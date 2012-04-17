@@ -1,5 +1,0 @@
-#Fri Dec 16 11:49:11 EST 2011
-eclipse.preferences.version=1
-jarsExcludedFromWebInfLib=/Users/florhaf/ravent/service/lib/joda-time-2.0/joda-time-2.0.jar|/Users/florhaf/ravent/service/lib/restlet-gae-2.0.10/lib/org.codehaus.jackson_1.4/org.codehaus.jackson.core.jar|/Users/florhaf/ravent/service/lib/restlet-gae-2.0.10/lib/org.codehaus.jackson_1.4/org.codehaus.jackson.mapper.jar|/Users/florhaf/ravent/service/lib/restlet-gae-2.0.10/lib/org.restlet.ext.jackson.jar|/Users/florhaf/ravent/service/lib/restlet-gae-2.0.10/lib/org.restlet.ext.servlet.jar|/Users/florhaf/ravent/service/lib/restlet-gae-2.0.10/lib/org.restlet.jar|/Users/florhaf/ravent/service/lib/restfb-1/restfb-1.6.9.jar
-warSrcDir=war
-warSrcDirIsOutput=true
