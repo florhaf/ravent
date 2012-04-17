@@ -1,0 +1,15 @@
+{
+	"results": [{
+        "name": "Rite of wednesday",
+        "location": "bar 13",
+        "distance": "0.2mi",
+        "time_start": "10:00pm",
+        "time_end": "04:00am",
+        "date_start": "2011-10-26",
+        "date_end": "2011-10-27",
+        "group": "Today",
+        "score": "4",
+        "invited_by": "Matias Jofre",
+        "picture": "/sencha/RaVent/resources/images/dummy/events/small/1.jpg"
+    }]
+}
