@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="lib/geocell/geocell.jar"/>
+	<classpathentry kind="lib" path="lib/jackson-1.9/jackson-core-asl-1.9.2.jar"/>
+	<classpathentry kind="lib" path="lib/jackson-1.9/jackson-mapper-asl-1.9.2.jar"/>
+	<classpathentry kind="lib" path="lib/joda-time-2.0/joda-time-2.0.jar"/>
+	<classpathentry kind="lib" path="lib/objectify-3.1/objectify-3.1.jar"/>
+	<classpathentry kind="lib" path="lib/restfb-1/restfb-1.6.9.jar"/>
+	<classpathentry kind="lib" path="lib/restlet-gae-2.0.10/lib/org.restlet.ext.jackson.jar"/>
+	<classpathentry kind="lib" path="lib/restlet-gae-2.0.10/lib/org.restlet.jar"/>
+	<classpathentry kind="lib" path="lib/restlet-gae-2.0.10/lib/org.restlet.ext.servlet.jar"/>
+	<classpathentry kind="output" path="war/WEB-INF/classes"/>
+</classpath>

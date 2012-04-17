@@ -126,7 +126,7 @@ public class User extends Model {
 		
 		String eventQuery = "SELECT eid from event_member where uid = ";
 
-		Dao dao = new Dao();
+		//Dao dao = new Dao();
 		
 		for (User u : users) {
 			
