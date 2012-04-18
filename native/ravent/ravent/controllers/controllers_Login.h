@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface controllers_Login : UIViewController
+@interface controllers_Login : UIViewController {
+    
+    IBOutlet UIImageView *_titleImage;
+    IBOutlet UIButton *_loginButton;
+}
 
 @end

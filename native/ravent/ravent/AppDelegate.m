@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "controllers_Login.h"
 #import "customNavigationController.h"
 #import "controllers_events_Events.h"
 #import "controllers_friends_People.h"
@@ -17,6 +18,7 @@
 
 @synthesize window = _window;
 @synthesize tabBarController = _tabBarController;
+@synthesize loginController = _loginController;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -25,6 +27,15 @@
     
     [[UIApplication sharedApplication] setStatusBarStyle: UIStatusBarStyleBlackOpaque];
     
+    
+    [self showLogin];
+    
+    [self.window makeKeyAndVisible];
+    return YES;
+}
+
+- (void)showApp
+{
     // TAB 1
     // *******************************************************
     controllers_events_Events *events = [[controllers_events_Events alloc] initWithNibName:nil bundle:nil forUser:[[models_User crtUser] copy]];
@@ -61,9 +72,15 @@
     
     self.tabBarController = [[UITabBarController alloc] init];
     self.tabBarController.viewControllers = [NSArray arrayWithObjects:eventsNav, friendsNav, calendar, options, nil];
+    
     self.window.rootViewController = self.tabBarController;
-    [self.window makeKeyAndVisible];
-    return YES;
+}
+
+- (void)showLogin
+{
+    self.loginController = [[controllers_Login alloc] initWithNibName:@"views_Login" bundle:nil];
+    
+    self.window.rootViewController = self.loginController;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
@@ -106,17 +123,17 @@
 }
 
 /*
-// Optional UITabBarControllerDelegate method.
-- (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
-{
-}
-*/
+ // Optional UITabBarControllerDelegate method.
+ - (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
+ {
+ }
+ */
 
 /*
-// Optional UITabBarControllerDelegate method.
-- (void)tabBarController:(UITabBarController *)tabBarController didEndCustomizingViewControllers:(NSArray *)viewControllers changed:(BOOL)changed
-{
-}
-*/
+ // Optional UITabBarControllerDelegate method.
+ - (void)tabBarController:(UITabBarController *)tabBarController didEndCustomizingViewControllers:(NSArray *)viewControllers changed:(BOOL)changed
+ {
+ }
+ */
 
 @end

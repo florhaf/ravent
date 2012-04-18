@@ -36,13 +36,21 @@
 }
 */
 
-/*
+
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [UIView beginAnimations:nil context:NULL];
+	[UIView setAnimationDuration:1];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+    
+    _titleImage.frame = CGRectMake(_titleImage.frame.origin.x, 90, _titleImage.frame.size.width, _titleImage.frame.size.height);
+    _loginButton.alpha = 1;
+    
+	[UIView commitAnimations];
 }
-*/
 
 - (void)viewDidUnload
 {
