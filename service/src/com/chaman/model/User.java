@@ -8,6 +8,7 @@ import javax.persistence.Transient;
 import javax.persistence.Entity;
 
 import com.chaman.dao.Dao;
+import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.Query;
 import com.restfb.DefaultFacebookClient;
 import com.restfb.Facebook;
@@ -53,6 +54,14 @@ public class User extends Model {
 		searchRadius = 30;
 	}
 	
+	
+	static {
+		try {
+			ObjectifyService.register(User.class);
+		} catch (Exception ex) {
+			System.out.println(ex.getMessage());
+		}
+	}
 	
 	public static User Get(long userID) {
 		
@@ -126,7 +135,7 @@ public class User extends Model {
 		
 		String eventQuery = "SELECT eid from event_member where uid = ";
 
-		//Dao dao = new Dao();
+		Dao dao = new Dao();
 		
 		for (User u : users) {
 			
@@ -144,9 +153,9 @@ public class User extends Model {
 				u.nb_of_following = dbu.nb_of_following;
 				
 				u.access_token = accessToken;
-	        	//dao.ofy().put(u); This interfer with followin/followers: need to investigate /*add the user to the datastore*/ /*find a solution to store friends*/
+	        	
 			}
-			
+			dao.ofy().put(u); /*This interfer with followin/followers: need to investigate /*add the user to the datastore*/ /*find a solution to store friends*/
 			result.add(u);
 		}
  	
