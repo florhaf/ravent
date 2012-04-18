@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "-[controllers_events_Events onLoadEvents:]:controllers_events_Events.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "[objects count]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[controllers_friends_People hideSpinner]:controllers_friends_People.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "_isFollowersLoaded">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[controllers_events_List tableView:cellForRowAtIndexPath:]:controllers_events_List.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "indexPath.section">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[controllers_events_Details viewDidLoad]:controllers_events_Details.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "NSLog(mapUrl)">
+            </PersistentString>
+            <PersistentString
+               value = "_headerNameLabel.frame.size.height">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[controllers_events_List onLoadEvents:]:controllers_events_List.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[JBAsyncImageView setImageURL:]:JBAsyncImageView.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.downloadTimeoutInterval">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[controllers_events_List numberOfSectionsInTableView:]:controllers_events_List.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "_sections">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[RKObjectMappingOperation applyAttributeMappings]:RKObjectMappingOperation.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.sourceObject">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "(null):(null)">
+         <PersistentStrings>
+            <PersistentString
+               value = "uis">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[models_Event objectLoader:didLoadObjects:]:models_Event.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[RKObjectLoader performMapping:]:RKObjectLoader.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.objectManager == nil">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[models_User request:didLoadResponse:]:models_User.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "_delegate">
+            </PersistentString>
+            <PersistentString
+               value = "response">
+            </PersistentString>
+            <PersistentString
+               value = "response.statusCode">
+            </PersistentString>
+            <PersistentString
+               value = "[response bodyAsString]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[controllers_events_List tableView:heightForRowAtIndexPath:]:controllers_events_List.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "item">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[controllers_friends_List onUserLoad:]:controllers_friends_List.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "_data">
+            </PersistentString>
+            <PersistentString
+               value = "_inviteds">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[controllers_events_List loadEvents]:controllers_events_List.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "_user.timeZone">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "+[models_Event getGroupedData:]:models_Event.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[models_Event loadEventsWithParams:]:models_Event.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "(manager == null) ?">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>
