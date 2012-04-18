@@ -47,13 +47,21 @@
 {
     _user.locationDelegate = self;
     _user.locationSuccess = @selector(onLocationSuccess);
-    _user.locationFailure = @selector(onLoadEvents:);
+    _user.locationFailure = @selector(onLocationFailure:);
     [_user getLocation];
 }
 
 - (void)onLocationSuccess
 {
     [self loadData];
+}
+
+- (void)onLocationFailure:(NSError *)error
+{
+    NSMutableArray *objects = [[NSMutableArray alloc] init];
+    [objects addObject:error];
+    
+    [self onLoadEvents:objects];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section

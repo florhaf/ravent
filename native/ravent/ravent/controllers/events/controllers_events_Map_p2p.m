@@ -88,12 +88,12 @@
 {
     [super viewDidLoad];
     
-    [self setMapLocation:YES];
+    //[self setMapLocation:YES];
 }
 
 - (void)mapViewDidFinishLoadingMap:(MKMapView *)mapView
 {
-    [self setMapLocation:NO];
+    //[self setMapLocation:NO];
 }
 
 - (void)setMapLocation:(BOOL)force
