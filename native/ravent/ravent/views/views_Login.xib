@@ -43,7 +43,7 @@
 						<string key="NSFrameSize">{320, 460}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="597665465"/>
+						<reference key="NSNextKeyView" ref="184809756"/>
 						<string key="NSReuseIdentifierKey">_NS:567</string>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -58,7 +58,6 @@
 						<string key="NSFrame">{{62, 193}, {196, 51}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:567</string>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -107,10 +106,10 @@
 							<int key="NSfFlags">16</int>
 						</object>
 					</object>
-					<object class="IBUIActivityIndicatorView" id="597665465">
+					<object class="IBUIActivityIndicatorView" id="184809756">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{142, 148}, {37, 37}}</string>
+						<string key="NSFrame">{{142, 155}, {37, 37}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="863201286"/>
@@ -166,7 +165,7 @@
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">_spinner</string>
 						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="597665465"/>
+						<reference key="destination" ref="184809756"/>
 					</object>
 					<int key="connectionID">15</int>
 				</object>
@@ -195,7 +194,7 @@
 							<reference ref="1033151384"/>
 							<reference ref="193428882"/>
 							<reference ref="863201286"/>
-							<reference ref="597665465"/>
+							<reference ref="184809756"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -227,7 +226,7 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">14</int>
-						<reference key="object" ref="597665465"/>
+						<reference key="object" ref="184809756"/>
 						<reference key="parent" ref="191373211"/>
 					</object>
 				</array>

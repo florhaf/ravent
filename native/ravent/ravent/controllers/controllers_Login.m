@@ -36,7 +36,17 @@
 - (IBAction)onLoginButtonTap
 {
     if (![_facebook isSessionValid]) {
-        [_facebook authorize:nil];
+        
+        NSArray *permissions = [[NSArray alloc] initWithObjects:
+                                @"offline_access",
+                                @"user_events",
+                                @"friends_events",
+                                @"status_update",
+                                @"photo_upload",
+                                @"read_stream",
+                                nil];
+        
+        [_facebook authorize:permissions];
     }
 }
 
