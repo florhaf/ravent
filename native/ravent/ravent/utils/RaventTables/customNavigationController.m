@@ -11,6 +11,18 @@
 
 @implementation customNavigationController
     
+- (id) initWithRootViewController:(UIViewController *)rootViewController
+{
+    self = [super initWithRootViewController:rootViewController];
+    
+    if (self) {
+        
+        [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"navBar"] forBarMetrics:UIBarMetricsDefault];
+    }
+    
+    return self;
+}
+
 - (UIViewController *)popViewControllerAnimated:(BOOL)animated
 {
 		UIViewController *viewController = [super popViewControllerAnimated:YES];

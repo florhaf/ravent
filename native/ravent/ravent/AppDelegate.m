@@ -28,7 +28,7 @@
     [[UIApplication sharedApplication] setStatusBarStyle: UIStatusBarStyleBlackOpaque];
     
     
-    [self showLogin];
+    [self showApp];
     
     [self.window makeKeyAndVisible];
     return YES;
