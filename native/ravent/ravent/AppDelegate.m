@@ -7,18 +7,11 @@
 //
 
 #import "AppDelegate.h"
-#import "controllers_Login.h"
-#import "customNavigationController.h"
-#import "controllers_events_Events.h"
-#import "controllers_friends_People.h"
-#import "controllers_calendar_Calendar.h"
-#import "controllers_stats_Stats.h"
 
 @implementation AppDelegate
 
 @synthesize window = _window;
-@synthesize tabBarController = _tabBarController;
-@synthesize loginController = _loginController;
+@synthesize appController = _appController;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -27,60 +20,11 @@
     
     [[UIApplication sharedApplication] setStatusBarStyle: UIStatusBarStyleBlackOpaque];
     
-    
-    [self showApp];
+    self.appController = [[controllers_App alloc] init];
+    self.window.rootViewController = self.appController;
     
     [self.window makeKeyAndVisible];
     return YES;
-}
-
-- (void)showApp
-{
-    // TAB 1
-    // *******************************************************
-    controllers_events_Events *events = [[controllers_events_Events alloc] initWithNibName:nil bundle:nil forUser:[[models_User crtUser] copy]];
-    customNavigationController *eventsNav = [[customNavigationController alloc] initWithRootViewController:events];
-    
-    eventsNav.title = @"Events";
-    eventsNav.tabBarItem.image = [UIImage imageNamed:@"first"];
-    // *******************************************************
-    
-    // TAB 2
-    // *******************************************************
-    controllers_friends_People *friendsList = [[controllers_friends_People alloc] initWithUser:[[models_User crtUser] copy]];
-    customNavigationController *friendsNav = [[customNavigationController alloc] initWithRootViewController:friendsList];
-    
-    friendsNav.title = @"People";
-    friendsNav.tabBarItem.image = [UIImage imageNamed:@"first"];
-    // *******************************************************
-    
-    // TAB 3
-    // *******************************************************
-    controllers_calendar_Calendar *calendar = [[controllers_calendar_Calendar alloc] init];
-    
-    calendar.title = @"Calendar";
-    calendar.tabBarItem.image = [UIImage imageNamed:@"first"];
-    // *******************************************************
-    
-    // TAB 4
-    // *******************************************************
-    controllers_stats_Stats *options = [[controllers_stats_Stats alloc] initWithNibName:@"views_stats_Stats" bundle:[NSBundle mainBundle]];
-    
-    options.title = @"Stats";
-    options.tabBarItem.image = [UIImage imageNamed:@"first"];
-    // *******************************************************
-    
-    self.tabBarController = [[UITabBarController alloc] init];
-    self.tabBarController.viewControllers = [NSArray arrayWithObjects:eventsNav, friendsNav, calendar, options, nil];
-    
-    self.window.rootViewController = self.tabBarController;
-}
-
-- (void)showLogin
-{
-    self.loginController = [[controllers_Login alloc] initWithNibName:@"views_Login" bundle:nil];
-    
-    self.window.rootViewController = self.loginController;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
@@ -121,19 +65,5 @@
      See also applicationDidEnterBackground:.
      */
 }
-
-/*
- // Optional UITabBarControllerDelegate method.
- - (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
- {
- }
- */
-
-/*
- // Optional UITabBarControllerDelegate method.
- - (void)tabBarController:(UITabBarController *)tabBarController didEndCustomizingViewControllers:(NSArray *)viewControllers changed:(BOOL)changed
- {
- }
- */
 
 @end

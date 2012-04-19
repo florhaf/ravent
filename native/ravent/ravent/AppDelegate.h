@@ -7,17 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "controllers_Login.h"
+#import "controllers_App.h"
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate, UITabBarControllerDelegate>
+
+@interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-
-@property (strong, nonatomic) UITabBarController *tabBarController;
-@property (strong, nonatomic) controllers_Login *loginController;
-
-- (void)showLogin;
-- (void)showApp;
+@property (strong, nonatomic) controllers_App *appController;
 
 
 @end

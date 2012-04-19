@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <archive type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="8.00">
 	<data>
-		<int key="IBDocument.SystemTarget">1280</int>
-		<string key="IBDocument.SystemVersion">11C74</string>
-		<string key="IBDocument.InterfaceBuilderVersion">1938</string>
-		<string key="IBDocument.AppKitVersion">1138.23</string>
-		<string key="IBDocument.HIToolboxVersion">567.00</string>
+		<int key="IBDocument.SystemTarget">1296</int>
+		<string key="IBDocument.SystemVersion">11D50</string>
+		<string key="IBDocument.InterfaceBuilderVersion">2182</string>
+		<string key="IBDocument.AppKitVersion">1138.32</string>
+		<string key="IBDocument.HIToolboxVersion">568.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-			<string key="NS.object.0">933</string>
+			<string key="NS.object.0">1181</string>
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>IBUISwitch</string>
@@ -40,7 +40,7 @@
 					<object class="IBUILabel" id="267451735">
 						<reference key="NSNextResponder" ref="159259685"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{87, 6}, {140, 21}}</string>
+						<string key="NSFrame">{{71, 3}, {120, 21}}</string>
 						<reference key="NSSuperview" ref="159259685"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="705588063"/>
@@ -72,7 +72,7 @@
 					<object class="IBUIImageView" id="108672178">
 						<reference key="NSNextResponder" ref="159259685"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{15, 6}, {64, 64}}</string>
+						<string key="NSFrame">{{15, 6}, {48, 48}}</string>
 						<reference key="NSSuperview" ref="159259685"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="267451735"/>
@@ -84,7 +84,7 @@
 					<object class="IBUISwitch" id="164588007">
 						<reference key="NSNextResponder" ref="159259685"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{206, 29}, {94, 27}}</string>
+						<string key="NSFrame">{{193, 24}, {94, 27}}</string>
 						<reference key="NSSuperview" ref="159259685"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView"/>
@@ -99,7 +99,7 @@
 					<object class="IBUILabel" id="705588063">
 						<reference key="NSNextResponder" ref="159259685"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{87, 32}, {79, 21}}</string>
+						<string key="NSFrame">{{71, 24}, {79, 21}}</string>
 						<reference key="NSSuperview" ref="159259685"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="164588007"/>
@@ -128,7 +128,7 @@
 						</object>
 					</object>
 				</array>
-				<string key="NSFrameSize">{320, 76}</string>
+				<string key="NSFrameSize">{320, 62}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="108672178"/>
@@ -209,8 +209,8 @@
 						<array class="NSMutableArray" key="children">
 							<reference ref="108672178"/>
 							<reference ref="267451735"/>
-							<reference ref="705588063"/>
 							<reference ref="164588007"/>
+							<reference ref="705588063"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -268,12 +268,17 @@
 					<string key="className">UITableViewReloadable</string>
 					<string key="superclassName">UITableViewController</string>
 					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="_emptyView">UIView</string>
 						<string key="_item">UIView</string>
 						<string key="_itemImage">JBAsyncImageView</string>
 						<string key="_itemSubTitle">UILabel</string>
 						<string key="_itemTitle">UILabel</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="_emptyView">
+							<string key="name">_emptyView</string>
+							<string key="candidateClassName">UIView</string>
+						</object>
 						<object class="IBToOneOutletInfo" key="_item">
 							<string key="name">_item</string>
 							<string key="candidateClassName">UIView</string>
@@ -330,8 +335,12 @@
 		</object>
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaTouchFramework</string>
+		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencyDefaults">
+			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaTouchPlugin.iPhoneOS</string>
+			<real value="1296" key="NS.object.0"/>
+		</object>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
-		<string key="IBCocoaTouchPluginVersion">933</string>
+		<string key="IBCocoaTouchPluginVersion">1181</string>
 	</data>
 </archive>

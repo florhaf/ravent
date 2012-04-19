@@ -60,6 +60,8 @@
 		DF629E80153F8A8600BCA804 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF629E7E153F8A8600BCA804 /* Default@2x.png */; };
 		DF629E8B153F905D00BCA804 /* navBar.png in Resources */ = {isa = PBXBuildFile; fileRef = DF629E89153F905D00BCA804 /* navBar.png */; };
 		DF629E8C153F905D00BCA804 /* navBar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF629E8A153F905D00BCA804 /* navBar@2x.png */; };
+		DF629EA015408E0400BCA804 /* FBDialog.bundle in Resources */ = {isa = PBXBuildFile; fileRef = DF629E9315408E0400BCA804 /* FBDialog.bundle */; };
+		DF629EA115408E0400BCA804 /* libfacebook_ios_sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DF629E9915408E0400BCA804 /* libfacebook_ios_sdk.a */; };
 		DF6C864D152E476D0077E027 /* UITableViewReloadable.m in Sources */ = {isa = PBXBuildFile; fileRef = DF6C864C152E476D0077E027 /* UITableViewReloadable.m */; };
 		DF6C8653152E4CA70077E027 /* UItableViewEvents.m in Sources */ = {isa = PBXBuildFile; fileRef = DF6C8652152E4CA70077E027 /* UItableViewEvents.m */; };
 		DF6C8656152E4E4B0077E027 /* controllers_events_List_p2p.m in Sources */ = {isa = PBXBuildFile; fileRef = DF6C8655152E4E4B0077E027 /* controllers_events_List_p2p.m */; };
@@ -116,6 +118,8 @@
 		DFD2895B151DD2EF007A0873 /* views_calendar_Calendar.xib in Resources */ = {isa = PBXBuildFile; fileRef = DFD2895A151DD2EF007A0873 /* views_calendar_Calendar.xib */; };
 		DFD28965151E70E6007A0873 /* libKal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DFD28964151E70A5007A0873 /* libKal.a */; };
 		DFD28967151E731A007A0873 /* Kal.bundle in Resources */ = {isa = PBXBuildFile; fileRef = DFD28966151E731A007A0873 /* Kal.bundle */; };
+		DFF02DDE1540B0AA00FED164 /* controllers_TabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF02DDD1540B0AA00FED164 /* controllers_TabBar.m */; };
+		DFF02DE11540B39500FED164 /* controllers_App.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF02DE01540B39500FED164 /* controllers_App.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -228,6 +232,21 @@
 		DF629E7E153F8A8600BCA804 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		DF629E89153F905D00BCA804 /* navBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = navBar.png; sourceTree = "<group>"; };
 		DF629E8A153F905D00BCA804 /* navBar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navBar@2x.png"; sourceTree = "<group>"; };
+		DF629E9115408E0400BCA804 /* Facebook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Facebook.h; sourceTree = "<group>"; };
+		DF629E9215408E0400BCA804 /* FBConnect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBConnect.h; sourceTree = "<group>"; };
+		DF629E9315408E0400BCA804 /* FBDialog.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = FBDialog.bundle; sourceTree = "<group>"; };
+		DF629E9415408E0400BCA804 /* FBDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBDialog.h; sourceTree = "<group>"; };
+		DF629E9515408E0400BCA804 /* FBFrictionlessRequestSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBFrictionlessRequestSettings.h; sourceTree = "<group>"; };
+		DF629E9615408E0400BCA804 /* FBLoginDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBLoginDialog.h; sourceTree = "<group>"; };
+		DF629E9715408E0400BCA804 /* FBRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBRequest.h; sourceTree = "<group>"; };
+		DF629E9815408E0400BCA804 /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSON.h; sourceTree = "<group>"; };
+		DF629E9915408E0400BCA804 /* libfacebook_ios_sdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libfacebook_ios_sdk.a; sourceTree = "<group>"; };
+		DF629E9A15408E0400BCA804 /* NSObject+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJSON.h"; sourceTree = "<group>"; };
+		DF629E9B15408E0400BCA804 /* NSString+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+SBJSON.h"; sourceTree = "<group>"; };
+		DF629E9C15408E0400BCA804 /* SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJSON.h; sourceTree = "<group>"; };
+		DF629E9D15408E0400BCA804 /* SBJsonBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonBase.h; sourceTree = "<group>"; };
+		DF629E9E15408E0400BCA804 /* SBJsonParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonParser.h; sourceTree = "<group>"; };
+		DF629E9F15408E0400BCA804 /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
 		DF6C864B152E476D0077E027 /* UITableViewReloadable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITableViewReloadable.h; sourceTree = "<group>"; };
 		DF6C864C152E476D0077E027 /* UITableViewReloadable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UITableViewReloadable.m; sourceTree = "<group>"; };
 		DF6C8651152E4CA70077E027 /* UItableViewEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UItableViewEvents.h; sourceTree = "<group>"; };
@@ -304,6 +323,10 @@
 		DFD2895A151DD2EF007A0873 /* views_calendar_Calendar.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = views_calendar_Calendar.xib; path = ravent/views/calendar/views_calendar_Calendar.xib; sourceTree = SOURCE_ROOT; };
 		DFD2895C151E70A5007A0873 /* Kal.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Kal.xcodeproj; path = Kal/Kal.xcodeproj; sourceTree = "<group>"; };
 		DFD28966151E731A007A0873 /* Kal.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Kal.bundle; path = Kal/Kal.bundle; sourceTree = "<group>"; };
+		DFF02DDC1540B0AA00FED164 /* controllers_TabBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = controllers_TabBar.h; sourceTree = "<group>"; };
+		DFF02DDD1540B0AA00FED164 /* controllers_TabBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = controllers_TabBar.m; sourceTree = "<group>"; };
+		DFF02DDF1540B39500FED164 /* controllers_App.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = controllers_App.h; sourceTree = "<group>"; };
+		DFF02DE01540B39500FED164 /* controllers_App.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = controllers_App.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -325,6 +348,7 @@
 				DF8F14CD150BD48200008ABC /* UIKit.framework in Frameworks */,
 				DF8F14CF150BD48200008ABC /* Foundation.framework in Frameworks */,
 				DF8F14D1150BD48200008ABC /* CoreGraphics.framework in Frameworks */,
+				DF629EA115408E0400BCA804 /* libfacebook_ios_sdk.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -447,6 +471,28 @@
 			path = navBar;
 			sourceTree = "<group>";
 		};
+		DF629E9015408E0400BCA804 /* facebook-ios-sdk */ = {
+			isa = PBXGroup;
+			children = (
+				DF629E9115408E0400BCA804 /* Facebook.h */,
+				DF629E9215408E0400BCA804 /* FBConnect.h */,
+				DF629E9315408E0400BCA804 /* FBDialog.bundle */,
+				DF629E9415408E0400BCA804 /* FBDialog.h */,
+				DF629E9515408E0400BCA804 /* FBFrictionlessRequestSettings.h */,
+				DF629E9615408E0400BCA804 /* FBLoginDialog.h */,
+				DF629E9715408E0400BCA804 /* FBRequest.h */,
+				DF629E9815408E0400BCA804 /* JSON.h */,
+				DF629E9915408E0400BCA804 /* libfacebook_ios_sdk.a */,
+				DF629E9A15408E0400BCA804 /* NSObject+SBJSON.h */,
+				DF629E9B15408E0400BCA804 /* NSString+SBJSON.h */,
+				DF629E9C15408E0400BCA804 /* SBJSON.h */,
+				DF629E9D15408E0400BCA804 /* SBJsonBase.h */,
+				DF629E9E15408E0400BCA804 /* SBJsonParser.h */,
+				DF629E9F15408E0400BCA804 /* SBJsonWriter.h */,
+			);
+			path = "facebook-ios-sdk";
+			sourceTree = "<group>";
+		};
 		DF6C864A152E47340077E027 /* RaventTables */ = {
 			isa = PBXGroup;
 			children = (
@@ -500,6 +546,7 @@
 		DF8F14CB150BD48200008ABC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				DF629E9015408E0400BCA804 /* facebook-ios-sdk */,
 				DFD2895C151E70A5007A0873 /* Kal.xcodeproj */,
 				DF1EE83F151D23640037BE6C /* MapKit.framework */,
 				DF119435150FB8F100F72E41 /* libxml2.dylib */,
@@ -583,6 +630,10 @@
 				DF39E8081525275E0080EDA0 /* ActionDispatcher.m */,
 				DF39E80A152527A50080EDA0 /* Action.h */,
 				DF39E80B152527A50080EDA0 /* Action.m */,
+				DFF02DDC1540B0AA00FED164 /* controllers_TabBar.h */,
+				DFF02DDD1540B0AA00FED164 /* controllers_TabBar.m */,
+				DFF02DDF1540B39500FED164 /* controllers_App.h */,
+				DFF02DE01540B39500FED164 /* controllers_App.m */,
 			);
 			name = controllers;
 			path = ravent/controllers;
@@ -958,6 +1009,7 @@
 				DF629E80153F8A8600BCA804 /* Default@2x.png in Resources */,
 				DF629E8B153F905D00BCA804 /* navBar.png in Resources */,
 				DF629E8C153F905D00BCA804 /* navBar@2x.png in Resources */,
+				DF629EA015408E0400BCA804 /* FBDialog.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1003,6 +1055,8 @@
 				DF16F70C153BCABD002819C2 /* controllers_friends_People.m in Sources */,
 				DF16F70D153BCABD002819C2 /* controllers_friends_share.m in Sources */,
 				DF629E6A153F8A3100BCA804 /* controllers_Login.m in Sources */,
+				DFF02DDE1540B0AA00FED164 /* controllers_TabBar.m in Sources */,
+				DFF02DE11540B39500FED164 /* controllers_App.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1093,6 +1147,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ravent/ravent-Prefix.pch";
 				INFOPLIST_FILE = "ravent/ravent-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/facebook-ios-sdk\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				WRAPPER_EXTENSION = app;
@@ -1109,6 +1167,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ravent/ravent-Prefix.pch";
 				INFOPLIST_FILE = "ravent/ravent-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/facebook-ios-sdk\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				WRAPPER_EXTENSION = app;

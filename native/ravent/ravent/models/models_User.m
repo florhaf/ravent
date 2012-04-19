@@ -94,21 +94,28 @@ static models_User *_crtUser = nil;
     return another;
 }
 
-+ (models_User *)crtUser
++ (models_User *)setCrtUser:(models_User *)u
 {
     if (_crtUser == nil) {
         
         _crtUser = [[models_User alloc] init];
-        _crtUser.uid = @"698467887";
-        _crtUser.firstName = @"Florian";
-        _crtUser.lastName = @"Haftman";
-        _crtUser.picture = @"https://fbcdn-profile-a.akamaihd.net/hprofile-ak-ash2/371198_698467887_979103366_n.jpg";
+    }
+    
+        _crtUser.uid = u.uid;//@"698467887";
+        _crtUser.firstName = u.firstName;//@"Florian";
+        _crtUser.lastName = u.lastName;//@"Haftman";
+        _crtUser.picture = u.picture;//@"https://fbcdn-profile-a.akamaihd.net/hprofile-ak-ash2/371198_698467887_979103366_n.jpg";
         _crtUser.latitude = @"";//@"34.0482916";//@"40.743355";
         _crtUser.longitude = @"";//@"-118.2512404";//@"-73.972642";
         _crtUser.timeZone = [NSString stringWithFormat:@"%d", [[NSTimeZone localTimeZone] secondsFromGMT] / 60 ];
-        _crtUser.accessToken = @"AAAEQNGOuZAOsBACc43sdNDb4DZBpYuTMWmkP0CahyGLezdWSVfQZA0zowRIKeE5d3iW0gFRo9U0PYcTS1Ge2DRbyxLPTqoZD";
-    }
-    
+        _crtUser.accessToken = u.accessToken;//@"AAAEQNGOuZAOsBACc43sdNDb4DZBpYuTMWmkP0CahyGLezdWSVfQZA0zowRIKeE5d3iW0gFRo9U0PYcTS1Ge2DRbyxLPTqoZD";
+
+    return _crtUser;
+}
+
+
++ (models_User *)crtUser
+{
     return _crtUser;
 }
 
@@ -149,7 +156,7 @@ static models_User *_crtUser = nil;
 {
     NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
     [params setValue:_uid forKey:@"userID"];
-    [params setValue:[models_User crtUser].accessToken forKey:@"access_token"];
+    [params setValue:_accessToken forKey:@"access_token"];
     
     NSString *resourcePath = [@"users" appendQueryParams:params];
     
