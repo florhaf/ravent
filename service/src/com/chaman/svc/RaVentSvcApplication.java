@@ -12,6 +12,7 @@ public class RaVentSvcApplication extends Application {
 		Router router = new Router(getContext());
 		
 		router.attach("/events", 		Events.class);
+		router.attach("/totalNbOfInvited", 		Events.class);
 		router.attach("/description", 	Descriptions.class);
 		router.attach("/comments",		Comments.class);
 		router.attach("/pictures",		Pictures.class);

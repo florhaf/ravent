@@ -25,7 +25,8 @@ public class EventLocationCapable extends Model implements LocationCapable {
     private double longitude;
     private int score;
     private List<String> geocells;
-    private long creator; /* promoter ID */
+    private long creator; // promoter ID
+    private long nb_invited; // Number of users invited to the event (updated periodically)
     
 	static {
 		try {
@@ -49,6 +50,7 @@ public class EventLocationCapable extends Model implements LocationCapable {
     	this.longitude = Double.parseDouble(event.longitude);
     	this.score = event.score;
     	this.creator = (event.creator != null) ? Long.parseLong(event.creator) : 0;
+    	this.nb_invited = event.nb_invited;
     	
     	geocells = GeocellManager.generateGeoCell(this.getLocation());
     }
@@ -139,4 +141,9 @@ public class EventLocationCapable extends Model implements LocationCapable {
 	public void setCreator(long creator) {
 		this.creator = creator;
 	}
+	
+	public long getNb_invited() {
+		return this.nb_invited;
+	}
+	
 }

@@ -21,6 +21,7 @@ public class Attending extends Model {
 	@Facebook
 	String rsvp_status;
 	
+	Long eid;
 	String picture;
 	
 	public Attending() {
@@ -33,23 +34,23 @@ public class Attending extends Model {
 		
 		FacebookClient client 		= new DefaultFacebookClient(accessToken);
 		
-		String properties 			= "uid, first_name, last_name, pic";
+		String properties 			= "uid, first_name, last_name, pic, rsvp_status";
 		String query 				= "SELECT " + properties + " FROM user WHERE uid IN (SELECT uid FROM event_member WHERE eid = " + eid + 
 																		   " AND uid IN (SELECT uid2 FROM friend WHERE uid1 = me()))";
 		List<Attending> Attendings 	= client.executeQuery(query, Attending.class);
 		
-		String queryRsvp;
-		List<Attending> rsvpStatuses;
+		//String queryRsvp;
+		//List<Attending> rsvpStatuses;
 		
 		for (Attending a : Attendings) {
 			
 			a.picture = a.pic;
-			
+			a.eid = Long.parseLong(eid);
 			// REALLY HUGLY HACK...
-			queryRsvp = "SELECT rsvp_status FROM event_member WHERE eid = " + eid + " AND uid = " + a.uid;
-			rsvpStatuses 	= client.executeQuery(queryRsvp, Attending.class);
+			//queryRsvp = "SELECT rsvp_status FROM event_member WHERE eid = " + eid + " AND uid = " + a.uid;
+			//rsvpStatuses 	= client.executeQuery(queryRsvp, Attending.class);
 			
-			a.rsvp_status = rsvpStatuses.get(0).getRsvp_status();
+			//a.rsvp_status = rsvpStatuses.get(0).getRsvp_status();
 			
 			if (a.rsvp_status.equals("unsure") || a.rsvp_status.equals("not_replied")) {
 				
@@ -89,5 +90,10 @@ public class Attending extends Model {
 	public String getRsvp_status() {
 		
 		return this.rsvp_status;
+	}
+	
+	public long getEid() {
+		
+		return this.eid;
 	}
 }

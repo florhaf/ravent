@@ -13,7 +13,7 @@ import com.googlecode.objectify.annotation.Entity;
 public class Following extends Model {
 
 	@Id
-	Long id;
+	Long id; // can be optimized using a concatenation of friend and user id
 	Long userID;
 	Long friendID;
 	
