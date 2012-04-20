@@ -13,7 +13,8 @@
 @implementation controllers_App
 
 @synthesize loginController = _loginController;
-@synthesize tabBarController = _tabBarController;
+//@synthesize tabBarController = _tabBarController;
+@synthesize slidingController = _slidingController;
 
 - (id)init
 {
@@ -45,29 +46,36 @@
 
 - (void)flipView
 {    
-    if (_tabBarController == nil) {
+//    if (_tabBarController == nil) {
+//        
+//        _tabBarController = [[controllers_TabBar alloc] init];
+//        _tabBarController.view.frame = CGRectMake(0, -20, _tabBarController.view.frame.size.width, _tabBarController.view.frame.size.height);
+//    }
+
+    if (_slidingController == nil) {
         
-        _tabBarController = [[controllers_TabBar alloc] init];
-        _tabBarController.view.frame = CGRectMake(0, -20, _tabBarController.view.frame.size.width, _tabBarController.view.frame.size.height);
+        _slidingController = [[controllers_SlidingInitial alloc] init];
+        _slidingController.view.frame = CGRectMake(0, 0, _slidingController.view.frame.size.width, _slidingController.view.frame.size.height);
     }
     
-    UIView *tabbar = _tabBarController.view;
+//    UIView *tabbar = _tabBarController.view;
+    UIView *slide = _slidingController.view;
     UIView *login = _loginController.view;
     
 	[UIView beginAnimations:nil context:NULL];
 	[UIView setAnimationDuration:0.8];
     [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft forView:self.view cache:YES];
 	
-	if ([tabbar superview]) {
+	if ([slide superview]) {
         
-		[tabbar removeFromSuperview];
+		[slide removeFromSuperview];
 		[self.view addSubview:login];
     } else {
         
         [UIView setAnimationDelay:1.2];
         
 		[login removeFromSuperview];
-		[self.view addSubview:tabbar];
+		[self.view addSubview:slide];
     }
     
 	[UIView commitAnimations];

@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "controllers_Login.h"
+#import "controllers_SlidingInitial.h"
 #import "controllers_TabBar.h"
 
 @interface controllers_App : UIViewController {
@@ -15,7 +16,8 @@
     
 }
 
-@property (strong, nonatomic) controllers_TabBar *tabBarController;
+//@property (strong, nonatomic) controllers_TabBar *tabBarController;
+@property (strong, nonatomic) controllers_SlidingInitial *slidingController;
 @property (strong, nonatomic) controllers_Login *loginController;
 
 - (void)flipView;

@@ -10,9 +10,21 @@
 
 @implementation controllers_stats_Stats
 
+static controllers_stats_Stats *_ctrl;
+
 - (void)loadData
 {
     
+}
+
++ (controllers_stats_Stats *)instance
+{
+    if (_ctrl == nil) {
+        
+        _ctrl = [[controllers_stats_Stats alloc] init];
+    }
+    
+    return _ctrl;
 }
 
 @end

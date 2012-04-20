@@ -16,6 +16,7 @@
 @implementation controllers_events_Map_p2p
 
 @synthesize coordinate;
+@synthesize peekLeftAmount;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil user:(models_User *)user
 {
@@ -89,6 +90,10 @@
     [super viewDidLoad];
     
     //[self setMapLocation:YES];
+    
+    self.peekLeftAmount = 40.0f;
+    [self.slidingViewController setAnchorLeftPeekAmount:self.peekLeftAmount];
+    self.slidingViewController.underRightWidthLayout = ECVariableRevealWidth;
 }
 
 - (void)mapViewDidFinishLoadingMap:(MKMapView *)mapView

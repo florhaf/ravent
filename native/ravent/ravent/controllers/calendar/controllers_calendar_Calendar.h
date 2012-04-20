@@ -13,4 +13,6 @@
     
 }
 
++ (controllers_calendar_Calendar *)instance;
+
 @end

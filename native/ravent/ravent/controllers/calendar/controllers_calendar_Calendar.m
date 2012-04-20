@@ -10,6 +10,8 @@
 
 @implementation controllers_calendar_Calendar
 
+static controllers_calendar_Calendar *_ctrl;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -55,6 +57,16 @@
 {
     // Return YES for supported orientations
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
++ (controllers_calendar_Calendar *)instance
+{
+    if (_ctrl == nil) {
+        
+        _ctrl = [[controllers_calendar_Calendar alloc] init];
+    }
+    
+    return _ctrl;
 }
 
 @end

@@ -8,6 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "controllers_friends_Following.h"
+#import "customNavigationController.h"
+
+#import <QuartzCore/QuartzCore.h>
+#import "ECSlidingViewController.h"
+#import "controllers_SlidingMenu.h"
 
 @interface controllers_friends_People : UIViewController {
     
@@ -36,5 +41,9 @@
 - (void)flipView;
 - (void)showSpinner;
 - (void)hideSpinner;
+- (void)revealMenu:(id)sender;
+- (void)revealAll:(id)sender;
+
++ (customNavigationController *)instance;
 
 @end

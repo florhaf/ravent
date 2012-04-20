@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
+#import "ECSlidingViewController.h"
 #import "JBAsyncImageView.h"
 #import "models_User.h"
 
@@ -24,6 +25,8 @@
     
     BOOL _isMapSet;
 }
+
+@property (nonatomic, unsafe_unretained) CGFloat peekLeftAmount;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil user:(models_User *)user;
 - (void)loading;

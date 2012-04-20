@@ -101,14 +101,14 @@ static models_User *_crtUser = nil;
         _crtUser = [[models_User alloc] init];
     }
     
-        _crtUser.uid = u.uid;//@"698467887";
-        _crtUser.firstName = u.firstName;//@"Florian";
-        _crtUser.lastName = u.lastName;//@"Haftman";
-        _crtUser.picture = u.picture;//@"https://fbcdn-profile-a.akamaihd.net/hprofile-ak-ash2/371198_698467887_979103366_n.jpg";
-        _crtUser.latitude = @"";//@"34.0482916";//@"40.743355";
-        _crtUser.longitude = @"";//@"-118.2512404";//@"-73.972642";
-        _crtUser.timeZone = [NSString stringWithFormat:@"%d", [[NSTimeZone localTimeZone] secondsFromGMT] / 60 ];
-        _crtUser.accessToken = u.accessToken;//@"AAAEQNGOuZAOsBACc43sdNDb4DZBpYuTMWmkP0CahyGLezdWSVfQZA0zowRIKeE5d3iW0gFRo9U0PYcTS1Ge2DRbyxLPTqoZD";
+    _crtUser.uid = u.uid;
+    _crtUser.firstName = u.firstName;
+    _crtUser.lastName = u.lastName;
+    _crtUser.picture = u.picture;
+    _crtUser.latitude = @"";
+    _crtUser.longitude = @"";
+    _crtUser.timeZone = [NSString stringWithFormat:@"%d", [[NSTimeZone localTimeZone] secondsFromGMT] / 60 ];
+    _crtUser.accessToken = u.accessToken;
 
     return _crtUser;
 }

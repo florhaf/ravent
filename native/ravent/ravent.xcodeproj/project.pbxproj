@@ -24,6 +24,8 @@
 		DF12BD7815157F7300328B02 /* whiteArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF12BD7015157F7300328B02 /* whiteArrow@2x.png */; };
 		DF12BD7C1515848700328B02 /* JBAsyncImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = DF12BD7B1515848700328B02 /* JBAsyncImageView.m */; };
 		DF12BDA4151931DE00328B02 /* models_Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = DF12BDA3151931DE00328B02 /* models_Comment.m */; };
+		DF15FE5B15412DA600CF451E /* ECSlidingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF15FE5815412DA600CF451E /* ECSlidingViewController.m */; };
+		DF15FE5C15412DA600CF451E /* UIImage+ImageWithUIView.m in Sources */ = {isa = PBXBuildFile; fileRef = DF15FE5A15412DA600CF451E /* UIImage+ImageWithUIView.m */; };
 		DF16F709153BCABD002819C2 /* controllers_friends_All.m in Sources */ = {isa = PBXBuildFile; fileRef = DF16F700153BCABD002819C2 /* controllers_friends_All.m */; };
 		DF16F70A153BCABD002819C2 /* controllers_friends_Details.m in Sources */ = {isa = PBXBuildFile; fileRef = DF16F702153BCABD002819C2 /* controllers_friends_Details.m */; };
 		DF16F70B153BCABD002819C2 /* controllers_friends_Following.m in Sources */ = {isa = PBXBuildFile; fileRef = DF16F704153BCABD002819C2 /* controllers_friends_Following.m */; };
@@ -67,6 +69,12 @@
 		DF6C8656152E4E4B0077E027 /* controllers_events_List_p2p.m in Sources */ = {isa = PBXBuildFile; fileRef = DF6C8655152E4E4B0077E027 /* controllers_events_List_p2p.m */; };
 		DF6DA7991514011C00F98F05 /* EGORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = DF6DA7981514011C00F98F05 /* EGORefreshTableHeaderView.m */; };
 		DF6DA79B1514060300F98F05 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF6DA79A1514060200F98F05 /* QuartzCore.framework */; };
+		DF75ACC11541CE4C00150465 /* controllers_SlidingInitial.m in Sources */ = {isa = PBXBuildFile; fileRef = DF75ACC01541CE4C00150465 /* controllers_SlidingInitial.m */; };
+		DF75ACC81541D06200150465 /* controllers_SlidingMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = DF75ACC71541D06200150465 /* controllers_SlidingMenu.m */; };
+		DF75ACCC1541E7D400150465 /* backgroundDark.png in Resources */ = {isa = PBXBuildFile; fileRef = DF75ACCA1541E7D400150465 /* backgroundDark.png */; };
+		DF75ACCD1541E7D400150465 /* backgroundDark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF75ACCB1541E7D400150465 /* backgroundDark@2x.png */; };
+		DF75ACD01541F69C00150465 /* disclosure.png in Resources */ = {isa = PBXBuildFile; fileRef = DF75ACCE1541F69C00150465 /* disclosure.png */; };
+		DF75ACD11541F69C00150465 /* disclosure@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF75ACCF1541F69C00150465 /* disclosure@2x.png */; };
 		DF78B9FE150FB870003849D2 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF78B9FD150FB870003849D2 /* CFNetwork.framework */; };
 		DF8030E71533ED08008E71D6 /* views_friends_header_Following.xib in Resources */ = {isa = PBXBuildFile; fileRef = DF8030E61533ED08008E71D6 /* views_friends_header_Following.xib */; };
 		DF8030ED1534C62E008E71D6 /* UITableViewFriends.m in Sources */ = {isa = PBXBuildFile; fileRef = DF8030EC1534C62D008E71D6 /* UITableViewFriends.m */; };
@@ -182,6 +190,10 @@
 		DF12BDA11516CCDA00328B02 /* Config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Config.h; sourceTree = "<group>"; };
 		DF12BDA2151931DD00328B02 /* models_Comment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = models_Comment.h; sourceTree = "<group>"; };
 		DF12BDA3151931DE00328B02 /* models_Comment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = models_Comment.m; sourceTree = "<group>"; };
+		DF15FE5715412DA600CF451E /* ECSlidingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ECSlidingViewController.h; sourceTree = "<group>"; };
+		DF15FE5815412DA600CF451E /* ECSlidingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ECSlidingViewController.m; sourceTree = "<group>"; };
+		DF15FE5915412DA600CF451E /* UIImage+ImageWithUIView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageWithUIView.h"; sourceTree = "<group>"; };
+		DF15FE5A15412DA600CF451E /* UIImage+ImageWithUIView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageWithUIView.m"; sourceTree = "<group>"; };
 		DF16F6FF153BCABD002819C2 /* controllers_friends_All.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = controllers_friends_All.h; sourceTree = "<group>"; };
 		DF16F700153BCABD002819C2 /* controllers_friends_All.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = controllers_friends_All.m; sourceTree = "<group>"; };
 		DF16F701153BCABD002819C2 /* controllers_friends_Details.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = controllers_friends_Details.h; sourceTree = "<group>"; };
@@ -256,6 +268,14 @@
 		DF6DA7971514011C00F98F05 /* EGORefreshTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGORefreshTableHeaderView.h; sourceTree = "<group>"; };
 		DF6DA7981514011C00F98F05 /* EGORefreshTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGORefreshTableHeaderView.m; sourceTree = "<group>"; };
 		DF6DA79A1514060200F98F05 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		DF75ACBF1541CE4C00150465 /* controllers_SlidingInitial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = controllers_SlidingInitial.h; sourceTree = "<group>"; };
+		DF75ACC01541CE4C00150465 /* controllers_SlidingInitial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = controllers_SlidingInitial.m; sourceTree = "<group>"; };
+		DF75ACC61541D06200150465 /* controllers_SlidingMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = controllers_SlidingMenu.h; sourceTree = "<group>"; };
+		DF75ACC71541D06200150465 /* controllers_SlidingMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = controllers_SlidingMenu.m; sourceTree = "<group>"; };
+		DF75ACCA1541E7D400150465 /* backgroundDark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = backgroundDark.png; sourceTree = "<group>"; };
+		DF75ACCB1541E7D400150465 /* backgroundDark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "backgroundDark@2x.png"; sourceTree = "<group>"; };
+		DF75ACCE1541F69C00150465 /* disclosure.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = disclosure.png; sourceTree = "<group>"; };
+		DF75ACCF1541F69C00150465 /* disclosure@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "disclosure@2x.png"; sourceTree = "<group>"; };
 		DF78B9FD150FB870003849D2 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		DF8030E61533ED08008E71D6 /* views_friends_header_Following.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = views_friends_header_Following.xib; sourceTree = "<group>"; };
 		DF8030EB1534C62D008E71D6 /* UITableViewFriends.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITableViewFriends.h; sourceTree = "<group>"; };
@@ -397,6 +417,17 @@
 			path = JBAsyncImageView;
 			sourceTree = "<group>";
 		};
+		DF15FE5615412DA600CF451E /* ECSlidingViewController */ = {
+			isa = PBXGroup;
+			children = (
+				DF15FE5715412DA600CF451E /* ECSlidingViewController.h */,
+				DF15FE5815412DA600CF451E /* ECSlidingViewController.m */,
+				DF15FE5915412DA600CF451E /* UIImage+ImageWithUIView.h */,
+				DF15FE5A15412DA600CF451E /* UIImage+ImageWithUIView.m */,
+			);
+			path = ECSlidingViewController;
+			sourceTree = "<group>";
+		};
 		DF16F6FE153BCABD002819C2 /* people */ = {
 			isa = PBXGroup;
 			children = (
@@ -517,6 +548,17 @@
 			path = EGOPullToRefresh;
 			sourceTree = "<group>";
 		};
+		DF75ACC91541E7D400150465 /* background */ = {
+			isa = PBXGroup;
+			children = (
+				DF75ACCE1541F69C00150465 /* disclosure.png */,
+				DF75ACCF1541F69C00150465 /* disclosure@2x.png */,
+				DF75ACCA1541E7D400150465 /* backgroundDark.png */,
+				DF75ACCB1541E7D400150465 /* backgroundDark@2x.png */,
+			);
+			path = background;
+			sourceTree = "<group>";
+		};
 		DF8F14BD150BD48200008ABC = {
 			isa = PBXGroup;
 			children = (
@@ -589,6 +631,7 @@
 		DF8F14F8150BD4DE00008ABC /* resources */ = {
 			isa = PBXGroup;
 			children = (
+				DF75ACC91541E7D400150465 /* background */,
 				DF629E83153F8F2D00BCA804 /* navBar */,
 				DF629E6D153F8A5900BCA804 /* buttons */,
 				DF629E6F153F8A5900BCA804 /* splash */,
@@ -634,6 +677,10 @@
 				DFF02DDD1540B0AA00FED164 /* controllers_TabBar.m */,
 				DFF02DDF1540B39500FED164 /* controllers_App.h */,
 				DFF02DE01540B39500FED164 /* controllers_App.m */,
+				DF75ACBF1541CE4C00150465 /* controllers_SlidingInitial.h */,
+				DF75ACC01541CE4C00150465 /* controllers_SlidingInitial.m */,
+				DF75ACC61541D06200150465 /* controllers_SlidingMenu.h */,
+				DF75ACC71541D06200150465 /* controllers_SlidingMenu.m */,
 			);
 			name = controllers;
 			path = ravent/controllers;
@@ -642,6 +689,7 @@
 		DF8F1511150BD54B00008ABC /* utils */ = {
 			isa = PBXGroup;
 			children = (
+				DF15FE5615412DA600CF451E /* ECSlidingViewController */,
 				DF50EDCD1537B3E000ACBC4A /* DLStarRating */,
 				DF6C864A152E47340077E027 /* RaventTables */,
 				DFD2804B151DBA06007A0873 /* Map */,
@@ -1010,6 +1058,10 @@
 				DF629E8B153F905D00BCA804 /* navBar.png in Resources */,
 				DF629E8C153F905D00BCA804 /* navBar@2x.png in Resources */,
 				DF629EA015408E0400BCA804 /* FBDialog.bundle in Resources */,
+				DF75ACCC1541E7D400150465 /* backgroundDark.png in Resources */,
+				DF75ACCD1541E7D400150465 /* backgroundDark@2x.png in Resources */,
+				DF75ACD01541F69C00150465 /* disclosure.png in Resources */,
+				DF75ACD11541F69C00150465 /* disclosure@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1057,6 +1109,10 @@
 				DF629E6A153F8A3100BCA804 /* controllers_Login.m in Sources */,
 				DFF02DDE1540B0AA00FED164 /* controllers_TabBar.m in Sources */,
 				DFF02DE11540B39500FED164 /* controllers_App.m in Sources */,
+				DF15FE5B15412DA600CF451E /* ECSlidingViewController.m in Sources */,
+				DF15FE5C15412DA600CF451E /* UIImage+ImageWithUIView.m in Sources */,
+				DF75ACC11541CE4C00150465 /* controllers_SlidingInitial.m in Sources */,
+				DF75ACC81541D06200150465 /* controllers_SlidingMenu.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
