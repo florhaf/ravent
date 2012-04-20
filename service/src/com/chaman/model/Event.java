@@ -18,8 +18,6 @@ import com.restfb.Facebook;
 import com.restfb.FacebookClient;
 import com.restfb.exception.FacebookException;
 
-import com.chaman.model.Attending;
-
 /*
  * Event object from FB + formatting for our app
  */
@@ -114,7 +112,7 @@ public class Event extends Model {
 			        if (q.count() == 0) {
 			        	
 			        	e.Score();
-			        	e.getNb_invited(accessToken);
+			        	//e.getNb_invited(accessToken);
 			        	EventLocationCapable elc = new EventLocationCapable(e);
 			        	dao.ofy().put(elc);
 			        } else {
@@ -171,7 +169,7 @@ public class Event extends Model {
     			if (!event.IsPast()) {
     				
     				event.score = e.getScore();
-    				event.nb_invited = e.getNb_invited();
+    				//event.nb_invited = e.getNb_invited();
     				event.latitude 	= Double.toString(e.getLatitude());
     				event.longitude = Double.toString(e.getLongitude());
     				
@@ -243,53 +241,26 @@ public class Event extends Model {
 		}
 	}
 	
-	
 	/* 
-	 * - Get the list of users invited to the event (pic name rsvp status)
-	 * - Fill the number of user invited (this.nb_invited)
+	 * - Get the number of users invited
 	 */
-	public ArrayList<Model> InvitedList(String accessToken) throws FacebookException {
+	public static ArrayList<Model> getNb_invited(String accessToken, String eid) throws FacebookException {
 		
 		ArrayList<Model> result 	= new ArrayList<Model>();
 		
 		FacebookClient client 		= new DefaultFacebookClient(accessToken);
 		
-		String properties 			= "uid, first_name, last_name, pic, rsvp_status";
-		String query 				= "SELECT " + properties + " FROM user WHERE uid IN (SELECT uid FROM event_member WHERE eid = " + this.getEid();
+		String query 				= "SELECT uid FROM event_member WHERE eid = " + eid;
 		List<Attending> Attendings 	= client.executeQuery(query, Attending.class);
 		
-		this.nb_invited = Attendings.size();
+		Event e = new Event();
 		
-		for (Attending a : Attendings) {
-			a.picture = a.pic;
-			
-			if (a.rsvp_status.equals("unsure") || a.rsvp_status.equals("not_replied")) {
-				
-				a.rsvp_status = "maybe attending";
-			} else if (a.rsvp_status.equals("declined")) {
-				
-				a.rsvp_status = "not attending";
-			}
-			
-			result.add(a);
-		}
+		e.eid = Long.parseLong(eid);
+		e.nb_invited = Attendings.size();
  	
+		result.add(e);
+		
 		return result;
-	}
-	
-	/* 
-	 * - Get the number of users invited
-	 */
-	public long getNb_invited(String accessToken) throws FacebookException {
-		
-		FacebookClient client 		= new DefaultFacebookClient(accessToken);
-		
-		String query 				= "SELECT uid FROM event_member WHERE eid = " + this.getEid();
-		List<Attending> Attendings 	= client.executeQuery(query, Attending.class);
-		
-		this.nb_invited = Attendings.size();
- 	
-		return this.nb_invited;
 	}
 	
 	private void Score() {

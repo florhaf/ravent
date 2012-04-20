@@ -67,6 +67,39 @@ public class Attending extends Model {
 		return result;
 	}
 	
+	/* 
+	 * - Get the list of users invited to the event (pic name rsvp status)
+	 * - Fill the number of user invited (this.nb_invited)
+	 */
+	public static ArrayList<Model> InvitedList(String accessToken, String eid) throws FacebookException {
+		
+		ArrayList<Model> result 	= new ArrayList<Model>();
+		
+		FacebookClient client 		= new DefaultFacebookClient(accessToken);
+		
+		String properties 			= "uid, first_name, last_name, pic, rsvp_status";
+		String query 				= "SELECT " + properties + " FROM user WHERE uid IN (SELECT uid FROM event_member WHERE eid = " + eid + ")";
+		List<Attending> Attendings 	= client.executeQuery(query, Attending.class);
+		
+		// update data store with Attendings.size();
+		
+		for (Attending a : Attendings) {
+			a.picture = a.pic;
+			
+			if (a.rsvp_status.equals("unsure") || a.rsvp_status.equals("not_replied")) {
+				
+				a.rsvp_status = "maybe attending";
+			} else if (a.rsvp_status.equals("declined")) {
+				
+				a.rsvp_status = "not attending";
+			}
+			
+			result.add(a);
+		}
+ 	
+		return result;
+	}
+	
 	public long getUid() {
 		
 		return this.uid;

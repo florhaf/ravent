@@ -21,8 +21,13 @@ public class Attendings extends ServerResource {
 			String userID 		= getQuery().getValues("userID");
 			String eid			= getQuery().getValues("eid");
 			
-			ArrayList<Model> attendings = Attending.Get(accessToken, userID, eid);
-						
+			ArrayList<Model> attendings;
+			
+			if (userID != null) {
+				attendings = Attending.Get(accessToken, userID, eid);
+			} else {
+				attendings = Attending.InvitedList(accessToken, eid);
+			}
 			result.setSuccess(true);
 			result.setRecords(attendings);
 			
