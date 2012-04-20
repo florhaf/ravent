@@ -48,7 +48,7 @@
         
         isFollowingStr = @"false";
     }
-    
+
     [params setValue:_user.accessToken forKey:@"access_token"];
     [params setValue:_user.uid forKey:@"userID"];
     [params setValue:isFollowingStr forKey:@"isFollowing"];

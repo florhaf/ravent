@@ -7,11 +7,22 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FBConnect.h"
+#import "models_User.h"
 
-@interface controllers_Login : UIViewController {
+@interface controllers_Login : UIViewController<FBRequestDelegate, FBDialogDelegate, FBSessionDelegate> {
     
     IBOutlet UIImageView *_titleImage;
     IBOutlet UIButton *_loginButton;
+    IBOutlet UIActivityIndicatorView *_spinner;
+    
+    Facebook *_facebook;
+    
+    models_User *_user;
 }
+
+@property (nonatomic, retain) Facebook *facebook;
+
+- (IBAction)onLoginButtonTap;
 
 @end

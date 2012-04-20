@@ -70,6 +70,14 @@
 
 - (void)onUserLoad:(NSArray *)objects
 {
+    if (objects == nil || [objects count] == 0) {
+        
+        _eventsLabel.text = @"?";
+        _followersLabel.text = @"?";
+        _followingLabel.text = @"?";
+        return;
+    }
+    
     models_User *u = (models_User *)[objects objectAtIndex:0];
     
     if ([u isKindOfClass:[NSError class]]) {

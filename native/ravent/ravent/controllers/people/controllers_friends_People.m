@@ -23,14 +23,14 @@
         
         self.title = @"Ravent";
         _user = user;
-        
+          
         Action *loadAction = [[Action alloc] initWithDelegate:self andSelector:@selector(loadData)];
-        Action *isLoadedActopm = [[Action alloc] initWithDelegate:self andSelector:@selector(isLoaded:)];
+        Action *isLoadedAction = [[Action alloc] initWithDelegate:self andSelector:@selector(isLoaded:)];
         Action *showSpinnerAction = [[Action alloc] initWithDelegate:self andSelector:@selector(showSpinner)];
         Action *hideSpinnerAction = [[Action alloc] initWithDelegate:self andSelector:@selector(hideSpinner)];
         
         [[ActionDispatcher instance] add:loadAction named:@"reloadCurrentUser"];
-        [[ActionDispatcher instance] add:isLoadedActopm named:@"followingIsLoaded"];
+        [[ActionDispatcher instance] add:isLoadedAction named:@"followingIsLoaded"];
         [[ActionDispatcher instance] add:showSpinnerAction named:@"showFollowSpinner"];
         [[ActionDispatcher instance] add:hideSpinnerAction named:@"hideFollowSpinner"];
         

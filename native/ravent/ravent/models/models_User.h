@@ -88,5 +88,6 @@
 
 + (NSMutableDictionary *)getGroupedData:(NSArray *)data;
 + (models_User *) crtUser;
++ (models_User *)setCrtUser:(models_User *)u;
 
 @end

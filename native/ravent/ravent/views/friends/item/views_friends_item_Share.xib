@@ -40,7 +40,7 @@
 					<object class="IBUILabel" id="120700328">
 						<reference key="NSNextResponder" ref="358972489"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{90, 6}, {140, 21}}</string>
+						<string key="NSFrame">{{71, 6}, {140, 21}}</string>
 						<reference key="NSSuperview" ref="358972489"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="1055560631"/>
@@ -72,7 +72,7 @@
 					<object class="IBUIImageView" id="623504167">
 						<reference key="NSNextResponder" ref="358972489"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{15, 6}, {64, 64}}</string>
+						<string key="NSFrame">{{15, 6}, {48, 48}}</string>
 						<reference key="NSSuperview" ref="358972489"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="120700328"/>
@@ -84,10 +84,9 @@
 					<object class="IBUIButton" id="1055560631">
 						<reference key="NSNextResponder" ref="358972489"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{233, 18}, {72, 37}}</string>
+						<string key="NSFrame">{{205, 17}, {72, 37}}</string>
 						<reference key="NSSuperview" ref="358972489"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:225</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<int key="IBUITag">5</int>
@@ -115,7 +114,7 @@
 						<reference key="IBUIFont" ref="115587168"/>
 					</object>
 				</array>
-				<string key="NSFrameSize">{320, 75}</string>
+				<string key="NSFrameSize">{320, 62}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="623504167"/>
@@ -183,8 +182,8 @@
 						<reference key="object" ref="358972489"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="623504167"/>
-							<reference ref="1055560631"/>
 							<reference ref="120700328"/>
+							<reference ref="1055560631"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
