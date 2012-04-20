@@ -7,8 +7,9 @@
 //
 
 #import "UITableViewReloadable.h"
-#import "UITableViewReloadable.h"
 
 @interface controllers_stats_Stats : UITableViewReloadable
+
++ (controllers_stats_Stats *)instance;
 
 @end

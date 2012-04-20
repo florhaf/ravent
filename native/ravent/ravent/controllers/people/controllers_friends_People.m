@@ -15,6 +15,8 @@
 
 @implementation controllers_friends_People
 
+static customNavigationController *_ctrl;
+
 - (id)initWithUser:(models_User *)user
 {
     self = [super init];
@@ -162,8 +164,8 @@
 {
     [super viewDidLoad];
     
-    UIBarButtonItem *allButton = [[UIBarButtonItem alloc] initWithTitle:@"All" style:UIBarButtonItemStylePlain target:self action:@selector(showAllModal)];          
-    UIBarButtonItem *flipButton = [[UIBarButtonItem alloc] initWithTitle:@"F'er" style:UIBarButtonItemStylePlain target:self action:@selector(flipView)];          
+    UIBarButtonItem *allButton = [[UIBarButtonItem alloc] initWithTitle:@"Menu" style:UIBarButtonItemStylePlain target:self action:@selector(revealMenu:)];          
+    UIBarButtonItem *flipButton = [[UIBarButtonItem alloc] initWithTitle:@"All" style:UIBarButtonItemStylePlain target:self action:@selector(revealAll:)];          
     
     self.navigationItem.leftBarButtonItem = allButton;
     self.navigationItem.rightBarButtonItem = flipButton;
@@ -181,6 +183,49 @@
     [self.view addSubview:tableContainer];
     
     [self showSpinner];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    // shadowPath, shadowOffset, and rotation is handled by ECSlidingViewController.
+    // You just need to set the opacity, radius, and color.
+    self.parentViewController.view.layer.shadowOpacity = 0.75f;
+    self.parentViewController.view.layer.shadowRadius = 10.0f;
+    self.parentViewController.view.layer.shadowColor = [UIColor blackColor].CGColor;
+    
+    
+    if (![self.slidingViewController.underLeftViewController isKindOfClass:[controllers_SlidingMenu class]]) {
+        self.slidingViewController.underLeftViewController  = [controllers_SlidingMenu instance];
+    }
+    
+//    if (![self.slidingViewController.underRightViewController isKindOfClass:[controllers_events_Map_p2p class]]) {
+//        self.slidingViewController.underRightViewController = _mapController;
+//    }
+    
+    [self.view addGestureRecognizer:self.slidingViewController.panGesture];
+}
+
+- (void)revealMenu:(id)sender
+{
+    [self.slidingViewController anchorTopViewTo:ECRight];
+}
+
+- (void)revealAll:(id)sender
+{
+    [self.slidingViewController anchorTopViewTo:ECLeft];
+}
+
++ (customNavigationController *)instance 
+{
+    if (_ctrl == nil) {
+        
+        controllers_friends_People *friendsList = [[controllers_friends_People alloc] initWithUser:[[models_User crtUser] copy]];
+        _ctrl = [[customNavigationController alloc] initWithRootViewController:friendsList];
+    }
+    
+    return _ctrl;
 }
 
 @end

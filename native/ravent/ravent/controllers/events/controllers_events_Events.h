@@ -12,7 +12,10 @@
 #import "controllers_events_Map_p2p.h"
 #import "models_User.h"
 
-
+#import <QuartzCore/QuartzCore.h>
+#import "ECSlidingViewController.h"
+#import "controllers_SlidingMenu.h"
+#import "customNavigationController.h"
 
 @interface controllers_events_Events : UIViewController {
     
@@ -24,5 +27,10 @@
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil forUser:(models_User *)user;
 - (void)flipView;
+
+- (void)revealMenu:(id)sender;
+- (void)revealMap:(id)sender;
+
++ (customNavigationController *)instance;
 
 @end
