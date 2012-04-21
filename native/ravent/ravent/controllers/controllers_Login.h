@@ -16,6 +16,8 @@
     IBOutlet UIButton *_loginButton;
     IBOutlet UIActivityIndicatorView *_spinner;
     
+    IBOutlet UILabel *_errorLabel;
+    
     Facebook *_facebook;
     
     models_User *_user;

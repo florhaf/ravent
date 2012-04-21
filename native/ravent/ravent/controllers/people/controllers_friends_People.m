@@ -201,9 +201,7 @@ static customNavigationController *_ctrl;
     }
     
     if (![self.slidingViewController.underRightViewController isKindOfClass:[controllers_friends_All class]]) {
-        
-        controllers_friends_All *friendsAll = [[controllers_friends_All alloc] initWithUser:[_user copy] following:_following.groupedData];
-        self.slidingViewController.underRightViewController = friendsAll;
+        self.slidingViewController.underRightViewController = [controllers_friends_All instance:_following.groupedData];
     }
     
     [self.view addGestureRecognizer:self.slidingViewController.panGesture];
@@ -216,6 +214,8 @@ static customNavigationController *_ctrl;
 
 - (void)revealAll:(id)sender
 {
+    [controllers_friends_All instance:_following.groupedData];
+    
     [self.slidingViewController anchorTopViewTo:ECLeft];
 }
 

@@ -49,6 +49,9 @@ static controllers_Login *_ctrl;
                                 nil];
         
         [_facebook authorize:permissions];
+    } else {
+        
+        [self fbDidLogin];
     }
 }
 
@@ -126,6 +129,41 @@ static controllers_Login *_ctrl;
 
 - (void)onUserLoad:(NSArray *)objects
 {
+    if (objects == nil || [objects count] == 0) {
+        
+        _errorLabel.text = @"could not log you in, try again...";
+        [_spinner stopAnimating];
+        [_spinner setAlpha:0];
+        [_loginButton setEnabled:YES];
+        
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        if ([defaults objectForKey:@"FBAccessTokenKey"]) {
+            [defaults removeObjectForKey:@"FBAccessTokenKey"];
+            [defaults removeObjectForKey:@"FBExpirationDateKey"];
+            [defaults synchronize];
+        }
+        
+        return;
+    }
+    
+    if ([[objects objectAtIndex:0] isKindOfClass:[NSError class]]) {
+        
+        NSError *error = [objects objectAtIndex:0];
+        _errorLabel.text = error.localizedDescription;
+        [_spinner stopAnimating];
+        [_spinner setAlpha:0];
+        [_loginButton setEnabled:YES];
+        
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        if ([defaults objectForKey:@"FBAccessTokenKey"]) {
+            [defaults removeObjectForKey:@"FBAccessTokenKey"];
+            [defaults removeObjectForKey:@"FBExpirationDateKey"];
+            [defaults synchronize];
+        }
+        
+        return;
+    }
+    
     models_User *user = [objects objectAtIndex:0];
     
     [models_User setCrtUser:user];

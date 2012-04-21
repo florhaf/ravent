@@ -72,8 +72,6 @@
 - (void)loadEventsWithParams:(NSMutableDictionary *)params
 {
     
-    RKLogConfigureByName("RestKit/*", RKLogLevelTrace);
-    
     NSString *resourcePath = [@"events" appendQueryParams:params];
        
     RKObjectMapping *objectMapping = [RKObjectMapping mappingForClass:[models_Event class]];

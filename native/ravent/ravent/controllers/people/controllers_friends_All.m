@@ -13,7 +13,10 @@
 
 @implementation controllers_friends_All
 
+static controllers_friends_All *_ctrl;
+
 @synthesize peekLeftAmount;
+@synthesize following = _following;
 
 - (id)initWithUser:(models_User *)user following:(NSMutableDictionary *)following
 {
@@ -37,7 +40,10 @@
 
 - (void)loadData
 {
-    [self loadData:NO];
+    if (_following != nil && [_following count] > 0) {
+        
+        [self loadData:NO];   
+    }
 }
 
 - (void)loadData:(BOOL)force
@@ -262,6 +268,20 @@
         
         [[ActionDispatcher instance] execute:@"reloadFollowing"];
     }
+}
+
++ (controllers_friends_All *)instance:(NSMutableDictionary *)following
+{
+    if (_ctrl == nil) {
+        
+        _ctrl = [[controllers_friends_All alloc] initWithUser:[[models_User crtUser] copy] following:following];
+    } else {
+        
+        _ctrl.following = following;
+        [_ctrl reloadTableViewDataSource];
+    }
+    
+    return _ctrl;
 }
 
 @end
