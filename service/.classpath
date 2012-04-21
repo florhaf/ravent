@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/geocell/geocell.jar"/>
 	<classpathentry kind="lib" path="lib/jackson-1.9/jackson-core-asl-1.9.2.jar"/>
@@ -12,5 +11,6 @@
 	<classpathentry kind="lib" path="lib/restlet-gae-2.0.10/lib/org.restlet.ext.jackson.jar"/>
 	<classpathentry kind="lib" path="lib/restlet-gae-2.0.10/lib/org.restlet.jar"/>
 	<classpathentry kind="lib" path="lib/restlet-gae-2.0.10/lib/org.restlet.ext.servlet.jar"/>
+	<classpathentry kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER/App Engine"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>
