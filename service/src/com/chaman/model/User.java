@@ -155,7 +155,7 @@ public class User extends Model {
 				u.access_token = accessToken;
 	        	
 			}
-			dao.ofy().put(u); /*This interfer with followin/followers: need to investigate /*add the user to the datastore*/ /*find a solution to store friends*/
+			dao.ofy().put(u);
 			result.add(u);
 		}
  	
