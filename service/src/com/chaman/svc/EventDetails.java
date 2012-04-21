@@ -1,14 +1,12 @@
 package com.chaman.svc;
 
 import java.util.ArrayList;
-
 import org.restlet.resource.Get;
 import org.restlet.resource.ServerResource;
-
-import com.chaman.model.Attending;
+import com.chaman.model.Event;
 import com.chaman.model.Model;
 
-public class Attendings extends ServerResource {
+public class EventDetails extends ServerResource {
 
 	@Get("json")
 	public Response Read() {
@@ -18,18 +16,14 @@ public class Attendings extends ServerResource {
 		try {
 			
 			String accessToken	= getQuery().getValues("access_token");
-			String userID 		= getQuery().getValues("userID");
-			String eid			= getQuery().getValues("eid");
+			String eid 		= getQuery().getValues("eid");
+
+			ArrayList<Model> e;
 			
-			ArrayList<Model> attendings;
+			e = Event.getNb_invited(accessToken, eid);
 			
-			if (userID != null) {
-				attendings = Attending.GetInvitedFriendsList(accessToken, userID, eid);
-			} else {
-				attendings = Attending.GetAttendingAllList(accessToken, eid);
-			}
 			result.setSuccess(true);
-			result.setRecords(attendings);
+			result.setRecords(e);
 			
 		} catch (Exception ex) {
 			

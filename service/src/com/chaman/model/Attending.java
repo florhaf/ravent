@@ -28,29 +28,29 @@ public class Attending extends Model {
 		super();
 	}
 	
-	public static ArrayList<Model> Get(String accessToken, String userID, String eid) throws FacebookException {
+	public static ArrayList<Model> GetInvitedFriendsList(String accessToken, String userID, String eid) throws FacebookException {
 		
 		ArrayList<Model> result 	= new ArrayList<Model>();
 		
 		FacebookClient client 		= new DefaultFacebookClient(accessToken);
 		
-		String properties 			= "uid, first_name, last_name, pic, rsvp_status";
+		String properties 			= "uid, first_name, last_name, pic";
 		String query 				= "SELECT " + properties + " FROM user WHERE uid IN (SELECT uid FROM event_member WHERE eid = " + eid + 
 																		   " AND uid IN (SELECT uid2 FROM friend WHERE uid1 = me()))";
 		List<Attending> Attendings 	= client.executeQuery(query, Attending.class);
 		
-		//String queryRsvp;
-		//List<Attending> rsvpStatuses;
+		String queryRsvp;
+		List<Attending> rsvpStatuses;
 		
 		for (Attending a : Attendings) {
 			
 			a.picture = a.pic;
 			a.eid = Long.parseLong(eid);
-			// REALLY HUGLY HACK...
-			//queryRsvp = "SELECT rsvp_status FROM event_member WHERE eid = " + eid + " AND uid = " + a.uid;
-			//rsvpStatuses 	= client.executeQuery(queryRsvp, Attending.class);
 			
-			//a.rsvp_status = rsvpStatuses.get(0).getRsvp_status();
+			queryRsvp = "SELECT rsvp_status FROM event_member WHERE eid = " + eid + " AND uid = " + a.uid;
+			rsvpStatuses 	= client.executeQuery(queryRsvp, Attending.class);
+			
+			a.rsvp_status = rsvpStatuses.get(0).getRsvp_status();
 			
 			if (a.rsvp_status.equals("unsure") || a.rsvp_status.equals("not_replied")) {
 				
@@ -59,7 +59,6 @@ public class Attending extends Model {
 				
 				a.rsvp_status = "not attending";
 			}
-			//...
 			
 			result.add(a);
 		}
@@ -68,24 +67,33 @@ public class Attending extends Model {
 	}
 	
 	/* 
-	 * - Get the list of users invited to the event (pic name rsvp status)
+	 * - Get the list of users ATTENDING (not all the invited people) to the event (pic name rsvp status)
 	 * - Fill the number of user invited (this.nb_invited)
 	 */
-	public static ArrayList<Model> InvitedList(String accessToken, String eid) throws FacebookException {
+	public static ArrayList<Model> GetAttendingAllList(String accessToken, String eid) throws FacebookException {
 		
 		ArrayList<Model> result 	= new ArrayList<Model>();
 		
 		FacebookClient client 		= new DefaultFacebookClient(accessToken);
 		
-		String properties 			= "uid, first_name, last_name, pic, rsvp_status";
-		String query 				= "SELECT " + properties + " FROM user WHERE uid IN (SELECT uid FROM event_member WHERE eid = " + eid + ")";
+		String properties 			= "uid, first_name, last_name, pic";
+		String query 				= "SELECT " + properties + " FROM user WHERE uid IN (SELECT uid FROM event_member WHERE eid = " + eid + " AND rsvp_status = 'attending')";
 		List<Attending> Attendings 	= client.executeQuery(query, Attending.class);
+		
+		String queryRsvp;
+		List<Attending> rsvpStatuses;
 		
 		// update data store with Attendings.size();
 		
 		for (Attending a : Attendings) {
 			a.picture = a.pic;
+			a.eid = Long.parseLong(eid);
 			
+			queryRsvp = "SELECT rsvp_status FROM event_member WHERE eid = " + eid + " AND uid = " + a.uid;
+			rsvpStatuses 	= client.executeQuery(queryRsvp, Attending.class);
+			
+			a.rsvp_status = rsvpStatuses.get(0).getRsvp_status();
+		
 			if (a.rsvp_status.equals("unsure") || a.rsvp_status.equals("not_replied")) {
 				
 				a.rsvp_status = "maybe attending";
