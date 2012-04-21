@@ -131,7 +131,7 @@ static controllers_Login *_ctrl;
 {
     if (objects == nil || [objects count] == 0) {
         
-        _errorLabel.text = @"could not log you in, try again...";
+        _errorLabel.text = @"server not responding, try again later...";
         [_spinner stopAnimating];
         [_spinner setAlpha:0];
         [_loginButton setEnabled:YES];
