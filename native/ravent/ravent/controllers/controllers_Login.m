@@ -129,6 +129,8 @@ static controllers_Login *_ctrl;
 
 - (void)onUserLoad:(NSArray *)objects
 {
+    _errorLabel.text = @"";
+    
     if (objects == nil || [objects count] == 0) {
         
         _errorLabel.text = @"server not responding, try again later...";
