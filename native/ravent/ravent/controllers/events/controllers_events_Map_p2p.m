@@ -175,17 +175,20 @@ static controllers_events_Map_p2p *_ctrl;
 {
     models_Event *event = (models_Event *)view.annotation;
 
-    controllers_events_Details *details = [[controllers_events_Details alloc] initWithEvent:[event copy]];
-    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle: @"Back" style: UIBarButtonItemStyleBordered target: self action:nil];
-    UIViewController *rootController = self;
+    NSArray *array = [[NSArray alloc] initWithObjects:event, nil];
+    [[ActionDispatcher instance] execute:@"controller_events_List_p2p_loadDetails" with:array];
     
-    while (![rootController.parentViewController isKindOfClass:[UINavigationController class]]) {
-        
-        rootController = rootController.parentViewController;
-    }
-    
-    [rootController.navigationItem setBackBarButtonItem: backButton];
-    [self.navigationController pushViewController:details animated:YES];
+//    controllers_events_Details *details = [[controllers_events_Details alloc] initWithEvent:[event copy]];
+//    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle: @"Back" style: UIBarButtonItemStyleBordered target: self action:nil];
+//    UIViewController *rootController = self;
+//    
+//    while (![rootController.parentViewController isKindOfClass:[UINavigationController class]]) {
+//        
+//        rootController = rootController.parentViewController;
+//    }
+//    
+//    [rootController.navigationItem setBackBarButtonItem: backButton];
+//    [self.navigationController pushViewController:details animated:YES];
 }
 
 -(void)imageView:(JBAsyncImageView *)sender loadedImage:(UIImage *)imageLoaded fromURL:(NSURL *)url

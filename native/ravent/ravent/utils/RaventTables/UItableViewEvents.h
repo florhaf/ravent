@@ -20,5 +20,6 @@
 - (id)initWithUser:(models_User *)user;
 - (void)onLoadEvents:(NSArray *)objects;
 - (void)loadDataWithUserLocation;
+- (void)loadEventDetails:(models_Event *)event;
 
 @end

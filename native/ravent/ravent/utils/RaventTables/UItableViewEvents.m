@@ -128,6 +128,11 @@
     
     models_Event *event = [rows objectAtIndex:indexPath.row];
     
+    [self loadEventDetails:event];
+}
+
+- (void)loadEventDetails:(models_Event *)event
+{
     controllers_events_Details *details = [[controllers_events_Details alloc] initWithEvent:[event copy]]; 
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle: @"Back" style: UIBarButtonItemStyleBordered target:details action:@selector(cancellAllRequests)];
     UIViewController *rootController = self;

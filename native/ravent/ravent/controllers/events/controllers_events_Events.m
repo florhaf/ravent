@@ -11,6 +11,7 @@
 #import "controllers_events_List_p2p.h"
 #import "controllers_events_Details.h"
 #import "controllers_events_Options_p2p.h"
+#import "ActionDispatcher.h"
 
 @implementation controllers_events_Events
 
@@ -24,8 +25,20 @@ static customNavigationController *_ctrl;
         
         _user = user;
         self.title = @"Ravent";
+        
+        Action *loadDetailsAction = [[Action alloc] initWithDelegate:self andSelector:@selector(loadEventDetailsFromMap:)];
+        [[ActionDispatcher instance] add:loadDetailsAction named:@"controller_events_List_p2p_loadDetails"];
     }
     return self;
+}
+
+- (void)loadEventDetailsFromMap:(NSArray *)objects
+{
+    models_Event *e = [objects objectAtIndex:0];
+
+    [self.slidingViewController resetTopView];
+    
+    [[controllers_events_List_p2p instance] loadEventDetails:e];
 }
 
 #pragma mark - View lifecycle
