@@ -10,7 +10,7 @@
 
 @implementation controllers_calendar_Calendar
 
-static controllers_calendar_Calendar *_ctrl;
+static customNavigationController *_ctrl;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -38,13 +38,18 @@ static controllers_calendar_Calendar *_ctrl;
 }
 */
 
-/*
+
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithTitle:@"Menu" style:UIBarButtonItemStylePlain target:self action:@selector(revealMenu:)];          
+    self.navigationItem.leftBarButtonItem = menuButton;
+    
+    self.title = @"Ravent";
 }
-*/
+
 
 - (void)viewDidUnload
 {
@@ -59,11 +64,36 @@ static controllers_calendar_Calendar *_ctrl;
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-+ (controllers_calendar_Calendar *)instance
+- (void)revealMenu:(id)sender
+{
+    [self.slidingViewController anchorTopViewTo:ECRight];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    // shadowPath, shadowOffset, and rotation is handled by ECSlidingViewController.
+    // You just need to set the opacity, radius, and color.
+    self.parentViewController.view.layer.shadowOpacity = 0.75f;
+    self.parentViewController.view.layer.shadowRadius = 10.0f;
+    self.parentViewController.view.layer.shadowColor = [UIColor blackColor].CGColor;
+    
+    
+    if (![self.slidingViewController.underLeftViewController isKindOfClass:[controllers_SlidingMenu class]]) {
+        self.slidingViewController.underLeftViewController  = [controllers_SlidingMenu instance];
+    }
+    
+    [self.view addGestureRecognizer:self.slidingViewController.panGesture];
+}
+
++ (customNavigationController *)instance
 {
     if (_ctrl == nil) {
         
-        _ctrl = [[controllers_calendar_Calendar alloc] init];
+        controllers_calendar_Calendar *cal = [[controllers_calendar_Calendar alloc] init];
+        
+        _ctrl = [[customNavigationController alloc] initWithRootViewController:cal];;
     }
     
     return _ctrl;

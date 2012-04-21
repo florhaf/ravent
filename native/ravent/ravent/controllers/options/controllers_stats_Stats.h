@@ -7,9 +7,12 @@
 //
 
 #import "UITableViewReloadable.h"
+#import "customNavigationController.h"
+#import "ECSlidingViewController.h"
+#import "controllers_SlidingMenu.h"
 
 @interface controllers_stats_Stats : UITableViewReloadable
 
-+ (controllers_stats_Stats *)instance;
++ (customNavigationController *)instance;
 
 @end

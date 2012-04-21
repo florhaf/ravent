@@ -7,12 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "customNavigationController.h"
+#import "ECSlidingViewController.h"
+#import "controllers_SlidingMenu.h"
 #import "Kal.h"
 
 @interface controllers_calendar_Calendar : KalViewController {
     
 }
 
-+ (controllers_calendar_Calendar *)instance;
++ (customNavigationController *)instance;
 
 @end

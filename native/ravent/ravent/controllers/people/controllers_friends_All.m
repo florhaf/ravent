@@ -278,7 +278,14 @@ static controllers_friends_All *_ctrl;
     } else {
         
         _ctrl.following = following;
-        [_ctrl reloadTableViewDataSource];
+        
+        if (_ctrl.groupedData == nil || [_ctrl.groupedData count] == 0) {
+            
+            [_ctrl reloadTableViewDataSource];
+        } else {
+         
+            [_ctrl.tableView reloadData];
+        }
     }
     
     return _ctrl;

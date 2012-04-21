@@ -54,8 +54,8 @@ static customNavigationController *_ctrl;
     UIBarButtonItem *mapButton = [[UIBarButtonItem alloc] initWithTitle:@"Map" style:UIBarButtonItemStylePlain target:self action:@selector(revealMap:)];          
     self.navigationItem.rightBarButtonItem = mapButton;
     
-    UIBarButtonItem *optionsButton = [[UIBarButtonItem alloc] initWithTitle:@"Menu" style:UIBarButtonItemStylePlain target:self action:@selector(revealMenu:)];          
-    self.navigationItem.leftBarButtonItem = optionsButton;
+    UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithTitle:@"Menu" style:UIBarButtonItemStylePlain target:self action:@selector(revealMenu:)];          
+    self.navigationItem.leftBarButtonItem = menuButton;
 }
 
 - (void)showOptionsModal
