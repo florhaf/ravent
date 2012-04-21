@@ -100,6 +100,10 @@
 {
     self.tableView.tableFooterView = [[UIView alloc] init];
     
+    _data = nil;
+    _groupedData = nil;
+    _sortedKeys = nil;
+    
     [MBProgressHUD hideHUDForView:self.view animated:YES];
     
     if ([objects count] > 0) {
@@ -118,14 +122,14 @@
         } else {
             
             success();
-            
-            [self.tableView reloadData];
         }
     } else {
         
         [[NSBundle mainBundle] loadNibNamed:@"views_Empty" owner:self options:nil];
         self.tableView.tableFooterView = _emptyView;
     }
+    
+    [self.tableView reloadData];
     
     [self doneLoadingTableViewData];
 }
