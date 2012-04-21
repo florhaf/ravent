@@ -10,4 +10,6 @@
 
 @interface controllers_events_List_p2p : UITableViewEvents
 
++ (controllers_events_List_p2p *)instance;
+
 @end

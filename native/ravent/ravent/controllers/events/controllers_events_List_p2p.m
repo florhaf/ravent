@@ -12,6 +12,8 @@
 
 @implementation controllers_events_List_p2p
 
+static controllers_events_List_p2p *_ctrl;
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -39,7 +41,18 @@
 {
     [super onLoadEvents:objects];
     
-    [[ActionDispatcher instance] execute:@"controller_events_List_p2p_LoadData" with:objects];
+    [[ActionDispatcher instance] execute:@"controller_events_List_p2p_onLoadEvents" with:objects];
+}
+
++ (controllers_events_List_p2p *)instance
+{
+    if (_ctrl == nil) {
+        
+        _ctrl = [[controllers_events_List_p2p alloc] initWithUser:[[models_User crtUser] copy]];
+        _ctrl.view.frame = CGRectMake(0, 0, _ctrl.view.frame.size.width, _ctrl.view.frame.size.height);
+    }
+    
+    return _ctrl;
 }
 
 @end

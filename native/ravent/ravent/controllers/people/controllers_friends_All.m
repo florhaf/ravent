@@ -124,9 +124,15 @@
     return cell;
 }
 
-- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {
-    
-    return _sortedKeys;
+- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
+{
+    if (!_isSearching) {
+        
+        return _sortedKeys;
+    } else {
+        
+        return nil;
+    }
 }
 
 - (IBAction)onValueChanged:(id)sender
@@ -200,6 +206,7 @@
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
 {
     [searchBar setShowsCancelButton:YES animated:YES];
+    _isSearching = YES;
     
     [self.slidingViewController anchorTopViewOffScreenTo:ECLeft animations:^{
         CGRect frame = self.view.frame;
@@ -222,6 +229,7 @@
 - (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
 {
     [searchBar setShowsCancelButton:NO animated:YES];    
+    _isSearching = NO;
     
     [self.slidingViewController anchorTopViewTo:ECLeft animations:^{
         CGRect frame = self.view.frame;

@@ -39,7 +39,7 @@
 //#define SERVICE_URL @"http://air.local:8888"
 #define SERVICE_URL @"http://raventsvc.appspot.com"
 
-#define LOCATION_UPDATE_INTERVAL 300
+#define LOCATION_UPDATE_INTERVAL 2
 
 static NSArray* _allListSingleton = nil;
 static models_User *_crtUser = nil;
@@ -129,7 +129,13 @@ static models_User *_crtUser = nil;
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
 {
+    [_locationManager stopMonitoringSignificantLocationChanges];
     [_locationManager stopUpdatingLocation];
+    
+    if (_locationLastUpdateTime != nil && [[NSDate date] timeIntervalSinceDate:_locationLastUpdateTime] < LOCATION_UPDATE_INTERVAL) {
+        
+        return;
+    }
     
     _locationLastUpdateTime = [NSDate date];
     

@@ -26,7 +26,6 @@
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil forUser:(models_User *)user;
-- (void)flipView;
 
 - (void)revealMenu:(id)sender;
 - (void)revealMap:(id)sender;

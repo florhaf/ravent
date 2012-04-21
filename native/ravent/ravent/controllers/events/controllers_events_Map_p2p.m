@@ -29,7 +29,7 @@ static controllers_events_Map_p2p *_ctrl;
         Action *loadDataAction = [[Action alloc] initWithDelegate:self andSelector:@selector(loadData:)];
         
         [[ActionDispatcher instance] add:loadingAction named:@"controller_events_List_p2p_Loading"];
-        [[ActionDispatcher instance] add:loadDataAction named:@"controller_events_List_p2p_LoadData"];
+        [[ActionDispatcher instance] add:loadDataAction named:@"controller_events_List_p2p_onLoadEvents"];
         
         _imageLoading = [[NSMutableDictionary alloc] init];
         _user = user;
@@ -53,13 +53,8 @@ static controllers_events_Map_p2p *_ctrl;
         
         if ([object isKindOfClass:[NSError class]]) {
             
-//            NSError *error = (NSError *)object;
+            // error shown on the list itself
             
-//            [YRDropdownView showDropdownInView:self.view
-//                                         title:@"Error" 
-//                                        detail:[error localizedDescription]
-//                                         image:[UIImage imageNamed:@"dropdown-alert"]
-//                                      animated:YES];
         } else {
             
             for (id<MKAnnotation> annotation in _map.annotations) {
@@ -79,11 +74,7 @@ static controllers_events_Map_p2p *_ctrl;
         }
     } else {
         
-//        [YRDropdownView showDropdownInView:self.view
-//                                     title:@"Warning" 
-//                                    detail:@"No result"
-//                                     image:[UIImage imageNamed:@"dropdown-alert"]
-//                                  animated:YES];
+        // no result shown on the list itself
     }   
 }
 
@@ -91,7 +82,7 @@ static controllers_events_Map_p2p *_ctrl;
 {
     [super viewDidLoad];
     
-    //[self setMapLocation:YES];
+    [self setMapLocation:YES];
     
     self.peekLeftAmount = 40.0f;
     [self.slidingViewController setAnchorLeftPeekAmount:self.peekLeftAmount];
@@ -100,7 +91,7 @@ static controllers_events_Map_p2p *_ctrl;
 
 - (void)mapViewDidFinishLoadingMap:(MKMapView *)mapView
 {
-    //[self setMapLocation:NO];
+    [self setMapLocation:NO];
 }
 
 - (void)setMapLocation:(BOOL)force
@@ -124,7 +115,7 @@ static controllers_events_Map_p2p *_ctrl;
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
+    _isMapSet = NO;
     [self setMapLocation:YES];
 }
 
@@ -153,6 +144,7 @@ static controllers_events_Map_p2p *_ctrl;
         
         annotationView.enabled = YES;
         annotationView.canShowCallout = YES;
+        
         
         NSURL *url = [NSURL URLWithString:e.picture];
         

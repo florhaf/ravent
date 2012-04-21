@@ -178,10 +178,19 @@
 }
 
 - (NSString *)title {
-    if ([_name isKindOfClass:[NSNull class]]) 
+    if ([_name isKindOfClass:[NSNull class]]) {
+     
         return @"Unknown charge";
-    else
-        return _name;
+    } else {
+        
+        if ([_name length] > 23) {
+            
+             return [NSString stringWithFormat:@"%@...", [_name substringToIndex:23]];       
+        } else {
+            
+            return _name;
+        }
+    }
 }
 
 - (NSString *)subtitle {

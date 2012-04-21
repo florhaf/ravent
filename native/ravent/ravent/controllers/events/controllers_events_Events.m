@@ -28,41 +28,15 @@ static customNavigationController *_ctrl;
     return self;
 }
 
-- (void)flipView {
-    
-    UIView *mapView = _mapController.view;
-    UIView *listView = _listController.view;
-    
-	[UIView beginAnimations:nil context:NULL];
-	[UIView setAnimationDuration:0.8];
-    [UIView setAnimationTransition:[mapView superview] ? UIViewAnimationTransitionCurlUp : UIViewAnimationTransitionCurlDown forView:self.view cache:YES];
-	
-	if ([mapView superview]) {
-        
-		[mapView removeFromSuperview];
-		[self.view addSubview:listView];
-        self.navigationItem.rightBarButtonItem.title = @"Map";
-    } else {
-        
-		[listView removeFromSuperview];
-		[self.view addSubview:mapView];
-        self.navigationItem.rightBarButtonItem.title = @"List";
-    }
-    
-	[UIView commitAnimations];
-}
-
 #pragma mark - View lifecycle
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    _listController = [[controllers_events_List_p2p alloc] initWithUser:[_user copy]];
-    _listController.view.frame = CGRectMake(0, 0, _listController.view.frame.size.width, _listController.view.frame.size.height);
-
     [self addChildViewController:[controllers_events_Map_p2p instance]];
-    [self addChildViewController:_listController];
-    [self.view addSubview:_listController.view];
+    [self addChildViewController:[controllers_events_List_p2p instance]];
+    
+    [self.view addSubview:[controllers_events_List_p2p instance].view];
     
     UIBarButtonItem *mapButton = [[UIBarButtonItem alloc] initWithTitle:@"Map" style:UIBarButtonItemStylePlain target:self action:@selector(revealMap:)];          
     self.navigationItem.rightBarButtonItem = mapButton;

@@ -100,6 +100,8 @@
 {
     self.tableView.tableFooterView = [[UIView alloc] init];
     
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
+    
     if ([objects count] > 0) {
         
         id object = [objects objectAtIndex:0];
@@ -124,8 +126,6 @@
         [[NSBundle mainBundle] loadNibNamed:@"views_Empty" owner:self options:nil];
         self.tableView.tableFooterView = _emptyView;
     }
-    
-    [MBProgressHUD hideHUDForView:self.view animated:YES];
     
     [self doneLoadingTableViewData];
 }

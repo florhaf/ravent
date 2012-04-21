@@ -15,6 +15,8 @@
     NSMutableDictionary *_following;
     UISearchBar *_searchBar;
     IBOutlet UISwitch *_switch;
+    
+    BOOL _isSearching;
 }
 
 @property (nonatomic, unsafe_unretained) CGFloat peekLeftAmount;
