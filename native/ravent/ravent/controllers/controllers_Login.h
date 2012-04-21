@@ -24,5 +24,8 @@
 @property (nonatomic, retain) Facebook *facebook;
 
 - (IBAction)onLoginButtonTap;
+- (void)onLogoutButtonTap;
+
++ (controllers_Login *)instance;
 
 @end

@@ -12,6 +12,7 @@
 #import "controllers_calendar_Calendar.h"
 #import "controllers_stats_Stats.h"
 #import "customNavigationController.h"
+#import "controllers_Login.h"
 
 @implementation controllers_SlidingMenu
 
@@ -44,13 +45,32 @@ static controllers_SlidingMenu *_ctrl;
     menuTable.backgroundColor = [UIColor clearColor];
     menuTable.opaque = YES;
     
-    menuTable.tableFooterView = [[UIView alloc] init];
-
     [self.view addSubview:bg];
     [self.view addSubview:menuTable];
     
     [menuTable setSeparatorColor:[UIColor darkGrayColor]];
-
+    
+    UILabel *signOutLabel = [[UILabel alloc] init];
+    signOutLabel.text = @"Sign out";
+    signOutLabel.textColor = [UIColor grayColor];
+    signOutLabel.frame = CGRectMake(10, 0, 280, 44);
+    signOutLabel.backgroundColor = [UIColor clearColor];
+    signOutLabel.opaque = YES;
+    signOutLabel.shadowColor = [UIColor blackColor];
+    signOutLabel.shadowOffset = CGSizeMake(0, 1);
+    [signOutLabel setFont:[UIFont boldSystemFontOfSize:17]];
+    
+    // make the sign out clickable
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn.frame = signOutLabel.frame;
+    [btn addTarget:[controllers_Login instance] action:@selector(onLogoutButtonTap) forControlEvents:UIControlEventTouchUpInside];
+    [menuTable.tableFooterView addSubview:btn];
+    
+    UIView *footer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 280, 44)];
+    [footer addSubview:signOutLabel];
+    [footer addSubview:btn];
+    
+    menuTable.tableFooterView = footer;
     
     [self.slidingViewController setAnchorRightRevealAmount:280.0f];
     self.slidingViewController.underLeftWidthLayout = ECFullWidth;
@@ -74,9 +94,9 @@ static controllers_SlidingMenu *_ctrl;
     cell.textLabel.text = [self.menuItems objectAtIndex:indexPath.row];
     cell.textLabel.textColor = [UIColor whiteColor];
     
-    UIImageView *discl = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"disclosure"]];
-    cell.accessoryView = discl;
-    cell.accessoryView.frame = CGRectMake(discl.frame.origin.x - 50, discl.frame.origin.y, discl.frame.size.width, discl.frame.size.height);
+        UIImageView *discl = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"disclosure"]];
+        cell.accessoryView = discl;
+        cell.accessoryView.frame = CGRectMake(discl.frame.origin.x - 50, discl.frame.origin.y, discl.frame.size.width, discl.frame.size.height);
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     

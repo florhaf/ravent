@@ -11,6 +11,8 @@
 
 @implementation controllers_Login
 
+static controllers_Login *_ctrl;
+
 @synthesize facebook = _facebook;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -50,6 +52,11 @@
     }
 }
 
+- (void)onLogoutButtonTap
+{
+    [_facebook logout];
+}
+
 - (void)fbDidNotLogin:(BOOL)cancelled
 {
     NSLog(@"didnotloggedin");
@@ -63,7 +70,15 @@
 
 - (void)fbDidLogout
 {
+    // Remove saved authorization information if it exists
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if ([defaults objectForKey:@"FBAccessTokenKey"]) {
+        [defaults removeObjectForKey:@"FBAccessTokenKey"];
+        [defaults removeObjectForKey:@"FBExpirationDateKey"];
+        [defaults synchronize];
+    }
     
+    [[ActionDispatcher instance] execute:@"onFacebookLogout"];
 }
 
 - (void)fbSessionInvalidated
@@ -146,6 +161,16 @@
     _loginButton.alpha = 1;
     
 	[UIView commitAnimations];
+}
+
++ (controllers_Login *)instance
+{
+    if (_ctrl == nil) {
+        
+        _ctrl = [[controllers_Login alloc] initWithNibName:@"views_Login" bundle:nil];
+    }
+    
+    return _ctrl;
 }
 
 @end

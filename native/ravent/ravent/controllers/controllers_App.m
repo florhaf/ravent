@@ -28,8 +28,7 @@
         [[ActionDispatcher instance] add:loginAction named:@"onFacebookLogin"];
         [[ActionDispatcher instance] add:logoutAction named:@"onFacebookLogout"];
         
-        _loginController = [[controllers_Login alloc] initWithNibName:@"views_Login" bundle:nil];
-        [self.view addSubview:_loginController.view];
+        [self.view addSubview:[controllers_Login instance].view];
     }
     
     return self;
@@ -46,19 +45,12 @@
 
 - (void)flipView
 {    
-//    if (_tabBarController == nil) {
-//        
-//        _tabBarController = [[controllers_TabBar alloc] init];
-//        _tabBarController.view.frame = CGRectMake(0, -20, _tabBarController.view.frame.size.width, _tabBarController.view.frame.size.height);
-//    }
-
     if (_slidingController == nil) {
         
         _slidingController = [[controllers_SlidingInitial alloc] init];
         _slidingController.view.frame = CGRectMake(0, 0, _slidingController.view.frame.size.width, _slidingController.view.frame.size.height);
     }
     
-//    UIView *tabbar = _tabBarController.view;
     UIView *slide = _slidingController.view;
     UIView *login = _loginController.view;
     
