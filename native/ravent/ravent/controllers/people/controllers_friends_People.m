@@ -38,7 +38,7 @@ static customNavigationController *_ctrl;
         
         [[NSBundle mainBundle] loadNibNamed:@"views_friends_header_Following" owner:self options:nil];
         
-        CGRect frame = CGRectMake(0, 0, 320,  414 - _header.frame.size.height);
+        CGRect frame = CGRectMake(0, 0, 320,  414 - _header.frame.size.height + 2);
         _following = [[controllers_friends_Following alloc] initWithFrame:frame withUser:[_user copy] isFollowing:YES];
         _followers = [[controllers_friends_Following alloc] initWithFrame:frame withUser:[_user copy] isFollowing:NO];
         
@@ -176,7 +176,7 @@ static customNavigationController *_ctrl;
     [btn addTarget:self action:@selector(onMeTap) forControlEvents:UIControlEventTouchUpInside];
     [_header addSubview:btn];
     
-    UIView *tableContainer = [[UIView alloc] initWithFrame:CGRectMake(0, _header.frame.size.height, 320,  414 - _header.frame.size.height)];
+    UIView *tableContainer = [[UIView alloc] initWithFrame:CGRectMake(0, _header.frame.size.height, 320,  414 - _header.frame.size.height + 2)];
     tableContainer.backgroundColor = [UIColor whiteColor];
     
     [self.view addSubview:_header];
