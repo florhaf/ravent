@@ -452,6 +452,8 @@ NSString *const ECSlidingViewTopDidReset          = @"ECSlidingViewTopDidReset";
 
 - (CGFloat)anchorLeftTopViewCenter
 {
+    self.anchorLeftPeekAmount = 40;
+    
   if (self.anchorLeftPeekAmount) {
     return -self.resettedCenter + self.anchorLeftPeekAmount;
   } else if (self.anchorLeftRevealAmount) {

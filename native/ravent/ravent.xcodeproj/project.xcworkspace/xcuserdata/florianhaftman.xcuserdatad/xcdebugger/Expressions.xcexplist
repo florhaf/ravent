@@ -30,10 +30,18 @@
          contextName = "-[controllers_events_Details viewDidLoad]:controllers_events_Details.m">
          <PersistentStrings>
             <PersistentString
-               value = "NSLog(mapUrl)">
+               value = "_headerNameLabel.frame.size.height">
             </PersistentString>
             <PersistentString
-               value = "_headerNameLabel.frame.size.height">
+               value = "NSLog(mapUrl)">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[ECSlidingViewController anchorRightTopViewCenter]:ECSlidingViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.anchorRightRevealAmount">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

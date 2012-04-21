@@ -8,10 +8,6 @@
 
 #import "controllers_SlidingInitial.h"
 #import "controllers_events_Events.h"
-#import "controllers_friends_People.h"
-#import "controllers_calendar_Calendar.h"
-#import "controllers_stats_Stats.h"
-#import "customNavigationController.h"
 
 @implementation controllers_SlidingInitial
 
@@ -22,11 +18,6 @@
     if (self != nil) {
         
         self.topViewController = [controllers_events_Events instance];
-        
-//        Lazy loading is better
-//        [controllers_friends_People instance];
-//        [controllers_calendar_Calendar instance];
-//        [controllers_stats_Stats instance];
     }
     
     return self;

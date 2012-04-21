@@ -7,15 +7,17 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import "ECSlidingViewController.h"
 #import "UITableViewReloadable.h"
 
-@interface controllers_friends_All : UITableViewReloadable {
+@interface controllers_friends_All : UITableViewReloadable<UISearchBarDelegate> {
     
     NSMutableDictionary *_following;
-    
+    UISearchBar *_searchBar;
     IBOutlet UISwitch *_switch;
 }
+
+@property (nonatomic, unsafe_unretained) CGFloat peekLeftAmount;
 
 - (id)initWithUser:(models_User *)user following:(NSMutableDictionary *)following;
 - (void)loadData:(BOOL)force;

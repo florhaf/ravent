@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
-#import "ECSlidingViewController.h"
+
 #import "JBAsyncImageView.h"
 #import "models_User.h"
+
+#import "ECSlidingViewController.h"
 
 #define METERS_PER_MILE 1609.344
 
@@ -32,5 +34,7 @@
 - (void)loading;
 - (void)loadData:(NSArray *)objects;
 - (void)setMapLocation:(BOOL)force;
+
++ (controllers_events_Map_p2p *)instance;
 
 @end

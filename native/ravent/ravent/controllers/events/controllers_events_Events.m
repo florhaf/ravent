@@ -57,13 +57,10 @@ static customNavigationController *_ctrl;
 {
     [super viewDidLoad];
     
-    _mapController = [[controllers_events_Map_p2p alloc] initWithNibName:@"views_events_Map" bundle:nil user:[_user copy]];
-    _mapController.view.frame = CGRectMake(0, 0, _mapController.view.frame.size.width, _mapController.view.frame.size.height);
-
     _listController = [[controllers_events_List_p2p alloc] initWithUser:[_user copy]];
     _listController.view.frame = CGRectMake(0, 0, _listController.view.frame.size.width, _listController.view.frame.size.height);
 
-    [self addChildViewController:_mapController];
+    [self addChildViewController:[controllers_events_Map_p2p instance]];
     [self addChildViewController:_listController];
     [self.view addSubview:_listController.view];
     
@@ -98,7 +95,7 @@ static customNavigationController *_ctrl;
     }
     
     if (![self.slidingViewController.underRightViewController isKindOfClass:[controllers_events_Map_p2p class]]) {
-        self.slidingViewController.underRightViewController = _mapController;
+        self.slidingViewController.underRightViewController = [controllers_events_Map_p2p instance];
     }
     
     [self.view addGestureRecognizer:self.slidingViewController.panGesture];

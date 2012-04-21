@@ -13,6 +13,8 @@
 
 @implementation controllers_friends_All
 
+@synthesize peekLeftAmount;
+
 - (id)initWithUser:(models_User *)user following:(NSMutableDictionary *)following
 {
     self = [super init];
@@ -183,11 +185,54 @@
 {
     [super viewDidLoad];
     
-    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(hideAllModal)];        
-    self.navigationItem.rightBarButtonItem = doneButton;
+    _searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+    self.tableView.tableHeaderView = _searchBar;
+    _searchBar.delegate = self;
     
     self.tableView.tableFooterView = [[UIView alloc] init];
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
+    self.peekLeftAmount = 40.0f;
+    [self.slidingViewController setAnchorLeftPeekAmount:self.peekLeftAmount];
+    self.slidingViewController.underRightWidthLayout = ECVariableRevealWidth;
+}
+
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
+{
+    [searchBar setShowsCancelButton:YES animated:YES];
+    
+    [self.slidingViewController anchorTopViewOffScreenTo:ECLeft animations:^{
+        CGRect frame = self.view.frame;
+        frame.origin.x = 0.0f;
+        if (UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) {
+            frame.size.width = [UIScreen mainScreen].bounds.size.height;
+        } else if (UIInterfaceOrientationIsPortrait(self.interfaceOrientation)) {
+            frame.size.width = [UIScreen mainScreen].bounds.size.width;
+        }
+        self.view.frame = frame;
+    } onComplete:nil];
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
+{
+    [self searchBarTextDidEndEditing:searchBar];
+    [searchBar resignFirstResponder];
+}
+
+- (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
+{
+    [searchBar setShowsCancelButton:NO animated:YES];    
+    
+    [self.slidingViewController anchorTopViewTo:ECLeft animations:^{
+        CGRect frame = self.view.frame;
+        frame.origin.x = self.peekLeftAmount;
+        if (UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) {
+            frame.size.width = [UIScreen mainScreen].bounds.size.height - self.peekLeftAmount;
+        } else if (UIInterfaceOrientationIsPortrait(self.interfaceOrientation)) {
+            frame.size.width = [UIScreen mainScreen].bounds.size.width - self.peekLeftAmount;
+        }
+        self.view.frame = frame;
+    } onComplete:nil];
 }
 
 - (void)hideAllModal

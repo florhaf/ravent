@@ -38,7 +38,7 @@ static customNavigationController *_ctrl;
         
         [[NSBundle mainBundle] loadNibNamed:@"views_friends_header_Following" owner:self options:nil];
         
-        CGRect frame = CGRectMake(0, 0, 320,  367 - _header.frame.size.height);
+        CGRect frame = CGRectMake(0, 0, 320,  414 - _header.frame.size.height);
         _following = [[controllers_friends_Following alloc] initWithFrame:frame withUser:[_user copy] isFollowing:YES];
         _followers = [[controllers_friends_Following alloc] initWithFrame:frame withUser:[_user copy] isFollowing:NO];
         
@@ -176,7 +176,7 @@ static customNavigationController *_ctrl;
     [btn addTarget:self action:@selector(onMeTap) forControlEvents:UIControlEventTouchUpInside];
     [_header addSubview:btn];
     
-    UIView *tableContainer = [[UIView alloc] initWithFrame:CGRectMake(0, _header.frame.size.height, 320,  367 - _header.frame.size.height)];
+    UIView *tableContainer = [[UIView alloc] initWithFrame:CGRectMake(0, _header.frame.size.height, 320,  414 - _header.frame.size.height)];
     tableContainer.backgroundColor = [UIColor whiteColor];
     
     [self.view addSubview:_header];
@@ -200,9 +200,11 @@ static customNavigationController *_ctrl;
         self.slidingViewController.underLeftViewController  = [controllers_SlidingMenu instance];
     }
     
-//    if (![self.slidingViewController.underRightViewController isKindOfClass:[controllers_events_Map_p2p class]]) {
-//        self.slidingViewController.underRightViewController = _mapController;
-//    }
+    if (![self.slidingViewController.underRightViewController isKindOfClass:[controllers_friends_All class]]) {
+        
+        controllers_friends_All *friendsAll = [[controllers_friends_All alloc] initWithUser:[_user copy] following:_following.groupedData];
+        self.slidingViewController.underRightViewController = friendsAll;
+    }
     
     [self.view addGestureRecognizer:self.slidingViewController.panGesture];
 }

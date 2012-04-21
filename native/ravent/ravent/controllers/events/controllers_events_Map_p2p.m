@@ -15,6 +15,8 @@
 
 @implementation controllers_events_Map_p2p
 
+static controllers_events_Map_p2p *_ctrl;
+
 @synthesize coordinate;
 @synthesize peekLeftAmount;
 
@@ -205,6 +207,17 @@
     UIGraphicsEndImageContext();
     
     [_imageLoading removeObjectForKey:url];
+}
+
++ (controllers_events_Map_p2p *)instance
+{
+    if (_ctrl == nil) {
+        
+        _ctrl = [[controllers_events_Map_p2p alloc] initWithNibName:@"views_events_Map" bundle:nil user:[[models_User crtUser] copy]];
+        _ctrl.view.frame = CGRectMake(0, 0, 280, 382);
+    }
+    
+    return _ctrl;
 }
 
 @end
