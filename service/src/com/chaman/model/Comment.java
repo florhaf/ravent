@@ -21,7 +21,7 @@ public class Comment extends Model {
 		
 		this.uid = JSON.GetValueFor("id", p.getFrom());
 		
-		ArrayList<Model> users = User.Get(accessToken, this.uid);
+		ArrayList<Model> users = User.GetFacebookUserInfo(accessToken, this.uid);
 		
 		if (users != null) {
 			

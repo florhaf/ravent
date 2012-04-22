@@ -71,8 +71,7 @@ public class Friend extends Model {
 	    	
 	    	Query<Following> q = dao.ofy().query(Following.class);
 	    	q.filter("id", userID + String.valueOf(this.uid));
-	    	this.isFollowed = q.count() != 0 ?  true : false;    	
-	    	// update Following cache may be interesting here
+	    	this.isFollowed = q.count() != 0 ?  true : false;
 	    } else {
 	    	
 	    	this.isFollowed = true;

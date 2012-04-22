@@ -50,15 +50,12 @@ public class Following extends Model implements Serializable  {
 		
 		Dao dao = new Dao();
 		
-		//Following fcache = null;
-		//User ucache = null;
+		Following fcache = null;
+		User ucache = null;
 		
-	    //MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
+	    MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
 
 		Query<Following> q = dao.ofy().query(Following.class);
-		Query<Following> qfollowings = dao.ofy().query(Following.class);
-		Query<Following> qfollowers = dao.ofy().query(Following.class);
-		
 		q.filter(isFollowing ? "userID" : "friendID", Long.parseLong(userID));
 		
         for (Following f : q) {
@@ -66,16 +63,18 @@ public class Following extends Model implements Serializable  {
         	User u = new User();
         	u.uid = isFollowing ? f.friendID : f.userID;
 
-    	    //fcache = (Following) syncCache.get(f.id); // read from following cache
-    	    //if (fcache == null) {
+    	    fcache = (Following) syncCache.get(f.id); // read from following cache
+    	    if (fcache == null) {
     	    	
+        		Query<Following> qfollowings = dao.ofy().query(Following.class);
     	    	qfollowings.filter("userID", u.uid);
     	    	u.nb_of_following = qfollowings.count();
-        	        	
+    	    	
+    			Query<Following> qfollowers = dao.ofy().query(Following.class);    	
     	    	qfollowers.filter("friendID", u.uid);
     	    	u.nb_of_followers = qfollowers.count();   	
     	    	
-    	    	/*syncCache.put(f.id, f); // populate following cache
+    	    	syncCache.put(f.id, f); // populate following cache
     	    } else {
     	    	
     	    	ucache = (User) syncCache.get(u.uid); //read from user cache to get the nb following/ers values
@@ -86,13 +85,17 @@ public class Following extends Model implements Serializable  {
     	    	} else {
     	    		
     	    		//this "else" case should not happen but just in case
+    	    		Query<Following> qfollowings = dao.ofy().query(Following.class);
         	    	qfollowings.filter("userID", u.uid);
         	    	u.nb_of_following = qfollowings.count();
-            	        	
+        	    	
+        	    	Query<Following> qfollowers = dao.ofy().query(Following.class);   
         	    	qfollowers.filter("friendID", u.uid);
         	    	u.nb_of_followers = qfollowers.count();
+        	    	
+        	    	syncCache.put(f.id, f); // populate following cache
     	    	}
-    	    }*/
+    	    }
         	users.add(u);
         }
                
@@ -101,13 +104,13 @@ public class Following extends Model implements Serializable  {
 	
 	public static void Put(String userID, String friendID) {
 		
-		//Following fcache;
+		Following fcache;
 		
 		Following f = new Following(Long.parseLong(userID), Long.parseLong(friendID));
 	
 	    MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
-	    //fcache = (Following) syncCache.get(f.id); // read from cache
-	    //if (fcache == null) {
+	    fcache = (Following) syncCache.get(f.id); // read from cache
+	    if (fcache == null) {
 	    	
 			Dao dao = new Dao();
 			
@@ -120,7 +123,9 @@ public class Following extends Model implements Serializable  {
 	        }
 
 	      syncCache.put(f.id, f); // populate cache
-	    //}
+	      syncCache.delete(Long.parseLong(userID)); // to refresh the data at the next call of following()
+	      syncCache.delete(Long.parseLong(friendID)); // to refresh the data at the next call of following()
+	    }
 	}
 	
 	public static void Delete(String userID, String friendID) {
@@ -129,14 +134,12 @@ public class Following extends Model implements Serializable  {
 		
 		MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
 		
-		Query<Following> q = dao.ofy().query(Following.class);
-        q.filter("id", userID + friendID);
-	
-        for (Following f : q) {
+		Following f = new Following(Long.parseLong(userID), Long.parseLong(friendID));
         	
-        	dao.ofy().delete(f);
-        	syncCache.delete(userID + friendID); //delete from cache
-        }
+        dao.ofy().delete(f);
+        syncCache.delete(userID + friendID); //delete Following from cache
+        syncCache.delete(Long.parseLong(userID)); // to refresh the data at the next call of following()
+        syncCache.delete(Long.parseLong(friendID));// to refresh the data at the next call of following()
 	}
 	
 	public void setUserID(long userID) {

@@ -269,8 +269,22 @@ public class Event extends Model {
 	}
 	
 	private Boolean IsPast() {
-				
+		
 		return dtEnd.isBeforeNow();
+	}
+	
+	public static Boolean IsPast(String accessToken, long eid, String start_time){
+		
+		DateTime dtStart;
+		
+		// facebook events timestamp are in PST
+		DateTimeZone PST = DateTimeZone.forID("America/Los_Angeles");
+		
+		long timeStampStart = Long.parseLong(start_time) * 1000;
+		
+		dtStart = new DateTime(timeStampStart, PST);
+		//TODO need time zone of user!
+		return dtStart.isAfterNow();
 	}
 	
 	public long getEid() {

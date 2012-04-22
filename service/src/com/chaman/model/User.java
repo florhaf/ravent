@@ -1,5 +1,6 @@
 package com.chaman.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,15 +15,17 @@ import com.restfb.DefaultFacebookClient;
 import com.restfb.Facebook;
 import com.restfb.FacebookClient;
 import com.restfb.json.JsonObject;
-//import com.google.appengine.api.memcache.MemcacheService;
-//import com.google.appengine.api.memcache.MemcacheServiceFactory;
+import com.google.appengine.api.memcache.MemcacheService;
+import com.google.appengine.api.memcache.MemcacheServiceFactory;
 
 @Entity
-public class User extends Model {
+public class User extends Model implements Serializable {
 
 	/**
 	 * 
 	 */
+	private static final long serialVersionUID = 4211657780516168572L;
+	
 	@Id
 	@Facebook
 	long uid;
@@ -87,20 +90,22 @@ public class User extends Model {
 		
 		Dao dao = new Dao();
 		
-		//User ucache;
+		User ucache;
 
-	    //MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
+	    MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
 		
-		for (User u : users) {
+		if (users != null) {
+			
+			User u = (User) users.get(0);
 			
 			u.picture = u.pic;
 			
-			List<JsonObject> event_member = client.executeQuery(eventQuery + u.uid, JsonObject.class); // TODO: put in cache
+			List<JsonObject> event_member = client.executeQuery(eventQuery + u.uid, JsonObject.class);
 			
-			u.nb_of_events = event_member.size(); // TODO: put in cache
+			u.nb_of_events = event_member.size(); //TODO need to remove past events
 			
-    	    //ucache = (User) syncCache.get(u.uid); // read from User cache
-    	    //if (ucache == null) {
+    	    ucache = (User) syncCache.get(u.uid); // read from User cache
+    	    if (ucache == null) {
 
     	    	Query<Following> qfollowings = dao.ofy().query(Following.class);
     	    	qfollowings.filter("userID", u.uid);
@@ -110,15 +115,37 @@ public class User extends Model {
     	    	qfollowers.filter("friendID", u.uid);
     	    	u.nb_of_followers = qfollowers.count();
     	    	u.access_token = accessToken;
-    	    	//dao.ofy().put(u); //add the user to the data store
-    	    	//syncCache.put(u.uid, u); // populate User cache
+    	    	dao.ofy().put(u); //add the user to the data store
+    	    	syncCache.put(u.uid, u); // populate User cache
     	    	
-    	    //} else {
+    	    } else {
     	    	
-    	    	//u.nb_of_following = ucache.nb_of_following;
-    	    	//u.nb_of_followers = ucache.nb_of_followers;
-    	    //}
+    	    	u.nb_of_following = ucache.nb_of_following;
+    	    	u.nb_of_followers = ucache.nb_of_followers;
+    	    }
         	
+			result.add(u);
+		}
+ 	
+		return result;
+	}
+	
+	public static ArrayList<Model> GetFacebookUserInfo(String accessToken, String userID) {
+		
+		ArrayList<Model> result = new ArrayList<Model>();
+		
+		FacebookClient client 	= new DefaultFacebookClient(accessToken);
+		String properties 		= "uid, first_name, last_name, pic, email, sex, birthday_date, relationship_status";
+		String userQuery 		= "SELECT " + properties + " FROM user WHERE uid  = " + userID;
+		
+		List<User> users 		= client.executeQuery(userQuery, User.class);
+		
+		if (users != null) {
+			
+			User u = (User) users.get(0);
+			
+			u.picture = u.pic;
+	
 			result.add(u);
 		}
  	
@@ -151,16 +178,22 @@ public class User extends Model {
 		String query 			= "SELECT " + properties + " FROM user WHERE " + strUids + " ORDER BY last_name";
 		List<User> users 		= client.executeQuery(query, User.class);
 		
-		String eventQuery = "SELECT eid from event_member where uid = ";
+		String eventQuery = "SELECT eid, start_time from event_member where uid = ";
 		
 		for (User u : users) {
 			
 			u.picture = u.pic;
 			
 			List<JsonObject> event_member = client.executeQuery(eventQuery + u.uid, JsonObject.class);
-			
-			u.nb_of_events = event_member.size();
-			
+			/*for (JsonObject JO : event_member)
+			{		
+				//TODO: Need user time zone for more accuracy
+				if (com.chaman.model.Event.IsPast(accessToken, JO.getLong("eid"), JO.getString("start_time"))) {
+				u.nb_of_events = u.nb_of_events + 1;
+				}
+			}*/
+			u.nb_of_events = event_member.size(); // TODO need to remove past events (see commented code above)
+					
 			User dbu = User.getUserByUID(u.uid, dbUsers);
 			
 			if (dbu != null) {
@@ -168,8 +201,7 @@ public class User extends Model {
 				u.nb_of_followers = dbu.nb_of_followers;
 				u.nb_of_following = dbu.nb_of_following;
 				
-				u.access_token = accessToken;
-	        	
+				u.access_token = accessToken;	
 			}
 			result.add(u);
 		}

@@ -17,7 +17,7 @@ public class Picture extends Model {
 		
 		this.uid = JSON.GetValueFor("id", p.getFrom());
 		
-		User u = (User) User.Get(accessToken, this.uid).get(0);
+		User u = (User) User.GetFacebookUserInfo(accessToken, this.uid).get(0);
 		
 		this.first_name = u.getFirst_name();
 		this.last_name = u.getLast_name();
