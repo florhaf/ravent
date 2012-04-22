@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.chaman.dao.Dao;
+import com.google.appengine.api.memcache.MemcacheService;
+import com.google.appengine.api.memcache.MemcacheServiceFactory;
 import com.googlecode.objectify.Query;
 import com.restfb.DefaultFacebookClient;
 import com.restfb.Facebook;
@@ -55,11 +57,27 @@ public class Friend extends Model {
 		
 		Dao dao = new Dao();
 		
-		Query<Following> q = dao.ofy().query(Following.class);
-        q.filter("userID", Long.parseLong(userID));
-        q.filter("friendID", this.uid);
-        
-        this.isFollowed = (q.iterator() != null && q.iterator().hasNext() && q.iterator().next() != null);
+		/*Query<Following> q = dao.ofy().query(Following.class);
+    	q.filter("userID", Long.parseLong(userID));
+		q.filter("friendID", this.uid);
+		
+		this.isFollowed = (q.iterator() != null && q.iterator().hasNext() && q.iterator().next() != null); // Flo needs to explain this one!*/
+    	
+		Following fcache;
+	
+	    MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
+	    fcache = (Following) syncCache.get(userID + String.valueOf(this.uid)); // read from Following cache
+	    if (fcache == null) {	
+	    	
+	    	Query<Following> q = dao.ofy().query(Following.class);
+	    	q.filter("id", userID + String.valueOf(this.uid));
+	    	this.isFollowed = q.count() != 0 ?  true : false;    	
+	    	// update Following cache may be interesting here
+	    } else {
+	    	
+	    	this.isFollowed = true;
+	    }
+	    
 	}
 	
 	public long getUid() {

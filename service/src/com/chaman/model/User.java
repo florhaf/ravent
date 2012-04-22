@@ -2,22 +2,29 @@ package com.chaman.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.io.Serializable;
 
 import javax.persistence.Id;
-import javax.persistence.Transient;
-import javax.persistence.Entity;
 
 import com.chaman.dao.Dao;
 import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.Query;
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Unindexed;
 import com.restfb.DefaultFacebookClient;
 import com.restfb.Facebook;
 import com.restfb.FacebookClient;
 import com.restfb.json.JsonObject;
+import com.google.appengine.api.memcache.MemcacheService;
+import com.google.appengine.api.memcache.MemcacheServiceFactory;
 
 @Entity
-public class User extends Model {
+public class User extends Model implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3490082592421195364L;
 	@Id
 	@Facebook
 	long uid;
@@ -37,7 +44,7 @@ public class User extends Model {
 	String relationship_status;
 	/* Need to capture the time spent on the app somehow / need class for datastore with less variables*/
 	
-	@Transient
+	@Unindexed
 	String picture;
 	String access_token;
 
@@ -82,6 +89,10 @@ public class User extends Model {
 		
 		Dao dao = new Dao();
 		
+		User ucache;
+
+	    MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
+		
 		for (User u : users) {
 			
 			u.picture = u.pic;
@@ -90,16 +101,25 @@ public class User extends Model {
 			
 			u.nb_of_events = event_member.size();
 			
-			Query<Following> qfollowings = dao.ofy().query(Following.class);
-        	qfollowings.filter("userID", u.uid);
-        	u.nb_of_following = qfollowings.count();
+    	    ucache = (User) syncCache.get(u.uid); // read from User cache
+    	    if (ucache == null) {
+
+    	    	Query<Following> qfollowings = dao.ofy().query(Following.class);
+    	    	qfollowings.filter("userID", u.uid);
+    	    	u.nb_of_following = qfollowings.count();
         	
-        	Query<Following> qfollowers = dao.ofy().query(Following.class);
-        	qfollowers.filter("friendID", u.uid);
-        	u.nb_of_followers = qfollowers.count();
-			
-        	u.access_token = accessToken;
-        	dao.ofy().put(u); /*add the user to the datastore*/ /*find a solution to store friends*/
+    	    	Query<Following> qfollowers = dao.ofy().query(Following.class);
+    	    	qfollowers.filter("friendID", u.uid);
+    	    	u.nb_of_followers = qfollowers.count();
+    	    	u.access_token = accessToken;
+    	    	dao.ofy().put(u); //add the user to the data store
+    	    	syncCache.put(u.uid, u); // populate User cache
+    	    	
+    	    } else {
+    	    	
+    	    	u.nb_of_following = ucache.nb_of_following;
+    	    	u.nb_of_followers = ucache.nb_of_followers;
+    	    }
         	
 			result.add(u);
 		}
@@ -134,8 +154,6 @@ public class User extends Model {
 		List<User> users 		= client.executeQuery(query, User.class);
 		
 		String eventQuery = "SELECT eid from event_member where uid = ";
-
-		Dao dao = new Dao();
 		
 		for (User u : users) {
 			
@@ -155,7 +173,6 @@ public class User extends Model {
 				u.access_token = accessToken;
 	        	
 			}
-			dao.ofy().put(u);
 			result.add(u);
 		}
  	

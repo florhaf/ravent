@@ -107,7 +107,7 @@ public class Event extends Model {
 				if (e.latitude != null && e.latitude != "" && e.longitude != null && e.longitude != "") {
 				
 					Query<EventLocationCapable> q = dao.ofy().query(EventLocationCapable.class);
-			        q.filter("eid", e.eid);
+			        q.filter("eid", e.eid); //can be optimized with a get (filter = 1 read + 1small op)
 					
 			        if (q.count() == 0) {
 			        	
