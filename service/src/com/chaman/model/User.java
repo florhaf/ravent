@@ -2,7 +2,6 @@ package com.chaman.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.io.Serializable;
 
 import javax.persistence.Id;
 
@@ -19,12 +18,11 @@ import com.restfb.json.JsonObject;
 //import com.google.appengine.api.memcache.MemcacheServiceFactory;
 
 @Entity
-public class User extends Model implements Serializable {
+public class User extends Model {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 3490082592421195364L;
 	@Id
 	@Facebook
 	long uid;
@@ -112,7 +110,7 @@ public class User extends Model implements Serializable {
     	    	qfollowers.filter("friendID", u.uid);
     	    	u.nb_of_followers = qfollowers.count();
     	    	u.access_token = accessToken;
-    	    	dao.ofy().put(u); //add the user to the data store
+    	    	//dao.ofy().put(u); //add the user to the data store
     	    	//syncCache.put(u.uid, u); // populate User cache
     	    	
     	    //} else {
