@@ -15,8 +15,8 @@ import com.restfb.DefaultFacebookClient;
 import com.restfb.Facebook;
 import com.restfb.FacebookClient;
 import com.restfb.json.JsonObject;
-import com.google.appengine.api.memcache.MemcacheService;
-import com.google.appengine.api.memcache.MemcacheServiceFactory;
+//import com.google.appengine.api.memcache.MemcacheService;
+//import com.google.appengine.api.memcache.MemcacheServiceFactory;
 
 @Entity
 public class User extends Model implements Serializable {
@@ -89,20 +89,20 @@ public class User extends Model implements Serializable {
 		
 		Dao dao = new Dao();
 		
-		User ucache;
+		//User ucache;
 
-	    MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
+	    //MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
 		
 		for (User u : users) {
 			
 			u.picture = u.pic;
 			
-			List<JsonObject> event_member = client.executeQuery(eventQuery + u.uid, JsonObject.class);
+			List<JsonObject> event_member = client.executeQuery(eventQuery + u.uid, JsonObject.class); // TODO: put in cache
 			
-			u.nb_of_events = event_member.size();
+			u.nb_of_events = event_member.size(); // TODO: put in cache
 			
-    	    ucache = (User) syncCache.get(u.uid); // read from User cache
-    	    if (ucache == null) {
+    	    //ucache = (User) syncCache.get(u.uid); // read from User cache
+    	    //if (ucache == null) {
 
     	    	Query<Following> qfollowings = dao.ofy().query(Following.class);
     	    	qfollowings.filter("userID", u.uid);
@@ -113,13 +113,13 @@ public class User extends Model implements Serializable {
     	    	u.nb_of_followers = qfollowers.count();
     	    	u.access_token = accessToken;
     	    	dao.ofy().put(u); //add the user to the data store
-    	    	syncCache.put(u.uid, u); // populate User cache
+    	    	//syncCache.put(u.uid, u); // populate User cache
     	    	
-    	    } else {
+    	    //} else {
     	    	
-    	    	u.nb_of_following = ucache.nb_of_following;
-    	    	u.nb_of_followers = ucache.nb_of_followers;
-    	    }
+    	    	//u.nb_of_following = ucache.nb_of_following;
+    	    	//u.nb_of_followers = ucache.nb_of_followers;
+    	    //}
         	
 			result.add(u);
 		}
