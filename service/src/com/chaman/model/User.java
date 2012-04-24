@@ -11,6 +11,7 @@ import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.Query;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Unindexed;
+import com.googlecode.objectify.annotation.NotSaved;
 import com.restfb.DefaultFacebookClient;
 import com.restfb.Facebook;
 import com.restfb.FacebookClient;
@@ -19,6 +20,7 @@ import com.google.appengine.api.memcache.MemcacheService;
 import com.google.appengine.api.memcache.MemcacheServiceFactory;
 
 @Entity
+@Unindexed
 public class User extends Model implements Serializable {
 
 	/**
@@ -33,26 +35,31 @@ public class User extends Model implements Serializable {
 	String first_name;
 	@Facebook
 	String last_name;
+	@NotSaved
 	@Facebook
 	String pic;
 	@Facebook
 	String email;
+	@NotSaved
 	@Facebook
 	String birthday_date;
+	@NotSaved
 	@Facebook
 	String sex;
+	@NotSaved
 	@Facebook
 	String relationship_status;
 	/* Need to capture the time spent on the app somehow / need class for datastore with less variables*/
 	
-	@Unindexed
+	@NotSaved
 	String picture;
 	String access_token;
 
+	@NotSaved
 	int nb_of_events;
 	int nb_of_followers;
 	int nb_of_following;
-	
+	@NotSaved
 	float searchRadius;
 	
 	public User() {

@@ -37,6 +37,11 @@ public class Attending extends Model {
 		String properties 			= "uid, first_name, last_name, pic";
 		String query 				= "SELECT " + properties + " FROM user WHERE uid IN (SELECT uid FROM event_member WHERE eid = " + eid + 
 																		   " AND uid IN (SELECT uid2 FROM friend WHERE uid1 = me()))";
+		
+		/* TODO Optimize with this for more efficiency
+		 * String query 				= "query1 : SELECT uid, rsvp_status FROM event_member WHERE eid= " + eid +
+									  "query2 : SELECT name, url, pic FROM profile WHERE id IN (SELECT uid FROM #query1)";*/
+		
 		List<Attending> Attendings 	= client.executeQuery(query, Attending.class);
 		
 		String queryRsvp;

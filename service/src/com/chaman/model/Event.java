@@ -86,9 +86,17 @@ public class Event extends Model {
 		
 		ArrayList<Model> result = new ArrayList<Model>();
 		
+		//Prepare a timestamp to filter the facebook DB on the upcoming events
+		DateTime today = new DateTime();
+		today.plusMinutes(Integer.parseInt(timeZone)-420); //420 = GMT -7h TODO: need to optimize this with daylight saving!
+		Long TA = today.getMillis();
+		TA = TA /1000;
+		String TAS = String.valueOf(TA);
+		
+		
 		FacebookClient client 	= new DefaultFacebookClient(accessToken);
 		String properties 		= "eid, name, pic, start_time, end_time, venue, location, host, creator";
-		String query 			= "SELECT " + properties + " FROM event WHERE eid IN (SELECT eid FROM event_member WHERE uid = " + userID + ") ORDER BY start_time"; /*need to check privacy CLOSED AND SECRET */
+		String query 			= "SELECT " + properties + " FROM event WHERE eid IN (SELECT eid FROM event_member WHERE uid = " + userID + " AND start_time > " + TAS + ") ORDER BY start_time"; /*need to check privacy CLOSED AND SECRET */
 		List<Event> fbevents 	= client.executeQuery(query, Event.class);
 		
 		Dao dao = new Dao();
@@ -99,7 +107,7 @@ public class Event extends Model {
 						
 			e.Format(timeZoneInMinutes);
 			
-			if (!e.IsPast()) {
+			//if (e.IsNotPast()) { // TODO Put back if issue on the app showing past events
 				
 				e.latitude 	= JSON.GetValueFor("latitude", e.venue);
 				e.longitude = JSON.GetValueFor("longitude", e.venue);
@@ -132,7 +140,7 @@ public class Event extends Model {
 				}
 				
 				result.add(e);
-			}
+			//}
 		}
 		
 		return result;
@@ -166,7 +174,7 @@ public class Event extends Model {
     			Event event = fbevents.get(0);
     			event.Format(timeZoneInMinutes);    		
     			
-    			if (!event.IsPast()) {
+    			if (event.IsNotPast()) {
     				
     				event.score = e.getScore();
     				//event.nb_invited = e.getNb_invited();
@@ -230,7 +238,7 @@ public class Event extends Model {
 					if (dtStart.getDayOfYear() <= DateTime.now().plusMonths(1).getDayOfYear()) {
 						
 						this.group = "d";
-						this.groupTitle = "This month";
+						this.groupTitle = "This month"; // TODO not really this month. This is more like "In the next 30 days"
 					} else {
 						
 						this.group = "e";
@@ -268,9 +276,9 @@ public class Event extends Model {
 		this.score = 1 + (int) (Math.random() * ((5 - 1) + 1));
 	}
 	
-	private Boolean IsPast() {
+	private Boolean IsNotPast() {
 		
-		return dtEnd.isBeforeNow();
+		return dtStart.isAfterNow();
 	}
 	
 	public static Boolean IsPast(String accessToken, long eid, String start_time){
