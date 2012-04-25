@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
-
+import com.chaman.model.Venue;
 import com.beoui.geocell.GeocellManager;
 import com.beoui.geocell.LocationCapableRepositorySearch;
 import com.beoui.geocell.model.Point;
@@ -41,10 +41,14 @@ public class Event extends Model {
 	String description;
 	@Facebook
 	String host;
-	@Facebook
 	String creator; /*promoter ID*/
-	
-	int score;
+	@Facebook
+	String owner;
+	@Facebook
+	String privacy;
+
+	String venue_id;
+	double score;
 	long nb_invited;
 	String group;
 	String latitude;
@@ -57,7 +61,7 @@ public class Event extends Model {
 	String invited_by;
 	String distance;
 	String groupTitle;
-	String type; // need to query google app to get the type of the place (club, bar etc) / or using the location in FB Page
+	String venue_category; // (club, bar etc)
 	
 	User user;
 	
@@ -89,13 +93,10 @@ public class Event extends Model {
 		//Prepare a timestamp to filter the facebook DB on the upcoming events
 		DateTime today = new DateTime();
 		today.plusMinutes(Integer.parseInt(timeZone)-420); //420 = GMT -7h TODO: need to optimize this with daylight saving!
-		Long TA = today.getMillis();
-		TA = TA /1000;
-		String TAS = String.valueOf(TA);
-		
+		String TAS = String.valueOf(today.getMillis() / 1000);
 		
 		FacebookClient client 	= new DefaultFacebookClient(accessToken);
-		String properties 		= "eid, name, pic, start_time, end_time, venue, location, host, creator";
+		String properties 		= "eid, name, pic, start_time, end_time, venue, location, host, privacy, creator";
 		String query 			= "SELECT " + properties + " FROM event WHERE eid IN (SELECT eid FROM event_member WHERE uid = " + userID + " AND start_time > " + TAS + ") ORDER BY start_time"; /*need to check privacy CLOSED AND SECRET */
 		List<Event> fbevents 	= client.executeQuery(query, Event.class);
 		
@@ -103,50 +104,69 @@ public class Event extends Model {
 		
 		int timeZoneInMinutes = Integer.parseInt(timeZone);
 		
+		Event e_graph = new Event();
+		
 		for (Event e : fbevents) {
 						
 			e.Format(timeZoneInMinutes);
-			
+
 			//if (e.IsNotPast()) { // TODO Put back if issue on the app showing past events
 				
-				e.latitude 	= JSON.GetValueFor("latitude", e.venue);
-				e.longitude = JSON.GetValueFor("longitude", e.venue);
+			// TODO add event to cache to put a condition to avoid calculating all the values bellow too often (last update date on facebook event available)
+			
+			// fetch Facebook graph API for more data
+			e_graph = null;
+			e_graph = client.fetchObject(String.valueOf(e.eid), Event.class);  // TODO no need for Description.class anymore, e_graph has everything...
+			e.creator = JSON.GetValueFor("id", e_graph.owner);
+			
+			e.venue_id = JSON.GetValueFor("id", e_graph.venue);
+			Venue v_graph = new Venue(accessToken, e.venue_id);
+			e.venue_category = v_graph.category;
+			
+			e.latitude 	= JSON.GetValueFor("latitude", e.venue);
+			e.longitude = JSON.GetValueFor("longitude", e.venue);
+			
+			if ((e.latitude == null || e.latitude == "" || e.longitude == null || e.longitude == "") && v_graph != null) {
 				
-				if (e.latitude != null && e.latitude != "" && e.longitude != null && e.longitude != "") {
+				// take value from venue if event location is null
+				e.latitude = JSON.GetValueFor("latitude", v_graph.location);
+				e.longitude = JSON.GetValueFor("longitude", v_graph.location);
+			}	
+			
+			if (e.latitude != null && e.latitude != "" && e.longitude != null && e.longitude != "") {
 				
-					Query<EventLocationCapable> q = dao.ofy().query(EventLocationCapable.class);
-			        q.filter("eid", e.eid); //can be optimized with a get (filter = 1 read + 1small op)
+				Query<EventLocationCapable> q = dao.ofy().query(EventLocationCapable.class);
+			    q.filter("eid", e.eid); //can be optimized with a get (filter = 1 read + 1small op)
 					
-			        if (q.count() == 0) {
+			    if (q.count() == 0) {
 			        	
-			        	e.Score();
-			        	//e.getNb_invited(accessToken);
-			        	EventLocationCapable elc = new EventLocationCapable(e);
-			        	dao.ofy().put(elc);
-			        } else {
+			    e.Score(v_graph);
+			    //e.getNb_invited(accessToken);
+			    EventLocationCapable elc = new EventLocationCapable(e);
+			    dao.ofy().put(elc);
+			    } else {
 			        	
-			        	e.Score();
-			        	// update score in DB
-			        	// update nb invited in DB
+			    	e.Score(v_graph);
+			    	// update score in DB
+			    	// update nb invited in DB
 			        	
-			        }
-			        
-			        float distance = Geo.Fence(userLatitude, userLongitude, e.latitude, e.longitude);
+			    }
+			        			        
+			    float distance = Geo.Fence(userLatitude, userLongitude, e.latitude, e.longitude);
 					
-					e.distance = String.format("%.2f", distance);
-				} else {
-					
-					e.distance = "N/A";
-				}
+			    e.distance = String.format("%.2f", distance);
+			} else {
+								
+				e.distance = "N/A";
+			}
 				
-				result.add(e);
-			//}
+			result.add(e);
 		}
 		
 		return result;
 	}
 	
-	/*
+	/* TODO make sure this function is consistent with the changes made on the one above
 	 * - Get list of event for any user in search area
 	 * - exclude past event
 	 */
@@ -160,7 +180,7 @@ public class Event extends Model {
 		List<EventLocationCapable> l = GeocellManager.proximityFetch(new Point(Double.parseDouble(userLatitude), Double.parseDouble(userLongitude)), searchLimit, searchRadius * 1000, ofySearch);
 		
 		FacebookClient client 	= new DefaultFacebookClient(accessToken);
-		String properties 		= "eid, name, pic, start_time, end_time, venue, location, host";
+		String properties 		= "eid, name, pic, start_time, end_time, venue, location, host, privacy";
 	
 		int timeZoneInMinutes = Integer.parseInt(timeZone);
 		
@@ -271,9 +291,49 @@ public class Event extends Model {
 		return result;
 	}
 	
-	private void Score() {
-	
-		this.score = 1 + (int) (Math.random() * ((5 - 1) + 1));
+	private void Score(Venue v) {
+		
+		if (v != null){
+			
+			int likes = Integer.valueOf(v.likes);
+			int checkins = Integer.valueOf(v.checkins);
+			int talking_about_count = Integer.valueOf(v.talking_about_count);		
+			double res = 0;
+			// offcourse this is not the final scoring algo :)
+			if (likes >= 1 && likes < 1000){
+				res = res + 0.5;
+			}
+			if (likes >= 1000 && likes < 2000){
+				res = res + 1;
+			}
+			if (likes >= 2000){
+				res = res + 1;
+			}
+			
+			if (checkins >= 1 && checkins < 100){
+				res = res + 1;
+			}
+			if (checkins >= 100 && checkins < 200){
+				res = res + 1.5;
+			}
+			if (checkins >= 200){
+				res = res + 1.25;
+			}
+			
+			if (talking_about_count >= 1 && talking_about_count < 25){
+				res = res + 1;
+			}
+			if (talking_about_count >= 25 && talking_about_count < 50){
+				res = res + 2;
+			}
+			if (talking_about_count >= 50){
+				res = res + 2;
+			}
+			
+			this.score = res;
+		}
+		
+		//this.score = 1 + (int) (Math.random() * ((5 - 1) + 1));
 	}
 	
 	private Boolean IsNotPast() {
@@ -330,7 +390,7 @@ public class Event extends Model {
 		return this.location;
 	}
 	
-	public int getScore() {
+	public double getScore() {
 		
 		return this.score;
 	}
@@ -386,5 +446,13 @@ public class Event extends Model {
 
 	public void setGroupTitle(String groupTitle) {
 		this.groupTitle = groupTitle;
+	}
+	
+	public String getCategory() {
+		return this.venue_category;
+	}
+	
+	public void setCategory(String category) {
+		this.venue_category = category;
 	}
 }

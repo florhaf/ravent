@@ -25,7 +25,7 @@ public class EventLocationCapable extends Model implements LocationCapable {
     private double latitude;
     private double longitude;
     @Unindexed
-    private int score;
+    private double score;
     private List<String> geocells;
     private long creator; // promoter ID
     
@@ -126,7 +126,7 @@ public class EventLocationCapable extends Model implements LocationCapable {
 		this.timeStampEnd = timeStampEnd;
 	}
 
-	public int getScore() {
+	public double getScore() {
 		return score;
 	}
 
