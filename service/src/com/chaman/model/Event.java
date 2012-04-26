@@ -311,9 +311,9 @@ public class Event extends Model implements Serializable {
 		
 		if (v != null){
 			
-			int likes = Integer.valueOf(v.likes);
-			int checkins = Integer.valueOf(v.checkins);
-			int talking_about_count = Integer.valueOf(v.talking_about_count);		
+			int likes = v.likes != null ? Integer.valueOf(v.likes) : 0;
+			int checkins = v.checkins != null ? Integer.valueOf(v.checkins) : 0;
+			int talking_about_count = v.talking_about_count != null ? Integer.valueOf(v.talking_about_count) : 0;	
 			double res = 0;
 			// offcourse this is not the final scoring algo :)
 			if (likes >= 1 && likes < 1000){
