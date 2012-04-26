@@ -6,6 +6,9 @@ import java.util.List;
 
 import javax.persistence.Id;
 
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+
 import com.chaman.dao.Dao;
 import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.Query;
@@ -107,9 +110,15 @@ public class User extends Model implements Serializable {
 			
 			u.picture = u.pic;
 			
-			List<JsonObject> event_member = client.executeQuery(eventQuery + u.uid, JsonObject.class);
+			//Prepare a timestamp to filter the facebook DB on the upcoming events
+			DateTimeZone PST = DateTimeZone.forID("America/Los_Angeles");
+			DateTime now = new DateTime(PST);
+			now.plusMinutes(PST.getOffset(now));
+			String TAS = String.valueOf(now.getMillis() / 1000);
 			
-			u.nb_of_events = event_member.size(); //TODO need to remove past events
+			List<JsonObject> event_member = client.executeQuery(eventQuery + u.uid + " AND start_time > " + TAS, JsonObject.class);
+			
+			u.nb_of_events = event_member.size();
 			
     	    ucache = (User) syncCache.get(u.uid); // read from User cache
     	    if (ucache == null) {
@@ -185,21 +194,21 @@ public class User extends Model implements Serializable {
 		String query 			= "SELECT " + properties + " FROM user WHERE " + strUids + " ORDER BY last_name";
 		List<User> users 		= client.executeQuery(query, User.class);
 		
-		String eventQuery = "SELECT eid, start_time from event_member where uid = ";
+		//Prepare a timestamp to filter the facebook DB on the upcoming events
+		DateTimeZone PST = DateTimeZone.forID("America/Los_Angeles");
+		DateTime now = new DateTime(PST);
+		now.plusMinutes(PST.getOffset(now));
+		String TAS = String.valueOf(now.getMillis() / 1000);
+		
+		String eventQuery = "SELECT eid from event_member where uid = ";
 		
 		for (User u : users) {
 			
 			u.picture = u.pic;
 			
-			List<JsonObject> event_member = client.executeQuery(eventQuery + u.uid, JsonObject.class);
-			/*for (JsonObject JO : event_member)
-			{		
-				//TODO: Need user time zone for more accuracy
-				if (com.chaman.model.Event.IsPast(accessToken, JO.getLong("eid"), JO.getString("start_time"))) {
-				u.nb_of_events = u.nb_of_events + 1;
-				}
-			}*/
-			u.nb_of_events = event_member.size(); // TODO need to remove past events (see commented code above)
+			List<JsonObject> event_member = client.executeQuery(eventQuery + u.uid + " AND start_time > " + TAS, JsonObject.class);
+
+			u.nb_of_events = event_member.size();
 					
 			User dbu = User.getUserByUID(u.uid, dbUsers);
 			

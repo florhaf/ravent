@@ -11,6 +11,6 @@
 	<classpathentry kind="lib" path="lib/restlet-gae-2.0.10/lib/org.restlet.ext.jackson.jar"/>
 	<classpathentry kind="lib" path="lib/restlet-gae-2.0.10/lib/org.restlet.jar"/>
 	<classpathentry kind="lib" path="lib/restlet-gae-2.0.10/lib/org.restlet.ext.servlet.jar"/>
-	<classpathentry kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER/App Engine"/>
+	<classpathentry kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>

@@ -1,5 +1,6 @@
 package com.chaman.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +13,8 @@ import com.beoui.geocell.model.Point;
 import com.chaman.dao.Dao;
 import com.chaman.util.Geo;
 import com.chaman.util.JSON;
+import com.google.appengine.api.memcache.MemcacheService;
+import com.google.appengine.api.memcache.MemcacheServiceFactory;
 import com.googlecode.objectify.Query;
 import com.restfb.DefaultFacebookClient;
 import com.restfb.Facebook;
@@ -21,8 +24,12 @@ import com.restfb.exception.FacebookException;
 /*
  * Event object from FB + formatting for our app
  */
-public class Event extends Model {
+public class Event extends Model implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 379496115984033603L;
 	@Facebook
 	Long eid;
 	@Facebook
@@ -46,6 +53,8 @@ public class Event extends Model {
 	String owner;
 	@Facebook
 	String privacy;
+	@Facebook
+	String update_time;
 
 	String venue_id;
 	double score;
@@ -91,81 +100,88 @@ public class Event extends Model {
 		ArrayList<Model> result = new ArrayList<Model>();
 		
 		//Prepare a timestamp to filter the facebook DB on the upcoming events
-		DateTime today = new DateTime();
-		today.plusMinutes(Integer.parseInt(timeZone)-420); //420 = GMT -7h TODO: need to optimize this with daylight saving!
-		String TAS = String.valueOf(today.getMillis() / 1000);
+		DateTimeZone PST = DateTimeZone.forID("America/Los_Angeles");
+		DateTime now = new DateTime(PST);
+		now.plusMinutes(PST.getOffset(now));
+		String TAS = String.valueOf(now.getMillis() / 1000);
 		
 		FacebookClient client 	= new DefaultFacebookClient(accessToken);
-		String properties 		= "eid, name, pic, start_time, end_time, venue, location, host, privacy, creator";
+		String properties 		= "eid, name, pic, start_time, end_time, venue, location, host, privacy, creator, update_time";
 		String query 			= "SELECT " + properties + " FROM event WHERE eid IN (SELECT eid FROM event_member WHERE uid = " + userID + " AND start_time > " + TAS + ") ORDER BY start_time"; /*need to check privacy CLOSED AND SECRET */
 		List<Event> fbevents 	= client.executeQuery(query, Event.class);
 		
 		Dao dao = new Dao();
+		
+		MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
+		Event e_cache; 
 		
 		int timeZoneInMinutes = Integer.parseInt(timeZone);
 		
 		Event e_graph = new Event();
 		
 		for (Event e : fbevents) {
-						
-			e.Format(timeZoneInMinutes);
+				
+			e_cache = (Event) syncCache.get(e.eid); // read from Event cache
+    	    if (e_cache == null || e_cache.update_time != e.update_time) { // check the cache event version with the current one
+			
+    	    	e.Format(timeZoneInMinutes);
 
-			//if (e.IsNotPast()) { // TODO Put back if issue on the app showing past events
+    	    	// fetch Facebook graph API for more data
+    	    	e_graph = null;
+    	    	e_graph = client.fetchObject(String.valueOf(e.eid), Event.class);  // TODO no need for Description.class anymore, e_graph has everything...
+    	    	e.creator = JSON.GetValueFor("id", e_graph.owner);
+			
+    	    	e.venue_id = JSON.GetValueFor("id", e_graph.venue);
+    	    	Venue v_graph = new Venue(accessToken, e.venue_id);
+    	    	e.venue_category = v_graph.category;
+			
+    	    	e.latitude 	= JSON.GetValueFor("latitude", e.venue);
+    	    	e.longitude = JSON.GetValueFor("longitude", e.venue);
+			
+    	    	if ((e.latitude == null || e.latitude == "" || e.longitude == null || e.longitude == "") && v_graph != null) {
 				
-			// TODO add event to cache to put a condition to avoid calculating all the values bellow too often (last update date on facebook event available)
+    	    		// take value from venue if event location is null
+    	    		e.latitude = JSON.GetValueFor("latitude", v_graph.location);
+    	    		e.longitude = JSON.GetValueFor("longitude", v_graph.location);
+    	    	}	
 			
-			// fetch Facebook graph API for more data
-			e_graph = null;
-			e_graph = client.fetchObject(String.valueOf(e.eid), Event.class);  // TODO no need for Description.class anymore, e_graph has everything...
-			e.creator = JSON.GetValueFor("id", e_graph.owner);
-			
-			e.venue_id = JSON.GetValueFor("id", e_graph.venue);
-			Venue v_graph = new Venue(accessToken, e.venue_id);
-			e.venue_category = v_graph.category;
-			
-			e.latitude 	= JSON.GetValueFor("latitude", e.venue);
-			e.longitude = JSON.GetValueFor("longitude", e.venue);
-			
-			if ((e.latitude == null || e.latitude == "" || e.longitude == null || e.longitude == "") && v_graph != null) {
+    	    	if (e.latitude != null && e.latitude != "" && e.longitude != null && e.longitude != "") {
 				
-				// take value from venue if event location is null
-				e.latitude = JSON.GetValueFor("latitude", v_graph.location);
-				e.longitude = JSON.GetValueFor("longitude", v_graph.location);
-			}	
-			
-			if (e.latitude != null && e.latitude != "" && e.longitude != null && e.longitude != "") {
-				
-				Query<EventLocationCapable> q = dao.ofy().query(EventLocationCapable.class);
-			    q.filter("eid", e.eid); //can be optimized with a get (filter = 1 read + 1small op)
+    	    		Query<EventLocationCapable> q = dao.ofy().query(EventLocationCapable.class);
+    	    		q.filter("eid", e.eid); //can be optimized with a get (filter = 1 read + 1small op)
 					
-			    if (q.count() == 0) {
+    	    		if (q.count() == 0) {
 			        	
-			    e.Score(v_graph);
-			    //e.getNb_invited(accessToken);
-			    EventLocationCapable elc = new EventLocationCapable(e);
-			    dao.ofy().put(elc);
-			    } else {
+    	    			e.Score(v_graph);
+    	    			//e.getNb_invited(accessToken);
+    	    			EventLocationCapable elc = new EventLocationCapable(e);
+    	    			dao.ofy().put(elc);
+    	    		} else {
 			        	
-			    	e.Score(v_graph);
-			    	// update score in DB
-			    	// update nb invited in DB
-			        	
-			    }
+    	    			e.Score(v_graph);
+    	    			// update score in DB
+    	    			// update nb invited in DB		        	
+    	    		}
 			        			        
-			    float distance = Geo.Fence(userLatitude, userLongitude, e.latitude, e.longitude);
+    	    		float distance = Geo.Fence(userLatitude, userLongitude, e.latitude, e.longitude);
 					
-			    e.distance = String.format("%.2f", distance);
-			} else {
+    	    		e.distance = String.format("%.2f", distance);
+    	    	} else {
 								
-				e.distance = "N/A";
-			}
-				
-			result.add(e);
+    	    		e.distance = "N/A";
+    	    	}
+    	    	
+    	    	syncCache.put(e.eid, e); // Add Event to cache
+    	    }else {
+    	    	
+    	    	e = e_cache;
+    	    }
+    	    result.add(e);
 		}
 		
 		return result;
 	}
-	
+
 	/* TODO make sure this function is consistent with the changes made on the one above
 	 * - Get list of event for any user in search area
 	 * - exclude past event
@@ -338,20 +354,6 @@ public class Event extends Model {
 	
 	private Boolean IsNotPast() {
 		
-		return dtStart.isAfterNow();
-	}
-	
-	public static Boolean IsPast(String accessToken, long eid, String start_time){
-		
-		DateTime dtStart;
-		
-		// facebook events timestamp are in PST
-		DateTimeZone PST = DateTimeZone.forID("America/Los_Angeles");
-		
-		long timeStampStart = Long.parseLong(start_time) * 1000;
-		
-		dtStart = new DateTime(timeStampStart, PST);
-		//TODO need time zone of user!
 		return dtStart.isAfterNow();
 	}
 	

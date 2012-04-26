@@ -54,9 +54,7 @@ public class Friend extends Model {
 	}
 	
 	private void setIsFollowed(String userID) {
-		
-		Dao dao = new Dao();
-		
+
 		/*Query<Following> q = dao.ofy().query(Following.class);
     	q.filter("userID", Long.parseLong(userID));
 		q.filter("friendID", this.uid);
@@ -69,6 +67,7 @@ public class Friend extends Model {
 	    fcache = (Following) syncCache.get(userID + String.valueOf(this.uid)); // read from Following cache
 	    if (fcache == null) {	
 	    	
+	    	Dao dao = new Dao();
 	    	Query<Following> q = dao.ofy().query(Following.class);
 	    	q.filter("id", userID + String.valueOf(this.uid));
 	    	this.isFollowed = q.count() != 0 ?  true : false;
