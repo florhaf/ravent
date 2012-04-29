@@ -51,19 +51,25 @@ static customNavigationController *_ctrl;
     
     [self.view addSubview:[controllers_events_List_p2p instance].view];
     
-    UIBarButtonItem *mapButton = [[UIBarButtonItem alloc] initWithTitle:@"Map" style:UIBarButtonItemStylePlain target:self action:@selector(revealMap:)];          
-    self.navigationItem.rightBarButtonItem = mapButton;
+    UIImage *menui = [UIImage imageNamed:@"menuButton"];
     
-    UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithTitle:@"Menu" style:UIBarButtonItemStylePlain target:self action:@selector(revealMenu:)];          
+    UIButton *menub = [UIButton buttonWithType:UIButtonTypeCustom];
+    [menub addTarget:self action:@selector(revealMenu:) forControlEvents:UIControlEventTouchUpInside];
+    [menub setImage:menui forState:UIControlStateNormal];
+    [menub setFrame:CGRectMake(0, 0, menui.size.width, menui.size.height)];
+    
+    UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithCustomView:menub];
     self.navigationItem.leftBarButtonItem = menuButton;
-}
 
-- (void)showOptionsModal
-{
-    controllers_events_Options_p2p *options = [[controllers_events_Options_p2p alloc] initWithNibName:@"views_events_Options" bundle:nil];
-    UINavigationController *optionsModal = [[UINavigationController alloc] initWithRootViewController:options];
+    UIImage *mapi = [UIImage imageNamed:@"mapButton"];
     
-    [self presentModalViewController:optionsModal animated:YES];
+    UIButton *mapb = [UIButton buttonWithType:UIButtonTypeCustom];
+    [mapb addTarget:self action:@selector(revealMap:) forControlEvents:UIControlEventTouchUpInside];
+    [mapb setImage:mapi forState:UIControlStateNormal];
+    [mapb setFrame:CGRectMake(0, 0, mapi.size.width, mapi.size.height)];
+    
+    UIBarButtonItem *mapButton = [[UIBarButtonItem alloc] initWithCustomView:mapb];        
+    self.navigationItem.rightBarButtonItem = mapButton;
 }
 
 - (void)viewWillAppear:(BOOL)animated

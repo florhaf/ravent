@@ -21,8 +21,15 @@ static customNavigationController *_ctrl;
 {
     [super viewDidLoad];
     
-    UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithTitle:@"Menu" style:UIBarButtonItemStylePlain target:self action:@selector(revealMenu:)];          
-    self.navigationItem.leftBarButtonItem = menuButton;
+    UIImage *menui = [UIImage imageNamed:@"menuButton"];
+    
+    UIButton *menub = [UIButton buttonWithType:UIButtonTypeCustom];
+    [menub addTarget:self action:@selector(revealMenu:) forControlEvents:UIControlEventTouchUpInside];
+    [menub setImage:menui forState:UIControlStateNormal];
+    [menub setFrame:CGRectMake(0, 0, menui.size.width, menui.size.height)];
+    
+    UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithCustomView:menub];
+    self.navigationItem.leftBarButtonItem = menuButton;    
 }
 
 - (void)revealMenu:(id)sender

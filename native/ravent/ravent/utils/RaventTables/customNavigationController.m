@@ -11,7 +11,7 @@
 
 @implementation customNavigationController
     
-- (id) initWithRootViewController:(UIViewController *)rootViewController
+- (id)initWithRootViewController:(UIViewController *)rootViewController
 {
     self = [super initWithRootViewController:rootViewController];
     
@@ -21,6 +21,14 @@
     }
     
     return self;
+}
+
+- (void)viewDidLoad
+{
+    UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithTitle:@"Menu" style:UIBarButtonItemStylePlain target:self action:@selector(revealMenu:)];         
+    
+    self.navigationItem.leftBarButtonItem = menuButton;
+    
 }
 
 - (UIViewController *)popViewControllerAnimated:(BOOL)animated

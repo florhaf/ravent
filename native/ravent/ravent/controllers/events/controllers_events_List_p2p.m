@@ -7,6 +7,7 @@
 //
 
 #import "controllers_events_List_p2p.h"
+#import "controllers_events_Map_p2p.h"
 #import "ActionDispatcher.h"
 #import "MBProgressHUD.h"
 
@@ -23,10 +24,15 @@ static controllers_events_List_p2p *_ctrl;
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
 }
 
-- (void)loadData
+- (void)loadDataWithUserLocation
 {
-    [[ActionDispatcher instance] execute:@"controller_events_List_p2p_Loading"];
+    [super loadDataWithUserLocation];
     
+    [[controllers_events_Map_p2p instance] loading];
+}
+
+- (void)loadData
+{    
     NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
     
     [params setValue:[models_User crtUser].accessToken forKey:@"access_token"];
@@ -35,13 +41,15 @@ static controllers_events_List_p2p *_ctrl;
     [params setValue:[models_User crtUser].timeZone forKey:@"timezone_offset"];
     
     [_event loadEventsWithParams:params];
+    
+    [[controllers_events_Map_p2p instance] setMapLocation:YES];
 }
 
 - (void)onLoadEvents:(NSArray *)objects
 {
     [super onLoadEvents:objects];
-    
-    [[ActionDispatcher instance] execute:@"controller_events_List_p2p_onLoadEvents" with:objects];
+
+    [[controllers_events_Map_p2p instance] loadData:objects];
 }
 
 + (controllers_events_List_p2p *)instance

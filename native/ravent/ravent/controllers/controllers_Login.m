@@ -37,6 +37,7 @@ static controllers_Login *_ctrl;
 
 - (IBAction)onLoginButtonTap
 {
+    
     if (![_facebook isSessionValid]) {
         
         NSArray *permissions = [[NSArray alloc] initWithObjects:
@@ -133,7 +134,7 @@ static controllers_Login *_ctrl;
     
     if (objects == nil || [objects count] == 0) {
         
-        _errorLabel.text = @"server not responding, try again later...";
+        _errorLabel.text = @"Google App Engine limit, try again later...";
         [_spinner stopAnimating];
         [_spinner setAlpha:0];
         [_loginButton setEnabled:YES];

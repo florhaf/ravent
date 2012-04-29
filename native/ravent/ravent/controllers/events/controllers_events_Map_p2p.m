@@ -25,12 +25,6 @@ static controllers_events_Map_p2p *_ctrl;
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         
-        Action *loadingAction = [[Action alloc] initWithDelegate:self andSelector:@selector(loading)];
-        Action *loadDataAction = [[Action alloc] initWithDelegate:self andSelector:@selector(loadData:)];
-        
-        [[ActionDispatcher instance] add:loadingAction named:@"controller_events_List_p2p_Loading"];
-        [[ActionDispatcher instance] add:loadDataAction named:@"controller_events_List_p2p_onLoadEvents"];
-        
         _imageLoading = [[NSMutableDictionary alloc] init];
         _user = user;
     }
@@ -81,8 +75,8 @@ static controllers_events_Map_p2p *_ctrl;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    [self setMapLocation:YES];
+        
+    //_map.frame = CGRectMake(40, 44, 280, 372);
     
     self.peekLeftAmount = 40.0f;
     [self.slidingViewController setAnchorLeftPeekAmount:self.peekLeftAmount];
@@ -208,8 +202,7 @@ static controllers_events_Map_p2p *_ctrl;
 {
     if (_ctrl == nil) {
         
-        _ctrl = [[controllers_events_Map_p2p alloc] initWithNibName:@"views_events_Map" bundle:nil user:[[models_User crtUser] copy]];
-        _ctrl.view.frame = CGRectMake(0, 0, 280, 382);
+        _ctrl = [[controllers_events_Map_p2p alloc] initWithNibName:@"views_events_Map" bundle:nil user:[[models_User crtUser] copy]];        
     }
     
     return _ctrl;
