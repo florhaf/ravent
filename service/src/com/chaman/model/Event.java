@@ -107,7 +107,7 @@ public class Event extends Model implements Serializable {
 		
 		FacebookClient client 	= new DefaultFacebookClient(accessToken);
 		String properties 		= "eid, name, pic, start_time, end_time, venue, location, host, privacy, creator, update_time";
-		String query 			= "SELECT " + properties + " FROM event WHERE eid IN (SELECT eid FROM event_member WHERE uid = " + userID + " AND start_time > " + TAS + ") ORDER BY start_time"; /*need to check privacy CLOSED AND SECRET */
+		String query 			= "SELECT " + properties + " FROM event WHERE eid IN (SELECT eid FROM event_member WHERE uid = " + userID + ") AND end_time > " + TAS + " ORDER BY start_time"; /*need to check privacy CLOSED AND SECRET */
 		List<Event> fbevents 	= client.executeQuery(query, Event.class);
 		
 		Dao dao = new Dao();
@@ -221,7 +221,7 @@ public class Event extends Model implements Serializable {
             		event.distance = String.format("%.2f", distance);
             		
                 	result.add(event);
-    			}
+    			} // TODO else delete from elc
     		}
         }
 		
@@ -354,7 +354,7 @@ public class Event extends Model implements Serializable {
 	
 	private Boolean IsNotPast() {
 		
-		return dtStart.isAfterNow();
+		return dtEnd.isAfterNow();
 	}
 	
 	public long getEid() {
