@@ -196,14 +196,15 @@ static controllers_friends_All *_ctrl;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    _searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
-    self.tableView.tableHeaderView = _searchBar;
-    _searchBar.delegate = self;
-    
-    self.tableView.tableFooterView = [[UIView alloc] init];
+
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
+    _searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+    _searchBar.delegate = self;
+    
+    self.tableView.tableHeaderView = _searchBar;
+    self.tableView.tableFooterView = [[UIView alloc] init];
+
     self.peekLeftAmount = 40.0f;
     [self.slidingViewController setAnchorLeftPeekAmount:self.peekLeftAmount];
     self.slidingViewController.underRightWidthLayout = ECVariableRevealWidth;

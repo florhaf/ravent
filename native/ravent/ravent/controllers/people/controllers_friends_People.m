@@ -164,10 +164,18 @@ static customNavigationController *_ctrl;
 {
     [super viewDidLoad];
     
-    UIBarButtonItem *allButton = [[UIBarButtonItem alloc] initWithTitle:@"Menu" style:UIBarButtonItemStylePlain target:self action:@selector(revealMenu:)];          
+    UIImage *menui = [UIImage imageNamed:@"menuButton"];
+    
+    UIButton *menub = [UIButton buttonWithType:UIButtonTypeCustom];
+    [menub addTarget:self action:@selector(revealMenu:) forControlEvents:UIControlEventTouchUpInside];
+    [menub setImage:menui forState:UIControlStateNormal];
+    [menub setFrame:CGRectMake(0, 0, menui.size.width, menui.size.height)];
+    
+    UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithCustomView:menub];
+    self.navigationItem.leftBarButtonItem = menuButton;        
     UIBarButtonItem *flipButton = [[UIBarButtonItem alloc] initWithTitle:@"All" style:UIBarButtonItemStylePlain target:self action:@selector(revealAll:)];          
     
-    self.navigationItem.leftBarButtonItem = allButton;
+    self.navigationItem.leftBarButtonItem = menuButton;
     self.navigationItem.rightBarButtonItem = flipButton;
     
     // make the header clickable
