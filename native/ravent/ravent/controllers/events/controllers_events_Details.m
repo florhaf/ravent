@@ -7,7 +7,7 @@
 //
 
 #import "controllers_events_Details.h"
-
+#import "YRDropdownView.h"
 #import "JBAsyncImageView.h"
 #import "controllers_friends_share.h"
 #import "controllers_events_Description.h"
@@ -73,6 +73,37 @@
 
 - (void)newRating:(int)rating {
 
+    [_voteLoading setHidden:NO];
+    [_header bringSubviewToFront:_voteLoading];
+    [_header sendSubviewToBack:_voteView];
+    [((UIActivityIndicatorView *)[_voteLoading.subviews objectAtIndex:0]) startAnimating];
+        
+    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+    
+    [params setValue:[NSNumber numberWithInt:rating] forKey:@"vote"];
+    [params setValue:_user.uid forKey:@"userID"];
+    [params setValue:_event.eid forKey:@"eventID"];
+    
+    _event.delegate = self;
+    [_event vote:params success:@selector(onVoteSuccess:) failure:@selector(onVoteFailure:) sender:_voteView];
+}
+
+- (void)onVoteSuccess:(NSString *)response
+{
+    
+}
+
+- (void)onVoteFailure:(NSMutableDictionary *)response
+{
+    [_voteLoading setHidden:YES];
+    
+    NSString *errorMsg = (NSString *)[response valueForKey:@"statusCode"];
+        
+    [YRDropdownView showDropdownInView:self.view 
+                                 title:@"Error" 
+                                detail:errorMsg
+                                 image:[UIImage imageNamed:@"dropdown-alert"]
+                              animated:YES];
 }
 
 #pragma mark - View lifecycle

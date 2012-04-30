@@ -323,8 +323,6 @@ static models_User *_crtUser = nil;
     _callbackResponseFailure = failure;
     _sender = sender;
     
-//    RKLogConfigureByName("RestKit/Network", RKLogLevelTrace);
-    
     [[RKClient sharedClient] put:[@"followings" appendQueryParams:params] params:nil delegate:self];
 }
 

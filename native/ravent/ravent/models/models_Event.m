@@ -13,6 +13,8 @@
 
 @synthesize delegate = _delegate;
 @synthesize callback = _callback;
+@synthesize callbackResponseSuccess = _callbackResponseSuccess;
+@synthesize callbackResponseFailure = _callbackResponseFailure;
 @synthesize eid = _eid;
 @synthesize name = _name;
 @synthesize location = _location;
@@ -119,6 +121,15 @@
     [_manager loadObjectsAtResourcePath:resourcePath objectMapping:objectMapping delegate:self];     
 }
 
+- (void)vote:(NSMutableDictionary *)params success:(SEL)success failure:(SEL)failure sender:(id)sender;
+{
+    _callbackResponseSuccess = success;
+    _callbackResponseFailure = failure;
+    _sender = sender;
+    
+    [[RKClient sharedClient] put:[@"vote" appendQueryParams:params] params:nil delegate:self];
+}
+
 - (void)objectLoader:(RKObjectLoader *)objectLoader didLoadObjects:(NSArray *)objects
 {  
     #pragma clang diagnostic push
@@ -135,6 +146,32 @@
     #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
     [_delegate performSelector:_callback withObject:objects];
     #pragma clang diagnostic pop
+}
+
+- (void)request:(RKRequest *)request didLoadResponse:(RKResponse *)response
+{
+    if ([request isGET]) {
+        
+        return;
+    }
+    
+    if ([response isOK]) {
+        
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+        [_delegate performSelector:_callbackResponseSuccess withObject:[response bodyAsString]];
+#pragma clang diagnostic pop   
+    } else {
+        
+        NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+        [dic setValue:[NSString stringWithFormat:@"status code: %d", response.statusCode] forKey:@"statusCode"];
+        [dic setValue:_sender forKey:@"sender"];
+        
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+        [_delegate performSelector:_callbackResponseFailure withObject:dic];
+#pragma clang diagnostic pop
+    }
 }
 
 - (void)cancelAllRequests

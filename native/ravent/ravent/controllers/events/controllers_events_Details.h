@@ -25,6 +25,7 @@
     IBOutlet UILabel *_headerVoteLabel;
     IBOutlet UIButton *_headerAddButton;
     IBOutlet UIView *_headerScore;
+    IBOutlet UIView *_voteLoading;
     
     IBOutlet JBAsyncImageView *_headerImage;
     IBOutlet JBAsyncImageView *_mapImage;
@@ -37,5 +38,8 @@
 - (IBAction)descriptionButton_Tap:(id)sender;
 - (IBAction)feedButton_Tap:(id)sender;
 - (IBAction)mapButton_Tap:(id)sender;
+
+- (void)onVoteSuccess:(NSString *)response;
+- (void)onVoteFailure:(NSMutableDictionary *)response;
 
 @end

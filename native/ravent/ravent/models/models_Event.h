@@ -10,10 +10,15 @@
 #import <RestKit/RestKit.h>
 #import <MapKit/MapKit.h>
 
-@interface models_Event : NSObject<RKObjectLoaderDelegate, MKAnnotation> {
+@interface models_Event : NSObject<RKObjectLoaderDelegate, RKRequestDelegate, MKAnnotation> {
     
     id __unsafe_unretained _delegate;
     SEL _callback;
+    
+    // callback for raw response
+    SEL _callbackResponseSuccess;
+    SEL _callbackResponseFailure;
+    id _sender;
     
     RKObjectManager *_manager;    
     
@@ -39,6 +44,9 @@
 @property (unsafe_unretained) id delegate;
 @property (nonatomic, assign) SEL callback;
 
+@property (nonatomic, assign) SEL callbackResponseSuccess;
+@property (nonatomic, assign) SEL callbackResponseFailure;
+
 @property (nonatomic, retain) NSString *eid;
 @property (nonatomic, retain) NSString *name;
 @property (nonatomic, retain) NSString *location;
@@ -60,6 +68,7 @@
 - (id)initWithDelegate:(NSObject *)del andSelector:(SEL)sel;
 - (void)loadEventsWithParams:(NSMutableDictionary *)params;
 - (void)loadDescription;
+- (void)vote:(NSMutableDictionary *)params success:(SEL)success failure:(SEL)failure sender:(id)sender;
 - (void)cancelAllRequests;
 
 + (NSMutableDictionary *)getGroupedData:(NSArray *)data;

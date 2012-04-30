@@ -28,8 +28,8 @@
 - (void)setupView {
 	self.clipsToBounds = YES;
 	currentIdx = -1;
-	star = [self imageWithImage:[UIImage imageNamed:@"like-gray"] convertToSize:CGSizeMake(48, 48)] ;
-	highlightedStar = [self imageWithImage:[UIImage imageNamed:@"like"] convertToSize:CGSizeMake(48, 48)] ;    
+	star = [self imageWithImage:[UIImage imageNamed:@"like-gray"] convertToSize:CGSizeMake(56, 56)] ;
+	highlightedStar = [self imageWithImage:[UIImage imageNamed:@"like"] convertToSize:CGSizeMake(56, 56)] ;    
 	for (int i=0; i<numberOfStars; i++) {
 		DLStarView *v = [[DLStarView alloc] initWithDefault:self.star highlighted:self.highlightedStar position:i];
 		[self addSubview:v];

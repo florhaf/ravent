@@ -41,7 +41,7 @@
 	
 	float height = self.frame.size.height;
 	float frameHeight = _frame.size.height;
-	float newY = (frameHeight-height)/2;
+	float newY = (frameHeight-height)/2 + 6;
 	
 	float widthOfStars = self.frame.size.width * numberOfStars;
 	float frameWidth = _frame.size.width;
