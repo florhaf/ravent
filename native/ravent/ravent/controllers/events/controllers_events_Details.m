@@ -90,6 +90,12 @@
     _headerTimeLabel.text = [NSString stringWithFormat:@"%@ - %@", _event.timeStart, _event.timeEnd];
     _headerDistanceLabel.text = [NSString stringWithFormat:@"%@ mi.", _event.distance];
     
+    for (int i = 0; i < [_event.score intValue]; i++) {
+        
+        UIImageView *image = (UIImageView *)[_headerScore.subviews objectAtIndex:i];
+        image.image = [UIImage imageNamed:@"like"];
+    }
+    
     _voteView = [[DLStarRatingControl alloc] initWithFrame:_headerVoteLabel.frame andStars: 5];
     _voteView.delegate = self;
     [_header addSubview:_voteView];

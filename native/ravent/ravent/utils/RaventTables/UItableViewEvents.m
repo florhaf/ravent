@@ -114,6 +114,12 @@
     _itemTime.text = [NSString stringWithFormat:@"%@ - %@", event.timeStart, event.timeEnd];
     _itemDistance.text = [NSString stringWithFormat:@"%@ mi.", event.distance];
     
+    for (int i = 0; i < [event.score intValue]; i++) {
+        
+        UIImageView *image = (UIImageView *)[_itemScore.subviews objectAtIndex:i];
+        image.image = [UIImage imageNamed:@"like"];
+    }
+    
     [self resizeAndPositionCellItem];
     
     [cell.contentView addSubview:_item];

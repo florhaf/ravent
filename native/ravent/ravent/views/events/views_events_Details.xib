@@ -417,7 +417,6 @@
 						<string key="NSFrame">{{15, 468}, {147, 21}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:328</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -635,6 +634,14 @@
 						<reference key="destination" ref="339250164"/>
 					</object>
 					<int key="connectionID">100</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">_headerScore</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="374378433"/>
+					</object>
+					<int key="connectionID">101</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
@@ -880,7 +887,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">100</int>
+			<int key="maxID">101</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -977,6 +984,7 @@
 						<string key="_headerImage">JBAsyncImageView</string>
 						<string key="_headerLocationLabel">UILabel</string>
 						<string key="_headerNameLabel">UILabel</string>
+						<string key="_headerScore">UIView</string>
 						<string key="_headerTimeLabel">UILabel</string>
 						<string key="_headerVoteLabel">UILabel</string>
 						<string key="_mapImage">JBAsyncImageView</string>
@@ -1009,6 +1017,10 @@
 						<object class="IBToOneOutletInfo" key="_headerNameLabel">
 							<string key="name">_headerNameLabel</string>
 							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="_headerScore">
+							<string key="name">_headerScore</string>
+							<string key="candidateClassName">UIView</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="_headerTimeLabel">
 							<string key="name">_headerTimeLabel</string>

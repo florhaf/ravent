@@ -71,7 +71,6 @@
 
 - (void)loadEventsWithParams:(NSMutableDictionary *)params
 {
-    
     NSString *resourcePath = [@"events" appendQueryParams:params];
        
     RKObjectMapping *objectMapping = [RKObjectMapping mappingForClass:[models_Event class]];
@@ -175,7 +174,8 @@
     return result;
 }
 
-- (NSString *)title {
+- (NSString *)title
+{    
     if ([_name isKindOfClass:[NSNull class]]) {
      
         return @"Unknown charge";
@@ -191,7 +191,8 @@
     }
 }
 
-- (NSString *)subtitle {
+- (NSString *)subtitle
+{    
     return _location;
 }
 

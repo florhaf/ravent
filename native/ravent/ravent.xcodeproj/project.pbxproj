@@ -1170,13 +1170,13 @@
 					"$(SOURCE_ROOT)/Kal",
 					"\"$(SOURCE_ROOT)/RestKit/Build\"",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
 				LIBRARY_SEARCH_PATHS = "";
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-all_load",
 				);
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "BBD39F10-36AF-4D4E-BBA0-1DF5EEB94697";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "BD271CA5-C9BA-49BE-B7F2-E75121BC7109";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 			};
@@ -1199,14 +1199,14 @@
 					"$(SOURCE_ROOT)/Kal",
 					"\"$(SOURCE_ROOT)/RestKit/Build\"",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
 				LIBRARY_SEARCH_PATHS = "\"$(SOURCE_ROOT)/RestKit/Build/$(BUILD_STYLE)-$(PLATFORM_NAME)\"";
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-all_load",
 				);
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "BBD39F10-36AF-4D4E-BBA0-1DF5EEB94697";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "BD271CA5-C9BA-49BE-B7F2-E75121BC7109";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				VALIDATE_PRODUCT = YES;
@@ -1229,7 +1229,7 @@
 					"\"$(SRCROOT)/facebook-ios-sdk\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "BBD39F10-36AF-4D4E-BBA0-1DF5EEB94697";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "BD271CA5-C9BA-49BE-B7F2-E75121BC7109";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = NO;
 				WRAPPER_EXTENSION = app;
@@ -1252,7 +1252,7 @@
 					"\"$(SRCROOT)/facebook-ios-sdk\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "BBD39F10-36AF-4D4E-BBA0-1DF5EEB94697";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "BD271CA5-C9BA-49BE-B7F2-E75121BC7109";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = NO;
 				WRAPPER_EXTENSION = app;

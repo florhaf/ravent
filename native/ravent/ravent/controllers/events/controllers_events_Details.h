@@ -24,6 +24,7 @@
     IBOutlet UILabel *_headerDistanceLabel;
     IBOutlet UILabel *_headerVoteLabel;
     IBOutlet UIButton *_headerAddButton;
+    IBOutlet UIView *_headerScore;
     
     IBOutlet JBAsyncImageView *_headerImage;
     IBOutlet JBAsyncImageView *_mapImage;
