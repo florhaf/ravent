@@ -164,7 +164,16 @@ static models_User *_crtUser = nil;
     
     NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
     [params setValue:_uid forKey:@"userID"];
-    [params setValue:_accessToken forKey:@"access_token"];
+    
+    if (_accessToken == nil || [_accessToken isEqualToString:@""]) {
+     
+        // load a friend
+        [params setValue:[models_User crtUser].accessToken forKey:@"access_token"];
+    } else {
+        
+        // load crt user
+        [params setValue:_accessToken forKey:@"access_token"];
+    }
     
     NSString *resourcePath = [@"users" appendQueryParams:params];
     

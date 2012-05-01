@@ -90,7 +90,13 @@
 
 - (void)onVoteSuccess:(NSString *)response
 {
+    [_voteLoading setHidden:YES];
     
+    [YRDropdownView showDropdownInView:self.view 
+                                 title:@"Success" 
+                                detail:@"Vote submitted"
+                                 image:[UIImage imageNamed:@"dropdown-alert"]
+                              animated:YES];
 }
 
 - (void)onVoteFailure:(NSMutableDictionary *)response
