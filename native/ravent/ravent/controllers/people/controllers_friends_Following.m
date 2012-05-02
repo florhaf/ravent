@@ -125,7 +125,6 @@
     [self.navigationController pushViewController:details animated:YES];
 }
 
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];

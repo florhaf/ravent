@@ -145,6 +145,8 @@
 		DF1EE843151D24CF0037BE6C /* controllers_events_Events.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1EE842151D24CF0037BE6C /* controllers_events_Events.m */; };
 		DF223E33153DCECE008CD88A /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF223E32153DCECD008CD88A /* CoreLocation.framework */; };
 		DF223E82153E201A008CD88A /* views_Empty.xib in Resources */ = {isa = PBXBuildFile; fileRef = DF223E81153E201A008CD88A /* views_Empty.xib */; };
+		DF2A31D41551AD5C00AC01B0 /* allButton.png in Resources */ = {isa = PBXBuildFile; fileRef = DF2A31D21551AD5C00AC01B0 /* allButton.png */; };
+		DF2A31D51551AD5C00AC01B0 /* allButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF2A31D31551AD5C00AC01B0 /* allButton@2x.png */; };
 		DF39E8091525275F0080EDA0 /* ActionDispatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = DF39E8081525275E0080EDA0 /* ActionDispatcher.m */; };
 		DF39E80C152527A50080EDA0 /* Action.m in Sources */ = {isa = PBXBuildFile; fileRef = DF39E80B152527A50080EDA0 /* Action.m */; };
 		DF50EDAF1537732700ACBC4A /* customNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF50EDAE1537732700ACBC4A /* customNavigationController.m */; };
@@ -487,6 +489,8 @@
 		DF1EE842151D24CF0037BE6C /* controllers_events_Events.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = controllers_events_Events.m; sourceTree = "<group>"; };
 		DF223E32153DCECD008CD88A /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		DF223E81153E201A008CD88A /* views_Empty.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = views_Empty.xib; sourceTree = "<group>"; };
+		DF2A31D21551AD5C00AC01B0 /* allButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = allButton.png; sourceTree = "<group>"; };
+		DF2A31D31551AD5C00AC01B0 /* allButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "allButton@2x.png"; sourceTree = "<group>"; };
 		DF39E8071525275E0080EDA0 /* ActionDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActionDispatcher.h; sourceTree = "<group>"; };
 		DF39E8081525275E0080EDA0 /* ActionDispatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActionDispatcher.m; sourceTree = "<group>"; };
 		DF39E80A152527A50080EDA0 /* Action.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Action.h; sourceTree = "<group>"; };
@@ -1044,6 +1048,8 @@
 		DF629E6D153F8A5900BCA804 /* buttons */ = {
 			isa = PBXGroup;
 			children = (
+				DF2A31D21551AD5C00AC01B0 /* allButton.png */,
+				DF2A31D31551AD5C00AC01B0 /* allButton@2x.png */,
 				DF09C0961550B32400FFD51E /* backButton.png */,
 				DF09C0971550B32400FFD51E /* backButton@2x.png */,
 				DF09BF77154F053100FFD51E /* detailsButtonCal.png */,
@@ -1714,6 +1720,8 @@
 				DF09C0981550B32400FFD51E /* backButton.png in Resources */,
 				DF09C0991550B32400FFD51E /* backButton@2x.png in Resources */,
 				DF09C0A21551980600FFD51E /* views_Table_Searchable.xib in Resources */,
+				DF2A31D41551AD5C00AC01B0 /* allButton.png in Resources */,
+				DF2A31D51551AD5C00AC01B0 /* allButton@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

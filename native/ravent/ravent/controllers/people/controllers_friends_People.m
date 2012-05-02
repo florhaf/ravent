@@ -165,18 +165,21 @@ static customNavigationController *_ctrl;
     [super viewDidLoad];
     
     UIImage *menui = [UIImage imageNamed:@"menuButton"];
-    
     UIButton *menub = [UIButton buttonWithType:UIButtonTypeCustom];
     [menub addTarget:self action:@selector(revealMenu:) forControlEvents:UIControlEventTouchUpInside];
     [menub setImage:menui forState:UIControlStateNormal];
     [menub setFrame:CGRectMake(0, 0, menui.size.width, menui.size.height)];
-    
     UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithCustomView:menub];
     self.navigationItem.leftBarButtonItem = menuButton;        
-    UIBarButtonItem *flipButton = [[UIBarButtonItem alloc] initWithTitle:@"All" style:UIBarButtonItemStylePlain target:self action:@selector(revealAll:)];          
+        
     
-    self.navigationItem.leftBarButtonItem = menuButton;
-    self.navigationItem.rightBarButtonItem = flipButton;
+    UIImage *alli = [UIImage imageNamed:@"allButton"];
+    UIButton *allb = [UIButton buttonWithType:UIButtonTypeCustom];
+    [allb addTarget:self action:@selector(revealAll:) forControlEvents:UIControlEventTouchUpInside];
+    [allb setImage:alli forState:UIControlStateNormal];
+    [allb setFrame:CGRectMake(0, 0, alli.size.width, alli.size.height)];
+    UIBarButtonItem *allButton = [[UIBarButtonItem alloc] initWithCustomView:allb];       
+    self.navigationItem.rightBarButtonItem = allButton;
     
     // make the header clickable
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
