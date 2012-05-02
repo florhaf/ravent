@@ -89,14 +89,20 @@ static controllers_friends_All *_ctrl;
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    NSString *key = [_sortedKeys objectAtIndex:section];
-    
-    if (key != nil) {
-        
-        return [NSString stringWithFormat:@"%@", key];
-    } else {
+    if (_isSearching) {
         
         return @"";
+    } else {
+     
+        NSString *key = [_sortedKeys objectAtIndex:section];
+        
+        if (key != nil) {
+            
+            return [NSString stringWithFormat:@"%@", key];
+        } else {
+            
+            return @"";
+        }
     }
 }
 
@@ -109,9 +115,18 @@ static controllers_friends_All *_ctrl;
 {   
     UITableViewCell *cell = [super tableView:tableView cellForRowAtIndexPath:indexPath];
     
-    NSString *section = [_sortedKeys objectAtIndex:indexPath.section];
-    NSMutableArray *rows = [_groupedData objectForKey:section];
-    models_User *u = [rows objectAtIndex:indexPath.row];
+    models_User *u = nil;
+    if (tableView == self.searchDisplayController.searchResultsTableView)
+    {
+        u = [_filteredData objectAtIndex:indexPath.row];
+    }
+    else
+    {
+        NSString *section = [_sortedKeys objectAtIndex:indexPath.section];
+        NSMutableArray *rows = [_groupedData objectForKey:section];
+        u = [rows objectAtIndex:indexPath.row];
+    }
+    
     
     [[NSBundle mainBundle] loadNibNamed:@"views_friends_item_All" owner:self options:nil];
     
@@ -199,10 +214,6 @@ static controllers_friends_All *_ctrl;
 
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
-    _searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
-    _searchBar.delegate = self;
-    
-    self.tableView.tableHeaderView = _searchBar;
     self.tableView.tableFooterView = [[UIView alloc] init];
 
     self.peekLeftAmount = 40.0f;
@@ -212,8 +223,7 @@ static controllers_friends_All *_ctrl;
 
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
 {
-    [searchBar setShowsCancelButton:YES animated:YES];
-    _isSearching = YES;
+    [super searchBarTextDidBeginEditing:searchBar];
     
     [self.slidingViewController anchorTopViewOffScreenTo:ECLeft animations:^{
         CGRect frame = self.view.frame;
@@ -227,16 +237,9 @@ static controllers_friends_All *_ctrl;
     } onComplete:nil];
 }
 
-- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
-{
-    [self searchBarTextDidEndEditing:searchBar];
-    [searchBar resignFirstResponder];
-}
-
 - (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
 {
-    [searchBar setShowsCancelButton:NO animated:YES];    
-    _isSearching = NO;
+    [super searchBarTextDidEndEditing:searchBar];
     
     [self.slidingViewController anchorTopViewTo:ECLeft animations:^{
         CGRect frame = self.view.frame;

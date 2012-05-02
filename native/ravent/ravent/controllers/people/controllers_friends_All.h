@@ -8,15 +8,12 @@
 
 #import <Foundation/Foundation.h>
 #import "ECSlidingViewController.h"
-#import "UITableViewReloadable.h"
+#import "UITableViewSearchable.h"
 
-@interface controllers_friends_All : UITableViewReloadable<UISearchBarDelegate> {
+@interface controllers_friends_All : UITableViewSearchable {
     
     NSMutableDictionary *_following;
-    UISearchBar *_searchBar;
     IBOutlet UISwitch *_switch;
-    
-    BOOL _isSearching;
 }
 
 @property (nonatomic, unsafe_unretained) CGFloat peekLeftAmount;

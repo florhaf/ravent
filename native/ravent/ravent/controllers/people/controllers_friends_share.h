@@ -7,9 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "UITableViewReloadable.h"
+#import "UITableViewSearchable.h"
 
-@interface controllers_friends_share : UITableViewReloadable {
+@interface controllers_friends_share : UITableViewSearchable {
     
     NSArray *_invited;
     

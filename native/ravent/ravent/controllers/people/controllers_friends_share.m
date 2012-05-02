@@ -26,6 +26,8 @@
         
         _invited = invited;
         
+        self.title = @"Ravent";
+        
         [self loadData];
     }
     
@@ -74,14 +76,20 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    NSString *key = [_sortedKeys objectAtIndex:section];
-    
-    if (key != nil) {
-        
-        return [NSString stringWithFormat:@"%@", key];
-    } else {
+    if (_isSearching) {
         
         return @"";
+    } else {
+        
+        NSString *key = [_sortedKeys objectAtIndex:section];
+        
+        if (key != nil) {
+            
+            return [NSString stringWithFormat:@"%@", key];
+        } else {
+            
+            return @"";
+        }
     }
 }
 
@@ -89,9 +97,17 @@
 {   
     UITableViewCell *cell = [super tableView:tableView cellForRowAtIndexPath:indexPath];
     
-    NSString *section = [_sortedKeys objectAtIndex:indexPath.section];
-    NSMutableArray *rows = [_groupedData objectForKey:section];
-    models_User *u = [rows objectAtIndex:indexPath.row];
+    models_User *u = nil;
+    if (tableView == self.searchDisplayController.searchResultsTableView)
+    {
+        u = [_filteredData objectAtIndex:indexPath.row];
+    }
+    else
+    {
+        NSString *section = [_sortedKeys objectAtIndex:indexPath.section];
+        NSMutableArray *rows = [_groupedData objectForKey:section];
+        u = [rows objectAtIndex:indexPath.row];
+    }
     
     [[NSBundle mainBundle] loadNibNamed:@"views_friends_item_Share" owner:self options:nil];
     
