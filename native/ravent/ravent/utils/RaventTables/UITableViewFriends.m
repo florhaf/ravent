@@ -76,7 +76,17 @@
     
     controllers_friends_Details *details = [[controllers_friends_Details alloc] initWithUser:[user copy]];
     
-    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle: @"Back" style: UIBarButtonItemStyleBordered target:details action:@selector(cancellAllRequests)];
+    UIImage *menui = [UIImage imageNamed:@"backButton"];
+    
+    UIButton *menub = [UIButton buttonWithType:UIButtonTypeCustom];
+    [menub addTarget:details action:@selector(cancellAllRequests:) forControlEvents:UIControlEventTouchUpInside];
+    [menub setImage:menui forState:UIControlStateNormal];
+    [menub setFrame:CGRectMake(0, 0, menui.size.width, menui.size.height)];
+    
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:menub];
+    
+    //    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle: @"Back" style: UIBarButtonItemStyleBordered target:details action:@selector(cancellAllRequests)];
+    
     UIViewController *rootController = self;
     while (![rootController.parentViewController isKindOfClass:[UINavigationController class]]) {
         rootController = rootController.parentViewController;

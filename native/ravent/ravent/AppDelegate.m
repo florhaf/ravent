@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "JMC.h"
 
 @implementation AppDelegate
 
@@ -24,6 +25,13 @@
     self.window.rootViewController = self.appController;
     
     [self.window makeKeyAndVisible];
+    
+    
+    [[JMC sharedInstance] configureJiraConnect:@"https://connect.onjira.com/"
+                                    projectKey:@"NERDS"
+                                        apiKey:@"591451a6-bc59-4ca9-8840-b67f8c1e440f"];
+    
+    
     return YES;
 }
 

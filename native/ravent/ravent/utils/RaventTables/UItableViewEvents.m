@@ -140,6 +140,16 @@
 - (void)loadEventDetails:(models_Event *)event
 {
     controllers_events_Details *details = [[controllers_events_Details alloc] initWithEvent:[event copy]]; 
+    
+    UIImage *backi = [UIImage imageNamed:@"backButton"];
+    
+    UIButton *backb = [UIButton buttonWithType:UIButtonTypeCustom];
+    [backb addTarget:details action:@selector(cancellAllRequests:) forControlEvents:UIControlEventTouchUpInside];
+    [backb setImage:backi forState:UIControlStateNormal];
+    [backb setFrame:CGRectMake(0, 0, backi.size.width, backi.size.height)];
+    
+//    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:backb];
+      
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle: @"Back" style: UIBarButtonItemStyleBordered target:details action:@selector(cancellAllRequests)];
     UIViewController *rootController = self;
     
