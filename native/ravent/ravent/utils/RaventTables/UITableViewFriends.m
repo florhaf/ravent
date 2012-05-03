@@ -112,6 +112,7 @@
     UIView *footer = [[UIView alloc] init];
     [footer addSubview:label];
     [footer addSubview:myIndicator];
+    footer.backgroundColor = [UIColor clearColor];
     
     footer.frame = CGRectMake(0, 0, 320, 160);
     

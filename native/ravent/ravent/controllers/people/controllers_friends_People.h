@@ -29,20 +29,22 @@
     IBOutlet UILabel *_headerEventsLabel;
     IBOutlet JBAsyncImageView *_headerImage;
     
-    BOOL _isFollowingLoaded;
-    BOOL _isFollowersLoaded;
-    BOOL _isSpinnerShowing;
+    IBOutlet UISegmentedControl *_segmentedControl;
+    IBOutlet UIView *_container;
+    
+    BOOL _isFollowersVisible;
 }
 
 - (id)initWithUser:(models_User *)user;
 - (void)loadData;
 - (void)onCrtUserLoad:(NSArray *)objects;
 - (void)onMeTap;
-- (void)flipView;
-- (void)showSpinner;
-- (void)hideSpinner;
 - (void)revealMenu:(id)sender;
 - (void)revealAll:(id)sender;
+
+- (IBAction)onSegmentedControlValueChanged;
+
+- (void)uiview:(UIView *)uiview raceTo:(CGPoint)destination withSnapBack:(BOOL)withSnapBack;
 
 + (customNavigationController *)instance;
 

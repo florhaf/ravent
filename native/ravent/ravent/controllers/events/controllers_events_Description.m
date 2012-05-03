@@ -23,6 +23,8 @@
     if (self) {
         
         self.title = @"Ravent";
+        
+        //self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"backgroundLight"]];
 
         _event = event;
         _event.delegate = self;

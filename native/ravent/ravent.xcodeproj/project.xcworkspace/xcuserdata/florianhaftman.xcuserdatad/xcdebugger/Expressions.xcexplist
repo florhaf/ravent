@@ -19,6 +19,14 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "-[ECSlidingViewController anchorRightTopViewCenter]:ECSlidingViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.anchorRightRevealAmount">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "-[controllers_events_List tableView:cellForRowAtIndexPath:]:controllers_events_List.m">
          <PersistentStrings>
             <PersistentString
@@ -30,18 +38,10 @@
          contextName = "-[controllers_events_Details viewDidLoad]:controllers_events_Details.m">
          <PersistentStrings>
             <PersistentString
-               value = "_headerNameLabel.frame.size.height">
-            </PersistentString>
-            <PersistentString
                value = "NSLog(mapUrl)">
             </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "-[ECSlidingViewController anchorRightTopViewCenter]:ECSlidingViewController.m">
-         <PersistentStrings>
             <PersistentString
-               value = "self.anchorRightRevealAmount">
+               value = "_headerNameLabel.frame.size.height">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -137,6 +137,14 @@
       </ContextState>
       <ContextState
          contextName = "+[models_Event getGroupedData:]:models_Event.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[controllers_friends_People isLoaded:]:controllers_friends_People.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "_following.view">
+            </PersistentString>
+         </PersistentStrings>
       </ContextState>
       <ContextState
          contextName = "-[models_Event loadEventsWithParams:]:models_Event.m">

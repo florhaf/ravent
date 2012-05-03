@@ -28,8 +28,6 @@
         _event = [[models_Event alloc] initWithDelegate:self andSelector:@selector(onLoadEvents:)];
         
         [self loadDataWithUserLocation];
-        
-        
     }
     
     return self;

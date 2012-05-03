@@ -45,6 +45,8 @@
 	}
 	
 	[_refreshHeaderView refreshLastUpdatedDate];
+    
+    //self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"backgroundLight"]];
 }
 
 - (void)viewDidUnload

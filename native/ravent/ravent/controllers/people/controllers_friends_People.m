@@ -10,7 +10,7 @@
 #import "controllers_friends_All.h"
 #import "controllers_friends_Details.h"
 #import "models_User.h"
-#import "MBProgressHUD.h"
+
 #import "ActionDispatcher.h"
 
 @implementation controllers_friends_People
@@ -19,7 +19,7 @@ static customNavigationController *_ctrl;
 
 - (id)initWithUser:(models_User *)user
 {
-    self = [super init];
+    self = [super initWithNibName:@"views_friends_People" bundle:nil];
     
     if (self) {
         
@@ -27,53 +27,12 @@ static customNavigationController *_ctrl;
         _user = user;
           
         Action *loadAction = [[Action alloc] initWithDelegate:self andSelector:@selector(loadData)];
-        Action *isLoadedAction = [[Action alloc] initWithDelegate:self andSelector:@selector(isLoaded:)];
-        Action *showSpinnerAction = [[Action alloc] initWithDelegate:self andSelector:@selector(showSpinner)];
-        Action *hideSpinnerAction = [[Action alloc] initWithDelegate:self andSelector:@selector(hideSpinner)];
-        
         [[ActionDispatcher instance] add:loadAction named:@"reloadCurrentUser"];
-        [[ActionDispatcher instance] add:isLoadedAction named:@"followingIsLoaded"];
-        [[ActionDispatcher instance] add:showSpinnerAction named:@"showFollowSpinner"];
-        [[ActionDispatcher instance] add:hideSpinnerAction named:@"hideFollowSpinner"];
         
         [[NSBundle mainBundle] loadNibNamed:@"views_friends_header_Following" owner:self options:nil];
-        
-        CGRect frame = CGRectMake(0, 0, 320,  414 - _header.frame.size.height + 2);
-        _following = [[controllers_friends_Following alloc] initWithFrame:frame withUser:[_user copy] isFollowing:YES];
-        _followers = [[controllers_friends_Following alloc] initWithFrame:frame withUser:[_user copy] isFollowing:NO];
-        
-        [self addChildViewController:_following];
-        [self addChildViewController:_followers];
-        
-        _isFollowersLoaded = NO;
-        _isFollowingLoaded = NO;
     }
     
     return self;
-}
-
-- (void)isLoaded:(NSString *)isFollowing
-{
-    if ([isFollowing isEqualToString:@"true"]) {
-        
-        _isFollowingLoaded = YES;
-    } else {
-        
-        _isFollowersLoaded = YES;
-    }
-}
-
-- (void)showSpinner
-{
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-}
-
-- (void)hideSpinner
-{
-    if (_isFollowersLoaded || _isFollowingLoaded) {
-     
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
-    }
 }
 
 - (void)loadData
@@ -128,38 +87,6 @@ static customNavigationController *_ctrl;
     [self.navigationController pushViewController:details animated:YES];
 }
 
-- (void)showAllModal
-{
-    controllers_friends_All *friendsAll = [[controllers_friends_All alloc] initWithUser:[_user copy] following:_following.groupedData];
-    UINavigationController *friendsAllModal = [[UINavigationController alloc] initWithRootViewController:friendsAll];
-    
-    [self presentModalViewController:friendsAllModal animated:YES];
-}
-
-- (void)flipView
-{
-    UIView *ing = _following.view;
-    UIView *ers = _followers.view;
-    
-	[UIView beginAnimations:nil context:NULL];
-	[UIView setAnimationDuration:0.8];
-    [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft forView:[self.view.subviews objectAtIndex:1] cache:YES];
-	
-	if ([ing superview]) {
-        
-		[ing removeFromSuperview];
-		[[self.view.subviews objectAtIndex:1] addSubview:ers];
-        self.navigationItem.rightBarButtonItem.title = @"F'ing";
-    } else {
-        
-		[ers removeFromSuperview];
-		[[self.view.subviews objectAtIndex:1] addSubview:ing];
-        self.navigationItem.rightBarButtonItem.title = @"F'er";
-    }
-    
-	[UIView commitAnimations];
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -171,7 +98,6 @@ static customNavigationController *_ctrl;
     [menub setFrame:CGRectMake(0, 0, menui.size.width, menui.size.height)];
     UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithCustomView:menub];
     self.navigationItem.leftBarButtonItem = menuButton;        
-        
     
     UIImage *alli = [UIImage imageNamed:@"allButton"];
     UIButton *allb = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -181,19 +107,80 @@ static customNavigationController *_ctrl;
     UIBarButtonItem *allButton = [[UIBarButtonItem alloc] initWithCustomView:allb];       
     self.navigationItem.rightBarButtonItem = allButton;
     
-    // make the header clickable
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame = _header.frame;
     [btn addTarget:self action:@selector(onMeTap) forControlEvents:UIControlEventTouchUpInside];
     [_header addSubview:btn];
+
+    _following = [[controllers_friends_Following alloc] initWithUser:[_user copy] isFollowing:YES];
+    _followers = [[controllers_friends_Following alloc] initWithUser:[_user copy] isFollowing:NO];
+            
+    [self addChildViewController:_following];
+    [self addChildViewController:_followers];
     
-    UIView *tableContainer = [[UIView alloc] initWithFrame:CGRectMake(0, _header.frame.size.height, 320,  414 - _header.frame.size.height + 2)];
-    tableContainer.backgroundColor = [UIColor whiteColor];
+    _header.frame = CGRectMake(0, 0, _header.frame.size.width, _header.frame.size.height);
+    _following.view.frame = CGRectMake(0, 0, 320, _container.frame.size.height);
+    _followers.view.frame = CGRectMake(_following.view.frame.size.width, 0, 320, _container.frame.size.height);
     
     [self.view addSubview:_header];
-    [self.view addSubview:tableContainer];
+    [_container addSubview:_following.view];
+    [_container addSubview:_followers.view];
+}
+
+- (IBAction)onSegmentedControlValueChanged
+{    
+    if (!_isFollowersVisible) {
+     
+        [self uiview:_following.view raceTo:CGPointMake(-320, 0) withSnapBack:NO];
+        [self uiview:_followers.view raceTo:CGPointMake(0, 0) withSnapBack:YES];
+        _isFollowersVisible = YES;
+    } else {
+        
+        [self uiview:_following.view raceTo:CGPointMake(0, 0) withSnapBack:YES];
+        [self uiview:_followers.view raceTo:CGPointMake(320, 0) withSnapBack:NO];
+        _isFollowersVisible = NO;
+    }
+}
+
+- (void)uiview:(UIView *)uiview raceTo:(CGPoint)destination withSnapBack:(BOOL)withSnapBack
+{
+    CGPoint stopPoint = destination;
+    if (withSnapBack) {
+        // Determine our stop point, from which we will "snap back" to the final destination
+        int diffx = destination.x - uiview.frame.origin.x;
+        int diffy = destination.y - uiview.frame.origin.y;
+        if (diffx < 0) {
+            // Destination is to the left of current position
+            stopPoint.x -= 10.0;
+        } else if (diffx > 0) {
+            stopPoint.x += 10.0;
+        }
+        if (diffy < 0) {
+            // Destination is to the left of current position
+            stopPoint.y -= 10.0;
+        } else if (diffy > 0) {
+            stopPoint.y += 10.0;
+        }
+    }
     
-    [self showSpinner];
+    // Do the animation
+    [UIView animateWithDuration:0.5 
+                          delay:0.0 
+                        options:UIViewAnimationCurveEaseIn
+                     animations:^{
+                         uiview.frame = CGRectMake(stopPoint.x, stopPoint.y, uiview.frame.size.width, uiview.frame.size.height);
+                     }
+                     completion:^(BOOL finished) {
+                         if (withSnapBack) {
+                             [UIView animateWithDuration:0.2 
+                                                   delay:0.0 
+                                                 options:UIViewAnimationCurveLinear
+                                              animations:^{
+                                                  uiview.frame = CGRectMake(destination.x, destination.y, uiview.frame.size.width, uiview.frame.size.height);
+                                              }
+                                              completion:nil];
+                         }
+                     }];    
 }
 
 - (void)viewWillAppear:(BOOL)animated

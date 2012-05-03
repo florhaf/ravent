@@ -7,29 +7,29 @@
 //
 
 #import "controllers_friends_Following.h"
-
+#import "MBProgressHUD.h"
 #import "controllers_friends_Details.h"
 #import "ActionDispatcher.h"
 
 @implementation controllers_friends_Following
 
-- (id)initWithFrame:(CGRect)frame withUser:(models_User *)user isFollowing:(BOOL)value
+- (id)initWithUser:(models_User *)user isFollowing:(BOOL)value
 {
-    self = [super init];
+    self = [super initWithStyle:UITableViewStylePlain];
     
     if (self != nil) {
         
-        Action *action = [[Action alloc] initWithDelegate:self andSelector:@selector(loadDataWithSpinner)];
-        [[ActionDispatcher instance] add:action named:@"reloadFollowing"];
-        
         [[NSBundle mainBundle] loadNibNamed:@"views_friends_item_Following" owner:self options:nil];
         
-        _frame = frame;
         _isFollowing = value;
         _user = user;
         _user.delegate = self;
         _user.callback = @selector(onLoadFollowings:);
         
+        self.tableView.frame = CGRectMake(0, 0, 320, 392);
+        self.tableView.tableFooterView = [[UIView alloc] init];
+
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         [self loadData];
     }
     
@@ -59,14 +59,13 @@
 
 - (void)onLoadFollowings:(NSArray *)objects
 {   
-    [[ActionDispatcher instance] execute:@"hideFollowSpinner"];
-    
     [self onLoadData:objects withSuccess:^ {
         
         _data = objects;
         _groupedData = [models_User getGroupedData:_data];
         _sortedKeys = [[_groupedData allKeys] sortedArrayUsingSelector:@selector(compare:)];
     }];
+    
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
@@ -123,23 +122,6 @@
     
     [rootController.navigationItem setBackBarButtonItem: backButton];
     [self.navigationController pushViewController:details animated:YES];
-}
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    
-    self.tableView.tableFooterView = [[UIView alloc] init];
-    
-    self.view.frame = _frame;
-    
-    
-    if (_isFollowing) {
-        
-        [[self.parentViewController.view.subviews objectAtIndex:1] addSubview:self.view];
-    }
-    
-    [[ActionDispatcher instance] execute:@"followingIsLoaded" withBool:_isFollowing];
 }
 
 @end

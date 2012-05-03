@@ -20,7 +20,7 @@
     BOOL _isFollowing;
 }
 
-- (id)initWithFrame:(CGRect)frame withUser:(models_User *)user isFollowing:(BOOL)value;
+- (id)initWithUser:(models_User *)user isFollowing:(BOOL)value;
 - (void)onLoadFollowings:(NSArray *)objects;
 
 @end
