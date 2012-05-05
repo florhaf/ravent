@@ -15,6 +15,9 @@
     IBOutlet UIView *_itemScore;
     IBOutlet UILabel *_itemTime;
     IBOutlet UILabel *_itemDistance;
+    
+    IBOutlet UIImageView *_bgLeft;
+    IBOutlet UIImageView *_bgRight;
 }
 
 - (id)initWithUser:(models_User *)user;

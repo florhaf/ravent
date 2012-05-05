@@ -14,9 +14,6 @@
 
 @implementation controllers_events_Description
 
-@synthesize descriptionLabel = _descriptionLabel;
-@synthesize scrollview = _scrollview;
-
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil event:(models_Event *)event
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -54,21 +51,23 @@
         } else {
             
             _event.description = ((models_Event *)[objects objectAtIndex:0]).description;
+
+            _textView.text = _event.description;
             
-            CGFloat originalHeight = _descriptionLabel.frame.size.height;
-            CGFloat newHeight;
-            
-            _descriptionLabel.text = _event.description;
-            [_descriptionLabel sizeToFit];
-            
-            newHeight = _descriptionLabel.frame.size.height;
-            
-            CGFloat delta = newHeight - originalHeight;
-            
-            if (delta > 0) {
-                
-                _scrollview.contentSize = CGSizeMake(_scrollview.contentSize.width, _scrollview.contentSize.height + delta + _descriptionLabel.frame.origin.y);
-            } 
+//            CGFloat originalHeight = _descriptionLabel.frame.size.height;
+//            CGFloat newHeight;
+//            
+//            _descriptionLabel.text = _event.description;
+//            [_descriptionLabel sizeToFit];
+//            
+//            newHeight = _descriptionLabel.frame.size.height;
+//            
+//            CGFloat delta = newHeight - originalHeight;
+//            
+//            if (delta > 0) {
+//                
+//                _scrollview.contentSize = CGSizeMake(_scrollview.contentSize.width, _scrollview.contentSize.height + delta + _descriptionLabel.frame.origin.y);
+//            } 
         }
     } else {
         

@@ -51,7 +51,7 @@ typedef void (^success)();
 - (void)onLoadData:(NSArray *)objects withSuccess:(success)success;
 
 - (NSMutableArray *)subviews:(NSArray *)subviews BelowView:(UIView *)view;
-- (void)resizeAndPositionCellItem;
+- (CGFloat)resizeAndPositionCellItem;
 
 - (void)cancelAllRequests;
 

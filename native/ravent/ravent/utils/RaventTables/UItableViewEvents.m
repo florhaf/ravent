@@ -125,6 +125,17 @@
     return cell;
 }
 
+- (CGFloat)resizeAndPositionCellItem
+{
+    CGFloat delta = [super resizeAndPositionCellItem];
+    
+    _bgLeft.frame = CGRectMake(_bgLeft.frame.origin.x, _bgLeft.frame.origin.y, _bgLeft.frame.size.width, _bgLeft.frame.size.height + delta + 6);
+    
+    _bgRight.frame = CGRectMake(_bgRight.frame.origin.x, _bgRight.frame.origin.y, _bgRight.frame.size.width, _bgRight.frame.size.height + delta + 6);
+    
+    return delta;
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSString *section = [_sortedKeys objectAtIndex:indexPath.section];

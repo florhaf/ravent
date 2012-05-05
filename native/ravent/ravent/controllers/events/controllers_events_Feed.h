@@ -16,6 +16,7 @@
     models_Comment *_comment;
     
     IBOutlet UILabel *_itemTime;
+    
 }
 
 - (id)initWithEvent:(models_Event *)event;

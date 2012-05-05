@@ -105,21 +105,8 @@
 {
     [super viewDidLoad];
     
-    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(hideAllModal)];        
-    self.navigationItem.rightBarButtonItem = doneButton;
-    
     self.tableView.tableFooterView = [[UIView alloc] init];
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-}
-
-- (void)hideAllModal
-{
-    [self dismissModalViewControllerAnimated:YES];
-    
-    if (_comment != nil) {
-        
-        [_comment cancelAllRequests];
-    }
 }
 
 @end

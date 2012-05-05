@@ -11,7 +11,7 @@
 #import "JBAsyncImageView.h"
 #import "controllers_friends_share.h"
 #import "controllers_events_Description.h"
-#import "controllers_events_Feed.h"
+#import "controllers_events_FeedContainer.h"
 #import "controllers_events_Details_Map.h"
 
 @implementation controllers_events_Details
@@ -57,7 +57,8 @@
 
 - (IBAction)feedButton_Tap:(id)sender
 {
-    controllers_events_Feed *feedController = [[controllers_events_Feed alloc] initWithEvent:[_event copy]];
+    controllers_events_FeedContainer *feedController = [[controllers_events_FeedContainer alloc] initWithEvent:[_event copy]];
+    
     UINavigationController *feedModal = [[UINavigationController alloc] initWithRootViewController:feedController];
     
     [self presentModalViewController:feedModal animated:YES];

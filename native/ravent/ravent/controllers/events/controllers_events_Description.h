@@ -12,14 +12,10 @@
 
 @interface controllers_events_Description : UIViewController {
     
-    UILabel *_descriptionLabel;
-    UIScrollView *_scrollview;
+    IBOutlet UITextView *_textView;
     
     models_Event *_event;
 }
-
-@property (nonatomic, retain) IBOutlet UILabel *descriptionLabel;
-@property (nonatomic, retain) IBOutlet UIScrollView *scrollview;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil event:(models_Event *)event;
 

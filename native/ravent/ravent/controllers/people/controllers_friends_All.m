@@ -187,6 +187,15 @@ static controllers_friends_All *_ctrl;
         
         [_user follow:params success:@selector(onFollowSuccess:) failure:@selector(onFollowFailure:) sender:sender];
     }
+    
+    _isDirty = YES;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    _isDirty = NO;
 }
 
 - (void)onFollowSuccess:(NSString *)response

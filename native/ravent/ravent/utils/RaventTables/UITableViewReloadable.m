@@ -266,35 +266,35 @@
     return result;
 }
 
-- (void)resizeAndPositionCellItem
+- (CGFloat)resizeAndPositionCellItem
 {
     [_itemTitle sizeToFit];
     [_itemSubTitle sizeToFit];
     
-    CGFloat delta;
-    
-    delta = _itemTitle.frame.size.height - _titleSize.height;
-    if (delta > 0) {
+    CGFloat delta1 = _itemTitle.frame.size.height - _titleSize.height;
+    if (delta1 > 0) {
         
         NSMutableArray *subviewsBelowTitle = [self subviews:_item.subviews BelowView:_itemTitle];
         
         for (int i = 0; i < [subviewsBelowTitle count]; i++) {
             
             UIView *subview = [subviewsBelowTitle objectAtIndex:i];
-            subview.frame = CGRectMake(subview.frame.origin.x, subview.frame.origin.y + delta, subview.frame.size.width, subview.frame.size.height);
+            subview.frame = CGRectMake(subview.frame.origin.x, subview.frame.origin.y + delta1, subview.frame.size.width, subview.frame.size.height);
         }
     }
     
-    delta = _itemSubTitle.frame.size.height - _subTitleSize.height;
-    if (delta > 0) {
+    CGFloat delta2 = _itemSubTitle.frame.size.height - _subTitleSize.height;
+    if (delta2 > 0) {
         
         NSMutableArray *subviewsBelowSubTitle = [self subviews:_item.subviews BelowView:_itemSubTitle];
         for (int i = 0; i < [subviewsBelowSubTitle count]; i++) {
             
             UIView *subview = [subviewsBelowSubTitle objectAtIndex:i];
-            subview.frame = CGRectMake(subview.frame.origin.x, subview.frame.origin.y + delta, subview.frame.size.width, subview.frame.size.height);
+            subview.frame = CGRectMake(subview.frame.origin.x, subview.frame.origin.y + delta2, subview.frame.size.width, subview.frame.size.height);
         }
     }
+    
+    return delta1 + delta2;
 }
 
 @end
