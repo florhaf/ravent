@@ -23,9 +23,11 @@ public class Posts extends ServerResource {
 			
 			if (eventID == null) {
 				Post.FriendWallPost(accessToken, friendID, message);
-			} else {
-				Post.EventPost(accessToken, userID, eventID, attachment, message);
-			}
+			} else if (attachment != null) {
+				Post.EventPostWithAttachment(accessToken, userID, eventID, attachment, message);
+				} else {
+					Post.EventPost(accessToken, userID, eventID, message);
+				}
 			
 			result.setSuccess(true);
 			result.setRecords(null);
