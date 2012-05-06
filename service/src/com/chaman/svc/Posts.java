@@ -19,12 +19,12 @@ public class Posts extends ServerResource {
 			String friendID		= getQuery().getValues("friendid");
 			String eventID 		= getQuery().getValues("eid");
 			String message		= getQuery().getValues("message");
-			String attachement	= getQuery().getValues("attachement");
+			String attachment	= getQuery().getValues("attachment");
 			
 			if (eventID == null) {
 				Post.FriendWallPost(accessToken, friendID, message);
 			} else {
-				Post.EventPost(accessToken, userID, eventID, attachement, message);
+				Post.EventPost(accessToken, userID, eventID, attachment, message);
 			}
 			
 			result.setSuccess(true);
