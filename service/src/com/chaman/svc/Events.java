@@ -23,7 +23,7 @@ public class Events extends ServerResource {
 			
 			// TODO: get from query string
 			String searchTimeFrame = "48";
-			String searchRadius = "3";
+			String searchRadius = "30";
 			String searchLimit = "30";
 			
 			ArrayList<Model> events;

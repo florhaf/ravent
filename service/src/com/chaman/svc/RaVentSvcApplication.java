@@ -12,7 +12,7 @@ public class RaVentSvcApplication extends Application {
 		Router router = new Router(getContext());
 		
 		router.attach("/events", 		Events.class);
-		router.attach("/eventdetails", 		EventDetails.class);
+		router.attach("/eventdetails", 	EventDetails.class);
 		router.attach("/description", 	Descriptions.class);
 		router.attach("/comments",		Comments.class);
 		router.attach("/pictures",		Pictures.class);
@@ -20,9 +20,9 @@ public class RaVentSvcApplication extends Application {
 		router.attach("/attendings",	Attendings.class);
 		router.attach("/followings",	Followings.class);
 		router.attach("/users", 		Users.class);
-		
-		//router.attach("/rsvp",	Rsvp.class); // PUT access_token, eventID, userID, rsvp_status
-		//router.attach("/share",	Share.class); // PUT access_token, eventID, userID
+		router.attach("/post", 			Posts.class);
+		router.attach("/share",			Share.class);
+		router.attach("/rsvp",			Rsvp.class);
 		//router.attach("/upload",	Picture.class); // PUT access_token, eventID, userID, picture
 		
 		return router;

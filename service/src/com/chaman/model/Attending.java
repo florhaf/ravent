@@ -7,6 +7,7 @@ import com.restfb.DefaultFacebookClient;
 import com.restfb.Facebook;
 import com.restfb.FacebookClient;
 import com.restfb.exception.FacebookException;
+import com.restfb.types.FacebookType;
 
 public class Attending extends Model {
 
@@ -110,6 +111,19 @@ public class Attending extends Model {
 		}
  	
 		return result;
+	}
+	
+	public static void SetFacebookRsvp (String accessToken, String eid, String rsvp) {
+		
+		FacebookClient client	= new DefaultFacebookClient(accessToken);
+		
+		if (rsvp == "yes") {
+			client.publish(eid + "/attending", FacebookType.class);
+		} else if (rsvp == "no") {
+			client.publish(eid + "/declined", FacebookType.class);
+		} else {
+			client.publish(eid + "/maybe", FacebookType.class);
+		}
 	}
 	
 	public long getUid() {

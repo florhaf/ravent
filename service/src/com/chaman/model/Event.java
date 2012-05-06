@@ -175,6 +175,7 @@ public class Event extends Model implements Serializable {
     	    }else {
     	    	
     	    	e = e_cache;
+    	    	e.Format(timeZoneInMinutes);
     	    }
     	    result.add(e);
 		}
