@@ -55,11 +55,11 @@ public class Post  extends Model {
 		client.publish(friendID + "/feed", FacebookType.class, Parameter.with("message", message));
 	}
 
-	public static void EventPost(String accessToken, String userID, String eventID,String message) {
+	public static void EventPost(String accessToken, String userID, String eventID, String message) {
 		
 		FacebookClient client	= new DefaultFacebookClient(accessToken);
 		//TODO: add reference to ravent
-		client.publish(userID + "/feed", FacebookType.class, Parameter.with("message", message));
+		client.publish(eventID + "/feed", FacebookType.class, Parameter.with("message", message));
 	}
 	
 	public static void EventPostWithAttachment(String accessToken, String userID, String eventID, String attachment,String message) {
@@ -67,7 +67,7 @@ public class Post  extends Model {
 		FacebookClient client	= new DefaultFacebookClient(accessToken);
 		InputStream data = new ByteArrayInputStream(attachment.getBytes());
 		//TODO: add reference to ravent
-		client.publish(userID + "/feed", FacebookType.class, BinaryAttachment.with("Ravent", data), Parameter.with("message", message));
+		client.publish(eventID + "/feed", FacebookType.class, BinaryAttachment.with("Ravent", data), Parameter.with("message", message));
 	}
 	
 	public static void ShareEvent(String accessToken, String friendID, String eventID) {
