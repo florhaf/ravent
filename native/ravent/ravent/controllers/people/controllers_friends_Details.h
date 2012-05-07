@@ -22,5 +22,6 @@
 }
 
 - (void)onUserLoad:(NSArray *)objects;
+- (IBAction)onCommentTap:(id)sender;
 
 @end

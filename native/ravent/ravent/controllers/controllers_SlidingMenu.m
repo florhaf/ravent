@@ -13,6 +13,7 @@
 #import "controllers_stats_Stats.h"
 #import "customNavigationController.h"
 #import "controllers_Login.h"
+#import "JMC.h"
 
 @implementation controllers_SlidingMenu
 
@@ -26,7 +27,7 @@ static controllers_SlidingMenu *_ctrl;
     
     if (self) {
         
-        self.menuItems = [NSArray arrayWithObjects:@"Events", @"People", @"Calendar", @"Stats", nil];
+        self.menuItems = [NSArray arrayWithObjects:@"Events", @"People", @"Calendar", @"Stats", @"Feedback", nil];
     }
     
     return self;
@@ -124,7 +125,13 @@ static controllers_SlidingMenu *_ctrl;
                 newTopViewController = [controllers_calendar_Calendar instance];
             } else {
                 
-                newTopViewController = [controllers_stats_Stats instance];
+                if ([identifier isEqualToString:@"Stats"]) {
+                
+                    newTopViewController = [controllers_stats_Stats instance];
+                } else {
+                    
+                    newTopViewController = [[JMC sharedInstance] issuesViewController];
+                }
             }
         }
     }

@@ -8,6 +8,7 @@
 
 #import "controllers_friends_Details.h"
 #import "JBAsyncImageView.h"
+#import "postController.h"
 
 @implementation controllers_friends_Details
 
@@ -67,6 +68,15 @@
     footer.frame = CGRectMake(0, 0, 320, 160);
     
     self.tableView.tableFooterView = footer;
+}
+
+- (IBAction)onCommentTap:(id)sender
+{
+    postController *post = [[postController alloc] initWithNibName:@"views_Post" bundle:nil];
+    
+    UINavigationController *postModal = [[UINavigationController alloc] initWithRootViewController:post];
+    
+    [self presentModalViewController:postModal animated:YES];
 }
 
 - (void)onUserLoad:(NSArray *)objects

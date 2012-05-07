@@ -14,6 +14,7 @@
 @interface controllers_events_FeedContainer : UIViewController {
     
     controllers_events_Feed *_feedController;
+    models_Event *_event;
 }
 
 - (id)initWithEvent:(models_Event *)event;

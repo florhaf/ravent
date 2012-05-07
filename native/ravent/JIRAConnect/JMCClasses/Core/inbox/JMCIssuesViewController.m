@@ -20,6 +20,7 @@
 #import "UILabel+JMCVerticalAlign.h"
 #import "JMCMacros.h"
 #import "JMCRequestQueue.h"
+#import "controllers_SlidingMenu.h"
 
 static NSString *cellId = @"CommentCell";
 
@@ -105,16 +106,43 @@ static NSString *cellId = @"CommentCell";
     [[JMCRequestQueue sharedInstance] flushQueue];
     [super viewWillAppear:animated];
 
-    // If we are not the root of the stack, we don't show the close button
-    if ([self.navigationController.viewControllers count] > 1) {
-        self.navigationItem.leftBarButtonItem = nil;
+    // Added by Flo
+    UIImage *menui = [UIImage imageNamed:@"menuButton"];
+    
+    UIButton *menub = [UIButton buttonWithType:UIButtonTypeCustom];
+    [menub addTarget:self action:@selector(revealMenu:) forControlEvents:UIControlEventTouchUpInside];
+    [menub setImage:menui forState:UIControlStateNormal];
+    [menub setFrame:CGRectMake(0, 0, menui.size.width, menui.size.height)];
+    
+    UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithCustomView:menub];
+    self.navigationItem.leftBarButtonItem = menuButton;
+    
+    self.parentViewController.view.layer.shadowOpacity = 0.75f;
+    self.parentViewController.view.layer.shadowRadius = 10.0f;
+    self.parentViewController.view.layer.shadowColor = [UIColor blackColor].CGColor;
+    
+    
+    if (![self.slidingViewController.underLeftViewController isKindOfClass:[controllers_SlidingMenu class]]) {
+        self.slidingViewController.underLeftViewController  = [controllers_SlidingMenu instance];
     }
-    else {
-        self.navigationItem.leftBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:JMCLocalizedString(@"Close", @"Close navigation item")
-                                                                                  style:UIBarButtonItemStyleBordered
-                                                                                 target:self
-                                                                                 action:@selector(cancel:)] autorelease];
-    }
+    
+    [self.view addGestureRecognizer:self.slidingViewController.panGesture];
+    
+//    // If we are not the root of the stack, we don't show the close button
+//    if ([self.navigationController.viewControllers count] > 1) {
+//        self.navigationItem.leftBarButtonItem = nil;
+//    }
+//    else {
+//        self.navigationItem.leftBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:JMCLocalizedString(@"Close", @"Close navigation item")
+//                                                                                  style:UIBarButtonItemStyleBordered
+//                                                                                 target:self
+//                                                                                 action:@selector(cancel:)] autorelease];
+//    }
+}
+
+- (void)revealMenu:(id)sender
+{
+    [self.slidingViewController anchorTopViewTo:ECRight];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {

@@ -7,7 +7,7 @@
 //
 
 #import "UItableViewEvents.h"
-
+#import "QuartzCore/CALayer.h"
 #import "controllers_events_Details.h"
 
 @implementation UITableViewEvents
@@ -111,7 +111,7 @@
     _itemImage.imageURL = [NSURL URLWithString:event.picture];
     _itemTime.text = [NSString stringWithFormat:@"%@ - %@", event.timeStart, event.timeEnd];
     _itemDistance.text = [NSString stringWithFormat:@"%@ mi.", event.distance];
-    
+        
     for (int i = 0; i < [event.score intValue]; i++) {
         
         UIImageView *image = (UIImageView *)[_itemScore.subviews objectAtIndex:i];

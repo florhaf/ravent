@@ -27,10 +27,9 @@
     [self.window makeKeyAndVisible];
     
     
-    [[JMC sharedInstance] configureJiraConnect:@"https://connect.onjira.com/"
-                                    projectKey:@"NERDS"
-                                        apiKey:@"591451a6-bc59-4ca9-8840-b67f8c1e440f"];
-    
+    [[JMC sharedInstance] configureJiraConnect:@"https://ravent.atlassian.net/"
+                                    projectKey:@"RAV"
+                                        apiKey:@"eb74bda1-a5a5-4ac8-80ea-b0ce502c926a"];
     
     return YES;
 }

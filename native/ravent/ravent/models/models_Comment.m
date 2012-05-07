@@ -7,6 +7,7 @@
 //
 
 #import "models_Comment.h"
+#import <RestKit/JSONKit.h>
 
 @implementation models_Comment
 
@@ -16,6 +17,7 @@
 @synthesize message = _message;
 @synthesize pictureContent = _pictureContent;
 @synthesize time = _time;
+@synthesize uid = _uid;
 
 //#define SERVICE_URL @"http://air.local:8888"
 #define SERVICE_URL @"http://raventsvc.appspot.com"
@@ -52,6 +54,54 @@
     
     [_manager.mappingProvider setMapping:objectMapping forKeyPath:@"records"];
     [_manager loadObjectsAtResourcePath:resourcePath objectMapping:objectMapping delegate:self]; 
+}
+
+- (void)post:(NSMutableDictionary *)params success:(SEL)success failure:(SEL)failure
+{
+    _callbackResponseSuccess = success;
+    _callbackResponseFailure = failure;
+    
+    [[RKClient sharedClient] put:[@"post" appendQueryParams:params] params:nil delegate:self];
+}
+
+- (void)request:(RKRequest *)request didLoadResponse:(RKResponse *)response
+{
+    if ([request isGET]) {
+        
+        return;
+    }
+    
+    if ([response isOK]) {
+        
+        NSDictionary *responseAsDic = [[response bodyAsString] objectFromJSONString];
+        
+        if ([[NSString stringWithFormat:@"%@", [responseAsDic valueForKey:@"success"]] isEqualToString:@"0"]) {
+         
+            NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+            [dic setValue:[NSString stringWithFormat:@"%@", [responseAsDic valueForKey:@"message"]] forKey:@"statusCode"];
+            
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+            [_delegate performSelector:_callbackResponseFailure withObject:dic];
+#pragma clang diagnostic pop
+        } else {
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+            [_delegate performSelector:_callbackResponseSuccess withObject:[response bodyAsString]];
+#pragma clang diagnostic pop   
+            
+        }
+    } else {
+        
+        NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+        [dic setValue:[NSString stringWithFormat:@"status code: %d", response.statusCode] forKey:@"statusCode"];
+        
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+        [_delegate performSelector:_callbackResponseFailure withObject:dic];
+#pragma clang diagnostic pop
+    }
 }
 
 - (void)objectLoader:(RKObjectLoader *)objectLoader didLoadObjects:(NSArray *)objects

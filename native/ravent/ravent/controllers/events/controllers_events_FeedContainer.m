@@ -21,6 +21,7 @@
     if (self != nil) {
         
         self.title = @"Ravent";
+        _event = event;
         _feedController = [[controllers_events_Feed alloc] initWithEvent:event];
         _feedController.view.frame = CGRectMake(0, 0, 320, 372);
         [self.view addSubview:_feedController.view];
@@ -42,6 +43,8 @@
 - (IBAction)onCommentTap:(id)sender
 {
     postController *post = [[postController alloc] initWithNibName:@"views_Post" bundle:nil];
+    post.isForEvent = YES;
+    post.toId = _event.eid;
     
     UINavigationController *postModal = [[UINavigationController alloc] initWithRootViewController:post];
     

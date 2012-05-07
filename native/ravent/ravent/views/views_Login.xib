@@ -96,7 +96,7 @@
 						</object>
 						<object class="NSCustomResource" key="IBUINormalBackgroundImage">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">button.png</string>
+							<string key="NSResourceName">regularButton.png</string>
 						</object>
 						<object class="IBUIFontDescription" key="IBUIFontDescription">
 							<int key="type">2</int>
@@ -357,7 +357,7 @@
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
 			<string key="background.png">{640, 920}</string>
-			<string key="button.png">{599, 85}</string>
+			<string key="regularButton.png">{556, 90}</string>
 			<string key="title.png">{196, 51}</string>
 		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">1181</string>

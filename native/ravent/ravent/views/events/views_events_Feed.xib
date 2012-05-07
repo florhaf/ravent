@@ -42,6 +42,7 @@
 						<string key="NSFrame">{{0, 372}, {320, 44}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
@@ -49,16 +50,9 @@
 						<int key="IBUIBarStyle">2</int>
 						<array class="NSMutableArray" key="IBUIItems">
 							<object class="IBUIBarButtonItem" id="561776403">
-								<string key="IBUITitle">Comment</string>
+								<string key="IBUITitle">Post a comment</string>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-								<float key="IBUIWidth">150</float>
-								<int key="IBUIStyle">1</int>
-								<reference key="IBUIToolbar" ref="747286688"/>
-							</object>
-							<object class="IBUIBarButtonItem" id="327585490">
-								<string key="IBUITitle">Picture</string>
-								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-								<float key="IBUIWidth">150</float>
+								<float key="IBUIWidth">305</float>
 								<int key="IBUIStyle">1</int>
 								<reference key="IBUIToolbar" ref="747286688"/>
 							</object>
@@ -140,18 +134,12 @@
 						<reference key="object" ref="747286688"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="561776403"/>
-							<reference ref="327585490"/>
 						</array>
 						<reference key="parent" ref="191373211"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">6</int>
 						<reference key="object" ref="561776403"/>
-						<reference key="parent" ref="747286688"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">7</int>
-						<reference key="object" ref="327585490"/>
 						<reference key="parent" ref="747286688"/>
 					</object>
 				</array>
@@ -164,7 +152,6 @@
 				<string key="1.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="5.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="6.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<string key="7.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
 			<nil key="activeLocalization"/>
