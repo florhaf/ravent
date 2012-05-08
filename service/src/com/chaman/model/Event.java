@@ -152,13 +152,11 @@ public class Event extends Model implements Serializable {
 					
     	    		if (q.count() == 0) {
 			        	
-    	    			e.Score(v_graph);
     	    			//e.getNb_invited(accessToken);
     	    			EventLocationCapable elc = new EventLocationCapable(e);
     	    			dao.ofy().put(elc);
     	    		} else {
 			        	
-    	    			e.Score(v_graph);
     	    			// update score in DB
     	    			// update nb invited in DB		        	
     	    		}
@@ -171,13 +169,16 @@ public class Event extends Model implements Serializable {
     	    		e.distance = "N/A";
     	    	}
     	    	
-    	    	syncCache.put(e.eid, e); // Add Event to cache
+    	    	e.Score(v_graph);
     	    }else {
     	    	
     	    	e = e_cache;
     	    	e.Format(timeZoneInMinutes);
+    	    	Venue v_graph = new Venue(accessToken, e.venue_id);
+    	    	e.Score(v_graph);
     	    }
     	    result.add(e);
+	    	syncCache.put(e.eid, e); // Add Event to cache
 		}
 		
 		return result;
@@ -193,16 +194,16 @@ public class Event extends Model implements Serializable {
 		
 		Dao dao = new Dao();
 		
-		MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
-		
-		Event e_graph = new Event();
-		
 		LocationCapableRepositorySearch<EventLocationCapable> ofySearch = new OfyEntityLocationCapableRepositorySearchImpl(dao.ofy(), timeZone, searchTimeFrame);
 		List<EventLocationCapable> l = GeocellManager.proximityFetch(new Point(Double.parseDouble(userLatitude), Double.parseDouble(userLongitude)), searchLimit, searchRadius * 1000, ofySearch);
 		
 		FacebookClient client 	= new DefaultFacebookClient(accessToken);
 		String properties 		= "eid, name, pic, start_time, end_time, venue, location, host, privacy";
-	
+		
+		MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
+		
+		Event e_graph = new Event();	
+		
 		int timeZoneInMinutes = Integer.parseInt(timeZone);
 		
         for (EventLocationCapable e : l) {
@@ -327,14 +328,37 @@ public class Event extends Model implements Serializable {
 	}
 	
 	private void Score(Venue v) {
-		
+
+		// offcourse this is not the final scoring algo :)
 		if (v != null){
 			
 			int likes = v.likes != null ? Integer.valueOf(v.likes) : 0;
 			int checkins = v.checkins != null ? Integer.valueOf(v.checkins) : 0;
 			int talking_about_count = v.talking_about_count != null ? Integer.valueOf(v.talking_about_count) : 0;	
 			double res = 0;
-			// offcourse this is not the final scoring algo :)
+
+			
+			Dao dao = new Dao();
+			
+			MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
+			Vote v_cache; 		
+			v_cache = (Vote) syncCache.get(String.valueOf(this.eid)); // read from vote cache
+			
+			if (v_cache == null) {
+		    	
+		    	//get from DS
+		    	Vote dsvote = null;
+		    	dsvote = dao.ofy().find(Vote.class, String.valueOf(this.eid));
+		    	
+		    	if (dsvote != null) {
+		    		
+		    		res = dsvote.getVote_avg();
+		    	}
+			} else {
+				
+				res = v_cache.vote_avg;
+			}
+			
 			if (likes >= 1 && likes < 1000){
 				res = res + 0.5;
 			}
@@ -365,7 +389,7 @@ public class Event extends Model implements Serializable {
 				res = res + 2;
 			}
 			
-			this.score = res;
+			this.score = res/2;
 		}
 		
 		//this.score = 1 + (int) (Math.random() * ((5 - 1) + 1));
