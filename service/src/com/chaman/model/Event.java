@@ -193,6 +193,10 @@ public class Event extends Model implements Serializable {
 		
 		Dao dao = new Dao();
 		
+		MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
+		
+		Event e_graph = new Event();
+		
 		LocationCapableRepositorySearch<EventLocationCapable> ofySearch = new OfyEntityLocationCapableRepositorySearchImpl(dao.ofy(), timeZone, searchTimeFrame);
 		List<EventLocationCapable> l = GeocellManager.proximityFetch(new Point(Double.parseDouble(userLatitude), Double.parseDouble(userLongitude)), searchLimit, searchRadius * 1000, ofySearch);
 		
@@ -203,7 +207,7 @@ public class Event extends Model implements Serializable {
 		
         for (EventLocationCapable e : l) {
         	
-    		String query 			= "SELECT " + properties + " FROM event WHERE eid = " + e.getEid();
+    		String query 			= "SELECT " + properties + " FROM event WHERE eid = " + e.getEid(); //TODO to remove and replace by e_graph (see below)
     		List<Event> fbevents 	= client.executeQuery(query, Event.class);
         	
     		if (fbevents != null && fbevents.size() > 0) {
@@ -213,16 +217,30 @@ public class Event extends Model implements Serializable {
     			
     			if (event.IsNotPast()) {
     				
-    				event.score = e.getScore();
-    				//event.nb_invited = e.getNb_invited();
+    				// event.nb_invited = e.getNb_invited();
     				event.latitude 	= Double.toString(e.getLatitude());
     				event.longitude = Double.toString(e.getLongitude());
     				
     				float distance = Geo.Fence(userLatitude, userLongitude, event.latitude, event.longitude);
             		event.distance = String.format("%.2f", distance);
+
+            		event.creator = String.valueOf(e.getCreator());
+
+            		e_graph = null;
+        	    	e_graph = client.fetchObject(String.valueOf(event.eid), Event.class);
+            		
+        	    	event.venue_id = JSON.GetValueFor("id", e_graph.venue);
+        	    	Venue v_graph = new Venue(accessToken, event.venue_id);
+        	    	event.venue_category = v_graph.category;
+        	    	event.Score(v_graph);
+            		syncCache.put(event.eid, event); //add event to cache
             		
                 	result.add(event);
-    			} // TODO else delete from elc
+    			} else {
+    				
+	    			dao.ofy().delete(e); //clean the datastore by removing old events TODO: call a task doesn't have to be deleted right away
+    				//TODO: delete vote DS
+    			}
     		}
         }
 		

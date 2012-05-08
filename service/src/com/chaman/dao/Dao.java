@@ -3,6 +3,7 @@ package com.chaman.dao;
 import com.chaman.model.EventLocationCapable;
 import com.chaman.model.Following;
 import com.chaman.model.User;
+import com.chaman.model.Vote;
 import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.util.DAOBase;
 
@@ -14,6 +15,7 @@ public class Dao extends DAOBase {
 			ObjectifyService.register(Following.class);
 			ObjectifyService.register(EventLocationCapable.class);
 			ObjectifyService.register(User.class);
+			ObjectifyService.register(Vote.class);
 		} catch (Exception ex) {
 			
 			System.out.println(ex.toString());
