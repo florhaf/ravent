@@ -340,6 +340,8 @@ public class Event extends Model implements Serializable {
 			
 			Dao dao = new Dao();
 			
+			Vote dsvote = new Vote();
+			
 			MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
 			Vote v_cache; 		
 			v_cache = (Vote) syncCache.get(String.valueOf(this.eid)); // read from vote cache
@@ -347,7 +349,7 @@ public class Event extends Model implements Serializable {
 			if (v_cache == null) {
 		    	
 		    	//get from DS
-		    	Vote dsvote = null;
+		    	dsvote = null;
 		    	dsvote = dao.ofy().find(Vote.class, String.valueOf(this.eid));
 		    	
 		    	if (dsvote != null) {

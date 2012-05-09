@@ -33,7 +33,7 @@ public class Venue  extends Model {
 	
 	public Venue(String accessToken, String venueID) throws FacebookException {
 		
-		if (venueID != null){
+		if (venueID != null && venueID.charAt(0) != '{'){
 			Venue result = new Venue();
 			
 			FacebookClient client 	= new DefaultFacebookClient(accessToken);

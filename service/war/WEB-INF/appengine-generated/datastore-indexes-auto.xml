@@ -1,7 +1,12 @@
+<<<<<<< HEAD
 <!-- Indices written at Tue, 8 May 2012 18:33:16 UTC -->
+=======
+<!-- Indices written at Tue, 8 May 2012 20:57:31 UTC -->
+>>>>>>> 676b5d31ec03472ab64c42889ac90530d69344e5
 
-<datastore-indexes>
+<datastore-indexes/>
 
+<<<<<<< HEAD
     <!-- Used 29 times in query history -->
     <datastore-index kind="EventLocationCapable" ancestor="false" source="auto">
         <property name="geocells" direction="asc"/>
@@ -9,3 +14,5 @@
     </datastore-index>
 
 </datastore-indexes>
+=======
+>>>>>>> 676b5d31ec03472ab64c42889ac90530d69344e5
