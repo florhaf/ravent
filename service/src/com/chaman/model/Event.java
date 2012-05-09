@@ -336,6 +336,7 @@ public class Event extends Model implements Serializable {
 			int checkins = v.checkins != null ? Integer.valueOf(v.checkins) : 0;
 			int talking_about_count = v.talking_about_count != null ? Integer.valueOf(v.talking_about_count) : 0;	
 			double res = 0;
+			double res_vote = 0;
 
 			
 			Dao dao = new Dao();
@@ -354,13 +355,14 @@ public class Event extends Model implements Serializable {
 		    	
 		    	if (dsvote != null) {
 		    		
-		    		res = dsvote.getVote_avg();
+		    		res_vote = dsvote.getVote_avg();
 		    	}
 			} else {
 				
-				res = v_cache.vote_avg;
+				res_vote = v_cache.vote_avg;
 			}
 			
+			//venue score
 			if (likes >= 1 && likes < 1000){
 				res = res + 0.5;
 			}
@@ -391,7 +393,7 @@ public class Event extends Model implements Serializable {
 				res = res + 2;
 			}
 			
-			this.score = res/2;
+			this.score = res_vote == 0 ? res : (res + res_vote) / 2;
 		}
 		
 		//this.score = 1 + (int) (Math.random() * ((5 - 1) + 1));
