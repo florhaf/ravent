@@ -3,18 +3,18 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "(null):(null)">
-         <PersistentStrings>
-            <PersistentString
-               value = "uis">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
          contextName = "-[controllers_friends_People isLoaded:]:controllers_friends_People.m">
          <PersistentStrings>
             <PersistentString
                value = "_following.view">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "(null):(null)">
+         <PersistentStrings>
+            <PersistentString
+               value = "uis">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -103,6 +103,14 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "-[Store fetchedResultsController]:Store.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.managedObjectContext">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "-[controllers_events_List loadEvents]:controllers_events_List.m">
          <PersistentStrings>
             <PersistentString
@@ -112,6 +120,14 @@
       </ContextState>
       <ContextState
          contextName = "+[models_Event getGroupedData:]:models_Event.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[Store findEidsForDate:]:Store.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "[self managedObjectContext]">
+            </PersistentString>
+         </PersistentStrings>
       </ContextState>
       <ContextState
          contextName = "-[models_Comment request:didLoadResponse:]:models_Comment.m">
@@ -152,13 +168,16 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "-[AppDelegate managedObjectModel]:AppDelegate.m">
+      </ContextState>
+      <ContextState
          contextName = "-[controllers_events_Details viewDidLoad]:controllers_events_Details.m">
          <PersistentStrings>
             <PersistentString
-               value = "_headerNameLabel.frame.size.height">
+               value = "NSLog(mapUrl)">
             </PersistentString>
             <PersistentString
-               value = "NSLog(mapUrl)">
+               value = "_headerNameLabel.frame.size.height">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

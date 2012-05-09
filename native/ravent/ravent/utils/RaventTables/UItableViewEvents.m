@@ -98,7 +98,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {   
     UITableViewCell *cell = [super tableView:tableView cellForRowAtIndexPath:indexPath];
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    //cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
     NSString *section = [_sortedKeys objectAtIndex:indexPath.section];
     NSMutableArray *rows = [_groupedData objectForKey:section];
@@ -129,9 +129,9 @@
 {
     CGFloat delta = [super resizeAndPositionCellItem];
     
-    _bgLeft.frame = CGRectMake(_bgLeft.frame.origin.x, _bgLeft.frame.origin.y, _bgLeft.frame.size.width, _bgLeft.frame.size.height + delta + 6);
+    _bgLeft.frame = CGRectMake(_bgLeft.frame.origin.x, _bgLeft.frame.origin.y, _bgLeft.frame.size.width, _item.frame.size.height);
     
-    _bgRight.frame = CGRectMake(_bgRight.frame.origin.x, _bgRight.frame.origin.y, _bgRight.frame.size.width, _bgRight.frame.size.height + delta + 6);
+    _bgRight.frame = CGRectMake(_bgRight.frame.origin.x, _bgRight.frame.origin.y, _bgRight.frame.size.width, _item.frame.size.height);
     
     return delta;
 }

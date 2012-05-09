@@ -25,12 +25,15 @@
     IBOutlet UIImageView *_pictureBorder;
     IBOutlet UIButton *_removeButton;
     
+    IBOutlet UIView *_buttonsContainer;
+    
     BOOL _isKeyboardShowing;
     BOOL _isForEvent;
     
     NSString *_toId; // id for an event of a friend
     
     NSString *_base64Picture;
+    NSData *_imageData;
     models_Comment *_comment;
 }
 

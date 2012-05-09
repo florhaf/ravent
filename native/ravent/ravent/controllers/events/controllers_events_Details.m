@@ -13,6 +13,7 @@
 #import "controllers_events_Description.h"
 #import "controllers_events_FeedContainer.h"
 #import "controllers_events_Details_Map.h"
+#import "Store.h"
 
 @implementation controllers_events_Details
 
@@ -36,7 +37,13 @@
 
 - (IBAction)addToListButton_Tap:(id)sender
 {
-    NSLog(@"add to list");
+    NSString *msg = [[Store instance]saveEid:_event.eid forDate:_event.dateStart];
+    
+    [YRDropdownView showDropdownInView:self.view 
+                                 title:@"Calendar" 
+                                detail:msg
+                                 image:[UIImage imageNamed:@"dropdown-alert"]
+                              animated:YES];
 }
 
 - (IBAction)shareButton_Tap:(id)sender
@@ -184,6 +191,10 @@
         }
     }
     _header.frame = CGRectMake(_header.frame.origin.x, _header.frame.origin.y, _header.frame.size.width, _header.frame.size.height + delta);
+    
+    _borderLeft.frame = CGRectMake(_borderLeft.frame.origin.x, _borderLeft.frame.origin.y, _borderLeft.frame.size.width, _header.frame.size.height);
+    
+    _borderRight.frame = CGRectMake(_borderRight.frame.origin.x, _borderRight.frame.origin.y, _borderRight.frame.size.width, _header.frame.size.height);
     
     self.tableView.tableHeaderView = _header;
 }

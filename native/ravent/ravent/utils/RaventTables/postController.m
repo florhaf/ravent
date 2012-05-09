@@ -11,6 +11,7 @@
 #import "NSData+Base64.h"
 #import "MBProgressHUD.h"
 #import "YRDropdownView.h"
+#import "UIView+Animation.h"
 
 @implementation postController
 
@@ -71,7 +72,7 @@
         [params setValue:_toId forKey:@"friendid"];
     }
     
-    [params setValue:_base64Picture forKey:@"attachment"];
+    [params setValue:_imageData forKey:@"attachment"];
     [params setValue:_textView.text forKey:@"message"];
     [params setValue:[models_User crtUser].accessToken forKey:@"access_token"];
     [params setValue:[models_User crtUser].uid forKey:@"userid"];
@@ -109,10 +110,14 @@
         
         [_textView resignFirstResponder];
         _isKeyboardShowing = NO;
+        
+        [_buttonsContainer raceTo:CGPointMake(0, 199) withSnapBack:NO];
     } else {
      
         [_textView becomeFirstResponder];
         _isKeyboardShowing = YES;
+        
+        [_buttonsContainer raceTo:CGPointMake(0, 415) withSnapBack:NO];
     }
 }
 
@@ -146,6 +151,8 @@
 {
     [_textView becomeFirstResponder];
     _isKeyboardShowing = YES;
+    
+    [_buttonsContainer raceTo:CGPointMake(0, 415) withSnapBack:NO];
 }
 
 - (IBAction)onRemoveTap:(id)sender
@@ -156,25 +163,25 @@
     [_removeButton setHidden:YES];
     
     _base64Picture = nil;
+    _imageData = nil;
 }
 
 - (void) imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
+    [self dismissModalViewControllerAnimated:YES];
+    [_textView becomeFirstResponder];
+    _isKeyboardShowing = YES;
+    
     // Access the uncropped image from info dictionary
     UIImage *image = [info objectForKey:@"UIImagePickerControllerOriginalImage"];
-    
-    NSData *imageData = UIImageJPEGRepresentation(image, 1.0);
-    _base64Picture = [imageData base64EncodingWithLineLength:0];
     
     [_picture setImage:image];
     [_picture setHidden:NO];
     [_pictureBorder setHidden:NO];
     [_removeButton setHidden:NO];
     
-    [self dismissModalViewControllerAnimated:YES];
-    
-    [_textView becomeFirstResponder];
-    _isKeyboardShowing = YES;
+    _imageData = UIImageJPEGRepresentation(image, 1.0);
+    _base64Picture = [_imageData base64EncodingWithLineLength:0];
 }
 
 @end

@@ -57,7 +57,6 @@
 						<string key="NSFrame">{{0, 93}, {320, 6}}</string>
 						<reference key="NSSuperview" ref="464747833"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -171,7 +170,7 @@
 					<object class="IBUIImageView" id="562318962">
 						<reference key="NSNextResponder" ref="464747833"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{13, 4}, {68, 90}}</string>
+						<string key="NSFrame">{{13, 4}, {68, 85}}</string>
 						<reference key="NSSuperview" ref="464747833"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="666821813"/>
@@ -670,7 +669,7 @@
 			<string key="itemRight.png">{12, 3}</string>
 			<string key="itemTop.png">{320, 6}</string>
 			<string key="like-gray.png">{256, 256}</string>
-			<string key="picbg2@2x.png">{136, 180}</string>
+			<string key="picbg2@2x.png">{136, 170}</string>
 		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">1181</string>
 	</data>

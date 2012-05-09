@@ -13,10 +13,8 @@
 
 @interface controllers_App : UIViewController {
     
-    
 }
 
-//@property (strong, nonatomic) controllers_TabBar *tabBarController;
 @property (strong, nonatomic) controllers_SlidingInitial *slidingController;
 @property (strong, nonatomic) controllers_Login *loginController;
 

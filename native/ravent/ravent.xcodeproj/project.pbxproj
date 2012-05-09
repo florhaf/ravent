@@ -204,6 +204,8 @@
 		DF8030FB15355A47008E71D6 /* controllers_stats_Stats.m in Sources */ = {isa = PBXBuildFile; fileRef = DF8030FA15355A47008E71D6 /* controllers_stats_Stats.m */; };
 		DF8A1304150FB74700817874 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF8A1303150FB74700817874 /* SystemConfiguration.framework */; };
 		DF8A1317150FB7D700817874 /* libRestKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DFA9B5F3150FB454001CD530 /* libRestKit.a */; };
+		DF8DA067155889FF00002A57 /* Store.m in Sources */ = {isa = PBXBuildFile; fileRef = DF8DA066155889FF00002A57 /* Store.m */; };
+		DF8DA0A51559654600002A57 /* ravent.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DF8DA0A31559654600002A57 /* ravent.xcdatamodeld */; };
 		DF8F14CD150BD48200008ABC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF8F14CC150BD48200008ABC /* UIKit.framework */; };
 		DF8F14CF150BD48200008ABC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF8F14CE150BD48200008ABC /* Foundation.framework */; };
 		DF8F14D1150BD48200008ABC /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF8F14D0150BD48200008ABC /* CoreGraphics.framework */; };
@@ -605,6 +607,9 @@
 		DF8030F915355A47008E71D6 /* controllers_stats_Stats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = controllers_stats_Stats.h; sourceTree = "<group>"; };
 		DF8030FA15355A47008E71D6 /* controllers_stats_Stats.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = controllers_stats_Stats.m; sourceTree = "<group>"; };
 		DF8A1303150FB74700817874 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		DF8DA065155889FF00002A57 /* Store.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Store.h; sourceTree = "<group>"; };
+		DF8DA066155889FF00002A57 /* Store.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Store.m; sourceTree = "<group>"; };
+		DF8DA0A41559654600002A57 /* ravent.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ravent.xcdatamodel; sourceTree = "<group>"; };
 		DF8F14C8150BD48200008ABC /* ravent.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ravent.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF8F14CC150BD48200008ABC /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		DF8F14CE150BD48200008ABC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -1177,7 +1182,7 @@
 			path = "facebook-ios-sdk";
 			sourceTree = "<group>";
 		};
-		DF6C864A152E47340077E027 /* RaventTables */ = {
+		DF6C864A152E47340077E027 /* Ravent */ = {
 			isa = PBXGroup;
 			children = (
 				DF6C864B152E476D0077E027 /* UITableViewReloadable.h */,
@@ -1194,7 +1199,10 @@
 				DF36FF4C1555868900C3CB53 /* postController.m */,
 				DF945D001556D5DE00B21571 /* NSData+Base64.h */,
 				DF945D011556D5DE00B21571 /* NSData+Base64.m */,
+				DF8DA065155889FF00002A57 /* Store.h */,
+				DF8DA066155889FF00002A57 /* Store.m */,
 			);
+			name = Ravent;
 			path = RaventTables;
 			sourceTree = "<group>";
 		};
@@ -1288,6 +1296,7 @@
 				DF8F14DC150BD48200008ABC /* AppDelegate.m */,
 				DF8F14D3150BD48200008ABC /* Supporting Files */,
 				DF12BDA11516CCDA00328B02 /* Config.h */,
+				DF8DA0A31559654600002A57 /* ravent.xcdatamodeld */,
 			);
 			path = ravent;
 			sourceTree = "<group>";
@@ -1370,7 +1379,7 @@
 				DF09BF8B1550A3C900FFD51E /* JMCClasses */,
 				DF15FE5615412DA600CF451E /* ECSlidingViewController */,
 				DF50EDCD1537B3E000ACBC4A /* DLStarRating */,
-				DF6C864A152E47340077E027 /* RaventTables */,
+				DF6C864A152E47340077E027 /* Ravent */,
 				DFD2804B151DBA06007A0873 /* Map */,
 				DF12BD791515848700328B02 /* JBAsyncImageView */,
 				DF12BD5F15157D2800328B02 /* YRDropDown */,
@@ -1934,6 +1943,8 @@
 				DF36FF4415534E9400C3CB53 /* controllers_events_FeedContainer.m in Sources */,
 				DF36FF4D1555868900C3CB53 /* postController.m in Sources */,
 				DF945D021556D5DE00B21571 /* NSData+Base64.m in Sources */,
+				DF8DA067155889FF00002A57 /* Store.m in Sources */,
+				DF8DA0A51559654600002A57 /* ravent.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1984,7 +1995,7 @@
 					"$(SOURCE_ROOT)/Kal",
 					"\"$(SOURCE_ROOT)/RestKit/Build\"",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				LIBRARY_SEARCH_PATHS = "";
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -2013,7 +2024,7 @@
 					"$(SOURCE_ROOT)/Kal",
 					"\"$(SOURCE_ROOT)/RestKit/Build\"",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				LIBRARY_SEARCH_PATHS = "\"$(SOURCE_ROOT)/RestKit/Build/$(BUILD_STYLE)-$(PLATFORM_NAME)\"";
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				OTHER_LDFLAGS = (
@@ -2039,6 +2050,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ravent/ravent-Prefix.pch";
 				INFOPLIST_FILE = "ravent/ravent-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/facebook-ios-sdk\"",
@@ -2063,6 +2075,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ravent/ravent-Prefix.pch";
 				INFOPLIST_FILE = "ravent/ravent-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/facebook-ios-sdk\"",
@@ -2097,6 +2110,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		DF8DA0A31559654600002A57 /* ravent.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				DF8DA0A41559654600002A57 /* ravent.xcdatamodel */,
+			);
+			currentVersion = DF8DA0A41559654600002A57 /* ravent.xcdatamodel */;
+			path = ravent.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = DF8F14BF150BD48200008ABC /* Project object */;
 }

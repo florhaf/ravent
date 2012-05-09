@@ -61,7 +61,26 @@
     _callbackResponseSuccess = success;
     _callbackResponseFailure = failure;
     
-    [[RKClient sharedClient] put:[@"post" appendQueryParams:params] params:nil delegate:self];
+    RKParams* rkparams = [RKParams params];
+    
+    for (int i = 0; i < [params.allKeys count]; i++) {
+        
+        NSString *key = [params.allKeys objectAtIndex:i];
+        
+        if ([key isEqualToString:@"attachment"]) {
+          
+            [rkparams setData:[params valueForKey:@"attachment"] MIMEType:@"image/jpeg" forParam:@"attachment"];
+        } else {
+            
+            [rkparams setValue:[params valueForKey:key] forParam:key];
+        }
+    }
+    
+    // Let's examine the RKRequestSerializable info...
+    NSLog(@"RKParams HTTPHeaderValueForContentType = %@", [rkparams HTTPHeaderValueForContentType]);
+    NSLog(@"RKParams HTTPHeaderValueForContentLength = %d", [rkparams HTTPHeaderValueForContentLength]);
+    
+    [[RKClient sharedClient] put:@"/post" params:rkparams delegate:self];
 }
 
 - (void)request:(RKRequest *)request didLoadResponse:(RKResponse *)response
