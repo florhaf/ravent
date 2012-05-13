@@ -9,6 +9,10 @@ import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.annotation.Entity;
 import com.google.appengine.api.memcache.MemcacheService;
 import com.google.appengine.api.memcache.MemcacheServiceFactory;
+import com.restfb.DefaultFacebookClient;
+import com.restfb.FacebookClient;
+import com.restfb.Parameter;
+import com.restfb.types.FacebookType;
 
 @Entity
 public class Vote extends Model implements Serializable  {
@@ -38,6 +42,7 @@ public class Vote extends Model implements Serializable  {
 	public Vote(String accessToken, String userid, String eventid, String svote) {
 		
 		Dao dao = new Dao();
+		FacebookClient client 	= new DefaultFacebookClient(accessToken);
 		Double lvote = Double.valueOf(svote);
 		this.eid = eventid;
 		
@@ -68,6 +73,9 @@ public class Vote extends Model implements Serializable  {
 		
 		dao.ofy().put(this);
     	syncCache.put(this.eid, this); // Add vote to cache
+    	
+    	//Open graph
+    	//client.publish(userid + "/eventsrating:rate", FacebookType.class, Parameter.with("event", "http://facebook.com/" + eid));
     	
     	//TODO: Facebook post? like?
 	}
