@@ -35,7 +35,7 @@ public class Vote extends Model implements Serializable  {
 		super();
 	}
 	
-	public Vote(String userid, String eventid, String svote) {
+	public Vote(String accessToken, String userid, String eventid, String svote) {
 		
 		Dao dao = new Dao();
 		Double lvote = Double.valueOf(svote);

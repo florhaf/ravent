@@ -14,11 +14,12 @@ public class Votes extends ServerResource {
 
 		try {
 			
+			String accessToken	= getQuery().getValues("access_token");
 			String userid	= getQuery().getValues("userID");
 			String eid 		= getQuery().getValues("eventID");
 			String vote		= getQuery().getValues("vote");
 			
-			new Vote(userid, eid, vote);
+			new Vote(accessToken, userid, eid, vote);
 			
 			result.setSuccess(true);
 			result.setRecords(null);
