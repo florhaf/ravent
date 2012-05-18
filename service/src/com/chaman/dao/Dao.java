@@ -22,6 +22,11 @@ public class Dao extends DAOBase {
 		}
     }
 
+	public Dao() {
+		
+		super();
+	}
+	
     /** Your DAO can have your own useful methods */
 //    public MyThing getOrCreateMyThing(long id)
 //    {

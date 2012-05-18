@@ -7,7 +7,6 @@ import javax.persistence.Id;
 
 import com.chaman.dao.Dao;
 import com.chaman.model.User;
-import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.Query;
 import com.googlecode.objectify.annotation.Entity;
 import com.google.appengine.api.memcache.MemcacheService;
@@ -24,14 +23,6 @@ public class Following extends Model implements Serializable  {
 	String id; // concatenation of userID and friendID
 	Long userID;
 	Long friendID;
-	
-	static {
-		try {
-			ObjectifyService.register(Following.class);
-		} catch (Exception ex) {
-			System.out.println(ex.getMessage());
-		}
-	}
 	
 	public Following() {
 		

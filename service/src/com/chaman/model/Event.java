@@ -77,14 +77,6 @@ public class Event extends Model implements Serializable {
 	DateTime dtStart;
 	DateTime dtEnd;
 	
-//	static {
-//		try {
-//			ObjectifyService.register(Event.class);
-//		} catch (Exception ex) {
-//			System.out.println(ex.getMessage());
-//		}
-//	}
-	
 	public Event() {
 		
 		super();

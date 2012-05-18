@@ -5,7 +5,6 @@ import java.io.Serializable;
 import javax.persistence.Id;
 
 import com.chaman.dao.Dao;
-import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.annotation.Entity;
 import com.google.appengine.api.memcache.MemcacheService;
 import com.google.appengine.api.memcache.MemcacheServiceFactory;
@@ -26,14 +25,6 @@ public class Vote extends Model implements Serializable  {
 	Long nb_vote;
 	Double vote_avg;
 	
-	static {
-		try {
-			ObjectifyService.register(Vote.class);
-		} catch (Exception ex) {
-			System.out.println(ex.getMessage());
-		}
-	}
-	
 	public Vote () {
 		
 		super();
@@ -42,7 +33,7 @@ public class Vote extends Model implements Serializable  {
 	public Vote(String accessToken, String userid, String eventid, String svote) {
 		
 		Dao dao = new Dao();
-		FacebookClient client 	= new DefaultFacebookClient(accessToken);
+		//FacebookClient client 	= new DefaultFacebookClient(accessToken);
 		Double lvote = Double.valueOf(svote);
 		this.eid = eventid;
 		
@@ -75,7 +66,7 @@ public class Vote extends Model implements Serializable  {
     	syncCache.put(this.eid, this); // Add vote to cache
     	
     	//Open graph
-    	//client.publish(userid + "/eventsrating:rate", FacebookType.class, Parameter.with("event", "http://facebook.com/" + eid));
+    	//client.publish(userid + "/eventsrating:rate", FacebookType.class, Parameter.with("event", "http://samples.ogp.me/420557737968056"), Parameter.with("vote", 4.2));
     	
     	//TODO: Facebook post? like?
 	}

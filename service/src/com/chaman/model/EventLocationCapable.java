@@ -8,7 +8,6 @@ import com.beoui.geocell.GeocellManager;
 import com.beoui.geocell.model.LocationCapable;
 import com.beoui.geocell.model.Point;
 import com.chaman.dao.Dao;
-import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Unindexed;
 
@@ -28,14 +27,6 @@ public class EventLocationCapable extends Model implements LocationCapable {
     private double score;
     private List<String> geocells;
     private long creator; // promoter ID
-    
-	static {
-		try {
-			ObjectifyService.register(EventLocationCapable.class);
-		} catch (Exception ex) {
-			System.out.println(ex.getMessage());
-		}
-	}
     
 	public EventLocationCapable() {
 		
