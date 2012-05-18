@@ -55,6 +55,15 @@ public class Post  extends Model {
 		client.publish(friendID + "/feed", FacebookType.class, Parameter.with("message", message));
 	}
 
+	public static void FriendWallPostWithAttachment(String accessToken, String friendID, String attachment, String message) {
+		
+		FacebookClient client	= new DefaultFacebookClient(accessToken);
+		InputStream data = new ByteArrayInputStream(attachment.getBytes());
+		//TODO: add reference to ravent
+		client.publish(friendID + "/feed", FacebookType.class, BinaryAttachment.with("Ravent", data), Parameter.with("message", message));
+		
+	}
+	
 	public static void EventPost(String accessToken, String userID, String eventID, String message) {
 		
 		FacebookClient client	= new DefaultFacebookClient(accessToken);
@@ -96,4 +105,5 @@ public class Post  extends Model {
 	public String getCreated_time() {
 		return this.created_time;
 	}
+
 }
