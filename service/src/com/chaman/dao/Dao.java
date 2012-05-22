@@ -25,6 +25,17 @@ public class Dao extends DAOBase {
 	public Dao() {
 		
 		super();
+		// TODO find the best way to register the classes
+		try {
+			
+			ObjectifyService.register(Following.class);
+			ObjectifyService.register(EventLocationCapable.class);
+			ObjectifyService.register(User.class);
+			ObjectifyService.register(Vote.class);
+		} catch (Exception ex) {
+				
+			System.out.println(ex.toString());
+		}
 	}
 	
     /** Your DAO can have your own useful methods */
