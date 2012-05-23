@@ -24,6 +24,7 @@ public class RaVentSvcApplication extends Application {
 		router.attach("/share",			Share.class);
 		router.attach("/rsvp",			Rsvp.class);
 		router.attach("/vote",			Votes.class);
+		router.attach("/calendar",		Calendar.class);
 		//router.attach("/upload",	Picture.class); // PUT access_token, eventID, userID, picture
 		
 		return router;

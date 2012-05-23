@@ -2,10 +2,16 @@ package com.chaman.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
+import org.joda.time.LocalDateTime;
+import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.format.ISODateTimeFormat;
+
 import com.chaman.model.Venue;
 import com.beoui.geocell.GeocellManager;
 import com.beoui.geocell.LocationCapableRepositorySearch;
@@ -55,7 +61,10 @@ public class Event extends Model implements Serializable {
 	String privacy;
 	@Facebook
 	String update_time;
-
+	@Facebook
+	String timezone; //event time zone (some events have are stored with a specific timezone)
+	
+	
 	String venue_id;
 	double score;
 	long nb_invited;
@@ -240,24 +249,75 @@ public class Event extends Model implements Serializable {
 		return result;
 	}
 	
+	public static ArrayList<Model> date(String accessToken, String[] eids, String date, String timeZone, String userLatitude, String userLongitude) {
+		
+		ArrayList<Model> result	= new ArrayList<Model>();
+		FacebookClient client	= new DefaultFacebookClient(accessToken);
+		int timeZoneInMinutes	= Integer.parseInt(timeZone);
+		
+		Event e = new Event();
+		
+		for (String eid : eids) {
+		
+			e = client.fetchObject(eid, Event.class);
+			e.eid = Long.valueOf(eid);
+			
+
+			// test
+			DateTimeFormatter parser2 = ISODateTimeFormat.dateTimeParser();
+			System.out.println(parser2.parseDateTime(e.start_time));
+			
+			e.start_time = String.valueOf(com.restfb.util.DateUtils.toDateFromLongFormat(e.start_time).getTime()/1000);
+			e.end_time = String.valueOf(com.restfb.util.DateUtils.toDateFromLongFormat(e.end_time).getTime()/1000);
+			e.Format(timeZoneInMinutes);
+	    	e.creator = e.owner;
+			
+	    	e.venue_id = JSON.GetValueFor("id", e.venue);
+			Venue v_graph = new Venue(accessToken, e.venue_id);
+	    	e.venue_category = v_graph.category;
+	    	e.latitude 	= JSON.GetValueFor("latitude", e.venue);
+	    	e.longitude = JSON.GetValueFor("longitude", e.venue);
+		
+	    	if ((e.latitude == null || e.latitude == "" || e.longitude == null || e.longitude == "") && v_graph != null) {
+			
+	    		e.latitude = JSON.GetValueFor("latitude", v_graph.location);
+	    		e.longitude = JSON.GetValueFor("longitude", v_graph.location);
+				
+	    		if (e.latitude != null && e.latitude != "" && e.longitude != null && e.longitude != "") {
+	    			
+	    			float distance = Geo.Fence(userLatitude, userLongitude, e.latitude, e.longitude);
+	    			e.distance = String.format("%.2f", distance);
+	    		}  else {
+								
+	    			e.distance = "N/A";
+	    		}
+	    	}	    	
+	    	e.Score(v_graph);
+	    	
+			result.add(e);
+		}
+		
+		return result;
+	}
+	
 	private void Format(int timeZoneInMinutes) {
 		
 		// format misc.
 		this.picture	= this.pic;
 		this.invited_by = this.host;
-		
+			
 		long timeStampStart = Long.parseLong(this.start_time) * 1000;
 		long timeStampEnd = Long.parseLong(this.end_time) * 1000;
 		
 		// facebook events timestamp are in PST
 		DateTimeZone PST = DateTimeZone.forID("America/Los_Angeles");
 		
-		this.dtStart = new DateTime(timeStampStart, PST);
-		this.dtEnd = new DateTime(timeStampEnd, PST);
+		//some events have their times stored for a specific timezone TODO: to check again	
+		//DateTimeZone event_time_zone = DateTimeZone.forID(this.timezone);
 		
-		// so need to add time zone offset
-		this.dtStart.plusMinutes(timeZoneInMinutes);
-		this.dtEnd.plusMinutes(timeZoneInMinutes);
+		// so need to add time zone offset to DateTime
+		this.dtStart = new DateTime(timeStampStart, PST);//.withZone(event_time_zone);//(timeZoneInMinutes);
+		this.dtEnd = new DateTime(timeStampEnd, PST);//.plusMinutes(PST + timeZoneInMinutes);	
 		
 		this.time_start = dtStart.toString("KK:mm a");
 		this.time_end = dtEnd.toString("KK:mm a");
