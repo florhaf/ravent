@@ -1,7 +1,8 @@
 package com.chaman.model;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.restfb.DefaultFacebookClient;
 import com.restfb.Facebook;
@@ -35,27 +36,24 @@ public class Attending extends Model {
 		
 		FacebookClient client 		= new DefaultFacebookClient(accessToken);
 		
-		String properties 			= "uid, first_name, last_name, pic";
-		String query 				= "SELECT " + properties + " FROM user WHERE uid IN (SELECT uid FROM event_member WHERE eid = " + eid + 
-																		   " AND uid IN (SELECT uid2 FROM friend WHERE uid1 = me()))";
-		/*TODO Optimize with this for more efficiency
-		String query0 				= "SELECT uid, rsvp_status FROM event_member WHERE eid= " + eid + " AND uid IN (SELECT uid2 FROM friend WHERE uid1 = me()))";
-		String query1				= "SELECT uid, first_name, last_name, pic FROM profile WHERE id IN (SELECT uid FROM #query0)";*/
-	
-		List<Attending> Attendings 	= client.executeQuery(query, Attending.class);
+		Long eid_long = Long.parseLong(eid);
+
+		//initiate multiquery for FB (one call for multiple queries = optimization)
+		Map<String, String> queries = new HashMap<String, String>();
+		queries.put("friends", "SELECT uid2 FROM friend WHERE uid1 = me()");
+		queries.put("friends_invited_rsvp", "SELECT uid, rsvp_status FROM event_member WHERE eid = " + eid + " AND uid in (select uid2 from #friends)");
+		queries.put("friends_invited_info", "SELECT uid, first_name, last_name, pic FROM user WHERE uid in (select uid from #friends_invited_rsvp)");
+
+		MultiqueryResults multiqueryResult = client.executeMultiquery(queries, MultiqueryResults.class);
 		
-		String queryRsvp;
-		List<Attending> rsvpStatuses;
+		for (int i=0; i<multiqueryResult.friends_invited_info.size(); i++) {
 		
-		for (Attending a : Attendings) {
+			Attending a = multiqueryResult.friends_invited_info.get(i);
 			
 			a.picture = a.pic;
-			a.eid = Long.parseLong(eid);
+			a.eid = eid_long;
 			
-			queryRsvp = "SELECT rsvp_status FROM event_member WHERE eid = " + eid + " AND uid = " + a.uid;
-			rsvpStatuses 	= client.executeQuery(queryRsvp, Attending.class);
-			
-			a.rsvp_status = rsvpStatuses.get(0).getRsvp_status();
+			a.rsvp_status = multiqueryResult.friends_invited_rsvp.get(i).rsvp_status;
 			
 			if (a.rsvp_status.equals("unsure") || a.rsvp_status.equals("not_replied")) {
 				
@@ -81,24 +79,24 @@ public class Attending extends Model {
 		
 		FacebookClient client 		= new DefaultFacebookClient(accessToken);
 		
-		String properties 			= "uid, first_name, last_name, pic";
-		String query 				= "SELECT " + properties + " FROM user WHERE uid IN (SELECT uid FROM event_member WHERE eid = " + eid + " AND rsvp_status = 'attending')";
-		List<Attending> Attendings 	= client.executeQuery(query, Attending.class);
+		Long eid_long = Long.parseLong(eid);
+
+		//initiate multiquery for FB (one call for multiple queries = optimization)
+		Map<String, String> queries = new HashMap<String, String>();
+		queries.put("friends_invited_rsvp", "SELECT uid, rsvp_status FROM event_member WHERE eid = " + eid + " AND rsvp_status = 'attending'");
+		queries.put("friends_invited_info", "SELECT uid, first_name, last_name, pic FROM user WHERE uid in (select uid from #friends_invited_rsvp)");
+
+		MultiqueryResults multiqueryResult = client.executeMultiquery(queries, MultiqueryResults.class);
 		
-		String queryRsvp;
-		List<Attending> rsvpStatuses;
+		for (int i=0; i<multiqueryResult.friends_invited_info.size(); i++) {
 		
-		// update data store with Attendings.size();
-		
-		for (Attending a : Attendings) {
+			Attending a = multiqueryResult.friends_invited_info.get(i);
+			
 			a.picture = a.pic;
-			a.eid = Long.parseLong(eid);
+			a.eid = eid_long;
 			
-			queryRsvp = "SELECT rsvp_status FROM event_member WHERE eid = " + eid + " AND uid = " + a.uid;
-			rsvpStatuses 	= client.executeQuery(queryRsvp, Attending.class);
+			a.rsvp_status = multiqueryResult.friends_invited_rsvp.get(i).rsvp_status;
 			
-			a.rsvp_status = rsvpStatuses.get(0).getRsvp_status();
-		
 			if (a.rsvp_status.equals("unsure") || a.rsvp_status.equals("not_replied")) {
 				
 				a.rsvp_status = "maybe attending";
@@ -111,6 +109,7 @@ public class Attending extends Model {
 		}
  	
 		return result;
+			
 	}
 	
 	public static void SetFacebookRsvp (String accessToken, String eid, String rsvp) {

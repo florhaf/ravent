@@ -8,10 +8,10 @@ import com.chaman.dao.Dao;
 import com.googlecode.objectify.annotation.Entity;
 import com.google.appengine.api.memcache.MemcacheService;
 import com.google.appengine.api.memcache.MemcacheServiceFactory;
-import com.restfb.DefaultFacebookClient;
-import com.restfb.FacebookClient;
-import com.restfb.Parameter;
-import com.restfb.types.FacebookType;
+//import com.restfb.DefaultFacebookClient;
+//import com.restfb.FacebookClient;
+//import com.restfb.Parameter;
+//import com.restfb.types.FacebookType;
 
 @Entity
 public class Vote extends Model implements Serializable  {
@@ -66,7 +66,8 @@ public class Vote extends Model implements Serializable  {
     	syncCache.put(this.eid, this); // Add vote to cache
     	
     	//Open graph
-    	//client.publish(userid + "/eventsrating:rate", FacebookType.class, Parameter.with("event", "http://samples.ogp.me/420557737968056"), Parameter.with("vote", 4.2));
+    	//FacebookClient client 	= new DefaultFacebookClient(accessToken);
+    	//client.publish(userid + "/eventsrating:rate", FacebookType.class, Parameter.with("event", "http://samples.ogp.me/427679573922539"), Parameter.with("vote", 3));
     	
     	//TODO: Facebook post? like?
 	}

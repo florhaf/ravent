@@ -264,8 +264,11 @@ public class Event extends Model implements Serializable {
 			
 
 			// test
+			System.out.println(eid);
+			System.out.println(e.start_time);
 			DateTimeFormatter parser2 = ISODateTimeFormat.dateTimeParser();
 			System.out.println(parser2.parseDateTime(e.start_time));
+			//DateTime(e.start_time);
 			
 			e.start_time = String.valueOf(com.restfb.util.DateUtils.toDateFromLongFormat(e.start_time).getTime()/1000);
 			e.end_time = String.valueOf(com.restfb.util.DateUtils.toDateFromLongFormat(e.end_time).getTime()/1000);

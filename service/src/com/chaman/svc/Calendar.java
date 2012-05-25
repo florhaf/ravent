@@ -1,8 +1,6 @@
 package com.chaman.svc;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import org.restlet.resource.Get;
 import org.restlet.resource.ServerResource;
