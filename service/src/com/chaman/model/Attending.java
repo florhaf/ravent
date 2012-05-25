@@ -7,6 +7,7 @@ import java.util.Map;
 import com.restfb.DefaultFacebookClient;
 import com.restfb.Facebook;
 import com.restfb.FacebookClient;
+import com.restfb.Parameter;
 import com.restfb.exception.FacebookException;
 import com.restfb.types.FacebookType;
 
@@ -26,6 +27,9 @@ public class Attending extends Model {
 	Long eid;
 	String picture;
 	
+	//@Facebook //to delete
+	//String data;
+	
 	public Attending() {
 		super();
 	}
@@ -35,6 +39,8 @@ public class Attending extends Model {
 		ArrayList<Model> result 	= new ArrayList<Model>();
 		
 		FacebookClient client 		= new DefaultFacebookClient(accessToken);
+		
+		//Attending e = client.fetchObject("10150896332898770", Attending.class);
 		
 		Long eid_long = Long.parseLong(eid);
 

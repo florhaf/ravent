@@ -107,7 +107,7 @@ public class Event extends Model implements Serializable {
 		String TAS = String.valueOf(now.getMillis() / 1000);
 		
 		FacebookClient client 	= new DefaultFacebookClient(accessToken);
-		String properties 		= "eid, name, pic, start_time, end_time, venue, location, host, privacy, creator, update_time";
+		String properties 		= "eid, name, pic, start_time, end_time, venue, location, host, privacy, creator, update_time"; //TODO REMOVE FIELDS took from graph bellow
 		String query 			= "SELECT " + properties + " FROM event WHERE eid IN (SELECT eid FROM event_member WHERE uid = " + userID + ") AND end_time > " + TAS + " ORDER BY start_time"; /*need to check privacy CLOSED AND SECRET */
 		List<Event> fbevents 	= client.executeQuery(query, Event.class);
 		
@@ -249,26 +249,34 @@ public class Event extends Model implements Serializable {
 		return result;
 	}
 	
-	public static ArrayList<Model> date(String accessToken, String[] eids, String date, String timeZone, String userLatitude, String userLongitude) {
+	public static ArrayList<Model> getMultiple(String accessToken, String[] eids, String timeZone, String userLatitude, String userLongitude) {
 		
 		ArrayList<Model> result	= new ArrayList<Model>();
+		
+		for (String eid : eids) {
+	    	
+			result.add(getSingle(accessToken, eid, timeZone, userLatitude, userLongitude));
+		}
+		
+		return result;
+	}
+	
+	public static Event getSingle(String accessToken, String eid, String timeZone, String userLatitude, String userLongitude) {
+		
 		FacebookClient client	= new DefaultFacebookClient(accessToken);
 		int timeZoneInMinutes	= Integer.parseInt(timeZone);
 		
 		Event e = new Event();
-		
-		for (String eid : eids) {
-		
+				
 			e = client.fetchObject(eid, Event.class);
 			e.eid = Long.valueOf(eid);
 			
-
-			// test
+			/*// test TODO: FIX DATE
 			System.out.println(eid);
 			System.out.println(e.start_time);
 			DateTimeFormatter parser2 = ISODateTimeFormat.dateTimeParser();
 			System.out.println(parser2.parseDateTime(e.start_time));
-			//DateTime(e.start_time);
+			//DateTime(e.start_time);*/
 			
 			e.start_time = String.valueOf(com.restfb.util.DateUtils.toDateFromLongFormat(e.start_time).getTime()/1000);
 			e.end_time = String.valueOf(com.restfb.util.DateUtils.toDateFromLongFormat(e.end_time).getTime()/1000);
@@ -296,11 +304,8 @@ public class Event extends Model implements Serializable {
 	    		}
 	    	}	    	
 	    	e.Score(v_graph);
-	    	
-			result.add(e);
-		}
-		
-		return result;
+
+		return e;
 	}
 	
 	private void Format(int timeZoneInMinutes) {

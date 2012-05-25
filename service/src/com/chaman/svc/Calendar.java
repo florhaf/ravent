@@ -19,14 +19,13 @@ public class Calendar extends ServerResource {
 			
 			String accessToken	= getQuery().getValues("access_token");
 			String[] eids 		= getQuery().getValuesArray("eventID");
-			String date			= getQuery().getValues("date");
 			String timeZone		= getQuery().getValues("timezone_offset");
 			String latitude		= getQuery().getValues("latitude");
 			String longitude 	= getQuery().getValues("longitude");
 			
 			ArrayList<Model> events;
 			
-			events = Event.date(accessToken, eids, date, timeZone, latitude, longitude);
+			events = Event.getMultiple(accessToken, eids, timeZone, latitude, longitude);
 			
 			result.setSuccess(true);
 			result.setRecords(events);
