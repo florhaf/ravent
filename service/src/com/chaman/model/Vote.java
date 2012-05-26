@@ -30,6 +30,13 @@ public class Vote extends Model implements Serializable  {
 		super();
 	}
 	
+	public Vote (String eid, Long nb_vote, Double vote_avg) {
+		
+		this.eid = eid;
+		this.nb_vote = nb_vote;
+		this.vote_avg = vote_avg;
+	}
+	
 	public Vote(String accessToken, String userid, String eventid, String svote) {
 		
 		Dao dao = new Dao();
@@ -69,7 +76,7 @@ public class Vote extends Model implements Serializable  {
     	//FacebookClient client 	= new DefaultFacebookClient(accessToken);
     	//client.publish(userid + "/eventsrating:rate", FacebookType.class, Parameter.with("event", "http://samples.ogp.me/427679573922539"), Parameter.with("vote", 3));
     	
-    	//TODO: Facebook post? like?
+    	//TODO: Facebook Timeline
 	}
 	
 	public static void NewVote(String userid, String eventid, String svote) {

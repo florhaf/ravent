@@ -18,7 +18,7 @@ public class Dao extends DAOBase {
 			ObjectifyService.register(Vote.class);
 		} catch (Exception ex) {
 			
-			System.out.println(ex.toString());
+			//System.out.println(ex.toString());
 		}
     }
 
@@ -34,7 +34,7 @@ public class Dao extends DAOBase {
 			ObjectifyService.register(Vote.class);
 		} catch (Exception ex) {
 				
-			System.out.println(ex.toString());
+			//System.out.println(ex.toString());
 		}
 	}
 	

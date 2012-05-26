@@ -14,6 +14,9 @@ public class JSON {
 				
 				int startIndex	= keyIndex + key.length() + 2;
 				int endIndex 	= json.indexOf("\"", startIndex + 1);
+
+				if (endIndex == -1) {endIndex = json.indexOf(",", startIndex + 1);}
+				if (endIndex == -1) {endIndex = json.indexOf("}", startIndex + 1);}
 				
 				result = json.substring(startIndex, endIndex);
 				result = result.replace("\"", "");

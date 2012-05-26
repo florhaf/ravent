@@ -2,15 +2,10 @@ package com.chaman.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
-import org.joda.time.LocalDateTime;
-import org.joda.time.format.DateTimeFormatter;
-import org.joda.time.format.ISODateTimeFormat;
 
 import com.chaman.model.Venue;
 import com.beoui.geocell.GeocellManager;
@@ -64,7 +59,6 @@ public class Event extends Model implements Serializable {
 	@Facebook
 	String timezone; //event time zone (some events have are stored with a specific timezone)
 	
-	
 	String venue_id;
 	double score;
 	long nb_invited;
@@ -80,9 +74,7 @@ public class Event extends Model implements Serializable {
 	String distance;
 	String groupTitle;
 	String venue_category; // (club, bar etc)
-	
 	User user;
-	
 	DateTime dtStart;
 	DateTime dtEnd;
 	
@@ -107,7 +99,7 @@ public class Event extends Model implements Serializable {
 		String TAS = String.valueOf(now.getMillis() / 1000);
 		
 		FacebookClient client 	= new DefaultFacebookClient(accessToken);
-		String properties 		= "eid, name, pic, start_time, end_time, venue, location, host, privacy, creator, update_time"; //TODO REMOVE FIELDS took from graph bellow
+		String properties 		= "eid, name, pic, start_time, end_time, venue, location, host, privacy, creator, update_time";
 		String query 			= "SELECT " + properties + " FROM event WHERE eid IN (SELECT eid FROM event_member WHERE uid = " + userID + ") AND end_time > " + TAS + " ORDER BY start_time"; /*need to check privacy CLOSED AND SECRET */
 		List<Event> fbevents 	= client.executeQuery(query, Event.class);
 		
@@ -118,21 +110,14 @@ public class Event extends Model implements Serializable {
 		
 		int timeZoneInMinutes = Integer.parseInt(timeZone);
 		
-		Event e_graph = new Event();
-		
 		for (Event e : fbevents) {
 				
 			e_cache = (Event) syncCache.get(e.eid); // read from Event cache
-    	    if (e_cache == null || e_cache.update_time != e.update_time) { // check the cache event version with the current one
+    	    if (e_cache == null || !e_cache.update_time.equals(e.update_time)) { // check the cache event version with the current one
 			
     	    	e.Format(timeZoneInMinutes);
-
-    	    	// fetch Facebook graph API for more data
-    	    	e_graph = null;
-    	    	e_graph = client.fetchObject(String.valueOf(e.eid), Event.class);  // TODO no need for Description.class anymore, e_graph has everything...
-    	    	e.creator = JSON.GetValueFor("id", e_graph.owner);
-			
-    	    	e.venue_id = JSON.GetValueFor("id", e_graph.venue);
+    	    	
+    	    	e.venue_id = JSON.GetValueFor("id", e.venue);    	
     	    	Venue v_graph = new Venue(accessToken, e.venue_id);
     	    	e.venue_category = v_graph.category;
 			
@@ -158,8 +143,7 @@ public class Event extends Model implements Serializable {
     	    			dao.ofy().put(elc);
     	    		} else {
 			        	
-    	    			// update score in DB
-    	    			// update nb invited in DB		        	
+    	    			// update score in DB     	
     	    		}
 			        			        
     	    		float distance = Geo.Fence(userLatitude, userLongitude, e.latitude, e.longitude);
@@ -174,7 +158,6 @@ public class Event extends Model implements Serializable {
     	    }else {
     	    	
     	    	e = e_cache;
-    	    	e.Format(timeZoneInMinutes);
     	    	Venue v_graph = new Venue(accessToken, e.venue_id);
     	    	e.Score(v_graph);
     	    }
@@ -185,8 +168,7 @@ public class Event extends Model implements Serializable {
 		return result;
 	}
 
-	/* TODO make sure this function is consistent with the changes made on the one above
-	 * - Get list of event for any user in search area
+	 /* - Get list of event for any user in search area
 	 * - exclude past event
 	 */
 	public static ArrayList<Model> Get(String accessToken, String userLatitude, String userLongitude, String timeZone, int searchTimeFrame, int searchRadius, int searchLimit) throws FacebookException {
@@ -203,15 +185,13 @@ public class Event extends Model implements Serializable {
 		
 		MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
 		
-		Event e_graph = new Event();	
-		
 		int timeZoneInMinutes = Integer.parseInt(timeZone);
 		
         for (EventLocationCapable e : l) {
         	
     		String query 			= "SELECT " + properties + " FROM event WHERE eid = " + e.getEid(); //TODO to remove and replace by e_graph (see below)
     		List<Event> fbevents 	= client.executeQuery(query, Event.class);
-        	
+    		
     		if (fbevents != null && fbevents.size() > 0) {
     			
     			Event event = fbevents.get(0);
@@ -227,11 +207,8 @@ public class Event extends Model implements Serializable {
             		event.distance = String.format("%.2f", distance);
 
             		event.creator = String.valueOf(e.getCreator());
-
-            		e_graph = null;
-        	    	e_graph = client.fetchObject(String.valueOf(event.eid), Event.class);
-            		
-        	    	event.venue_id = JSON.GetValueFor("id", e_graph.venue);
+    		
+        	    	event.venue_id = JSON.GetValueFor("id", event.venue);
         	    	Venue v_graph = new Venue(accessToken, event.venue_id);
         	    	event.venue_category = v_graph.category;
         	    	event.Score(v_graph);
@@ -271,12 +248,8 @@ public class Event extends Model implements Serializable {
 			e = client.fetchObject(eid, Event.class);
 			e.eid = Long.valueOf(eid);
 			
-			/*// test TODO: FIX DATE
-			System.out.println(eid);
-			System.out.println(e.start_time);
-			DateTimeFormatter parser2 = ISODateTimeFormat.dateTimeParser();
-			System.out.println(parser2.parseDateTime(e.start_time));
-			//DateTime(e.start_time);*/
+			//TODO use calendar
+			//TODO make sure ti get the event's picture using the facebook connection
 			
 			e.start_time = String.valueOf(com.restfb.util.DateUtils.toDateFromLongFormat(e.start_time).getTime()/1000);
 			e.end_time = String.valueOf(com.restfb.util.DateUtils.toDateFromLongFormat(e.end_time).getTime()/1000);
@@ -398,6 +371,7 @@ public class Event extends Model implements Serializable {
 			double res = 0;
 			double res_vote = 0;
 
+			String eid_string = String.valueOf(this.eid);
 			
 			Dao dao = new Dao();
 			
@@ -405,17 +379,20 @@ public class Event extends Model implements Serializable {
 			
 			MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
 			Vote v_cache; 		
-			v_cache = (Vote) syncCache.get(String.valueOf(this.eid)); // read from vote cache
+			v_cache = (Vote) syncCache.get(eid_string); // read from vote cache
 			
 			if (v_cache == null) {
 		    	
 		    	//get from DS
-		    	dsvote = null;
-		    	dsvote = dao.ofy().find(Vote.class, String.valueOf(this.eid));
+		    	dsvote = dao.ofy().find(Vote.class, eid_string);
 		    	
 		    	if (dsvote != null) {
 		    		
 		    		res_vote = dsvote.getVote_avg();
+		    		syncCache.put(eid_string, dsvote); // Add vote to cache
+		    	} else {
+
+		    		syncCache.put(eid_string, new Vote(eid_string, 0L, 0D)); // Add vote to cache with 0 vote and 0 average
 		    	}
 			} else {
 				
@@ -455,8 +432,6 @@ public class Event extends Model implements Serializable {
 			
 			this.score = res_vote == 0 ? res : (res + res_vote) / 2;
 		}
-		
-		//this.score = 1 + (int) (Math.random() * ((5 - 1) + 1));
 	}
 	
 	private Boolean IsNotPast() {
