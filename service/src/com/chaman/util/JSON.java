@@ -50,4 +50,10 @@ public class JSON {
 		
 		return result;
 	}
+	
+	public static String RemoveSpaces(String dirty_string) {
+		
+		return dirty_string.replace(" ", "");
+	}
+	
 }

@@ -69,7 +69,7 @@ public class Friend extends Model {
 	    	
 	    	Dao dao = new Dao();
 	    	Query<Following> q = dao.ofy().query(Following.class);
-	    	q.filter("id", userID + String.valueOf(this.uid));
+	    	q.filter("id", userID + String.valueOf(this.uid)); // TODO: fetch for one value
 	    	this.isFollowed = q.count() != 0 ?  true : false;
 	    } else {
 	    	

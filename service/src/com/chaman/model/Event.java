@@ -108,12 +108,12 @@ public class Event extends Model implements Serializable {
 		MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
 		Event e_cache; 
 		
-		int timeZoneInMinutes = Integer.parseInt(timeZone);
+		int timeZoneInMinutes = Integer.parseInt(JSON.RemoveSpaces(timeZone));
 		
 		for (Event e : fbevents) {
 				
 			e_cache = (Event) syncCache.get(e.eid); // read from Event cache
-    	    if (e_cache == null || !e_cache.update_time.equals(e.update_time)) { // check the cache event version with the current one
+    	    if (e_cache == null) {// || !e_cache.update_time.equals(e.update_time)) { // check the cache event version with the current one
 			
     	    	e.Format(timeZoneInMinutes);
     	    	
@@ -249,6 +249,7 @@ public class Event extends Model implements Serializable {
 			e.eid = Long.valueOf(eid);
 			
 			//TODO use calendar
+			//TODO PIC
 			//TODO make sure ti get the event's picture using the facebook connection
 			
 			e.start_time = String.valueOf(com.restfb.util.DateUtils.toDateFromLongFormat(e.start_time).getTime()/1000);
