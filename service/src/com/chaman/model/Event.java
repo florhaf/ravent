@@ -108,7 +108,7 @@ public class Event extends Model implements Serializable {
 		MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
 		Event e_cache; 
 		
-		int timeZoneInMinutes = Integer.parseInt(JSON.RemoveSpaces(timeZone));
+		int timeZoneInMinutes = Integer.parseInt(timeZone);
 		
 		for (Event e : fbevents) {
 				
