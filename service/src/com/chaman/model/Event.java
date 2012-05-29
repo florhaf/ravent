@@ -189,7 +189,7 @@ public class Event extends Model implements Serializable {
 		
         for (EventLocationCapable e : l) {
         	
-    		String query 			= "SELECT " + properties + " FROM event WHERE eid = " + e.getEid(); //TODO to remove and replace by e_graph (see below)
+    		String query 			= "SELECT " + properties + " FROM event WHERE eid = " + e.getEid();
     		List<Event> fbevents 	= client.executeQuery(query, Event.class);
     		
     		if (fbevents != null && fbevents.size() > 0) {
@@ -244,41 +244,36 @@ public class Event extends Model implements Serializable {
 		int timeZoneInMinutes	= Integer.parseInt(timeZone);
 		
 		Event e = new Event();
-				
-			e = client.fetchObject(eid, Event.class);
-			e.eid = Long.valueOf(eid);
-			
-			//TODO use calendar
-			//TODO PIC
-			//TODO make sure ti get the event's picture using the facebook connection
-			
-			e.start_time = String.valueOf(com.restfb.util.DateUtils.toDateFromLongFormat(e.start_time).getTime()/1000);
-			e.end_time = String.valueOf(com.restfb.util.DateUtils.toDateFromLongFormat(e.end_time).getTime()/1000);
-			e.Format(timeZoneInMinutes);
-	    	e.creator = e.owner;
-			
-	    	e.venue_id = JSON.GetValueFor("id", e.venue);
-			Venue v_graph = new Venue(accessToken, e.venue_id);
-	    	e.venue_category = v_graph.category;
-	    	e.latitude 	= JSON.GetValueFor("latitude", e.venue);
-	    	e.longitude = JSON.GetValueFor("longitude", e.venue);
+        	
+    	String query 			= "SELECT eid, name, pic, start_time, end_time, venue, location, host, privacy FROM event WHERE eid = " + eid;
+    	List<Event> fbevents 	= client.executeQuery(query, Event.class);
 		
-	    	if ((e.latitude == null || e.latitude == "" || e.longitude == null || e.longitude == "") && v_graph != null) {
-			
-	    		e.latitude = JSON.GetValueFor("latitude", v_graph.location);
-	    		e.longitude = JSON.GetValueFor("longitude", v_graph.location);
-				
-	    		if (e.latitude != null && e.latitude != "" && e.longitude != null && e.longitude != "") {
-	    			
-	    			float distance = Geo.Fence(userLatitude, userLongitude, e.latitude, e.longitude);
-	    			e.distance = String.format("%.2f", distance);
-	    		}  else {
-								
-	    			e.distance = "N/A";
-	    		}
-	    	}	    	
-	    	e.Score(v_graph);
+		e = fbevents.get(0);
 
+		e.Format(timeZoneInMinutes);
+			
+		e.venue_id = JSON.GetValueFor("id", e.venue);
+		Venue v_graph = new Venue(accessToken, e.venue_id);
+		e.venue_category = v_graph.category;
+		e.latitude 	= JSON.GetValueFor("latitude", e.venue);
+		e.longitude = JSON.GetValueFor("longitude", e.venue);
+		
+		if ((e.latitude == null || e.latitude == "" || e.longitude == null || e.longitude == "") && v_graph != null) {
+	    		
+			e.latitude = JSON.GetValueFor("latitude", v_graph.location);
+			e.longitude = JSON.GetValueFor("longitude", v_graph.location);
+		}
+		
+		if (e.latitude != null && e.latitude != "" && e.longitude != null && e.longitude != "") {
+				
+			float distance = Geo.Fence(userLatitude, userLongitude, e.latitude, e.longitude);
+			e.distance = String.format("%.2f", distance);
+		}  else {
+				
+			e.distance = "N/A";
+		}
+		
+		e.Score(v_graph);
 		return e;
 	}
 	
