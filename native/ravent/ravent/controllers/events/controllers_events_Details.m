@@ -9,6 +9,7 @@
 #import "controllers_events_Details.h"
 #import "YRDropdownView.h"
 #import "JBAsyncImageView.h"
+#import "MBProgressHUD.h"
 #import "controllers_friends_share.h"
 #import "controllers_events_Description.h"
 #import "controllers_events_FeedContainer.h"
@@ -33,11 +34,91 @@
     return self;
 }
 
+- (id)initWithReloadEvent:(models_Event *)event
+{
+    self = [super initWithEvent:event];
+    
+    if (self != nil) {
+        
+        _eventLoader = [[models_Event alloc] init];
+        _eventLoader.delegate = self;
+        _eventLoader.callback = @selector(onLoadEvents:);
+        
+        [[NSBundle mainBundle] loadNibNamed:@"views_events_Details" owner:self options:nil];
+        
+        _headerSize = CGSizeMake(_header.frame.size.width, _header.frame.size.height);
+        _headerTitleSize = CGSizeMake(_headerNameLabel.frame.size.width, _headerNameLabel.frame.size.height);
+        _headerSubTitleSize = CGSizeMake(_headerLocationLabel.frame.size.width, _headerLocationLabel.frame.size.height);
+    }
+    
+    _user.locationDelegate = self;
+    _user.locationSuccess = @selector(onLocationSuccess);
+    _user.locationFailure = @selector(onLocationFailure:);
+    
+    [_user getLocation];
+    
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
+    return self;
+}
+
+- (void)onLocationSuccess
+{
+    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+    
+    [params setValue:[models_User crtUser].accessToken forKey:@"access_token"];
+    [params setValue:[models_User crtUser].latitude forKey:@"latitude"];
+    [params setValue:[models_User crtUser].longitude forKey:@"longitude"];
+    [params setValue:[models_User crtUser].timeZone forKey:@"timezone_offset"];
+    [params setValue:_event.eid forKey:@"eventID"];
+    
+    [_eventLoader reloadWithParams:params];
+}
+
+- (void)onLocationFailure:(NSError *)error
+{
+    NSMutableArray *objects = [[NSMutableArray alloc] init];
+    [objects addObject:error];
+    
+    [self onLoadEvents:objects];
+}
+
+
+- (void)onLoadEvents:(NSArray *)objects
+{
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
+    
+    if ([objects count] > 0) {
+        
+        id object = [objects objectAtIndex:0];
+        
+        if ([object isKindOfClass:[NSError class]]) {
+            
+            NSError *error = (NSError *)object;
+            
+            [YRDropdownView showDropdownInView:self.view 
+                                         title:@"Error" 
+                                        detail:[error localizedDescription]
+                                         image:[UIImage imageNamed:@"dropdown-alert"]
+                                      animated:YES];
+        } else {
+            
+            _event = [objects objectAtIndex:0];
+            
+            [self viewDidLoad];
+        }
+    } else {
+        
+        [[NSBundle mainBundle] loadNibNamed:@"views_Empty" owner:self options:nil];
+        self.tableView.tableFooterView = _emptyView;
+    }
+}
+
 #pragma mark - Button event handler
 
 - (IBAction)addToListButton_Tap:(id)sender
 {
-    NSString *msg = [[Store instance]saveEid:_event.eid forDate:_event.dateStart];
+    NSString *msg = [[Store instance]saveEvent:_event];
     
     [YRDropdownView showDropdownInView:self.view 
                                  title:@"Calendar" 
@@ -197,6 +278,13 @@
     _borderRight.frame = CGRectMake(_borderRight.frame.origin.x, _borderRight.frame.origin.y, _borderRight.frame.size.width, _header.frame.size.height);
     
     self.tableView.tableHeaderView = _header;
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    [self cancelAllRequests];
 }
 
 @end

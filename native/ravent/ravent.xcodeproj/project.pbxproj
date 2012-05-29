@@ -183,7 +183,6 @@
 		DF629E8C153F905D00BCA804 /* navBar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF629E8A153F905D00BCA804 /* navBar@2x.png */; };
 		DF629EA015408E0400BCA804 /* FBDialog.bundle in Resources */ = {isa = PBXBuildFile; fileRef = DF629E9315408E0400BCA804 /* FBDialog.bundle */; };
 		DF629EA115408E0400BCA804 /* libfacebook_ios_sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DF629E9915408E0400BCA804 /* libfacebook_ios_sdk.a */; };
-		DF6C864D152E476D0077E027 /* UITableViewReloadable.m in Sources */ = {isa = PBXBuildFile; fileRef = DF6C864C152E476D0077E027 /* UITableViewReloadable.m */; };
 		DF6C8653152E4CA70077E027 /* UItableViewEvents.m in Sources */ = {isa = PBXBuildFile; fileRef = DF6C8652152E4CA70077E027 /* UItableViewEvents.m */; };
 		DF6C8656152E4E4B0077E027 /* controllers_events_List_p2p.m in Sources */ = {isa = PBXBuildFile; fileRef = DF6C8655152E4E4B0077E027 /* controllers_events_List_p2p.m */; };
 		DF6DA7991514011C00F98F05 /* EGORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = DF6DA7981514011C00F98F05 /* EGORefreshTableHeaderView.m */; };
@@ -202,10 +201,12 @@
 		DF8030F615354C73008E71D6 /* controllers_events_Options_p2p.m in Sources */ = {isa = PBXBuildFile; fileRef = DF8030F515354C71008E71D6 /* controllers_events_Options_p2p.m */; };
 		DF8030F815354CAA008E71D6 /* views_events_Options.xib in Resources */ = {isa = PBXBuildFile; fileRef = DF8030F715354CAA008E71D6 /* views_events_Options.xib */; };
 		DF8030FB15355A47008E71D6 /* controllers_stats_Stats.m in Sources */ = {isa = PBXBuildFile; fileRef = DF8030FA15355A47008E71D6 /* controllers_stats_Stats.m */; };
+		DF85907915741AE40094518F /* views_events_item_Calendar.xib in Resources */ = {isa = PBXBuildFile; fileRef = DF85907815741AE40094518F /* views_events_item_Calendar.xib */; };
 		DF8A1304150FB74700817874 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF8A1303150FB74700817874 /* SystemConfiguration.framework */; };
 		DF8A1317150FB7D700817874 /* libRestKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DFA9B5F3150FB454001CD530 /* libRestKit.a */; };
 		DF8DA067155889FF00002A57 /* Store.m in Sources */ = {isa = PBXBuildFile; fileRef = DF8DA066155889FF00002A57 /* Store.m */; };
 		DF8DA0A51559654600002A57 /* ravent.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DF8DA0A31559654600002A57 /* ravent.xcdatamodeld */; };
+		DF8DA0B5155AB3C200002A57 /* dataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = DF8DA0B4155AB3C200002A57 /* dataSource.m */; };
 		DF8F14CD150BD48200008ABC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF8F14CC150BD48200008ABC /* UIKit.framework */; };
 		DF8F14CF150BD48200008ABC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF8F14CE150BD48200008ABC /* Foundation.framework */; };
 		DF8F14D1150BD48200008ABC /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF8F14D0150BD48200008ABC /* CoreGraphics.framework */; };
@@ -258,6 +259,7 @@
 		DF9E82D91525840000A5728D /* like@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF9E82D51525840000A5728D /* like@2x.png */; };
 		DF9EB13B154C914600CBC4BC /* mapButton.png in Resources */ = {isa = PBXBuildFile; fileRef = DF9EB139154C914600CBC4BC /* mapButton.png */; };
 		DF9EB13C154C914600CBC4BC /* mapButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF9EB13A154C914600CBC4BC /* mapButton@2x.png */; };
+		DF9F6414156D925400304C0F /* UITableViewReloadable.m in Sources */ = {isa = PBXBuildFile; fileRef = DF9F6413156D925400304C0F /* UITableViewReloadable.m */; };
 		DFA23E2F151D205600B8A8B5 /* views_events_Map.xib in Resources */ = {isa = PBXBuildFile; fileRef = DFA23E2E151D205600B8A8B5 /* views_events_Map.xib */; };
 		DFCB87B0154619BC00DDB85B /* menuButton.png in Resources */ = {isa = PBXBuildFile; fileRef = DFCB87AE154619BC00DDB85B /* menuButton.png */; };
 		DFCB87B1154619BC00DDB85B /* menuButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DFCB87AF154619BC00DDB85B /* menuButton@2x.png */; };
@@ -268,6 +270,7 @@
 		DFD2895B151DD2EF007A0873 /* views_calendar_Calendar.xib in Resources */ = {isa = PBXBuildFile; fileRef = DFD2895A151DD2EF007A0873 /* views_calendar_Calendar.xib */; };
 		DFD28965151E70E6007A0873 /* libKal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DFD28964151E70A5007A0873 /* libKal.a */; };
 		DFD28967151E731A007A0873 /* Kal.bundle in Resources */ = {isa = PBXBuildFile; fileRef = DFD28966151E731A007A0873 /* Kal.bundle */; };
+		DFDA1482156D945000877686 /* KalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFDA1481156D945000877686 /* KalViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		DFF02DDE1540B0AA00FED164 /* controllers_TabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF02DDD1540B0AA00FED164 /* controllers_TabBar.m */; };
 		DFF02DE11540B39500FED164 /* controllers_App.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF02DE01540B39500FED164 /* controllers_App.m */; };
 /* End PBXBuildFile section */
@@ -577,8 +580,6 @@
 		DF629E9D15408E0400BCA804 /* SBJsonBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonBase.h; sourceTree = "<group>"; };
 		DF629E9E15408E0400BCA804 /* SBJsonParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonParser.h; sourceTree = "<group>"; };
 		DF629E9F15408E0400BCA804 /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
-		DF6C864B152E476D0077E027 /* UITableViewReloadable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITableViewReloadable.h; sourceTree = "<group>"; };
-		DF6C864C152E476D0077E027 /* UITableViewReloadable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UITableViewReloadable.m; sourceTree = "<group>"; };
 		DF6C8651152E4CA70077E027 /* UItableViewEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UItableViewEvents.h; sourceTree = "<group>"; };
 		DF6C8652152E4CA70077E027 /* UItableViewEvents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UItableViewEvents.m; sourceTree = "<group>"; };
 		DF6C8654152E4E4B0077E027 /* controllers_events_List_p2p.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = controllers_events_List_p2p.h; sourceTree = "<group>"; };
@@ -606,10 +607,13 @@
 		DF8030F715354CAA008E71D6 /* views_events_Options.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = views_events_Options.xib; sourceTree = "<group>"; };
 		DF8030F915355A47008E71D6 /* controllers_stats_Stats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = controllers_stats_Stats.h; sourceTree = "<group>"; };
 		DF8030FA15355A47008E71D6 /* controllers_stats_Stats.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = controllers_stats_Stats.m; sourceTree = "<group>"; };
+		DF85907815741AE40094518F /* views_events_item_Calendar.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = views_events_item_Calendar.xib; sourceTree = "<group>"; };
 		DF8A1303150FB74700817874 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		DF8DA065155889FF00002A57 /* Store.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Store.h; sourceTree = "<group>"; };
 		DF8DA066155889FF00002A57 /* Store.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Store.m; sourceTree = "<group>"; };
 		DF8DA0A41559654600002A57 /* ravent.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ravent.xcdatamodel; sourceTree = "<group>"; };
+		DF8DA0B3155AB3C200002A57 /* dataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dataSource.h; sourceTree = "<group>"; };
+		DF8DA0B4155AB3C200002A57 /* dataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = dataSource.m; sourceTree = "<group>"; };
 		DF8F14C8150BD48200008ABC /* ravent.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ravent.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF8F14CC150BD48200008ABC /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		DF8F14CE150BD48200008ABC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -673,6 +677,8 @@
 		DF9E82D51525840000A5728D /* like@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "like@2x.png"; sourceTree = "<group>"; };
 		DF9EB139154C914600CBC4BC /* mapButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mapButton.png; sourceTree = "<group>"; };
 		DF9EB13A154C914600CBC4BC /* mapButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mapButton@2x.png"; sourceTree = "<group>"; };
+		DF9F6412156D925400304C0F /* UITableViewReloadable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITableViewReloadable.h; sourceTree = "<group>"; };
+		DF9F6413156D925400304C0F /* UITableViewReloadable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UITableViewReloadable.m; sourceTree = "<group>"; };
 		DFA23E2E151D205600B8A8B5 /* views_events_Map.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = views_events_Map.xib; path = item/views_events_Map.xib; sourceTree = "<group>"; };
 		DFA9B5EB150FB454001CD530 /* RestKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RestKit.xcodeproj; path = RestKit/RestKit.xcodeproj; sourceTree = "<group>"; };
 		DFCB87AE154619BC00DDB85B /* menuButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menuButton.png; sourceTree = "<group>"; };
@@ -686,6 +692,8 @@
 		DFD2895A151DD2EF007A0873 /* views_calendar_Calendar.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = views_calendar_Calendar.xib; path = ravent/views/calendar/views_calendar_Calendar.xib; sourceTree = SOURCE_ROOT; };
 		DFD2895C151E70A5007A0873 /* Kal.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Kal.xcodeproj; path = Kal/Kal.xcodeproj; sourceTree = "<group>"; };
 		DFD28966151E731A007A0873 /* Kal.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Kal.bundle; path = Kal/Kal.bundle; sourceTree = "<group>"; };
+		DFDA1480156D945000877686 /* KalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KalViewController.h; sourceTree = "<group>"; };
+		DFDA1481156D945000877686 /* KalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KalViewController.m; sourceTree = "<group>"; };
 		DFF02DDC1540B0AA00FED164 /* controllers_TabBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = controllers_TabBar.h; sourceTree = "<group>"; };
 		DFF02DDD1540B0AA00FED164 /* controllers_TabBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = controllers_TabBar.m; sourceTree = "<group>"; };
 		DFF02DDF1540B39500FED164 /* controllers_App.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = controllers_App.h; sourceTree = "<group>"; };
@@ -1185,8 +1193,10 @@
 		DF6C864A152E47340077E027 /* Ravent */ = {
 			isa = PBXGroup;
 			children = (
-				DF6C864B152E476D0077E027 /* UITableViewReloadable.h */,
-				DF6C864C152E476D0077E027 /* UITableViewReloadable.m */,
+				DFDA1480156D945000877686 /* KalViewController.h */,
+				DFDA1481156D945000877686 /* KalViewController.m */,
+				DF9F6412156D925400304C0F /* UITableViewReloadable.h */,
+				DF9F6413156D925400304C0F /* UITableViewReloadable.m */,
 				DF6C8651152E4CA70077E027 /* UItableViewEvents.h */,
 				DF6C8652152E4CA70077E027 /* UItableViewEvents.m */,
 				DF8030EB1534C62D008E71D6 /* UITableViewFriends.h */,
@@ -1520,6 +1530,7 @@
 				DF9DA54B150CAC250006E61A /* views_events_item_Event.xib */,
 				DF9DA58C150DC4210006E61A /* views_events_item_Comment.xib */,
 				DF9DA58E150DC4890006E61A /* views_events_Picture.xib */,
+				DF85907815741AE40094518F /* views_events_item_Calendar.xib */,
 			);
 			path = item;
 			sourceTree = "<group>";
@@ -1540,6 +1551,8 @@
 			children = (
 				DFD28957151DD2E0007A0873 /* controllers_calendar_Calendar.h */,
 				DFD28958151DD2E0007A0873 /* controllers_calendar_Calendar.m */,
+				DF8DA0B3155AB3C200002A57 /* dataSource.h */,
+				DF8DA0B4155AB3C200002A57 /* dataSource.m */,
 			);
 			name = calendar;
 			path = ../../../../../../../Users/florianhaftman/ravent/native/ravent/ravent/controllers/calendar;
@@ -1839,6 +1852,7 @@
 				DF945CFA155612D800B21571 /* regularButton.png in Resources */,
 				DF945CFC1556B7D800B21571 /* picbg2@2x.png in Resources */,
 				DF945D041556E5DC00B21571 /* removeButton.png in Resources */,
+				DF85907915741AE40094518F /* views_events_item_Calendar.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1866,7 +1880,6 @@
 				DFD28959151DD2E0007A0873 /* controllers_calendar_Calendar.m in Sources */,
 				DF39E8091525275F0080EDA0 /* ActionDispatcher.m in Sources */,
 				DF39E80C152527A50080EDA0 /* Action.m in Sources */,
-				DF6C864D152E476D0077E027 /* UITableViewReloadable.m in Sources */,
 				DF6C8653152E4CA70077E027 /* UItableViewEvents.m in Sources */,
 				DF6C8656152E4E4B0077E027 /* controllers_events_List_p2p.m in Sources */,
 				DF8030ED1534C62E008E71D6 /* UITableViewFriends.m in Sources */,
@@ -1945,6 +1958,9 @@
 				DF945D021556D5DE00B21571 /* NSData+Base64.m in Sources */,
 				DF8DA067155889FF00002A57 /* Store.m in Sources */,
 				DF8DA0A51559654600002A57 /* ravent.xcdatamodeld in Sources */,
+				DF8DA0B5155AB3C200002A57 /* dataSource.m in Sources */,
+				DF9F6414156D925400304C0F /* UITableViewReloadable.m in Sources */,
+				DFDA1482156D945000877686 /* KalViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1977,7 +1993,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: florian haftman (247VK6949Z)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: florian haftman";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -2001,7 +2017,7 @@
 					"-ObjC",
 					"-all_load",
 				);
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "67C20EBB-AA59-4A4B-B4BF-60479C59B59C";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "18C33D37-F37B-4653-A32E-C464B59203DD";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 			};
@@ -2013,7 +2029,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: florian haftman (247VK6949Z)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: florian haftman";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -2031,7 +2047,7 @@
 					"-ObjC",
 					"-all_load",
 				);
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "67C20EBB-AA59-4A4B-B4BF-60479C59B59C";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "18C33D37-F37B-4653-A32E-C464B59203DD";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				VALIDATE_PRODUCT = YES;
@@ -2041,7 +2057,7 @@
 		DF8F14F5150BD48200008ABC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: florian haftman (247VK6949Z)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: florian haftman";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/RestKit/Specs/Runner/OCHamcrest\"",
@@ -2056,7 +2072,7 @@
 					"\"$(SRCROOT)/facebook-ios-sdk\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "67C20EBB-AA59-4A4B-B4BF-60479C59B59C";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "18C33D37-F37B-4653-A32E-C464B59203DD";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = NO;
 				WRAPPER_EXTENSION = app;
@@ -2066,7 +2082,7 @@
 		DF8F14F6150BD48200008ABC /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: florian haftman (247VK6949Z)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: florian haftman";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/RestKit/Specs/Runner/OCHamcrest\"",
@@ -2081,7 +2097,7 @@
 					"\"$(SRCROOT)/facebook-ios-sdk\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "67C20EBB-AA59-4A4B-B4BF-60479C59B59C";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "18C33D37-F37B-4653-A32E-C464B59203DD";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = NO;
 				WRAPPER_EXTENSION = app;

@@ -24,6 +24,7 @@
         _subTitleSize = CGSizeMake(_itemSubTitle.frame.size.width, _itemSubTitle.frame.size.height);
         
         _event = event;
+        
         _user = [[models_User crtUser] copy];
         _user.delegate = self;
         _user.callback = @selector(onLoadInvited:);

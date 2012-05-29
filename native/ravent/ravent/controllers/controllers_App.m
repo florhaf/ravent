@@ -13,7 +13,6 @@
 @implementation controllers_App
 
 @synthesize loginController = _loginController;
-//@synthesize tabBarController = _tabBarController;
 @synthesize slidingController = _slidingController;
 
 - (id)init

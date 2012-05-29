@@ -38,7 +38,7 @@ NSString *const KalDataSourceChangedNotification = @"KalDataSourceChangedNotific
 
 @implementation KalViewController
 
-@synthesize dataSource, delegate, initialDate, selectedDate;
+@synthesize dataSource, delegate, initialDate, selectedDate, tableView;
 
 - (id)initWithSelectedDate:(NSDate *)date
 {
@@ -127,8 +127,21 @@ NSString *const KalDataSourceChangedNotification = @"KalDataSourceChangedNotific
 
 - (void)loadedDataSource:(id<KalDataSource>)theDataSource;
 {
-  NSArray *markedDates = [theDataSource markedDatesFrom:logic.fromDate to:logic.toDate];
-  NSMutableArray *dates = [[markedDates mutableCopy] autorelease];
+    NSArray *markedDates = [theDataSource markedDatesFrom:logic.fromDate to:logic.toDate];
+    NSMutableArray *dates = [[NSMutableArray alloc]init];//[[markedDates mutableCopy] autorelease];
+    
+    for (int i = 0; i < [markedDates count]; i++) {
+        
+        NSString *dateStr = [markedDates objectAtIndex:i];
+        
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"MMM d, yyyy"];
+        NSDate *date = [dateFormatter dateFromString:dateStr];
+        
+        [dates addObject:date];
+    }
+    
+    
   for (int i=0; i<[dates count]; i++)
     [dates replaceObjectAtIndex:i withObject:[KalDate dateFromNSDate:[dates objectAtIndex:i]]];
   
@@ -188,6 +201,7 @@ NSString *const KalDataSourceChangedNotification = @"KalDataSourceChangedNotific
   tableView = kalView.tableView;
   tableView.dataSource = dataSource;
   tableView.delegate = delegate;
+    tableView.tableFooterView = [[UIView alloc] init];
   [tableView retain];
   [kalView selectDate:[KalDate dateFromNSDate:self.initialDate]];
   [self reloadData];

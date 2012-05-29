@@ -100,6 +100,35 @@
     [_manager loadObjectsAtResourcePath:resourcePath objectMapping:objectMapping delegate:self]; 
 }
 
+- (void)reloadWithParams:(NSMutableDictionary *)params
+{
+    NSString *resourcePath = [@"calendar" appendQueryParams:params];
+    
+    RKObjectMapping *objectMapping = [RKObjectMapping mappingForClass:[models_Event class]];
+    [objectMapping mapKeyPath:@"eid" toAttribute:@"eid"];
+    [objectMapping mapKeyPath:@"name" toAttribute:@"name"];
+    [objectMapping mapKeyPath:@"location" toAttribute:@"location"];
+    [objectMapping mapKeyPath:@"picture" toAttribute:@"picture"];
+    [objectMapping mapKeyPath:@"score" toAttribute:@"score"];
+    [objectMapping mapKeyPath:@"time_start" toAttribute:@"timeStart"];
+    [objectMapping mapKeyPath:@"time_end" toAttribute:@"timeEnd"];
+    [objectMapping mapKeyPath:@"distance" toAttribute:@"distance"];
+    [objectMapping mapKeyPath:@"group" toAttribute:@"group"];
+    [objectMapping mapKeyPath:@"date_start" toAttribute:@"dateStart"];
+    [objectMapping mapKeyPath:@"date_end" toAttribute:@"dateEnd"];
+    [objectMapping mapKeyPath:@"latitude" toAttribute:@"latitude"];
+    [objectMapping mapKeyPath:@"longitude" toAttribute:@"longitude"];
+    [objectMapping mapKeyPath:@"groupTitle" toAttribute:@"groupTitle"];
+    
+    if (_manager == nil) {
+        
+        _manager = [RKObjectManager objectManagerWithBaseURL:SERVICE_URL];
+    }
+    
+    [_manager.mappingProvider setMapping:objectMapping forKeyPath:@"records"];
+    [_manager loadObjectsAtResourcePath:resourcePath objectMapping:objectMapping delegate:self];
+}
+
 - (void)loadDescription
 {
     NSMutableDictionary *params = [[NSMutableDictionary alloc] initWithCapacity:2];

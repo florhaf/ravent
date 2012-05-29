@@ -51,6 +51,50 @@ static Store *_store;
     return @"event added to your calendar";
 }
 
+- (NSString *)saveEvent:(models_Event *)event
+{
+    NSMutableArray *array = [self findEidsForDate:event.dateStart];
+    
+    for (int i = 0; i < [array count]; i++) {
+        
+        NSString *eid = [array objectAtIndex:i];
+        
+        if ([eid isEqualToString:event.eid]) {
+            
+            NSLog(@"eid already present");
+            return @"event already in calendar";
+        }
+    }
+    
+    NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
+    NSEntityDescription *entity = [[self.fetchedResultsController fetchRequest] entity];
+    NSManagedObject *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:context];
+    
+    // If appropriate, configure the new managed object.
+    // Normally you should use accessor methods, but using KVC here avoids the need to add a custom class to the template.
+    [newManagedObject setValue:event.dateStart forKey:@"startDate"];
+    [newManagedObject setValue:event.dateEnd forKey:@"endDate"];
+    [newManagedObject setValue:event.timeStart forKey:@"startTime"];
+    [newManagedObject setValue:event.timeEnd forKey:@"endTime"];
+    [newManagedObject setValue:event.eid forKey:@"eid"];
+    [newManagedObject setValue:event.name forKey:@"name"];
+    [newManagedObject setValue:event.location forKey:@"location"];
+    [newManagedObject setValue:event.latitude forKey:@"latitude"];
+    [newManagedObject setValue:event.longitude forKey:@"longitude"];
+    [newManagedObject setValue:event.picture forKey:@"picture"];
+    
+    // Save the context.
+    NSError *error = nil;
+    if (![context save:&error]) {
+        // Replace this implementation with code to handle the error appropriately.
+        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        abort();
+    }
+    
+    return @"event added to your calendar";
+}
+
 #pragma mark - Fetched results controller
 
 - (NSFetchedResultsController *)fetchedResultsController
@@ -108,11 +152,49 @@ static Store *_store;
     
     for (int i = 0; i < [objects count]; i++) {
             
-        NSManagedObject *matches = [objects objectAtIndex:i];
+        NSManagedObject *matche = [objects objectAtIndex:i];
             
-        [result addObject:[matches valueForKey:@"eid"]];
+        [result addObject:[matche valueForKey:@"eid"]];
     }
 
+    return result;
+}
+
+- (NSMutableArray *)findEventsForDate:(NSString *)startDate
+{
+    NSEntityDescription *entityDesc = [NSEntityDescription entityForName:@"Event" inManagedObjectContext:[self managedObjectContext]];
+    
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"(startDate = %@)", startDate];
+    
+    [request setEntity:entityDesc];
+    [request setPredicate:pred];
+    
+    NSError *error;
+    NSArray *objects = [[self managedObjectContext] executeFetchRequest:request error:&error];
+    
+    NSMutableArray *result = [[NSMutableArray alloc] init];
+    
+    for (int i = 0; i < [objects count]; i++) {
+        
+        NSManagedObject *match = [objects objectAtIndex:i];
+        
+        models_Event *e = [[models_Event alloc] init];
+        
+        e.eid = [match valueForKey:@"eid"];
+        e.name = [match valueForKey:@"name"];
+        e.location = [match valueForKey:@"location"];
+        e.picture = [match valueForKey:@"picture"];
+        e.latitude = [match valueForKey:@"latitude"];
+        e.longitude = [match valueForKey:@"longitude"];
+        e.dateStart = [match valueForKey:@"startDate"];
+        e.dateEnd = [match valueForKey:@"endDate"];
+        e.timeStart = [match valueForKey:@"startTime"];
+        e.timeEnd = [match valueForKey:@"endTime"];
+        
+        [result addObject:e];
+    }
+    
     return result;
 }
 

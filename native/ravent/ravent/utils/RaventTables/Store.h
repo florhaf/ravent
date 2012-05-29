@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
+#import "models_Event.h"
 
 @interface Store : NSObject<NSFetchedResultsControllerDelegate> {
     
@@ -18,7 +19,9 @@
 
 - (NSFetchedResultsController *)fetchedResultsController;
 - (NSString *)saveEid:(NSString *)eid forDate:(NSString *)startDate;
+- (NSString *)saveEvent:(models_Event *)event;
 - (NSMutableArray *)findEidsForDate:(NSString *)startDate;
+- (NSMutableArray *)findEventsForDate:(NSString *)startDate;
 
 + (Store *)instance;
 

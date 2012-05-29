@@ -23,8 +23,6 @@
 		533B288311E2D46E00B3CC07 /* KalTileView.m in Sources */ = {isa = PBXBuildFile; fileRef = 533B286D11E2D46E00B3CC07 /* KalTileView.m */; };
 		533B288411E2D46E00B3CC07 /* KalView.h in Headers */ = {isa = PBXBuildFile; fileRef = 533B286E11E2D46E00B3CC07 /* KalView.h */; };
 		533B288511E2D46E00B3CC07 /* KalView.m in Sources */ = {isa = PBXBuildFile; fileRef = 533B286F11E2D46E00B3CC07 /* KalView.m */; };
-		533B288611E2D46E00B3CC07 /* KalViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 533B287011E2D46E00B3CC07 /* KalViewController.h */; };
-		533B288711E2D46E00B3CC07 /* KalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 533B287111E2D46E00B3CC07 /* KalViewController.m */; };
 		533B288811E2D46E00B3CC07 /* NSDateAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 533B287211E2D46E00B3CC07 /* NSDateAdditions.h */; };
 		533B288911E2D46E00B3CC07 /* NSDateAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 533B287311E2D46E00B3CC07 /* NSDateAdditions.m */; };
 		533B288A11E2D46E00B3CC07 /* UIViewAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 533B287411E2D46E00B3CC07 /* UIViewAdditions.h */; };
@@ -51,8 +49,6 @@
 		533B286D11E2D46E00B3CC07 /* KalTileView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KalTileView.m; sourceTree = SOURCE_ROOT; };
 		533B286E11E2D46E00B3CC07 /* KalView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KalView.h; sourceTree = SOURCE_ROOT; };
 		533B286F11E2D46E00B3CC07 /* KalView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KalView.m; sourceTree = SOURCE_ROOT; };
-		533B287011E2D46E00B3CC07 /* KalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KalViewController.h; sourceTree = SOURCE_ROOT; };
-		533B287111E2D46E00B3CC07 /* KalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KalViewController.m; sourceTree = SOURCE_ROOT; };
 		533B287211E2D46E00B3CC07 /* NSDateAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDateAdditions.h; sourceTree = "<group>"; };
 		533B287311E2D46E00B3CC07 /* NSDateAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDateAdditions.m; sourceTree = "<group>"; };
 		533B287411E2D46E00B3CC07 /* UIViewAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIViewAdditions.h; sourceTree = "<group>"; };
@@ -122,8 +118,6 @@
 				533B286D11E2D46E00B3CC07 /* KalTileView.m */,
 				533B286E11E2D46E00B3CC07 /* KalView.h */,
 				533B286F11E2D46E00B3CC07 /* KalView.m */,
-				533B287011E2D46E00B3CC07 /* KalViewController.h */,
-				533B287111E2D46E00B3CC07 /* KalViewController.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -164,7 +158,6 @@
 				533B288111E2D46E00B3CC07 /* KalPrivate.h in Headers */,
 				533B288211E2D46E00B3CC07 /* KalTileView.h in Headers */,
 				533B288411E2D46E00B3CC07 /* KalView.h in Headers */,
-				533B288611E2D46E00B3CC07 /* KalViewController.h in Headers */,
 				533B288811E2D46E00B3CC07 /* NSDateAdditions.h in Headers */,
 				533B288A11E2D46E00B3CC07 /* UIViewAdditions.h in Headers */,
 			);
@@ -230,7 +223,6 @@
 				533B288011E2D46E00B3CC07 /* KalMonthView.m in Sources */,
 				533B288311E2D46E00B3CC07 /* KalTileView.m in Sources */,
 				533B288511E2D46E00B3CC07 /* KalView.m in Sources */,
-				533B288711E2D46E00B3CC07 /* KalViewController.m in Sources */,
 				533B288911E2D46E00B3CC07 /* NSDateAdditions.m in Sources */,
 				533B288B11E2D46E00B3CC07 /* UIViewAdditions.m in Sources */,
 			);

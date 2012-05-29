@@ -79,7 +79,7 @@ extern const CGSize kTileSize;
     if ([t.date isEqual:date]) {
       tile = t;
       break;
-    }
+    } 
   }
   NSAssert1(tile != nil, @"Failed to find corresponding tile for date %@", date);
   

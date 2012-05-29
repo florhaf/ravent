@@ -67,6 +67,7 @@
 
 - (id)initWithDelegate:(NSObject *)del andSelector:(SEL)sel;
 - (void)loadEventsWithParams:(NSMutableDictionary *)params;
+- (void)reloadWithParams:(NSMutableDictionary *)params;
 - (void)loadDescription;
 - (void)vote:(NSMutableDictionary *)params success:(SEL)success failure:(SEL)failure sender:(id)sender;
 - (void)cancelAllRequests;

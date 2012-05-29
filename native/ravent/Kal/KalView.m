@@ -155,7 +155,7 @@ static const CGFloat kMonthLabelHeight = 17.f;
   [contentView addSubview:gridView];
 
   // The list of events for the selected day
-  tableView = [[UITableView alloc] initWithFrame:fullWidthAutomaticLayoutFrame style:UITableViewStylePlain];
+    tableView = [[UITableView alloc] initWithFrame:fullWidthAutomaticLayoutFrame style:UITableViewStylePlain];
   tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   [contentView addSubview:tableView];
   

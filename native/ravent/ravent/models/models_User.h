@@ -25,6 +25,7 @@
     SEL _locationSuccess;
     SEL _locationFailure;
     NSDate *_locationLastUpdateTime;
+    CLLocation *_bestEffortAtLocation;
     
     RKObjectManager *_manager;
     RKClient *_client;

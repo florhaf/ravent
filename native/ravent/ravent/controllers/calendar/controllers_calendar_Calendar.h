@@ -11,10 +11,16 @@
 #import "ECSlidingViewController.h"
 #import "controllers_SlidingMenu.h"
 #import "Kal.h"
+#import "UITableViewReloadable.h"
 
-@interface controllers_calendar_Calendar : KalViewController {
+@interface controllers_calendar_Calendar : UIViewController<UITableViewDelegate> {
     
+    UITableViewReloadable *_tableViewController;
+    KalViewController *_kal;
+    id _datasource;
 }
+
+@property (nonatomic, retain) KalViewController *kal;
 
 + (customNavigationController *)instance;
 

@@ -33,7 +33,10 @@
     IBOutlet JBAsyncImageView *_mapImage;
     
     DLStarRatingControl *_voteView;
+    models_Event *_eventLoader;
 }
+
+- (id)initWithReloadEvent:(models_Event *)event;
 
 - (IBAction)addToListButton_Tap:(id)sender;
 - (IBAction)shareButton_Tap:(id)sender;
