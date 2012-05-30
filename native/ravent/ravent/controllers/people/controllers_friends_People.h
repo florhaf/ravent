@@ -33,6 +33,8 @@
     IBOutlet UIView *_container;
     
     BOOL _isFollowersVisible;
+    
+    UIViewController *_details;
 }
 
 - (id)initWithUser:(models_User *)user;

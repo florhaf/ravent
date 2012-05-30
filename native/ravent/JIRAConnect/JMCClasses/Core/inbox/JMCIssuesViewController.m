@@ -32,9 +32,19 @@ static NSString *cellId = @"CommentCell";
 
     self = [super initWithStyle:style];
     if (self) {
-        self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose
-                                                                                                target:self
-                                                                                                action:@selector(compose:)] autorelease];
+        
+        
+        UIImage *posti = [UIImage imageNamed:@"postButton"];
+        UIButton *postb = [UIButton buttonWithType:UIButtonTypeCustom];
+        [postb addTarget:self action:@selector(compose:) forControlEvents:UIControlEventTouchUpInside];
+        [postb setImage:posti forState:UIControlStateNormal];
+        [postb setFrame:CGRectMake(0, 0, posti.size.width, posti.size.height)];
+        UIBarButtonItem *postButton = [[UIBarButtonItem alloc] initWithCustomView:postb];       
+        self.navigationItem.rightBarButtonItem = postButton;
+        
+//        self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose
+//                                                                                                target:self
+//                                                                                                action:@selector(compose:)] autorelease];
 
         self.title = JMCLocalizedString(@"Your Feedback", @"Title of list of previous messages");
         _dateFormatter = [[NSDateFormatter alloc] init];

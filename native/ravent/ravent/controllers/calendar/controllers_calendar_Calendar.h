@@ -18,6 +18,8 @@
     UITableViewReloadable *_tableViewController;
     KalViewController *_kal;
     id _datasource;
+    
+    UIViewController *_details;
 }
 
 @property (nonatomic, retain) KalViewController *kal;

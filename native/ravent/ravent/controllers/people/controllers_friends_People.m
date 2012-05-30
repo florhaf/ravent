@@ -74,8 +74,18 @@ static customNavigationController *_ctrl;
 
 - (void)onMeTap
 {
-    controllers_friends_Details *details = [[controllers_friends_Details alloc] initWithUser:[[models_User crtUser] copy]];
-    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle: @"Back" style: UIBarButtonItemStyleBordered target: nil action: nil];
+    
+    _details = [[controllers_friends_Details alloc] initWithUser:[[models_User crtUser] copy]];
+    
+    UIImage *backi = [UIImage imageNamed:@"backButton"];
+    
+    UIButton *backb = [UIButton buttonWithType:UIButtonTypeCustom];
+    [backb addTarget:self action:@selector(onBackTap) forControlEvents:UIControlEventTouchUpInside];
+    [backb setImage:backi forState:UIControlStateNormal];
+    [backb setFrame:CGRectMake(0, 0, backi.size.width, backi.size.height)];
+    
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:backb];
+    
     UIViewController *rootController = self;
     
     while (![rootController.parentViewController isKindOfClass:[UINavigationController class]]) {
@@ -83,8 +93,15 @@ static customNavigationController *_ctrl;
         rootController = rootController.parentViewController;
     }
     
-    [rootController.navigationItem setBackBarButtonItem: backButton];
-    [self.navigationController pushViewController:details animated:YES];
+    [rootController.navigationItem hidesBackButton];
+    [_details.navigationItem setLeftBarButtonItem:backButton];
+    [self.navigationController pushViewController:_details animated:YES];
+}
+
+- (void)onBackTap
+{
+    [(controllers_friends_Details *)_details cancelAllRequests];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)viewDidLoad

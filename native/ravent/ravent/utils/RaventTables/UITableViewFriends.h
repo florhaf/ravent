@@ -8,8 +8,12 @@
 
 #import <Foundation/Foundation.h>
 #import "UITableViewReloadable.h"
+#import "controllers_friends_Details.h"
 
-@interface UITableViewFriends : UITableViewReloadable
+@interface UITableViewFriends : UITableViewReloadable {
+    
+    controllers_friends_Details *_details;
+}
 
 - (id)initWithEvent:(models_Event *)event;
 - (void)onLoadInvited:(NSArray *)objects;

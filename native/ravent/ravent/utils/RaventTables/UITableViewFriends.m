@@ -75,25 +75,33 @@
 {
     models_User *user = [_data objectAtIndex:indexPath.row];
     
-    controllers_friends_Details *details = [[controllers_friends_Details alloc] initWithUser:[user copy]];
+    _details = [[controllers_friends_Details alloc] initWithUser:[user copy]];
     
-    UIImage *menui = [UIImage imageNamed:@"backButton"];
+    UIImage *backi = [UIImage imageNamed:@"backButton"];
     
-    UIButton *menub = [UIButton buttonWithType:UIButtonTypeCustom];
-    [menub addTarget:details action:@selector(cancellAllRequests:) forControlEvents:UIControlEventTouchUpInside];
-    [menub setImage:menui forState:UIControlStateNormal];
-    [menub setFrame:CGRectMake(0, 0, menui.size.width, menui.size.height)];
+    UIButton *backb = [UIButton buttonWithType:UIButtonTypeCustom];
+    [backb addTarget:self action:@selector(onBackTap) forControlEvents:UIControlEventTouchUpInside];
+    [backb setImage:backi forState:UIControlStateNormal];
+    [backb setFrame:CGRectMake(0, 0, backi.size.width, backi.size.height)];
     
-    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:menub];
-    
-    //    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle: @"Back" style: UIBarButtonItemStyleBordered target:details action:@selector(cancellAllRequests)];
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:backb];
     
     UIViewController *rootController = self;
+    
     while (![rootController.parentViewController isKindOfClass:[UINavigationController class]]) {
+        
         rootController = rootController.parentViewController;
     }
-    [rootController.navigationItem setBackBarButtonItem: backButton];
-    [self.navigationController pushViewController:details animated:YES];
+    
+    [rootController.navigationItem hidesBackButton];
+    [_details.navigationItem setLeftBarButtonItem:backButton];
+    [self.navigationController pushViewController:_details animated:YES];
+}
+
+- (void)onBackTap
+{
+    [_details cancelAllRequests];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)viewDidLoad

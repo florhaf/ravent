@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-
 #import "UITableViewReloadable.h"
 
 @interface UITableViewEvents : UITableViewReloadable {
@@ -18,6 +17,8 @@
     
     IBOutlet UIImageView *_bgLeft;
     IBOutlet UIImageView *_bgRight;
+    
+    UIViewController *_details;
 }
 
 - (id)initWithUser:(models_User *)user;

@@ -27,7 +27,7 @@ static controllers_SlidingMenu *_ctrl;
     
     if (self) {
         
-        self.menuItems = [NSArray arrayWithObjects:@"Events", @"People", @"Calendar", @"Stats", @"Feedback", nil];
+        self.menuItems = [NSArray arrayWithObjects:@"Events", @"Friends", @"Calendar", @"Feedback", nil];
     }
     
     return self;
@@ -115,7 +115,7 @@ static controllers_SlidingMenu *_ctrl;
         newTopViewController = [controllers_events_Events instance];
     } else {
         
-        if ([identifier isEqualToString:@"People"]) {
+        if ([identifier isEqualToString:@"Friends"]) {
             
             newTopViewController = [controllers_friends_People instance];
         } else {

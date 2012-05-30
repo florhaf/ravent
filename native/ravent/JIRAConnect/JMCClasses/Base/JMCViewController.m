@@ -99,12 +99,22 @@ static NSInteger kJMCTag = 10133;
         self.navigationItem.title = JMCLocalizedString(@"Feedback", "Title of the feedback controller");
     }
 
+    
+    
+    UIImage *posti = [UIImage imageNamed:@"postButton"];
+    UIButton *postb = [UIButton buttonWithType:UIButtonTypeCustom];
+    [postb addTarget:self action:@selector(sendFeedback) forControlEvents:UIControlEventTouchUpInside];
+    [postb setImage:posti forState:UIControlStateNormal];
+    [postb setFrame:CGRectMake(0, 0, posti.size.width, posti.size.height)];
+    UIBarButtonItem *postButton = [[UIBarButtonItem alloc] initWithCustomView:postb];       
+    self.navigationItem.leftBarButtonItem = postButton;
+    
 
-    self.navigationItem.rightBarButtonItem =
-            [[[UIBarButtonItem alloc] initWithTitle:JMCLocalizedString(@"Send", @"Send feedback")
-                                              style:UIBarButtonItemStyleDone
-                                             target:self
-                                             action:@selector(sendFeedback)] autorelease];
+//    self.navigationItem.rightBarButtonItem =
+//            [[[UIBarButtonItem alloc] initWithTitle:JMCLocalizedString(@"Send", @"Send feedback")
+//                                              style:UIBarButtonItemStyleDone
+//                                             target:self
+//                                             action:@selector(sendFeedback)] autorelease];
 
     [self addButtonsToView];
     if (!self.attachments) {
@@ -133,11 +143,19 @@ static NSInteger kJMCTag = 10133;
     
     // Show cancel button only if this is the first controller on the stack
     if ([self.navigationController.viewControllers objectAtIndex:0] == self) {
-        self.navigationItem.leftBarButtonItem =
-        [[[UIBarButtonItem alloc] initWithTitle:JMCLocalizedString(@"Cancel", @"Cancel feedback")
-                                          style:UIBarButtonItemStyleBordered
-                                         target:self
-                                         action:@selector(dismiss)] autorelease];
+//        self.navigationItem.leftBarButtonItem =
+//        [[[UIBarButtonItem alloc] initWithTitle:JMCLocalizedString(@"Cancel", @"Cancel feedback")
+//                                          style:UIBarButtonItemStyleBordered
+//                                         target:self
+//                                         action:@selector(dismiss)] autorelease];
+        
+        UIImage *donei = [UIImage imageNamed:@"doneButton"];
+        UIButton *doneb = [UIButton buttonWithType:UIButtonTypeCustom];
+        [doneb addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
+        [doneb setImage:donei forState:UIControlStateNormal];
+        [doneb setFrame:CGRectMake(0, 0, donei.size.width, donei.size.height)];
+        UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithCustomView:doneb];       
+        self.navigationItem.rightBarButtonItem = doneButton;
     }
     
     [self.descriptionField becomeFirstResponder];

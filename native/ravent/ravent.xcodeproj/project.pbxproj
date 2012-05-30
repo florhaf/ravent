@@ -149,6 +149,10 @@
 		DF2A31D51551AD5C00AC01B0 /* allButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF2A31D31551AD5C00AC01B0 /* allButton@2x.png */; };
 		DF2A31D81551E05A00AC01B0 /* backgroundLight.png in Resources */ = {isa = PBXBuildFile; fileRef = DF2A31D61551E05A00AC01B0 /* backgroundLight.png */; };
 		DF2A31D91551E05A00AC01B0 /* backgroundLight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF2A31D71551E05A00AC01B0 /* backgroundLight@2x.png */; };
+		DF3170371575DDAC00EB8319 /* doneButton.png in Resources */ = {isa = PBXBuildFile; fileRef = DF3170331575DDAC00EB8319 /* doneButton.png */; };
+		DF3170381575DDAC00EB8319 /* doneButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF3170341575DDAC00EB8319 /* doneButton@2x.png */; };
+		DF3170391575DDAC00EB8319 /* postButton.png in Resources */ = {isa = PBXBuildFile; fileRef = DF3170351575DDAC00EB8319 /* postButton.png */; };
+		DF31703A1575DDAC00EB8319 /* postButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF3170361575DDAC00EB8319 /* postButton@2x.png */; };
 		DF36FF3D15532B9300C3CB53 /* UIView+Animation.m in Sources */ = {isa = PBXBuildFile; fileRef = DF36FF3C15532B9300C3CB53 /* UIView+Animation.m */; };
 		DF36FF411553443F00C3CB53 /* views_events_Feed.xib in Resources */ = {isa = PBXBuildFile; fileRef = DF36FF401553443F00C3CB53 /* views_events_Feed.xib */; };
 		DF36FF4415534E9400C3CB53 /* controllers_events_FeedContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = DF36FF4315534E9400C3CB53 /* controllers_events_FeedContainer.m */; };
@@ -522,6 +526,10 @@
 		DF2A31D31551AD5C00AC01B0 /* allButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "allButton@2x.png"; sourceTree = "<group>"; };
 		DF2A31D61551E05A00AC01B0 /* backgroundLight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = backgroundLight.png; sourceTree = "<group>"; };
 		DF2A31D71551E05A00AC01B0 /* backgroundLight@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "backgroundLight@2x.png"; sourceTree = "<group>"; };
+		DF3170331575DDAC00EB8319 /* doneButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = doneButton.png; sourceTree = "<group>"; };
+		DF3170341575DDAC00EB8319 /* doneButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "doneButton@2x.png"; sourceTree = "<group>"; };
+		DF3170351575DDAC00EB8319 /* postButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = postButton.png; sourceTree = "<group>"; };
+		DF3170361575DDAC00EB8319 /* postButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "postButton@2x.png"; sourceTree = "<group>"; };
 		DF36FF3B15532B9300C3CB53 /* UIView+Animation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Animation.h"; sourceTree = "<group>"; };
 		DF36FF3C15532B9300C3CB53 /* UIView+Animation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Animation.m"; sourceTree = "<group>"; };
 		DF36FF401553443F00C3CB53 /* views_events_Feed.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = views_events_Feed.xib; sourceTree = "<group>"; };
@@ -1122,6 +1130,10 @@
 		DF629E6D153F8A5900BCA804 /* buttons */ = {
 			isa = PBXGroup;
 			children = (
+				DF3170331575DDAC00EB8319 /* doneButton.png */,
+				DF3170341575DDAC00EB8319 /* doneButton@2x.png */,
+				DF3170351575DDAC00EB8319 /* postButton.png */,
+				DF3170361575DDAC00EB8319 /* postButton@2x.png */,
 				DF945CF9155612D800B21571 /* regularButton.png */,
 				DF945CF71556120200B21571 /* cancelButton.png */,
 				DF945CF3155609A200B21571 /* picture@2x.png */,
@@ -1853,6 +1865,10 @@
 				DF945CFC1556B7D800B21571 /* picbg2@2x.png in Resources */,
 				DF945D041556E5DC00B21571 /* removeButton.png in Resources */,
 				DF85907915741AE40094518F /* views_events_item_Calendar.xib in Resources */,
+				DF3170371575DDAC00EB8319 /* doneButton.png in Resources */,
+				DF3170381575DDAC00EB8319 /* doneButton@2x.png in Resources */,
+				DF3170391575DDAC00EB8319 /* postButton.png in Resources */,
+				DF31703A1575DDAC00EB8319 /* postButton@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1993,7 +2009,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: florian haftman";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: florian haftman (247VK6949Z)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -2017,7 +2033,7 @@
 					"-ObjC",
 					"-all_load",
 				);
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "18C33D37-F37B-4653-A32E-C464B59203DD";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "67C20EBB-AA59-4A4B-B4BF-60479C59B59C";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 			};
@@ -2029,7 +2045,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: florian haftman";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: florian haftman (247VK6949Z)";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -2047,7 +2063,7 @@
 					"-ObjC",
 					"-all_load",
 				);
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "18C33D37-F37B-4653-A32E-C464B59203DD";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "67C20EBB-AA59-4A4B-B4BF-60479C59B59C";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				VALIDATE_PRODUCT = YES;
@@ -2057,7 +2073,7 @@
 		DF8F14F5150BD48200008ABC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: florian haftman";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: florian haftman (247VK6949Z)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/RestKit/Specs/Runner/OCHamcrest\"",
@@ -2072,7 +2088,7 @@
 					"\"$(SRCROOT)/facebook-ios-sdk\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "18C33D37-F37B-4653-A32E-C464B59203DD";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "67C20EBB-AA59-4A4B-B4BF-60479C59B59C";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = NO;
 				WRAPPER_EXTENSION = app;
@@ -2082,7 +2098,7 @@
 		DF8F14F6150BD48200008ABC /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: florian haftman";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: florian haftman (247VK6949Z)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/RestKit/Specs/Runner/OCHamcrest\"",
@@ -2097,7 +2113,7 @@
 					"\"$(SRCROOT)/facebook-ios-sdk\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "18C33D37-F37B-4653-A32E-C464B59203DD";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "67C20EBB-AA59-4A4B-B4BF-60479C59B59C";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = NO;
 				WRAPPER_EXTENSION = app;

@@ -40,10 +40,20 @@
     _picUser.imageURL = [NSURL URLWithString:[models_User crtUser].picture];
     _labelName.text = [NSString stringWithFormat:@"%@ %@", [models_User crtUser].firstName, [models_User crtUser].lastName];
     
-    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(hideModal)];        
+    UIImage *donei = [UIImage imageNamed:@"doneButton"];
+    UIButton *doneb = [UIButton buttonWithType:UIButtonTypeCustom];
+    [doneb addTarget:self action:@selector(hideModal) forControlEvents:UIControlEventTouchUpInside];
+    [doneb setImage:donei forState:UIControlStateNormal];
+    [doneb setFrame:CGRectMake(0, 0, donei.size.width, donei.size.height)];
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithCustomView:doneb];       
     self.navigationItem.rightBarButtonItem = doneButton;
     
-    UIBarButtonItem *postButton = [[UIBarButtonItem alloc] initWithTitle:@"Post" style:UIBarButtonItemStylePlain target:self action:@selector(post)];        
+    UIImage *posti = [UIImage imageNamed:@"postButton"];
+    UIButton *postb = [UIButton buttonWithType:UIButtonTypeCustom];
+    [postb addTarget:self action:@selector(post) forControlEvents:UIControlEventTouchUpInside];
+    [postb setImage:posti forState:UIControlStateNormal];
+    [postb setFrame:CGRectMake(0, 0, posti.size.width, posti.size.height)];
+    UIBarButtonItem *postButton = [[UIBarButtonItem alloc] initWithCustomView:postb];       
     self.navigationItem.leftBarButtonItem = postButton;
 }
 

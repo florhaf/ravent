@@ -18,6 +18,8 @@
     
     CGRect _frame;
     BOOL _isFollowing;
+    
+    UIViewController *_details;
 }
 
 - (id)initWithUser:(models_User *)user isFollowing:(BOOL)value;

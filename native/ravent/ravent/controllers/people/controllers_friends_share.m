@@ -139,7 +139,12 @@
 {
     [super viewDidLoad];
     
-    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(hideAllModal)];        
+    UIImage *donei = [UIImage imageNamed:@"doneButton"];
+    UIButton *doneb = [UIButton buttonWithType:UIButtonTypeCustom];
+    [doneb addTarget:self action:@selector(hideAllModal) forControlEvents:UIControlEventTouchUpInside];
+    [doneb setImage:donei forState:UIControlStateNormal];
+    [doneb setFrame:CGRectMake(0, 0, donei.size.width, donei.size.height)];
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithCustomView:doneb];       
     self.navigationItem.rightBarButtonItem = doneButton;
     
     self.tableView.tableFooterView = [[UIView alloc] init];

@@ -115,10 +115,10 @@ static BOOL IsDateBetweenInclusive(NSDate *date, NSDate *begin, NSDate *end)
      * (even in the trivial case where we are responding synchronously).
      */
     
-    if (dataReady) {
-        [callback loadedDataSource:self];
-        return;
-    }
+//    if (dataReady) {
+//        [callback loadedDataSource:self];
+//        return;
+//    }
     
     callback = delegate;
     [self fetchEventsFrom:fromDate To:toDate];

@@ -148,18 +148,17 @@
 
 - (void)loadEventDetails:(models_Event *)event
 {
-    controllers_events_Details *details = [[controllers_events_Details alloc] initWithEvent:[event copy]]; 
+    _details = [[controllers_events_Details alloc] initWithEvent:[event copy]]; 
     
     UIImage *backi = [UIImage imageNamed:@"backButton"];
     
     UIButton *backb = [UIButton buttonWithType:UIButtonTypeCustom];
-    [backb addTarget:details action:@selector(cancellAllRequests:) forControlEvents:UIControlEventTouchUpInside];
+    [backb addTarget:self action:@selector(onBackTap) forControlEvents:UIControlEventTouchUpInside];
     [backb setImage:backi forState:UIControlStateNormal];
     [backb setFrame:CGRectMake(0, 0, backi.size.width, backi.size.height)];
     
-//    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:backb];
-      
-    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle: @"Back" style: UIBarButtonItemStyleBordered target:details action:@selector(cancellAllRequests)];
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:backb];
+
     UIViewController *rootController = self;
     
     while (![rootController.parentViewController isKindOfClass:[UINavigationController class]]) {
@@ -167,8 +166,16 @@
         rootController = rootController.parentViewController;
     }
     
-    [rootController.navigationItem setBackBarButtonItem: backButton];
-    [self.navigationController pushViewController:details animated:YES];
+    [rootController.navigationItem hidesBackButton];
+    [_details.navigationItem setLeftBarButtonItem:backButton];
+    [self.navigationController pushViewController:_details animated:YES];
+    
+}
+
+- (void)onBackTap
+{
+    [(controllers_events_Details *)_details cancelAllRequests];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)reloadTableViewDataSource
