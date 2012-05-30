@@ -17,7 +17,7 @@ public class OfyEntityLocationCapableRepositorySearchImpl implements
 		
 		this.ofy = ofy;
 		
-		Calendar c = Calendar.getInstance(TimeZone.getTimeZone("America/Los_Angeles")); //TODO: What is this? Should it be PST?
+		Calendar c = Calendar.getInstance(TimeZone.getTimeZone("GMT")); //TODO: What is this? Should it be PST?
 		c.add(Calendar.MINUTE, Integer.parseInt(timeZone));
 		c.add(Calendar.HOUR, timeFrame);
 		timeStampLimit = c.getTimeInMillis() / 1000L;

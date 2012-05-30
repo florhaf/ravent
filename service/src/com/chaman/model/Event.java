@@ -56,8 +56,6 @@ public class Event extends Model implements Serializable {
 	String privacy;
 	@Facebook
 	String update_time;
-	@Facebook
-	String timezone; //event time zone (some events have are stored with a specific timezone)
 	
 	String venue_id;
 	double score;
@@ -158,6 +156,7 @@ public class Event extends Model implements Serializable {
     	    }else {
     	    	
     	    	e = e_cache;
+    	    	e.Format(timeZoneInMinutes);
     	    	Venue v_graph = new Venue(accessToken, e.venue_id);
     	    	e.Score(v_graph);
     	    }
@@ -287,14 +286,11 @@ public class Event extends Model implements Serializable {
 		long timeStampEnd = Long.parseLong(this.end_time) * 1000;
 		
 		// facebook events timestamp are in PST
-		DateTimeZone PST = DateTimeZone.forID("America/Los_Angeles");
-		
-		//some events have their times stored for a specific timezone TODO: to check again	
-		//DateTimeZone event_time_zone = DateTimeZone.forID(this.timezone);
+		DateTimeZone GMT = DateTimeZone.forID("GMT");
 		
 		// so need to add time zone offset to DateTime
-		this.dtStart = new DateTime(timeStampStart, PST);//.withZone(event_time_zone);//(timeZoneInMinutes);
-		this.dtEnd = new DateTime(timeStampEnd, PST);//.plusMinutes(PST + timeZoneInMinutes);	
+		this.dtStart = new DateTime(timeStampStart, GMT).plusMinutes(timeZoneInMinutes);
+		this.dtEnd = new DateTime(timeStampEnd, GMT).plusMinutes(timeZoneInMinutes);	
 		
 		this.time_start = dtStart.toString("KK:mm a");
 		this.time_end = dtEnd.toString("KK:mm a");
