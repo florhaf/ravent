@@ -72,6 +72,12 @@ public class Event extends Model implements Serializable {
 	String distance;
 	String groupTitle;
 	String venue_category; // (club, bar etc)
+	String offer_link; // for the future, could be a barcode etc.
+	String offer_title;
+	String offer_description;
+	String ticket_link; //link to a website provided by promoter (later a link to our own ticket system)
+	String guest_list; // Open, close, full or no guest list
+	String gender_ratio; // male:% / female:%
 	User user;
 	DateTime dtStart;
 	DateTime dtEnd;
