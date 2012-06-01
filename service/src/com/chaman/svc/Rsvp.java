@@ -45,7 +45,7 @@ public class Rsvp extends ServerResource {
 		try {
 			
 			String accessToken	= getQuery().getValues("access_token");
-			String eventID 		= getQuery().getValues("eid");
+			String eventID 		= getQuery().getValues("eventID");
 			String rsvp			= getQuery().getValues("rsvp");
 			
 			Attending.SetFacebookRsvp(accessToken, eventID, rsvp);

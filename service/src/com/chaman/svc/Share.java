@@ -15,8 +15,8 @@ public class Share extends ServerResource {
 		try {
 			
 			String accessToken	= getQuery().getValues("access_token");
-			String friendID		= getQuery().getValues("friendid");
-			String eventID 		= getQuery().getValues("eid");
+			String friendID		= getQuery().getValues("friendID");
+			String eventID 		= getQuery().getValues("eventID");
 			
 			Post.ShareEvent(accessToken, friendID, eventID);
 			

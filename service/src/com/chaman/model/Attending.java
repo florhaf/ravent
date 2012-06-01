@@ -120,9 +120,9 @@ public class Attending extends Model {
 		
 		FacebookClient client	= new DefaultFacebookClient(accessToken);
 		
-		if (rsvp == "yes") {
+		if (rsvp.equals("yes")) {
 			client.publish(eid + "/attending", FacebookType.class);
-		} else if (rsvp == "no") {
+		} else if (rsvp.equals("no")) {
 			client.publish(eid + "/declined", FacebookType.class);
 		} else {
 			client.publish(eid + "/maybe", FacebookType.class);

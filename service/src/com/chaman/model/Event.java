@@ -530,11 +530,59 @@ public class Event extends Model implements Serializable {
 		this.groupTitle = groupTitle;
 	}
 	
-	public String getCategory() {
+	public String getVenue_category() {
 		return this.venue_category;
 	}
 	
-	public void setCategory(String category) {
+	public void setVenue_category(String category) {
 		this.venue_category = category;
+	}
+
+	public String getOffer_link() {
+		return offer_link;
+	}
+
+	public void setOffer_link(String offer_link) {
+		this.offer_link = offer_link;
+	}
+
+	public String getOffer_title() {
+		return offer_title;
+	}
+
+	public void setOffer_title(String offer_title) {
+		this.offer_title = offer_title;
+	}
+
+	public String getOffer_description() {
+		return offer_description;
+	}
+
+	public void setOffer_description(String offer_description) {
+		this.offer_description = offer_description;
+	}
+
+	public String getTicket_link() {
+		return ticket_link;
+	}
+
+	public void setTicket_link(String ticket_link) {
+		this.ticket_link = ticket_link;
+	}
+
+	public String getGuest_list() {
+		return guest_list;
+	}
+
+	public void setGuest_list(String guest_list) {
+		this.guest_list = guest_list;
+	}
+
+	public String getGender_ratio() {
+		return gender_ratio;
+	}
+
+	public void setGender_ratio(String gender_ratio) {
+		this.gender_ratio = gender_ratio;
 	}
 }
