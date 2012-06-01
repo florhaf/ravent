@@ -2,6 +2,7 @@ package com.chaman.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.restfb.DefaultFacebookClient;
@@ -38,8 +39,6 @@ public class Attending extends Model {
 		ArrayList<Model> result 	= new ArrayList<Model>();
 		
 		FacebookClient client 		= new DefaultFacebookClient(accessToken);
-		
-		//Attending e = client.fetchObject("10150896332898770", Attending.class);
 		
 		Long eid_long = Long.parseLong(eid);
 
@@ -128,6 +127,31 @@ public class Attending extends Model {
 		} else {
 			client.publish(eid + "/maybe", FacebookType.class);
 		}
+	}
+	
+	public static ArrayList<Model> GetFacebookRsvp (String accessToken, String userid, String eid) {
+		
+		ArrayList<Model> result 	= new ArrayList<Model>();
+		FacebookClient client		= new DefaultFacebookClient(accessToken);
+		String query 				= "SELECT rsvp_status, uid FROM event_member WHERE eid = " + eid + "AND uid = " + userid;
+		List<Attending> user_rsvp 	= client.executeQuery(query, Attending.class);
+		
+		if (!user_rsvp.isEmpty()) {
+			
+			Attending a = user_rsvp.get(0);
+			a.eid = Long.parseLong(eid);
+			if (a.rsvp_status.equals("unsure") || a.rsvp_status.equals("not_replied")) {
+				
+				a.rsvp_status = "maybe attending";
+			} else if (a.rsvp_status.equals("declined")) {
+				
+				a.rsvp_status = "not attending";
+			}
+			
+			result.add(a);
+		}
+
+		return result;
 	}
 	
 	public long getUid() {
