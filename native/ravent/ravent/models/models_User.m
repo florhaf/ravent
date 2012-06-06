@@ -140,8 +140,8 @@ static models_User *_crtUser = nil;
         // store the location as the "best effort"
         _bestEffortAtLocation = newLocation;
         _locationLastUpdateTime = [NSDate date];
-        _crtUser.latitude = [NSString stringWithFormat:@"%f", newLocation.coordinate.latitude];
-        _crtUser.longitude = [NSString stringWithFormat:@"%f", newLocation.coordinate.longitude];
+        _crtUser.latitude = @"40.751418";//[NSString stringWithFormat:@"%f", newLocation.coordinate.latitude];
+        _crtUser.longitude = @"-73.970947";//[NSString stringWithFormat:@"%f", newLocation.coordinate.longitude];
         // test the measurement to see if it meets the desired accuracy
         //
         // IMPORTANT!!! kCLLocationAccuracyBest should not be used for comparison with location coordinate or altitidue 
@@ -169,9 +169,9 @@ static models_User *_crtUser = nil;
     // The location "unknown" error simply means the manager is currently unable to get the location.
     // We can ignore this error for the scenario of getting a single location fix, because we already have a 
     // timeout that will stop the location manager to save power.
-    if ([error code] != kCLErrorLocationUnknown) {
+    //if ([error code] != kCLErrorLocationUnknown) {
         [self stopUpdatingLocation:error];
-    }
+    //}
 }
 
 - (void)stopUpdatingLocation:(NSError *)error {

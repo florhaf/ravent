@@ -14,10 +14,15 @@
     NSArray *_invited;
     
     IBOutlet UIButton *_inviteButton;
+    IBOutlet UIActivityIndicatorView *_indic;
+    
+    NSMutableArray *_friends;
 }
 
 - (id)initWithUser:(models_User *)user invited:(NSArray *)invited;
 - (void)loadData:(BOOL)force;
 - (void)onLoadAll:(NSArray *)objects;
+
+- (IBAction)onShareTap:(id)sender;
 
 @end

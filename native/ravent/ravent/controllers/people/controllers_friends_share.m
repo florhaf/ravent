@@ -27,11 +27,34 @@
         _invited = invited;
         
         self.title = @"Ravent";
+        _friends = [[NSMutableArray alloc] init];
         
         [self loadData];
     }
     
     return self;
+}
+
+- (IBAction)onShareTap:(id)sender
+{
+    UIView *parentView = [sender superview];
+    while (! [parentView isKindOfClass:[UITableViewCell class]]) {
+        
+        parentView = [parentView superview];
+    }
+    UITableViewCell *cell = (UITableViewCell*)parentView;
+    NSIndexPath *path = [self.tableView indexPathForCell:cell];
+    
+    NSString *key = [_sortedKeys objectAtIndex:path.section];
+    NSMutableArray *rows = [_groupedData objectForKey:key];
+    
+    models_User *friend = [rows objectAtIndex:path.row]; 
+    
+    [_friends addObject:friend];
+    
+    UIButton *button = (UIButton *)sender;
+    [button setEnabled:NO];
+    [button setTitle:@"Invited" forState:UIControlStateNormal];
 }
 
 - (void)loadData
@@ -62,14 +85,21 @@
         _groupedData = [models_User getGroupedData:_data];
         _sortedKeys = [[_groupedData allKeys] sortedArrayUsingSelector:@selector(compare:)];
 
-        for (int j = 0; j < [_invited count]; j++) {
+        for (int j = 0; j < [_data count]; j++) {
             
-            models_User *invitedUser = [_invited objectAtIndex:j];
-            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"uid like %@", invitedUser.uid];
+            models_User *friend = [_data objectAtIndex:j];
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"uid like %@", friend.uid];
             
-            NSArray *result = [objects filteredArrayUsingPredicate:predicate];
+            NSArray *result = [_invited filteredArrayUsingPredicate:predicate];
             
-            ((models_User *)[result objectAtIndex:0]).isInvited = @"true";
+            if (result != nil && [result count] > 0) {
+                
+                friend.isInvited = @"true";
+            } else {
+                
+                friend.isInvited = @"false";
+            }
+            
         }
     }];
 }
@@ -117,7 +147,6 @@
     if ([u.isInvited isEqualToString:@"true"]) {
         
         [_inviteButton setEnabled:NO];
-        _inviteButton.titleLabel.text = @"Invited";
     }
     
     [cell.contentView addSubview:_item];
@@ -155,7 +184,6 @@
 {
     [self dismissModalViewControllerAnimated:YES];
     
-    
     if (_user != nil) {
         
         [_user cancelAllRequests];
@@ -165,6 +193,8 @@
         
         [_event cancelAllRequests];
     }
+    
+    [[ActionDispatcher instance] execute:@"share" with:_friends];
 }
 
 @end

@@ -28,6 +28,11 @@ static customNavigationController *_ctrl;
         
         _kal.view.frame = CGRectMake(0, 0, 320, 460);
         
+        UIImageView *bg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bg"]];
+        bg.frame = _kal.view.frame;
+        _kal.tableView.backgroundView = bg;
+        [_kal.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+        
         [self addChildViewController:_kal];
         [self.view addSubview:_kal.view];
     }
@@ -59,6 +64,11 @@ static customNavigationController *_ctrl;
     [rootController.navigationItem hidesBackButton];
     [_details.navigationItem setLeftBarButtonItem:backButton];
     [self.navigationController pushViewController:_details animated:YES];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 91;
 }
 
 - (void)onBackTap

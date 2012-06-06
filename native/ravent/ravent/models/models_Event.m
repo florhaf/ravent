@@ -73,6 +73,7 @@
 
 - (void)loadEventsWithParams:(NSMutableDictionary *)params
 {
+        RKLogConfigureByName("RestKit/*", RKLogLevelTrace);
     NSString *resourcePath = [@"events" appendQueryParams:params];
        
     RKObjectMapping *objectMapping = [RKObjectMapping mappingForClass:[models_Event class]];
@@ -150,13 +151,27 @@
     [_manager loadObjectsAtResourcePath:resourcePath objectMapping:objectMapping delegate:self];     
 }
 
-- (void)vote:(NSMutableDictionary *)params success:(SEL)success failure:(SEL)failure sender:(id)sender;
+- (void)vote:(NSMutableDictionary *)params success:(SEL)success failure:(SEL)failure sender:(id)sender
 {
     _callbackResponseSuccess = success;
     _callbackResponseFailure = failure;
     _sender = sender;
     
     [[RKClient sharedClient] put:[@"vote" appendQueryParams:params] params:nil delegate:self];
+}
+
+- (void)rsvp:(NSMutableDictionary *)params success:(SEL)success failure:(SEL)failure sender:(id)sender
+{
+    _callbackResponseSuccess = success;
+    _callbackResponseFailure = failure;
+    _sender = sender;
+    
+    [[RKClient sharedClient] put:[@"rsvp" appendQueryParams:params] params:nil delegate:self];
+}
+
+- (void)share:(NSMutableDictionary *)params
+{
+    [[RKClient sharedClient] put:[@"share" appendQueryParams:params] params:nil delegate:self];
 }
 
 - (void)objectLoader:(RKObjectLoader *)objectLoader didLoadObjects:(NSArray *)objects

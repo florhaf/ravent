@@ -14,9 +14,8 @@
     IBOutlet UIView *_itemScore;
     IBOutlet UILabel *_itemTime;
     IBOutlet UILabel *_itemDistance;
-    
-    IBOutlet UIImageView *_bgLeft;
-    IBOutlet UIImageView *_bgRight;
+
+    IBOutlet UIImageView *_bg;
     
     UIViewController *_details;
 }

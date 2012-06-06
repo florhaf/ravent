@@ -19,6 +19,8 @@
 @interface controllers_events_Map_p2p : UIViewController<MKMapViewDelegate, MKAnnotation, JBAsyncImageViewDelegate> {
     
     IBOutlet MKMapView *_map;
+    IBOutlet UIToolbar *_toolbarTop;
+    IBOutlet UIToolbar *_toolbarBottom;
     
     NSMutableDictionary *_imageLoading;
     JBAsyncImageView *_image;

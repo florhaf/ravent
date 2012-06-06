@@ -35,7 +35,7 @@ static BOOL IsDateBetweenInclusive(NSDate *date, NSDate *begin, NSDate *end)
         
         items = [[NSMutableArray alloc] init];
         events = [[NSMutableArray alloc] init];
-        buffer = [[NSMutableData alloc] init];        
+        buffer = [[NSMutableData alloc] init];   
     }
     return self;
 }
@@ -46,11 +46,6 @@ static BOOL IsDateBetweenInclusive(NSDate *date, NSDate *begin, NSDate *end)
 }
 
 #pragma mark UITableViewDataSource protocol conformance
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return _item.frame.size.height;
-}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {

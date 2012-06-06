@@ -25,6 +25,7 @@
     IBOutlet UILabel *_headerVoteLabel;
     IBOutlet UIButton *_headerAddButton;
     IBOutlet UIView *_headerScore;
+    IBOutlet UISegmentedControl *_rsvp;
     IBOutlet UIView *_voteLoading;
     IBOutlet UIImageView *_borderLeft;
     IBOutlet UIImageView *_borderRight;
@@ -34,6 +35,8 @@
     
     DLStarRatingControl *_voteView;
     models_Event *_eventLoader;
+    
+    NSArray *_friendsSharedTo;
 }
 
 - (id)initWithReloadEvent:(models_Event *)event;
@@ -43,6 +46,7 @@
 - (IBAction)descriptionButton_Tap:(id)sender;
 - (IBAction)feedButton_Tap:(id)sender;
 - (IBAction)mapButton_Tap:(id)sender;
+- (IBAction)rsvp:(id)sender;
 
 - (void)onVoteSuccess:(NSString *)response;
 - (void)onVoteFailure:(NSMutableDictionary *)response;

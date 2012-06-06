@@ -68,29 +68,29 @@
 {
     NSString *key = [_sortedKeys objectAtIndex:section];
     models_Event *e = (models_Event *)[[_groupedData valueForKey:key]objectAtIndex:0];
-    return e.groupTitle;
+    return [e.groupTitle uppercaseString];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     CGFloat result = [super tableView:tableView heightForRowAtIndexPath:indexPath];
-    CGFloat actualHeight;
-    
-    NSString *section = [_sortedKeys objectAtIndex:indexPath.section];
-    NSMutableArray *rows = [_groupedData objectForKey:section];
-    models_Event *e = [rows objectAtIndex:indexPath.row];
-    
-    actualHeight = [e.name sizeWithFont:_itemTitle.font constrainedToSize:CGSizeMake(_titleSize.width, 2000) lineBreakMode:UILineBreakModeWordWrap].height;
-    if (actualHeight > _titleSize.height) {
-        
-        result = result + (actualHeight - _titleSize.height);
-    }
-    
-    actualHeight = [e.location sizeWithFont:_itemSubTitle.font constrainedToSize:CGSizeMake(_subTitleSize.width, 2000) lineBreakMode:UILineBreakModeWordWrap].height;
-    if (actualHeight > _subTitleSize.height) {
-        
-        result = result + (actualHeight - _subTitleSize.height);
-    }
+//    CGFloat actualHeight;
+//    
+//    NSString *section = [_sortedKeys objectAtIndex:indexPath.section];
+//    NSMutableArray *rows = [_groupedData objectForKey:section];
+//    models_Event *e = [rows objectAtIndex:indexPath.row];
+//    
+//    actualHeight = [e.name sizeWithFont:_itemTitle.font constrainedToSize:CGSizeMake(_titleSize.width, 2000) lineBreakMode:UILineBreakModeWordWrap].height;
+//    if (actualHeight > _titleSize.height) {
+//        
+//        result = result + (actualHeight - _titleSize.height);
+//    }
+//    
+//    actualHeight = [e.location sizeWithFont:_itemSubTitle.font constrainedToSize:CGSizeMake(_subTitleSize.width, 2000) lineBreakMode:UILineBreakModeWordWrap].height;
+//    if (actualHeight > _subTitleSize.height) {
+//        
+//        result = result + (actualHeight - _subTitleSize.height);
+//    }
     
     return result;
 }
@@ -109,7 +109,7 @@
     _itemTitle.text = event.name;
     _itemSubTitle.text = event.location;
     _itemImage.imageURL = [NSURL URLWithString:event.picture];
-    _itemTime.text = [NSString stringWithFormat:@"%@ - %@", event.timeStart, event.timeEnd];
+    _itemTime.text = [[NSString stringWithFormat:@"%@ - %@", event.timeStart, event.timeEnd] lowercaseString];
     _itemDistance.text = [NSString stringWithFormat:@"%@ mi.", event.distance];
         
     for (int i = 0; i < [event.score intValue]; i++) {
@@ -127,11 +127,9 @@
 
 - (CGFloat)resizeAndPositionCellItem
 {
-    CGFloat delta = [super resizeAndPositionCellItem];
+    CGFloat delta = [super resizeAndPositionCellItem] + 21;
     
-    _bgLeft.frame = CGRectMake(_bgLeft.frame.origin.x, _bgLeft.frame.origin.y, _bgLeft.frame.size.width, _item.frame.size.height);
-    
-    _bgRight.frame = CGRectMake(_bgRight.frame.origin.x, _bgRight.frame.origin.y, _bgRight.frame.size.width, _item.frame.size.height);
+    //_bg.frame = CGRectMake(_item.frame.origin.x, _item.frame.origin.y, _item.frame.size.width, _item.frame.size.height);
     
     return delta;
 }

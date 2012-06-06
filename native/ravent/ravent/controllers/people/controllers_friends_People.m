@@ -10,7 +10,6 @@
 #import "controllers_friends_All.h"
 #import "controllers_friends_Details.h"
 #import "models_User.h"
-
 #import "ActionDispatcher.h"
 
 @implementation controllers_friends_People
@@ -107,6 +106,8 @@ static customNavigationController *_ctrl;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [_toolbar insertSubview:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"toolbar"]] atIndex:1];
     
     UIImage *menui = [UIImage imageNamed:@"menuButton"];
     UIButton *menub = [UIButton buttonWithType:UIButtonTypeCustom];

@@ -15,6 +15,7 @@
 #import "controllers_events_FeedContainer.h"
 #import "controllers_events_Details_Map.h"
 #import "Store.h"
+#import "ActionDispatcher.h"
 
 @implementation controllers_events_Details
 
@@ -26,12 +27,66 @@
         
         [[NSBundle mainBundle] loadNibNamed:@"views_events_Details" owner:self options:nil];
         
+        Action *shareAction = [[Action alloc] initWithDelegate:self andSelector:@selector(share:)];
+        [[ActionDispatcher instance] add:shareAction named:@"share"];
+        
         _headerSize = CGSizeMake(_header.frame.size.width, _header.frame.size.height);
         _headerTitleSize = CGSizeMake(_headerNameLabel.frame.size.width, _headerNameLabel.frame.size.height);
         _headerSubTitleSize = CGSizeMake(_headerLocationLabel.frame.size.width, _headerLocationLabel.frame.size.height);
     }
     
     return self;
+}
+
+- (void)share:(NSArray *)friends
+{
+    if (_eventLoader == nil) {
+        
+        _eventLoader = [[models_Event alloc] init];
+        _eventLoader.callbackResponseFailure = @selector(shareFailure:);
+    }
+    
+    _friendsSharedTo = [friends copy];
+    NSMutableDictionary *params = nil;
+    NSMutableArray *array = [[NSMutableArray alloc] initWithArray:_data];
+    
+    for (int i = 0; i < [friends count]; i++) {
+        
+        params = [[NSMutableDictionary alloc] init];
+        [params setValue:[models_User crtUser].accessToken forKey:@"access_token"];
+        [params setValue:[models_User crtUser].uid forKey:@"userID"];
+        [params setValue:_event.eid forKey:@"eventID"];
+        [params setValue:((models_User *)[friends objectAtIndex:i]).uid forKey:@"friendID"];
+        
+        [array addObject:[friends objectAtIndex:i]];
+        
+        [_eventLoader share:params];
+    }
+
+    [self onLoadInvited:array];
+}
+
+- (void)shareFailure:(NSMutableDictionary *)error
+{
+    [YRDropdownView showDropdownInView:self.view 
+                                 title:@"Error sharing" 
+                                detail:[error valueForKey:@"statusCode"]
+                                 image:[UIImage imageNamed:@"dropdown-alert"]
+                              animated:YES];
+    
+    for (int i = 0; i < [_friendsSharedTo count]; i++) {
+        
+        models_User *friend = [_friendsSharedTo objectAtIndex:i];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"uid like %@", friend.uid];
+        NSArray *result = [_data filteredArrayUsingPredicate:predicate];
+        
+        if (result != nil && [result count] > 0) {
+            
+            [_data delete:[result objectAtIndex:0]];
+        }
+    }
+    
+    [self onLoadInvited:_data];
 }
 
 - (id)initWithReloadEvent:(models_Event *)event
@@ -82,7 +137,6 @@
     
     [self onLoadEvents:objects];
 }
-
 
 - (void)onLoadEvents:(NSArray *)objects
 {
@@ -160,9 +214,10 @@
     [self presentModalViewController:feedModal animated:YES];
 }
 
-- (void)newRating:(int)rating {
-
+- (void)newRating:(int)rating
+{
     [_voteLoading setHidden:NO];
+    _voteLoading.frame = _voteView.frame;
     [_header bringSubviewToFront:_voteLoading];
     [_header sendSubviewToBack:_voteView];
     [((UIActivityIndicatorView *)[_voteLoading.subviews objectAtIndex:0]) startAnimating];
@@ -172,6 +227,7 @@
     [params setValue:[NSNumber numberWithInt:rating] forKey:@"vote"];
     [params setValue:_user.uid forKey:@"userID"];
     [params setValue:_event.eid forKey:@"eventID"];
+    [params setValue:[models_User crtUser].accessToken forKey:@"access_token"];
     
     _event.delegate = self;
     [_event vote:params success:@selector(onVoteSuccess:) failure:@selector(onVoteFailure:) sender:_voteView];
@@ -194,6 +250,64 @@
     
     NSString *errorMsg = (NSString *)[response valueForKey:@"statusCode"];
         
+    [YRDropdownView showDropdownInView:self.view 
+                                 title:@"Error" 
+                                detail:errorMsg
+                                 image:[UIImage imageNamed:@"dropdown-alert"]
+                              animated:YES];
+}
+
+- (IBAction)rsvp:(id)sender
+{
+    NSString *rsvpValue = @"yes";
+    
+    if (_rsvp.selectedSegmentIndex == 1) {
+        
+        rsvpValue = @"maybe";
+    } else {
+        
+        if (_rsvp.selectedSegmentIndex == 2) {
+            
+            rsvpValue = @"no";
+        }
+    }
+    
+    [_voteLoading setHidden:NO];
+    _voteLoading.frame = _rsvp.frame;
+    [_header bringSubviewToFront:_voteLoading];
+    [_header sendSubviewToBack:_rsvp];
+    [((UIActivityIndicatorView *)[_voteLoading.subviews objectAtIndex:0]) startAnimating];
+    
+    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+    
+    [params setValue:rsvpValue forKey:@"rsvp"];
+    [params setValue:_user.uid forKey:@"userID"];
+    [params setValue:_event.eid forKey:@"eventID"];
+    [params setValue:[models_User crtUser].accessToken forKey:@"access_token"];
+    
+    _event.delegate = self;
+    [_event rsvp:params success:@selector(onRsvpSuccess:) failure:@selector(onRsvpFailure:) sender:_rsvp];
+}
+
+- (void)onRsvpSuccess:(NSString *)response
+{
+    [_voteLoading setHidden:YES];
+    
+    [YRDropdownView showDropdownInView:self.view 
+                                 title:@"Success" 
+                                detail:@"RSVP submitted"
+                                 image:[UIImage imageNamed:@"dropdown-alert"]
+                              animated:YES];
+}
+
+- (void)onRsvpFailure:(NSMutableDictionary *)response
+{
+    [_voteLoading setHidden:YES];
+    
+    [_rsvp setSelected:NO];
+    
+    NSString *errorMsg = (NSString *)[response valueForKey:@"statusCode"];
+    
     [YRDropdownView showDropdownInView:self.view 
                                  title:@"Error" 
                                 detail:errorMsg
@@ -251,31 +365,31 @@
     delta = _headerNameLabel.frame.size.height - _headerTitleSize.height;
     if (delta > 0) {
         
-        NSMutableArray *subviewsBelowTitle = [self subviews:_header.subviews BelowView:_headerNameLabel];
+        //NSMutableArray *subviewsBelowTitle = [self subviews:_header.subviews BelowView:_headerNameLabel];
         
-        for (int i = 0; i < [subviewsBelowTitle count]; i++) {
+        //for (int i = 0; i < [subviewsBelowTitle count]; i++) {
             
-            UIView *subview = [subviewsBelowTitle objectAtIndex:i];
+        UIView *subview = _headerLocationLabel;//[subviewsBelowTitle objectAtIndex:i];
             subview.frame = CGRectMake(subview.frame.origin.x, subview.frame.origin.y + delta, subview.frame.size.width, subview.frame.size.height);
-        }
+        //}
     }
-    _header.frame = CGRectMake(_header.frame.origin.x, _header.frame.origin.y, _header.frame.size.width, _header.frame.size.height + delta);
+    //_header.frame = CGRectMake(_header.frame.origin.x, _header.frame.origin.y, _header.frame.size.width, _header.frame.size.height + delta);
     
-    delta = _headerLocationLabel.frame.size.height - _headerSubTitleSize.height;
-    if (delta > 0) {
-        
-        NSMutableArray *subviewsBelowSubTitle = [self subviews:_header.subviews BelowView:_headerLocationLabel];
-        for (int i = 0; i < [subviewsBelowSubTitle count]; i++) {
-            
-            UIView *subview = [subviewsBelowSubTitle objectAtIndex:i];
-            subview.frame = CGRectMake(subview.frame.origin.x, subview.frame.origin.y + delta, subview.frame.size.width, subview.frame.size.height);
-        }
-    }
-    _header.frame = CGRectMake(_header.frame.origin.x, _header.frame.origin.y, _header.frame.size.width, _header.frame.size.height + delta);
+//    delta = _headerLocationLabel.frame.size.height - _headerSubTitleSize.height;
+//    if (delta > 0) {
+//        
+//        NSMutableArray *subviewsBelowSubTitle = [self subviews:_header.subviews BelowView:_headerLocationLabel];
+//        for (int i = 0; i < [subviewsBelowSubTitle count]; i++) {
+//            
+//            UIView *subview = [subviewsBelowSubTitle objectAtIndex:i];
+//            subview.frame = CGRectMake(subview.frame.origin.x, subview.frame.origin.y + delta, subview.frame.size.width, subview.frame.size.height);
+//        }
+//    }
+    //_header.frame = CGRectMake(_header.frame.origin.x, _header.frame.origin.y, _header.frame.size.width, _header.frame.size.height + delta);
     
-    _borderLeft.frame = CGRectMake(_borderLeft.frame.origin.x, _borderLeft.frame.origin.y, _borderLeft.frame.size.width, _header.frame.size.height);
-    
-    _borderRight.frame = CGRectMake(_borderRight.frame.origin.x, _borderRight.frame.origin.y, _borderRight.frame.size.width, _header.frame.size.height);
+//    _borderLeft.frame = CGRectMake(_borderLeft.frame.origin.x, _borderLeft.frame.origin.y, _borderLeft.frame.size.width, _header.frame.size.height);
+//    
+//    _borderRight.frame = CGRectMake(_borderRight.frame.origin.x, _borderRight.frame.origin.y, _borderRight.frame.size.width, _header.frame.size.height);
     
     self.tableView.tableHeaderView = _header;
 }

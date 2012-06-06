@@ -131,6 +131,25 @@
          contextName = "-[AppDelegate managedObjectModel]:AppDelegate.m">
       </ContextState>
       <ContextState
+         contextName = "-[controllers_friends_share onShareTap:]:controllers_friends_share.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "(UIButton *)sender superview">
+            </PersistentString>
+            <PersistentString
+               value = "[button superview]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[controllers_Login onLoginButtonTap]:controllers_Login.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "_facebook">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "-[RKObjectMappingOperation applyAttributeMappings]:RKObjectMappingOperation.m">
          <PersistentStrings>
             <PersistentString

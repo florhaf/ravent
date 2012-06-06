@@ -30,6 +30,7 @@
     IBOutlet JBAsyncImageView *_headerImage;
     
     IBOutlet UISegmentedControl *_segmentedControl;
+    IBOutlet UIToolbar *_toolbar;
     IBOutlet UIView *_container;
     
     BOOL _isFollowersVisible;

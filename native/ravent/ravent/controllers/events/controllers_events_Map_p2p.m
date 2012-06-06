@@ -78,6 +78,17 @@ static controllers_events_Map_p2p *_ctrl;
         
     //_map.frame = CGRectMake(40, 44, 280, 372);
     
+    UIImageView *imgTop = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"toolbar"]];
+    UIImageView *imgBottom = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"toolbar"]];
+    imgTop.frame = CGRectMake(0, 0, 320, 44);
+    imgBottom.frame = CGRectMake(0, 0, 320, 44);
+    
+    [_toolbarTop insertSubview:imgTop atIndex:1];
+    [_toolbarBottom insertSubview:imgBottom atIndex:1];
+    
+//    _toolbarTop.frame = CGRectMake(0, 0, 320, 44);
+//    _toolbarBottom.frame = CGRectMake(0, 0, 320, 44);
+    
     self.peekLeftAmount = 40.0f;
     [self.slidingViewController setAnchorLeftPeekAmount:self.peekLeftAmount];
     self.slidingViewController.underRightWidthLayout = ECVariableRevealWidth;

@@ -37,6 +37,12 @@ static controllers_Login *_ctrl;
 
 - (IBAction)onLoginButtonTap
 {
+    if (_facebook == nil) {
+        
+        _facebook = [[Facebook alloc] initWithAppId:@"299292173427947" andDelegate:self];
+        _user = [[models_User alloc] initWithDelegate:self andSelector:@selector(onUserLoad:)];
+    }
+    
     
     if (![_facebook isSessionValid]) {
         
@@ -47,6 +53,9 @@ static controllers_Login *_ctrl;
                                 @"status_update",
                                 @"photo_upload",
                                 @"read_stream",
+                                @"publish_stream",
+                                @"create_event",
+                                @"rsvp_event",
                                 nil];
         
         [_facebook authorize:permissions];
@@ -83,6 +92,22 @@ static controllers_Login *_ctrl;
     }
     
     [[ActionDispatcher instance] execute:@"onFacebookLogout"];
+    
+    _facebook.accessToken = nil;
+    NSHTTPCookie *cookie;
+    NSHTTPCookieStorage *storage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+    for (cookie in [storage cookies]) {
+        
+        [storage deleteCookie:cookie];
+    }
+    
+    _facebook = nil;
+    _user = nil;
+    
+    
+    
+    
+    [models_User setCrtUser:nil];
 }
 
 - (void)fbSessionInvalidated

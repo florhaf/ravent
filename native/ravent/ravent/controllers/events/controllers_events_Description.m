@@ -52,7 +52,10 @@
             
             _event.description = ((models_Event *)[objects objectAtIndex:0]).description;
 
-            _textView.text = _event.description;
+            
+            NSString *res = [NSString stringWithFormat:@"%@\n%@\n\n%@", _event.name, _event.location, _event.description];
+            
+            _textView.text = res;
             
 //            CGFloat originalHeight = _descriptionLabel.frame.size.height;
 //            CGFloat newHeight;

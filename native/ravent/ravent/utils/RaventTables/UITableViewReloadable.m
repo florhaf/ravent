@@ -10,6 +10,7 @@
 
 #import "MBProgressHUD.h"
 #import "YRDropdownView.h"
+#import "JBAsyncImageView.h"
 
 @implementation UITableViewReloadable
 
@@ -36,6 +37,9 @@
 {
     [super viewDidLoad];
     
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.tableView.backgroundColor = [UIColor clearColor];
+    
     if (_refreshHeaderView == nil) {
 		
 		EGORefreshTableHeaderView *view = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.tableView.bounds.size.height, self.view.frame.size.width, self.tableView.bounds.size.height)];
@@ -46,7 +50,9 @@
 	
 	[_refreshHeaderView refreshLastUpdatedDate];
     
-    //self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"backgroundLight"]];
+    UIImageView *bg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bg"]];
+    bg.frame = self.tableView.frame;
+    self.tableView.backgroundView = bg;
 }
 
 - (void)viewDidUnload
@@ -236,6 +242,42 @@
     return cell;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    if ([self tableView:tableView titleForHeaderInSection:section] != nil) {
+        return 21;;
+    }
+    else {
+        // If no section header title, no section header needed
+        return 0;
+    }
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    // Create label with section title
+    UILabel *label = [[UILabel alloc] init]; 
+    label.frame = CGRectMake(10, 0, 300, 21);
+    label.backgroundColor = [UIColor clearColor];
+    label.textColor = [UIColor colorWithRed:228 green:230 blue:234 alpha:1.0];
+    label.shadowColor = [UIColor darkGrayColor];
+    label.shadowOffset = CGSizeMake(0.0, 1.0);
+    label.font = [UIFont boldSystemFontOfSize:16];
+    label.text = [self tableView:tableView titleForHeaderInSection:section];
+    
+    // Create header view and add label as a subview
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 21)];
+    
+    UIImageView *bg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"sectionHeader"]];
+    bg.frame = view.frame;
+    bg.alpha = 0.9;
+    
+    [view addSubview:bg];
+    [view addSubview:label];
+
+    return view;
+}
+
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -269,32 +311,41 @@
 - (CGFloat)resizeAndPositionCellItem
 {
     [_itemTitle sizeToFit];
-    [_itemSubTitle sizeToFit];
+    //[_itemSubTitle sizeToFit];
     
     CGFloat delta1 = _itemTitle.frame.size.height - _titleSize.height;
     if (delta1 > 0) {
         
-        NSMutableArray *subviewsBelowTitle = [self subviews:_item.subviews BelowView:_itemTitle];
+        //NSMutableArray *subviewsBelowTitle = [self subviews:_item.subviews BelowView:_itemTitle];
         
-        for (int i = 0; i < [subviewsBelowTitle count]; i++) {
+        //for (int i = 0; i < [subviewsBelowTitle count]; i++) {
             
-            UIView *subview = [subviewsBelowTitle objectAtIndex:i];
-            subview.frame = CGRectMake(subview.frame.origin.x, subview.frame.origin.y + delta1, subview.frame.size.width, subview.frame.size.height);
-        }
+            //UIView *subview = [subviewsBelowTitle objectAtIndex:i];
+        UIView *subview = _itemSubTitle;
+            
+            if (subview.tag != 42) {
+                
+                subview.frame = CGRectMake(subview.frame.origin.x, subview.frame.origin.y + delta1, subview.frame.size.width, subview.frame.size.height);
+            }
+        //}
     }
     
-    CGFloat delta2 = _itemSubTitle.frame.size.height - _subTitleSize.height;
-    if (delta2 > 0) {
-        
-        NSMutableArray *subviewsBelowSubTitle = [self subviews:_item.subviews BelowView:_itemSubTitle];
-        for (int i = 0; i < [subviewsBelowSubTitle count]; i++) {
-            
-            UIView *subview = [subviewsBelowSubTitle objectAtIndex:i];
-            subview.frame = CGRectMake(subview.frame.origin.x, subview.frame.origin.y + delta2, subview.frame.size.width, subview.frame.size.height);
-        }
-    }
+//    CGFloat delta2 = _itemSubTitle.frame.size.height - _subTitleSize.height;
+//    if (delta2 > 0) {
+//        
+//        NSMutableArray *subviewsBelowSubTitle = [self subviews:_item.subviews BelowView:_itemSubTitle];
+//        for (int i = 0; i < [subviewsBelowSubTitle count]; i++) {
+//            
+//            UIView *subview = [subviewsBelowSubTitle objectAtIndex:i];
+//            
+//            if (subview.tag != 42) {
+//                
+//                subview.frame = CGRectMake(subview.frame.origin.x, subview.frame.origin.y + delta2, subview.frame.size.width, subview.frame.size.height);
+//            }
+//        }
+//    }
     
-    return delta1 + delta2;
+    return delta1;// + delta2;
 }
 
 @end
