@@ -292,11 +292,11 @@ public class Event extends Model implements Serializable {
 		long timeStampEnd = Long.parseLong(this.end_time) * 1000;
 		
 		// facebook events timestamp are in PST
-		DateTimeZone GMT = DateTimeZone.forID("GMT");
+		DateTimeZone T = DateTimeZone.forID("America/Los_Angeles");
 		
 		// so need to add time zone offset to DateTime
-		this.dtStart = new DateTime(timeStampStart, GMT).plusMinutes(timeZoneInMinutes);
-		this.dtEnd = new DateTime(timeStampEnd, GMT).plusMinutes(timeZoneInMinutes);	
+		this.dtStart = new DateTime(timeStampStart, T); //plusMinutes(timeZoneInMinutes);
+		this.dtEnd = new DateTime(timeStampEnd, T); //.plusMinutes(timeZoneInMinutes);	
 		
 		this.time_start = dtStart.toString("KK:mm a");
 		this.time_end = dtEnd.toString("KK:mm a");
@@ -304,25 +304,28 @@ public class Event extends Model implements Serializable {
 		this.date_start = dtStart.toString("MMM d, Y");
 		this.date_end = dtEnd.toString("MMM d, Y");
 		
-		if (dtStart.getDayOfYear() <= DateTime.now().getDayOfYear() && dtEnd.dayOfYear().get() >= DateTime.now().getDayOfYear()) {
+		DateTimeZone GMT = DateTimeZone.forID("GMT");		
+		DateTime now = DateTime.now(GMT).plusMinutes(timeZoneInMinutes);
+		
+		if (dtStart.getDayOfYear() <= now.getDayOfYear() && dtEnd.dayOfYear().get() >= now.getDayOfYear()) {
 			
 			this.group = "a";
 			this.groupTitle = "Today";
 		} else {
 			
-			if (dtStart.getDayOfYear() <= DateTime.now().plusDays(1).getDayOfYear()) {
+			if (dtStart.getDayOfYear() <= now.plusDays(1).getDayOfYear()) {
 				
 				this.group = "b";
 				this.groupTitle = "Tomorrow";
 			} else {
 				
-				if (dtStart.getDayOfYear() <= DateTime.now().plusWeeks(1).getDayOfYear()) {
+				if (dtStart.getDayOfYear() <= now.plusWeeks(1).getDayOfYear()) {
 					
 					this.group = "c";
 					this.groupTitle = "This week";
 				} else {
 					
-					if (dtStart.getDayOfYear() <= DateTime.now().plusMonths(1).getDayOfYear()) {
+					if (dtStart.getDayOfYear() <= now.plusMonths(1).getDayOfYear()) {
 						
 						this.group = "d";
 						this.groupTitle = "This month"; // TODO not really this month. This is more like "In the next 30 days"
