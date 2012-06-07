@@ -38,6 +38,8 @@ public class Event extends Model implements Serializable {
 	@Facebook
 	String pic;
 	@Facebook
+	String pic_big;
+	@Facebook
 	String venue;
 	@Facebook
 	String location;
@@ -103,7 +105,7 @@ public class Event extends Model implements Serializable {
 		String TAS = String.valueOf(now.getMillis() / 1000);
 		
 		FacebookClient client 	= new DefaultFacebookClient(accessToken);
-		String properties 		= "eid, name, pic, start_time, end_time, venue, location, host, privacy, creator, update_time";
+		String properties 		= "eid, name, pic, pic_big, start_time, end_time, venue, location, host, privacy, creator, update_time";
 		String query 			= "SELECT " + properties + " FROM event WHERE eid IN (SELECT eid FROM event_member WHERE uid = " + userID + ") AND end_time > " + TAS + " ORDER BY start_time"; /*need to check privacy CLOSED AND SECRET */
 		List<Event> fbevents 	= client.executeQuery(query, Event.class);
 		
@@ -186,7 +188,7 @@ public class Event extends Model implements Serializable {
 		List<EventLocationCapable> l = GeocellManager.proximityFetch(new Point(Double.parseDouble(userLatitude), Double.parseDouble(userLongitude)), searchLimit, searchRadius * 1000, ofySearch);
 		
 		FacebookClient client 	= new DefaultFacebookClient(accessToken);
-		String properties 		= "eid, name, pic, start_time, end_time, venue, location, host, privacy";
+		String properties 		= "eid, name, pic, pic_big, start_time, end_time, venue, location, host, privacy";
 		
 		MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
 		
@@ -250,7 +252,7 @@ public class Event extends Model implements Serializable {
 		
 		Event e = new Event();
         	
-    	String query 			= "SELECT eid, name, pic, start_time, end_time, venue, location, host, privacy FROM event WHERE eid = " + eid;
+    	String query 			= "SELECT eid, name, pic, pic_big, start_time, end_time, venue, location, host, privacy FROM event WHERE eid = " + eid;
     	List<Event> fbevents 	= client.executeQuery(query, Event.class);
 		
 		e = fbevents.get(0);
@@ -587,5 +589,13 @@ public class Event extends Model implements Serializable {
 
 	public void setGender_ratio(String gender_ratio) {
 		this.gender_ratio = gender_ratio;
+	}
+
+	public String getPic_big() {
+		return pic_big;
+	}
+
+	public void setPic_big(String pic_big) {
+		this.pic_big = pic_big;
 	}
 }
