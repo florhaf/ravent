@@ -28,7 +28,7 @@ public class Events extends ServerResource {
 			
 			ArrayList<Model> events;
 			
-			Event.GetCron();
+			//Event.GetCron(); //test
 			
 			if (userID != null) {
 			

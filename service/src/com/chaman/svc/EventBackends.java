@@ -13,9 +13,9 @@ public class EventBackends extends ServerResource {
 		
 		try {
 			
-			String options	= getQuery().getValues("options");
+			//String options	= getQuery().getValues("options");
 
-			if (options == "all") {Event.GetCron();}
+			Event.GetCron();
 			
 			result.setSuccess(true);
 			result.setRecords(null);
