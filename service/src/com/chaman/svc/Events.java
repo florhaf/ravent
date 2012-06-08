@@ -28,6 +28,8 @@ public class Events extends ServerResource {
 			
 			ArrayList<Model> events;
 			
+			Event.GetCron();
+			
 			if (userID != null) {
 			
 				events = Event.Get(accessToken, userID, latitude, longitude, timeZone);

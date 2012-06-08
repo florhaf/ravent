@@ -14,6 +14,7 @@ import com.beoui.geocell.model.Point;
 import com.chaman.dao.Dao;
 import com.chaman.util.Geo;
 import com.chaman.util.JSON;
+
 import com.google.appengine.api.memcache.MemcacheService;
 import com.google.appengine.api.memcache.MemcacheServiceFactory;
 import com.googlecode.objectify.Query;
@@ -120,9 +121,7 @@ public class Event extends Model implements Serializable {
 				
 			e_cache = (Event) syncCache.get(e.eid); // read from Event cache
     	    if (e_cache == null) {// || !e_cache.update_time.equals(e.update_time)) { // check the cache event version with the current one
-			
-    	    	e.Format(timeZoneInMinutes);
-    	    	
+			 	    	
     	    	e.venue_id = JSON.GetValueFor("id", e.venue);    	
     	    	Venue v_graph = new Venue(accessToken, e.venue_id);
     	    	e.venue_category = v_graph.category;
@@ -147,14 +146,8 @@ public class Event extends Model implements Serializable {
     	    			//e.getNb_invited(accessToken);
     	    			EventLocationCapable elc = new EventLocationCapable(e);
     	    			dao.ofy().put(elc);
-    	    		} else {
-			        	
-    	    			// update score in DB     	
     	    		}
-			        			        
-    	    		float distance = Geo.Fence(userLatitude, userLongitude, e.latitude, e.longitude);
-					
-    	    		e.distance = String.format("%.2f", distance);
+    	    		
     	    	} else {
 								
     	    		e.distance = "N/A";
@@ -164,10 +157,18 @@ public class Event extends Model implements Serializable {
     	    }else {
     	    	
     	    	e = e_cache;
-    	    	e.Format(timeZoneInMinutes);
     	    	Venue v_graph = new Venue(accessToken, e.venue_id);
     	    	e.Score(v_graph);
     	    }
+	
+	    	e.Format(timeZoneInMinutes);
+    	    
+    	    if (e.distance != "N/A") {
+
+    	    	float distance = Geo.Fence(userLatitude, userLongitude, e.latitude, e.longitude);
+        	    e.distance = String.format("%.2f", distance);
+    	    }
+	    
     	    result.add(e);
 	    	syncCache.put(e.eid, e); // Add Event to cache
 		}
@@ -232,6 +233,89 @@ public class Event extends Model implements Serializable {
 		
 		return result;
 	}
+	
+	
+	public static void GetCron() throws FacebookException {
+		
+		Dao dao = new Dao();
+		
+		//get users and Access tokens from DS		
+		Query<User> quser = dao.ofy().query(User.class);
+		for (User u: quser) {
+
+			try {
+				
+				//Get friend list 
+				List<Friend> uidList = Friend.GetCron(u.getAccess_token(), Long.toString(u.getUid()));
+				
+		    	//Loop to get all events	
+				for (Friend l : uidList) {
+				
+					try {
+						
+						//Prepare a timestamp to filter the facebook DB on the upcoming events
+						DateTimeZone PST = DateTimeZone.forID("America/Los_Angeles");
+						DateTime now = new DateTime(PST);
+						now.plusMinutes(PST.getOffset(now));
+						String TAS = String.valueOf(now.getMillis() / 1000);
+						
+						FacebookClient client 	= new DefaultFacebookClient(u.getAccess_token());
+						String properties 		= "eid, name, pic, pic_big, start_time, end_time, venue, location, host, privacy, creator, update_time";
+						String query 			= "SELECT " + properties + " FROM event WHERE eid IN (SELECT eid FROM event_member WHERE uid = " + l.getUid() + ") AND end_time > " + TAS + " ORDER BY start_time"; /*need to check privacy CLOSED AND SECRET */
+						List<Event> fbevents 	= client.executeQuery(query, Event.class);
+						
+						MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
+						Event e_cache; 
+						
+						for (Event e : fbevents) {
+							
+							e_cache = (Event) syncCache.get(e.eid); // read from Event cache
+				    	    if (e_cache == null) {
+							 	    	
+				    	    	e.venue_id = JSON.GetValueFor("id", e.venue);    	
+				    	    	Venue v_graph = new Venue(u.getAccess_token(), e.venue_id);
+				    	    	e.venue_category = v_graph.category;
+							
+				    	    	e.latitude 	= JSON.GetValueFor("latitude", e.venue);
+				    	    	e.longitude = JSON.GetValueFor("longitude", e.venue);
+							
+				    	    	if ((e.latitude == null || e.latitude == "" || e.longitude == null || e.longitude == "") && v_graph != null) {
+								
+				    	    		// take value from venue if event location is null
+				    	    		e.latitude = JSON.GetValueFor("latitude", v_graph.location);
+				    	    		e.longitude = JSON.GetValueFor("longitude", v_graph.location);
+				    	    	}	
+							
+				    	    	if (e.latitude != null && e.latitude != "" && e.longitude != null && e.longitude != "") {
+								
+				    	    		Query<EventLocationCapable> q = dao.ofy().query(EventLocationCapable.class);
+				    	    		q.filter("eid", e.eid); //can be optimized with a get (filter = 1 read + 1small op)
+									
+				    	    		if (q.count() == 0) {
+							        	
+				    	    			//e.getNb_invited(accessToken);
+				    	    			EventLocationCapable elc = new EventLocationCapable(e);
+				    	    			dao.ofy().put(elc);
+				    	    		}
+				    	    		
+				    	    	} else {
+												
+				    	    		e.distance = "N/A";
+				    	    	}
+				    	    	
+				    	    }else {
+				    	    	
+				    	    	e = e_cache;
+				    	    }
+					    
+					    	syncCache.put(e.eid, e); // Add Event to cache
+						}
+					} catch (Exception ex ) {}
+				}		
+			} catch (Exception ex) {}
+		}
+	}
+	
 	
 	public static ArrayList<Model> getMultiple(String accessToken, String[] eids, String timeZone, String userLatitude, String userLongitude) {
 		

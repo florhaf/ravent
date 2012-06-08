@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<backends>
+	<backend name="eventbackend">
+		<class>B1</class>
+   		<instances>1</instances>
+ 		<options>
+  			<dynamic>true</dynamic>
+   		</options>
+ 	</backend>
+</backends>

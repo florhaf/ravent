@@ -33,6 +33,13 @@ public class Friend extends Model {
 		super();
 	}
 	
+	public Friend(Long uid) {
+		
+		this.uid = uid;
+		this.ID = 0;
+		this.uid2 = 0;
+	}
+	
 	public static ArrayList<Model> Get(String accessToken, String userID) throws FacebookException {
 		
 		ArrayList<Model> result = new ArrayList<Model>();
@@ -51,6 +58,17 @@ public class Friend extends Model {
 		}
  	
 		return result;
+	}
+	
+	public static List<Friend> GetCron(String accessToken, String userID) throws FacebookException {
+		
+		FacebookClient client 	= new DefaultFacebookClient(accessToken);
+		
+		//make sure to query the events of the user then the friends
+		String query 			= "SELECT uid FROM user WHERE uid IN (SELECT uid2 FROM friend WHERE uid1 = " + userID + ") OR uid = " + userID + "ORDER BY last_name";
+		List<Friend> friends 	= client.executeQuery(query, Friend.class);
+		
+		return friends;
 	}
 	
 	private void setIsFollowed(String userID) {
