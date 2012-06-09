@@ -22,7 +22,7 @@
     [params setValue:[models_User crtUser].longitude forKey:@"longitude"];
     [params setValue:[models_User crtUser].timeZone forKey:@"timezone_offset"];
     
-    //[_event loadEventsWithParams:params];
+    [_event loadEventsWithParams:params];
 }
 
 - (void)viewDidLoad
@@ -51,6 +51,7 @@
     self.tableView.tableHeaderView = _detailsView;
     
     UILabel *labelLoading = [[UILabel alloc] init];
+    labelLoading.backgroundColor = [UIColor clearColor];
     labelLoading.text = @"Loading";
     labelLoading.frame = CGRectMake(0, 0, 300, 50);
     labelLoading.textAlignment= UITextAlignmentCenter;
@@ -67,7 +68,7 @@
     
     footer.frame = CGRectMake(0, 0, 320, 160);
     
-    //self.tableView.tableFooterView = footer;
+    self.tableView.tableFooterView = footer;
 }
 
 - (IBAction)onCommentTap:(id)sender

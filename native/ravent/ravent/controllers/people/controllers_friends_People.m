@@ -143,20 +143,25 @@ static customNavigationController *_ctrl;
     [self.view addSubview:_header];
     [_container addSubview:_following.view];
     [_container addSubview:_followers.view];
+    [_container setBackgroundColor:[UIColor clearColor]];
+    [_followers.view setHidden:YES];
 }
 
 - (IBAction)onSegmentedControlValueChanged
 {    
     if (!_isFollowersVisible) {
      
+        _isFollowersVisible = YES;
+        [_followers.view setHidden:NO];
         [self uiview:_following.view raceTo:CGPointMake(-320, 0) withSnapBack:NO];
         [self uiview:_followers.view raceTo:CGPointMake(0, 0) withSnapBack:YES];
-        _isFollowersVisible = YES;
+        
     } else {
         
+        _isFollowersVisible = NO;
         [self uiview:_following.view raceTo:CGPointMake(0, 0) withSnapBack:YES];
         [self uiview:_followers.view raceTo:CGPointMake(320, 0) withSnapBack:NO];
-        _isFollowersVisible = NO;
+        
     }
 }
 
@@ -196,7 +201,13 @@ static customNavigationController *_ctrl;
                                               animations:^{
                                                   uiview.frame = CGRectMake(destination.x, destination.y, uiview.frame.size.width, uiview.frame.size.height);
                                               }
-                                              completion:nil];
+                                              completion:^(BOOL value){
+                                                  
+                                                  if (!_isFollowersVisible) {
+                                                      
+                                                      [_followers.view setHidden:YES];
+                                                  }
+                                              }];
                          }
                      }];    
 }

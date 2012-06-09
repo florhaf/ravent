@@ -22,11 +22,6 @@
 		[self setTag:index];
 		[self setImageEdgeInsets:UIEdgeInsetsMake(5, 5, kEdgeInsetBottom, 0)];
 		[self setBackgroundColor:[UIColor clearColor]];
-        
-        if (index == 0) {
-            
-            [self setSelected:YES];
-        }
 	}
 	return self;
 }

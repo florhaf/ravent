@@ -67,7 +67,7 @@
             
                 _showEmptyMessage = YES;
                 _emptyView.frame = CGRectMake(0, 0, 320, 312);
-                _emptyImageView.frame = CGRectMake(_emptyImageView.frame.origin.x, _emptyImageView.frame.origin.y + 80, _emptyImageView.frame.size.width, _emptyImageView.frame.size.height);
+                _emptyImageView.frame = CGRectMake(_emptyImageView.frame.origin.x, _emptyImageView.frame.origin.y + 40, _emptyImageView.frame.size.width, _emptyImageView.frame.size.height);
             } else {
                 
                 _data = objects;

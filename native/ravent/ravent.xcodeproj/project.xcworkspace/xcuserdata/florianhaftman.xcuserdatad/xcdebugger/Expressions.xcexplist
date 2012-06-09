@@ -3,13 +3,10 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "-[dataSource eventsFrom:to:]:dataSource.m">
+         contextName = "-[controllers_events_List loadEvents]:controllers_events_List.m">
          <PersistentStrings>
             <PersistentString
-               value = "toDate">
-            </PersistentString>
-            <PersistentString
-               value = "event.dateStart">
+               value = "_user.timeZone">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -131,6 +128,14 @@
          contextName = "-[AppDelegate managedObjectModel]:AppDelegate.m">
       </ContextState>
       <ContextState
+         contextName = "-[controllers_Login onLoginButtonTap]:controllers_Login.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "_facebook">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "-[controllers_friends_share onShareTap:]:controllers_friends_share.m">
          <PersistentStrings>
             <PersistentString
@@ -138,14 +143,6 @@
             </PersistentString>
             <PersistentString
                value = "[button superview]">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "-[controllers_Login onLoginButtonTap]:controllers_Login.m">
-         <PersistentStrings>
-            <PersistentString
-               value = "_facebook">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -165,6 +162,14 @@
          <PersistentStrings>
             <PersistentString
                value = "_isFollowersLoaded">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[UITableViewReloadable onLoadData:withSuccess:]:UITableViewReloadable.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "_emptyMessage">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -234,10 +239,10 @@
          contextName = "-[controllers_events_Details viewDidLoad]:controllers_events_Details.m">
          <PersistentStrings>
             <PersistentString
-               value = "_headerNameLabel.frame.size.height">
+               value = "NSLog(mapUrl)">
             </PersistentString>
             <PersistentString
-               value = "NSLog(mapUrl)">
+               value = "_headerNameLabel.frame.size.height">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -261,10 +266,10 @@
          contextName = "-[models_User locationManager:didUpdateToLocation:fromLocation:]:models_User.m">
          <PersistentStrings>
             <PersistentString
-               value = "newLocation.horizontalAccuracy">
+               value = "_bestEffortAtLocation.horizontalAccuracy &gt; newLocation.horizontalAccuracy">
             </PersistentString>
             <PersistentString
-               value = "_bestEffortAtLocation.horizontalAccuracy &gt; newLocation.horizontalAccuracy">
+               value = "newLocation.horizontalAccuracy">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -294,10 +299,13 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "-[controllers_events_List loadEvents]:controllers_events_List.m">
+         contextName = "-[dataSource eventsFrom:to:]:dataSource.m">
          <PersistentStrings>
             <PersistentString
-               value = "_user.timeZone">
+               value = "toDate">
+            </PersistentString>
+            <PersistentString
+               value = "event.dateStart">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

@@ -50,6 +50,12 @@
     [super onLoadData:objects withSuccess:^ {
         
         _data = [[NSMutableArray alloc] initWithArray:objects]; 
+        
+        if (_data == nil || [_data count] == 0) {
+            
+            _showEmptyMessage = YES;
+            _emptyMessage = @"no friend invited";
+        }
     }];
 }
 
@@ -109,6 +115,7 @@
     [super viewDidLoad];
     
     UILabel *label = [[UILabel alloc] init];
+    label.backgroundColor = [UIColor clearColor];
     label.text = @"Loading";
     label.frame = CGRectMake(0, 0, 320, 50);
     label.textAlignment= UITextAlignmentCenter;

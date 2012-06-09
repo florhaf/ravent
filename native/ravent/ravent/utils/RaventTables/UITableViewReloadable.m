@@ -15,6 +15,7 @@
 @implementation UITableViewReloadable
 
 @synthesize groupedData = _groupedData;
+@synthesize emptyMessage = _emptyMessage;
 
 - (id)init
 {
@@ -107,7 +108,8 @@
 
 - (void)onLoadData:(NSArray *)objects withSuccess:(success)success
 {
-    self.tableView.tableFooterView = [[UIView alloc] init];
+    [[NSBundle mainBundle] loadNibNamed:@"views_Empty" owner:self options:nil];
+    self.tableView.tableFooterView = _emptyView;
     
     _data = nil;
     _groupedData = nil;
@@ -128,17 +130,37 @@
                                         detail:[error localizedDescription]
                                          image:[UIImage imageNamed:@"dropdown-alert"]
                                       animated:YES];
+            return;
         }
     }
     
     success();
         
-    [[NSBundle mainBundle] loadNibNamed:@"views_Empty" owner:self options:nil];
-    self.tableView.tableFooterView = _emptyView;
+    
     
     if (_showEmptyMessage == YES) {
         
+        if (_emptyMessage != nil) {
+            
+            for (UIView *v in _emptyMessageView.subviews) {
+                
+                [v setHidden:YES];
+            }
+            
+            UILabel *l = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, 20)];
+            l.text = _emptyMessage;
+            l.backgroundColor = [UIColor clearColor];
+            l.textColor = [UIColor lightGrayColor];
+            l.font = [UIFont fontWithName:@"System Bold" size: 16.0];
+            l.textAlignment = UITextAlignmentCenter;
+            
+            [_emptyMessageView addSubview:l];
+        }
+        
         [_emptyMessageView setHidden:NO];
+    } else {
+        
+        [_emptyMessageView setHidden:YES];
     }
     
     [self.tableView reloadData];

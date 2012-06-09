@@ -28,8 +28,8 @@
 - (void)setupView {
 	self.clipsToBounds = YES;
 	currentIdx = -1;
-	star = [self imageWithImage:[UIImage imageNamed:@"diamondSlot"] convertToSize:CGSizeMake(56, 46)] ;
-	highlightedStar = [self imageWithImage:[UIImage imageNamed:@"diamond"] convertToSize:CGSizeMake(56, 46)] ;    
+	star = [self imageWithImage:[UIImage imageNamed:@"diamondSlot"] convertToSize:CGSizeMake(60, 50)] ;
+	highlightedStar = [self imageWithImage:[UIImage imageNamed:@"diamond"] convertToSize:CGSizeMake(60, 50)] ;    
 	for (int i=0; i<numberOfStars; i++) {
 		DLStarView *v = [[DLStarView alloc] initWithDefault:self.star highlighted:self.highlightedStar position:i];
 		[self addSubview:v];

@@ -217,9 +217,9 @@
 - (void)newRating:(int)rating
 {
     [_voteLoading setHidden:NO];
-    _voteLoading.frame = _voteView.frame;
+    //_voteLoading.frame = _voteView.frame;
     [_header bringSubviewToFront:_voteLoading];
-    [_header sendSubviewToBack:_voteView];
+    //[_header sendSubviewToBack:_voteView];
     [((UIActivityIndicatorView *)[_voteLoading.subviews objectAtIndex:0]) startAnimating];
         
     NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
@@ -341,6 +341,7 @@
     }
     
     _voteView = [[DLStarRatingControl alloc] initWithFrame:_headerVoteLabel.frame andStars: 5];
+    [_voteView setRating:1];
     _voteView.delegate = self;
     [_header addSubview:_voteView];
     [_headerVoteLabel removeFromSuperview];

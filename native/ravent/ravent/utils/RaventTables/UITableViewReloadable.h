@@ -38,6 +38,7 @@ typedef void (^success)();
     BOOL _reloading;
     BOOL _isDirty;
     BOOL _showEmptyMessage;
+    NSString *_emptyMessage;
     
     NSArray *_data;
     NSArray *_sortedKeys;
@@ -45,6 +46,7 @@ typedef void (^success)();
 }
 
 @property (nonatomic, retain) NSMutableDictionary *groupedData;
+@property (nonatomic, retain) NSString *emptyMessage;
 
 - (void)reloadTableViewDataSource;
 - (void)doneLoadingTableViewData;
