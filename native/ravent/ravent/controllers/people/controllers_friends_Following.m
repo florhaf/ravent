@@ -61,9 +61,20 @@
 {   
     [self onLoadData:objects withSuccess:^ {
         
-        _data = objects;
-        _groupedData = [models_User getGroupedData:_data];
-        _sortedKeys = [[_groupedData allKeys] sortedArrayUsingSelector:@selector(compare:)];
+        if (objects != nil) {
+            
+            if ([objects count] == 0) {
+            
+                _showEmptyMessage = YES;
+                _emptyView.frame = CGRectMake(0, 0, 320, 312);
+                _emptyImageView.frame = CGRectMake(_emptyImageView.frame.origin.x, _emptyImageView.frame.origin.y + 80, _emptyImageView.frame.size.width, _emptyImageView.frame.size.height);
+            } else {
+                
+                _data = objects;
+                _groupedData = [models_User getGroupedData:_data];
+                _sortedKeys = [[_groupedData allKeys] sortedArrayUsingSelector:@selector(compare:)];
+            }
+        }
     }];
     
 }

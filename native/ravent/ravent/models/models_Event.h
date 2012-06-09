@@ -26,6 +26,7 @@
     NSString *_name;
     NSString *_location;
     NSString *_picture;
+    NSString *_pic_big;
     NSString *_score;
     NSString *_timeStart;
     NSString *_timeEnd;
@@ -51,6 +52,7 @@
 @property (nonatomic, retain) NSString *name;
 @property (nonatomic, retain) NSString *location;
 @property (nonatomic, retain) NSString *picture;
+@property (nonatomic, retain) NSString *pic_big;
 @property (nonatomic, retain) NSString *score;
 @property (nonatomic, retain) NSString *timeStart;
 @property (nonatomic, retain) NSString *timeEnd;

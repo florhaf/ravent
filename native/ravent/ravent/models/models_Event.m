@@ -19,6 +19,7 @@
 @synthesize name = _name;
 @synthesize location = _location;
 @synthesize picture = _picture;
+@synthesize pic_big = _pic_big;
 @synthesize score = _score;
 @synthesize timeStart = _timeStart;
 @synthesize timeEnd = _timeEnd;
@@ -55,6 +56,7 @@
     another.name = _name;
     another.location = _location;
     another.picture = _picture;
+    another.pic_big = _pic_big;
     another.score = _score;
     another.timeStart = _timeStart;
     another.timeEnd = _timeEnd;
@@ -81,6 +83,7 @@
     [objectMapping mapKeyPath:@"name" toAttribute:@"name"];
     [objectMapping mapKeyPath:@"location" toAttribute:@"location"];
     [objectMapping mapKeyPath:@"picture" toAttribute:@"picture"];
+    [objectMapping mapKeyPath:@"pic_big" toAttribute:@"pic_big"];
     [objectMapping mapKeyPath:@"score" toAttribute:@"score"];
     [objectMapping mapKeyPath:@"time_start" toAttribute:@"timeStart"];
     [objectMapping mapKeyPath:@"time_end" toAttribute:@"timeEnd"];
@@ -110,6 +113,7 @@
     [objectMapping mapKeyPath:@"name" toAttribute:@"name"];
     [objectMapping mapKeyPath:@"location" toAttribute:@"location"];
     [objectMapping mapKeyPath:@"picture" toAttribute:@"picture"];
+    [objectMapping mapKeyPath:@"pic_big" toAttribute:@"pic_big"];
     [objectMapping mapKeyPath:@"score" toAttribute:@"score"];
     [objectMapping mapKeyPath:@"time_start" toAttribute:@"timeStart"];
     [objectMapping mapKeyPath:@"time_end" toAttribute:@"timeEnd"];

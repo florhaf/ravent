@@ -22,6 +22,7 @@
     if (self) {
         
         self.title = @"Ravent";
+        _showEmptyMessage = NO;
     }
     return self;
 }
@@ -127,14 +128,17 @@
                                         detail:[error localizedDescription]
                                          image:[UIImage imageNamed:@"dropdown-alert"]
                                       animated:YES];
-        } else {
-            
-            success();
         }
-    } else {
+    }
+    
+    success();
         
-        [[NSBundle mainBundle] loadNibNamed:@"views_Empty" owner:self options:nil];
-        self.tableView.tableFooterView = _emptyView;
+    [[NSBundle mainBundle] loadNibNamed:@"views_Empty" owner:self options:nil];
+    self.tableView.tableFooterView = _emptyView;
+    
+    if (_showEmptyMessage == YES) {
+        
+        [_emptyMessageView setHidden:NO];
     }
     
     [self.tableView reloadData];
@@ -308,44 +312,74 @@
     return result;
 }
 
+- (int)getFontSizeForLabel:(UILabel *)label
+{
+    /* This is where we define the ideal font that the Label wants to use.
+     Use the font you want to use and the largest font size you want to use. */
+    UIFont *font = [label.font fontWithSize:36];
+    
+    int i;
+    /* Time to calculate the needed font size.
+     This for loop starts at the largest font size, and decreases by two point sizes (i=i-2)
+     Until it either hits a size that will fit or hits the minimum size we want to allow (i > 10) */
+    for(i = 36; i > 10; i--)
+    {
+        // Set the new font size.
+        font = [font fontWithSize:i];
+        
+        /* This step is important: We make a constraint box 
+         using only the fixed WIDTH of the UILabel. The height will
+         be checked later. */ 
+        CGSize constraintSize = CGSizeMake(label.frame.size.width, MAXFLOAT);
+        
+        // This step checks how tall the label would be with the desired font.
+        CGSize labelSize = [label.text sizeWithFont:font constrainedToSize:constraintSize lineBreakMode:UILineBreakModeWordWrap];
+        
+        if(labelSize.height <= label.frame.size.height) {
+            break;   
+        }
+    }
+    
+    return i;
+}
+
 - (CGFloat)resizeAndPositionCellItem
 {
     [_itemTitle sizeToFit];
-    //[_itemSubTitle sizeToFit];
+    [_itemSubTitle sizeToFit];
     
     CGFloat delta1 = _itemTitle.frame.size.height - _titleSize.height;
     if (delta1 > 0) {
         
-        //NSMutableArray *subviewsBelowTitle = [self subviews:_item.subviews BelowView:_itemTitle];
+        NSMutableArray *subviewsBelowTitle = [self subviews:_item.subviews BelowView:_itemTitle];
         
-        //for (int i = 0; i < [subviewsBelowTitle count]; i++) {
+        for (int i = 0; i < [subviewsBelowTitle count]; i++) {
             
-            //UIView *subview = [subviewsBelowTitle objectAtIndex:i];
-        UIView *subview = _itemSubTitle;
+            UIView *subview = [subviewsBelowTitle objectAtIndex:i];
             
             if (subview.tag != 42) {
                 
                 subview.frame = CGRectMake(subview.frame.origin.x, subview.frame.origin.y + delta1, subview.frame.size.width, subview.frame.size.height);
             }
-        //}
+        }
     }
     
-//    CGFloat delta2 = _itemSubTitle.frame.size.height - _subTitleSize.height;
-//    if (delta2 > 0) {
-//        
-//        NSMutableArray *subviewsBelowSubTitle = [self subviews:_item.subviews BelowView:_itemSubTitle];
-//        for (int i = 0; i < [subviewsBelowSubTitle count]; i++) {
-//            
-//            UIView *subview = [subviewsBelowSubTitle objectAtIndex:i];
-//            
-//            if (subview.tag != 42) {
-//                
-//                subview.frame = CGRectMake(subview.frame.origin.x, subview.frame.origin.y + delta2, subview.frame.size.width, subview.frame.size.height);
-//            }
-//        }
-//    }
+    CGFloat delta2 = _itemSubTitle.frame.size.height - _subTitleSize.height;
+    if (delta2 > 0) {
+        
+        NSMutableArray *subviewsBelowSubTitle = [self subviews:_item.subviews BelowView:_itemSubTitle];
+        for (int i = 0; i < [subviewsBelowSubTitle count]; i++) {
+            
+            UIView *subview = [subviewsBelowSubTitle objectAtIndex:i];
+            
+            if (subview.tag != 42) {
+                
+                subview.frame = CGRectMake(subview.frame.origin.x, subview.frame.origin.y + delta2, subview.frame.size.width, subview.frame.size.height);
+            }
+        }
+    }
     
-    return delta1;// + delta2;
+    return delta1 + delta2;
 }
 
 @end

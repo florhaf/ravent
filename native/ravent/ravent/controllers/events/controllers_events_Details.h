@@ -18,6 +18,7 @@
     
     IBOutlet UIView *_header;
     IBOutlet UILabel *_headerDateLabel;
+    IBOutlet UILabel *_headerGroupLabel;
     IBOutlet UILabel *_headerNameLabel;
     IBOutlet UILabel *_headerLocationLabel;
     IBOutlet UILabel *_headerTimeLabel;
@@ -34,6 +35,7 @@
     IBOutlet JBAsyncImageView *_mapImage;
     
     DLStarRatingControl *_voteView;
+    UIToolbar *_toolbar;
     models_Event *_eventLoader;
     
     NSArray *_friendsSharedTo;

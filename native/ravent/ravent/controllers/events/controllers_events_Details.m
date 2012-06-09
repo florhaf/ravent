@@ -236,6 +236,7 @@
 - (void)onVoteSuccess:(NSString *)response
 {
     [_voteLoading setHidden:YES];
+    [_header bringSubviewToFront:_voteView];
     
     [YRDropdownView showDropdownInView:self.view 
                                  title:@"Success" 
@@ -317,23 +318,26 @@
 
 #pragma mark - View lifecycle
 
+
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
        
     [[NSBundle mainBundle] loadNibNamed:@"views_events_Details" owner:self options:nil];
         
-    _headerDateLabel.text = [NSString stringWithFormat:@"%@ (%@ to %@)", _event.groupTitle, _event.dateStart, _event.dateEnd];
+    _headerGroupLabel.text = [NSString stringWithFormat:@"%@", _event.groupTitle];
+    _headerDateLabel.text = [NSString stringWithFormat:@"(%@ to %@)", _event.dateStart, _event.dateEnd];
     _headerNameLabel.text = _event.name;
     _headerLocationLabel.text = _event.location;
-    _headerImage.imageURL = [NSURL URLWithString:_event.picture];
+    _headerImage.imageURL = [NSURL URLWithString:_event.pic_big];
     _headerTimeLabel.text = [NSString stringWithFormat:@"%@ - %@", _event.timeStart, _event.timeEnd];
     _headerDistanceLabel.text = [NSString stringWithFormat:@"%@ mi.", _event.distance];
     
     for (int i = 0; i < [_event.score intValue]; i++) {
         
         UIImageView *image = (UIImageView *)[_headerScore.subviews objectAtIndex:i];
-        image.image = [UIImage imageNamed:@"like"];
+        image.image = [UIImage imageNamed:@"diamond"];
     }
     
     _voteView = [[DLStarRatingControl alloc] initWithFrame:_headerVoteLabel.frame andStars: 5];
@@ -356,9 +360,11 @@
 
     mapUrl = [mapUrl appendQueryParams:params];
     _mapImage.imageURL = [NSURL URLWithString:mapUrl];
+
+    _headerNameLabel.font = [_headerNameLabel.font fontWithSize:[self getFontSizeForLabel:_headerNameLabel]];
     
-    [_headerNameLabel sizeToFit];
-    [_headerLocationLabel sizeToFit];
+    [_headerGroupLabel sizeToFit];
+    _headerDateLabel.frame = CGRectMake(_headerGroupLabel.frame.origin.x + _headerGroupLabel.frame.size.width + 4, _headerDateLabel.frame.origin.y, _headerDateLabel.frame.size.width, _headerDateLabel.frame.size.height);
     
     CGFloat delta;
     

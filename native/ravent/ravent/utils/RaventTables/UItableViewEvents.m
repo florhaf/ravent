@@ -8,7 +8,7 @@
 
 #import "UItableViewEvents.h"
 #import "QuartzCore/CALayer.h"
-#import "controllers_events_Details.h"
+#import "controllers_events_DetailsContainer.h"
 
 @implementation UITableViewEvents
 
@@ -108,17 +108,19 @@
     
     _itemTitle.text = event.name;
     _itemSubTitle.text = event.location;
-    _itemImage.imageURL = [NSURL URLWithString:event.picture];
+    _itemImage.imageURL = [NSURL URLWithString:event.pic_big];
     _itemTime.text = [[NSString stringWithFormat:@"%@ - %@", event.timeStart, event.timeEnd] lowercaseString];
     _itemDistance.text = [NSString stringWithFormat:@"%@ mi.", event.distance];
         
     for (int i = 0; i < [event.score intValue]; i++) {
         
         UIImageView *image = (UIImageView *)[_itemScore.subviews objectAtIndex:i];
-        image.image = [UIImage imageNamed:@"like"];
+        image.image = [UIImage imageNamed:@"diamond"];
     }
     
-    [self resizeAndPositionCellItem];
+    _itemTitle.font = [_itemTitle.font fontWithSize:[self getFontSizeForLabel:_itemTitle]];
+    
+    //[self resizeAndPositionCellItem];
     
     [cell.contentView addSubview:_item];
     

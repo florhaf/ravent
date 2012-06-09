@@ -140,8 +140,16 @@ static models_User *_crtUser = nil;
         // store the location as the "best effort"
         _bestEffortAtLocation = newLocation;
         _locationLastUpdateTime = [NSDate date];
-        _crtUser.latitude = @"40.751418";//[NSString stringWithFormat:@"%f", newLocation.coordinate.latitude];
-        _crtUser.longitude = @"-73.970947";//[NSString stringWithFormat:@"%f", newLocation.coordinate.longitude];
+        _crtUser.latitude = @"40.743680";//[NSString stringWithFormat:@"%f", newLocation.coordinate.latitude];
+        _crtUser.longitude = @"-73.972750";//[NSString stringWithFormat:@"%f", newLocation.coordinate.longitude];
+        
+        _crtUser.latitude = [NSString stringWithFormat:@"%f", newLocation.coordinate.latitude];
+        _crtUser.longitude = [NSString stringWithFormat:@"%f", newLocation.coordinate.longitude];
+        
+        
+//        _crtUser.latitude = [NSString stringWithFormat:@"%f", newLocation.coordinate.latitude];
+//        _crtUser.longitude = [NSString stringWithFormat:@"%f", newLocation.coordinate.longitude];
+        
         // test the measurement to see if it meets the desired accuracy
         //
         // IMPORTANT!!! kCLLocationAccuracyBest should not be used for comparison with location coordinate or altitidue 

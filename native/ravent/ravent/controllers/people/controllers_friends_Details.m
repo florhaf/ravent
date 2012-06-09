@@ -22,7 +22,7 @@
     [params setValue:[models_User crtUser].longitude forKey:@"longitude"];
     [params setValue:[models_User crtUser].timeZone forKey:@"timezone_offset"];
     
-    [_event loadEventsWithParams:params];
+    //[_event loadEventsWithParams:params];
 }
 
 - (void)viewDidLoad
@@ -46,13 +46,13 @@
         [_user loadUser];
     }
         
-    _fbButton.titleLabel.text = [NSString stringWithFormat:@"Ask where %@ is going", _user.firstName];
+    //_fbButton.titleLabel.text = [NSString stringWithFormat:@"Ask where %@ is going", _user.firstName];
 
     self.tableView.tableHeaderView = _detailsView;
     
     UILabel *labelLoading = [[UILabel alloc] init];
     labelLoading.text = @"Loading";
-    labelLoading.frame = CGRectMake(0, 0, 320, 50);
+    labelLoading.frame = CGRectMake(0, 0, 300, 50);
     labelLoading.textAlignment= UITextAlignmentCenter;
     
     UIActivityIndicatorView *myIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
@@ -67,7 +67,7 @@
     
     footer.frame = CGRectMake(0, 0, 320, 160);
     
-    self.tableView.tableFooterView = footer;
+    //self.tableView.tableFooterView = footer;
 }
 
 - (IBAction)onCommentTap:(id)sender
