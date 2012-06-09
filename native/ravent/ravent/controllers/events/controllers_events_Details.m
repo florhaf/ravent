@@ -366,37 +366,6 @@
     [_headerGroupLabel sizeToFit];
     _headerDateLabel.frame = CGRectMake(_headerGroupLabel.frame.origin.x + _headerGroupLabel.frame.size.width + 4, _headerDateLabel.frame.origin.y, _headerDateLabel.frame.size.width, _headerDateLabel.frame.size.height);
     
-    CGFloat delta;
-    
-    delta = _headerNameLabel.frame.size.height - _headerTitleSize.height;
-    if (delta > 0) {
-        
-        //NSMutableArray *subviewsBelowTitle = [self subviews:_header.subviews BelowView:_headerNameLabel];
-        
-        //for (int i = 0; i < [subviewsBelowTitle count]; i++) {
-            
-        UIView *subview = _headerLocationLabel;//[subviewsBelowTitle objectAtIndex:i];
-            subview.frame = CGRectMake(subview.frame.origin.x, subview.frame.origin.y + delta, subview.frame.size.width, subview.frame.size.height);
-        //}
-    }
-    //_header.frame = CGRectMake(_header.frame.origin.x, _header.frame.origin.y, _header.frame.size.width, _header.frame.size.height + delta);
-    
-//    delta = _headerLocationLabel.frame.size.height - _headerSubTitleSize.height;
-//    if (delta > 0) {
-//        
-//        NSMutableArray *subviewsBelowSubTitle = [self subviews:_header.subviews BelowView:_headerLocationLabel];
-//        for (int i = 0; i < [subviewsBelowSubTitle count]; i++) {
-//            
-//            UIView *subview = [subviewsBelowSubTitle objectAtIndex:i];
-//            subview.frame = CGRectMake(subview.frame.origin.x, subview.frame.origin.y + delta, subview.frame.size.width, subview.frame.size.height);
-//        }
-//    }
-    //_header.frame = CGRectMake(_header.frame.origin.x, _header.frame.origin.y, _header.frame.size.width, _header.frame.size.height + delta);
-    
-//    _borderLeft.frame = CGRectMake(_borderLeft.frame.origin.x, _borderLeft.frame.origin.y, _borderLeft.frame.size.width, _header.frame.size.height);
-//    
-//    _borderRight.frame = CGRectMake(_borderRight.frame.origin.x, _borderRight.frame.origin.y, _borderRight.frame.size.width, _header.frame.size.height);
-    
     self.tableView.tableHeaderView = _header;
 }
 
