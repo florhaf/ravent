@@ -132,6 +132,8 @@ static controllers_friends_All *_ctrl;
     
     _itemTitle.text = [NSString stringWithFormat:@"%@ %@", u.firstName, u.lastName];
     _itemImage.imageURL = [NSURL URLWithString:u.picture];
+    _itemImage.clipsToBounds = YES;
+    _itemImage.contentMode = UIViewContentModeScaleAspectFill;
     
     if ([u.isFollowed isEqualToString:@"true"]) {
         

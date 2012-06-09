@@ -105,6 +105,8 @@
     
     _itemTitle.text = [NSString stringWithFormat:@"%@ %@", u.firstName, u.lastName];
     _itemImage.imageURL = [NSURL URLWithString:u.picture];
+    _itemImage.clipsToBounds = YES;
+    _itemImage.contentMode = UIViewContentModeScaleAspectFill;
     
     _followersLabel.text = u.nbOfFollowers;
     _followingLabel.text = u.nbOfFollowing;

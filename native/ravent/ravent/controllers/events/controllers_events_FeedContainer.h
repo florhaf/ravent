@@ -15,6 +15,9 @@
     
     controllers_events_Feed *_feedController;
     models_Event *_event;
+    
+    IBOutlet UIToolbar *_toolbar;
+    IBOutlet UIBarButtonItem *_button;
 }
 
 - (id)initWithEvent:(models_Event *)event;

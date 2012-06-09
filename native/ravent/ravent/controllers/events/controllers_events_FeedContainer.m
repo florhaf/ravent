@@ -62,6 +62,19 @@
     [doneb setFrame:CGRectMake(0, 0, donei.size.width, donei.size.height)];
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithCustomView:doneb];       
     self.navigationItem.rightBarButtonItem = doneButton;
+    
+    [_toolbar insertSubview:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"toolbar"]] atIndex:1];
+    
+    UIImage *posti = [UIImage imageNamed:@"postcomment"];
+    UIButton *postb = [UIButton buttonWithType:UIButtonTypeCustom];
+    [postb addTarget:self action:@selector(onCommentTap:) forControlEvents:UIControlEventTouchUpInside];
+    [postb setImage:posti forState:UIControlStateNormal];
+    [postb setFrame:CGRectMake(-20, 0, 310, 44)];
+    _button = [[UIBarButtonItem alloc] initWithCustomView:postb];
+    //[_button setCustomView:postb];
+    NSArray *items = [[NSArray alloc] initWithObjects:_button, nil];
+    [_toolbar setItems:items];
+    
 }
 
 - (void)hideModal

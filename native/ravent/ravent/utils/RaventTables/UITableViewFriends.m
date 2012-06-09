@@ -71,6 +71,8 @@
     _itemTitle.text = [NSString stringWithFormat:@"%@ %@", u.firstName, u.lastName];
     _itemSubTitle.text = u.rsvpStatus;
     _itemImage.imageURL = [NSURL URLWithString:u.picture];
+    _itemImage.clipsToBounds = YES;
+    _itemImage.contentMode = UIViewContentModeScaleAspectFill;
     
     [cell.contentView addSubview:_item];
     

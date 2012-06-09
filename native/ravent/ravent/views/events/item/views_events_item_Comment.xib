@@ -142,7 +142,7 @@
 				<string key="NSReuseIdentifierKey">_NS:196</string>
 				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">3</int>
-					<bytes key="NSWhite">MQA</bytes>
+					<bytes key="NSWhite">MCAwAA</bytes>
 				</object>
 				<int key="IBUITag">-1</int>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -276,6 +276,8 @@
 					<string key="className">UITableViewReloadable</string>
 					<string key="superclassName">UITableViewController</string>
 					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="_emptyImageView">UIView</string>
+						<string key="_emptyMessageView">UIView</string>
 						<string key="_emptyView">UIView</string>
 						<string key="_item">UIView</string>
 						<string key="_itemImage">JBAsyncImageView</string>
@@ -283,6 +285,14 @@
 						<string key="_itemTitle">UILabel</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="_emptyImageView">
+							<string key="name">_emptyImageView</string>
+							<string key="candidateClassName">UIView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="_emptyMessageView">
+							<string key="name">_emptyMessageView</string>
+							<string key="candidateClassName">UIView</string>
+						</object>
 						<object class="IBToOneOutletInfo" key="_emptyView">
 							<string key="name">_emptyView</string>
 							<string key="candidateClassName">UIView</string>

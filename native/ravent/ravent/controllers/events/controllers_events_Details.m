@@ -16,6 +16,7 @@
 #import "controllers_events_Details_Map.h"
 #import "Store.h"
 #import "ActionDispatcher.h"
+#import <QuartzCore/QuartzCore.h>
 
 @implementation controllers_events_Details
 
@@ -217,6 +218,10 @@
 - (void)newRating:(int)rating
 {
     [_voteLoading setHidden:NO];
+    [_voteLoading.layer setBorderColor:[[UIColor grayColor] CGColor]];
+    [_voteLoading.layer setBorderWidth:1];
+    _voteLoading.layer.cornerRadius = 3;
+    _voteLoading.layer.masksToBounds = YES;
     //_voteLoading.frame = _voteView.frame;
     [_header bringSubviewToFront:_voteLoading];
     //[_header sendSubviewToBack:_voteView];
@@ -331,6 +336,8 @@
     _headerNameLabel.text = _event.name;
     _headerLocationLabel.text = _event.location;
     _headerImage.imageURL = [NSURL URLWithString:_event.pic_big];
+    _headerImage.clipsToBounds = YES;
+    _headerImage.contentMode = UIViewContentModeScaleAspectFill;
     _headerTimeLabel.text = [NSString stringWithFormat:@"%@ - %@", _event.timeStart, _event.timeEnd];
     _headerDistanceLabel.text = [NSString stringWithFormat:@"%@ mi.", _event.distance];
     

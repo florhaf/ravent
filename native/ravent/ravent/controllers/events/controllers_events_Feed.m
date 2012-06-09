@@ -87,6 +87,8 @@
     _itemTitle.text = [NSString stringWithFormat:@"%@ %@", c.firstName, c.lastName];
     _itemSubTitle.text = c.message;
     _itemImage.imageURL = [NSURL URLWithString:c.pictureUser];
+    _itemImage.clipsToBounds = YES;
+    _itemImage.contentMode = UIViewContentModeScaleAspectFill;
     _itemTime.text = c.time;
     
     [self resizeAndPositionCellItem];

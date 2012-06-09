@@ -109,6 +109,8 @@
     _itemTitle.text = event.name;
     _itemSubTitle.text = event.location;
     _itemImage.imageURL = [NSURL URLWithString:event.pic_big];
+    _itemImage.clipsToBounds = YES;
+    _itemImage.contentMode = UIViewContentModeScaleAspectFill;
     _itemTime.text = [[NSString stringWithFormat:@"%@ - %@", event.timeStart, event.timeEnd] lowercaseString];
     _itemDistance.text = [NSString stringWithFormat:@"%@ mi.", event.distance];
         

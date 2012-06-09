@@ -32,6 +32,8 @@
     [[NSBundle mainBundle] loadNibNamed:@"views_friends_Details" owner:self options:nil];
     
     _userImage.imageURL = [NSURL URLWithString:_user.picture];
+    _itemImage.clipsToBounds = YES;
+    _itemImage.contentMode = UIViewContentModeScaleAspectFill;
     _nameLabel.text = [NSString stringWithFormat:@"%@ %@", _user.firstName, _user.lastName];
     
     if (_user.nbOfEvents != nil && ![_user.nbOfEvents isEqualToString:@""]) {
