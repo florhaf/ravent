@@ -16,6 +16,7 @@
 #import "controllers_events_Details_Map.h"
 #import "Store.h"
 #import "ActionDispatcher.h"
+#import "controllers_App.h"
 #import <QuartzCore/QuartzCore.h>
 
 @implementation controllers_events_Details
@@ -69,7 +70,7 @@
 
 - (void)shareFailure:(NSMutableDictionary *)error
 {
-    [YRDropdownView showDropdownInView:self.view 
+    [YRDropdownView showDropdownInView:[controllers_App instance].view 
                                  title:@"Error sharing" 
                                 detail:[error valueForKey:@"statusCode"]
                                  image:[UIImage imageNamed:@"dropdown-alert"]
@@ -151,7 +152,7 @@
             
             NSError *error = (NSError *)object;
             
-            [YRDropdownView showDropdownInView:self.view 
+            [YRDropdownView showDropdownInView:[controllers_App instance].view 
                                          title:@"Error" 
                                         detail:[error localizedDescription]
                                          image:[UIImage imageNamed:@"dropdown-alert"]
@@ -175,7 +176,7 @@
 {
     NSString *msg = [[Store instance]saveEvent:_event];
     
-    [YRDropdownView showDropdownInView:self.view 
+    [YRDropdownView showDropdownInView:[controllers_App instance].view 
                                  title:@"Calendar" 
                                 detail:msg
                                  image:[UIImage imageNamed:@"dropdown-alert"]
@@ -243,7 +244,7 @@
     [_voteLoading setHidden:YES];
     [_header bringSubviewToFront:_voteView];
     
-    [YRDropdownView showDropdownInView:self.view 
+    [YRDropdownView showDropdownInView:[controllers_App instance].view 
                                  title:@"Success" 
                                 detail:@"Vote submitted"
                                  image:[UIImage imageNamed:@"dropdown-alert"]
@@ -255,8 +256,8 @@
     [_voteLoading setHidden:YES];
     
     NSString *errorMsg = (NSString *)[response valueForKey:@"statusCode"];
-        
-    [YRDropdownView showDropdownInView:self.view 
+    
+    [YRDropdownView showDropdownInView:[controllers_App instance].view
                                  title:@"Error" 
                                 detail:errorMsg
                                  image:[UIImage imageNamed:@"dropdown-alert"]
@@ -299,7 +300,7 @@
 {
     [_voteLoading setHidden:YES];
     
-    [YRDropdownView showDropdownInView:self.view 
+    [YRDropdownView showDropdownInView:[controllers_App instance].view 
                                  title:@"Success" 
                                 detail:@"RSVP submitted"
                                  image:[UIImage imageNamed:@"dropdown-alert"]
@@ -314,7 +315,7 @@
     
     NSString *errorMsg = (NSString *)[response valueForKey:@"statusCode"];
     
-    [YRDropdownView showDropdownInView:self.view 
+    [YRDropdownView showDropdownInView:[controllers_App instance].view 
                                  title:@"Error" 
                                 detail:errorMsg
                                  image:[UIImage imageNamed:@"dropdown-alert"]

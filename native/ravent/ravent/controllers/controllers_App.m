@@ -15,6 +15,8 @@
 @synthesize loginController = _loginController;
 @synthesize slidingController = _slidingController;
 
+static controllers_App *_ctrl;
+
 - (id)init
 {
     self = [super init];
@@ -28,6 +30,8 @@
         [[ActionDispatcher instance] add:logoutAction named:@"onFacebookLogout"];
         
         [self.view addSubview:[controllers_Login instance].view];
+        
+        _ctrl = self;
     }
     
     return self;
@@ -87,6 +91,11 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
++ (controllers_App *)instance
+{
+    return _ctrl;
 }
 
 @end

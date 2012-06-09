@@ -10,6 +10,7 @@
 #import "MBProgressHUD.h"
 #import "YRDropdownView.h"
 #import "ActionDispatcher.h"
+#import "controllers_App.h"
 
 @implementation controllers_friends_All
 
@@ -212,7 +213,7 @@ static controllers_friends_All *_ctrl;
     
     [sender setOn:![sender isOn] animated:YES];
     
-    [YRDropdownView showDropdownInView:self.view 
+    [YRDropdownView showDropdownInView:[controllers_App instance].view 
                                  title:@"Error" 
                                 detail:errorMsg
                                  image:[UIImage imageNamed:@"dropdown-alert"]

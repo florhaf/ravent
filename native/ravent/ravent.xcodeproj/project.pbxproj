@@ -275,6 +275,7 @@
 		DF945D041556E5DC00B21571 /* removeButton.png in Resources */ = {isa = PBXBuildFile; fileRef = DF945D031556E5DC00B21571 /* removeButton.png */; };
 		DF9CED3D15833640002B1024 /* picbg3.png in Resources */ = {isa = PBXBuildFile; fileRef = DF9CED3C15833640002B1024 /* picbg3.png */; };
 		DF9CED3F158339EA002B1024 /* postcomment.png in Resources */ = {isa = PBXBuildFile; fileRef = DF9CED3E158339EA002B1024 /* postcomment.png */; };
+		DF9CED41158356DF002B1024 /* searchoptions.png in Resources */ = {isa = PBXBuildFile; fileRef = DF9CED40158356DF002B1024 /* searchoptions.png */; };
 		DF9DA511150C47760006E61A /* views_friends_Details.xib in Resources */ = {isa = PBXBuildFile; fileRef = DF9DA510150C47760006E61A /* views_friends_Details.xib */; };
 		DF9DA514150C4B5C0006E61A /* models_User.m in Sources */ = {isa = PBXBuildFile; fileRef = DF9DA513150C4B5C0006E61A /* models_User.m */; };
 		DF9DA521150C5BAD0006E61A /* views_stats_Stats.xib in Resources */ = {isa = PBXBuildFile; fileRef = DF9DA520150C5BAD0006E61A /* views_stats_Stats.xib */; };
@@ -727,6 +728,7 @@
 		DF945D031556E5DC00B21571 /* removeButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = removeButton.png; path = ravent/resources/buttons/removeButton.png; sourceTree = SOURCE_ROOT; };
 		DF9CED3C15833640002B1024 /* picbg3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = picbg3.png; sourceTree = "<group>"; };
 		DF9CED3E158339EA002B1024 /* postcomment.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = postcomment.png; sourceTree = "<group>"; };
+		DF9CED40158356DF002B1024 /* searchoptions.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = searchoptions.png; sourceTree = "<group>"; };
 		DF9DA510150C47760006E61A /* views_friends_Details.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = views_friends_Details.xib; sourceTree = "<group>"; };
 		DF9DA512150C4B5C0006E61A /* models_User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = models_User.h; sourceTree = "<group>"; };
 		DF9DA513150C4B5C0006E61A /* models_User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = models_User.m; sourceTree = "<group>"; };
@@ -1194,6 +1196,7 @@
 		DF629E6D153F8A5900BCA804 /* buttons */ = {
 			isa = PBXGroup;
 			children = (
+				DF9CED40158356DF002B1024 /* searchoptions.png */,
 				DF9CED3E158339EA002B1024 /* postcomment.png */,
 				DF86A1A71581B1C2009B3257 /* diamond.png */,
 				DF86A1A81581B1C2009B3257 /* diamondSlot.png */,
@@ -2003,6 +2006,7 @@
 				DF86A1B11582D834009B3257 /* allIcon.png in Resources */,
 				DF9CED3D15833640002B1024 /* picbg3.png in Resources */,
 				DF9CED3F158339EA002B1024 /* postcomment.png in Resources */,
+				DF9CED41158356DF002B1024 /* searchoptions.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

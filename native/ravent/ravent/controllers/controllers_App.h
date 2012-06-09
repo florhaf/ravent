@@ -19,5 +19,6 @@
 @property (strong, nonatomic) controllers_Login *loginController;
 
 - (void)flipView;
++ (controllers_App *)instance;
 
 @end

@@ -86,8 +86,16 @@ static controllers_events_Map_p2p *_ctrl;
     [_toolbarTop insertSubview:imgTop atIndex:1];
     [_toolbarBottom insertSubview:imgBottom atIndex:1];
     
-//    _toolbarTop.frame = CGRectMake(0, 0, 320, 44);
-//    _toolbarBottom.frame = CGRectMake(0, 0, 320, 44);
+    
+    UIImage *soi = [UIImage imageNamed:@"searchoptions"];
+    UIButton *sob = [UIButton buttonWithType:UIButtonTypeCustom];
+    //[sob addTarget:self action:@selector(onCommentTap:) forControlEvents:UIControlEventTouchUpInside];
+    [sob setImage:soi forState:UIControlStateNormal];
+    [sob setFrame:CGRectMake(-20, 0, 270, 44)];
+    UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithCustomView:sob];
+    NSArray *items = [[NSArray alloc] initWithObjects:button, nil];
+    [_toolbarBottom setItems:items];
+    
     
     self.peekLeftAmount = 40.0f;
     [self.slidingViewController setAnchorLeftPeekAmount:self.peekLeftAmount];

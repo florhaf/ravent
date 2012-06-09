@@ -11,6 +11,7 @@
 #import "JBAsyncImageView.h"
 #import "MBProgressHUD.h"
 #import "YRDropdownView.h"
+#import "controllers_App.h"
 
 @implementation controllers_events_Description
 
@@ -43,7 +44,7 @@
             
             NSError *error = (NSError *)object;
             
-            [YRDropdownView showDropdownInView:self.view 
+            [YRDropdownView showDropdownInView:[controllers_App instance].view 
                                          title:@"Error" 
                                         detail:[error localizedDescription]
                                          image:[UIImage imageNamed:@"dropdown-alert"]
@@ -74,7 +75,7 @@
         }
     } else {
         
-        [YRDropdownView showDropdownInView:self.view 
+        [YRDropdownView showDropdownInView:[controllers_App instance].view 
                                      title:@"Warning" 
                                     detail:@"No result"
                                      image:[UIImage imageNamed:@"dropdown-alert"]

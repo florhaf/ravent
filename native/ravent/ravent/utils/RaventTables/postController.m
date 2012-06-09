@@ -12,6 +12,7 @@
 #import "MBProgressHUD.h"
 #import "YRDropdownView.h"
 #import "UIView+Animation.h"
+#import "controllers_App.h"
 
 @implementation postController
 
@@ -102,7 +103,7 @@
 
     NSString *errorMsg = (NSString *)[response valueForKey:@"statusCode"];
     
-    [YRDropdownView showDropdownInView:self.view 
+    [YRDropdownView showDropdownInView:[controllers_App instance].view 
                                  title:@"Error" 
                                 detail:errorMsg
                                  image:[UIImage imageNamed:@"dropdown-alert"]

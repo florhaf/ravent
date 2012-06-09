@@ -11,6 +11,7 @@
 #import "MBProgressHUD.h"
 #import "YRDropdownView.h"
 #import "JBAsyncImageView.h"
+#import "controllers_App.h"
 
 @implementation UITableViewReloadable
 
@@ -125,7 +126,7 @@
             
             NSError *error = (NSError *)object;
             
-            [YRDropdownView showDropdownInView:self.view 
+            [YRDropdownView showDropdownInView:[controllers_App instance].view 
                                          title:@"Error" 
                                         detail:[error localizedDescription]
                                          image:[UIImage imageNamed:@"dropdown-alert"]
