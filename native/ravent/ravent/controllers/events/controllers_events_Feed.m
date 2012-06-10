@@ -48,6 +48,12 @@
     [super onLoadData:objects withSuccess:^ {
         
         _data = [[NSMutableArray alloc] initWithArray:objects]; 
+        
+//        if (_data == nil || [_data count] == 0) {
+//            
+//            _showEmptyMessage = YES;
+//            _emptyMessage = @"be the first to post";
+//        }
     }];
 }
 

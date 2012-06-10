@@ -13,6 +13,16 @@
 #import "JBAsyncImageView.h"
 #import "controllers_App.h"
 
+typedef enum {
+    
+    invited,
+    eventsP2P,
+    eventsUser,
+    followings,
+    followers,
+    empty
+} emptyMessage;
+
 @implementation UITableViewReloadable
 
 @synthesize groupedData = _groupedData;
@@ -107,6 +117,28 @@
     [self loadData];
 }
 
+- (void)showEmptyMessage:(UIView *)msg
+{
+//    switch (msg) {
+//        case invited:
+//            break;
+//        case eventsP2P:
+//            break;
+//        case eventsUser:
+//            break;
+//        case followings:
+//            break;
+//        case followers:
+//            break;
+//        case empty:
+//            break;
+//    }
+    
+    if (msg != nil) {
+        
+    }
+}
+
 - (void)onLoadData:(NSArray *)objects withSuccess:(success)success
 {
     [[NSBundle mainBundle] loadNibNamed:@"views_Empty" owner:self options:nil];
@@ -115,6 +147,7 @@
     _data = nil;
     _groupedData = nil;
     _sortedKeys = nil;
+    
     
     [MBProgressHUD hideHUDForView:self.view animated:YES];
     
@@ -131,40 +164,24 @@
                                         detail:[error localizedDescription]
                                          image:[UIImage imageNamed:@"dropdown-alert"]
                                       animated:YES];
-            return;
-        }
-    }
-    
-    success();
-        
-    
-    
-    if (_showEmptyMessage == YES) {
-        
-        if (_emptyMessage != nil) {
             
-            for (UIView *v in _emptyMessageView.subviews) {
+            [[NSBundle mainBundle] loadNibNamed:@"views_Empty_Generic" owner:self options:nil];
+            ((UILabel *)[_emptyMessageView.subviews objectAtIndex:0]).text = @"pull to refresh";
+            [_emptyMessageViewPlaceHolder addSubview:_emptyMessageView];
+            
+        } else {
                 
-                [v setHidden:YES];
-            }
+            success();
             
-            UILabel *l = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, 20)];
-            l.text = _emptyMessage;
-            l.backgroundColor = [UIColor clearColor];
-            l.textColor = [UIColor lightGrayColor];
-            l.font = [UIFont fontWithName:@"System Bold" size: 16.0];
-            l.textAlignment = UITextAlignmentCenter;
-            
-            [_emptyMessageView addSubview:l];
+            [self.tableView reloadData];
         }
-        
-        [_emptyMessageView setHidden:NO];
     } else {
         
-        [_emptyMessageView setHidden:YES];
+        if (_emptyMessageView != nil) {
+            
+            [_emptyMessageViewPlaceHolder addSubview:_emptyMessageView];
+        }
     }
-    
-    [self.tableView reloadData];
     
     [self doneLoadingTableViewData];
 }

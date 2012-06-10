@@ -59,6 +59,20 @@
 
 - (void)onLoadFollowings:(NSArray *)objects
 {   
+    if (objects == nil || [objects count] == 0) {
+        
+        if (_isFollowing) {
+            
+            [[NSBundle mainBundle]loadNibNamed:@"views_Empty_Following" owner:self options:nil];
+            
+        } else {
+         
+            [[NSBundle mainBundle]loadNibNamed:@"views_Empty_Generic" owner:self options:nil];
+            ((UILabel *)[_emptyMessageView.subviews objectAtIndex:0]).text = @"no follower yet";
+        }
+    }
+    
+    
     [self onLoadData:objects withSuccess:^ {
         
         if (objects != nil) {

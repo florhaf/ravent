@@ -69,7 +69,7 @@
     UIButton *postb = [UIButton buttonWithType:UIButtonTypeCustom];
     [postb addTarget:self action:@selector(onCommentTap:) forControlEvents:UIControlEventTouchUpInside];
     [postb setImage:posti forState:UIControlStateNormal];
-    [postb setFrame:CGRectMake(0, 0, 298, 44)];
+    [postb setFrame:CGRectMake(0, 0, 298, 34)];
     _button = [[UIBarButtonItem alloc] initWithCustomView:postb];
     NSArray *items = [[NSArray alloc] initWithObjects:_button, nil];
     [_toolbar setItems:items];
