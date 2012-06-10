@@ -17,6 +17,7 @@
 #import "Store.h"
 #import "ActionDispatcher.h"
 #import "controllers_App.h"
+#import "controllers_events_Pic_big.h"
 #import <QuartzCore/QuartzCore.h>
 
 @implementation controllers_events_Details
@@ -216,6 +217,14 @@
     [self presentModalViewController:feedModal animated:YES];
 }
 
+- (IBAction)picButton_Tap:(id)sender
+{
+    controllers_events_Pic_big *picController = [[controllers_events_Pic_big alloc] initWithPic:_event.pic_big];
+    UINavigationController *picModal = [[UINavigationController alloc] initWithRootViewController:picController];
+    
+    [self presentModalViewController:picModal animated:YES];
+}
+
 - (void)newRating:(int)rating
 {
     [_voteLoading setHidden:NO];
@@ -350,6 +359,7 @@
     
     _voteView = [[DLStarRatingControl alloc] initWithFrame:_headerVoteLabel.frame andStars: 5];
     [_voteView setRating:1];
+    [_voteView setAlpha:0.8];
     _voteView.delegate = self;
     [_header addSubview:_voteView];
     [_headerVoteLabel removeFromSuperview];

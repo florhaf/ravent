@@ -48,6 +48,7 @@
 - (IBAction)descriptionButton_Tap:(id)sender;
 - (IBAction)feedButton_Tap:(id)sender;
 - (IBAction)mapButton_Tap:(id)sender;
+- (IBAction)picButton_Tap:(id)sender;
 - (IBAction)rsvp:(id)sender;
 
 - (void)onVoteSuccess:(NSString *)response;

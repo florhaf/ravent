@@ -280,6 +280,8 @@
 		DF9CED4515841BB0002B1024 /* views_Empty_Following.xib in Resources */ = {isa = PBXBuildFile; fileRef = DF9CED4415841BB0002B1024 /* views_Empty_Following.xib */; };
 		DF9CED4715841BCC002B1024 /* views_Empty_EventP2P.xib in Resources */ = {isa = PBXBuildFile; fileRef = DF9CED4615841BCC002B1024 /* views_Empty_EventP2P.xib */; };
 		DF9CED4915841BE5002B1024 /* views_Empty_Generic.xib in Resources */ = {isa = PBXBuildFile; fileRef = DF9CED4815841BE5002B1024 /* views_Empty_Generic.xib */; };
+		DF9CED4B158450D6002B1024 /* views_events_Pic_Big.xib in Resources */ = {isa = PBXBuildFile; fileRef = DF9CED4A158450D6002B1024 /* views_events_Pic_Big.xib */; };
+		DF9CED4E15845129002B1024 /* controllers_events_Pic_big.m in Sources */ = {isa = PBXBuildFile; fileRef = DF9CED4D15845128002B1024 /* controllers_events_Pic_big.m */; };
 		DF9DA511150C47760006E61A /* views_friends_Details.xib in Resources */ = {isa = PBXBuildFile; fileRef = DF9DA510150C47760006E61A /* views_friends_Details.xib */; };
 		DF9DA514150C4B5C0006E61A /* models_User.m in Sources */ = {isa = PBXBuildFile; fileRef = DF9DA513150C4B5C0006E61A /* models_User.m */; };
 		DF9DA521150C5BAD0006E61A /* views_stats_Stats.xib in Resources */ = {isa = PBXBuildFile; fileRef = DF9DA520150C5BAD0006E61A /* views_stats_Stats.xib */; };
@@ -737,6 +739,9 @@
 		DF9CED4415841BB0002B1024 /* views_Empty_Following.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = views_Empty_Following.xib; sourceTree = "<group>"; };
 		DF9CED4615841BCC002B1024 /* views_Empty_EventP2P.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = views_Empty_EventP2P.xib; sourceTree = "<group>"; };
 		DF9CED4815841BE5002B1024 /* views_Empty_Generic.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = views_Empty_Generic.xib; sourceTree = "<group>"; };
+		DF9CED4A158450D6002B1024 /* views_events_Pic_Big.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = views_events_Pic_Big.xib; sourceTree = "<group>"; };
+		DF9CED4C15845128002B1024 /* controllers_events_Pic_big.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = controllers_events_Pic_big.h; sourceTree = "<group>"; };
+		DF9CED4D15845128002B1024 /* controllers_events_Pic_big.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = controllers_events_Pic_big.m; sourceTree = "<group>"; };
 		DF9DA510150C47760006E61A /* views_friends_Details.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = views_friends_Details.xib; sourceTree = "<group>"; };
 		DF9DA512150C4B5C0006E61A /* models_User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = models_User.h; sourceTree = "<group>"; };
 		DF9DA513150C4B5C0006E61A /* models_User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = models_User.m; sourceTree = "<group>"; };
@@ -1570,6 +1575,7 @@
 				DF50EDB31537A8AE00ACBC4A /* views_events_Map_Big.xib */,
 				DF36FF401553443F00C3CB53 /* views_events_Feed.xib */,
 				DF24593E15807B530095027E /* views_events_Details_Container.xib */,
+				DF9CED4A158450D6002B1024 /* views_events_Pic_Big.xib */,
 			);
 			path = events;
 			sourceTree = "<group>";
@@ -1597,6 +1603,8 @@
 				DF36FF4315534E9400C3CB53 /* controllers_events_FeedContainer.m */,
 				DF24593B15807A260095027E /* controllers_events_DetailsContainer.h */,
 				DF24593C15807A260095027E /* controllers_events_DetailsContainer.m */,
+				DF9CED4C15845128002B1024 /* controllers_events_Pic_big.h */,
+				DF9CED4D15845128002B1024 /* controllers_events_Pic_big.m */,
 			);
 			path = events;
 			sourceTree = "<group>";
@@ -2023,6 +2031,7 @@
 				DF9CED4515841BB0002B1024 /* views_Empty_Following.xib in Resources */,
 				DF9CED4715841BCC002B1024 /* views_Empty_EventP2P.xib in Resources */,
 				DF9CED4915841BE5002B1024 /* views_Empty_Generic.xib in Resources */,
+				DF9CED4B158450D6002B1024 /* views_events_Pic_Big.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2133,6 +2142,7 @@
 				DFDA1482156D945000877686 /* KalViewController.m in Sources */,
 				DF8ADB86157E81A10034BB3B /* UIToolbar+CustomImage.m in Sources */,
 				DF24593D15807A260095027E /* controllers_events_DetailsContainer.m in Sources */,
+				DF9CED4E15845129002B1024 /* controllers_events_Pic_big.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
