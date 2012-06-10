@@ -38,7 +38,7 @@ static customNavigationController *_ctrl;
 
     [self.slidingViewController resetTopView];
     
-    [[controllers_events_List_p2p instance] performSelector:@selector(loadEventDetails:) withObject:e afterDelay:0.3];
+    [[controllers_events_List_p2p instance] performSelector:@selector(loadEventDetails:) withObject:e afterDelay:0.1];
 }
 
 #pragma mark - View lifecycle

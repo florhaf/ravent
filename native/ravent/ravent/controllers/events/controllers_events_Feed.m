@@ -45,15 +45,15 @@
 
 - (void)onLoadFeed:(NSArray *)objects
 {
+    if (objects == nil || [objects count] == 0) {
+        
+        [[NSBundle mainBundle] loadNibNamed:@"views_Empty_Generic" owner:self options:nil];
+        ((UILabel *)[_emptyMessageView.subviews objectAtIndex:0]).text = @"be the first to post";
+    }
+    
     [super onLoadData:objects withSuccess:^ {
         
         _data = [[NSMutableArray alloc] initWithArray:objects]; 
-        
-//        if (_data == nil || [_data count] == 0) {
-//            
-//            _showEmptyMessage = YES;
-//            _emptyMessage = @"be the first to post";
-//        }
     }];
 }
 

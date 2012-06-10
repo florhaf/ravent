@@ -159,19 +159,23 @@ static controllers_events_Map_p2p *_ctrl;
         annotationView.canShowCallout = YES;
         
         
-        NSURL *url = [NSURL URLWithString:e.picture];
+//        NSURL *url = [NSURL URLWithString:e.picture];
+//        
+//        _image = [[JBAsyncImageView alloc] init];
+//        [_image setDelegate:self];
+//        [_image setImageURL:url];
+//        
+//        NSMutableArray *annotAndImage = [[NSMutableArray alloc] initWithCapacity:2];
+//        [annotAndImage addObject:annotationView];
+//        [annotAndImage addObject:_image];
+//        
+//        [_imageLoading setObject:annotAndImage forKey:url];
         
-        _image = [[JBAsyncImageView alloc] init];
-        [_image setDelegate:self];
-        [_image setImageURL:url];
+//        annotationView.image = [UIImage imageNamed:@"AnnotationEvent"];
         
-        NSMutableArray *annotAndImage = [[NSMutableArray alloc] initWithCapacity:2];
-        [annotAndImage addObject:annotationView];
-        [annotAndImage addObject:_image];
+        annotationView.image = [UIImage imageNamed:@"diamond"];
+        [annotationView setFrame:CGRectMake(0, 0, 24, 18)];
         
-        [_imageLoading setObject:annotAndImage forKey:url];
-        
-        annotationView.image = [UIImage imageNamed:@"AnnotationEvent"];
         annotationView.annotation = annotation;
         [annotationView setCenterOffset:CGPointMake(0, - annotationView.image.size.height / 2)];
         
