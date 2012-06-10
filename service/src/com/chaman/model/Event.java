@@ -261,7 +261,7 @@ public class Event extends Model implements Serializable {
 						
 						FacebookClient client 	= new DefaultFacebookClient(u.getAccess_token());
 						String properties 		= "eid, name, pic, pic_big, start_time, end_time, venue, location, host, privacy, creator, update_time";
-						String query 			= "SELECT " + properties + " FROM event WHERE eid IN (SELECT eid FROM event_member WHERE uid = " + l.getUid() + ") AND end_time > " + TAS + " ORDER BY start_time"; /*need to check privacy CLOSED AND SECRET */
+						String query 			= "SELECT " + properties + " FROM event WHERE eid IN (SELECT eid FROM event_member WHERE uid = " + l.getUid() + ") AND end_time > " + TAS; /*need to check privacy CLOSED AND SECRET */
 						List<Event> fbevents 	= client.executeQuery(query, Event.class);
 						
 						MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
