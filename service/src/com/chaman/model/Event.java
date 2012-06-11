@@ -163,7 +163,7 @@ public class Event extends Model implements Serializable {
 	
 	    	e.Format(timeZoneInMinutes);
     	    
-    	    if (e.distance != "N/A") {
+	    	if (e.latitude != null && e.latitude != "" && e.longitude != null && e.longitude != "") {
 
     	    	float distance = Geo.Fence(userLatitude, userLongitude, e.latitude, e.longitude);
         	    e.distance = String.format("%.2f", distance);
