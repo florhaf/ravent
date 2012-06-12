@@ -207,17 +207,17 @@ public class Event extends Model implements Serializable {
         		if (fbevents != null && fbevents.size() > 0) {
     	
         			event = fbevents.get(0);
-        			
-    				// event.nb_invited = e.getNb_invited();
-    				event.latitude 	= Double.toString(e.getLatitude());
-    				event.longitude = Double.toString(e.getLongitude());
-    				event.creator = String.valueOf(e.getCreator());
         		}
         	}
         	
         	if (event != null) {
         		
     			event.Format(timeZoneInMinutes);    		
+    			
+    			// event.nb_invited = e.getNb_invited();
+    			event.latitude 	= Double.toString(e.getLatitude());
+    			event.longitude = Double.toString(e.getLongitude());
+    			event.creator = String.valueOf(e.getCreator());
     			
     			if (event.IsNotPast()) {
 				
