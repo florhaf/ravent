@@ -28,6 +28,7 @@
     CLLocation *_bestEffortAtLocation;
     
     BOOL _isRequesting;
+    BOOL _isLoadingAllFriends;
     
     RKObjectManager *_manager;
     RKClient *_client;

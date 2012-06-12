@@ -100,13 +100,46 @@
     _itemImage.imageURL = [NSURL URLWithString:c.pictureUser];
     _itemImage.clipsToBounds = YES;
     _itemImage.contentMode = UIViewContentModeScaleAspectFill;
-    _itemTime.text = c.time;
+    
+    
+    if (c.pictureContent != nil) {
+        
+        JBAsyncImageView *imageView = [[JBAsyncImageView alloc] initWithFrame:CGRectMake(_itemTitle.frame.origin.x, _itemTitle.frame.origin.y + 21, 0, 0)];
+        imageView.imageURL = [NSURL URLWithString:c.pictureContent];
+        imageView.delegate = self;
+        
+        [self.view addSubview:imageView];
+    }
+    
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ssZ"];
+    NSDate *timeDate = [dateFormatter dateFromString:[c.time stringByReplacingOccurrencesOfString:@"T" withString:@" "]];
+    
+    [dateFormatter setDateFormat:@"MMM d @ hh:mm:ss a"];
+    NSString *timeStr = [dateFormatter stringFromDate:timeDate];
+    
+    _itemTime.text = timeStr;
     
     [self resizeAndPositionCellItem];
     
     [cell.contentView addSubview:_item];
     
     return cell;
+}
+
+-(void)imageView:(JBAsyncImageView *)sender loadedImage:(UIImage *)imageLoaded fromURL:(NSURL *)url
+{
+    [sender setFrame:CGRectMake(sender.frame.origin.x, sender.frame.origin.y, imageLoaded.size.width * 0.5, imageLoaded.size.width * 0.5)];
+    
+    UIView *sub = [sender.superview.subviews objectAtIndex:1];
+    
+    sub.frame = CGRectMake(sub.frame.origin.x, sub.frame.origin.y + sender.frame.size.height, sub.frame.size.width, sub.frame.size.height);
+    
+    sub = [sender.superview.subviews objectAtIndex:2];
+    
+    sub.frame = CGRectMake(sub.frame.origin.x, sub.frame.origin.y + sender.frame.size.height, sub.frame.size.width, sub.frame.size.height);
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

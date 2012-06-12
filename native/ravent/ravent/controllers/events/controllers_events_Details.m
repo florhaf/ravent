@@ -364,22 +364,27 @@
     [_header addSubview:_voteView];
     [_headerVoteLabel removeFromSuperview];
     
+    if (_event.latitude != nil && ![_event.latitude isEqualToString:@""]) {
+        
+        NSString *mapUrl = @"http://maps.googleapis.com/maps/api/staticmap";
+        
+        NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+        
+        [params setValue:[NSString stringWithFormat:@"%@,%@", _event.latitude, _event.longitude] forKey:@"center"];
+        [params setValue:@"16" forKey:@"zoom"];
+        [params setValue:@"320x160" forKey:@"size"];
+        [params setValue:@"roadmap" forKey:@"maptype"];
+        [params setValue:@"2" forKey:@"scale"];
+        [params setValue:[NSString stringWithFormat:@"%@,%@", _event.latitude, _event.longitude] forKey:@"markers"];
+        [params setValue:@"true" forKey:@"sensor"];
+        
+        mapUrl = [mapUrl appendQueryParams:params];
+        _mapImage.imageURL = [NSURL URLWithString:mapUrl];
+    } else {
+        
+        _mapImage.image = [UIImage imageNamed:@"noMap"];
+    }
     
-    NSString *mapUrl = @"http://maps.googleapis.com/maps/api/staticmap";
-    
-    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
-    
-    [params setValue:[NSString stringWithFormat:@"%@,%@", _event.latitude, _event.longitude] forKey:@"center"];
-    [params setValue:@"16" forKey:@"zoom"];
-    [params setValue:@"320x160" forKey:@"size"];
-    [params setValue:@"roadmap" forKey:@"maptype"];
-    [params setValue:@"2" forKey:@"scale"];
-    [params setValue:[NSString stringWithFormat:@"%@,%@", _event.latitude, _event.longitude] forKey:@"markers"];
-    [params setValue:@"true" forKey:@"sensor"];
-
-    mapUrl = [mapUrl appendQueryParams:params];
-    _mapImage.imageURL = [NSURL URLWithString:mapUrl];
-
     _headerNameLabel.font = [_headerNameLabel.font fontWithSize:[self getFontSizeForLabel:_headerNameLabel]];
     
     [_headerGroupLabel sizeToFit];

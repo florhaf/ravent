@@ -67,30 +67,32 @@
     
     RKParams* rkparams = [RKParams params];
     
-    for (int i = 0; i < [params.allKeys count]; i++) {
+    NSString *key = nil;
+    int i = 0;
+    
+    for (; i < [params.allKeys count]; i++) {
         
-        NSString *key = [params.allKeys objectAtIndex:i];
+        key = [params.allKeys objectAtIndex:i];
         
         if ([key isEqualToString:@"attachment"]) {
           
             [rkparams setData:[params valueForKey:@"attachment"] MIMEType:@"image/jpeg" forParam:@"attachment"];
-        } else {
-            
-            [rkparams setValue:[params valueForKey:key] forParam:key];
+            break;
         }
     }
     
-    // Let's examine the RKRequestSerializable info...
-    NSLog(@"RKParams HTTPHeaderValueForContentType = %@", [rkparams HTTPHeaderValueForContentType]);
-    NSLog(@"RKParams HTTPHeaderValueForContentLength = %d", [rkparams HTTPHeaderValueForContentLength]);
+    if ([key isEqualToString:@"attachment"]) {
+     
+        [params removeObjectForKey:key];
+    }
     
-    [[RKClient sharedClient] put:@"/post" params:rkparams delegate:self];
+    [[RKClient sharedClient] put:[@"/post" appendQueryParams:params] params:rkparams delegate:self];
 }
 
 - (void)updateLoadingMessage:(NSString *)resourcePath
 {
     [[ActionDispatcher instance] execute:resourcePath withString:@"Loading..."];
-    [self performSelector:@selector(updateLoadingMessage2:) withObject:resourcePath afterDelay:5];
+    [self performSelector:@selector(updateLoadingMessage2:) withObject:resourcePath afterDelay:10];
 }
 
 - (void)updateLoadingMessage2:(NSString *)resourcePath

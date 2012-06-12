@@ -142,16 +142,16 @@ static models_User *_crtUser = nil;
         _bestEffortAtLocation = newLocation;
         _locationLastUpdateTime = [NSDate date];
         // NYC
-        _crtUser.latitude = @"40.743680";//[NSString stringWithFormat:@"%f", newLocation.coordinate.latitude];
-        _crtUser.longitude = @"-73.972750";//[NSString stringWithFormat:@"%f", newLocation.coordinate.longitude];
+        //_crtUser.latitude = @"40.743680";//[NSString stringWithFormat:@"%f", newLocation.coordinate.latitude];
+        //_crtUser.longitude = @"-73.972750";//[NSString stringWithFormat:@"%f", newLocation.coordinate.longitude];
         
         // Paris
         //_crtUser.latitude = @"48.883118";//[NSString stringWithFormat:@"%f", newLocation.coordinate.latitude];
         //_crtUser.longitude = @"2.328243";//[NSString stringWithFormat:@"%f", newLocation.coordinate.longitude];
         
         // real
-        //_crtUser.latitude = [NSString stringWithFormat:@"%f", newLocation.coordinate.latitude];
-        //_crtUser.longitude = [NSString stringWithFormat:@"%f", newLocation.coordinate.longitude];
+        _crtUser.latitude = [NSString stringWithFormat:@"%f", newLocation.coordinate.latitude];
+        _crtUser.longitude = [NSString stringWithFormat:@"%f", newLocation.coordinate.longitude];
         
         
 //        _crtUser.latitude = [NSString stringWithFormat:@"%f", newLocation.coordinate.latitude];
@@ -225,6 +225,7 @@ static models_User *_crtUser = nil;
         
         // load crt user
         [params setValue:_accessToken forKey:@"access_token"];
+        [params setValue:@"yes" forKey:@"appuser"];
     }
     
     NSString *resourcePath = [@"users" appendQueryParams:params];
@@ -411,7 +412,7 @@ static models_User *_crtUser = nil;
 - (void)updateLoadingMessage:(NSString *)resourcePath
 {
     [[ActionDispatcher instance] execute:resourcePath withString:@"Loading..."];
-    [self performSelector:@selector(updateLoadingMessage2:) withObject:resourcePath afterDelay:5];
+    [self performSelector:@selector(updateLoadingMessage2:) withObject:resourcePath afterDelay:10];
 }
 
 - (void)updateLoadingMessage2:(NSString *)resourcePath

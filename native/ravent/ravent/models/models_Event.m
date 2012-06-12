@@ -209,7 +209,7 @@
 - (void)updateLoadingMessage:(NSString *)resourcePath
 {
     [[ActionDispatcher instance] execute:resourcePath withString:@"Loading..."];
-    [self performSelector:@selector(updateLoadingMessage2:) withObject:resourcePath afterDelay:5];
+    [self performSelector:@selector(updateLoadingMessage2:) withObject:resourcePath afterDelay:10];
 }
 
 - (void)updateLoadingMessage2:(NSString *)resourcePath
