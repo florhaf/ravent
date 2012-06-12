@@ -18,6 +18,8 @@
     SEL _callbackResponseSuccess;
     SEL _callbackResponseFailure;
     
+    BOOL _isRequesting;
+    
     RKObjectManager *_manager;    
     
     NSString *_firstName;

@@ -21,5 +21,6 @@
 - (void)execute;
 - (void)executeWith:(NSArray *)objects;
 - (void)executeWithBool:(BOOL)value;
+- (void)executeWithString:(NSString *)value;
 
 @end

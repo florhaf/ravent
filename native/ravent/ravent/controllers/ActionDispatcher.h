@@ -20,6 +20,8 @@
 - (void)execute:(NSString *)name;
 - (void)execute:(NSString *)name with:(NSArray *)objects;
 - (void)execute:(NSString *)name withBool:(BOOL)value;
+- (void)execute:(NSString *)name withString:(NSString *)value;
+- (BOOL)containsActionNamed:(NSString *)action;
 
 + (ActionDispatcher *)instance;
 

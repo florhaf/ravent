@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "MBProgressHUD.h"
 #import "models_Event.h"
 
 @interface controllers_events_Description : UIViewController {
@@ -15,6 +15,8 @@
     IBOutlet UITextView *_textView;
     
     models_Event *_event;
+    MBProgressHUD *_hud;
+    NSString *_url;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil event:(models_Event *)event;

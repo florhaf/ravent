@@ -10,7 +10,7 @@
 
 #import "models_User.h"
 #import "models_Event.h"
-
+#import "MBProgressHUD.h"
 #import "EGORefreshTableHeaderView.h"
 #import "JBAsyncImageView.h"
 
@@ -43,6 +43,9 @@ typedef void (^success)();
     NSArray *_data;
     NSArray *_sortedKeys;
     NSMutableDictionary *_groupedData;
+    
+    NSString *_url;
+    MBProgressHUD *_hud;
 }
 
 @property (nonatomic, retain) NSMutableDictionary *groupedData;
@@ -54,6 +57,8 @@ typedef void (^success)();
 - (void)loadData;
 - (void)loadDataWithSpinner;
 - (void)onLoadData:(NSArray *)objects withSuccess:(success)success;
+
+- (void)updateLoadingMessageWith:(NSString *)text;
 
 - (NSMutableArray *)subviews:(NSArray *)subviews BelowView:(UIView *)view;
 - (CGFloat)resizeAndPositionCellItem;

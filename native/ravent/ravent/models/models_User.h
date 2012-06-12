@@ -27,6 +27,8 @@
     NSDate *_locationLastUpdateTime;
     CLLocation *_bestEffortAtLocation;
     
+    BOOL _isRequesting;
+    
     RKObjectManager *_manager;
     RKClient *_client;
     

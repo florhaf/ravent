@@ -8,10 +8,10 @@
 
 #import "UITableViewReloadable.h"
 
-#import "MBProgressHUD.h"
 #import "YRDropdownView.h"
 #import "JBAsyncImageView.h"
 #import "controllers_App.h"
+#import "ActionDispatcher.h"
 
 typedef enum {
     
@@ -35,6 +35,8 @@ typedef enum {
         
         self.title = @"Ravent";
         _showEmptyMessage = NO;
+        
+        
     }
     return self;
 }
@@ -42,6 +44,18 @@ typedef enum {
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
+}
+
+- (void)updateLoadingMessageWith:(NSString *)text
+{
+    
+    if (_hud != nil) {
+        
+        [MBProgressHUD hideHUDForView:self.view animated:NO];
+        [MBProgressHUD showHUDAddedTo:self.view animated:NO withText:text];
+    }
+    
+    _refreshHeaderView.statusLabel.text = text;
 }
 
 #pragma mark - View lifecycle
@@ -113,30 +127,8 @@ typedef enum {
 
 - (void)loadDataWithSpinner
 {
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    _hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [self loadData];
-}
-
-- (void)showEmptyMessage:(UIView *)msg
-{
-//    switch (msg) {
-//        case invited:
-//            break;
-//        case eventsP2P:
-//            break;
-//        case eventsUser:
-//            break;
-//        case followings:
-//            break;
-//        case followers:
-//            break;
-//        case empty:
-//            break;
-//    }
-    
-    if (msg != nil) {
-        
-    }
 }
 
 - (void)onLoadData:(NSArray *)objects withSuccess:(success)success
@@ -148,8 +140,14 @@ typedef enum {
     _groupedData = nil;
     _sortedKeys = nil;
     
+    if (_url != nil) {
+    
+        [[ActionDispatcher instance] del:_url];
+    }
     
     [MBProgressHUD hideHUDForView:self.view animated:YES];
+    _hud = nil;
+    
     
     if ([objects count] > 0) {
         
@@ -181,6 +179,8 @@ typedef enum {
             
             [_emptyMessageViewPlaceHolder addSubview:_emptyMessageView];
         }
+        
+        [self.tableView reloadData];
     }
     
     [self doneLoadingTableViewData];

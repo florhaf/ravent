@@ -20,6 +20,8 @@
     SEL _callbackResponseFailure;
     id _sender;
     
+    BOOL _isRequesting;
+    
     RKObjectManager *_manager;    
     
     NSString *_eid;

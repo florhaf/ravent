@@ -68,6 +68,11 @@
     
     [params setValue:_user.accessToken forKey:@"access_token"];
     [params setValue:_user.uid forKey:@"userID"];
+    
+    _url = [@"friends" appendQueryParams:params];
+    Action *upadteLoadingMessageAction = [[Action alloc] initWithDelegate:self andSelector:@selector(updateLoadingMessageWith:)];
+    [[ActionDispatcher instance] add:upadteLoadingMessageAction named:_url];
+    
     [_user loadShareWithParams:params force:force];
 }
 
@@ -179,7 +184,7 @@
     self.navigationItem.rightBarButtonItem = doneButton;
     
     self.tableView.tableFooterView = [[UIView alloc] init];
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    _hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
 }
 
 - (void)hideAllModal

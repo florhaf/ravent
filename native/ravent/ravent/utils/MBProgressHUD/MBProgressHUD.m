@@ -217,8 +217,23 @@
 + (MBProgressHUD *)showHUDAddedTo:(UIView *)view animated:(BOOL)animated {
 	MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:view];
     
-    hud.dimBackground = YES;
-    hud.labelText = @"Loading...";
+    hud.dimBackground = NO;
+    hud.labelText = @"Sending request...";
+    
+	[view addSubview:hud];
+	[hud show:animated];
+#if __has_feature(objc_arc)
+	return hud;
+#else
+	return [hud autorelease];
+#endif
+}
+
++ (MBProgressHUD *)showHUDAddedTo:(UIView *)view animated:(BOOL)animated withText:(NSString *)text {
+	MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:view];
+    
+    hud.dimBackground = NO;
+    hud.labelText = text;
     
 	[view addSubview:hud];
 	[hud show:animated];

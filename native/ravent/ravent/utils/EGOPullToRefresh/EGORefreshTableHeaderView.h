@@ -40,7 +40,7 @@ typedef enum{
 	EGOPullRefreshState _state;
 
 	UILabel *_lastUpdatedLabel;
-	UILabel *_statusLabel;
+	UILabel __unsafe_unretained *_statusLabel;
 	CALayer *_arrowImage;
 	UIActivityIndicatorView *_activityView;
 	
@@ -48,6 +48,7 @@ typedef enum{
 }
 
 @property (unsafe_unretained) id <EGORefreshTableHeaderDelegate> delegate;
+@property (unsafe_unretained) UILabel *statusLabel;
 
 - (id)initWithFrame:(CGRect)frame arrowImageName:(NSString *)arrow textColor:(UIColor *)textColor;
 

@@ -53,6 +53,11 @@ static controllers_friends_All *_ctrl;
     
     [params setValue:_user.accessToken forKey:@"access_token"];
     [params setValue:_user.uid forKey:@"userID"];
+    
+    _url = [@"friends" appendQueryParams:params];
+    Action *upadteLoadingMessageAction = [[Action alloc] initWithDelegate:self andSelector:@selector(updateLoadingMessageWith:)];
+    [[ActionDispatcher instance] add:upadteLoadingMessageAction named:_url];
+    
     [_user loadAllWithParams:params force:force];
 }
 
@@ -224,7 +229,7 @@ static controllers_friends_All *_ctrl;
 {
     [super viewDidLoad];
 
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    _hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
     self.tableView.tableFooterView = [[UIView alloc] init];
 

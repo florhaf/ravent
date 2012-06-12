@@ -31,14 +31,26 @@ static controllers_events_Map_p2p *_ctrl;
     return self;
 }
 
+- (void)updateLoadingMessageWith:(NSString *)text
+{
+    
+    if (_hud != nil) {
+        
+        [MBProgressHUD hideHUDForView:self.view animated:NO];
+        [MBProgressHUD showHUDAddedTo:self.view animated:NO withText:text];
+    }
+}
+
 - (void)loading
 {
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    _hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
 }
 
 - (void)loadData:(NSArray *)objects
 {
     [MBProgressHUD hideHUDForView:self.view animated:YES];
+    _hud = nil;
+    
     [self setMapLocation:YES];
     
     if ([objects count] > 0) {

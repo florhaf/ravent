@@ -24,6 +24,19 @@ static ActionDispatcher *dispatcher = nil;
     return self;
 }
 
+- (BOOL)containsActionNamed:(NSString *)action
+{
+    for (NSString *crtAction in [_actions allKeys]) {
+        
+        if ([crtAction isEqualToString:action]) {
+            
+            return true;
+        }
+    }
+    
+    return false;
+}
+
 - (void)add:(Action *)action named:(NSString *)name
 {
     [_actions setValue:action forKey:name];
@@ -61,6 +74,16 @@ static ActionDispatcher *dispatcher = nil;
     if (action != nil) {
         
         [action executeWithBool:value];
+    }
+}
+
+- (void)execute:(NSString *)name withString:(NSString *)value
+{
+    Action *action = [_actions valueForKey:name];
+    
+    if (action != nil) {
+        
+        [action executeWithString:value];
     }
 }
 

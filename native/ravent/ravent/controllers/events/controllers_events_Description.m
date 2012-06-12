@@ -12,6 +12,7 @@
 #import "MBProgressHUD.h"
 #import "YRDropdownView.h"
 #import "controllers_App.h"
+#import "ActionDispatcher.h"
 
 @implementation controllers_events_Description
 
@@ -28,14 +29,29 @@
         _event.delegate = self;
         _event.callback = @selector(onLoadDescription:);
     
+        NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
         
+        [params setValue:[models_User crtUser].accessToken forKey:@"access_token"];
+        [params setValue:_event.eid forKey:@"eid"];
+        
+        _url = [@"description" appendQueryParams:params];
+        Action *upadteLoadingMessageAction = [[Action alloc] initWithDelegate:self andSelector:@selector(updateLoadingMessageWith:)];
+        [[ActionDispatcher instance] add:upadteLoadingMessageAction named:_url];
         [_event loadDescription];
     }
     return self;
 }
 
+- (void)updateLoadingMessageWith:(NSString *)text
+{
+    [MBProgressHUD hideHUDForView:self.view animated:NO];
+    [MBProgressHUD showHUDAddedTo:self.view animated:NO withText:text];
+}
+
 - (void)onLoadDescription:(NSArray *)objects
 {
+    [[ActionDispatcher instance] del:_url];
+    
     if ([objects count] > 0) {
         
         id object = [objects objectAtIndex:0];
@@ -106,7 +122,7 @@
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithCustomView:doneb];       
     self.navigationItem.rightBarButtonItem = doneButton;
     
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    _hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
 }
 
 #pragma mark - Private
