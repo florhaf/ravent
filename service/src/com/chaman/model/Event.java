@@ -62,7 +62,7 @@ public class Event extends Model implements Serializable {
 	
 	String venue_id;
 	double score;
-	long nb_invited;
+	double nb_attending;
 	String group;
 	String latitude;
 	String longitude;
@@ -80,7 +80,7 @@ public class Event extends Model implements Serializable {
 	String offer_description;
 	String ticket_link; //link to a website provided by promoter (later a link to our own ticket system)
 	String guest_list; // Open, close, full or no guest list
-	String gender_ratio; // male:% / female:%
+	double female_ratio; // female:%
 	User user;
 	DateTime dtStart;
 	DateTime dtEnd;
@@ -120,7 +120,7 @@ public class Event extends Model implements Serializable {
 		for (Event e : fbevents) {
 				
 			e_cache = (Event) syncCache.get(e.eid); // read from Event cache
-    	    if (e_cache == null) {// || !e_cache.update_time.equals(e.update_time)) { // check the cache event version with the current one
+    	    if (e_cache == null) {
 			 	    	
     	    	e.venue_id = JSON.GetValueFor("id", e.venue);    	
     	    	Venue v_graph = new Venue(accessToken, e.venue_id);
@@ -143,7 +143,6 @@ public class Event extends Model implements Serializable {
 					
     	    		if (q.count() == 0) {
 			        	
-    	    			//e.getNb_invited(accessToken);
     	    			EventLocationCapable elc = new EventLocationCapable(e);
     	    			dao.ofy().put(elc);
     	    		}
@@ -153,11 +152,7 @@ public class Event extends Model implements Serializable {
     	    		e.distance = "N/A";
     	    	}
     	    	
-    	    	e.Score(v_graph);
-    	    }else {
-    	    	
-    	    	e = e_cache;
-    	    	Venue v_graph = new Venue(accessToken, e.venue_id);
+    	    	e.GetNb_attending_and_gender_ratio(accessToken, String.valueOf(e.eid));
     	    	e.Score(v_graph);
     	    }
 	
@@ -199,7 +194,7 @@ public class Event extends Model implements Serializable {
         for (EventLocationCapable e : l) {
         	
         	event = (Event) syncCache.get(e.getEid());
-        	if (event == null) {
+        	if (event == null) { // if not in the cache
    	
         		String query 			= "SELECT " + properties + " FROM event WHERE eid = " + e.getEid();
         		List<Event> fbevents 	= client.executeQuery(query, Event.class);
@@ -207,6 +202,11 @@ public class Event extends Model implements Serializable {
         		if (fbevents != null && fbevents.size() > 0) {
     	
         			event = fbevents.get(0);
+        			event.venue_id = JSON.GetValueFor("id", event.venue);
+    				Venue v_graph = new Venue(accessToken, event.venue_id);
+    				event.venue_category = v_graph.category;
+    				event.Score(v_graph);
+    				event.GetNb_attending_and_gender_ratio(accessToken, String.valueOf(event.eid));
         		}
         	}
         	
@@ -214,7 +214,6 @@ public class Event extends Model implements Serializable {
         		
     			event.Format(timeZoneInMinutes);    		
     			
-    			// event.nb_invited = e.getNb_invited();
     			event.latitude 	= Double.toString(e.getLatitude());
     			event.longitude = Double.toString(e.getLongitude());
     			event.creator = String.valueOf(e.getCreator());
@@ -223,11 +222,7 @@ public class Event extends Model implements Serializable {
 				
     				float distance = Geo.Fence(userLatitude, userLongitude, event.latitude, event.longitude);
     				event.distance = String.format("%.2f", distance);
-    				
-    				event.venue_id = JSON.GetValueFor("id", event.venue);
-    				Venue v_graph = new Venue(accessToken, event.venue_id);
-    				event.venue_category = v_graph.category;
-    				event.Score(v_graph);
+
     				syncCache.put(event.eid, event); //add event to cache
         		
     				result.add(event);
@@ -242,9 +237,6 @@ public class Event extends Model implements Serializable {
         return result;    
 	}
 
-
-	
-	
 	
 	public static void GetCron() throws FacebookException {
 		
@@ -304,7 +296,6 @@ public class Event extends Model implements Serializable {
 									
 				    	    		if (q.count() == 0) {
 							        	
-				    	    			//e.getNb_invited(accessToken);
 				    	    			EventLocationCapable elc = new EventLocationCapable(e);
 				    	    			dao.ofy().put(elc);
 				    	    		}
@@ -318,7 +309,9 @@ public class Event extends Model implements Serializable {
 				    	    	
 				    	    	e = e_cache;
 				    	    }
-					    
+				    	    
+	    	    			e.GetNb_attending_and_gender_ratio(u.getAccess_token(), String.valueOf(e.eid));
+				    	    
 					    	syncCache.put(e.eid, e); // Add Event to cache
 						}
 					} catch (Exception ex ) {}
@@ -439,23 +432,14 @@ public class Event extends Model implements Serializable {
 	/* 
 	 * - Get the number of users invited
 	 */
-	public static ArrayList<Model> getNb_invited(String accessToken, String eid) throws FacebookException {
+	public void GetNb_attending_and_gender_ratio(String accessToken, String eid) throws FacebookException {
 		
-		ArrayList<Model> result 	= new ArrayList<Model>();
+		Attending a = new Attending();
 		
-		FacebookClient client 		= new DefaultFacebookClient(accessToken);
+		Event event = a.GetNb_attending_and_gender_ratio(accessToken, eid);
 		
-		String query 				= "SELECT uid FROM event_member WHERE eid = " + eid;
-		List<Attending> Attendings 	= client.executeQuery(query, Attending.class);
-		
-		Event e = new Event();
-		
-		e.eid = Long.parseLong(eid);
-		e.nb_invited = Attendings.size();
- 	
-		result.add(e);
-		
-		return result;
+		this.nb_attending = event.nb_attending;
+		this.female_ratio = event.female_ratio;
 	}
 	
 	private void Score(Venue v) {
@@ -612,9 +596,9 @@ public class Event extends Model implements Serializable {
 		return this.latitude;
 	}
 	
-	public long getNb_invited() {
+	public double getNb_attending() {
 		
-		return this.nb_invited;
+		return this.nb_attending;
 	}
 	
 	public String getLongitude() {
@@ -678,12 +662,12 @@ public class Event extends Model implements Serializable {
 		this.guest_list = guest_list;
 	}
 
-	public String getGender_ratio() {
-		return gender_ratio;
+	public double getFemale_ratio() {
+		return female_ratio;
 	}
 
-	public void setGender_ratio(String gender_ratio) {
-		this.gender_ratio = gender_ratio;
+	public void setFemale_ratio(double female_ratio) {
+		this.female_ratio = female_ratio;
 	}
 
 	public String getPic_big() {

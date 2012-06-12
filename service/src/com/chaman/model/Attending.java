@@ -22,6 +22,8 @@ public class Attending extends Model {
 	@Facebook
 	String pic;
 	@Facebook
+	String sex;
+	@Facebook
 	String rsvp_status;
 	
 	Long eid;
@@ -45,21 +47,21 @@ public class Attending extends Model {
 		//initiate multiquery for FB (one call for multiple queries = optimization)
 		Map<String, String> queries = new HashMap<String, String>();
 		queries.put("friends", "SELECT uid2 FROM friend WHERE uid1 = me()");
-		queries.put("friends_invited_rsvp", "SELECT uid, rsvp_status FROM event_member WHERE eid = " + eid + " AND uid in (select uid2 from #friends)");
-		queries.put("friends_invited_info", "SELECT uid, first_name, last_name, pic FROM user WHERE uid in (select uid from #friends_invited_rsvp)");
+		queries.put("invited_rsvp", "SELECT uid, rsvp_status FROM event_member WHERE eid = " + eid + " AND uid in (select uid2 from #friends)");
+		queries.put("invited_info", "SELECT uid, first_name, last_name, pic FROM user WHERE uid in (select uid from #invited_rsvp)");
 
 		MultiqueryResults multiqueryResult = client.executeMultiquery(queries, MultiqueryResults.class);
 		
-		for (int i=0; i<multiqueryResult.friends_invited_info.size(); i++) {
+		for (int i=0; i<multiqueryResult.invited_info.size(); i++) {
 		
-			Attending a = multiqueryResult.friends_invited_info.get(i);
+			Attending a = multiqueryResult.invited_info.get(i);
 			
 			a.picture = a.pic;
 			a.eid = eid_long;
 			
-			a.rsvp_status = multiqueryResult.friends_invited_rsvp.get(i).rsvp_status;
+			a.rsvp_status = multiqueryResult.invited_rsvp.get(i).rsvp_status;
 			
-			if (a.rsvp_status.equals("unsure") || a.rsvp_status.equals("not_replied")) {
+			if (a.rsvp_status.equals("unsure")) {
 				
 				a.rsvp_status = "maybe attending";
 			} else if (a.rsvp_status.equals("declined")) {
@@ -87,33 +89,73 @@ public class Attending extends Model {
 
 		//initiate multiquery for FB (one call for multiple queries = optimization)
 		Map<String, String> queries = new HashMap<String, String>();
-		queries.put("friends_invited_rsvp", "SELECT uid, rsvp_status FROM event_member WHERE eid = " + eid + " AND rsvp_status = 'attending'");
-		queries.put("friends_invited_info", "SELECT uid, first_name, last_name, pic FROM user WHERE uid in (select uid from #friends_invited_rsvp)");
+		queries.put("invited_rsvp", "SELECT uid FROM event_member WHERE eid = " + eid + " AND rsvp_status = 'attending'");
+		queries.put("invited_info", "SELECT uid, first_name, last_name, pic, sex FROM user WHERE uid in (select uid from #invited_rsvp)");
 
 		MultiqueryResults multiqueryResult = client.executeMultiquery(queries, MultiqueryResults.class);
 		
-		for (int i=0; i<multiqueryResult.friends_invited_info.size(); i++) {
+		for (int i=0; i<multiqueryResult.invited_info.size(); i++) {
 		
-			Attending a = multiqueryResult.friends_invited_info.get(i);
+			Attending a = multiqueryResult.invited_info.get(i);
 			
 			a.picture = a.pic;
 			a.eid = eid_long;
 			
-			a.rsvp_status = multiqueryResult.friends_invited_rsvp.get(i).rsvp_status;
-			
-			if (a.rsvp_status.equals("unsure") || a.rsvp_status.equals("not_replied")) {
-				
-				a.rsvp_status = "maybe attending";
-			} else if (a.rsvp_status.equals("declined")) {
-				
-				a.rsvp_status = "not attending";
-			}
+			a.rsvp_status = multiqueryResult.invited_rsvp.get(i).rsvp_status;
 			
 			result.add(a);
 		}
  	
-		return result;
+		return result;		
+	}
+	
+	/* 
+	 * - Get the list of users ATTENDING (not all the invited people) to the event (pic name rsvp status)
+	 * - Fill the number of user invited (this.nb_invited)
+	 */
+	public Event GetNb_attending_and_gender_ratio(String accessToken, String eid) throws FacebookException {
+
+		double male 			= 0;
+		double female			= 0;
+		
+		Event event 			= new Event();
+		
+		double nb_attending 	= 0;
+		
+		FacebookClient client 	= new DefaultFacebookClient(accessToken);
+
+		Long eid_long = Long.parseLong(eid);
+		
+		//initiate multiquery for FB (one call for multiple queries = optimization)
+		Map<String, String> queries = new HashMap<String, String>();
+		queries.put("invited_rsvp", "SELECT uid FROM event_member WHERE eid = " + eid + " AND rsvp_status = 'attending'");
+		queries.put("invited_info", "SELECT sex FROM user WHERE uid in (select uid from #invited_rsvp)");
+
+		MultiqueryResults multiqueryResult = client.executeMultiquery(queries, MultiqueryResults.class);
+		
+		for (int i=0; i<multiqueryResult.invited_info.size(); i++) {
+		
+			Attending a = multiqueryResult.invited_info.get(i);
 			
+			event.eid = eid_long;
+			
+			if (a.sex.equals("male")) {
+				male = male + 1;
+			} else if (a.sex.equals("female")) {
+				female = female + 1;
+			}
+	
+			nb_attending = nb_attending + 1;
+		}
+		
+		event.nb_attending = nb_attending;
+		
+		if (female + male != 0){
+			
+			event.female_ratio = female / (female + male);
+		}
+	
+		return event;		
 	}
 	
 	public static void SetFacebookRsvp (String accessToken, String eid, String rsvp) {
@@ -140,7 +182,7 @@ public class Attending extends Model {
 			
 			Attending a = user_rsvp.get(0);
 			a.eid = Long.parseLong(eid);
-			if (a.rsvp_status.equals("unsure") || a.rsvp_status.equals("not_replied")) {
+			if (a.rsvp_status.equals("unsure")) {
 				
 				a.rsvp_status = "maybe attending";
 			} else if (a.rsvp_status.equals("declined")) {
@@ -182,5 +224,13 @@ public class Attending extends Model {
 	public long getEid() {
 		
 		return this.eid;
+	}
+
+	public String getSex() {
+		return sex;
+	}
+
+	public void setSex(String sex) {
+		this.sex = sex;
 	}
 }

@@ -6,7 +6,7 @@ import com.restfb.Facebook;
 /* Used to do multiple queries in one call using restfb */
 public class MultiqueryResults {
 	  @Facebook
-	  List<Attending> friends_invited_info;
+	  List<Attending> invited_info;
 	  @Facebook
-	  List<Attending> friends_invited_rsvp;
+	  List<Attending> invited_rsvp;
 }
