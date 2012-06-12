@@ -16,6 +16,7 @@ public class Comment extends Model {
 	String uid;
 	String time;
 	String message;
+	String picture;
 	
 	public Comment(String accessToken, Post p) {
 		
@@ -34,6 +35,7 @@ public class Comment extends Model {
 		
 		this.time = p.getCreated_time();		
 		this.message = p.getMessage();
+		this.picture = p.getPicture();
 	}
 	
 	public static ArrayList<Model> Get(String accessToken, String eventID) {
@@ -46,7 +48,7 @@ public class Comment extends Model {
 			
 			Post p = (Post)m;
 			
-			if (p.getType().equals("status")) {
+			if (p.getType().equals("status") || p.getType().equals("photo")) {
 				
 				Comment c = new Comment(accessToken, p);
 				result.add(c);
@@ -82,4 +84,8 @@ public class Comment extends Model {
 	public String getMessage() {
 		return this.message;
 	}
+
+	public String getPicture() {
+		return picture;
+	}	
 }

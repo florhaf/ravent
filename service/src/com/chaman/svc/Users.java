@@ -20,8 +20,9 @@ public class Users extends ServerResource {
 			
 			String accessToken	= getQuery().getValues("access_token");
 			String userID 		= getQuery().getValues("userID");
+			String appuser		= getQuery().getValues("appuser");
 			
-			ArrayList<Model> users = User.Get(accessToken, userID);
+			ArrayList<Model> users = User.Get(accessToken, userID, appuser);
 						
 			result.setSuccess(true);
 			result.setRecords(users);

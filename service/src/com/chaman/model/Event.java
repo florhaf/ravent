@@ -194,45 +194,56 @@ public class Event extends Model implements Serializable {
 		MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
 		
 		int timeZoneInMinutes = Integer.parseInt(timeZone);
+		Event event;
 		
         for (EventLocationCapable e : l) {
         	
-    		String query 			= "SELECT " + properties + " FROM event WHERE eid = " + e.getEid();
-    		List<Event> fbevents 	= client.executeQuery(query, Event.class);
-    		
-    		if (fbevents != null && fbevents.size() > 0) {
-    			
-    			Event event = fbevents.get(0);
-    			event.Format(timeZoneInMinutes);    		
-    			
-    			if (event.IsNotPast()) {
-    				
+        	event = (Event) syncCache.get(e.getEid());
+        	if (event == null) {
+   	
+        		String query 			= "SELECT " + properties + " FROM event WHERE eid = " + e.getEid();
+        		List<Event> fbevents 	= client.executeQuery(query, Event.class);
+        	
+        		if (fbevents != null && fbevents.size() > 0) {
+    	
+        			event = fbevents.get(0);
+        			
     				// event.nb_invited = e.getNb_invited();
     				event.latitude 	= Double.toString(e.getLatitude());
     				event.longitude = Double.toString(e.getLongitude());
-    				
+    				event.creator = String.valueOf(e.getCreator());
+        		}
+        	}
+        	
+        	if (event != null) {
+        		
+    			event.Format(timeZoneInMinutes);    		
+    			
+    			if (event.IsNotPast()) {
+				
     				float distance = Geo.Fence(userLatitude, userLongitude, event.latitude, event.longitude);
-            		event.distance = String.format("%.2f", distance);
-
-            		event.creator = String.valueOf(e.getCreator());
-    		
-        	    	event.venue_id = JSON.GetValueFor("id", event.venue);
-        	    	Venue v_graph = new Venue(accessToken, event.venue_id);
-        	    	event.venue_category = v_graph.category;
-        	    	event.Score(v_graph);
-            		syncCache.put(event.eid, event); //add event to cache
-            		
-                	result.add(event);
-    			} else {
+    				event.distance = String.format("%.2f", distance);
     				
-	    			dao.ofy().delete(e); //clean the datastore by removing old events TODO: call a task doesn't have to be deleted right away
+    				event.venue_id = JSON.GetValueFor("id", event.venue);
+    				Venue v_graph = new Venue(accessToken, event.venue_id);
+    				event.venue_category = v_graph.category;
+    				event.Score(v_graph);
+    				syncCache.put(event.eid, event); //add event to cache
+        		
+    				result.add(event);
+    			} else {
+				
+    				dao.ofy().delete(e); //clean the datastore by removing old events TODO: call a task doesn't have to be deleted right away
     				//TODO: delete vote DS
     			}
-    		}
+        	}
+
         }
-		
-		return result;
+        return result;    
 	}
+
+
+	
 	
 	
 	public static void GetCron() throws FacebookException {

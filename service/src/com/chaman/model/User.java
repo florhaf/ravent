@@ -86,7 +86,7 @@ public class User extends Model implements Serializable {
 		return new User();
 	}
 	
-	public static ArrayList<Model> Get(String accessToken, String userID) {
+	public static ArrayList<Model> Get(String accessToken, String userID, String appuser) {
 		
 		ArrayList<Model> result = new ArrayList<Model>();
 		
@@ -131,7 +131,7 @@ public class User extends Model implements Serializable {
     	    	qfollowers.filter("friendID", u.uid);
     	    	u.nb_of_followers = qfollowers.count();
     	    	u.access_token = accessToken;
-    	    	dao.ofy().put(u); //add the user to the data store
+    	    	if (appuser == "yes") {dao.ofy().put(u);} //add the user to the data store
     	    	syncCache.put(u.uid, u); // populate User cache
     	    	
     	    } else {
