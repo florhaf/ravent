@@ -305,14 +305,9 @@ public class Event extends Model implements Serializable {
 				    	    		e.distance = "N/A";
 				    	    	}
 				    	    	
-				    	    }else {
-				    	    	
-				    	    	e = e_cache;
-				    	    }
-				    	    
-	    	    			e.GetNb_attending_and_gender_ratio(u.getAccess_token(), String.valueOf(e.eid));
-				    	    
-					    	syncCache.put(e.eid, e); // Add Event to cache
+				    	    	e.GetNb_attending_and_gender_ratio(u.getAccess_token(), String.valueOf(e.eid));
+				    	    	syncCache.put(e.eid, e); // Add Event to cache
+				    	    } 						    	    			    	    
 						}
 					} catch (Exception ex ) {}
 				}		

@@ -61,12 +61,15 @@ public class Attending extends Model {
 			
 			a.rsvp_status = multiqueryResult.invited_rsvp.get(i).rsvp_status;
 			
-			if (a.rsvp_status.equals("unsure")) {
+			if (a.rsvp_status. equals("not_replied")) {
 				
-				a.rsvp_status = "maybe attending";
-			} else if (a.rsvp_status.equals("declined")) {
+				a.rsvp_status = "not replied";
+			} else if (a.rsvp_status.equals("declined")) {	
 				
 				a.rsvp_status = "not attending";
+			} else if (a.rsvp_status.equals("unsure")){
+				
+				a.rsvp_status = "maybe attending";
 			}
 			
 			result.add(a);
@@ -182,12 +185,15 @@ public class Attending extends Model {
 			
 			Attending a = user_rsvp.get(0);
 			a.eid = Long.parseLong(eid);
-			if (a.rsvp_status.equals("unsure")) {
+			if (a.rsvp_status. equals("not_replied")) {
 				
-				a.rsvp_status = "maybe attending";
-			} else if (a.rsvp_status.equals("declined")) {
+				a.rsvp_status = "not replied";
+			} else if (a.rsvp_status.equals("declined")) {	
 				
 				a.rsvp_status = "not attending";
+			} else if (a.rsvp_status.equals("unsure")){
+				
+				a.rsvp_status = "maybe attending";
 			}
 			
 			result.add(a);
