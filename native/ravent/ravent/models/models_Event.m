@@ -8,6 +8,7 @@
 
 #import "models_Event.h"
 #import "models_User.h"
+#import "ActionDispatcher.h"
 
 @implementation models_Event
 
@@ -75,7 +76,7 @@
 
 - (void)loadEventsWithParams:(NSMutableDictionary *)params
 {
-        RKLogConfigureByName("RestKit/*", RKLogLevelTrace);
+        //RKLogConfigureByName("RestKit/*", RKLogLevelTrace);
     NSString *resourcePath = [@"events" appendQueryParams:params];
        
     RKObjectMapping *objectMapping = [RKObjectMapping mappingForClass:[models_Event class]];
@@ -101,7 +102,10 @@
     }
     
     [_manager.mappingProvider setMapping:objectMapping forKeyPath:@"records"];
-    [_manager loadObjectsAtResourcePath:resourcePath objectMapping:objectMapping delegate:self]; 
+    [_manager loadObjectsAtResourcePath:resourcePath objectMapping:objectMapping delegate:self];
+    
+    _isRequesting = YES;
+    [self performSelector:@selector(updateLoadingMessage3:) withObject:resourcePath afterDelay:5];
 }
 
 - (void)reloadWithParams:(NSMutableDictionary *)params
@@ -132,6 +136,9 @@
     
     [_manager.mappingProvider setMapping:objectMapping forKeyPath:@"records"];
     [_manager loadObjectsAtResourcePath:resourcePath objectMapping:objectMapping delegate:self];
+    
+    _isRequesting = YES;
+    [self performSelector:@selector(updateLoadingMessage3:) withObject:resourcePath afterDelay:5];
 }
 
 - (void)loadDescription
@@ -152,7 +159,10 @@
     }
     
     [_manager.mappingProvider setMapping:objectMapping forKeyPath:@"records"];
-    [_manager loadObjectsAtResourcePath:resourcePath objectMapping:objectMapping delegate:self];     
+    [_manager loadObjectsAtResourcePath:resourcePath objectMapping:objectMapping delegate:self];  
+    
+    _isRequesting = YES;
+    [self performSelector:@selector(updateLoadingMessage3:) withObject:resourcePath afterDelay:5];
 }
 
 - (void)vote:(NSMutableDictionary *)params success:(SEL)success failure:(SEL)failure sender:(id)sender
@@ -196,8 +206,33 @@
     #pragma clang diagnostic pop
 }
 
+- (void)updateLoadingMessage:(NSString *)resourcePath
+{
+    [[ActionDispatcher instance] execute:resourcePath withString:@"Loading..."];
+    [self performSelector:@selector(updateLoadingMessage2:) withObject:resourcePath afterDelay:5];
+}
+
+- (void)updateLoadingMessage2:(NSString *)resourcePath
+{
+    [[ActionDispatcher instance] execute:resourcePath withString:@"Still loading..."];
+}
+
+- (void)updateLoadingMessage3:(NSString *)resourcePath
+{
+    if (_isRequesting) {
+     
+        [[ActionDispatcher instance] execute:resourcePath withString:@"Waiting for server..."];
+    }
+}
+
 - (void)request:(RKRequest *)request didLoadResponse:(RKResponse *)response
 {
+    _isRequesting = NO;
+    
+    [[ActionDispatcher instance] execute:request.resourcePath withString:@"Got a response..."];
+    
+    [self performSelector:@selector(updateLoadingMessage:) withObject:request.resourcePath afterDelay:2];
+    
     if ([request isGET]) {
         
         return;

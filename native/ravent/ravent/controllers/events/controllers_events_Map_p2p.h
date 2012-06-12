@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
-
+#import "MBProgressHUD.h"
 #import "JBAsyncImageView.h"
 #import "models_User.h"
 
@@ -27,6 +27,8 @@
     
     models_User *_user;
     
+    MBProgressHUD *_hud;
+    
     BOOL _isMapSet;
 }
 
@@ -36,6 +38,7 @@
 - (void)loading;
 - (void)loadData:(NSArray *)objects;
 - (void)setMapLocation:(BOOL)force;
+- (void)updateLoadingMessageWith:(NSString *)text;
 
 + (controllers_events_Map_p2p *)instance;
 

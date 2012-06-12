@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <archive type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="8.00">
 	<data>
-		<int key="IBDocument.SystemTarget">1280</int>
+		<int key="IBDocument.SystemTarget">1296</int>
 		<string key="IBDocument.SystemVersion">11D50</string>
 		<string key="IBDocument.InterfaceBuilderVersion">2182</string>
 		<string key="IBDocument.AppKitVersion">1138.32</string>
@@ -140,7 +140,7 @@
 					<object class="IBUILabel" id="23159513">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{157, 184}, {148, 25}}</string>
+						<string key="NSFrame">{{157, 176}, {148, 25}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="877198820"/>
@@ -518,7 +518,7 @@
 								<reference key="IBUIImage" ref="697971773"/>
 							</object>
 						</array>
-						<string key="NSFrame">{{154, 212}, {164, 32}}</string>
+						<string key="NSFrame">{{157, 204}, {164, 32}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="789713145"/>
@@ -579,17 +579,17 @@
 							<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
 						</object>
 						<reference key="IBUINormalTitleShadowColor" ref="1053412906"/>
-						<object class="IBUIFontDescription" key="IBUIFontDescription" id="982486046">
+						<object class="IBUIFontDescription" key="IBUIFontDescription" id="13798658">
 							<int key="type">2</int>
 							<double key="pointSize">15</double>
 						</object>
-						<object class="NSFont" key="IBUIFont" id="110440506">
+						<object class="NSFont" key="IBUIFont" id="170657114">
 							<string key="NSName">Helvetica-Bold</string>
 							<double key="NSSize">15</double>
 							<int key="NSfFlags">16</int>
 						</object>
 					</object>
-					<object class="IBUIButton" id="825260473">
+					<object class="IBUIButton" id="498661934">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{8, 85}, {140, 139}}</string>
@@ -606,8 +606,8 @@
 							<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
 						</object>
 						<reference key="IBUINormalTitleShadowColor" ref="1053412906"/>
-						<reference key="IBUIFontDescription" ref="982486046"/>
-						<reference key="IBUIFont" ref="110440506"/>
+						<reference key="IBUIFontDescription" ref="13798658"/>
+						<reference key="IBUIFont" ref="170657114"/>
 					</object>
 				</array>
 				<string key="NSFrameSize">{320, 559}</string>
@@ -790,7 +790,7 @@
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">picButton_Tap:</string>
-						<reference key="source" ref="825260473"/>
+						<reference key="source" ref="498661934"/>
 						<reference key="destination" ref="372490531"/>
 						<int key="IBEventType">7</int>
 					</object>
@@ -828,7 +828,7 @@
 							<reference ref="34694742"/>
 							<reference ref="735805823"/>
 							<reference ref="787693277"/>
-							<reference ref="825260473"/>
+							<reference ref="498661934"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -980,7 +980,7 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">136</int>
-						<reference key="object" ref="825260473"/>
+						<reference key="object" ref="498661934"/>
 						<reference key="parent" ref="191373211"/>
 					</object>
 				</array>
@@ -1232,6 +1232,10 @@
 		</object>
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaTouchFramework</string>
+		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencyDefaults">
+			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaTouchPlugin.iPhoneOS</string>
+			<real value="1296" key="NS.object.0"/>
+		</object>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">

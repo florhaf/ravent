@@ -29,7 +29,7 @@
         self.tableView.frame = CGRectMake(0, 0, 320, 392);
         self.tableView.tableFooterView = [[UIView alloc] init];
 
-        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        _hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         [self loadData];
     }
     
@@ -52,6 +52,11 @@
     [params setValue:_user.accessToken forKey:@"access_token"];
     [params setValue:_user.uid forKey:@"userID"];
     [params setValue:isFollowingStr forKey:@"isFollowing"];
+    
+    _url = [@"followings" appendQueryParams:params];
+    Action *upadteLoadingMessageAction = [[Action alloc] initWithDelegate:self andSelector:@selector(updateLoadingMessageWith:)];
+    [[ActionDispatcher instance] add:upadteLoadingMessageAction named:_url];
+    
     [_user loadFollowingsWithParams:params];
     
     [[ActionDispatcher instance]execute:@"reloadCurrentUser"];

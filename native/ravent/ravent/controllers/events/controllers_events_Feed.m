@@ -10,6 +10,7 @@
 #import "models_User.h"
 #import "JBAsyncImageView.h"
 #import "MBProgressHUD.h"
+#import "ActionDispatcher.h"
 
 @implementation controllers_events_Feed
 
@@ -39,6 +40,10 @@
     [params setValue:[models_User crtUser].accessToken forKey:@"access_token"];
     [params setValue:_event.eid forKey:@"eid"];
     [params setValue:[models_User crtUser].timeZone forKey:@"timezone_offset"];
+    
+    _url = [@"comments" appendQueryParams:params];
+    Action *upadteLoadingMessageAction = [[Action alloc] initWithDelegate:self andSelector:@selector(updateLoadingMessageWith:)];
+    [[ActionDispatcher instance] add:upadteLoadingMessageAction named:_url];
     
     [_comment loadFeedWithParams:params];
 }
@@ -114,7 +119,7 @@
     [super viewDidLoad];
     
     self.tableView.tableFooterView = [[UIView alloc] init];
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    _hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
 }
 
 @end

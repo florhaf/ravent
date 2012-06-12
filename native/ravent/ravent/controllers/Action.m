@@ -60,4 +60,12 @@
 #pragma clang diagnostic pop
 }
 
+- (void)executeWithString:(NSString *)value
+{
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+    [_delegate performSelector:_selector withObject:value];
+#pragma clang diagnostic pop
+}
+
 @end

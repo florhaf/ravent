@@ -136,6 +136,7 @@ typedef enum {
  * @see hideHUDForView:animated:
  */
 + (MBProgressHUD *)showHUDAddedTo:(UIView *)view animated:(BOOL)animated;
++ (MBProgressHUD *)showHUDAddedTo:(UIView *)view animated:(BOOL)animated withText:(NSString *)text;
 
 /**
  * Finds a HUD subview and hides it. The counterpart to this method is showHUDAddedTo:animated:.

@@ -7,6 +7,7 @@
 //
 
 #import "models_User.h"
+#import "ActionDispatcher.h"
 
 @implementation models_User
 
@@ -140,11 +141,17 @@ static models_User *_crtUser = nil;
         // store the location as the "best effort"
         _bestEffortAtLocation = newLocation;
         _locationLastUpdateTime = [NSDate date];
+        // NYC
         _crtUser.latitude = @"40.743680";//[NSString stringWithFormat:@"%f", newLocation.coordinate.latitude];
         _crtUser.longitude = @"-73.972750";//[NSString stringWithFormat:@"%f", newLocation.coordinate.longitude];
         
-        _crtUser.latitude = [NSString stringWithFormat:@"%f", newLocation.coordinate.latitude];
-        _crtUser.longitude = [NSString stringWithFormat:@"%f", newLocation.coordinate.longitude];
+        // Paris
+        //_crtUser.latitude = @"48.883118";//[NSString stringWithFormat:@"%f", newLocation.coordinate.latitude];
+        //_crtUser.longitude = @"2.328243";//[NSString stringWithFormat:@"%f", newLocation.coordinate.longitude];
+        
+        // real
+        //_crtUser.latitude = [NSString stringWithFormat:@"%f", newLocation.coordinate.latitude];
+        //_crtUser.longitude = [NSString stringWithFormat:@"%f", newLocation.coordinate.longitude];
         
         
 //        _crtUser.latitude = [NSString stringWithFormat:@"%f", newLocation.coordinate.latitude];
@@ -260,6 +267,9 @@ static models_User *_crtUser = nil;
     
     [_manager.mappingProvider setMapping:objectMapping forKeyPath:@"records"];
     [_manager loadObjectsAtResourcePath:resourcePath objectMapping:objectMapping delegate:self]; 
+    
+    _isRequesting = YES;
+    [self performSelector:@selector(updateLoadingMessage3:) withObject:resourcePath afterDelay:5];
 }
 
 - (void)loadAllWithParams:(NSMutableDictionary *)params force:(BOOL)force
@@ -288,6 +298,9 @@ static models_User *_crtUser = nil;
     
     [_manager.mappingProvider setMapping:objectMapping forKeyPath:@"records"];
     [_manager loadObjectsAtResourcePath:resourcePath objectMapping:objectMapping delegate:self]; 
+    
+    _isRequesting = YES;
+    [self performSelector:@selector(updateLoadingMessage3:) withObject:resourcePath afterDelay:5];
 }
 
 - (void)loadInvitedWithParams:(NSMutableDictionary *)params
@@ -308,6 +321,9 @@ static models_User *_crtUser = nil;
     
     [_manager.mappingProvider setMapping:objectMapping forKeyPath:@"records"];
     [_manager loadObjectsAtResourcePath:resourcePath objectMapping:objectMapping delegate:self]; 
+    
+    _isRequesting = YES;
+    [self performSelector:@selector(updateLoadingMessage3:) withObject:resourcePath afterDelay:5];
 }
 
 - (void)loadShareWithParams:(NSMutableDictionary *)params force:(BOOL)force
@@ -336,6 +352,9 @@ static models_User *_crtUser = nil;
     
     [_manager.mappingProvider setMapping:objectMapping forKeyPath:@"records"];
     [_manager loadObjectsAtResourcePath:resourcePath objectMapping:objectMapping delegate:self]; 
+    
+    _isRequesting = YES;
+    [self performSelector:@selector(updateLoadingMessage3:) withObject:resourcePath afterDelay:5];
 }
 
 - (void)objectLoader:(RKObjectLoader *)objectLoader didLoadObjects:(NSArray *)objects
@@ -389,8 +408,32 @@ static models_User *_crtUser = nil;
     [[RKClient sharedClient] delete:[@"followings" appendQueryParams:params] delegate:self];
 }
 
+- (void)updateLoadingMessage:(NSString *)resourcePath
+{
+    [[ActionDispatcher instance] execute:resourcePath withString:@"Loading..."];
+    [self performSelector:@selector(updateLoadingMessage2:) withObject:resourcePath afterDelay:5];
+}
+
+- (void)updateLoadingMessage2:(NSString *)resourcePath
+{
+    [[ActionDispatcher instance] execute:resourcePath withString:@"Still loading..."];
+}
+
+- (void)updateLoadingMessage3:(NSString *)resourcePath
+{
+    if (_isRequesting) {
+        
+        [[ActionDispatcher instance] execute:resourcePath withString:@"Waiting for server..."];
+    }
+}
+
 - (void)request:(RKRequest *)request didLoadResponse:(RKResponse *)response
 {
+    _isRequesting = NO;
+    [[ActionDispatcher instance] execute:request.resourcePath withString:@"Got a response..."];
+    
+    [self performSelector:@selector(updateLoadingMessage:) withObject:request.resourcePath afterDelay:2];
+    
     if ([request isGET]) {
         
         return;

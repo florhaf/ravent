@@ -7,6 +7,7 @@
 //
 
 #import "models_Comment.h"
+#import "ActionDispatcher.h"
 #import <RestKit/JSONKit.h>
 
 @implementation models_Comment
@@ -54,6 +55,9 @@
     
     [_manager.mappingProvider setMapping:objectMapping forKeyPath:@"records"];
     [_manager loadObjectsAtResourcePath:resourcePath objectMapping:objectMapping delegate:self]; 
+    
+    _isRequesting = YES;
+    [self performSelector:@selector(updateLoadingMessage3:) withObject:resourcePath afterDelay:5];
 }
 
 - (void)post:(NSMutableDictionary *)params success:(SEL)success failure:(SEL)failure
@@ -83,8 +87,32 @@
     [[RKClient sharedClient] put:@"/post" params:rkparams delegate:self];
 }
 
+- (void)updateLoadingMessage:(NSString *)resourcePath
+{
+    [[ActionDispatcher instance] execute:resourcePath withString:@"Loading..."];
+    [self performSelector:@selector(updateLoadingMessage2:) withObject:resourcePath afterDelay:5];
+}
+
+- (void)updateLoadingMessage2:(NSString *)resourcePath
+{
+    [[ActionDispatcher instance] execute:resourcePath withString:@"Still loading..."];
+}
+
+- (void)updateLoadingMessage3:(NSString *)resourcePath
+{
+    if (_isRequesting) {
+        
+        [[ActionDispatcher instance] execute:resourcePath withString:@"Waiting for server..."];
+    }
+}
+
 - (void)request:(RKRequest *)request didLoadResponse:(RKResponse *)response
 {
+    _isRequesting = NO;
+    [[ActionDispatcher instance] execute:request.resourcePath withString:@"Got a response..."];
+    
+    [self performSelector:@selector(updateLoadingMessage:) withObject:request.resourcePath afterDelay:2];
+    
     if ([request isGET]) {
         
         return;

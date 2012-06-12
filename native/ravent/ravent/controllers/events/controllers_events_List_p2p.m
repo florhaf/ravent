@@ -21,7 +21,7 @@ static controllers_events_List_p2p *_ctrl;
     
     self.tableView.tableFooterView = [[UIView alloc] init];
     
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    _hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
 }
 
 - (void)loadDataWithUserLocation
@@ -29,6 +29,13 @@ static controllers_events_List_p2p *_ctrl;
     [super loadDataWithUserLocation];
     
     [[controllers_events_Map_p2p instance] loading];
+}
+
+- (void)updateLoadingMessageWith:(NSString *)text
+{
+    [super updateLoadingMessageWith:text];
+    
+    [[controllers_events_Map_p2p instance] updateLoadingMessageWith:text];
 }
 
 - (void)loadData
@@ -39,6 +46,12 @@ static controllers_events_List_p2p *_ctrl;
     [params setValue:[models_User crtUser].latitude forKey:@"latitude"];
     [params setValue:[models_User crtUser].longitude forKey:@"longitude"];
     [params setValue:[models_User crtUser].timeZone forKey:@"timezone_offset"];
+    
+    
+    _url = [@"events" appendQueryParams:params];
+    Action *upadteLoadingMessageAction = [[Action alloc] initWithDelegate:self andSelector:@selector(updateLoadingMessageWith:)];
+    [[ActionDispatcher instance] add:upadteLoadingMessageAction named:_url];
+    
     
     [_event loadEventsWithParams:params];
     
