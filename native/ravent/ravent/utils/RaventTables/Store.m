@@ -25,7 +25,6 @@ static Store *_store;
             
         if ([e isEqualToString:eid]) {
                 
-            NSLog(@"eid already present");
             return @"event already in calendar";
         }
     }
@@ -42,10 +41,8 @@ static Store *_store;
     // Save the context.
     NSError *error = nil;
     if (![context save:&error]) {
-        // Replace this implementation with code to handle the error appropriately.
-        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
-        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-        abort();
+
+        return error.localizedDescription;
     }
     
     return @"event added to your calendar";
@@ -61,7 +58,6 @@ static Store *_store;
         
         if ([eid isEqualToString:event.eid]) {
             
-            NSLog(@"eid already present");
             return @"event already in calendar";
         }
     }
@@ -87,9 +83,7 @@ static Store *_store;
     NSError *error = nil;
     if (![context save:&error]) {
         // Replace this implementation with code to handle the error appropriately.
-        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
-        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-        abort();
+        return error.localizedDescription;
     }
     
     return @"event added to your calendar";
@@ -126,10 +120,8 @@ static Store *_store;
     
 	NSError *error = nil;
 	if (![self.fetchedResultsController performFetch:&error]) {
-        // Replace this implementation with code to handle the error appropriately.
-        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
+
 	    NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-	    abort();
 	}
     
     return __fetchedResultsController;

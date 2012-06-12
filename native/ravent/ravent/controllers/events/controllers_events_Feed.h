@@ -11,7 +11,7 @@
 #import "UITableViewReloadable.h"
 #import "models_Comment.h"
 
-@interface controllers_events_Feed : UITableViewReloadable {
+@interface controllers_events_Feed : UITableViewReloadable<JBAsyncImageViewDelegate> {
 
     models_Comment *_comment;
     

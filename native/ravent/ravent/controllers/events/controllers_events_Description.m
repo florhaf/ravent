@@ -69,8 +69,15 @@
             
             _event.description = ((models_Event *)[objects objectAtIndex:0]).description;
 
+            NSString *res = nil;
             
-            NSString *res = [NSString stringWithFormat:@"%@\n%@\n\n%@", _event.name, _event.location, _event.description];
+            if (_event.location != nil) {
+                
+                res = [NSString stringWithFormat:@"%@\n%@\n\n%@", _event.name, _event.location, _event.description];
+            } else {
+                
+                res = [NSString stringWithFormat:@"%@\n\n%@", _event.name, _event.description];
+            }
             
             _textView.text = res;
             
