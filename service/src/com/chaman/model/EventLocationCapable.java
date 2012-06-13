@@ -21,11 +21,14 @@ public class EventLocationCapable extends Model implements LocationCapable {
 	private long eid;
 	private long timeStampStart;
 	private long timeStampEnd;
+	@Unindexed
     private double latitude;
+	@Unindexed
     private double longitude;
     @Unindexed
     private double score;
     private List<String> geocells;
+    @Unindexed
     private long creator; // promoter ID
     
 	public EventLocationCapable() {
