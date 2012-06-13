@@ -52,9 +52,6 @@ public class Event extends Model implements Serializable {
 	String description;
 	@Facebook
 	String host;
-	String creator; /*promoter ID*/
-	@Facebook
-	String owner;
 	@Facebook
 	String privacy;
 	@Facebook
@@ -106,7 +103,7 @@ public class Event extends Model implements Serializable {
 		String TAS = String.valueOf(now.getMillis() / 1000);
 		
 		FacebookClient client 	= new DefaultFacebookClient(accessToken);
-		String properties 		= "eid, name, pic, pic_big, start_time, end_time, venue, location, host, privacy, creator, update_time";
+		String properties 		= "eid, name, pic, pic_big, start_time, end_time, venue, location, host, privacy, update_time";
 		String query 			= "SELECT " + properties + " FROM event WHERE eid IN (SELECT eid FROM event_member WHERE uid = " + userID + ") AND end_time > " + TAS + " ORDER BY start_time"; /*need to check privacy CLOSED AND SECRET */
 		List<Event> fbevents 	= client.executeQuery(query, Event.class);
 		
@@ -180,6 +177,12 @@ public class Event extends Model implements Serializable {
 		
 		Dao dao = new Dao();
 		
+		//Prepare a timestamp to filter on current dateTime
+		DateTimeZone PST = DateTimeZone.forID("America/Los_Angeles");
+		DateTime now = new DateTime(PST);
+		now.plusMinutes(PST.getOffset(now));
+		long actual_time = now.getMillis() / 1000;
+		
 		LocationCapableRepositorySearch<EventLocationCapable> ofySearch = new OfyEntityLocationCapableRepositorySearchImpl(dao.ofy(), timeZone, searchTimeFrame);
 		List<EventLocationCapable> l = GeocellManager.proximityFetch(new Point(Double.parseDouble(userLatitude), Double.parseDouble(userLongitude)), searchLimit, searchRadius * 1000, ofySearch);
 		
@@ -193,47 +196,44 @@ public class Event extends Model implements Serializable {
 		
         for (EventLocationCapable e : l) {
         	
-        	event = (Event) syncCache.get(e.getEid());
-        	if (event == null) { // if not in the cache
-   	
-        		String query 			= "SELECT " + properties + " FROM event WHERE eid = " + e.getEid();
-        		List<Event> fbevents 	= client.executeQuery(query, Event.class);
-        	
-        		if (fbevents != null && fbevents.size() > 0) {
-    	
-        			event = fbevents.get(0);
-        			event.venue_id = JSON.GetValueFor("id", event.venue);
-    				Venue v_graph = new Venue(accessToken, event.venue_id);
-    				event.venue_category = v_graph.category;
-    				event.Score(v_graph);
-    				event.GetNb_attending_and_gender_ratio(accessToken, String.valueOf(event.eid));
-        		}
-        	}
-        	
-        	if (event != null) {
+        	if (actual_time < e.getTimeStampEnd()) { //if event not in the past
         		
-    			event.Format(timeZoneInMinutes);    		
-    			
-    			event.latitude 	= Double.toString(e.getLatitude());
-    			event.longitude = Double.toString(e.getLongitude());
-    			event.creator = String.valueOf(e.getCreator());
-    			
-    			if (event.IsNotPast()) {
-				
-    				float distance = Geo.Fence(userLatitude, userLongitude, event.latitude, event.longitude);
-    				event.distance = String.format("%.2f", distance);
+            	event = (Event) syncCache.get(e.getEid());
+            	if (event == null) { // if not in the cache
+       	
+            		String query 			= "SELECT " + properties + " FROM event WHERE eid = " + e.getEid();
+            		List<Event> fbevents 	= client.executeQuery(query, Event.class);
+            	
+            		if (fbevents != null && fbevents.size() > 0) {
+        	
+            			event = fbevents.get(0);
+            			event.venue_id = JSON.GetValueFor("id", event.venue);
+        				Venue v_graph = new Venue(accessToken, event.venue_id);
+        				event.venue_category = v_graph.category;
+        				event.Score(v_graph);
+        				event.GetNb_attending_and_gender_ratio(accessToken, String.valueOf(event.eid));
+            		}
+            	}
+            	
+            	if (event != null) {
+            		
+        			event.Format(timeZoneInMinutes);    		
+        			
+        			event.latitude 	= Double.toString(e.getLatitude());
+        			event.longitude = Double.toString(e.getLongitude());
+        			
+        			float distance = Geo.Fence(userLatitude, userLongitude, event.latitude, event.longitude);
+        			event.distance = String.format("%.2f", distance);
 
-    				syncCache.put(event.eid, event); //add event to cache
-        		
-    				result.add(event);
-    			} else {
-				
-    				dao.ofy().delete(e); //clean the datastore by removing old events TODO: call a task doesn't have to be deleted right away
-    				//TODO: delete vote DS
-    			}
+        			syncCache.put(event.eid, event); //add event to cache
+            		
+        			result.add(event);
+            	} 
+        	} else { // event in the past
+					
+        		dao.ofy().delete(e); //clean the datastore by removing old events TODO: call a task doesn't have to be deleted right away
         	}
-
-        }
+        }	
         return result;    
 	}
 
@@ -263,7 +263,7 @@ public class Event extends Model implements Serializable {
 						String TAS = String.valueOf(now.getMillis() / 1000);
 						
 						FacebookClient client 	= new DefaultFacebookClient(u.getAccess_token());
-						String properties 		= "eid, name, pic, pic_big, start_time, end_time, venue, location, host, privacy, creator, update_time";
+						String properties 		= "eid, name, pic, pic_big, start_time, end_time, venue, location, host, privacy, update_time";
 						String query 			= "SELECT " + properties + " FROM event WHERE eid IN (SELECT eid FROM event_member WHERE uid = " + l.getUid() + ") AND end_time > " + TAS; /*need to check privacy CLOSED AND SECRET */
 						List<Event> fbevents 	= client.executeQuery(query, Event.class);
 						
@@ -306,8 +306,8 @@ public class Event extends Model implements Serializable {
 				    	    	}
 				    	    	
 				    	    	e.GetNb_attending_and_gender_ratio(u.getAccess_token(), String.valueOf(e.eid));
-				    	    	syncCache.put(e.eid, e); // Add Event to cache
-				    	    } 						    	    			    	    
+				    	    }
+				    	    syncCache.put(e.eid, e); // Add Event to cache
 						}
 					} catch (Exception ex ) {}
 				}		
@@ -509,11 +509,6 @@ public class Event extends Model implements Serializable {
 			
 			this.score = res_vote == 0 ? res : (res + res_vote) / 2;
 		}
-	}
-	
-	private Boolean IsNotPast() {
-		
-		return dtEnd.isAfterNow();
 	}
 	
 	public long getEid() {
