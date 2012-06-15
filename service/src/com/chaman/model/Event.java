@@ -438,82 +438,44 @@ public class Event extends Model implements Serializable {
 		
 		int dayofweek = now_userTZ.getDayOfWeek();		
 		
-		if (dayofweek != 5 && name.indexOf("friday") != -1) {
+		int dayindex = name.indexOf("day");
+		
+		String day;
+		int dayoffweek_name = 0;
+		
+		if (dayindex != -1 && dayindex > 3) {
 			
-			if (5 - dayofweek < 0) {
-				this.group = "d";
-				this.groupTitle = "This month";
-			} else if (5 - dayofweek == 1){
-				this.group = "b";
-				this.groupTitle = "Tomorrow";
+			day = name.substring(dayindex - 3, dayindex);
+			
+			if (day.contains(" ")){
+				
+				this.group = "a";
+				this.groupTitle = "Today";
 			} else {
-				this.group = "c";
-				this.groupTitle = "This week";
+				
+				if (day.equals("mon")) {dayoffweek_name = 1;} else
+					if (day.equals("ues")) {dayoffweek_name = 2;} else
+						if (day.equals("nes")) {dayoffweek_name = 3;} else
+							if (day.equals("urs")) {dayoffweek_name = 4;} else
+								if (day.equals("fri")) {dayoffweek_name = 5;} else
+									if (day.equals("sat")) {dayoffweek_name = 6;} else
+										if (day.equals("sun")) {dayoffweek_name = 7;} 
+											
+				
+				if (dayoffweek_name - dayofweek < 0) {
+					
+					this.group = "d";
+					this.groupTitle = "This month";
+				} else if (dayoffweek_name - dayofweek > 0) {
+					
+					this.group = "c";
+					this.groupTitle = "This week";
+				} else {
+					
+					this.group = "a";
+					this.groupTitle = "Today";
+				}
 			}
-		}else if (dayofweek != 6 && name.indexOf("saturday") != -1) {
-			
-			if (6 - dayofweek < 0) {
-				this.group = "d";
-				this.groupTitle = "This month";
-			} else if (6 - dayofweek == 1){
-				this.group = "b";
-				this.groupTitle = "Tomorrow";
-			} else {
-				this.group = "c";
-				this.groupTitle = "This week";
-			}
-		}else if (dayofweek != 7 && name.indexOf("sunday") != -1) {
-			
-			if (7 - dayofweek < 0) {
-				this.group = "d";
-				this.groupTitle = "This month";
-			} else if (7 - dayofweek == 1){
-				this.group = "b";
-				this.groupTitle = "Tomorrow";
-			} else {
-				this.group = "c";
-				this.groupTitle = "This week";
-			}
-		}else if (dayofweek != 4 && name.indexOf("thursday") != -1) {
-			
-			if (4 - dayofweek < 0) {
-				this.group = "d";
-				this.groupTitle = "This month";
-			} else if (4 - dayofweek == 1){
-				this.group = "b";
-				this.groupTitle = "Tomorrow";
-			} else {
-				this.group = "c";
-				this.groupTitle = "This week";
-			}
-		}else if (dayofweek != 3 && name.indexOf("wednesday") != -1) {
-			
-			if (3 - dayofweek < 0) {
-				this.group = "d";
-				this.groupTitle = "This month";
-			} else if (3 - dayofweek == 1){
-				this.group = "b";
-				this.groupTitle = "Tomorrow";
-			} else {
-				this.group = "c";
-				this.groupTitle = "This week";
-			}
-		}else if (dayofweek != 2 && name.indexOf("tuesday") != -1) {
-			
-			if (2 - dayofweek < 0) {
-				this.group = "d";
-				this.groupTitle = "This month";
-			} else if (2 - dayofweek == 1){
-				this.group = "b";
-				this.groupTitle = "Tomorrow";
-			} else {
-				this.group = "c";
-				this.groupTitle = "This week";
-			}
-		}else if (dayofweek != 1 && name.indexOf("monday") != -1) {
-			
-			this.group = "d";
-			this.groupTitle = "This month";
 		} else {
 			
 			this.group = "a";
