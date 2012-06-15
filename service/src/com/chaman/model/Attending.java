@@ -143,12 +143,12 @@ public class Attending extends Model {
 			event.eid = eid_long;
 			
 			if (a.sex.equals("male")) {
-				male = male + 1;
+				male++;
 			} else if (a.sex.equals("female")) {
-				female = female + 1;
+				female++;
 			}
 	
-			nb_attending = nb_attending + 1;
+			nb_attending++;
 		}
 		
 		event.nb_attending = nb_attending;

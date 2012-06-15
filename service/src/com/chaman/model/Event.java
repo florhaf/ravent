@@ -242,6 +242,8 @@ public class Event extends Model implements Serializable {
 		
 		Dao dao = new Dao();
 		
+		MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
+		
 		//get users and Access tokens from DS		
 		Query<User> quser = dao.ofy().query(User.class);
 		for (User u: quser) {
@@ -249,7 +251,7 @@ public class Event extends Model implements Serializable {
 			try {
 				
 				//Get friend list 
-				List<Friend> uidList = Friend.GetCron(u.getAccess_token(), Long.toString(u.getUid()));
+				List<Friend> uidList = Friend.GetCron(u.getAccess_token(), Long.toString(u.getUid()), syncCache);
 				
 		    	//Loop to get all events	
 				for (Friend l : uidList) {
@@ -267,7 +269,7 @@ public class Event extends Model implements Serializable {
 						String query 			= "SELECT " + properties + " FROM event WHERE eid IN (SELECT eid FROM event_member WHERE uid = " + l.getUid() + ") AND end_time > " + TAS; /*need to check privacy CLOSED AND SECRET */
 						List<Event> fbevents 	= client.executeQuery(query, Event.class);
 						
-						MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
+						
 						Event e_cache; 
 						
 						for (Event e : fbevents) {

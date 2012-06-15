@@ -12,8 +12,8 @@ import com.restfb.Facebook;
 import com.restfb.FacebookClient;
 import com.restfb.exception.FacebookException;
 
-public class Friend extends Model {
-
+public class Friend extends Model{
+	
 	@Facebook
 	long uid;
 	@Facebook
@@ -44,6 +44,8 @@ public class Friend extends Model {
 		
 		ArrayList<Model> result = new ArrayList<Model>();
 		
+	    MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
+		
 		FacebookClient client 	= new DefaultFacebookClient(accessToken);
 		String properties 		= "uid, first_name, last_name, pic";
 		String query 			= "SELECT " + properties + " FROM user WHERE uid IN (SELECT uid2 FROM friend WHERE uid1 = " + userID + ") ORDER BY last_name";
@@ -52,7 +54,7 @@ public class Friend extends Model {
 		for (Friend f : friends) {
 			
 			f.picture = f.pic;
-			f.setIsFollowed(userID);
+			f.setIsFollowed(userID, syncCache);
 			
 			result.add(f);
 		}
@@ -60,28 +62,21 @@ public class Friend extends Model {
 		return result;
 	}
 	
-	public static List<Friend> GetCron(String accessToken, String userID) throws FacebookException {
+	public static List<Friend> GetCron(String accessToken, String userID, MemcacheService syncCache) throws FacebookException {
 		
 		FacebookClient client 	= new DefaultFacebookClient(accessToken);
 		
 		//make sure to query the events of the user then the friends
-		String query 			= "SELECT uid FROM user WHERE uid IN (SELECT uid2 FROM friend WHERE uid1 = " + userID + ") OR uid = " + userID + "ORDER BY last_name";
+		String query 			= "SELECT uid, first_name, last_name, pic FROM user WHERE uid IN (SELECT uid2 FROM friend WHERE uid1 = " + userID + ") OR uid = " + userID;
 		List<Friend> friends 	= client.executeQuery(query, Friend.class);
 		
 		return friends;
 	}
 	
-	private void setIsFollowed(String userID) {
-
-		/*Query<Following> q = dao.ofy().query(Following.class);
-    	q.filter("userID", Long.parseLong(userID));
-		q.filter("friendID", this.uid);
+	private void setIsFollowed(String userID, MemcacheService syncCache) {
 		
-		this.isFollowed = (q.iterator() != null && q.iterator().hasNext() && q.iterator().next() != null); // Flo needs to explain this one!*/
-    	
 		Following fcache;
 	
-	    MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
 	    fcache = (Following) syncCache.get(userID + String.valueOf(this.uid)); // read from Following cache
 	    if (fcache == null) {	
 	    	
