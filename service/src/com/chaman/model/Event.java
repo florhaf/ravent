@@ -380,8 +380,8 @@ public class Event extends Model implements Serializable {
 		DateTimeZone T = DateTimeZone.forID("America/Los_Angeles");
 		
 		// so need to add time zone offset to DateTime
-		this.dtStart = new DateTime(timeStampStart, T); //plusMinutes(timeZoneInMinutes);
-		this.dtEnd = new DateTime(timeStampEnd, T); //.plusMinutes(timeZoneInMinutes);	
+		this.dtStart = new DateTime(timeStampStart, T);
+		this.dtEnd = new DateTime(timeStampEnd, T);
 		
 		this.time_start = dtStart.toString("KK:mm a");
 		this.time_end = dtEnd.toString("KK:mm a");
@@ -392,10 +392,18 @@ public class Event extends Model implements Serializable {
 		DateTimeZone GMT = DateTimeZone.forID("GMT");		
 		DateTime now = DateTime.now(GMT).plusMinutes(timeZoneInMinutes);
 		
+		int end_minus_start = dtEnd.getDayOfYear() - dtStart.getDayOfYear();
+		
 		if (dtStart.getDayOfYear() <= now.getDayOfYear() && dtEnd.dayOfYear().get() >= now.getDayOfYear()) {
 			
-			this.group = "a";
-			this.groupTitle = "Today";
+			if (end_minus_start >= 7) { // to filter bogus "Fridays", "Tuesdays" events
+				
+				this.Filter_bogus_events(now);
+			} else {
+				
+				this.group = "a";
+				this.groupTitle = "Today";
+			}
 		} else {
 			
 			if (dtStart.getDayOfYear() <= now.plusDays(1).getDayOfYear()) {
@@ -404,16 +412,16 @@ public class Event extends Model implements Serializable {
 				this.groupTitle = "Tomorrow";
 			} else {
 				
-				if (dtStart.getDayOfYear() <= now.plusWeeks(1).getDayOfYear()) {
+				if (dtStart.getWeekyear() == now.getWeekyear()) {
 					
 					this.group = "c";
 					this.groupTitle = "This week";
 				} else {
 					
-					if (dtStart.getDayOfYear() <= now.plusMonths(1).getDayOfYear()) {
+					if (dtStart.getMonthOfYear() == now.getMonthOfYear()) {
 						
 						this.group = "d";
-						this.groupTitle = "This month"; // TODO not really this month. This is more like "In the next 30 days"
+						this.groupTitle = "This month";
 					} else {
 						
 						this.group = "e";
@@ -421,6 +429,95 @@ public class Event extends Model implements Serializable {
 					}
 				}
 			}
+		}
+	}
+	
+	public void Filter_bogus_events(DateTime now_userTZ) {
+		
+		String name = this.name.toLowerCase();
+		
+		int dayofweek = now_userTZ.getDayOfWeek();		
+		
+		if (dayofweek != 5 && name.indexOf("friday") != -1) {
+			
+			if (5 - dayofweek < 0) {
+				this.group = "d";
+				this.groupTitle = "This month";
+			} else if (5 - dayofweek == 1){
+				this.group = "b";
+				this.groupTitle = "Tomorrow";
+			} else {
+				this.group = "c";
+				this.groupTitle = "This week";
+			}
+		}else if (dayofweek != 6 && name.indexOf("saturday") != -1) {
+			
+			if (6 - dayofweek < 0) {
+				this.group = "d";
+				this.groupTitle = "This month";
+			} else if (6 - dayofweek == 1){
+				this.group = "b";
+				this.groupTitle = "Tomorrow";
+			} else {
+				this.group = "c";
+				this.groupTitle = "This week";
+			}
+		}else if (dayofweek != 7 && name.indexOf("sunday") != -1) {
+			
+			if (7 - dayofweek < 0) {
+				this.group = "d";
+				this.groupTitle = "This month";
+			} else if (7 - dayofweek == 1){
+				this.group = "b";
+				this.groupTitle = "Tomorrow";
+			} else {
+				this.group = "c";
+				this.groupTitle = "This week";
+			}
+		}else if (dayofweek != 4 && name.indexOf("thursday") != -1) {
+			
+			if (4 - dayofweek < 0) {
+				this.group = "d";
+				this.groupTitle = "This month";
+			} else if (4 - dayofweek == 1){
+				this.group = "b";
+				this.groupTitle = "Tomorrow";
+			} else {
+				this.group = "c";
+				this.groupTitle = "This week";
+			}
+		}else if (dayofweek != 3 && name.indexOf("wednesday") != -1) {
+			
+			if (3 - dayofweek < 0) {
+				this.group = "d";
+				this.groupTitle = "This month";
+			} else if (3 - dayofweek == 1){
+				this.group = "b";
+				this.groupTitle = "Tomorrow";
+			} else {
+				this.group = "c";
+				this.groupTitle = "This week";
+			}
+		}else if (dayofweek != 2 && name.indexOf("tuesday") != -1) {
+			
+			if (2 - dayofweek < 0) {
+				this.group = "d";
+				this.groupTitle = "This month";
+			} else if (2 - dayofweek == 1){
+				this.group = "b";
+				this.groupTitle = "Tomorrow";
+			} else {
+				this.group = "c";
+				this.groupTitle = "This week";
+			}
+		}else if (dayofweek != 1 && name.indexOf("monday") != -1) {
+			
+			this.group = "d";
+			this.groupTitle = "This month";
+		} else {
+			
+			this.group = "a";
+			this.groupTitle = "Today";
 		}
 	}
 	
