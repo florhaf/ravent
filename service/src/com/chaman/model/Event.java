@@ -281,6 +281,8 @@ public class Event extends Model implements Serializable {
 				    	    	Venue v_graph = new Venue(u.getAccess_token(), e.venue_id);
 				    	    	e.venue_category = v_graph.category;
 							
+				    	    	e.Score(v_graph);
+				    	    	
 				    	    	e.latitude 	= JSON.GetValueFor("latitude", e.venue);
 				    	    	e.longitude = JSON.GetValueFor("longitude", e.venue);
 							
