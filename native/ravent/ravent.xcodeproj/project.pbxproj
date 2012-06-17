@@ -237,6 +237,7 @@
 		DF8ADB91157EC7FD0034BB3B /* invite.png in Resources */ = {isa = PBXBuildFile; fileRef = DF8ADB8F157EC7FD0034BB3B /* invite.png */; };
 		DF8ADB92157EC7FD0034BB3B /* invited.png in Resources */ = {isa = PBXBuildFile; fileRef = DF8ADB90157EC7FD0034BB3B /* invited.png */; };
 		DF8ADB96157EC9590034BB3B /* inviteHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = DF8ADB95157EC9590034BB3B /* inviteHighlighted.png */; };
+		DF8C0651158C0DC1009D3400 /* GPSManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DF8C0650158C0DC1009D3400 /* GPSManager.m */; };
 		DF8DA067155889FF00002A57 /* Store.m in Sources */ = {isa = PBXBuildFile; fileRef = DF8DA066155889FF00002A57 /* Store.m */; };
 		DF8DA0A51559654600002A57 /* ravent.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DF8DA0A31559654600002A57 /* ravent.xcdatamodeld */; };
 		DF8DA0B5155AB3C200002A57 /* dataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = DF8DA0B4155AB3C200002A57 /* dataSource.m */; };
@@ -687,6 +688,8 @@
 		DF8ADB8F157EC7FD0034BB3B /* invite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = invite.png; sourceTree = "<group>"; };
 		DF8ADB90157EC7FD0034BB3B /* invited.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = invited.png; sourceTree = "<group>"; };
 		DF8ADB95157EC9590034BB3B /* inviteHighlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = inviteHighlighted.png; path = buttons/inviteHighlighted.png; sourceTree = "<group>"; };
+		DF8C064F158C0DC1009D3400 /* GPSManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPSManager.h; sourceTree = "<group>"; };
+		DF8C0650158C0DC1009D3400 /* GPSManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPSManager.m; sourceTree = "<group>"; };
 		DF8DA065155889FF00002A57 /* Store.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Store.h; sourceTree = "<group>"; };
 		DF8DA066155889FF00002A57 /* Store.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Store.m; sourceTree = "<group>"; };
 		DF8DA0A41559654600002A57 /* ravent.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ravent.xcdatamodel; sourceTree = "<group>"; };
@@ -1316,6 +1319,8 @@
 				DF8DA066155889FF00002A57 /* Store.m */,
 				DF8ADB84157E81A10034BB3B /* UIToolbar+CustomImage.h */,
 				DF8ADB85157E81A10034BB3B /* UIToolbar+CustomImage.m */,
+				DF8C064F158C0DC1009D3400 /* GPSManager.h */,
+				DF8C0650158C0DC1009D3400 /* GPSManager.m */,
 			);
 			name = Ravent;
 			path = RaventTables;
@@ -2147,6 +2152,7 @@
 				DF8ADB86157E81A10034BB3B /* UIToolbar+CustomImage.m in Sources */,
 				DF24593D15807A260095027E /* controllers_events_DetailsContainer.m in Sources */,
 				DF9CED4E15845129002B1024 /* controllers_events_Pic_big.m in Sources */,
+				DF8C0651158C0DC1009D3400 /* GPSManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

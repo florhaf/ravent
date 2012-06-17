@@ -25,7 +25,7 @@ static controllers_events_Map_p2p *_ctrl;
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         
-        _imageLoading = [[NSMutableDictionary alloc] init];
+//        _imageLoading = [[NSMutableDictionary alloc] init];
         _user = user;
     }
     return self;
@@ -44,6 +44,7 @@ static controllers_events_Map_p2p *_ctrl;
 - (void)loading
 {
     _hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    _isMapSet = NO;
 }
 
 - (void)loadData:(NSArray *)objects
@@ -51,7 +52,7 @@ static controllers_events_Map_p2p *_ctrl;
     [MBProgressHUD hideHUDForView:self.view animated:YES];
     _hud = nil;
     
-    [self setMapLocation:YES];
+//    [self setMapLocation:YES];
     
     if ([objects count] > 0) {
         
@@ -87,9 +88,10 @@ static controllers_events_Map_p2p *_ctrl;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-        
-    //_map.frame = CGRectMake(40, 44, 280, 372);
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(startGps) name:ECSlidingViewUnderRightWillAppear object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(stopGps) name:ECSlidingViewTopDidReset object:nil];
+        
     UIImageView *imgTop = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"toolbar"]];
     UIImageView *imgBottom = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"toolbar"]];
     imgTop.frame = CGRectMake(0, 0, 320, 44);
@@ -101,7 +103,7 @@ static controllers_events_Map_p2p *_ctrl;
     
     UIImage *soi = [UIImage imageNamed:@"searchoptions"];
     UIButton *sob = [UIButton buttonWithType:UIButtonTypeCustom];
-    //[sob addTarget:self action:@selector(onCommentTap:) forControlEvents:UIControlEventTouchUpInside];
+    [sob addTarget:self action:@selector(buttonTap:) forControlEvents:UIControlEventTouchUpInside];
     [sob setImage:soi forState:UIControlStateNormal];
     [sob setFrame:CGRectMake(-20, 0, 270, 44)];
     UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithCustomView:sob];
@@ -114,34 +116,78 @@ static controllers_events_Map_p2p *_ctrl;
     self.slidingViewController.underRightWidthLayout = ECVariableRevealWidth;
 }
 
-- (void)mapViewDidFinishLoadingMap:(MKMapView *)mapView
+- (void) stopGps
 {
-    [self setMapLocation:NO];
+    _map.showsUserLocation = NO;
 }
 
-- (void)setMapLocation:(BOOL)force
+- (void) startGps
 {
-    CLLocationCoordinate2D zoomLocation;
+    _map.showsUserLocation = YES;
     
-    zoomLocation.latitude  = [[models_User crtUser].latitude doubleValue];
-    zoomLocation.longitude = [[models_User crtUser].longitude doubleValue];
-    
-    if (!_isMapSet || force) {
-        
-        _isMapSet = YES;
-        MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(zoomLocation, 2 * METERS_PER_MILE, 2 * METERS_PER_MILE);
-        MKCoordinateRegion adjustedRegion = [_map regionThatFits:viewRegion];                
-        [_map setRegion:adjustedRegion animated:YES];
-        
-        _map.showsUserLocation = YES;
-    }
+    [MBProgressHUD hideHUDForView:self.view animated:NO];
 }
+
+- (IBAction)buttonTap:(id)sender
+{
+    //_map.showsUserLocation = !_map.showsUserLocation;
+}
+
+- (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
+{    
+    MKCoordinateRegion region;
+    MKCoordinateSpan span;
+    
+    span.latitudeDelta = 0.08;
+    span.longitudeDelta = 0.08;
+    
+    CLLocationCoordinate2D location;
+    
+    location.latitude = userLocation.coordinate.latitude;
+    location.longitude = userLocation.coordinate.longitude;
+    
+    region.span = span;
+    region.center = location;
+    
+    [mapView setRegion:region animated:YES];
+}
+
+//- (void)mapViewDidFinishLoadingMap:(MKMapView *)mapView
+//{
+//    [self setMapLocation:NO];
+//}
+
+//- (void)setMapLocation:(BOOL)force
+//{
+//    CLLocationCoordinate2D zoomLocation;
+//    
+//    zoomLocation.latitude  = [[models_User crtUser].latitude doubleValue];
+//    zoomLocation.longitude = [[models_User crtUser].longitude doubleValue];
+//    
+//    if (!_isMapSet || force) {
+//        
+//        _isMapSet = YES;
+//        MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(zoomLocation, 2 * METERS_PER_MILE, 2 * METERS_PER_MILE);
+//        MKCoordinateRegion adjustedRegion = [_map regionThatFits:viewRegion];                
+//        [_map setRegion:adjustedRegion animated:YES];
+//        
+//        //_map.showsUserLocation = YES;
+//    }
+//}
+
+
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    _isMapSet = NO;
-    [self setMapLocation:YES];
+//    _isMapSet = NO;
+//    [self setMapLocation:YES];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    
 }
 
 - (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views {

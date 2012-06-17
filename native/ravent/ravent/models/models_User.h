@@ -8,9 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import <RestKit/RestKit.h>
-#import <CoreLocation/CoreLocation.h>
+//#import <CoreLocation/CoreLocation.h>
 
-@interface models_User : NSObject<RKObjectLoaderDelegate, RKRequestDelegate, CLLocationManagerDelegate> {
+@interface models_User : NSObject<RKObjectLoaderDelegate, RKRequestDelegate/*, CLLocationManagerDelegate*/> {
     
     id __unsafe_unretained _delegate;
     // callback for object loading
@@ -20,12 +20,12 @@
     SEL _callbackResponseFailure;
     id _sender;
     
-    CLLocationManager *_locationManager;
+//    CLLocationManager *_locationManager;
     id __unsafe_unretained _locationDelegate;
     SEL _locationSuccess;
     SEL _locationFailure;
-    NSDate *_locationLastUpdateTime;
-    CLLocation *_bestEffortAtLocation;
+//    NSDate *_locationLastUpdateTime;
+//    CLLocation *_bestEffortAtLocation;
     
     BOOL _isRequesting;
     BOOL _isLoadingAllFriends;
@@ -56,7 +56,7 @@
 @property (nonatomic, assign) SEL callbackResponseSuccess;
 @property (nonatomic, assign) SEL callbackResponseFailure;
 
-@property (nonatomic, retain) CLLocationManager *locationManager;
+//@property (nonatomic, retain) CLLocationManager *locationManager;
 @property (unsafe_unretained) id locationDelegate;
 @property (nonatomic, assign) SEL locationSuccess;
 @property (nonatomic, assign) SEL locationFailure;
@@ -86,6 +86,7 @@
 - (void)cancelAllRequests;
 
 - (void)getLocation;
+- (void)dispatchLocation:(NSError *)error;
 
 - (void)follow:(NSMutableDictionary *)params success:(SEL)success failure:(SEL)failure sender:(id)sender;
 - (void)unfollow:(NSMutableDictionary *)params success:(SEL)success failure:(SEL)failure sender:(id)sender;

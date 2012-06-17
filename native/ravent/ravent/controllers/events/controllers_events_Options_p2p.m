@@ -26,25 +26,25 @@
 - (void)viewDidLoad
 {
     [super viewDidUnload];
-   
-    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(hideOptionsModal)];        
-    UIBarButtonItem *locateButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(hideOptionsModal)];        
-    
-    self.navigationItem.rightBarButtonItem = doneButton;
-    self.navigationItem.leftBarButtonItem = locateButton;
-    
-    ((UIScrollView *)[self.view.subviews objectAtIndex:0]).contentSize = CGSizeMake(320, 565);
-    
-    CLLocationCoordinate2D zoomLocation;
-    zoomLocation.latitude = [[models_User crtUser].latitude floatValue];
-    zoomLocation.longitude= [[models_User crtUser].longitude floatValue];
-    
-    MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(zoomLocation, 5*METERS_PER_MILE, 5*METERS_PER_MILE);
-    MKCoordinateRegion adjustedRegion = [_map regionThatFits:viewRegion];                
-    
-    [_map setRegion:adjustedRegion animated:YES];
-    
-    _map.showsUserLocation = YES;
+//   
+//    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(hideOptionsModal)];        
+//    UIBarButtonItem *locateButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(hideOptionsModal)];        
+//    
+//    self.navigationItem.rightBarButtonItem = doneButton;
+//    self.navigationItem.leftBarButtonItem = locateButton;
+//    
+//    ((UIScrollView *)[self.view.subviews objectAtIndex:0]).contentSize = CGSizeMake(320, 565);
+//    
+//    CLLocationCoordinate2D zoomLocation;
+//    zoomLocation.latitude = [[models_User crtUser].latitude floatValue];
+//    zoomLocation.longitude= [[models_User crtUser].longitude floatValue];
+//    
+//    MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(zoomLocation, 5*METERS_PER_MILE, 5*METERS_PER_MILE);
+//    MKCoordinateRegion adjustedRegion = [_map regionThatFits:viewRegion];                
+//    
+//    [_map setRegion:adjustedRegion animated:YES];
+//    
+//    _map.showsUserLocation = YES;
 }
 
 - (void)hideOptionsModal

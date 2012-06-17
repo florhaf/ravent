@@ -44,7 +44,7 @@
     MKCoordinateRegion adjustedRegion = [_map regionThatFits:viewRegion];                
     [_map setRegion:adjustedRegion animated:YES];
     
-    _map.showsUserLocation = YES;
+    //_map.showsUserLocation = YES;
     
     CLLocationCoordinate2D coord;
     coord.latitude = [_event.latitude doubleValue];

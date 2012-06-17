@@ -55,7 +55,7 @@ static controllers_events_List_p2p *_ctrl;
     
     [_event loadEventsWithParams:params];
     
-    [[controllers_events_Map_p2p instance] setMapLocation:YES];
+    //[[controllers_events_Map_p2p instance] setMapLocation:YES];
 }
 
 - (void)onLoadEvents:(NSArray *)objects

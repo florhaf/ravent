@@ -34,11 +34,15 @@
 
 @property (nonatomic, unsafe_unretained) CGFloat peekLeftAmount;
 
+- (IBAction)buttonTap:(id)sender;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil user:(models_User *)user;
 - (void)loading;
 - (void)loadData:(NSArray *)objects;
-- (void)setMapLocation:(BOOL)force;
+//- (void)setMapLocation:(BOOL)force;
 - (void)updateLoadingMessageWith:(NSString *)text;
+- (void) stopGps;
+- (void) startGps;
 
 + (controllers_events_Map_p2p *)instance;
 
