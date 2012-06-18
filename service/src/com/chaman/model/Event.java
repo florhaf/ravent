@@ -37,8 +37,6 @@ public class Event extends Model implements Serializable {
 	@Facebook
 	String name;
 	@Facebook
-	String pic;
-	@Facebook
 	String pic_big;
 	@Facebook
 	String venue;
@@ -50,8 +48,6 @@ public class Event extends Model implements Serializable {
 	String end_time;
 	@Facebook
 	String description;
-	@Facebook
-	String host;
 	@Facebook
 	String privacy;
 	@Facebook
@@ -67,8 +63,6 @@ public class Event extends Model implements Serializable {
 	String time_end;
 	String date_start;
 	String date_end;
-	String picture;
-	String invited_by;
 	String distance;
 	String groupTitle;
 	String venue_category; // (club, bar etc)
@@ -103,7 +97,7 @@ public class Event extends Model implements Serializable {
 		String TAS = String.valueOf(now.getMillis() / 1000);
 		
 		FacebookClient client 	= new DefaultFacebookClient(accessToken);
-		String properties 		= "eid, name, pic, pic_big, start_time, end_time, venue, location, host, privacy, update_time";
+		String properties 		= "eid, name, pic_big, start_time, end_time, venue, location, privacy, update_time";
 		String query 			= "SELECT " + properties + " FROM event WHERE eid IN (SELECT eid FROM event_member WHERE uid = " + userID + ") AND end_time > " + TAS + " ORDER BY start_time"; /*need to check privacy CLOSED AND SECRET */
 		List<Event> fbevents 	= client.executeQuery(query, Event.class);
 		
@@ -187,7 +181,7 @@ public class Event extends Model implements Serializable {
 		List<EventLocationCapable> l = GeocellManager.proximityFetch(new Point(Double.parseDouble(userLatitude), Double.parseDouble(userLongitude)), searchLimit, searchRadius * 1000, ofySearch);
 		
 		FacebookClient client 	= new DefaultFacebookClient(accessToken);
-		String properties 		= "eid, name, pic, pic_big, start_time, end_time, venue, location, host, privacy";
+		String properties 		= "eid, name, pic_big, start_time, end_time, venue, location, privacy";
 		
 		MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
 		
@@ -210,12 +204,14 @@ public class Event extends Model implements Serializable {
             			event.venue_id = JSON.GetValueFor("id", event.venue);
         				Venue v_graph = new Venue(accessToken, event.venue_id);
         				event.venue_category = v_graph.category;
-        				event.Score(v_graph);
-        				event.GetNb_attending_and_gender_ratio(accessToken, String.valueOf(event.eid));
+        				if (event.venue_category == null || (event.venue_category != null && !event.venue_category.equals("City"))) {
+        					event.Score(v_graph);
+        					event.GetNb_attending_and_gender_ratio(accessToken, String.valueOf(event.eid));
+        				}
             		}
             	}
             	
-            	if (event != null) {
+            	if (event != null && (event.venue_category == null || (event.venue_category != null && !event.venue_category.equals("City")))) {
             		
         			event.Format(timeZoneInMinutes);    		
         			
@@ -265,7 +261,7 @@ public class Event extends Model implements Serializable {
 						String TAS = String.valueOf(now.getMillis() / 1000);
 						
 						FacebookClient client 	= new DefaultFacebookClient(u.getAccess_token());
-						String properties 		= "eid, name, pic, pic_big, start_time, end_time, venue, location, host, privacy, update_time";
+						String properties 		= "eid, name, pic_big, start_time, end_time, venue, location, privacy, update_time";
 						String query 			= "SELECT " + properties + " FROM event WHERE eid IN (SELECT eid FROM event_member WHERE uid = " + l.getUid() + ") AND end_time > " + TAS; /*need to check privacy CLOSED AND SECRET */
 						List<Event> fbevents 	= client.executeQuery(query, Event.class);
 						
@@ -281,37 +277,40 @@ public class Event extends Model implements Serializable {
 				    	    	Venue v_graph = new Venue(u.getAccess_token(), e.venue_id);
 				    	    	e.venue_category = v_graph.category;
 							
-				    	    	e.Score(v_graph);
+				    	    	if (e.venue_category == null || (e.venue_category != null && !e.venue_category.equals("City"))) {
 				    	    	
-				    	    	e.latitude 	= JSON.GetValueFor("latitude", e.venue);
-				    	    	e.longitude = JSON.GetValueFor("longitude", e.venue);
-							
-				    	    	if ((e.latitude == null || e.latitude == "" || e.longitude == null || e.longitude == "") && v_graph != null) {
+					    	    	e.Score(v_graph);
+					    	    	
+					    	    	e.latitude 	= JSON.GetValueFor("latitude", e.venue);
+					    	    	e.longitude = JSON.GetValueFor("longitude", e.venue);
 								
-				    	    		// take value from venue if event location is null
-				    	    		e.latitude = JSON.GetValueFor("latitude", v_graph.location);
-				    	    		e.longitude = JSON.GetValueFor("longitude", v_graph.location);
-				    	    	}	
-							
-				    	    	if (e.latitude != null && e.latitude != "" && e.longitude != null && e.longitude != "") {
-								
-				    	    		Query<EventLocationCapable> q = dao.ofy().query(EventLocationCapable.class);
-				    	    		q.filter("eid", e.eid); //can be optimized with a get (filter = 1 read + 1small op)
+					    	    	if ((e.latitude == null || e.latitude == "" || e.longitude == null || e.longitude == "") && v_graph != null) {
 									
-				    	    		if (q.count() == 0) {
-							        	
-				    	    			EventLocationCapable elc = new EventLocationCapable(e);
-				    	    			dao.ofy().put(elc);
-				    	    		}
-				    	    		
-				    	    	} else {
-												
-				    	    		e.distance = "N/A";
-				    	    	}
-				    	    	
-				    	    	e.GetNb_attending_and_gender_ratio(u.getAccess_token(), String.valueOf(e.eid));
+					    	    		// take value from venue if event location is null
+					    	    		e.latitude = JSON.GetValueFor("latitude", v_graph.location);
+					    	    		e.longitude = JSON.GetValueFor("longitude", v_graph.location);
+					    	    	}	
+								
+					    	    	if (e.latitude != null && e.latitude != "" && e.longitude != null && e.longitude != "") {
+									
+					    	    		Query<EventLocationCapable> q = dao.ofy().query(EventLocationCapable.class);
+					    	    		q.filter("eid", e.eid); //can be optimized with a get (filter = 1 read + 1small op)
+										
+					    	    		if (q.count() == 0) {
+								        	
+					    	    			EventLocationCapable elc = new EventLocationCapable(e);
+					    	    			dao.ofy().put(elc);
+					    	    		}
+					    	    		
+					    	    	} else {
+													
+					    	    		e.distance = "N/A";
+					    	    	}
+					    	    	
+					    	    	e.GetNb_attending_and_gender_ratio(u.getAccess_token(), String.valueOf(e.eid));
+					    	    }
 				    	    }
-				    	    syncCache.put(e.eid, e); // Add Event to cache
+				    	    if (e.venue_category == null || (e.venue_category != null && !e.venue_category.equals("City"))) {syncCache.put(e.eid, e);} // Add Event to cache
 						}
 					} catch (Exception ex ) {}
 				}		
@@ -339,7 +338,7 @@ public class Event extends Model implements Serializable {
 		
 		Event e = new Event();
         	
-    	String query 			= "SELECT eid, name, pic, pic_big, start_time, end_time, venue, location, host, privacy FROM event WHERE eid = " + eid;
+    	String query 			= "SELECT eid, name, pic_big, start_time, end_time, venue, location, privacy FROM event WHERE eid = " + eid;
     	List<Event> fbevents 	= client.executeQuery(query, Event.class);
 		
 		e = fbevents.get(0);
@@ -372,10 +371,6 @@ public class Event extends Model implements Serializable {
 	}
 	
 	private void Format(int timeZoneInMinutes) {
-		
-		// format misc.
-		this.picture	= this.pic;
-		this.invited_by = this.host;
 			
 		long timeStampStart = Long.parseLong(this.start_time) * 1000;
 		long timeStampEnd = Long.parseLong(this.end_time) * 1000;
@@ -584,24 +579,9 @@ public class Event extends Model implements Serializable {
 		return this.name;
 	}
 	
-	public String getPicture() {
-		
-		return this.picture;
-	}
-	
 	public String getGroup() {
 		
 		return this.group;
-	}
-	
-	public String getDescription() {
-		
-		return this.description;
-	}
-	
-	public String getVenue() {
-		
-		return this.venue;
 	}
 	
 	public String getLocation() {
@@ -637,11 +617,6 @@ public class Event extends Model implements Serializable {
 	public String getDate_end() {
 		
 		return this.date_end;
-	}
-	
-	public String getInvited_by() {
-		
-		return this.invited_by;
 	}
 	
 	public String getLatitude() {
