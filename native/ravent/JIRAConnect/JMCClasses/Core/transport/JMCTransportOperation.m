@@ -183,7 +183,7 @@
     if (responseString) {
         msg = [msg stringByAppendingString:responseString];
     }
-    NSString *absoluteURL = [[request.URL absoluteURL] description];
+    //qNSString *absoluteURL = [[request.URL absoluteURL] description];
     JMCDLog(@"Request failed: %@ URL: %@, response code: %d", msg, absoluteURL, statusCode);
     [responseString release];
 #endif

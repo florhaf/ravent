@@ -272,7 +272,6 @@
 		DF945CF81556120200B21571 /* cancelButton.png in Resources */ = {isa = PBXBuildFile; fileRef = DF945CF71556120200B21571 /* cancelButton.png */; };
 		DF945CFA155612D800B21571 /* regularButton.png in Resources */ = {isa = PBXBuildFile; fileRef = DF945CF9155612D800B21571 /* regularButton.png */; };
 		DF945CFC1556B7D800B21571 /* picbg2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF945CFB1556B7D800B21571 /* picbg2@2x.png */; };
-		DF945D021556D5DE00B21571 /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = DF945D011556D5DE00B21571 /* NSData+Base64.m */; };
 		DF945D041556E5DC00B21571 /* removeButton.png in Resources */ = {isa = PBXBuildFile; fileRef = DF945D031556E5DC00B21571 /* removeButton.png */; };
 		DF9CED3D15833640002B1024 /* picbg3.png in Resources */ = {isa = PBXBuildFile; fileRef = DF9CED3C15833640002B1024 /* picbg3.png */; };
 		DF9CED3F158339EA002B1024 /* postcomment.png in Resources */ = {isa = PBXBuildFile; fileRef = DF9CED3E158339EA002B1024 /* postcomment.png */; };
@@ -733,8 +732,6 @@
 		DF945CF71556120200B21571 /* cancelButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cancelButton.png; sourceTree = "<group>"; };
 		DF945CF9155612D800B21571 /* regularButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = regularButton.png; sourceTree = "<group>"; };
 		DF945CFB1556B7D800B21571 /* picbg2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "picbg2@2x.png"; sourceTree = "<group>"; };
-		DF945D001556D5DE00B21571 /* NSData+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Base64.h"; sourceTree = "<group>"; };
-		DF945D011556D5DE00B21571 /* NSData+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Base64.m"; sourceTree = "<group>"; };
 		DF945D031556E5DC00B21571 /* removeButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = removeButton.png; path = ravent/resources/buttons/removeButton.png; sourceTree = SOURCE_ROOT; };
 		DF9CED3C15833640002B1024 /* picbg3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = picbg3.png; sourceTree = "<group>"; };
 		DF9CED3E158339EA002B1024 /* postcomment.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = postcomment.png; sourceTree = "<group>"; };
@@ -1315,8 +1312,6 @@
 				DF09C09B1551858800FFD51E /* UITableViewSearchable.m */,
 				DF36FF4B1555868900C3CB53 /* postController.h */,
 				DF36FF4C1555868900C3CB53 /* postController.m */,
-				DF945D001556D5DE00B21571 /* NSData+Base64.h */,
-				DF945D011556D5DE00B21571 /* NSData+Base64.m */,
 				DF8DA065155889FF00002A57 /* Store.h */,
 				DF8DA066155889FF00002A57 /* Store.m */,
 				DF8ADB84157E81A10034BB3B /* UIToolbar+CustomImage.h */,
@@ -2147,7 +2142,6 @@
 				DF36FF3D15532B9300C3CB53 /* UIView+Animation.m in Sources */,
 				DF36FF4415534E9400C3CB53 /* controllers_events_FeedContainer.m in Sources */,
 				DF36FF4D1555868900C3CB53 /* postController.m in Sources */,
-				DF945D021556D5DE00B21571 /* NSData+Base64.m in Sources */,
 				DF8DA067155889FF00002A57 /* Store.m in Sources */,
 				DF8DA0A51559654600002A57 /* ravent.xcdatamodeld in Sources */,
 				DF8DA0B5155AB3C200002A57 /* dataSource.m in Sources */,
