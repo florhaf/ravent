@@ -159,7 +159,7 @@ static models_User *_crtUser = nil;
 
 - (void)loadUser
 {
-    RKLogConfigureByName("RestKit/*", RKLogLevelTrace);
+    //RKLogConfigureByName("RestKit/*", RKLogLevelTrace);
     
     NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
     [params setValue:_uid forKey:@"userID"];
