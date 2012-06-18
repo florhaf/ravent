@@ -64,7 +64,13 @@ static controllers_friends_All *_ctrl;
 - (void)reloadTableViewDataSource
 {
 	_reloading = YES;
-    [self loadData:YES];
+    [self reloadTableViewDataSource:YES];
+}
+
+- (void)reloadTableViewDataSource:(BOOL)force
+{
+	_reloading = YES;
+    [self loadData:force];
 }
 
 - (void)onLoadAll:(NSArray *)objects
@@ -302,7 +308,7 @@ static controllers_friends_All *_ctrl;
         
         if (_ctrl.groupedData == nil || [_ctrl.groupedData count] == 0) {
             
-            [_ctrl reloadTableViewDataSource];
+            [_ctrl reloadTableViewDataSource:NO];
         } else {
          
             [_ctrl.tableView reloadData];

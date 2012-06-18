@@ -124,7 +124,6 @@ static models_User *_crtUser = nil;
     [[GPSManager instance] startGps];
 }
 
-
 - (void)onGPSDone
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:GPSDone object:[GPSManager instance]];
@@ -140,7 +139,8 @@ static models_User *_crtUser = nil;
     [self dispatchLocation:error];
 }
 
-- (void)dispatchLocation:(NSError *)error {
+- (void)dispatchLocation:(NSError *)error
+{
 
     if (error != nil) {
         
@@ -314,6 +314,11 @@ static models_User *_crtUser = nil;
     if ([objectLoader.URL.path rangeOfString:@"friends"].location != NSNotFound) {
         
         _allListSingleton = [[NSArray alloc] initWithArray:sortedObjects];
+    }
+    
+    if (_delegate == nil) {
+        
+        return;
     }
     
 #pragma clang diagnostic push

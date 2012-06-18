@@ -150,6 +150,16 @@ static controllers_Login *_ctrl;
 
     _user.uid = uid;
     
+    
+    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+    
+    [params setValue:_user.accessToken forKey:@"access_token"];
+    [params setValue:_user.uid forKey:@"userID"];
+    _userLoader = [[models_User alloc] init];
+    
+    [_userLoader loadAllWithParams:params force:YES];
+    
+    
     [_user loadUser];
 }
 
