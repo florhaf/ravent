@@ -26,6 +26,7 @@ typedef enum {
 
 @implementation UITableViewReloadable
 
+@synthesize data = _data;
 @synthesize groupedData = _groupedData;
 @synthesize emptyMessage = _emptyMessage;
 

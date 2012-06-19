@@ -41,34 +41,6 @@
         _groupedData = [models_Event getGroupedData:_data];
         _sortedKeys = [[_groupedData allKeys] sortedArrayUsingSelector:@selector(compare:)];
         
-//        NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
-//        
-//        for (models_Event *e in _data) {
-//            
-//            NSString *cat = e.venue_category;
-//            
-//            if (cat == nil || [cat isEqualToString:@""]) {
-//                
-//                cat = @"no cat";
-//            }
-//            
-//            if ([[dic allKeys] containsObject:cat]) {
-//                
-//                NSNumber *count = (NSNumber *)[dic objectForKey:cat];
-//                count = [NSNumber numberWithInt:count.intValue + 1];
-//                [dic setValue:count forKey:cat];
-//            } else {
-//                
-//                [dic setValue:[NSNumber numberWithInt:1] forKey:cat];
-//            }
-//        }
-//        
-//        
-//        for (NSString *key in [dic allKeys]) {
-//            
-//            NSLog(@"category: %@ - number of: %d", key, ((NSNumber *)[dic objectForKey:key]).intValue);
-//        }
-        
     }];
 }
 

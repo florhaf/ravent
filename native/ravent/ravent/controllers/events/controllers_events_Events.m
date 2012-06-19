@@ -28,6 +28,7 @@ static customNavigationController *_ctrl;
         
         Action *loadDetailsAction = [[Action alloc] initWithDelegate:self andSelector:@selector(loadEventDetailsFromMap:)];
         [[ActionDispatcher instance] add:loadDetailsAction named:@"controller_events_List_p2p_loadDetails"];
+        
     }
     return self;
 }
@@ -97,14 +98,18 @@ static customNavigationController *_ctrl;
     [_toolbar setItems:[[NSArray alloc] initWithObjects:btn, nil]];
     
     [self.view bringSubviewToFront:_toolbar];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onValueChanged:) name:@"onLoadEventsP2P" object:[controllers_events_List_p2p instance]];
 }
 
 - (IBAction)onValueChanged:(id)sender
 {
-    UISegmentedControl *seg = (UISegmentedControl *)sender;
+    UISegmentedControl *seg = (UISegmentedControl *)((UIBarButtonItem *)[_toolbar.items objectAtIndex:0]).customView;
     int selectedIndex = seg.selectedSegmentIndex;
     
     [[controllers_events_List_p2p instance] reloadTableViewDataSourceWithIndex:selectedIndex];
+    
+    [[controllers_events_Map_p2p instance] loadData:[controllers_events_List_p2p instance].data];
 }
 
 - (void)viewWillAppear:(BOOL)animated

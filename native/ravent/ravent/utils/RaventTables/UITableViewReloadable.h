@@ -48,6 +48,7 @@ typedef void (^success)();
     MBProgressHUD *_hud;
 }
 
+@property (nonatomic, retain) NSArray *data;
 @property (nonatomic, retain) NSMutableDictionary *groupedData;
 @property (nonatomic, retain) NSString *emptyMessage;
 
