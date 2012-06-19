@@ -34,6 +34,9 @@
 @synthesize groupTitle = _groupTitle;
 @synthesize coordinate = _coordinate;
 @synthesize filter = _filter;
+@synthesize female_ratio = _female_ratio;
+@synthesize male_ratio = _male_ratio;
+@synthesize nb_attending = _nb_attending;
 
 //#define SERVICE_URL @"http://air.local:8888"
 #define SERVICE_URL @"http://raventsvc.appspot.com"
@@ -169,6 +172,28 @@
     [self performSelector:@selector(updateLoadingMessage3:) withObject:resourcePath afterDelay:5];
 }
 
+- (void)loadStatsWithParams:(NSMutableDictionary *)params andTarget:(id)target andSelector:(SEL)success
+{
+    NSString *resourcePath = [@"eventstats" appendQueryParams:params];
+    
+    
+    _callbackStatsSuccess = success;
+    _senderStats = target;
+    
+    RKObjectMapping *objectMapping = [RKObjectMapping mappingForClass:[models_Event class]];
+    [objectMapping mapKeyPath:@"female_ratio" toAttribute:@"female_ratio"];
+    [objectMapping mapKeyPath:@"male_ratio" toAttribute:@"male_ratio"];
+    [objectMapping mapKeyPath:@"nb_attending" toAttribute:@"nb_attending"];
+    
+    if (_manager == nil) {
+        
+        _manager = [RKObjectManager objectManagerWithBaseURL:SERVICE_URL];
+    }
+    
+    [_manager.mappingProvider setMapping:objectMapping forKeyPath:@"records"];
+    [_manager loadObjectsAtResourcePath:resourcePath objectMapping:objectMapping delegate:self];
+}
+
 - (void)vote:(NSMutableDictionary *)params success:(SEL)success failure:(SEL)failure sender:(id)sender
 {
     _callbackResponseSuccess = success;
@@ -194,6 +219,17 @@
 
 - (void)objectLoader:(RKObjectLoader *)objectLoader didLoadObjects:(NSArray *)objects
 {  
+    
+    if ([objectLoader.URL.path rangeOfString:@"eventstats"].location != NSNotFound) {
+        
+    #pragma clang diagnostic push
+    #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+        [_senderStats performSelector:_callbackStatsSuccess withObject:objects];
+    #pragma clang diagnostic pop
+        
+        return;
+    }
+    
     #pragma clang diagnostic push
     #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
     [_delegate performSelector:_callback withObject:objects];

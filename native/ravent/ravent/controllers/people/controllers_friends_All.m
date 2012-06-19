@@ -33,18 +33,46 @@ static controllers_friends_All *_ctrl;
         
         _following = following;
         
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onFollowingLoaded:) name:@"followingLoaded" object:nil];
+        
         [self loadData];
     }
     
     return self;
 }
 
+- (void)onFollowingLoaded:(NSNotification *)notification
+{
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
+    
+    _following = [[NSMutableDictionary alloc] initWithDictionary:[notification userInfo]];
+    
+    for (int i = 0; i < [[_following allKeys] count]; i++) {
+        
+        NSString *key = [[_following allKeys]objectAtIndex:i];
+        NSMutableArray *users = [_following objectForKey:key];
+        
+        for (int j = 0; j < [users count]; j++) {
+            
+            models_User *followedUser = [users objectAtIndex:j];
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"uid like %@", followedUser.uid];
+            
+            NSArray *result = [[_groupedData objectForKey:key] filteredArrayUsingPredicate:predicate];
+            
+            ((models_User *)[result objectAtIndex:0]).isFollowed = @"true";
+        }
+    }
+    
+    
+    [self.tableView reloadData];
+}
+
 - (void)loadData
 {
-    if (_following != nil && [_following count] > 0) {
+    //if (_following != nil && [_following count] > 0) {
         
         [self loadData:NO];   
-    }
+    //}
 }
 
 - (void)loadData:(BOOL)force
@@ -231,9 +259,30 @@ static controllers_friends_All *_ctrl;
                               animated:YES];
 }
 
+- (void)openDrawer
+{
+//    if (_following == nil) {
+//        
+//        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadFollowings:) name:@"followingLoaded" object:nil];
+//    }
+}
+
+- (void)closeDrawer
+{
+    if (_isDirty) {
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadFollowing" object:nil];
+    }
+    
+    _isDirty = NO;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(openDrawer) name:ECSlidingViewUnderRightWillAppear object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(closeDrawer) name:ECSlidingViewTopDidReset object:nil];
 
     _hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     

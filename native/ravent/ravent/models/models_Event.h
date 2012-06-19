@@ -20,6 +20,11 @@
     SEL _callbackResponseFailure;
     id _sender;
     
+    SEL _callbackStatsSuccess;
+    SEL _callbackStatsFailure;
+    id _senderStats;
+    
+    
     BOOL _isRequesting;
     
     RKObjectManager *_manager;    
@@ -41,6 +46,9 @@
     NSString *_longitude;
     NSString *_groupTitle;
     NSString *_filter;
+    NSString *_female_ratio;
+    NSString *_male_ratio;
+    NSString *_nb_attending;
     
     CLLocationCoordinate2D _coordinate;
 }
@@ -68,6 +76,9 @@
 @property (nonatomic, retain) NSString *longitude;
 @property (nonatomic, retain) NSString *groupTitle;
 @property (nonatomic, retain) NSString *filter;
+@property (nonatomic, retain) NSString *female_ratio;
+@property (nonatomic, retain) NSString *male_ratio;
+@property (nonatomic, retain) NSString *nb_attending;
 
 @property (nonatomic, assign) CLLocationCoordinate2D coordinate;
 
@@ -76,6 +87,7 @@
 - (void)reloadWithParams:(NSMutableDictionary *)params;
 - (void)share:(NSMutableDictionary *)params;
 - (void)loadDescription;
+- (void)loadStatsWithParams:(NSMutableDictionary *)params andTarget:(id)target andSelector:(SEL)success;
 - (void)vote:(NSMutableDictionary *)params success:(SEL)success failure:(SEL)failure sender:(id)sender;
 - (void)rsvp:(NSMutableDictionary *)params success:(SEL)success failure:(SEL)failure sender:(id)sender;
 - (void)cancelAllRequests;

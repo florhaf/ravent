@@ -30,6 +30,9 @@
     IBOutlet UIView *_voteLoading;
     IBOutlet UIImageView *_borderLeft;
     IBOutlet UIImageView *_borderRight;
+    IBOutlet UILabel *_labelFemaleRatio;
+    IBOutlet UILabel *_labelMaleRatio;
+    IBOutlet UILabel *_labelTotalAttendings;
     
     IBOutlet JBAsyncImageView *_headerImage;
     IBOutlet JBAsyncImageView *_mapImage;

@@ -390,7 +390,31 @@
     [_headerGroupLabel sizeToFit];
     _headerDateLabel.frame = CGRectMake(_headerGroupLabel.frame.origin.x + _headerGroupLabel.frame.size.width + 4, _headerDateLabel.frame.origin.y, _headerDateLabel.frame.size.width, _headerDateLabel.frame.size.height);
     
+    
+    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+    
+    [params setValue:_event.eid forKey:@"eid"];
+    [params setValue:[models_User crtUser].accessToken forKey:@"access_token"];
+    
+    [_event loadStatsWithParams:params andTarget:self andSelector:@selector(onEventStatsLoad:)];
+    
     self.tableView.tableHeaderView = _header;
+}
+
+- (void)onEventStatsLoad:(NSArray *)objects
+{
+    if (objects != nil && [objects count] > 0) {
+        
+        models_Event *e = [objects objectAtIndex:0];
+        
+        
+        double d = [e.female_ratio doubleValue];
+        d = d * 100;
+        
+        _labelFemaleRatio.text = [NSString stringWithFormat:@"%.0f %%", d + 1];
+        _labelMaleRatio.text = [NSString stringWithFormat:@"%.0f %%", 100 - (d + 1)];
+        _labelTotalAttendings.text = e.nb_attending;
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated

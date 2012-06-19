@@ -162,12 +162,12 @@ static controllers_events_Map_p2p *_ctrl;
     self.slidingViewController.underRightWidthLayout = ECVariableRevealWidth;
 }
 
-- (void) stopGps
+- (void)stopGps
 {
     _map.showsUserLocation = NO;
 }
 
-- (void) startGps
+- (void)startGps
 {
     _map.showsUserLocation = YES;
     
