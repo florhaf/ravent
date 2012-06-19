@@ -8,7 +8,25 @@
 
 #import "UItableViewEvents.h"
 
-@interface controllers_events_List_p2p : UITableViewEvents
+@interface controllers_events_List_p2p : UITableViewEvents {
+    
+    NSMutableArray *_party;
+    NSMutableArray *_chill;
+    NSMutableArray *_art;
+    NSMutableArray *_other;
+    
+    NSArray *_sortedKeysParty;
+    NSArray *_sortedKeysChill;
+    NSArray *_sortedKeysArt;
+    NSArray *_sortedKeysOther;
+    
+    NSMutableDictionary *_groupedParty;
+    NSMutableDictionary *_groupedChill;
+    NSMutableDictionary *_groupedArt;
+    NSMutableDictionary *_groupedOther;
+}
+
+- (void)reloadTableViewDataSourceWithIndex:(int)index;
 
 + (controllers_events_List_p2p *)instance;
 

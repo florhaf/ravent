@@ -157,7 +157,7 @@ static controllers_Login *_ctrl;
     [params setValue:_user.uid forKey:@"userID"];
     _userLoader = [[models_User alloc] init];
     
-    [_userLoader loadAllWithParams:params force:YES];
+    //[_userLoader loadAllWithParams:params force:YES];
     
     
     [_user loadUser];

@@ -14,6 +14,7 @@
 #import "ActionDispatcher.h"
 #import "UIView+Animation.h"
 #import "controllers_events_List_p2p.h"
+#import <RestKit/RKErrorMessage.h>
 
 @implementation controllers_events_Map_p2p
 
@@ -60,7 +61,8 @@ static controllers_events_Map_p2p *_ctrl;
         
         id object = [objects objectAtIndex:0];
         
-        if ([object isKindOfClass:[NSError class]]) {
+        if ([object isKindOfClass:[NSError class]] ||
+            [object isKindOfClass:[RKErrorMessage class]]) {
             
             // error shown on the list itself
             

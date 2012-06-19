@@ -40,6 +40,7 @@
     NSString *_latitude;
     NSString *_longitude;
     NSString *_groupTitle;
+    NSString *_filter;
     
     CLLocationCoordinate2D _coordinate;
 }
@@ -66,6 +67,7 @@
 @property (nonatomic, retain) NSString *latitude;
 @property (nonatomic, retain) NSString *longitude;
 @property (nonatomic, retain) NSString *groupTitle;
+@property (nonatomic, retain) NSString *filter;
 
 @property (nonatomic, assign) CLLocationCoordinate2D coordinate;
 

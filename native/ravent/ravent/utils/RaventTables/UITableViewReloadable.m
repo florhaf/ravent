@@ -12,6 +12,7 @@
 #import "JBAsyncImageView.h"
 #import "controllers_App.h"
 #import "ActionDispatcher.h"
+#import <RestKit/RKErrorMessage.h>
 
 typedef enum {
     
@@ -167,8 +168,22 @@ typedef enum {
             ((UILabel *)[_emptyMessageView.subviews objectAtIndex:0]).text = @"pull to refresh";
             [_emptyMessageViewPlaceHolder addSubview:_emptyMessageView];
             
+        } else if ([object isKindOfClass:[RKErrorMessage class]]) {
+            
+            RKErrorMessage *error = (RKErrorMessage *)object;
+            
+            [YRDropdownView showDropdownInView:[controllers_App instance].view 
+                                         title:@"Error" 
+                                        detail:[error errorMessage]
+                                         image:[UIImage imageNamed:@"dropdown-alert"]
+                                      animated:YES];
+            
+            [[NSBundle mainBundle] loadNibNamed:@"views_Empty_Generic" owner:self options:nil];
+            ((UILabel *)[_emptyMessageView.subviews objectAtIndex:0]).text = @"pull to refresh";
+            [_emptyMessageViewPlaceHolder addSubview:_emptyMessageView];
+            
         } else {
-                
+            
             success();
             
             [self.tableView reloadData];

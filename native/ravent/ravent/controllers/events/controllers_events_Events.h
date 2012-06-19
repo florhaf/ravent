@@ -22,8 +22,14 @@
     
     controllers_events_List_p2p *_listController;
     controllers_events_Map_p2p *_mapController;
+    
+    IBOutlet UIToolbar *_toolbar;
+    IBOutlet UISegmentedControl *_seg;
+    
     models_User *_user;
 }
+
+- (IBAction)onValueChanged:(id)sender;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil forUser:(models_User *)user;
 

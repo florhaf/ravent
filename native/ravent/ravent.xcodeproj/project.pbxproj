@@ -304,6 +304,7 @@
 		DF9EB13C154C914600CBC4BC /* mapButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF9EB13A154C914600CBC4BC /* mapButton@2x.png */; };
 		DF9F6414156D925400304C0F /* UITableViewReloadable.m in Sources */ = {isa = PBXBuildFile; fileRef = DF9F6413156D925400304C0F /* UITableViewReloadable.m */; };
 		DFA23E2F151D205600B8A8B5 /* views_events_Map.xib in Resources */ = {isa = PBXBuildFile; fileRef = DFA23E2E151D205600B8A8B5 /* views_events_Map.xib */; };
+		DFA903AA1590136800426865 /* views_events_Events.xib in Resources */ = {isa = PBXBuildFile; fileRef = DFA903A91590136800426865 /* views_events_Events.xib */; };
 		DFCB87B0154619BC00DDB85B /* menuButton.png in Resources */ = {isa = PBXBuildFile; fileRef = DFCB87AE154619BC00DDB85B /* menuButton.png */; };
 		DFCB87B1154619BC00DDB85B /* menuButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DFCB87AF154619BC00DDB85B /* menuButton@2x.png */; };
 		DFD28049151D6742007A0873 /* AnnotationEvent@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DFD28047151D6742007A0873 /* AnnotationEvent@2x.png */; };
@@ -769,6 +770,7 @@
 		DF9F6412156D925400304C0F /* UITableViewReloadable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITableViewReloadable.h; sourceTree = "<group>"; };
 		DF9F6413156D925400304C0F /* UITableViewReloadable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UITableViewReloadable.m; sourceTree = "<group>"; };
 		DFA23E2E151D205600B8A8B5 /* views_events_Map.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = views_events_Map.xib; path = item/views_events_Map.xib; sourceTree = "<group>"; };
+		DFA903A91590136800426865 /* views_events_Events.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = views_events_Events.xib; sourceTree = "<group>"; };
 		DFA9B5EB150FB454001CD530 /* RestKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RestKit.xcodeproj; path = RestKit/RestKit.xcodeproj; sourceTree = "<group>"; };
 		DFC55CDD158D6A9400310433 /* Paris.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Paris.gpx; sourceTree = "<group>"; };
 		DFC55CDE158D6AD500310433 /* LA.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = LA.gpx; sourceTree = "<group>"; };
@@ -1585,6 +1587,7 @@
 				DF36FF401553443F00C3CB53 /* views_events_Feed.xib */,
 				DF24593E15807B530095027E /* views_events_Details_Container.xib */,
 				DF9CED4A158450D6002B1024 /* views_events_Pic_Big.xib */,
+				DFA903A91590136800426865 /* views_events_Events.xib */,
 			);
 			path = events;
 			sourceTree = "<group>";
@@ -2042,6 +2045,7 @@
 				DF9CED4915841BE5002B1024 /* views_Empty_Generic.xib in Resources */,
 				DF9CED4B158450D6002B1024 /* views_events_Pic_Big.xib in Resources */,
 				DF9CED7B1586F46E002B1024 /* noMap.png in Resources */,
+				DFA903AA1590136800426865 /* views_events_Events.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

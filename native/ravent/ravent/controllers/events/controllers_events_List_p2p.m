@@ -38,6 +38,42 @@ static controllers_events_List_p2p *_ctrl;
     [[controllers_events_Map_p2p instance] updateLoadingMessageWith:text];
 }
 
+- (void)reloadTableViewDataSourceWithIndex:(int)index
+{    
+    _data = nil;
+    _groupedData = nil;
+    _sortedKeys = nil;
+    
+    switch (index) {
+            
+        case 0:
+            _data = _party;
+            _groupedData = _groupedParty;
+            _sortedKeys = _sortedKeysParty;
+            break;
+        case 1:
+            _data = _chill;
+            _groupedData = _groupedChill;
+            _sortedKeys = _sortedKeysChill;
+            break;
+        case 2:
+            _data = _art;
+            _groupedData = _groupedArt;
+            _sortedKeys = _sortedKeysArt;
+            break;
+        case 3:
+            _data = _other;
+            _groupedData = _groupedOther;
+            _sortedKeys = _sortedKeysOther;
+            break;
+        default:
+            break;
+    }
+    
+    
+    [self.tableView reloadData];
+}
+
 - (void)loadData
 {    
     NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
@@ -68,6 +104,64 @@ static controllers_events_List_p2p *_ctrl;
     [super onLoadEvents:objects];
 
     [[controllers_events_Map_p2p instance] loadData:objects];
+    
+    
+    if ([objects count] > 0 &&
+        [[objects objectAtIndex:0] isKindOfClass:[models_Event class]]) {
+     
+        _party = [[NSMutableArray alloc] init];
+        _chill = [[NSMutableArray alloc] init];
+        _art = [[NSMutableArray alloc] init];
+        _other = [[NSMutableArray alloc] init];
+        
+        _sortedKeysParty = [[NSMutableArray alloc] init];
+        _sortedKeysChill = [[NSMutableArray alloc] init];
+        _sortedKeysArt = [[NSMutableArray alloc] init];
+        _sortedKeysOther = [[NSMutableArray alloc] init];
+        
+        _groupedParty = [[NSMutableDictionary alloc] init];
+        _groupedChill = [[NSMutableDictionary alloc] init];
+        _groupedArt = [[NSMutableDictionary alloc] init];
+        _groupedOther = [[NSMutableDictionary alloc] init];
+        
+        
+        for (models_Event *e in objects) {
+            
+            if ([e.filter rangeOfString:@"Party"].location != NSNotFound) {
+                
+                [_party addObject:e];
+                
+            } if ([e.filter rangeOfString:@"Chill"].location != NSNotFound) {
+                
+                [_chill addObject:e];
+                
+            } if ([e.filter rangeOfString:@"Entertain"].location != NSNotFound) {
+                
+                [_art addObject:e];
+                
+            } if (([e.filter rangeOfString:@"Party"].location == NSNotFound) &&
+                  ([e.filter rangeOfString:@"Chill"].location == NSNotFound) &&
+                  ([e.filter rangeOfString:@"Entertain"].location == NSNotFound)) {
+                
+                [_other addObject:e];
+                
+            }
+        }
+        
+        _groupedParty = [models_Event getGroupedData:_party];
+        _groupedChill = [models_Event getGroupedData:_chill];
+        _groupedArt = [models_Event getGroupedData:_art];
+        _groupedOther = [models_Event getGroupedData:_other];
+        
+        _sortedKeysParty = [[_groupedParty allKeys] sortedArrayUsingSelector:@selector(compare:)];
+        _sortedKeysChill = [[_groupedChill allKeys] sortedArrayUsingSelector:@selector(compare:)];
+        _sortedKeysArt = [[_groupedArt allKeys] sortedArrayUsingSelector:@selector(compare:)];
+        _sortedKeysOther = [[_groupedOther allKeys] sortedArrayUsingSelector:@selector(compare:)];
+        
+        _data = _party;
+        _groupedData = _groupedParty;
+        _sortedKeys = _sortedKeysParty;
+    }
 }
 
 + (controllers_events_List_p2p *)instance

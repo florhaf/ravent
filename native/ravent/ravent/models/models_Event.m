@@ -33,6 +33,7 @@
 @synthesize longitude = _longitude;
 @synthesize groupTitle = _groupTitle;
 @synthesize coordinate = _coordinate;
+@synthesize filter = _filter;
 
 //#define SERVICE_URL @"http://air.local:8888"
 #define SERVICE_URL @"http://raventsvc.appspot.com"
@@ -70,6 +71,7 @@
     another.longitude = _longitude;
     another.groupTitle = _groupTitle;
     another.coordinate = _coordinate;
+    another.filter = _filter;
     
     return another;
 }
@@ -95,6 +97,7 @@
     [objectMapping mapKeyPath:@"latitude" toAttribute:@"latitude"];
     [objectMapping mapKeyPath:@"longitude" toAttribute:@"longitude"];
     [objectMapping mapKeyPath:@"groupTitle" toAttribute:@"groupTitle"];
+    [objectMapping mapKeyPath:@"filter" toAttribute:@"filter"];
 
     if (_manager == nil) {
         
@@ -128,6 +131,7 @@
     [objectMapping mapKeyPath:@"latitude" toAttribute:@"latitude"];
     [objectMapping mapKeyPath:@"longitude" toAttribute:@"longitude"];
     [objectMapping mapKeyPath:@"groupTitle" toAttribute:@"groupTitle"];
+    [objectMapping mapKeyPath:@"filter" toAttribute:@"filter"];
     
     if (_manager == nil) {
         

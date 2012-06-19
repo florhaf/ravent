@@ -70,6 +70,41 @@ static customNavigationController *_ctrl;
     
     UIBarButtonItem *mapButton = [[UIBarButtonItem alloc] initWithCustomView:mapb];        
     self.navigationItem.rightBarButtonItem = mapButton;
+    
+//    _toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 416, 320, 44)];
+//    [_toolbar setBarStyle:UIBarStyleBlackTranslucent];
+//    [_toolbar sizeToFit];
+//    
+//    UISegmentedControl *seg = [[UISegmentedControl alloc] initWithItems:[[NSArray alloc] initWithObjects:@"Party", @"Chill", @"Art", @"All", nil]];
+//    [seg setFrame:CGRectMake(0, 0, 200, 40)];
+//    [seg setSegmentedControlStyle:UISegmentedControlStyleBar];
+//    
+//    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:seg];
+//    
+//    [_toolbar setItems:[[NSArray alloc] initWithObjects:item, nil]];
+//    
+//    [self.view addSubview:_toolbar];
+    
+    UISegmentedControl *seg = [[UISegmentedControl alloc] initWithItems:[[NSArray alloc] initWithObjects:@"Party", @"Chill", @"Art", @"Other", nil]];
+    [seg setSegmentedControlStyle:UISegmentedControlStyleBar];
+    [seg setTintColor:[UIColor darkGrayColor]];
+    [seg setFrame:CGRectMake(0, 0, 310, 30)];
+    [seg setSelectedSegmentIndex:0];
+    [seg addTarget:self action:@selector(onValueChanged:) forControlEvents:UIControlEventValueChanged];
+    
+    UIBarButtonItem *btn = [[UIBarButtonItem alloc] initWithCustomView:seg];
+    
+    [_toolbar setItems:[[NSArray alloc] initWithObjects:btn, nil]];
+    
+    [self.view bringSubviewToFront:_toolbar];
+}
+
+- (IBAction)onValueChanged:(id)sender
+{
+    UISegmentedControl *seg = (UISegmentedControl *)sender;
+    int selectedIndex = seg.selectedSegmentIndex;
+    
+    [[controllers_events_List_p2p instance] reloadTableViewDataSourceWithIndex:selectedIndex];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -108,7 +143,7 @@ static customNavigationController *_ctrl;
 {
     if (_ctrl == nil) {
         
-        controllers_events_Events *events = [[controllers_events_Events alloc] initWithNibName:nil bundle:nil forUser:[[models_User crtUser] copy]];
+        controllers_events_Events *events = [[controllers_events_Events alloc] initWithNibName:@"views_events_Events" bundle:nil forUser:[[models_User crtUser] copy]];
         _ctrl = [[customNavigationController alloc] initWithRootViewController:events];
     }
     
