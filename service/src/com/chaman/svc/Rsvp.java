@@ -30,7 +30,7 @@ public class Rsvp extends ServerResource {
 		} catch (Exception ex) {
 			
 			result.setSuccess(false);
-			result.setMessage(ex.toString());
+			result.setError(ex.toString());
 		}
 		
 		return result;
@@ -56,7 +56,7 @@ public class Rsvp extends ServerResource {
 		} catch (Exception ex) {
 			
 			result.setSuccess(false);
-			result.setMessage(ex.toString());
+			result.setError(ex.toString());
 		}
 		
 		return result;

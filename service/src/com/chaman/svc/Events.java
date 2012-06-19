@@ -15,20 +15,18 @@ public class Events extends ServerResource {
 		
 		try {
 			
-			String accessToken	= getQuery().getValues("access_token");
-			String userID 		= getQuery().getValues("userID");
-			String latitude 	= getQuery().getValues("latitude");
-			String longitude 	= getQuery().getValues("longitude");
-			String timeZone 	= getQuery().getValues("timezone_offset");
+			String accessToken		= getQuery().getValues("access_token");
+			String userID 			= getQuery().getValues("userID");
+			String latitude 		= getQuery().getValues("latitude");
+			String longitude 		= getQuery().getValues("longitude");
+			String timeZone 		= getQuery().getValues("timezone_offset");
+			String searchTimeFrame 	= getQuery().getValues("timeframe");
+			String searchRadius		= getQuery().getValues("radius");
+			String searchLimit 		= getQuery().getValues("limit");
 			
-			// TODO: get from query string
-			String searchTimeFrame = "48";
-			String searchRadius = "30";
-			String searchLimit = "100";
+			searchLimit = "100";
 			
 			ArrayList<Model> events;
-			
-			//Event.GetCron(); //test
 			
 			if (userID != null) {
 			
@@ -44,7 +42,7 @@ public class Events extends ServerResource {
 		} catch (Exception ex) {
 			
 			result.setSuccess(false);
-			result.setMessage(ex.toString());
+			result.setError(ex.toString());
 		}
 		
 		return result;

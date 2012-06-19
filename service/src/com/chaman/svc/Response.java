@@ -6,13 +6,13 @@ import com.chaman.model.Model;
 public class Response {
 	
 	Boolean				success;
-	String				message;
+	String				error;
 	ArrayList<Model> 	records;
 	
 	public Response() {
 		
 		this.success = false;
-		this.message = "";
+		this.error = "";
 		this.records = new ArrayList<Model>();
 	}
 	
@@ -25,20 +25,20 @@ public class Response {
 		
 		if (success == true) {
 			
-			this.message = "OK";
+			this.error = null;
 		}
 		
 		this.success = success;
 	}
 	
-	public String getMessage() {
+	public String getError() {
 		
-		return message;
+		return error;
 	}
 	
-	public void setMessage(String message) {
+	public void setError(String error) {
 		
-		this.message = message;
+		this.error = error;
 	}
 	
 	public ArrayList<Model> getRecords() {

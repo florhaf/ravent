@@ -59,6 +59,7 @@ public class Event extends Model implements Serializable {
 	String group;
 	String latitude;
 	String longitude;
+	String filter;
 	String time_start;
 	String time_end;
 	String date_start;
@@ -117,6 +118,8 @@ public class Event extends Model implements Serializable {
     	    	Venue v_graph = new Venue(accessToken, e.venue_id);
     	    	e.venue_category = v_graph.category;
 			
+    	    	e.Filter_category();
+    	    	
     	    	e.latitude 	= JSON.GetValueFor("latitude", e.venue);
     	    	e.longitude = JSON.GetValueFor("longitude", e.venue);
 			
@@ -143,7 +146,6 @@ public class Event extends Model implements Serializable {
     	    		e.distance = "N/A";
     	    	}
     	    	
-    	    	e.GetNb_attending_and_gender_ratio(accessToken, String.valueOf(e.eid));
     	    	e.Score(v_graph);
     	    }
 	
@@ -206,14 +208,14 @@ public class Event extends Model implements Serializable {
         				event.venue_category = v_graph.category;
         				if (event.venue_category == null || (event.venue_category != null && !event.venue_category.equals("City"))) {
         					event.Score(v_graph);
-        					event.GetNb_attending_and_gender_ratio(accessToken, String.valueOf(event.eid));
+        					event.Filter_category();
         				}
             		}
             	}
             	
             	if (event != null && (event.venue_category == null || (event.venue_category != null && !event.venue_category.equals("City")))) {
             		
-        			event.Format(timeZoneInMinutes);    		
+        			event.Format(timeZoneInMinutes);
         			
         			event.latitude 	= Double.toString(e.getLatitude());
         			event.longitude = Double.toString(e.getLongitude());
@@ -281,6 +283,8 @@ public class Event extends Model implements Serializable {
 				    	    	
 					    	    	e.Score(v_graph);
 					    	    	
+					    	    	e.Filter_category();
+					    	    	
 					    	    	e.latitude 	= JSON.GetValueFor("latitude", e.venue);
 					    	    	e.longitude = JSON.GetValueFor("longitude", e.venue);
 								
@@ -305,9 +309,7 @@ public class Event extends Model implements Serializable {
 					    	    	} else {
 													
 					    	    		e.distance = "N/A";
-					    	    	}
-					    	    	
-					    	    	e.GetNb_attending_and_gender_ratio(u.getAccess_token(), String.valueOf(e.eid));
+					    	    	}    	    	
 					    	    }
 				    	    }
 				    	    if (e.venue_category == null || (e.venue_category != null && !e.venue_category.equals("City"))) {syncCache.put(e.eid, e);} // Add Event to cache
@@ -344,12 +346,14 @@ public class Event extends Model implements Serializable {
 		e = fbevents.get(0);
 
 		e.Format(timeZoneInMinutes);
-			
+		
 		e.venue_id = JSON.GetValueFor("id", e.venue);
 		Venue v_graph = new Venue(accessToken, e.venue_id);
 		e.venue_category = v_graph.category;
 		e.latitude 	= JSON.GetValueFor("latitude", e.venue);
 		e.longitude = JSON.GetValueFor("longitude", e.venue);
+		
+		e.Filter_category();
 		
 		if ((e.latitude == null || e.latitude == "" || e.longitude == null || e.longitude == "") && v_graph != null) {
 	    		
@@ -393,6 +397,8 @@ public class Event extends Model implements Serializable {
 		
 		int end_minus_start = dtEnd.getDayOfYear() - dtStart.getDayOfYear();
 		
+		
+		
 		if (dtStart.getDayOfYear() <= now.getDayOfYear() && dtEnd.dayOfYear().get() >= now.getDayOfYear()) {
 			
 			if (end_minus_start >= 7) { // to filter bogus "Fridays", "Tuesdays" events
@@ -429,6 +435,38 @@ public class Event extends Model implements Serializable {
 				}
 			}
 		}
+	}
+	
+	public void Filter_category () {
+		
+		if (this.venue_category != null) {
+			
+			if (this.venue_category.equals("Bar")) {
+				
+				this.filter = "Party/Chill";
+			} else if (this.venue_category.equals("Restaurant/cafe")) {
+			
+				this.filter = "Chill";
+			} else if (this.venue_category.equals("Club")) {
+			
+				this.filter = "Party";
+			} else if (this.venue_category.equals("Concert venue")) {
+			
+				this.filter = "Party";
+			} else if (this.venue_category.equals("Arts/entertainment/nightlife")) {
+			
+				this.filter = "Entertain";
+			} else if (this.venue_category.equals("Museum/art gallery")) {
+			
+				this.filter = "Entertain";
+			} else if (this.venue_category.equals("Movie theater")) {
+			
+				this.filter = "Entertain";
+			} else {
+			
+				this.filter = "Other";
+			}
+		}		
 	}
 	
 	public void Filter_bogus_events(DateTime now_userTZ) {
@@ -487,9 +525,7 @@ public class Event extends Model implements Serializable {
 	 */
 	public void GetNb_attending_and_gender_ratio(String accessToken, String eid) throws FacebookException {
 		
-		Attending a = new Attending();
-		
-		Event event = a.GetNb_attending_and_gender_ratio(accessToken, eid);
+		Event event = Attending.GetNb_attending_and_gender_ratio(accessToken, eid);
 		
 		this.nb_attending = event.nb_attending;
 		this.female_ratio = event.female_ratio;
@@ -537,31 +573,25 @@ public class Event extends Model implements Serializable {
 			//venue score
 			if (likes >= 1 && likes < 1000){
 				res = res + 0.5;
-			}
-			if (likes >= 1000 && likes < 2000){
+			} else if (likes >= 1000 && likes < 2000){
 				res = res + 1;
-			}
-			if (likes >= 2000){
+			} else if (likes >= 2000){
 				res = res + 1;
 			}
 			
 			if (checkins >= 1 && checkins < 100){
 				res = res + 1;
-			}
-			if (checkins >= 100 && checkins < 200){
+			} else if (checkins >= 100 && checkins < 200){
 				res = res + 1.5;
-			}
-			if (checkins >= 200){
+			} else if (checkins >= 200){
 				res = res + 1.25;
 			}
 			
 			if (talking_about_count >= 1 && talking_about_count < 25){
 				res = res + 1;
-			}
-			if (talking_about_count >= 25 && talking_about_count < 50){
+			} else if(talking_about_count >= 25 && talking_about_count < 50){
 				res = res + 2;
-			}
-			if (talking_about_count >= 50){
+			} else if (talking_about_count >= 50){
 				res = res + 2;
 			}
 			
@@ -704,5 +734,13 @@ public class Event extends Model implements Serializable {
 
 	public void setPic_big(String pic_big) {
 		this.pic_big = pic_big;
+	}
+
+	public String getFilter() {
+		return filter;
+	}
+
+	public void setFilter(String filter) {
+		this.filter = filter;
 	}
 }

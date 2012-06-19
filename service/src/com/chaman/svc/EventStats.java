@@ -1,29 +1,29 @@
 package com.chaman.svc;
 
 import java.util.ArrayList;
-
 import org.restlet.resource.Get;
 import org.restlet.resource.ServerResource;
-
-import com.chaman.model.Description;
+import com.chaman.model.Attending;
 import com.chaman.model.Model;
 
-public class Descriptions extends ServerResource {
+public class EventStats extends ServerResource {
 
 	@Get("json")
 	public Response Read() {
-		
+				
 		Response result = new Response();
 		
 		try {
 			
-			String accessToken	= getQuery().getValues("access_token");
-			String eventID 		= getQuery().getValues("eid");
+			String accessToken		= getQuery().getValues("access_token");
+			String eid 				= getQuery().getValues("eid");
 			
-			ArrayList<Model> descriptions = Description.Get(accessToken, eventID);
+			ArrayList<Model> events = new ArrayList<Model>();
+			
+			events.add(Attending.GetNb_attending_and_gender_ratio(accessToken, eid));
 			
 			result.setSuccess(true);
-			result.setRecords(descriptions);
+			result.setRecords(events);
 			
 		} catch (Exception ex) {
 			
@@ -33,4 +33,5 @@ public class Descriptions extends ServerResource {
 		
 		return result;
 	}
+
 }

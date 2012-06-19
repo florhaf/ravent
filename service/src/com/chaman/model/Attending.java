@@ -29,9 +29,6 @@ public class Attending extends Model {
 	Long eid;
 	String picture;
 	
-	//@Facebook //to delete
-	//String data;
-	
 	public Attending() {
 		super();
 	}
@@ -116,7 +113,7 @@ public class Attending extends Model {
 	 * - Get the list of users ATTENDING (not all the invited people) to the event (pic name rsvp status)
 	 * - Fill the number of user invited (this.nb_invited)
 	 */
-	public Event GetNb_attending_and_gender_ratio(String accessToken, String eid) throws FacebookException {
+	public static Event GetNb_attending_and_gender_ratio(String accessToken, String eid) throws FacebookException {
 
 		double male 			= 0;
 		double female			= 0;
