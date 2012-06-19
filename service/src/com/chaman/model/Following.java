@@ -65,7 +65,7 @@ public class Following extends Model implements Serializable  {
     	    	qfollowers.filter("friendID", u.uid);
     	    	u.nb_of_followers = qfollowers.count();   	
     	    	
-    	    	syncCache.put(f.id, f); // populate following cache
+    	    	syncCache.put(f.id, f, null); // populate following cache
     	    } else {
     	    	
     	    	ucache = (User) syncCache.get(u.uid); //read from user cache to get the nb following/ers values
@@ -84,7 +84,7 @@ public class Following extends Model implements Serializable  {
         	    	qfollowers.filter("friendID", u.uid);
         	    	u.nb_of_followers = qfollowers.count();
         	    	
-        	    	syncCache.put(f.id, f); // populate following cache
+        	    	syncCache.put(f.id, f, null); // populate following cache
     	    	}
     	    }
         	users.add(u);
@@ -113,7 +113,7 @@ public class Following extends Model implements Serializable  {
 	    		dao.ofy().put(f);
 	        }
 
-	      syncCache.put(f.id, f); // populate cache
+	      syncCache.put(f.id, f, null); // populate cache
 	      syncCache.delete(Long.parseLong(userID)); // to refresh the data at the next call of following()
 	      syncCache.delete(Long.parseLong(friendID)); // to refresh the data at the next call of following()
 	    }

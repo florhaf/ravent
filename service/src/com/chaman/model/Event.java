@@ -91,15 +91,9 @@ public class Event extends Model implements Serializable {
 		
 		ArrayList<Model> result = new ArrayList<Model>();
 		
-		//Prepare a timestamp to filter the facebook DB on the upcoming events
-		DateTimeZone PST = DateTimeZone.forID("America/Los_Angeles");
-		DateTime now = new DateTime(PST);
-		now.plusMinutes(PST.getOffset(now));
-		String TAS = String.valueOf(now.getMillis() / 1000);
-		
 		FacebookClient client 	= new DefaultFacebookClient(accessToken);
 		String properties 		= "eid, name, pic_big, start_time, end_time, venue, location, privacy, update_time";
-		String query 			= "SELECT " + properties + " FROM event WHERE eid IN (SELECT eid FROM event_member WHERE uid = " + userID + ") AND end_time > " + TAS + " ORDER BY start_time"; /*need to check privacy CLOSED AND SECRET */
+		String query 			= "SELECT " + properties + " FROM event WHERE eid IN (SELECT eid FROM event_member WHERE uid = " + userID + ")"; /*need to check privacy CLOSED AND SECRET */
 		List<Event> fbevents 	= client.executeQuery(query, Event.class);
 		
 		Dao dao = new Dao();
@@ -158,7 +152,7 @@ public class Event extends Model implements Serializable {
     	    }
 	    
     	    result.add(e);
-	    	syncCache.put(e.eid, e); // Add Event to cache
+	    	syncCache.put(e.eid, e, null); // Add Event to cache
 		}
 		
 		return result;
@@ -215,17 +209,18 @@ public class Event extends Model implements Serializable {
             	
             	if (event != null && (event.venue_category == null || (event.venue_category != null && !event.venue_category.equals("City")))) {
             		
-        			event.Format(timeZoneInMinutes);
-        			
-        			event.latitude 	= Double.toString(e.getLatitude());
-        			event.longitude = Double.toString(e.getLongitude());
-        			
-        			float distance = Geo.Fence(userLatitude, userLongitude, event.latitude, event.longitude);
-        			event.distance = String.format("%.2f", distance);
+        			if (event.Format(timeZoneInMinutes)){
+        				
+            			event.latitude 	= Double.toString(e.getLatitude());
+            			event.longitude = Double.toString(e.getLongitude());
+            			
+            			float distance = Geo.Fence(userLatitude, userLongitude, event.latitude, event.longitude);
+            			event.distance = String.format("%.2f", distance);
 
-        			syncCache.put(event.eid, event); //add event to cache
-            		
-        			result.add(event);
+            			syncCache.put(event.eid, event, null); //add event to cache
+                		
+            			result.add(event);
+        			}
             	} 
         	} else { // event in the past
 					
@@ -256,18 +251,11 @@ public class Event extends Model implements Serializable {
 				
 					try {
 						
-						//Prepare a timestamp to filter the facebook DB on the upcoming events
-						DateTimeZone PST = DateTimeZone.forID("America/Los_Angeles");
-						DateTime now = new DateTime(PST);
-						now.plusMinutes(PST.getOffset(now));
-						String TAS = String.valueOf(now.getMillis() / 1000);
-						
 						FacebookClient client 	= new DefaultFacebookClient(u.getAccess_token());
 						String properties 		= "eid, name, pic_big, start_time, end_time, venue, location, privacy, update_time";
-						String query 			= "SELECT " + properties + " FROM event WHERE eid IN (SELECT eid FROM event_member WHERE uid = " + l.getUid() + ") AND end_time > " + TAS; /*need to check privacy CLOSED AND SECRET */
+						String query 			= "SELECT " + properties + " FROM event WHERE eid IN (SELECT eid FROM event_member WHERE uid = " + l.getUid() + ")"; /*need to check privacy CLOSED AND SECRET */
 						List<Event> fbevents 	= client.executeQuery(query, Event.class);
-						
-						
+										
 						Event e_cache; 
 						
 						for (Event e : fbevents) {
@@ -312,7 +300,7 @@ public class Event extends Model implements Serializable {
 					    	    	}    	    	
 					    	    }
 				    	    }
-				    	    if (e.venue_category == null || (e.venue_category != null && !e.venue_category.equals("City"))) {syncCache.put(e.eid, e);} // Add Event to cache
+				    	    if (e.venue_category == null || (e.venue_category != null && !e.venue_category.equals("City"))) {syncCache.put(e.eid, e, null);} // Add Event to cache
 						}
 					} catch (Exception ex ) {}
 				}		
@@ -374,7 +362,7 @@ public class Event extends Model implements Serializable {
 		return e;
 	}
 	
-	private void Format(int timeZoneInMinutes) {
+	private boolean Format(int timeZoneInMinutes) {
 			
 		long timeStampStart = Long.parseLong(this.start_time) * 1000;
 		long timeStampEnd = Long.parseLong(this.end_time) * 1000;
@@ -395,11 +383,13 @@ public class Event extends Model implements Serializable {
 		DateTimeZone GMT = DateTimeZone.forID("GMT");		
 		DateTime now = DateTime.now(GMT).plusMinutes(timeZoneInMinutes);
 		
-		int end_minus_start = dtEnd.getDayOfYear() - dtStart.getDayOfYear();
-		
-		
-		
 		if (dtStart.getDayOfYear() <= now.getDayOfYear() && dtEnd.dayOfYear().get() >= now.getDayOfYear()) {
+			
+			long end_minus_start = (timeStampEnd - timeStampStart) / 86400000; // in days
+			
+			if (end_minus_start > 90) {
+				return false;
+			}
 			
 			if (end_minus_start >= 7) { // to filter bogus "Fridays", "Tuesdays" events
 				
@@ -435,6 +425,7 @@ public class Event extends Model implements Serializable {
 				}
 			}
 		}
+		return true;
 	}
 	
 	public void Filter_category () {
@@ -560,10 +551,10 @@ public class Event extends Model implements Serializable {
 		    	if (dsvote != null) {
 		    		
 		    		res_vote = dsvote.getVote_avg();
-		    		syncCache.put(eid_string, dsvote); // Add vote to cache
+		    		syncCache.put(eid_string, dsvote, null); // Add vote to cache
 		    	} else {
 
-		    		syncCache.put(eid_string, new Vote(eid_string, 0L, 0D)); // Add vote to cache with 0 vote and 0 average
+		    		syncCache.put(eid_string, new Vote(eid_string, 0L, 0D), null); // Add vote to cache with 0 vote and 0 average
 		    	}
 			} else {
 				

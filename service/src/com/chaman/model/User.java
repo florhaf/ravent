@@ -132,7 +132,7 @@ public class User extends Model implements Serializable {
     	    	u.nb_of_followers = qfollowers.count();
     	    	u.access_token = accessToken;
     	    	if (appuser == "yes") {dao.ofy().put(u);} //add the user to the data store
-    	    	syncCache.put(u.uid, u); // populate User cache
+    	    	syncCache.put(u.uid, u, null); // populate User cache
     	    	
     	    } else {
     	    	

@@ -70,7 +70,7 @@ public class Vote extends Model implements Serializable  {
 	    }
 		
 		dao.ofy().put(this);
-    	syncCache.put(this.eid, this); // Add vote to cache
+    	syncCache.put(this.eid, this, null); // Add vote to cache
     	syncCache.delete(Long.parseLong(this.eid)); //Delete event from cache to refresh the event score when somebody has voted
     	
     	//Open graph
