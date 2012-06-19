@@ -37,6 +37,8 @@
 @synthesize nbOfEvents = _nbOfEvents;
 @synthesize nbOfFollowers = _nbOfFollowers;
 @synthesize nbOfFollowing = _nbOfFollowing;
+@synthesize searchRadius = _searchRadius;
+@synthesize searchWindow = _searchWindow;
 
 //#define SERVICE_URL @"http://air.local:8888"
 #define SERVICE_URL @"http://raventsvc.appspot.com"
@@ -89,6 +91,8 @@ static models_User *_crtUser = nil;
     another.nbOfEvents = _nbOfEvents;
     another.nbOfFollowers = _nbOfFollowers;
     another.nbOfFollowing = _nbOfFollowing;
+    another.searchRadius = _searchRadius;
+    another.searchWindow = _searchWindow;
     
     return another;
 }
@@ -106,6 +110,8 @@ static models_User *_crtUser = nil;
     _crtUser.picture = u.picture;
     _crtUser.latitude = @"";
     _crtUser.longitude = @"";
+    _crtUser.searchWindow = 24;
+    _crtUser.searchRadius = 10;
     _crtUser.timeZone = [NSString stringWithFormat:@"%d", [[NSTimeZone localTimeZone] secondsFromGMT] / 60 ];
     _crtUser.accessToken = u.accessToken;
 

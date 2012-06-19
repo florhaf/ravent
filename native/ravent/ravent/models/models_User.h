@@ -49,6 +49,9 @@
     NSString *_nbOfEvents;
     NSString *_nbOfFollowers;
     NSString *_nbOfFollowing;
+    
+    int _searchRadius;
+    int _searchWindow;
 }
 
 @property (unsafe_unretained) id delegate;
@@ -76,6 +79,8 @@
 @property (nonatomic, retain) NSString *nbOfEvents;
 @property (nonatomic, retain) NSString *nbOfFollowers;
 @property (nonatomic, retain) NSString *nbOfFollowing;
+@property (nonatomic, assign) int searchRadius;
+@property (nonatomic, assign) int searchWindow;
 
 - (id)initWithDelegate:(NSObject *)del andSelector:(SEL)sel;
 - (void)loadUser;

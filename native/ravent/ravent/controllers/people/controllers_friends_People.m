@@ -107,7 +107,7 @@ static customNavigationController *_ctrl;
 {
     [super viewDidLoad];
     
-    [_toolbar insertSubview:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"toolbar"]] atIndex:1];
+//    [_toolbar insertSubview:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"toolbar"]] atIndex:1];
     
     UIImage *menui = [UIImage imageNamed:@"menuButton"];
     UIButton *menub = [UIButton buttonWithType:UIButtonTypeCustom];

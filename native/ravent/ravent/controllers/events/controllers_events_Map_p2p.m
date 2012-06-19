@@ -12,6 +12,8 @@
 #import "MBProgressHUD.h"
 #import "YRDropdownView.h"
 #import "ActionDispatcher.h"
+#import "UIView+Animation.h"
+#import "controllers_events_List_p2p.h"
 
 @implementation controllers_events_Map_p2p
 
@@ -85,6 +87,48 @@ static controllers_events_Map_p2p *_ctrl;
     }   
 }
 
+- (IBAction)onOptionsTap:(id)sender
+{
+    [_map raceTo:CGPointMake(0, -_tableOptions.frame.size.height) withSnapBack:YES];
+    [_tableOptions raceTo:CGPointMake(0, 460 -_tableOptions.frame.size.height) withSnapBack:YES];
+    
+    UIBarButtonItem *btn = (UIBarButtonItem *)sender;
+    
+    [btn setStyle:UIBarButtonItemStyleDone];
+    [btn setAction:@selector(onDoneTap:)];
+    
+    _isOptionsShowing = YES;
+    
+    _prevRadiusValue = [models_User crtUser].searchRadius;
+    _prevWindowValue = [models_User crtUser].searchWindow;
+}
+
+- (IBAction)onDoneTap:(id)sender
+{
+    [_map raceTo:CGPointMake(0, 0) withSnapBack:YES];
+    [_tableOptions raceTo:CGPointMake(0, 460) withSnapBack:YES];
+    
+    UIBarButtonItem *btn = (UIBarButtonItem *)sender;
+    
+    [btn setStyle:UIBarButtonSystemItemSearch];
+    [btn setAction:@selector(onOptionsTap:)];
+    
+    _isOptionsShowing = NO;
+    
+    if (_prevRadiusValue != [models_User crtUser].searchRadius ||
+        _prevWindowValue != [models_User crtUser].searchWindow) {
+        
+        [self performSelector:@selector(resetTopViewAfterDelayCallback) withObject:nil afterDelay:0.9 inModes:[[NSArray alloc] initWithObjects:NSRunLoopCommonModes, nil]];
+        
+        [[controllers_events_List_p2p instance] loadDataWithSpinner];
+    }
+}
+
+- (void)resetTopViewAfterDelayCallback
+{
+    [self.slidingViewController resetTopView];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -92,23 +136,23 @@ static controllers_events_Map_p2p *_ctrl;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(startGps) name:ECSlidingViewUnderRightWillAppear object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(stopGps) name:ECSlidingViewTopDidReset object:nil];
         
-    UIImageView *imgTop = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"toolbar"]];
-    UIImageView *imgBottom = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"toolbar"]];
-    imgTop.frame = CGRectMake(0, 0, 320, 44);
-    imgBottom.frame = CGRectMake(0, 0, 320, 44);
+//    UIImageView *imgTop = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"toolbar"]];
+//    UIImageView *imgBottom = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"toolbar"]];
+//    imgTop.frame = CGRectMake(0, 0, 320, 44);
+//    imgBottom.frame = CGRectMake(0, 0, 320, 44);
     
-    [_toolbarTop insertSubview:imgTop atIndex:1];
-    [_toolbarBottom insertSubview:imgBottom atIndex:1];
+    //[_toolbarTop insertSubview:imgTop atIndex:1];
+    //[_toolbarBottom insertSubview:imgBottom atIndex:1];
     
     
-    UIImage *soi = [UIImage imageNamed:@"searchoptions"];
-    UIButton *sob = [UIButton buttonWithType:UIButtonTypeCustom];
-    [sob addTarget:self action:@selector(buttonTap:) forControlEvents:UIControlEventTouchUpInside];
-    [sob setImage:soi forState:UIControlStateNormal];
-    [sob setFrame:CGRectMake(-20, 0, 270, 44)];
-    UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithCustomView:sob];
-    NSArray *items = [[NSArray alloc] initWithObjects:button, nil];
-    [_toolbarBottom setItems:items];
+//    UIImage *soi = [UIImage imageNamed:@"searchoptions"];
+//    UIButton *sob = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [sob addTarget:self action:@selector(buttonTap:) forControlEvents:UIControlEventTouchUpInside];
+//    [sob setImage:soi forState:UIControlStateNormal];
+//    [sob setFrame:CGRectMake(-20, 0, 270, 44)];
+//    UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithCustomView:sob];
+//    NSArray *items = [[NSArray alloc] initWithObjects:button, nil];
+//    [_toolbarBottom setItems:items];
     
     
     self.peekLeftAmount = 40.0f;
@@ -277,6 +321,121 @@ static controllers_events_Map_p2p *_ctrl;
     UIGraphicsEndImageContext();
     
     [_imageLoading removeObjectForKey:url];
+}
+
+
+#pragma mark - Table view data source
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    return @"Search";
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 44;
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return 2;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *CellIdentifier = @"Cell";
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    
+    if (cell == nil) {
+        
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    } else {
+        
+        for (int i = 0; i < [cell.contentView.subviews count]; i++) {
+            
+            [[cell.contentView.subviews objectAtIndex:i] removeFromSuperview];
+        }
+    }
+    
+    if (indexPath.row == 0) {
+        
+        UIView *v = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 44)];
+        [v setBackgroundColor:[UIColor clearColor]];
+        
+        UILabel *l1 = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 100, 44)];
+        [l1 setText:@"Radius"];
+        [l1 setBackgroundColor:[UIColor clearColor]];
+        [l1 setTextColor:[UIColor darkGrayColor]];
+        
+        _labelRadiusValue = [[UILabel alloc] initWithFrame:CGRectMake(90, 0, 90, 44)];
+        [_labelRadiusValue setTextColor:[UIColor darkGrayColor]];
+        [_labelRadiusValue setText:[NSString stringWithFormat:@"%d mi.", [models_User crtUser].searchRadius]];
+        [_labelRadiusValue setBackgroundColor:[UIColor clearColor]];
+        
+        UIStepper *s = [[UIStepper alloc] initWithFrame:CGRectMake(160, 10, 50, 44)];
+        s.value = [models_User crtUser].searchRadius;
+        s.minimumValue = 5;
+        s.maximumValue = 50;
+        s.stepValue = 5;
+        s.continuous = NO;
+        
+        [s addTarget:self action:@selector(stepperRadiusPressed:) forControlEvents:UIControlEventValueChanged];
+        
+        [v addSubview:l1];
+        [v addSubview:_labelRadiusValue];
+        [v addSubview:s];
+        
+        [cell.contentView addSubview:v];
+        
+    } else {
+        
+        UIView *v = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 44)];
+        [v setBackgroundColor:[UIColor clearColor]];
+        
+        UILabel *l1 = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 100, 44)];
+        [l1 setText:@"Window"];
+        [l1 setTextColor:[UIColor darkGrayColor]];
+        
+        _labelWindowValue = [[UILabel alloc] initWithFrame:CGRectMake(90, 0, 90, 44)];
+        [_labelWindowValue setTextColor:[UIColor darkGrayColor]];
+        [_labelWindowValue setText:[NSString stringWithFormat:@"%d h.", [models_User crtUser].searchWindow]];
+        
+        UIStepper *s = [[UIStepper alloc] initWithFrame:CGRectMake(160, 10, 50, 44)];
+        s.value = [models_User crtUser].searchWindow;
+        s.minimumValue = 12;
+        s.maximumValue = 72;
+        s.stepValue = 12;
+        s.continuous = NO;
+        
+        [s addTarget:self action:@selector(stepperWindowPressed:) forControlEvents:UIControlEventValueChanged];
+        
+        [v addSubview:l1];
+        [v addSubview:_labelWindowValue];
+        [v addSubview:s];
+        
+        [cell.contentView addSubview:v];
+    }
+    
+    return cell;
+}
+
+- (void)stepperRadiusPressed:(UIStepper *)sender
+{
+    [models_User crtUser].searchRadius = (int)sender.value;
+    _labelRadiusValue.text = [NSString stringWithFormat:@"%d mi.",  (int)sender.value];
+}
+
+- (void)stepperWindowPressed:(UIStepper *)sender
+{
+    [models_User crtUser].searchWindow = (int)sender.value;
+    _labelWindowValue.text = [NSString stringWithFormat:@"%d h.", (int)sender.value];    
 }
 
 + (controllers_events_Map_p2p *)instance

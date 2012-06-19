@@ -772,6 +772,7 @@
 		DFA9B5EB150FB454001CD530 /* RestKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RestKit.xcodeproj; path = RestKit/RestKit.xcodeproj; sourceTree = "<group>"; };
 		DFC55CDD158D6A9400310433 /* Paris.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Paris.gpx; sourceTree = "<group>"; };
 		DFC55CDE158D6AD500310433 /* LA.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = LA.gpx; sourceTree = "<group>"; };
+		DFC55CDF158F9E9800310433 /* Miami.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Miami.gpx; sourceTree = "<group>"; };
 		DFCB87AE154619BC00DDB85B /* menuButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menuButton.png; sourceTree = "<group>"; };
 		DFCB87AF154619BC00DDB85B /* menuButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menuButton@2x.png"; sourceTree = "<group>"; };
 		DFD28047151D6742007A0873 /* AnnotationEvent@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AnnotationEvent@2x.png"; sourceTree = "<group>"; };
@@ -1380,6 +1381,7 @@
 		DF8F14BD150BD48200008ABC = {
 			isa = PBXGroup;
 			children = (
+				DFC55CDF158F9E9800310433 /* Miami.gpx */,
 				DFC55CDD158D6A9400310433 /* Paris.gpx */,
 				DFC55CDE158D6AD500310433 /* LA.gpx */,
 				DF629E7D153F8A8600BCA804 /* Default.png */,
@@ -1500,8 +1502,6 @@
 		DF8F150A150BD53C00008ABC /* controllers */ = {
 			isa = PBXGroup;
 			children = (
-				DF629E68153F8A3100BCA804 /* controllers_Login.h */,
-				DF629E69153F8A3100BCA804 /* controllers_Login.m */,
 				DF16F6FE153BCABD002819C2 /* people */,
 				DFA23E27151D150200B8A8B5 /* calendar */,
 				DF9DA507150C46E60006E61A /* stats */,
@@ -1518,6 +1518,8 @@
 				DF75ACC01541CE4C00150465 /* controllers_SlidingInitial.m */,
 				DF75ACC61541D06200150465 /* controllers_SlidingMenu.h */,
 				DF75ACC71541D06200150465 /* controllers_SlidingMenu.m */,
+				DF629E68153F8A3100BCA804 /* controllers_Login.h */,
+				DF629E69153F8A3100BCA804 /* controllers_Login.m */,
 			);
 			name = controllers;
 			path = ravent/controllers;

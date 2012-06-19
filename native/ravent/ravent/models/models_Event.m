@@ -19,7 +19,7 @@
 @synthesize eid = _eid;
 @synthesize name = _name;
 @synthesize location = _location;
-//@synthesize picture = _picture;
+@synthesize venue_category = _venue_category;
 @synthesize pic_big = _pic_big;
 @synthesize score = _score;
 @synthesize timeStart = _timeStart;
@@ -56,7 +56,7 @@
     another.eid = _eid;
     another.name = _name;
     another.location = _location;
-//    another.picture = _picture;
+    another.venue_category = _venue_category;
     another.pic_big = _pic_big;
     another.score = _score;
     another.timeStart = _timeStart;
@@ -76,14 +76,14 @@
 
 - (void)loadEventsWithParams:(NSMutableDictionary *)params
 {
-        //RKLogConfigureByName("RestKit/*", RKLogLevelTrace);
+        RKLogConfigureByName("RestKit/*", RKLogLevelTrace);
     NSString *resourcePath = [@"events" appendQueryParams:params];
        
     RKObjectMapping *objectMapping = [RKObjectMapping mappingForClass:[models_Event class]];
     [objectMapping mapKeyPath:@"eid" toAttribute:@"eid"];
     [objectMapping mapKeyPath:@"name" toAttribute:@"name"];
     [objectMapping mapKeyPath:@"location" toAttribute:@"location"];
-//    [objectMapping mapKeyPath:@"picture" toAttribute:@"picture"];
+    [objectMapping mapKeyPath:@"venue_category" toAttribute:@"venue_category"];
     [objectMapping mapKeyPath:@"pic_big" toAttribute:@"pic_big"];
     [objectMapping mapKeyPath:@"score" toAttribute:@"score"];
     [objectMapping mapKeyPath:@"time_start" toAttribute:@"timeStart"];
@@ -116,7 +116,7 @@
     [objectMapping mapKeyPath:@"eid" toAttribute:@"eid"];
     [objectMapping mapKeyPath:@"name" toAttribute:@"name"];
     [objectMapping mapKeyPath:@"location" toAttribute:@"location"];
-//    [objectMapping mapKeyPath:@"picture" toAttribute:@"picture"];
+    [objectMapping mapKeyPath:@"venue_category" toAttribute:@"venue_category"];
     [objectMapping mapKeyPath:@"pic_big" toAttribute:@"pic_big"];
     [objectMapping mapKeyPath:@"score" toAttribute:@"score"];
     [objectMapping mapKeyPath:@"time_start" toAttribute:@"timeStart"];
