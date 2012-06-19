@@ -169,6 +169,8 @@ typedef enum {
             ((UILabel *)[_emptyMessageView.subviews objectAtIndex:0]).text = @"pull to refresh";
             [_emptyMessageViewPlaceHolder addSubview:_emptyMessageView];
             
+            [self.tableView reloadData];
+            
         } else if ([object isKindOfClass:[RKErrorMessage class]]) {
             
             RKErrorMessage *error = (RKErrorMessage *)object;
@@ -182,6 +184,8 @@ typedef enum {
             [[NSBundle mainBundle] loadNibNamed:@"views_Empty_Generic" owner:self options:nil];
             ((UILabel *)[_emptyMessageView.subviews objectAtIndex:0]).text = @"pull to refresh";
             [_emptyMessageViewPlaceHolder addSubview:_emptyMessageView];
+            
+            [self.tableView reloadData];
             
         } else {
             

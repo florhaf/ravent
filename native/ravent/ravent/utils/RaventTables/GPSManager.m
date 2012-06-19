@@ -55,6 +55,8 @@ static GPSManager *_gps;
     _error = error;
     _isLoading = NO;
     
+    _locationManager = nil;
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:GPSDone object:self];
 }
 
