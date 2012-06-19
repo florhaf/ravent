@@ -23,6 +23,7 @@
 - (void)loadData:(BOOL)force;
 - (void)onLoadAll:(NSArray *)objects;
 - (IBAction)onValueChanged:(id)sender;
+- (void)reloadTableViewDataSource:(BOOL)force;
 
 + (controllers_friends_All *)instance:(NSMutableDictionary *)following;
 

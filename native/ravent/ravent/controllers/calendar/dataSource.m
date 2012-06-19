@@ -64,7 +64,7 @@ static BOOL IsDateBetweenInclusive(NSDate *date, NSDate *begin, NSDate *end)
 
     _name.text = event.name;
     _location.text = event.location;
-    _picture.imageURL = [NSURL URLWithString:event.picture];
+    _picture.imageURL = [NSURL URLWithString:event.pic_big];
     _picture.clipsToBounds = YES;
     _picture.contentMode = UIViewContentModeScaleAspectFill;
     

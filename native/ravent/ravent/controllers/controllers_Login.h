@@ -21,6 +21,7 @@
     Facebook *_facebook;
     
     models_User *_user;
+    models_User *_userLoader;
 }
 
 @property (nonatomic, retain) Facebook *facebook;

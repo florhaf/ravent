@@ -64,8 +64,7 @@ static GPSManager *_gps;
 {
 	NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
 	[formatter setTimeStyle:NSDateFormatterMediumStyle];
-    
-	NSLog(@"Location: %.06f %.06f %@", newLocation.coordinate.latitude, newLocation.coordinate.longitude, [formatter stringFromDate:newLocation.timestamp]);
+
     
     if (newLocation.horizontalAccuracy < 0) 
         return;

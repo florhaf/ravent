@@ -77,7 +77,7 @@ static Store *_store;
     [newManagedObject setValue:event.location forKey:@"location"];
     [newManagedObject setValue:event.latitude forKey:@"latitude"];
     [newManagedObject setValue:event.longitude forKey:@"longitude"];
-    [newManagedObject setValue:event.picture forKey:@"picture"];
+    [newManagedObject setValue:event.pic_big forKey:@"picture"];
     
     // Save the context.
     NSError *error = nil;
@@ -176,7 +176,7 @@ static Store *_store;
         e.eid = [match valueForKey:@"eid"];
         e.name = [match valueForKey:@"name"];
         e.location = [match valueForKey:@"location"];
-        e.picture = [match valueForKey:@"picture"];
+        e.pic_big = [match valueForKey:@"picture"];
         e.latitude = [match valueForKey:@"latitude"];
         e.longitude = [match valueForKey:@"longitude"];
         e.dateStart = [match valueForKey:@"startDate"];

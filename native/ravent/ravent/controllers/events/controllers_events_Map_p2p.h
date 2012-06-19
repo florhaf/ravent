@@ -16,11 +16,15 @@
 
 #define METERS_PER_MILE 1609.344
 
-@interface controllers_events_Map_p2p : UIViewController<MKMapViewDelegate, MKAnnotation, JBAsyncImageViewDelegate> {
+@interface controllers_events_Map_p2p : UIViewController<MKMapViewDelegate, MKAnnotation, JBAsyncImageViewDelegate, UITableViewDelegate, UITableViewDataSource> {
     
     IBOutlet MKMapView *_map;
     IBOutlet UIToolbar *_toolbarTop;
     IBOutlet UIToolbar *_toolbarBottom;
+    IBOutlet UITableView *_tableOptions;
+    
+    UILabel *_labelRadiusValue;
+    UILabel *_labelWindowValue;
     
     NSMutableDictionary *_imageLoading;
     JBAsyncImageView *_image;
@@ -30,6 +34,11 @@
     MBProgressHUD *_hud;
     
     BOOL _isMapSet;
+    BOOL _isOptionsShowing;
+    
+    
+    int _prevRadiusValue;
+    int _prevWindowValue;
 }
 
 @property (nonatomic, unsafe_unretained) CGFloat peekLeftAmount;
@@ -43,6 +52,9 @@
 - (void)updateLoadingMessageWith:(NSString *)text;
 - (void) stopGps;
 - (void) startGps;
+
+- (IBAction)onOptionsTap:(id)sender;
+- (IBAction)onDoneTap:(id)sender;
 
 + (controllers_events_Map_p2p *)instance;
 

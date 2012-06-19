@@ -45,7 +45,9 @@ static controllers_events_List_p2p *_ctrl;
     [params setValue:[models_User crtUser].accessToken forKey:@"access_token"];
     [params setValue:[models_User crtUser].latitude forKey:@"latitude"];
     [params setValue:[models_User crtUser].longitude forKey:@"longitude"];
-    [params setValue:[models_User crtUser].timeZone forKey:@"timezone_offset"];
+    [params setValue:[models_User crtUser].timeZone forKey:@"timezone_offset"];                
+    [params setValue:[NSNumber numberWithInt:[models_User crtUser].searchRadius] forKey:@"radius"];
+    [params setValue:[NSNumber numberWithInt:[models_User crtUser].searchWindow] forKey:@"timeframe"];
     
     
     _url = [@"events" appendQueryParams:params];
@@ -54,8 +56,6 @@ static controllers_events_List_p2p *_ctrl;
     
     
     [_event loadEventsWithParams:params];
-    
-    //[[controllers_events_Map_p2p instance] setMapLocation:YES];
 }
 
 - (void)onLoadEvents:(NSArray *)objects
