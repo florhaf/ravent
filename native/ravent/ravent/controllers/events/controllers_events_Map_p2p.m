@@ -55,7 +55,10 @@ static controllers_events_Map_p2p *_ctrl;
     [MBProgressHUD hideHUDForView:self.view animated:YES];
     _hud = nil;
     
-//    [self setMapLocation:YES];
+    for (id<MKAnnotation> annotation in _map.annotations) {
+        
+        [_map removeAnnotation:annotation];
+    }
     
     if ([objects count] > 0) {
         
@@ -68,10 +71,7 @@ static controllers_events_Map_p2p *_ctrl;
             
         } else {
             
-            for (id<MKAnnotation> annotation in _map.annotations) {
-                
-                [_map removeAnnotation:annotation];
-            }
+            
             
             for (int i = 0; i < [objects count]; i++) {
                 

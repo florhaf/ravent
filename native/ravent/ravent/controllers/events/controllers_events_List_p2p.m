@@ -47,29 +47,40 @@ static controllers_events_List_p2p *_ctrl;
     switch (index) {
             
         case 0:
-            _data = _party;
-            _groupedData = _groupedParty;
-            _sortedKeys = _sortedKeysParty;
+            if (_party != nil && [_party count] > 0) {
+             
+                _data = _party;
+                _groupedData = _groupedParty;
+                _sortedKeys = _sortedKeysParty;
+            }
             break;
         case 1:
-            _data = _chill;
-            _groupedData = _groupedChill;
-            _sortedKeys = _sortedKeysChill;
+            if (_chill != nil && [_chill count] > 0) {
+                
+                _data = _chill;
+                _groupedData = _groupedChill;
+                _sortedKeys = _sortedKeysChill;
+            }
             break;
         case 2:
-            _data = _art;
-            _groupedData = _groupedArt;
-            _sortedKeys = _sortedKeysArt;
+            if (_art != nil && [_art count] > 0) {
+                
+                _data = _art;
+                _groupedData = _groupedArt;
+                _sortedKeys = _sortedKeysArt;
+            }
             break;
         case 3:
-            _data = _other;
-            _groupedData = _groupedOther;
-            _sortedKeys = _sortedKeysOther;
+            if (_other != nil && [_other count] > 0) {
+                
+                _data = _other;
+                _groupedData = _groupedOther;
+                _sortedKeys = _sortedKeysOther;
+            }
             break;
         default:
             break;
     }
-    
     
     [self.tableView reloadData];
 }
@@ -85,11 +96,9 @@ static controllers_events_List_p2p *_ctrl;
     [params setValue:[NSNumber numberWithInt:[models_User crtUser].searchRadius] forKey:@"radius"];
     [params setValue:[NSNumber numberWithInt:[models_User crtUser].searchWindow] forKey:@"timeframe"];
     
-    
     _url = [@"events" appendQueryParams:params];
     Action *upadteLoadingMessageAction = [[Action alloc] initWithDelegate:self andSelector:@selector(updateLoadingMessageWith:)];
     [[ActionDispatcher instance] add:upadteLoadingMessageAction named:_url];
-    
     
     [_event loadEventsWithParams:params];
 }
@@ -101,11 +110,8 @@ static controllers_events_List_p2p *_ctrl;
         [[NSBundle mainBundle] loadNibNamed:@"views_Empty_EventP2P" owner:self options:nil];
     }
     
-    //[super onLoadEvents:objects];
-    
     [self onLoadData:objects withSuccess:^ {
 
-        
         _party = [[NSMutableArray alloc] init];
         _chill = [[NSMutableArray alloc] init];
         _art = [[NSMutableArray alloc] init];
@@ -123,31 +129,19 @@ static controllers_events_List_p2p *_ctrl;
         
         
         for (models_Event *e in objects) {
-            
             if (e.filter != nil && [e.filter rangeOfString:@"Party"].location != NSNotFound) {
-                
                 [_party addObject:e];
-                
             }
-            
             if (e.filter != nil &&[e.filter rangeOfString:@"Chill"].location != NSNotFound) {
-                
                 [_chill addObject:e];
-                
             }
-            
             if (e.filter != nil &&[e.filter rangeOfString:@"Entertain"].location != NSNotFound) {
-                
                 [_art addObject:e];
-                
             }
-            
             if (e.filter == nil || (([e.filter rangeOfString:@"Party"].location == NSNotFound) &&
                                     ([e.filter rangeOfString:@"Chill"].location == NSNotFound) &&
                                     ([e.filter rangeOfString:@"Entertain"].location == NSNotFound))) {
-                
                 [_other addObject:e];
-                
             }
         }
         
@@ -161,13 +155,7 @@ static controllers_events_List_p2p *_ctrl;
         _sortedKeysArt = [[_groupedArt allKeys] sortedArrayUsingSelector:@selector(compare:)];
         _sortedKeysOther = [[_groupedOther allKeys] sortedArrayUsingSelector:@selector(compare:)];
         
-
         [[NSNotificationCenter defaultCenter] postNotificationName:@"onLoadEventsP2P" object:self];
-        
-//        _data = _party;
-//        _groupedData = _groupedParty;
-//        _sortedKeys = _sortedKeysParty;
-        
     }];
 
     [[controllers_events_Map_p2p instance] loadData:_data];
