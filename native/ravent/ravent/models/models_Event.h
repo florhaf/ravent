@@ -24,6 +24,10 @@
     SEL _callbackStatsFailure;
     id _senderStats;
     
+    SEL _callbackRsvpSuccess;
+    SEL _callbackRsvpFailure;
+    id _senderRsvp;
+    
     
     BOOL _isRequesting;
     
@@ -49,6 +53,7 @@
     NSString *_female_ratio;
     NSString *_male_ratio;
     NSString *_nb_attending;
+    NSString *_rsvp_status;
     
     CLLocationCoordinate2D _coordinate;
 }
@@ -79,6 +84,7 @@
 @property (nonatomic, retain) NSString *female_ratio;
 @property (nonatomic, retain) NSString *male_ratio;
 @property (nonatomic, retain) NSString *nb_attending;
+@property (nonatomic, retain) NSString *rsvp_status;
 
 @property (nonatomic, assign) CLLocationCoordinate2D coordinate;
 
@@ -88,6 +94,7 @@
 - (void)share:(NSMutableDictionary *)params;
 - (void)loadDescription;
 - (void)loadStatsWithParams:(NSMutableDictionary *)params andTarget:(id)target andSelector:(SEL)success;
+- (void)loadRsvpWithParams:(NSMutableDictionary *)params andTarget:(id)target andSelector:(SEL)success;
 - (void)vote:(NSMutableDictionary *)params success:(SEL)success failure:(SEL)failure sender:(id)sender;
 - (void)rsvp:(NSMutableDictionary *)params success:(SEL)success failure:(SEL)failure sender:(id)sender;
 - (void)cancelAllRequests;

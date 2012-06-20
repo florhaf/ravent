@@ -146,7 +146,6 @@ static customNavigationController *_ctrl;
     [_container setBackgroundColor:[UIColor clearColor]];
     [_followers.view setHidden:YES];
     
-    
     [_segmentedControl setTintColor:[UIColor darkGrayColor]];
 }
 

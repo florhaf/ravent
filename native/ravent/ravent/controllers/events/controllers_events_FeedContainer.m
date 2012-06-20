@@ -7,6 +7,8 @@
 //
 
 #import "controllers_events_FeedContainer.h"
+#import "YRDropdownView.h"
+#import "controllers_App.h"
 
 @interface controllers_events_FeedContainer ()
 
@@ -42,6 +44,17 @@
 
 - (IBAction)onCommentTap:(id)sender
 {
+    if (_event.rsvp_status == nil || [_event.rsvp_status isEqualToString:@""] || [_event.rsvp_status isEqualToString:@"not replied"]) {
+        
+        [YRDropdownView showDropdownInView:[controllers_App instance].view 
+                                     title:@"Warning" 
+                                    detail:@"You must RSVP to post a comment"
+                                     image:[UIImage imageNamed:@"dropdown-alert"]
+                                  animated:YES];
+        
+        return;
+    }
+    
     postController *post = [[postController alloc] initWithNibName:@"views_Post" bundle:nil];
     post.isForEvent = YES;
     post.toId = _event.eid;

@@ -186,6 +186,18 @@
 
 - (IBAction)shareButton_Tap:(id)sender
 {
+    if (_event.rsvp_status == nil || [_event.rsvp_status isEqualToString:@""] || [_event.rsvp_status isEqualToString:@"not replied"]) {
+        
+        [YRDropdownView showDropdownInView:[controllers_App instance].view 
+                                     title:@"Warning" 
+                                    detail:@"You must RSVP to share this event"
+                                     image:[UIImage imageNamed:@"dropdown-alert"]
+                                  animated:YES];
+        
+        return;
+    }
+    
+    
     controllers_friends_share *shareController = [[controllers_friends_share alloc] initWithUser:[_user copy] invited:_data];
     UINavigationController *shareModal = [[UINavigationController alloc] initWithRootViewController:shareController];
     
@@ -397,6 +409,7 @@
     [params setValue:[models_User crtUser].accessToken forKey:@"access_token"];
     
     [_event loadStatsWithParams:params andTarget:self andSelector:@selector(onEventStatsLoad:)];
+    [_event loadStatsWithParams:params andTarget:self andSelector:@selector(onRsvpLoad:)];
     
     self.tableView.tableHeaderView = _header;
 }
@@ -414,6 +427,18 @@
         _labelFemaleRatio.text = [NSString stringWithFormat:@"%.0f %%", d + 1];
         _labelMaleRatio.text = [NSString stringWithFormat:@"%.0f %%", 100 - (d + 1)];
         _labelTotalAttendings.text = e.nb_attending;
+    }
+}
+
+- (void)onRsvpLoad:(NSArray *)objects
+{
+    if (objects != nil && [objects count] > 0) {
+        
+        models_Event *e = [objects objectAtIndex:0];
+        
+        _event.rsvp_status = e.rsvp_status;
+        
+        // update rsvp control here
     }
 }
 
