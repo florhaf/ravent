@@ -64,7 +64,7 @@ static controllers_SlidingMenu *_ctrl;
     // make the sign out clickable
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame = signOutLabel.frame;
-    [btn addTarget:[controllers_Login instance] action:@selector(onLogoutButtonTap) forControlEvents:UIControlEventTouchUpInside];
+    [btn addTarget:self action:@selector(logout) forControlEvents:UIControlEventTouchUpInside];
     [menuTable.tableFooterView addSubview:btn];
     
     UIView *footer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 280, 44)];
@@ -75,6 +75,18 @@ static controllers_SlidingMenu *_ctrl;
     
     [self.slidingViewController setAnchorRightRevealAmount:280.0f];
     self.slidingViewController.underLeftWidthLayout = ECFullWidth;
+}
+
+- (void)logout
+{
+    [self.slidingViewController anchorTopViewOffScreenTo:ECRight animations:nil onComplete:^{
+        CGRect frame = self.slidingViewController.topViewController.view.frame;
+        self.slidingViewController.topViewController = [controllers_events_Events instance];
+        self.slidingViewController.topViewController.view.frame = frame;
+        [self.slidingViewController resetTopView];
+    }];
+    
+    [[controllers_Login instance] performSelector:@selector(onLogoutButtonTap) withObject:nil afterDelay:1];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)sectionIndex
@@ -152,6 +164,13 @@ static controllers_SlidingMenu *_ctrl;
     }
     
     return _ctrl;
+}
+
++ (void)release
+{
+    [controllers_friends_People release];
+    [controllers_calendar_Calendar release];
+    _ctrl = nil;
 }
 
 

@@ -10,4 +10,6 @@
 
 @interface customNavigationController : UINavigationController
 
+@property (nonatomic, retain) UIViewController *rootController;
+
 @end

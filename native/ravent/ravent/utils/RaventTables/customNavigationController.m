@@ -11,6 +11,8 @@
 
 @implementation customNavigationController
     
+@synthesize rootController = _rootController;
+
 - (id)initWithRootViewController:(UIViewController *)rootViewController
 {
     self = [super initWithRootViewController:rootViewController];
@@ -18,6 +20,7 @@
     if (self) {
         
         [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"navBar"] forBarMetrics:UIBarMetricsDefault];
+        _rootController = rootViewController;
     }
     
     return self;

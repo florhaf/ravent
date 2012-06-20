@@ -367,4 +367,10 @@ static controllers_friends_All *_ctrl;
     return _ctrl;
 }
 
++ (void)release
+{
+    [models_User release];
+    _ctrl = nil;
+}
+
 @end

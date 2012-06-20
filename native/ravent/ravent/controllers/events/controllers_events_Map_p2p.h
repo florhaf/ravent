@@ -57,5 +57,6 @@
 - (IBAction)onDoneTap:(id)sender;
 
 + (controllers_events_Map_p2p *)instance;
++ (void)release;
 
 @end

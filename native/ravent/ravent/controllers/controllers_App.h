@@ -18,6 +18,7 @@
 @property (strong, nonatomic) controllers_SlidingInitial *slidingController;
 @property (strong, nonatomic) controllers_Login *loginController;
 
+- (void)resetApp;
 - (void)flipView;
 + (controllers_App *)instance;
 

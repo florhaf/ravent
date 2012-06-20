@@ -172,4 +172,10 @@ static controllers_events_List_p2p *_ctrl;
     return _ctrl;
 }
 
++ (void)release
+{
+    [_ctrl cancelAllRequests];
+    _ctrl = nil;
+}
+
 @end

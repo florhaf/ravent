@@ -29,5 +29,6 @@
 - (void)reloadTableViewDataSourceWithIndex:(int)index;
 
 + (controllers_events_List_p2p *)instance;
++ (void)release;
 
 @end

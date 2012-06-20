@@ -44,11 +44,13 @@
 - (void)onMeTap;
 - (void)revealMenu:(id)sender;
 - (void)revealAll:(id)sender;
+- (void)cancelAllRequests;
 
 - (IBAction)onSegmentedControlValueChanged;
 
 - (void)uiview:(UIView *)uiview raceTo:(CGPoint)destination withSnapBack:(BOOL)withSnapBack;
 
 + (customNavigationController *)instance;
++ (void)release;
 
 @end

@@ -136,4 +136,9 @@ static customNavigationController *_ctrl;
     return _ctrl;
 }
 
++ (void)release
+{
+    _ctrl = nil;
+}
+
 @end

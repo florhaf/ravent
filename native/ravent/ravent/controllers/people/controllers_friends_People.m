@@ -249,6 +249,12 @@ static customNavigationController *_ctrl;
     [self.slidingViewController anchorTopViewTo:ECLeft];
 }
 
+- (void)cancelAllRequests
+{
+    [_followers cancelAllRequests];
+    [_following cancelAllRequests];
+}
+
 + (customNavigationController *)instance 
 {
     if (_ctrl == nil) {
@@ -258,6 +264,13 @@ static customNavigationController *_ctrl;
     }
     
     return _ctrl;
+}
+
++ (void)release
+{
+    [((controllers_friends_People *)_ctrl.rootController) cancelAllRequests];
+    [controllers_friends_All release];
+    _ctrl = nil;
 }
 
 @end

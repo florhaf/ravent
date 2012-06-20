@@ -37,5 +37,6 @@
 - (void)revealMap:(id)sender;
 
 + (customNavigationController *)instance;
++ (void)release;
 
 @end

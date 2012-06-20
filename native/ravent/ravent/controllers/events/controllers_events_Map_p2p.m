@@ -450,4 +450,9 @@ static controllers_events_Map_p2p *_ctrl;
     return _ctrl;
 }
 
++ (void)release
+{
+    _ctrl = nil;
+}
+
 @end
