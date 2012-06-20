@@ -91,17 +91,22 @@ public class Event extends Model implements Serializable {
 		
 		ArrayList<Model> result = new ArrayList<Model>();
 		
+		int timeZoneInMinutes = Integer.parseInt(timeZone);
+		
+		 //Prepare a timestamp to filter the facebook DB on the upcoming events
+		DateTimeZone GMT = DateTimeZone.forID("GMT");		
+		DateTime now = DateTime.now(GMT).plusMinutes(timeZoneInMinutes);
+		long actual_time = now.getMillis() / 1000;
+		
 		FacebookClient client 	= new DefaultFacebookClient(accessToken);
 		String properties 		= "eid, name, pic_big, start_time, end_time, venue, location, privacy, update_time";
-		String query 			= "SELECT " + properties + " FROM event WHERE eid IN (SELECT eid FROM event_member WHERE uid = " + userID + ")"; /*need to check privacy CLOSED AND SECRET */
+		String query 			= "SELECT " + properties + " FROM event WHERE eid IN (SELECT eid FROM event_member WHERE uid = " + userID + ") AND end_time > " + actual_time + " ORDER BY start_time"; /*need to check privacy CLOSED AND SECRET */
 		List<Event> fbevents 	= client.executeQuery(query, Event.class);
 		
 		Dao dao = new Dao();
 		
 		MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
 		Event e_cache; 
-		
-		int timeZoneInMinutes = Integer.parseInt(timeZone);
 		
 		for (Event e : fbevents) {
 				
@@ -135,11 +140,7 @@ public class Event extends Model implements Serializable {
     	    			dao.ofy().put(elc);
     	    		}
     	    		
-    	    	} else {
-								
-    	    		e.distance = "N/A";
-    	    	}
-    	    	
+    	    	}    	    	
     	    	e.Score(v_graph);
     	    }
 	
@@ -149,7 +150,10 @@ public class Event extends Model implements Serializable {
 
     	    	float distance = Geo.Fence(userLatitude, userLongitude, e.latitude, e.longitude);
         	    e.distance = String.format("%.2f", distance);
-    	    }
+    	    } else {
+				
+	    		e.distance = "N/A";
+	    	}
 	    
     	    result.add(e);
 	    	syncCache.put(e.eid, e, null); // Add Event to cache
@@ -167,10 +171,10 @@ public class Event extends Model implements Serializable {
 		
 		Dao dao = new Dao();
 		
-		//Prepare a timestamp to filter on current dateTime
-		DateTimeZone PST = DateTimeZone.forID("America/Los_Angeles");
-		DateTime now = new DateTime(PST);
-		now.plusMinutes(PST.getOffset(now));
+		int timeZoneInMinutes = Integer.parseInt(timeZone);
+		
+		DateTimeZone GMT = DateTimeZone.forID("GMT");		
+		DateTime now = DateTime.now(GMT).plusMinutes(timeZoneInMinutes);
 		long actual_time = now.getMillis() / 1000;
 		
 		LocationCapableRepositorySearch<EventLocationCapable> ofySearch = new OfyEntityLocationCapableRepositorySearchImpl(dao.ofy(), timeZone, searchTimeFrame);
@@ -181,7 +185,6 @@ public class Event extends Model implements Serializable {
 		
 		MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
 		
-		int timeZoneInMinutes = Integer.parseInt(timeZone);
 		Event event;
 		
         for (EventLocationCapable e : l) {
@@ -251,9 +254,14 @@ public class Event extends Model implements Serializable {
 				
 					try {
 						
+						//Prepare a timestamp to filter the facebook DB on the upcoming events
+						DateTimeZone PST = DateTimeZone.forID("America/Los_Angeles"); 	
+						DateTime now = new DateTime(PST);		
+						String TAS = String.valueOf(now.getMillis() / 1000);
+						
 						FacebookClient client 	= new DefaultFacebookClient(u.getAccess_token());
 						String properties 		= "eid, name, pic_big, start_time, end_time, venue, location, privacy, update_time";
-						String query 			= "SELECT " + properties + " FROM event WHERE eid IN (SELECT eid FROM event_member WHERE uid = " + l.getUid() + ")"; /*need to check privacy CLOSED AND SECRET */
+						String query 			= "SELECT " + properties + " FROM event WHERE eid IN (SELECT eid FROM event_member WHERE uid = " + l.getUid() + ") AND end_time > " + TAS; /*need to check privacy CLOSED AND SECRET */
 						List<Event> fbevents 	= client.executeQuery(query, Event.class);
 										
 						Event e_cache; 
@@ -294,10 +302,7 @@ public class Event extends Model implements Serializable {
 					    	    			dao.ofy().put(elc);
 					    	    		}
 					    	    		
-					    	    	} else {
-													
-					    	    		e.distance = "N/A";
-					    	    	}    	    	
+					    	    	}   	
 					    	    }
 				    	    }
 				    	    if (e.venue_category == null || (e.venue_category != null && !e.venue_category.equals("City"))) {syncCache.put(e.eid, e, null);} // Add Event to cache
@@ -383,7 +388,9 @@ public class Event extends Model implements Serializable {
 		DateTimeZone GMT = DateTimeZone.forID("GMT");		
 		DateTime now = DateTime.now(GMT).plusMinutes(timeZoneInMinutes);
 		
-		if (dtStart.getDayOfYear() <= now.getDayOfYear() && dtEnd.dayOfYear().get() >= now.getDayOfYear()) {
+		long timeStampNow = now.getMillis();
+		
+		if (timeStampStart <= timeStampNow && timeStampEnd >= timeStampNow) {
 			
 			long end_minus_start = (timeStampEnd - timeStampStart) / 86400000; // in days
 			
@@ -401,13 +408,13 @@ public class Event extends Model implements Serializable {
 			}
 		} else {
 			
-			if (dtStart.getDayOfYear() <= now.plusDays(1).getDayOfYear()) {
+			if (timeStampStart <= timeStampNow + 86400000) {
 				
 				this.group = "b";
 				this.groupTitle = "Tomorrow";
 			} else {
 				
-				if (dtStart.getWeekyear() == now.getWeekyear()) {
+				if (dtStart.getWeekOfWeekyear() == now.getWeekOfWeekyear()) {
 					
 					this.group = "c";
 					this.groupTitle = "This week";
