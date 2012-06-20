@@ -69,7 +69,7 @@
     models_User *u = [_data objectAtIndex:indexPath.row];
     
     _itemTitle.text = [NSString stringWithFormat:@"%@ %@", u.firstName, u.lastName];
-    _itemSubTitle.text = u.rsvpStatus;
+    _itemSubTitle.text = (u.rsvpStatus != nil && ![u.rsvpStatus isEqualToString:@""]) ? u.rsvpStatus : @"not replied";
     _itemImage.imageURL = [NSURL URLWithString:u.picture];
     _itemImage.clipsToBounds = YES;
     _itemImage.contentMode = UIViewContentModeScaleAspectFill;
