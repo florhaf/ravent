@@ -11,6 +11,7 @@
 #import "controllers_friends_People.h"
 #import "controllers_calendar_Calendar.h"
 #import "controllers_stats_Stats.h"
+#import "controllers_dropagem_DropAGemViewController.h"
 #import "customNavigationController.h"
 #import "controllers_Login.h"
 #import "JMC.h"
@@ -27,7 +28,7 @@ static controllers_SlidingMenu *_ctrl;
     
     if (self) {
         
-        self.menuItems = [NSArray arrayWithObjects:@"Events", @"Friends", @"Calendar", @"Feedback", nil];
+        self.menuItems = [NSArray arrayWithObjects:@"Events", @"Friends", @"Watchlist", @"Drop a gem", @"Feedback", nil];
     }
     
     return self;
@@ -36,6 +37,7 @@ static controllers_SlidingMenu *_ctrl;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
 
     UIImageView *bg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"backgroundDark"]];
     
@@ -89,6 +91,18 @@ static controllers_SlidingMenu *_ctrl;
     [[controllers_Login instance] performSelector:@selector(onLogoutButtonTap) withObject:nil afterDelay:1];
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row == 3) {
+        
+        return 44;// * 5 + 15;
+        
+    } else {
+        
+        return 44;
+    }
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)sectionIndex
 {
     return self.menuItems.count;
@@ -112,6 +126,16 @@ static controllers_SlidingMenu *_ctrl;
         cell.accessoryView.frame = CGRectMake(discl.frame.origin.x - 50, discl.frame.origin.y, discl.frame.size.width, discl.frame.size.height);
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+    if (indexPath.row == 4) {
+        
+        cell.textLabel.textColor = [UIColor grayColor];
+        cell.textLabel.backgroundColor = [UIColor clearColor];
+        cell.textLabel.opaque = YES;
+        cell.textLabel.shadowColor = [UIColor blackColor];
+        cell.textLabel.shadowOffset = CGSizeMake(0, 1);
+        [cell.textLabel setFont:[UIFont boldSystemFontOfSize:17]];
+    }
     
     return cell;
 }
@@ -137,9 +161,9 @@ static controllers_SlidingMenu *_ctrl;
                 newTopViewController = [controllers_calendar_Calendar instance];
             } else {
                 
-                if ([identifier isEqualToString:@"Stats"]) {
+                if ([identifier isEqualToString:@"Drop a gem"]) {
                 
-                    newTopViewController = [controllers_stats_Stats instance];
+                    newTopViewController = [controllers_dropagem_DropAGemViewController instance];
                 } else {
                     
                     newTopViewController = [[JMC sharedInstance] issuesViewController];

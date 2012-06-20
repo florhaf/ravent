@@ -170,6 +170,8 @@
 		DF4E475C157883590015616B /* itemBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = DF4E475A157883590015616B /* itemBackground.png */; };
 		DF4E475D157883590015616B /* itemBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF4E475B157883590015616B /* itemBackground@2x.png */; };
 		DF4E475F15789DC60015616B /* itemNext@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF4E475E15789DC60015616B /* itemNext@2x.png */; };
+		DF4F86DC15926B7100AE9742 /* controllers_dropagem_DropAGemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF4F86DB15926B7100AE9742 /* controllers_dropagem_DropAGemViewController.m */; };
+		DF4F86DF15926B9200AE9742 /* controllers_dropagem_List.m in Sources */ = {isa = PBXBuildFile; fileRef = DF4F86DE15926B9200AE9742 /* controllers_dropagem_List.m */; };
 		DF50EDAF1537732700ACBC4A /* customNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF50EDAE1537732700ACBC4A /* customNavigationController.m */; };
 		DF50EDB21537A85400ACBC4A /* controllers_events_Details_Map.m in Sources */ = {isa = PBXBuildFile; fileRef = DF50EDB11537A85300ACBC4A /* controllers_events_Details_Map.m */; };
 		DF50EDB41537A8AE00ACBC4A /* views_events_Map_Big.xib in Resources */ = {isa = PBXBuildFile; fileRef = DF50EDB31537A8AE00ACBC4A /* views_events_Map_Big.xib */; };
@@ -593,6 +595,10 @@
 		DF4E475A157883590015616B /* itemBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = itemBackground.png; sourceTree = "<group>"; };
 		DF4E475B157883590015616B /* itemBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "itemBackground@2x.png"; sourceTree = "<group>"; };
 		DF4E475E15789DC60015616B /* itemNext@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "itemNext@2x.png"; sourceTree = "<group>"; };
+		DF4F86DA15926B7100AE9742 /* controllers_dropagem_DropAGemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = controllers_dropagem_DropAGemViewController.h; path = dropagem/controllers_dropagem_DropAGemViewController.h; sourceTree = "<group>"; };
+		DF4F86DB15926B7100AE9742 /* controllers_dropagem_DropAGemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = controllers_dropagem_DropAGemViewController.m; path = dropagem/controllers_dropagem_DropAGemViewController.m; sourceTree = "<group>"; };
+		DF4F86DD15926B9200AE9742 /* controllers_dropagem_List.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = controllers_dropagem_List.h; path = dropagem/controllers_dropagem_List.h; sourceTree = "<group>"; };
+		DF4F86DE15926B9200AE9742 /* controllers_dropagem_List.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = controllers_dropagem_List.m; path = dropagem/controllers_dropagem_List.m; sourceTree = "<group>"; };
 		DF50EDAD1537732700ACBC4A /* customNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = customNavigationController.h; sourceTree = "<group>"; };
 		DF50EDAE1537732700ACBC4A /* customNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = customNavigationController.m; sourceTree = "<group>"; };
 		DF50EDB01537A85300ACBC4A /* controllers_events_Details_Map.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = controllers_events_Details_Map.h; sourceTree = "<group>"; };
@@ -1186,6 +1192,17 @@
 			path = Anims;
 			sourceTree = "<group>";
 		};
+		DF4F86D915926B2600AE9742 /* DropAGem */ = {
+			isa = PBXGroup;
+			children = (
+				DF4F86DA15926B7100AE9742 /* controllers_dropagem_DropAGemViewController.h */,
+				DF4F86DB15926B7100AE9742 /* controllers_dropagem_DropAGemViewController.m */,
+				DF4F86DD15926B9200AE9742 /* controllers_dropagem_List.h */,
+				DF4F86DE15926B9200AE9742 /* controllers_dropagem_List.m */,
+			);
+			name = DropAGem;
+			sourceTree = "<group>";
+		};
 		DF50EDCD1537B3E000ACBC4A /* DLStarRating */ = {
 			isa = PBXGroup;
 			children = (
@@ -1504,6 +1521,7 @@
 		DF8F150A150BD53C00008ABC /* controllers */ = {
 			isa = PBXGroup;
 			children = (
+				DF4F86D915926B2600AE9742 /* DropAGem */,
 				DF16F6FE153BCABD002819C2 /* people */,
 				DFA23E27151D150200B8A8B5 /* calendar */,
 				DF9DA507150C46E60006E61A /* stats */,
@@ -2157,6 +2175,8 @@
 				DF24593D15807A260095027E /* controllers_events_DetailsContainer.m in Sources */,
 				DF9CED4E15845129002B1024 /* controllers_events_Pic_big.m in Sources */,
 				DF8C0651158C0DC1009D3400 /* GPSManager.m in Sources */,
+				DF4F86DC15926B7100AE9742 /* controllers_dropagem_DropAGemViewController.m in Sources */,
+				DF4F86DF15926B9200AE9742 /* controllers_dropagem_List.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
