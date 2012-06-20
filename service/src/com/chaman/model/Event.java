@@ -174,7 +174,7 @@ public class Event extends Model implements Serializable {
 		long actual_time = now.getMillis() / 1000;
 		
 		LocationCapableRepositorySearch<EventLocationCapable> ofySearch = new OfyEntityLocationCapableRepositorySearchImpl(dao.ofy(), timeZone, searchTimeFrame);
-		List<EventLocationCapable> l = GeocellManager.proximityFetch(new Point(Double.parseDouble(userLatitude), Double.parseDouble(userLongitude)), searchLimit, searchRadius * 1000, ofySearch);
+		List<EventLocationCapable> l = GeocellManager.proximityFetch(new Point(Double.parseDouble(userLatitude), Double.parseDouble(userLongitude)), searchLimit, searchRadius * 1000 * 1.61, ofySearch);
 		
 		FacebookClient client 	= new DefaultFacebookClient(accessToken);
 		String properties 		= "eid, name, pic_big, start_time, end_time, venue, location, privacy";
@@ -206,7 +206,7 @@ public class Event extends Model implements Serializable {
         				}
             		}
             	}
-            	
+          	
             	if (event != null && (event.venue_category == null || (event.venue_category != null && !event.venue_category.equals("City")))) {
             		
         			if (event.Format(timeZoneInMinutes)){
