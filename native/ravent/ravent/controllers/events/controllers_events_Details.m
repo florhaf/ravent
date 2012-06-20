@@ -409,7 +409,7 @@
     [params setValue:[models_User crtUser].accessToken forKey:@"access_token"];
     
     [_event loadStatsWithParams:params andTarget:self andSelector:@selector(onEventStatsLoad:)];
-    [_event loadStatsWithParams:params andTarget:self andSelector:@selector(onRsvpLoad:)];
+    //[_event loadRsvpWithParams:params andTarget:self andSelector:@selector(onRsvpLoad:)];
     
     self.tableView.tableHeaderView = _header;
 }

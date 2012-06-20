@@ -21,12 +21,10 @@ static controllers_dropagem_List *_ctrl;
     
     _hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
-    UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 200, 44)];
-    textLabel.textColor = [UIColor grayColor];
+    UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectMake(30, 10, 200, 44)];
+    textLabel.textColor = [UIColor lightGrayColor];
     textLabel.backgroundColor = [UIColor clearColor];
     textLabel.opaque = YES;
-    textLabel.shadowColor = [UIColor blackColor];
-    textLabel.shadowOffset = CGSizeMake(0, 1);
     [textLabel setFont:[UIFont boldSystemFontOfSize:17]];
     
     textLabel.text = @"Where are you at?";

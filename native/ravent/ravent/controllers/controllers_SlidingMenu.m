@@ -156,7 +156,7 @@ static controllers_SlidingMenu *_ctrl;
             newTopViewController = [controllers_friends_People instance];
         } else {
             
-            if ([identifier isEqualToString:@"Calendar"]) {
+            if ([identifier isEqualToString:@"Watchlist"]) {
                 
                 newTopViewController = [controllers_calendar_Calendar instance];
             } else {
