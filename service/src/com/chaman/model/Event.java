@@ -165,7 +165,7 @@ public class Event extends Model implements Serializable {
 	 /* - Get list of event for any user in search area
 	 * - exclude past event
 	 */
-	public static ArrayList<Model> Get(String accessToken, String userLatitude, String userLongitude, String timeZone, int searchTimeFrame, int searchRadius, int searchLimit) throws FacebookException {
+	public static ArrayList<Model> Get(String accessToken, String userLatitude, String userLongitude, String timeZone, int searchTimeFrame, float searchRadius, int searchLimit) throws FacebookException {
 		
 		ArrayList<Model> result = new ArrayList<Model>();
 		
