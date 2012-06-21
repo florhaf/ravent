@@ -25,5 +25,6 @@
 @property (nonatomic, retain) KalViewController *kal;
 
 + (customNavigationController *)instance;
++ (void)release;
 
 @end

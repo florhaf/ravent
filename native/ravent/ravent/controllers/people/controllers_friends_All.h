@@ -26,5 +26,6 @@
 - (void)reloadTableViewDataSource:(BOOL)force;
 
 + (controllers_friends_All *)instance:(NSMutableDictionary *)following;
++ (void)release;
 
 @end

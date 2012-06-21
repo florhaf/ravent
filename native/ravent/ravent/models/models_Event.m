@@ -37,6 +37,7 @@
 @synthesize female_ratio = _female_ratio;
 @synthesize male_ratio = _male_ratio;
 @synthesize nb_attending = _nb_attending;
+@synthesize rsvp_status = _rsvp_status;
 
 //#define SERVICE_URL @"http://air.local:8888"
 #define SERVICE_URL @"http://raventsvc.appspot.com"
@@ -75,6 +76,7 @@
     another.groupTitle = _groupTitle;
     another.coordinate = _coordinate;
     another.filter = _filter;
+    another.rsvp_status = _rsvp_status;
     
     return another;
 }
@@ -176,7 +178,6 @@
 {
     NSString *resourcePath = [@"eventstats" appendQueryParams:params];
     
-    
     _callbackStatsSuccess = success;
     _senderStats = target;
     
@@ -184,6 +185,25 @@
     [objectMapping mapKeyPath:@"female_ratio" toAttribute:@"female_ratio"];
     [objectMapping mapKeyPath:@"male_ratio" toAttribute:@"male_ratio"];
     [objectMapping mapKeyPath:@"nb_attending" toAttribute:@"nb_attending"];
+    
+    if (_manager == nil) {
+        
+        _manager = [RKObjectManager objectManagerWithBaseURL:SERVICE_URL];
+    }
+    
+    [_manager.mappingProvider setMapping:objectMapping forKeyPath:@"records"];
+    [_manager loadObjectsAtResourcePath:resourcePath objectMapping:objectMapping delegate:self];
+}
+
+- (void)loadRsvpWithParams:(NSMutableDictionary *)params andTarget:(id)target andSelector:(SEL)success
+{
+    NSString *resourcePath = [@"rsvp" appendQueryParams:params];
+    
+    _callbackRsvpSuccess = success;
+    _senderRsvp = target;
+    
+    RKObjectMapping *objectMapping = [RKObjectMapping mappingForClass:[models_Event class]];
+    [objectMapping mapKeyPath:@"rsvp_status" toAttribute:@"rsvp_status"];
     
     if (_manager == nil) {
         
@@ -226,6 +246,16 @@
     #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
         [_senderStats performSelector:_callbackStatsSuccess withObject:objects];
     #pragma clang diagnostic pop
+        
+        return;
+    }
+    
+    if ([objectLoader.URL.path rangeOfString:@"rsvp"].location != NSNotFound) {
+        
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+        [_senderRsvp performSelector:_callbackRsvpSuccess withObject:objects];
+#pragma clang diagnostic pop
         
         return;
     }

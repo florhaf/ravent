@@ -155,4 +155,12 @@ static customNavigationController *_ctrl;
     return _ctrl;
 }
 
++ (void)release
+{
+    [controllers_events_List_p2p release];
+    [controllers_events_Map_p2p release];
+    [controllers_SlidingMenu release];
+    _ctrl = nil;
+}
+
 @end

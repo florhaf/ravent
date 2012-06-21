@@ -124,6 +124,12 @@ static models_User *_crtUser = nil;
     return _crtUser;
 }
 
++ (void)release
+{
+    _allListSingleton = nil;
+    _crtUser = nil;
+}
+
 - (void)getLocation
 {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onGPSDone) name:GPSDone object:[GPSManager instance]];

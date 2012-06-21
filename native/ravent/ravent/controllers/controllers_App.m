@@ -8,7 +8,7 @@
 
 #import "controllers_App.h"
 #import "ActionDispatcher.h"
-
+#import "controllers_events_Events.h"
 
 @implementation controllers_App
 
@@ -65,6 +65,8 @@ static controllers_App *_ctrl;
         
 		[slide removeFromSuperview];
 		[self.view addSubview:login];
+        
+        [self resetApp];
     } else {
         
         [UIView setAnimationDelay:1.2];
@@ -74,6 +76,12 @@ static controllers_App *_ctrl;
     }
     
 	[UIView commitAnimations];
+}
+
+- (void)resetApp
+{
+    [controllers_events_Events release];
+    _slidingController = nil;
 }
 
 - (void)viewDidLoad

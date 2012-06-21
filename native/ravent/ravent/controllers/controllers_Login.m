@@ -104,9 +104,6 @@ static controllers_Login *_ctrl;
     _facebook = nil;
     _user = nil;
     
-    
-    
-    
     [models_User setCrtUser:nil];
 }
 
@@ -158,8 +155,6 @@ static controllers_Login *_ctrl;
     _userLoader = [[models_User alloc] init];
     
     [_userLoader loadAllWithParams:params force:YES];
-    
-    
     [_user loadUser];
 }
 
