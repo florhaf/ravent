@@ -118,7 +118,6 @@ static models_User *_crtUser = nil;
     return _crtUser;
 }
 
-
 + (models_User *)crtUser
 {
     return _crtUser;

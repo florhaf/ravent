@@ -1,8 +1,8 @@
 //
-//  controllers_dropagem_DropAGemViewController.h
+//  controllers_watchlist_Container.h
 //  ravent
 //
-//  Created by florian haftman on 6/20/12.
+//  Created by florian haftman on 6/21/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
@@ -14,14 +14,12 @@
 #import "ECSlidingViewController.h"
 #import "controllers_SlidingMenu.h"
 #import "customNavigationController.h"
+#import "controllers_watchlist_WatchList.h"
 
-@interface controllers_dropagem_DropAGemViewController : UIViewController {
+@interface controllers_watchlist_Container : UIViewController {
     
-    
-    controllers_dropagem_List *_listController;
-    
-    IBOutlet UIToolbar *_toolbar;
-    IBOutlet UISegmentedControl *_seg;
+    controllers_watchlist_WatchList *_listController;
+
     
     models_User *_user;
 }
@@ -33,5 +31,4 @@
 
 + (customNavigationController *)instance;
 + (void)release;
-
 @end

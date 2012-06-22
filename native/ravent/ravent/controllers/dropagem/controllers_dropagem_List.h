@@ -11,6 +11,7 @@
 
 @interface controllers_dropagem_List : UITableViewEvents {
 
+    BOOL _isFromDetails;
 }
 
 + (controllers_dropagem_List *)instance;

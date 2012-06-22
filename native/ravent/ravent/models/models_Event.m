@@ -9,6 +9,7 @@
 #import "models_Event.h"
 #import "models_User.h"
 #import "ActionDispatcher.h"
+#import "Store.h"
 
 @implementation models_Event
 
@@ -118,7 +119,20 @@
 
 - (void)reloadWithParams:(NSMutableDictionary *)params
 {
+    
+    //RKLogConfigureByName("RestKit/*", RKLogLevelTrace);
     NSString *resourcePath = [@"calendar" appendQueryParams:params];
+    
+    Store *store = [Store instance];
+    NSMutableArray *events = [[NSMutableArray alloc] init];
+    
+    [events addObjectsFromArray:[store findFutureEvents]];
+    
+    
+    for (int i = 0; i < [events count]; i++) {
+        
+        resourcePath = [NSString stringWithFormat:@"%@&eventID=%@", resourcePath, ((models_Event *)[events objectAtIndex:i]).eid];
+    }
     
     RKObjectMapping *objectMapping = [RKObjectMapping mappingForClass:[models_Event class]];
     [objectMapping mapKeyPath:@"eid" toAttribute:@"eid"];

@@ -198,31 +198,6 @@ static controllers_events_Map_p2p *_ctrl;
     [mapView setRegion:region animated:YES];
 }
 
-//- (void)mapViewDidFinishLoadingMap:(MKMapView *)mapView
-//{
-//    [self setMapLocation:NO];
-//}
-
-//- (void)setMapLocation:(BOOL)force
-//{
-//    CLLocationCoordinate2D zoomLocation;
-//    
-//    zoomLocation.latitude  = [[models_User crtUser].latitude doubleValue];
-//    zoomLocation.longitude = [[models_User crtUser].longitude doubleValue];
-//    
-//    if (!_isMapSet || force) {
-//        
-//        _isMapSet = YES;
-//        MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(zoomLocation, 2 * METERS_PER_MILE, 2 * METERS_PER_MILE);
-//        MKCoordinateRegion adjustedRegion = [_map regionThatFits:viewRegion];                
-//        [_map setRegion:adjustedRegion animated:YES];
-//        
-//        //_map.showsUserLocation = YES;
-//    }
-//}
-
-
-
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
@@ -403,6 +378,7 @@ static controllers_events_Map_p2p *_ctrl;
         
         UILabel *l1 = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 100, 44)];
         [l1 setText:@"Window"];
+        [l1 setBackgroundColor:[UIColor clearColor]];
         [l1 setTextColor:[UIColor darkGrayColor]];
         
         _labelWindowValue = [[UILabel alloc] initWithFrame:CGRectMake(90, 0, 90, 44)];

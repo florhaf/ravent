@@ -177,6 +177,11 @@
 {
     NSString *msg = [[Store instance]saveEvent:_event];
     
+    if ([msg rangeOfString:@"added"].location != NSNotFound) {
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"addedToWatchList" object:nil];   
+    }
+    
     [YRDropdownView showDropdownInView:[controllers_App instance].view 
                                  title:@"Calendar" 
                                 detail:msg

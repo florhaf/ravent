@@ -152,12 +152,33 @@ static Store *_store;
     return result;
 }
 
+- (NSMutableArray *)findFutureEvents
+{
+    NSDate *start = [NSDate date];
+    NSDate *end = [start dateByAddingTimeInterval:60 * 60 * 24 * 31 * 6];
+    
+    NSMutableArray *results = [[NSMutableArray alloc] init];
+    
+    while ([start compare:end] != NSOrderedDescending) {
+        
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"MMM d, yyyy"];
+        NSString *strFromDate = [dateFormatter stringFromDate:start];
+        
+        [results addObjectsFromArray:[self findEventsForDate:strFromDate]];
+        
+        start = [start dateByAddingTimeInterval:60 * 60 * 24];
+    }
+    
+    return results;
+}
+
 - (NSMutableArray *)findEventsForDate:(NSString *)startDate
 {
     NSEntityDescription *entityDesc = [NSEntityDescription entityForName:@"Event" inManagedObjectContext:[self managedObjectContext]];
     
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    NSPredicate *pred = [NSPredicate predicateWithFormat:@"(startDate = %@)", startDate];
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"(endDate = %@)", startDate];
     
     [request setEntity:entityDesc];
     [request setPredicate:pred];
