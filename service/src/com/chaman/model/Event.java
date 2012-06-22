@@ -552,7 +552,7 @@ public class Event extends Model implements Serializable {
 			if (v_cache == null) {
 		    	
 		    	//get from DS
-		    	dsvote = dao.ofy().get(Vote.class, eid_string);
+		    	dsvote = dao.ofy().find(Vote.class, eid_string);
 		    	
 		    	if (dsvote != null) {
 		    		
