@@ -22,6 +22,7 @@
 - (NSString *)saveEvent:(models_Event *)event;
 - (NSMutableArray *)findEidsForDate:(NSString *)startDate;
 - (NSMutableArray *)findEventsForDate:(NSString *)startDate;
+- (NSMutableArray *)findFutureEvents;
 
 + (Store *)instance;
 

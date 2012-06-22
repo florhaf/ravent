@@ -42,6 +42,7 @@
     models_Event *_eventLoader;
     
     NSArray *_friendsSharedTo;
+    BOOL _isButtonTap;
 }
 
 - (id)initWithReloadEvent:(models_Event *)event;

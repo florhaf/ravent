@@ -319,6 +319,8 @@
 		DFDA1482156D945000877686 /* KalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFDA1481156D945000877686 /* KalViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		DFF02DDE1540B0AA00FED164 /* controllers_TabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF02DDD1540B0AA00FED164 /* controllers_TabBar.m */; };
 		DFF02DE11540B39500FED164 /* controllers_App.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF02DE01540B39500FED164 /* controllers_App.m */; };
+		DFF134001593E897004190AC /* controllers_watchlist_WatchList.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF133FF1593E897004190AC /* controllers_watchlist_WatchList.m */; };
+		DFF134031593EDA8004190AC /* controllers_watchlist_Container.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF134021593EDA8004190AC /* controllers_watchlist_Container.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -798,6 +800,10 @@
 		DFF02DDD1540B0AA00FED164 /* controllers_TabBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = controllers_TabBar.m; sourceTree = "<group>"; };
 		DFF02DDF1540B39500FED164 /* controllers_App.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = controllers_App.h; sourceTree = "<group>"; };
 		DFF02DE01540B39500FED164 /* controllers_App.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = controllers_App.m; sourceTree = "<group>"; };
+		DFF133FE1593E897004190AC /* controllers_watchlist_WatchList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = controllers_watchlist_WatchList.h; sourceTree = "<group>"; };
+		DFF133FF1593E897004190AC /* controllers_watchlist_WatchList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = controllers_watchlist_WatchList.m; sourceTree = "<group>"; };
+		DFF134011593EDA8004190AC /* controllers_watchlist_Container.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = controllers_watchlist_Container.h; sourceTree = "<group>"; };
+		DFF134021593EDA8004190AC /* controllers_watchlist_Container.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = controllers_watchlist_Container.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1521,6 +1527,7 @@
 		DF8F150A150BD53C00008ABC /* controllers */ = {
 			isa = PBXGroup;
 			children = (
+				DFF133FD1593E86C004190AC /* watchlist */,
 				DF4F86D915926B2600AE9742 /* DropAGem */,
 				DF16F6FE153BCABD002819C2 /* people */,
 				DFA23E27151D150200B8A8B5 /* calendar */,
@@ -1772,6 +1779,17 @@
 				DFD28964151E70A5007A0873 /* libKal.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		DFF133FD1593E86C004190AC /* watchlist */ = {
+			isa = PBXGroup;
+			children = (
+				DFF133FE1593E897004190AC /* controllers_watchlist_WatchList.h */,
+				DFF133FF1593E897004190AC /* controllers_watchlist_WatchList.m */,
+				DFF134011593EDA8004190AC /* controllers_watchlist_Container.h */,
+				DFF134021593EDA8004190AC /* controllers_watchlist_Container.m */,
+			);
+			name = watchlist;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -2177,6 +2195,8 @@
 				DF8C0651158C0DC1009D3400 /* GPSManager.m in Sources */,
 				DF4F86DC15926B7100AE9742 /* controllers_dropagem_DropAGemViewController.m in Sources */,
 				DF4F86DF15926B9200AE9742 /* controllers_dropagem_List.m in Sources */,
+				DFF134001593E897004190AC /* controllers_watchlist_WatchList.m in Sources */,
+				DFF134031593EDA8004190AC /* controllers_watchlist_Container.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

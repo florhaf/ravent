@@ -12,6 +12,7 @@
 #import "controllers_calendar_Calendar.h"
 #import "controllers_stats_Stats.h"
 #import "controllers_dropagem_DropAGemViewController.h"
+#import "controllers_watchlist_Container.h"
 #import "customNavigationController.h"
 #import "controllers_Login.h"
 #import "JMC.h"
@@ -28,7 +29,7 @@ static controllers_SlidingMenu *_ctrl;
     
     if (self) {
         
-        self.menuItems = [NSArray arrayWithObjects:@"Events", @"Friends", @"Watchlist", @"Drop a gem", @"Feedback", nil];
+        self.menuItems = [NSArray arrayWithObjects:@"Events", @"Friends", @"Watchlist", @"Drop a gem", @"Contact us", nil];
     }
     
     return self;
@@ -158,7 +159,7 @@ static controllers_SlidingMenu *_ctrl;
             
             if ([identifier isEqualToString:@"Watchlist"]) {
                 
-                newTopViewController = [controllers_calendar_Calendar instance];
+                newTopViewController = [controllers_watchlist_Container instance];
             } else {
                 
                 if ([identifier isEqualToString:@"Drop a gem"]) {

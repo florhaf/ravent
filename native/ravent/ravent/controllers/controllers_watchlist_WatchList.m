@@ -1,17 +1,18 @@
 //
-//  controllers_dropagem_List.m
+//  controllers_watchlist_WatchListViewController.m
 //  ravent
 //
-//  Created by florian haftman on 6/20/12.
+//  Created by florian haftman on 6/21/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "controllers_dropagem_List.h"
+#import "controllers_watchlist_WatchList.h"
 #import "ActionDispatcher.h"
+#import "Store.h"
 
-@implementation controllers_dropagem_List
+@implementation controllers_watchlist_WatchList
 
-static controllers_dropagem_List *_ctrl;
+static controllers_watchlist_WatchList *_ctrl;
 
 - (id)initWithUser:(models_User *)user
 {
@@ -27,28 +28,13 @@ static controllers_dropagem_List *_ctrl;
         
         _user = user;
         _event = [[models_Event alloc] initWithDelegate:self andSelector:@selector(onLoadEvents:)];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadDataWithSpinner) name:@"addedToWatchList" object:nil];
+        
+        [self loadDataWithSpinner];
     }
     
     return self;
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    
-    if (!_isFromDetails) {
-        
-        _groupedData = nil;
-        _data = nil;
-        _sortedKeys = nil;
-        
-        [self.tableView reloadData];
-        
-        [self loadDataWithSpinner];
-    } else {
-     
-        _isFromDetails = NO;
-    }
 }
 
 - (void)viewDidLoad
@@ -58,19 +44,6 @@ static controllers_dropagem_List *_ctrl;
     self.tableView.tableFooterView = [[UIView alloc] init];
     
     //_hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    
-    UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectMake(30, 10, 200, 44)];
-    textLabel.textColor = [UIColor lightGrayColor];
-    textLabel.backgroundColor = [UIColor clearColor];
-    textLabel.opaque = YES;
-    [textLabel setFont:[UIFont boldSystemFontOfSize:17]];
-    
-    textLabel.text = @"Where are you at?";
-    
-    self.tableView.tableHeaderView = textLabel;
-    
-    
-    
 }
 
 - (void)loadDataWithUserLocation
@@ -91,14 +64,14 @@ static controllers_dropagem_List *_ctrl;
     [params setValue:[models_User crtUser].latitude forKey:@"latitude"];
     [params setValue:[models_User crtUser].longitude forKey:@"longitude"];
     [params setValue:[models_User crtUser].timeZone forKey:@"timezone_offset"];                
-    [params setValue:[NSNumber numberWithDouble:0.1] forKey:@"radius"];
-    [params setValue:[NSNumber numberWithInt:6] forKey:@"timeframe"];
     
-    _url = [@"events" appendQueryParams:params];
+    _url = [@"calendar" appendQueryParams:params];
+    
+    
     Action *upadteLoadingMessageAction = [[Action alloc] initWithDelegate:self andSelector:@selector(updateLoadingMessageWith:)];
     [[ActionDispatcher instance] add:upadteLoadingMessageAction named:_url];
     
-    [_event loadEventsWithParams:params];
+    [_event reloadWithParams:params];
 }
 
 - (void)onLoadEvents:(NSArray *)objects
@@ -124,18 +97,11 @@ static controllers_dropagem_List *_ctrl;
     }
 }
 
-- (void)loadEventDetails:(models_Event *)event
-{
-    [super loadEventDetails:event];
-    
-    _isFromDetails = YES;
-}
-
-+ (controllers_dropagem_List *)instance
++ (controllers_watchlist_WatchList *)instance
 {
     if (_ctrl == nil) {
         
-        _ctrl = [[controllers_dropagem_List alloc] initWithUser:[[models_User crtUser] copy]];
+        _ctrl = [[controllers_watchlist_WatchList alloc] initWithUser:[[models_User crtUser] copy]];
         _ctrl.view.frame = CGRectMake(0, 0, _ctrl.view.frame.size.width, _ctrl.view.frame.size.height);
     }
     
