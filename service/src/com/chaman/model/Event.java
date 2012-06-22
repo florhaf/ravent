@@ -531,6 +531,9 @@ public class Event extends Model implements Serializable {
 	
 	private void Score(Venue v) {
 
+		Vote dsvote = new Vote();
+		Dao dao = new Dao();
+		
 		// offcourse this is not the final scoring algo :)
 		if (v != null){
 			
@@ -541,10 +544,6 @@ public class Event extends Model implements Serializable {
 			double res_vote = 0;
 
 			String eid_string = String.valueOf(this.eid);
-			
-			Dao dao = new Dao();
-			
-			Vote dsvote = new Vote();
 			
 			MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
 			Vote v_cache; 		

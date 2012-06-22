@@ -2,7 +2,6 @@ package com.chaman.model;
 
 import java.io.InputStream;
 import java.io.ByteArrayInputStream;
-import java.util.ArrayList;
 
 import com.restfb.BinaryAttachment;
 import com.restfb.Connection;
@@ -26,19 +25,10 @@ public class Post  extends Model {
 	@Facebook
 	String created_time;
 	
-	public static ArrayList<Model> Get(String accessToken, String eventID) throws FacebookException {
+	public static Connection<Post> Get(String accessToken, String eventID) throws FacebookException {
 		
 		FacebookClient client	= new DefaultFacebookClient(accessToken);
-		Connection<Post> myFeed = client.fetchConnection(eventID + "/feed", Post.class);
-		
-		ArrayList<Model> result = new ArrayList<Model>();
-		
-		for (Post p : myFeed.getData()) {
-			
-			result.add(p);
-		}
- 	
-		return result;
+		return client.fetchConnection(eventID + "/feed", Post.class);
 	}
 	
 	public static void WallPost(String accessToken, String userID, String message) {

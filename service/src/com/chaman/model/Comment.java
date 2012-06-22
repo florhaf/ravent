@@ -3,6 +3,7 @@ package com.chaman.model;
 import java.util.ArrayList;
 
 import com.chaman.util.JSON;
+import com.restfb.Connection;
 import com.restfb.DefaultFacebookClient;
 import com.restfb.FacebookClient;
 import com.restfb.Parameter;
@@ -10,27 +11,26 @@ import com.restfb.types.FacebookType;
 
 public class Comment extends Model {
 
-	String first_name;
+	String first_name; // TODO: Change to name
 	String last_name;
 	String picture_user; // of the user
-	String uid;
+	String profileID;
 	String time;
 	String message;
 	String picture;
 	
 	public Comment(String accessToken, Post p) {
 		
-		this.uid = JSON.GetValueFor("id", p.getFrom());
+		this.profileID = JSON.GetValueFor("id", p.getFrom());
 		
-		ArrayList<Model> users = User.GetFacebookUserInfo(accessToken, this.uid);
+		ArrayList<Model> profiles = Profile.GetFacebookProfileInfo(accessToken, this.profileID);
 		
-		if (users != null) {
+		if (profiles != null) {
 			
-			User u = (User) users.get(0);
+			Profile profile = (Profile) profiles.get(0);
 			
-			this.first_name = u.getFirst_name();
-			this.last_name = u.getLast_name();
-			this.picture_user = u.getPicture();
+			this.first_name = profile.getName();
+			this.picture_user = profile.getPic();
 		}
 		
 		this.time = p.getCreated_time();		
@@ -40,14 +40,12 @@ public class Comment extends Model {
 	
 	public static ArrayList<Model> Get(String accessToken, String eventID) {
 
-		ArrayList<Model> feed = Post.Get(accessToken, eventID);
+		Connection<Post> feed = Post.Get(accessToken, eventID);
 		
 		ArrayList<Model> result = new ArrayList<Model>();
 		
-		for (Model m : feed) {
-			
-			Post p = (Post)m;
-			
+		for (Post p : feed.getData()) {
+						
 			if (p.getType().equals("status") || p.getType().equals("photo")) {
 				
 				Comment c = new Comment(accessToken, p);

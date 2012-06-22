@@ -52,7 +52,6 @@ public class User extends Model implements Serializable {
 	@NotSaved
 	@Facebook
 	String relationship_status;
-	/* Need to capture the time spent on the app somehow / need class for datastore with less variables*/
 	
 	@NotSaved
 	String picture;
@@ -68,10 +67,7 @@ public class User extends Model implements Serializable {
 	public User() {
 		
 		super();
-		
-		searchRadius = 30;
 	}
-	
 	
 	static {
 		try {
@@ -151,14 +147,14 @@ public class User extends Model implements Serializable {
 		ArrayList<Model> result = new ArrayList<Model>();
 		
 		FacebookClient client 	= new DefaultFacebookClient(accessToken);
-		String properties 		= "uid, first_name, last_name, pic, email, sex, birthday_date, relationship_status";
+		String properties 		= "uid, first_name, last_name, pic";
 		String userQuery 		= "SELECT " + properties + " FROM user WHERE uid  = " + userID;
 		
 		List<User> users 		= client.executeQuery(userQuery, User.class);
 		
 		if (users != null) {
 			
-			User u = (User) users.get(0);
+			User u = users.get(0);
 			
 			u.picture = u.pic;
 	

@@ -3,39 +3,44 @@ package com.chaman.model;
 import java.util.ArrayList;
 
 import com.chaman.util.JSON;
+import com.restfb.Connection;
 
 public class Picture extends Model {
 
-	String first_name;
+	String first_name; // TODO: Change to name
 	String last_name;
-	String picture; // of the user
-	String uid;
+	String picture_user; // of the user
+	String profileID;
 	String time;
 	String url;
+	String picture;
 	
 	public Picture(String accessToken, Post p) {
 		
-		this.uid = JSON.GetValueFor("id", p.getFrom());
+		this.profileID = JSON.GetValueFor("id", p.getFrom());
 		
-		User u = (User) User.GetFacebookUserInfo(accessToken, this.uid).get(0);
+		ArrayList<Model> profiles = Profile.GetFacebookProfileInfo(accessToken, this.profileID);
 		
-		this.first_name = u.getFirst_name();
-		this.last_name = u.getLast_name();
-		this.picture = u.getPicture();
+		if (profiles != null) {
+			
+			Profile profile = (Profile) profiles.get(0);
+			this.first_name = profile.getName();
+			this.picture_user = profile.getPic();
+		}
+		
 		this.time = p.getCreated_time();		
 		this.url = p.getPicture();
+		this.picture = p.getPicture();
 	}
 	
 	public static ArrayList<Model> Get(String accessToken, String eventID) {
 
-		ArrayList<Model> feed = Post.Get(accessToken, eventID);
+		Connection<Post> feed = Post.Get(accessToken, eventID);
 		
 		ArrayList<Model> result = new ArrayList<Model>();
 		
-		for (Model m : feed) {
-			
-			Post p = (Post)m;
-			
+		for (Post p : feed.getData()) {
+
 			if (p.getType().equals("photo")) {
 				
 				Picture pic = new Picture(accessToken, p);
@@ -64,5 +69,13 @@ public class Picture extends Model {
 	
 	public String getUrl() {
 		return this.url;
+	}
+
+	public String getPicture_user() {
+		return picture_user;
+	}
+
+	public void setPicture_user(String picture_user) {
+		this.picture_user = picture_user;
 	}
 }
