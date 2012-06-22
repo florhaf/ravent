@@ -94,8 +94,8 @@ public class Event extends Model implements Serializable {
 		int timeZoneInMinutes = Integer.parseInt(timeZone);
 		
 		 //Prepare a timestamp to filter the facebook DB on the upcoming events
-		DateTimeZone GMT = DateTimeZone.forID("GMT");		
-		DateTime now = DateTime.now(GMT).plusMinutes(timeZoneInMinutes);
+		DateTimeZone PST = DateTimeZone.forID("America/Los_Angeles");		
+		DateTime now = DateTime.now(PST).plusMinutes(timeZoneInMinutes);
 		long actual_time = now.getMillis() / 1000;
 		
 		FacebookClient client 	= new DefaultFacebookClient(accessToken);
@@ -165,7 +165,7 @@ public class Event extends Model implements Serializable {
 	 /* - Get list of event for any user in search area
 	 * - exclude past event
 	 */
-	public static ArrayList<Model> Get(String accessToken, String userLatitude, String userLongitude, String timeZone, int searchTimeFrame, int searchRadius, int searchLimit) throws FacebookException {
+	public static ArrayList<Model> Get(String accessToken, String userLatitude, String userLongitude, String timeZone, int searchTimeFrame, float searchRadius, int searchLimit) throws FacebookException {
 		
 		ArrayList<Model> result = new ArrayList<Model>();
 		
@@ -173,8 +173,8 @@ public class Event extends Model implements Serializable {
 		
 		int timeZoneInMinutes = Integer.parseInt(timeZone);
 		
-		DateTimeZone GMT = DateTimeZone.forID("GMT");		
-		DateTime now = DateTime.now(GMT).plusMinutes(timeZoneInMinutes);
+		DateTimeZone PST = DateTimeZone.forID("America/Los_Angeles");		
+		DateTime now = DateTime.now(PST ).plusMinutes(timeZoneInMinutes);
 		long actual_time = now.getMillis() / 1000;
 		
 		LocationCapableRepositorySearch<EventLocationCapable> ofySearch = new OfyEntityLocationCapableRepositorySearchImpl(dao.ofy(), timeZone, searchTimeFrame);
@@ -384,13 +384,13 @@ public class Event extends Model implements Serializable {
 		
 		this.date_start = dtStart.toString("MMM d, Y");
 		this.date_end = dtEnd.toString("MMM d, Y");
-		
-		DateTimeZone GMT = DateTimeZone.forID("GMT");		
-		DateTime now = DateTime.now(GMT).plusMinutes(timeZoneInMinutes);
+				
+		DateTime now = DateTime.now(T).plusMinutes(timeZoneInMinutes);
 		
 		long timeStampNow = now.getMillis();
+		long timeStampToday = timeStampNow + (86400000 - now.getMillisOfDay());
 		
-		if (timeStampStart <= timeStampNow && timeStampEnd >= timeStampNow) {
+		if (timeStampStart <= timeStampToday && timeStampEnd >= timeStampNow) {
 			
 			long end_minus_start = (timeStampEnd - timeStampStart) / 86400000; // in days
 			
@@ -408,7 +408,7 @@ public class Event extends Model implements Serializable {
 			}
 		} else {
 			
-			if (timeStampStart <= timeStampNow + 86400000) {
+			if (timeStampStart <= timeStampToday + 86400000) {
 				
 				this.group = "b";
 				this.groupTitle = "Tomorrow";
