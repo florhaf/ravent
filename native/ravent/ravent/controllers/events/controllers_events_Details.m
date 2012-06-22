@@ -202,6 +202,8 @@
         return;
     }
     
+ 
+    _isButtonTap = YES;
     
     controllers_friends_share *shareController = [[controllers_friends_share alloc] initWithUser:[_user copy] invited:_data];
     UINavigationController *shareModal = [[UINavigationController alloc] initWithRootViewController:shareController];
@@ -211,6 +213,8 @@
 
 - (IBAction)descriptionButton_Tap:(id)sender
 {
+    _isButtonTap = YES;
+    
     controllers_events_Description *descController = [[controllers_events_Description alloc] initWithNibName:@"views_events_Description" bundle:[NSBundle mainBundle] event:[_event copy]];
     UINavigationController *descModal = [[UINavigationController alloc] initWithRootViewController:descController];
     
@@ -219,6 +223,8 @@
 
 - (IBAction)feedButton_Tap:(id)sender
 {
+    _isButtonTap = YES;
+    
     controllers_events_FeedContainer *feedController = [[controllers_events_FeedContainer alloc] initWithEvent:[_event copy]];
     
     UINavigationController *feedModal = [[UINavigationController alloc] initWithRootViewController:feedController];
@@ -228,6 +234,8 @@
 
 - (IBAction)mapButton_Tap:(id)sender
 {
+    _isButtonTap = YES;
+    
     controllers_events_Details_Map *mapController = [[controllers_events_Details_Map alloc] initWithEvent:[_event copy]];
     UINavigationController *feedModal = [[UINavigationController alloc] initWithRootViewController:mapController];
     
@@ -236,6 +244,8 @@
 
 - (IBAction)picButton_Tap:(id)sender
 {
+    _isButtonTap = YES;
+    
     controllers_events_Pic_big *picController = [[controllers_events_Pic_big alloc] initWithPic:_event.pic_big];
     UINavigationController *picModal = [[UINavigationController alloc] initWithRootViewController:picController];
     
@@ -451,7 +461,12 @@
 {
     [super viewWillDisappear:animated];
     
-    [self cancelAllRequests];
+    if (!_isButtonTap) {
+        
+        [self cancelAllRequests];   
+    }
+    
+    _isButtonTap = NO;
 }
 
 @end
