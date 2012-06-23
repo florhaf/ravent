@@ -175,7 +175,9 @@ static controllers_friends_All *_ctrl;
     _itemImage.clipsToBounds = YES;
     _itemImage.contentMode = UIViewContentModeScaleAspectFill;
     
-    if ([u.isFollowed isEqualToString:@"true"]) {
+    //if ([u.isFollowed isEqualToString:@"true"]) {
+    
+    if ([self contains:_following user:u]) {
         
         [_switch setOn:YES];
     } else {
@@ -185,6 +187,22 @@ static controllers_friends_All *_ctrl;
     [cell.contentView addSubview:_item];
     
     return cell;
+}
+
+- (BOOL)contains:(NSMutableDictionary *)dic user:(models_User *)u
+{
+    for (NSString *key in [dic allKeys]) {
+        
+        for (models_User *crtU in (NSArray *)[dic objectForKey:key]) {
+            
+            if ([crtU.uid isEqualToString:u.uid]) {
+                
+                return true;
+            }
+        }
+    }
+    
+    return false;
 }
 
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
@@ -239,6 +257,7 @@ static controllers_friends_All *_ctrl;
 
         models_User *userToRemove = nil;
         
+        // update _following
         for (NSString *key in [_following allKeys]) {
             
             for (models_User *u in (NSArray *)[_following objectForKey:key]) {
@@ -261,6 +280,10 @@ static controllers_friends_All *_ctrl;
                 break;
             }
         }
+        
+        // update _data
+        
+        
         
     } else {
         
