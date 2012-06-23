@@ -289,12 +289,19 @@ static controllers_friends_All *_ctrl;
         
         [_user follow:params success:@selector(onFollowSuccess:) failure:@selector(onFollowFailure:) sender:sender];
 
+        NSMutableArray *array = nil;
         NSString *key = [[friend.lastName uppercaseString] substringToIndex:1];
-        NSMutableArray *array = (NSMutableArray *)[_following objectForKey:key];
+        
+        if (_following == nil) {
+            
+            _following = [[NSMutableDictionary alloc] init];
+            array = [[NSMutableArray alloc] init];
+        } else {
+        
+            array = (NSMutableArray *)[_following objectForKey:key];
+        }
         
         [array addObject:friend];
-        
-        
         [_following setObject:array forKey:key];
         
     }

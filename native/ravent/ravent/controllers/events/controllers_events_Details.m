@@ -191,16 +191,16 @@
 
 - (IBAction)shareButton_Tap:(id)sender
 {
-    if (_event.rsvp_status == nil || [_event.rsvp_status isEqualToString:@""] || [_event.rsvp_status isEqualToString:@"not replied"]) {
-        
-        [YRDropdownView showDropdownInView:[controllers_App instance].view 
-                                     title:@"Warning" 
-                                    detail:@"You must RSVP to share this event"
-                                     image:[UIImage imageNamed:@"dropdown-alert"]
-                                  animated:YES];
-        
-        return;
-    }
+//    if (_event.rsvp_status == nil || [_event.rsvp_status isEqualToString:@""] || [_event.rsvp_status isEqualToString:@"not replied"]) {
+//        
+//        [YRDropdownView showDropdownInView:[controllers_App instance].view 
+//                                     title:@"Warning" 
+//                                    detail:@"You must RSVP to share this event"
+//                                     image:[UIImage imageNamed:@"dropdown-alert"]
+//                                  animated:YES];
+//        
+//        return;
+//    }
     
  
     _isButtonTap = YES;

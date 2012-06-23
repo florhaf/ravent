@@ -384,6 +384,7 @@ static controllers_events_Map_p2p *_ctrl;
         _labelWindowValue = [[UILabel alloc] initWithFrame:CGRectMake(90, 0, 90, 44)];
         [_labelWindowValue setTextColor:[UIColor darkGrayColor]];
         [_labelWindowValue setText:[NSString stringWithFormat:@"%d h.", [models_User crtUser].searchWindow]];
+        [_labelWindowValue setBackgroundColor:[UIColor clearColor]];
         
         UIStepper *s = [[UIStepper alloc] initWithFrame:CGRectMake(160, 10, 50, 44)];
         s.value = [models_User crtUser].searchWindow;

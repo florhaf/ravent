@@ -151,7 +151,8 @@
     _itemImage.clipsToBounds = YES;
     _itemImage.contentMode = UIViewContentModeScaleAspectFill;
     
-    if ([u.isInvited isEqualToString:@"true"]) {
+    //if ([u.isInvited isEqualToString:@"true"]) {
+    if ([self contains:_invited user:u]) {
         
         [_inviteButton setEnabled:NO];
     }
@@ -159,6 +160,22 @@
     [cell.contentView addSubview:_item];
     
     return cell;
+}
+
+- (BOOL)contains:(NSMutableArray *)array user:(models_User *)u
+{
+    //for (NSString *key in [dic allKeys]) {
+        
+        for (models_User *crtU in array) {
+            
+            if ([crtU.uid isEqualToString:u.uid]) {
+                
+                return true;
+            }
+        }
+    //}
+    
+    return false;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
