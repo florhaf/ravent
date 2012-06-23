@@ -94,9 +94,14 @@ public class Event extends Model implements Serializable {
 		int timeZoneInMinutes = Integer.parseInt(timeZone);
 		
 		 //Prepare a timestamp to filter the facebook DB on the upcoming events
-		DateTimeZone PST = DateTimeZone.forID("America/Los_Angeles");		
-		DateTime now = DateTime.now(PST).plusMinutes(timeZoneInMinutes);
+		
+		DateTimeZone TZ = DateTimeZone.forOffsetMillis(timeZoneInMinutes*60*1000);
+		DateTime now = DateTime.now(TZ);	
 		long actual_time = now.getMillis() / 1000;
+		
+		/*DateTimeZone PST = DateTimeZone.forID("America/Los_Angeles");		
+		DateTime now = DateTime.now(PST).plusMinutes(timeZoneInMinutes);
+		long actual_time = now.getMillis() / 1000;*/
 		
 		FacebookClient client 	= new DefaultFacebookClient(accessToken);
 		String properties 		= "eid, name, pic_big, start_time, end_time, venue, location, privacy, update_time";
@@ -173,8 +178,8 @@ public class Event extends Model implements Serializable {
 		
 		int timeZoneInMinutes = Integer.parseInt(timeZone);
 		
-		DateTimeZone PST = DateTimeZone.forID("America/Los_Angeles");		
-		DateTime now = DateTime.now(PST ).plusMinutes(timeZoneInMinutes);
+		DateTimeZone TZ = DateTimeZone.forOffsetMillis(timeZoneInMinutes*60*1000);
+		DateTime now = DateTime.now(TZ);	
 		long actual_time = now.getMillis() / 1000;
 		
 		LocationCapableRepositorySearch<EventLocationCapable> ofySearch = new OfyEntityLocationCapableRepositorySearchImpl(dao.ofy(), timeZone, searchTimeFrame);
@@ -384,11 +389,11 @@ public class Event extends Model implements Serializable {
 		
 		this.date_start = dtStart.toString("MMM d, Y");
 		this.date_end = dtEnd.toString("MMM d, Y");
-				
-		DateTime now = DateTime.now(T).plusMinutes(timeZoneInMinutes);
 		
+		DateTimeZone TZ = DateTimeZone.forOffsetMillis(timeZoneInMinutes*60*1000);
+		DateTime now = DateTime.now(TZ);	
 		long timeStampNow = now.getMillis();
-		long timeStampToday = timeStampNow + (86400000 - now.getMillisOfDay());
+		long timeStampToday = timeStampNow - (timeZoneInMinutes * 60000) + (86400000 - now.getMillisOfDay());
 		
 		if (timeStampStart <= timeStampToday && timeStampEnd >= timeStampNow) {
 			
@@ -493,7 +498,7 @@ public class Event extends Model implements Serializable {
 						if (day.equals("nes")) {dayoffweek_name = 3;} else
 							if (day.equals("urs")) {dayoffweek_name = 4;} else
 								if (day.equals("fri")) {dayoffweek_name = 5;} else
-									if (day.equals("sat")) {dayoffweek_name = 6;} else
+									if (day.equals("tur")) {dayoffweek_name = 6;} else
 										if (day.equals("sun")) {dayoffweek_name = 7;} 
 											
 				
@@ -552,16 +557,10 @@ public class Event extends Model implements Serializable {
 			if (v_cache == null) {
 		    	
 		    	//get from DS
-		    	dsvote = dao.ofy().find(Vote.class, eid_string);
-		    	
-		    	if (dsvote != null) {
-		    		
-		    		res_vote = dsvote.getVote_avg();
-		    		syncCache.put(eid_string, dsvote, null); // Add vote to cache
-		    	} else {
+		    	dsvote = dao.getVote(eid_string); // returns vote from cache or new Vote(id, 0L, 0D)
 
-		    		syncCache.put(eid_string, new Vote(eid_string, 0L, 0D), null); // Add vote to cache with 0 vote and 0 average
-		    	}
+		    	res_vote = dsvote.getVote_avg();
+		    	syncCache.put(eid_string, dsvote, null); // Add vote to cache
 			} else {
 				
 				res_vote = v_cache.vote_avg;

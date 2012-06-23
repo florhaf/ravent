@@ -39,13 +39,13 @@ public class Dao extends DAOBase {
 	}
 	
     /** Your DAO can have your own useful methods */
-//    public MyThing getOrCreateMyThing(long id)
-//    {
-//        MyThing found = ofy().find(clazz, id);
-//        if (found == null)
-//            return new MyThing(id);
-//        else
-//            return found;
-//    }
+    public Vote getVote(String id)
+    {
+        Vote found = ofy().find(Vote.class, id);
+        if (found == null)
+            return new Vote(id, 0L, 0D);
+        else
+            return found;
+    }
     
 }
