@@ -212,10 +212,22 @@ static controllers_friends_All *_ctrl;
     UITableViewCell *cell = (UITableViewCell*)parentView;
     NSIndexPath *path = [self.tableView indexPathForCell:cell];
     
-    NSString *key = [_sortedKeys objectAtIndex:path.section];
-    NSMutableArray *rows = [_groupedData objectForKey:key];
     
-    models_User *friend = [rows objectAtIndex:path.row]; 
+    // should be _filteredData here
+    
+    models_User *friend = nil;
+    
+    if (_isSearching) {
+        
+        friend = [_filteredData objectAtIndex:path.row];
+        
+    } else {
+        
+        NSString *key = [_sortedKeys objectAtIndex:path.section];
+        NSMutableArray *rows = [_groupedData objectForKey:key];
+        
+        friend = [rows objectAtIndex:path.row]; 
+    }
     
     [params setValue:friend.uid forKey:@"friendID"];
     
@@ -224,10 +236,44 @@ static controllers_friends_All *_ctrl;
     if (!s.isOn) {
         
         [_user unfollow:params success:@selector(onFollowSuccess:) failure:@selector(onFollowFailure:) sender:sender];
-        friend.isFollowed = @"false";
+
+        models_User *userToRemove = nil;
+        
+        for (NSString *key in [_following allKeys]) {
+            
+            for (models_User *u in (NSArray *)[_following objectForKey:key]) {
+                
+                if ([u.uid isEqualToString:friend.uid]) {
+                    
+                    userToRemove = u;
+                    break;
+                }
+            }
+            
+            if (userToRemove != nil) {
+                
+                NSMutableArray *array = (NSMutableArray *)[_following objectForKey:key];
+                
+                [array removeObject:userToRemove];
+                
+                [_following setObject:array forKey:key];
+                
+                break;
+            }
+        }
+        
     } else {
         
         [_user follow:params success:@selector(onFollowSuccess:) failure:@selector(onFollowFailure:) sender:sender];
+
+        NSString *key = [[friend.lastName uppercaseString] substringToIndex:1];
+        NSMutableArray *array = (NSMutableArray *)[_following objectForKey:key];
+        
+        [array addObject:friend];
+        
+        
+        [_following setObject:array forKey:key];
+        
     }
     
     _isDirty = YES;
@@ -243,6 +289,8 @@ static controllers_friends_All *_ctrl;
 - (void)onFollowSuccess:(NSString *)response
 {
     _isDirty = YES;
+    
+    
 }
 
 - (void)onFollowFailure:(NSMutableDictionary *)response

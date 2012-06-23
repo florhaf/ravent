@@ -84,6 +84,8 @@
 {
     [self searchBarTextDidEndEditing:searchBar];
     [searchBar resignFirstResponder];
+    
+    [self.tableView reloadData];
 }
 
 - (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
