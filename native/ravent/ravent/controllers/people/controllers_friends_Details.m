@@ -81,6 +81,9 @@
 {
     postController *post = [[postController alloc] initWithNibName:@"views_Post" bundle:nil];
     
+    post.toId = _user.uid;
+    post.isForEvent = NO;
+    
     UINavigationController *postModal = [[UINavigationController alloc] initWithRootViewController:post];
     
     [self presentModalViewController:postModal animated:YES];
