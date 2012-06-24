@@ -99,6 +99,13 @@ static customNavigationController *_ctrl;
     
     [self.view bringSubviewToFront:_toolbar];
     
+    UIView *v = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+    [v setBackgroundColor:[UIColor darkGrayColor]];
+    [v setAlpha:0.3];
+    
+    [_toolbar setBackgroundColor:[UIColor clearColor]];
+    [_toolbar insertSubview:v atIndex:1];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onValueChanged:) name:@"onLoadEventsP2P" object:[controllers_events_List_p2p instance]];
 }
 

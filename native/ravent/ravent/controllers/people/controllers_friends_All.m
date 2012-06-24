@@ -228,18 +228,17 @@ static controllers_friends_All *_ctrl;
         parentView = [parentView superview];
     }
     UITableViewCell *cell = (UITableViewCell*)parentView;
-    NSIndexPath *path = [self.tableView indexPathForCell:cell];
-    
-    
-    // should be _filteredData here
-    
+    NSIndexPath *path = nil;
     models_User *friend = nil;
     
     if (_isSearching) {
         
+        path = [self.searchDisplayController.searchResultsTableView indexPathForCell:cell];
         friend = [_filteredData objectAtIndex:path.row];
         
     } else {
+        
+        path = [self.tableView indexPathForCell:cell];
         
         NSString *key = [_sortedKeys objectAtIndex:path.section];
         NSMutableArray *rows = [_groupedData objectForKey:key];
@@ -289,20 +288,22 @@ static controllers_friends_All *_ctrl;
         
         [_user follow:params success:@selector(onFollowSuccess:) failure:@selector(onFollowFailure:) sender:sender];
 
-        NSMutableArray *array = nil;
+        NSMutableArray *a = [[NSMutableArray alloc] init];
         NSString *key = [[friend.lastName uppercaseString] substringToIndex:1];
         
         if (_following == nil) {
             
             _following = [[NSMutableDictionary alloc] init];
-            array = [[NSMutableArray alloc] init];
         } else {
         
-            array = (NSMutableArray *)[_following objectForKey:key];
+            if ((NSMutableArray *)[_following objectForKey:key] != nil) {
+             
+                a = (NSMutableArray *)[_following objectForKey:key];
+            }
         }
         
-        [array addObject:friend];
-        [_following setObject:array forKey:key];
+        [a addObject:friend];
+        [_following setObject:a forKey:key];
         
     }
     
