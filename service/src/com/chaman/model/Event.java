@@ -149,7 +149,7 @@ public class Event extends Model implements Serializable {
     	    	e.Score(v_graph);
     	    }
 	
-	    	e.Format(timeZoneInMinutes);
+	    	e.Format(timeZoneInMinutes, 0);
     	    
 	    	if (e.latitude != null && e.latitude != "" && e.longitude != null && e.longitude != "") {
 
@@ -180,7 +180,7 @@ public class Event extends Model implements Serializable {
 		
 		DateTimeZone TZ = DateTimeZone.forOffsetMillis(timeZoneInMinutes*60*1000);
 		DateTime now = DateTime.now(TZ);	
-		long actual_time = now.getMillis() / 1000;
+		long actual_time = now.getMillis() / 1000L;
 		
 		LocationCapableRepositorySearch<EventLocationCapable> ofySearch = new OfyEntityLocationCapableRepositorySearchImpl(dao.ofy(), timeZone, searchTimeFrame);
 		List<EventLocationCapable> l = GeocellManager.proximityFetch(new Point(Double.parseDouble(userLatitude), Double.parseDouble(userLongitude)), searchLimit, searchRadius * 1000 * 1.61, ofySearch);
@@ -217,7 +217,7 @@ public class Event extends Model implements Serializable {
           	
             	if (event != null && (event.venue_category == null || (event.venue_category != null && !event.venue_category.equals("City")))) {
             		
-        			if (event.Format(timeZoneInMinutes)){
+        			if (event.Format(timeZoneInMinutes, searchTimeFrame)){
         				
             			event.latitude 	= Double.toString(e.getLatitude());
             			event.longitude = Double.toString(e.getLongitude());
@@ -343,7 +343,7 @@ public class Event extends Model implements Serializable {
 		
 		e = fbevents.get(0);
 
-		e.Format(timeZoneInMinutes);
+		e.Format(timeZoneInMinutes, 0);
 		
 		e.venue_id = JSON.GetValueFor("id", e.venue);
 		Venue v_graph = new Venue(accessToken, e.venue_id);
@@ -372,7 +372,7 @@ public class Event extends Model implements Serializable {
 		return e;
 	}
 	
-	private boolean Format(int timeZoneInMinutes) {
+	private boolean Format(int timeZoneInMinutes, int searchTimeFrame) {
 			
 		long timeStampStart = Long.parseLong(this.start_time) * 1000;
 		long timeStampEnd = Long.parseLong(this.end_time) * 1000;
@@ -395,6 +395,10 @@ public class Event extends Model implements Serializable {
 		long timeStampNow = now.getMillis();
 		long timeStampToday = timeStampNow - (timeZoneInMinutes * 60000) + (86400000 - now.getMillisOfDay());
 		
+		if (timeStampEnd < timeStampNow) {
+			return false;
+		}
+		
 		if (timeStampStart <= timeStampToday && timeStampEnd >= timeStampNow) {
 			
 			long end_minus_start = (timeStampEnd - timeStampStart) / 86400000; // in days
@@ -405,7 +409,7 @@ public class Event extends Model implements Serializable {
 			
 			if (end_minus_start >= 7) { // to filter bogus "Fridays", "Tuesdays" events
 				
-				this.Filter_bogus_events(now);
+				return this.Filter_bogus_events(now, searchTimeFrame);
 			} else {
 				
 				this.group = "a";
@@ -472,14 +476,10 @@ public class Event extends Model implements Serializable {
 		}		
 	}
 	
-	public void Filter_bogus_events(DateTime now_userTZ) {
+	public boolean Filter_bogus_events(DateTime now_userTZ, int searchTimeFrame) {
 		
-		String name = this.name.toLowerCase();
-		
-		int dayofweek = now_userTZ.getDayOfWeek();		
-		
+		String name = this.name.toLowerCase();	
 		int dayindex = name.indexOf("day");
-		
 		String day;
 		int dayoffweek_name = 0;
 		
@@ -500,20 +500,40 @@ public class Event extends Model implements Serializable {
 								if (day.equals("fri")) {dayoffweek_name = 5;} else
 									if (day.equals("tur")) {dayoffweek_name = 6;} else
 										if (day.equals("sun")) {dayoffweek_name = 7;} 
-											
 				
-				if (dayoffweek_name - dayofweek < 0) {
+				int day_offset = dayoffweek_name - now_userTZ.getDayOfWeek();
+				
+				if(day_offset == 1 || day_offset == -6) {
+					
+					this.group = "b";
+					this.groupTitle = "Tomorrow";
+					
+					if (searchTimeFrame < 36 && searchTimeFrame != 0) { //TODO change to days
+						return false;
+					}
+				} else if (day_offset < 0) {
 					
 					this.group = "d";
 					this.groupTitle = "This month";
-				} else if (dayoffweek_name - dayofweek > 0) {
+					
+					if (searchTimeFrame < (7 + day_offset) * 24 && searchTimeFrame != 0) {
+						return false;
+					}
+				} else if (day_offset > 0) {
 					
 					this.group = "c";
 					this.groupTitle = "This week";
-				} else {
+					
+					if (searchTimeFrame < day_offset * 24 || searchTimeFrame == 0) {
+						return false;
+					}
+				} else if (day_offset == 0) {
 					
 					this.group = "a";
 					this.groupTitle = "Today";
+				} else {
+					
+					return false;
 				}
 			}
 		} else {
@@ -521,6 +541,8 @@ public class Event extends Model implements Serializable {
 			this.group = "a";
 			this.groupTitle = "Today";
 		}
+		
+		return true;
 	}
 	
 	/* 
