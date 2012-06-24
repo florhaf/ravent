@@ -107,7 +107,14 @@ static customNavigationController *_ctrl;
 {
     [super viewDidLoad];
     
-//    [_toolbar insertSubview:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"toolbar"]] atIndex:1];
+    //[_toolbar insertSubview:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"toolbar"]] atIndex:1];
+    
+    UIView *v = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+    [v setBackgroundColor:[UIColor darkGrayColor]];
+    [v setAlpha:0.3];
+    
+    [_toolbar setBackgroundColor:[UIColor clearColor]];
+    [_toolbar insertSubview:v atIndex:1];
     
     UIImage *menui = [UIImage imageNamed:@"menuButton"];
     UIButton *menub = [UIButton buttonWithType:UIButtonTypeCustom];

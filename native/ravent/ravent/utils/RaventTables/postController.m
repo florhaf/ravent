@@ -30,6 +30,39 @@
     return self;
 }
 
+- (void)setIsForEvent:(BOOL)isForEvent
+{
+    _isForEvent = isForEvent;
+    
+    if (_isForEvent) {
+        
+        _placeHolder = @"Post on this event wall";
+    } else {
+        
+        _placeHolder = @"Post on this friend wall";
+    }
+}
+
+- (void)textViewDidBeginEditing:(UITextView *)textView
+{
+    if (_isPlaceHolderShowing) {
+        
+        [textView setTextColor:[UIColor blackColor]];
+        textView.text = @"";
+        _isPlaceHolderShowing = NO;
+    }
+}
+
+- (void)textViewDidEndEditing:(UITextView *)textView
+{
+    if (textView.text == nil || [textView.text isEqualToString:@""]) {
+        
+        [textView setTextColor:[UIColor lightGrayColor]];
+        textView.text = _placeHolder;
+        _isPlaceHolderShowing = YES;
+    }
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];

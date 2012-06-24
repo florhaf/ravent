@@ -29,7 +29,7 @@ static controllers_SlidingMenu *_ctrl;
     
     if (self) {
         
-        self.menuItems = [NSArray arrayWithObjects:@"Events", @"Friends", @"Watchlist", @"Drop a gem", @"Contact us", nil];
+        self.menuItems = [NSArray arrayWithObjects:@"Events", @"Friends", @"Watchlist", @"Locate me", @"Contact us", nil];
     }
     
     return self;
@@ -162,7 +162,7 @@ static controllers_SlidingMenu *_ctrl;
                 newTopViewController = [controllers_watchlist_Container instance];
             } else {
                 
-                if ([identifier isEqualToString:@"Drop a gem"]) {
+                if ([identifier isEqualToString:@"Locate me"]) {
                 
                     newTopViewController = [controllers_dropagem_DropAGemViewController instance];
                 } else {

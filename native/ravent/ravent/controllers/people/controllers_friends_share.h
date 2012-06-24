@@ -11,7 +11,7 @@
 
 @interface controllers_friends_share : UITableViewSearchable {
     
-    NSArray *_invited;
+    NSMutableArray *_invited;
     
     IBOutlet UIButton *_inviteButton;
     IBOutlet UIActivityIndicatorView *_indic;
@@ -22,6 +22,7 @@
 - (id)initWithUser:(models_User *)user invited:(NSArray *)invited;
 - (void)loadData:(BOOL)force;
 - (void)onLoadAll:(NSArray *)objects;
+- (BOOL)contains:(NSMutableArray *)array user:(models_User *)u;
 
 - (IBAction)onShareTap:(id)sender;
 

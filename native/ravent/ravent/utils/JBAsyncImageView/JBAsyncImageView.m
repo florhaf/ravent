@@ -140,7 +140,7 @@ imageResponse = imageResponse_;
 	
 	// Create request
 	self.imageRequest = [[NSURLRequest alloc] initWithURL:imageURL 
-											  cachePolicy:(self.cachesImage) ? NSURLRequestReturnCacheDataElseLoad : NSURLRequestReloadIgnoringLocalCacheData 
+											  cachePolicy:NSURLRequestReturnCacheDataElseLoad
 										  timeoutInterval:15.0f];
 	
     

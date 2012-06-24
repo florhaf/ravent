@@ -62,6 +62,7 @@
 
 - (void)post:(NSMutableDictionary *)params success:(SEL)success failure:(SEL)failure
 {
+    RKLogConfigureByName("RestKit/*", RKLogLevelTrace);
     _callbackResponseSuccess = success;
     _callbackResponseFailure = failure;
     

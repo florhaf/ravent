@@ -50,7 +50,10 @@
         
     //_fbButton.titleLabel.text = [NSString stringWithFormat:@"Ask where %@ is going", _user.firstName];
 
-    self.tableView.tableHeaderView = _detailsView;
+    //self.tableView.tableHeaderView = _detailsView;
+    
+    self.tableView.tableHeaderView = [[UIView alloc] initWithFrame:_detailsView.frame];
+    [self.tableView.tableHeaderView addSubview:_detailsView];
     
     UILabel *labelLoading = [[UILabel alloc] init];
     labelLoading.backgroundColor = [UIColor clearColor];
@@ -71,11 +74,15 @@
     footer.frame = CGRectMake(0, 0, 320, 160);
     
     self.tableView.tableFooterView = footer;
+    
 }
 
 - (IBAction)onCommentTap:(id)sender
 {
     postController *post = [[postController alloc] initWithNibName:@"views_Post" bundle:nil];
+    
+    post.toId = _user.uid;
+    post.isForEvent = NO;
     
     UINavigationController *postModal = [[UINavigationController alloc] initWithRootViewController:post];
     

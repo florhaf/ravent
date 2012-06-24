@@ -43,14 +43,25 @@
         parentView = [parentView superview];
     }
     UITableViewCell *cell = (UITableViewCell*)parentView;
-    NSIndexPath *path = [self.tableView indexPathForCell:cell];
+    NSIndexPath *path = nil;
+    models_User *friend = nil;
     
-    NSString *key = [_sortedKeys objectAtIndex:path.section];
-    NSMutableArray *rows = [_groupedData objectForKey:key];
-    
-    models_User *friend = [rows objectAtIndex:path.row]; 
+    if (_isSearching) {
+        
+        path = [self.searchDisplayController.searchResultsTableView indexPathForCell:cell];
+        friend = [_filteredData objectAtIndex:path.row];
+    } else {
+        
+        path = [self.tableView indexPathForCell:cell];
+        
+        NSString *key = [_sortedKeys objectAtIndex:path.section];
+        NSMutableArray *rows = [_groupedData objectForKey:key];
+        
+        friend = [rows objectAtIndex:path.row]; 
+    }
     
     [_friends addObject:friend];
+    [_invited addObject:friend];
     
     UIButton *button = (UIButton *)sender;
     [button setEnabled:NO];
@@ -151,7 +162,8 @@
     _itemImage.clipsToBounds = YES;
     _itemImage.contentMode = UIViewContentModeScaleAspectFill;
     
-    if ([u.isInvited isEqualToString:@"true"]) {
+    //if ([u.isInvited isEqualToString:@"true"]) {
+    if ([self contains:_invited user:u] || [self contains:_friends user:u]) {
         
         [_inviteButton setEnabled:NO];
     }
@@ -159,6 +171,22 @@
     [cell.contentView addSubview:_item];
     
     return cell;
+}
+
+- (BOOL)contains:(NSMutableArray *)array user:(models_User *)u
+{
+    //for (NSString *key in [dic allKeys]) {
+        
+        for (models_User *crtU in array) {
+            
+            if ([crtU.uid isEqualToString:u.uid]) {
+                
+                return true;
+            }
+        }
+    //}
+    
+    return false;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
