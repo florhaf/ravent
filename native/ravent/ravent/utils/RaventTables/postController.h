@@ -10,7 +10,12 @@
 #import "JBAsyncImageView.h"
 #import "models_Comment.h"
 
-@interface postController : UIViewController<UINavigationControllerDelegate, UIImagePickerControllerDelegate> {
+typedef enum {
+    event,
+    user
+} postTo;
+
+@interface postController : UIViewController<UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITextViewDelegate> {
     
     IBOutlet UITextView *_textView;
     IBOutlet UILabel *_labelName;
@@ -29,8 +34,10 @@
     
     BOOL _isKeyboardShowing;
     BOOL _isForEvent;
+    BOOL _isPlaceHolderShowing;
     
     NSString *_toId; // id for an event of a friend
+    NSString *_placeHolder;
     
     NSString *_base64Picture;
     NSData *_imageData;
