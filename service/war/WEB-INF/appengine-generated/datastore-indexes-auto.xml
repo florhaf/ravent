@@ -1,8 +1,8 @@
-<!-- Indices written at Sun, 24 Jun 2012 02:42:38 EDT -->
+<!-- Indices written at Sun, 24 Jun 2012 19:11:52 EDT -->
 
 <datastore-indexes>
 
-    <!-- Used 30 times in query history -->
+    <!-- Used 29 times in query history -->
     <datastore-index kind="EventLocationCapable" ancestor="false" source="auto">
         <property name="geocells" direction="asc"/>
         <property name="timeStampStart" direction="asc"/>

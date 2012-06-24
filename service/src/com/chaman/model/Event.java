@@ -136,14 +136,22 @@ public class Event extends Model implements Serializable {
 			
     	    	if (e.latitude != null && e.latitude != "" && e.longitude != null && e.longitude != "") {
 				
-    	    		Query<EventLocationCapable> q = dao.ofy().query(EventLocationCapable.class);
+    	    		EventLocationCapable elc = dao.ofy().find(EventLocationCapable.class, e.eid);
+    	    		
+    	    		if (elc == null) {
+    	    			dao.ofy().put(elc);
+    	    		} else if (elc.getTimeStampStart() != Long.parseLong(e.start_time) || elc.getTimeStampEnd() != Long.parseLong(e.end_time)){
+    	    			dao.ofy().put(elc);
+    	    		}
+    	    		
+    	    		/*Query<EventLocationCapable> q = dao.ofy().query(EventLocationCapable.class);
     	    		q.filter("eid", e.eid); //can be optimized with a get (filter = 1 read + 1small op)
 					
     	    		if (q.count() == 0) {
 			        	
     	    			EventLocationCapable elc = new EventLocationCapable(e);
     	    			dao.ofy().put(elc);
-    	    		}
+    	    		}*/
     	    		
     	    	}    	    	
     	    	e.Score(v_graph);
@@ -212,6 +220,12 @@ public class Event extends Model implements Serializable {
         					event.Score(v_graph);
         					event.Filter_category();
         				}
+        				
+	    	    		if (e.getTimeStampStart() != Long.parseLong(event.start_time) || e.getTimeStampEnd() != Long.parseLong(event.end_time)){
+	    	    			e.setTimeStampStart(Long.parseLong(event.start_time));
+	    	    			e.setTimeStampStart(Long.parseLong(event.end_time));
+	    	    			dao.ofy().put(e);
+	    	    		}
             		}
             	}
           	
@@ -298,14 +312,22 @@ public class Event extends Model implements Serializable {
 								
 					    	    	if (e.latitude != null && e.latitude != "" && e.longitude != null && e.longitude != "") {
 									
-					    	    		Query<EventLocationCapable> q = dao.ofy().query(EventLocationCapable.class);
+					    	    		EventLocationCapable elc = dao.ofy().find(EventLocationCapable.class, e.eid);
+					    	    		
+					    	    		if (elc == null) {
+					    	    			dao.ofy().put(elc);
+					    	    		} else if (elc.getTimeStampStart() != Long.parseLong(e.start_time) || elc.getTimeStampEnd() != Long.parseLong(e.end_time)){
+					    	    			dao.ofy().put(elc);
+					    	    		}
+					    	    		
+					    	    		/*Query<EventLocationCapable> q = dao.ofy().query(EventLocationCapable.class);
 					    	    		q.filter("eid", e.eid); //can be optimized with a get (filter = 1 read + 1small op)
 										
 					    	    		if (q.count() == 0) {
 								        	
 					    	    			EventLocationCapable elc = new EventLocationCapable(e);
 					    	    			dao.ofy().put(elc);
-					    	    		}
+					    	    		}*/
 					    	    		
 					    	    	}   	
 					    	    }
