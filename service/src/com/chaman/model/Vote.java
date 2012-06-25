@@ -8,10 +8,6 @@ import com.chaman.dao.Dao;
 import com.googlecode.objectify.annotation.Entity;
 import com.google.appengine.api.memcache.MemcacheService;
 import com.google.appengine.api.memcache.MemcacheServiceFactory;
-//import com.restfb.DefaultFacebookClient;
-//import com.restfb.FacebookClient;
-//import com.restfb.Parameter;
-//import com.restfb.types.FacebookType;
 
 @Entity
 public class Vote extends Model implements Serializable  {
@@ -52,17 +48,10 @@ public class Vote extends Model implements Serializable  {
 	    	
 	    	//get from DS
 	    	Vote dsvote = null;
-	    	dsvote = dao.ofy().find(Vote.class, this.eid);
+	    	dsvote = dao.getVote(this.eid);
 	    	
-	    	if (dsvote != null) {
-	    		
-	    		this.nb_vote = dsvote.nb_vote + 1;
-	    		this.vote_avg = ((dsvote.vote_avg * dsvote.nb_vote) + lvote) / this.nb_vote;
-	    	} else {
-	    	
-	    		this.nb_vote = 1L;
-	    		this.vote_avg = lvote;
-	    	}
+	    	this.nb_vote = dsvote.nb_vote + 1;
+	    	this.vote_avg = ((dsvote.vote_avg * dsvote.nb_vote) + lvote) / this.nb_vote;
 	    } else {
 	    	
 	    	this.nb_vote = v_cache.nb_vote + 1;

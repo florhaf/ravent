@@ -94,9 +94,14 @@ public class Event extends Model implements Serializable {
 		int timeZoneInMinutes = Integer.parseInt(timeZone);
 		
 		 //Prepare a timestamp to filter the facebook DB on the upcoming events
-		DateTimeZone PST = DateTimeZone.forID("America/Los_Angeles");		
-		DateTime now = DateTime.now(PST).plusMinutes(timeZoneInMinutes);
+		
+		DateTimeZone TZ = DateTimeZone.forOffsetMillis(timeZoneInMinutes*60*1000);
+		DateTime now = DateTime.now(TZ);	
 		long actual_time = now.getMillis() / 1000;
+		
+		/*DateTimeZone PST = DateTimeZone.forID("America/Los_Angeles");		
+		DateTime now = DateTime.now(PST).plusMinutes(timeZoneInMinutes);
+		long actual_time = now.getMillis() / 1000;*/
 		
 		FacebookClient client 	= new DefaultFacebookClient(accessToken);
 		String properties 		= "eid, name, pic_big, start_time, end_time, venue, location, privacy, update_time";
@@ -131,20 +136,28 @@ public class Event extends Model implements Serializable {
 			
     	    	if (e.latitude != null && e.latitude != "" && e.longitude != null && e.longitude != "") {
 				
-    	    		Query<EventLocationCapable> q = dao.ofy().query(EventLocationCapable.class);
+    	    		EventLocationCapable elc = dao.ofy().find(EventLocationCapable.class, e.eid);
+    	    		
+    	    		if (elc == null) {
+    	    			dao.ofy().put(elc);
+    	    		} else if (elc.getTimeStampStart() != Long.parseLong(e.start_time) || elc.getTimeStampEnd() != Long.parseLong(e.end_time)){
+    	    			dao.ofy().put(elc);
+    	    		}
+    	    		
+    	    		/*Query<EventLocationCapable> q = dao.ofy().query(EventLocationCapable.class);
     	    		q.filter("eid", e.eid); //can be optimized with a get (filter = 1 read + 1small op)
 					
     	    		if (q.count() == 0) {
 			        	
     	    			EventLocationCapable elc = new EventLocationCapable(e);
     	    			dao.ofy().put(elc);
-    	    		}
+    	    		}*/
     	    		
     	    	}    	    	
     	    	e.Score(v_graph);
     	    }
 	
-	    	e.Format(timeZoneInMinutes);
+	    	e.Format(timeZoneInMinutes, 0);
     	    
 	    	if (e.latitude != null && e.latitude != "" && e.longitude != null && e.longitude != "") {
 
@@ -173,9 +186,9 @@ public class Event extends Model implements Serializable {
 		
 		int timeZoneInMinutes = Integer.parseInt(timeZone);
 		
-		DateTimeZone PST = DateTimeZone.forID("America/Los_Angeles");		
-		DateTime now = DateTime.now(PST ).plusMinutes(timeZoneInMinutes);
-		long actual_time = now.getMillis() / 1000;
+		DateTimeZone TZ = DateTimeZone.forOffsetMillis(timeZoneInMinutes*60*1000);
+		DateTime now = DateTime.now(TZ);	
+		long actual_time = now.getMillis() / 1000L;
 		
 		LocationCapableRepositorySearch<EventLocationCapable> ofySearch = new OfyEntityLocationCapableRepositorySearchImpl(dao.ofy(), timeZone, searchTimeFrame);
 		List<EventLocationCapable> l = GeocellManager.proximityFetch(new Point(Double.parseDouble(userLatitude), Double.parseDouble(userLongitude)), searchLimit, searchRadius * 1000 * 1.61, ofySearch);
@@ -207,12 +220,18 @@ public class Event extends Model implements Serializable {
         					event.Score(v_graph);
         					event.Filter_category();
         				}
+        				
+	    	    		if (e.getTimeStampStart() != Long.parseLong(event.start_time) || e.getTimeStampEnd() != Long.parseLong(event.end_time)){
+	    	    			e.setTimeStampStart(Long.parseLong(event.start_time));
+	    	    			e.setTimeStampStart(Long.parseLong(event.end_time));
+	    	    			dao.ofy().put(e);
+	    	    		}
             		}
             	}
           	
             	if (event != null && (event.venue_category == null || (event.venue_category != null && !event.venue_category.equals("City")))) {
             		
-        			if (event.Format(timeZoneInMinutes)){
+        			if (event.Format(timeZoneInMinutes, searchTimeFrame)){
         				
             			event.latitude 	= Double.toString(e.getLatitude());
             			event.longitude = Double.toString(e.getLongitude());
@@ -293,14 +312,22 @@ public class Event extends Model implements Serializable {
 								
 					    	    	if (e.latitude != null && e.latitude != "" && e.longitude != null && e.longitude != "") {
 									
-					    	    		Query<EventLocationCapable> q = dao.ofy().query(EventLocationCapable.class);
+					    	    		EventLocationCapable elc = dao.ofy().find(EventLocationCapable.class, e.eid);
+					    	    		
+					    	    		if (elc == null) {
+					    	    			dao.ofy().put(elc);
+					    	    		} else if (elc.getTimeStampStart() != Long.parseLong(e.start_time) || elc.getTimeStampEnd() != Long.parseLong(e.end_time)){
+					    	    			dao.ofy().put(elc);
+					    	    		}
+					    	    		
+					    	    		/*Query<EventLocationCapable> q = dao.ofy().query(EventLocationCapable.class);
 					    	    		q.filter("eid", e.eid); //can be optimized with a get (filter = 1 read + 1small op)
 										
 					    	    		if (q.count() == 0) {
 								        	
 					    	    			EventLocationCapable elc = new EventLocationCapable(e);
 					    	    			dao.ofy().put(elc);
-					    	    		}
+					    	    		}*/
 					    	    		
 					    	    	}   	
 					    	    }
@@ -338,7 +365,7 @@ public class Event extends Model implements Serializable {
 		
 		e = fbevents.get(0);
 
-		e.Format(timeZoneInMinutes);
+		e.Format(timeZoneInMinutes, 0);
 		
 		e.venue_id = JSON.GetValueFor("id", e.venue);
 		Venue v_graph = new Venue(accessToken, e.venue_id);
@@ -367,7 +394,7 @@ public class Event extends Model implements Serializable {
 		return e;
 	}
 	
-	private boolean Format(int timeZoneInMinutes) {
+	private boolean Format(int timeZoneInMinutes, int searchTimeFrame) {
 			
 		long timeStampStart = Long.parseLong(this.start_time) * 1000;
 		long timeStampEnd = Long.parseLong(this.end_time) * 1000;
@@ -384,11 +411,15 @@ public class Event extends Model implements Serializable {
 		
 		this.date_start = dtStart.toString("MMM d, Y");
 		this.date_end = dtEnd.toString("MMM d, Y");
-				
-		DateTime now = DateTime.now(T).plusMinutes(timeZoneInMinutes);
 		
+		DateTimeZone TZ = DateTimeZone.forOffsetMillis(timeZoneInMinutes*60*1000);
+		DateTime now = DateTime.now(TZ);	
 		long timeStampNow = now.getMillis();
-		long timeStampToday = timeStampNow + (86400000 - now.getMillisOfDay());
+		long timeStampToday = timeStampNow - (timeZoneInMinutes * 60000) + (86400000 - now.getMillisOfDay());
+		
+		if (timeStampEnd < timeStampNow) {
+			return false;
+		}
 		
 		if (timeStampStart <= timeStampToday && timeStampEnd >= timeStampNow) {
 			
@@ -400,7 +431,7 @@ public class Event extends Model implements Serializable {
 			
 			if (end_minus_start >= 7) { // to filter bogus "Fridays", "Tuesdays" events
 				
-				this.Filter_bogus_events(now);
+				return this.Filter_bogus_events(now, searchTimeFrame);
 			} else {
 				
 				this.group = "a";
@@ -467,14 +498,10 @@ public class Event extends Model implements Serializable {
 		}		
 	}
 	
-	public void Filter_bogus_events(DateTime now_userTZ) {
+	public boolean Filter_bogus_events(DateTime now_userTZ, int searchTimeFrame) {
 		
-		String name = this.name.toLowerCase();
-		
-		int dayofweek = now_userTZ.getDayOfWeek();		
-		
+		String name = this.name.toLowerCase();	
 		int dayindex = name.indexOf("day");
-		
 		String day;
 		int dayoffweek_name = 0;
 		
@@ -493,22 +520,42 @@ public class Event extends Model implements Serializable {
 						if (day.equals("nes")) {dayoffweek_name = 3;} else
 							if (day.equals("urs")) {dayoffweek_name = 4;} else
 								if (day.equals("fri")) {dayoffweek_name = 5;} else
-									if (day.equals("sat")) {dayoffweek_name = 6;} else
+									if (day.equals("tur")) {dayoffweek_name = 6;} else
 										if (day.equals("sun")) {dayoffweek_name = 7;} 
-											
 				
-				if (dayoffweek_name - dayofweek < 0) {
+				int day_offset = dayoffweek_name - now_userTZ.getDayOfWeek();
+				
+				if(day_offset == 1 || day_offset == -6) {
+					
+					this.group = "b";
+					this.groupTitle = "Tomorrow";
+					
+					if (searchTimeFrame < 36 && searchTimeFrame != 0) { //TODO change to days
+						return false;
+					}
+				} else if (day_offset < 0) {
 					
 					this.group = "d";
 					this.groupTitle = "This month";
-				} else if (dayoffweek_name - dayofweek > 0) {
+					
+					if (searchTimeFrame < (7 + day_offset) * 24 && searchTimeFrame != 0) {
+						return false;
+					}
+				} else if (day_offset > 0) {
 					
 					this.group = "c";
 					this.groupTitle = "This week";
-				} else {
+					
+					if (searchTimeFrame < day_offset * 24 || searchTimeFrame == 0) {
+						return false;
+					}
+				} else if (day_offset == 0) {
 					
 					this.group = "a";
 					this.groupTitle = "Today";
+				} else {
+					
+					return false;
 				}
 			}
 		} else {
@@ -516,6 +563,8 @@ public class Event extends Model implements Serializable {
 			this.group = "a";
 			this.groupTitle = "Today";
 		}
+		
+		return true;
 	}
 	
 	/* 
@@ -552,16 +601,10 @@ public class Event extends Model implements Serializable {
 			if (v_cache == null) {
 		    	
 		    	//get from DS
-		    	dsvote = dao.ofy().find(Vote.class, eid_string);
-		    	
-		    	if (dsvote != null) {
-		    		
-		    		res_vote = dsvote.getVote_avg();
-		    		syncCache.put(eid_string, dsvote, null); // Add vote to cache
-		    	} else {
+		    	dsvote = dao.getVote(eid_string); // returns vote from cache or new Vote(id, 0L, 0D)
 
-		    		syncCache.put(eid_string, new Vote(eid_string, 0L, 0D), null); // Add vote to cache with 0 vote and 0 average
-		    	}
+		    	res_vote = dsvote.getVote_avg();
+		    	syncCache.put(eid_string, dsvote, null); // Add vote to cache
 			} else {
 				
 				res_vote = v_cache.vote_avg;

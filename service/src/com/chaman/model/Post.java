@@ -87,6 +87,12 @@ public class Post  extends Model {
 	}
 	
 	public String getPicture() {
+		
+		if (this.picture != null) {
+			
+			this.picture = this.picture.substring(0, this.picture.length() - 5).concat("n.jpg");
+		}
+
 		return this.picture;
 	}
 	
