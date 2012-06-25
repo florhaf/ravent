@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.persistence.Id;
 
 import com.chaman.dao.Dao;
+import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.annotation.Entity;
 import com.google.appengine.api.memcache.MemcacheService;
 import com.google.appengine.api.memcache.MemcacheServiceFactory;
@@ -12,6 +13,16 @@ import com.google.appengine.api.memcache.MemcacheServiceFactory;
 @Entity
 public class Vote extends Model implements Serializable  {
 
+	static {
+		try {
+
+			ObjectifyService.register(Vote.class);
+		} catch (Exception ex) {
+			
+			//System.out.println(ex.toString());
+		}
+	}
+	
 	/**
 	 * 
 	 */
