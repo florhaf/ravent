@@ -11,6 +11,7 @@
 #import "DLStarRatingControl.h"
 #import "MWPhotoBrowser.h"
 #import "models_Comment.h"
+#import "STSegmentedControl.h"
 
 @interface controllers_events_Details : UITableViewFriends<DLStarRatingDelegate, MWPhotoBrowserDelegate> {
         
@@ -38,6 +39,8 @@
     
     IBOutlet JBAsyncImageView *_headerImage;
     IBOutlet JBAsyncImageView *_mapImage;
+    
+    STSegmentedControl *_segment;
     
     DLStarRatingControl *_voteView;
     UIToolbar *_toolbar;

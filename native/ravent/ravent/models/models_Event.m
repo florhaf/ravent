@@ -211,6 +211,7 @@
 
 - (void)loadRsvpWithParams:(NSMutableDictionary *)params andTarget:(id)target andSelector:(SEL)success
 {
+    //RKLogConfigureByName("RestKit/*", RKLogLevelTrace);
     NSString *resourcePath = [@"rsvp" appendQueryParams:params];
     
     _callbackRsvpSuccess = success;
@@ -373,6 +374,7 @@
             [array addObject:e];
             
             //group = (group == nil) ? @"?" : group;
+            
             if (group != nil) {
              
                 [result setObject:array forKey:group];

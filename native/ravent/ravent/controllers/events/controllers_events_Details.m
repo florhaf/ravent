@@ -18,6 +18,7 @@
 #import "ActionDispatcher.h"
 #import "controllers_App.h"
 #import "controllers_events_Pic_big.h"
+#import <RestKit/RKErrorMessage.h>
 #import <QuartzCore/QuartzCore.h>
 
 
@@ -69,8 +70,9 @@
     if (_eventLoader == nil) {
         
         _eventLoader = [[models_Event alloc] init];
-        _eventLoader.callbackResponseFailure = @selector(shareFailure:);
     }
+    
+    _eventLoader.callbackResponseFailure = @selector(shareFailure:);
     
     _friendsSharedTo = [friends copy];
     NSMutableDictionary *params = nil;
@@ -343,27 +345,20 @@
 {
     NSString *rsvpValue = @"yes";
     
-    if (_rsvp.selectedSegmentIndex == 1) {
+    if (_segment.selectedSegmentIndex == 1) {
         
         rsvpValue = @"maybe";
     } else {
         
-        if (_rsvp.selectedSegmentIndex == 2) {
+        if (_segment.selectedSegmentIndex == 2) {
             
             rsvpValue = @"no";
         }
     }
     
-    [_voteLoading setHidden:NO];
-    _voteLoading.frame = _rsvp.frame;
-    [_header bringSubviewToFront:_voteLoading];
-    [_header sendSubviewToBack:_rsvp];
-    [((UIActivityIndicatorView *)[_voteLoading.subviews objectAtIndex:0]) startAnimating];
-    
     NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
     
     [params setValue:rsvpValue forKey:@"rsvp"];
-    [params setValue:_user.uid forKey:@"userID"];
     [params setValue:_event.eid forKey:@"eventID"];
     [params setValue:[models_User crtUser].accessToken forKey:@"access_token"];
     
@@ -373,8 +368,6 @@
 
 - (void)onRsvpSuccess:(NSString *)response
 {
-    [_voteLoading setHidden:YES];
-    
     [YRDropdownView showDropdownInView:[controllers_App instance].view 
                                  title:@"Success" 
                                 detail:@"RSVP submitted"
@@ -384,9 +377,7 @@
 
 - (void)onRsvpFailure:(NSMutableDictionary *)response
 {
-    [_voteLoading setHidden:YES];
-    
-    [_rsvp setSelected:NO];
+    [_segment setSelected:NO];
     
     NSString *errorMsg = (NSString *)[response valueForKey:@"statusCode"];
     
@@ -429,6 +420,14 @@
     [_header addSubview:_voteView];
     [_headerVoteLabel removeFromSuperview];
     
+    NSArray *objects = [NSArray arrayWithObjects:@"Yes", @"Maybe", @"No", nil];
+    
+    _segment = [[STSegmentedControl alloc] initWithItems:objects];
+	_segment.frame = CGRectMake(15, 510, 290, 40);
+	
+	_segment.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+	[_header addSubview:_segment];
+    
     if (_event.latitude != nil && ![_event.latitude isEqualToString:@""]) {
         
         NSString *mapUrl = @"http://maps.googleapis.com/maps/api/staticmap";
@@ -459,10 +458,18 @@
     NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
     
     [params setValue:_event.eid forKey:@"eid"];
+    [params setValue:_event.eid forKey:@"eventID"];
+    [params setValue:[models_User crtUser].uid forKey:@"userID"];
     [params setValue:[models_User crtUser].accessToken forKey:@"access_token"];
     
+    if (_eventLoader == nil) {
+        
+        _eventLoader = [[models_Event alloc] init];
+    }
+    
+    // does not load if same instance ? 
     [_event loadStatsWithParams:params andTarget:self andSelector:@selector(onEventStatsLoad:)];
-    //[_event loadRsvpWithParams:params andTarget:self andSelector:@selector(onRsvpLoad:)];
+    [_eventLoader loadRsvpWithParams:params andTarget:self andSelector:@selector(onRsvpLoad:)];
     
     self.tableView.tableHeaderView = _header;
 }
@@ -471,28 +478,70 @@
 {
     if (objects != nil && [objects count] > 0) {
         
-        models_Event *e = [objects objectAtIndex:0];
+        if ([[objects objectAtIndex:0] isKindOfClass:[RKErrorMessage class]]) {
+            
+            RKErrorMessage *error = (RKErrorMessage *)[objects objectAtIndex:0];
+            
+            [YRDropdownView showDropdownInView:[controllers_App instance].view 
+                                         title:@"Error stats" 
+                                        detail:error.errorMessage
+                                         image:[UIImage imageNamed:@"dropdown-alert"]
+                                      animated:YES];
+            
+        } else {
+        
+            models_Event *e = [objects objectAtIndex:0];
         
         
-        double d = [e.female_ratio doubleValue];
-        d = d * 100;
+            double d = [e.female_ratio doubleValue];
+            d = d * 100;
         
-        _labelFemaleRatio.text = [NSString stringWithFormat:@"%.0f %%", d + 1];
-        _labelMaleRatio.text = [NSString stringWithFormat:@"%.0f %%", 100 - (d + 1)];
-        _labelTotalAttendings.text = e.nb_attending;
+            _labelFemaleRatio.text = [NSString stringWithFormat:@"%.0f %%", d + 1];
+            _labelMaleRatio.text = [NSString stringWithFormat:@"%.0f %%", 100 - (d + 1)];
+            _labelTotalAttendings.text = e.nb_attending;
+        }
     }
 }
 
 - (void)onRsvpLoad:(NSArray *)objects
 {
+    [_segment setSelected:NO];
+    
     if (objects != nil && [objects count] > 0) {
         
-        models_Event *e = [objects objectAtIndex:0];
         
-        _event.rsvp_status = e.rsvp_status;
-        
-        // update rsvp control here
+        if ([[objects objectAtIndex:0] isKindOfClass:[RKErrorMessage class]]) {
+            
+            RKErrorMessage *error = (RKErrorMessage *)[objects objectAtIndex:0];
+            
+            [YRDropdownView showDropdownInView:[controllers_App instance].view 
+                                         title:@"Error RSVP" 
+                                        detail:error.errorMessage
+                                         image:[UIImage imageNamed:@"dropdown-alert"]
+                                      animated:YES];
+            
+        } else {
+         
+            models_Event *e = [objects objectAtIndex:0];
+            
+            _event.rsvp_status = e.rsvp_status;
+            
+            if ([e.rsvp_status isEqualToString:@"attending"]) {
+                
+                [_segment setSelectedSegmentIndex:0];
+                
+            } else if ([e.rsvp_status isEqualToString:@"maybe attending"]) {
+                
+                [_segment setSelectedSegmentIndex:1];
+                
+            } else if ([e.rsvp_status isEqualToString:@"not attending"]) {
+            
+                [_segment setSelectedSegmentIndex:2];
+            }
+        }
     }
+    
+    [_segment addTarget:self action:@selector(rsvp:) forControlEvents:UIControlEventValueChanged];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
