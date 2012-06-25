@@ -9,8 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "UITableViewFriends.h"
 #import "DLStarRatingControl.h"
+#import "MWPhotoBrowser.h"
+#import "models_Comment.h"
 
-@interface controllers_events_Details : UITableViewFriends<DLStarRatingDelegate> {
+@interface controllers_events_Details : UITableViewFriends<DLStarRatingDelegate, MWPhotoBrowserDelegate> {
         
     CGSize _headerSize;
     CGSize _headerTitleSize;
@@ -40,10 +42,13 @@
     DLStarRatingControl *_voteView;
     UIToolbar *_toolbar;
     models_Event *_eventLoader;
+    models_Comment *_picturesLoader;
     
     NSArray *_friendsSharedTo;
     BOOL _isButtonTap;
 }
+
+@property (nonatomic, retain) NSMutableArray *photos;
 
 - (id)initWithReloadEvent:(models_Event *)event;
 

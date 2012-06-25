@@ -11,6 +11,8 @@
 #import "JBAsyncImageView.h"
 #import "MBProgressHUD.h"
 #import "ActionDispatcher.h"
+#import "controllers_events_Pic_big.h"
+
 
 @implementation controllers_events_Feed
 
@@ -84,32 +86,35 @@
         result = result + (actualHeight - _subTitleSize.height);
     }
     
+    if (c.picture != nil) {
+        
+        result = result + 75;
+    }
+    
     return result;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [super tableView:tableView cellForRowAtIndexPath:indexPath];
-    
-    [[NSBundle mainBundle] loadNibNamed:@"views_events_item_Comment" owner:self options:nil];
-    
     models_Comment *c = [_data objectAtIndex:indexPath.row];
+    
+    if (c.picture != nil) {
+    
+        [[NSBundle mainBundle] loadNibNamed:@"views_events_item_CommentPic" owner:self options:nil];
+        _commentImg.imageURL = [NSURL URLWithString:c.picture];
+        _commentImg.clipsToBounds = YES;
+        _commentImg.contentMode = UIViewContentModeScaleAspectFill;
+    } else {
+        
+        [[NSBundle mainBundle] loadNibNamed:@"views_events_item_Comment" owner:self options:nil];
+    }
     
     _itemTitle.text = [NSString stringWithFormat:@"%@ %@", c.firstName, c.lastName];
     _itemSubTitle.text = c.message;
     _itemImage.imageURL = [NSURL URLWithString:c.pictureUser];
     _itemImage.clipsToBounds = YES;
     _itemImage.contentMode = UIViewContentModeScaleAspectFill;
-    
-    
-    if (c.pictureContent != nil) {
-        
-        JBAsyncImageView *imageView = [[JBAsyncImageView alloc] initWithFrame:CGRectMake(_itemTitle.frame.origin.x, _itemTitle.frame.origin.y + 21, 0, 0)];
-        imageView.imageURL = [NSURL URLWithString:c.pictureContent];
-        imageView.delegate = self;
-        
-        [self.view addSubview:imageView];
-    }
     
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
@@ -128,6 +133,42 @@
     
     return cell;
 }
+
+-(IBAction)onPictureTap:(id)sender
+{
+    UITableViewCell *cell = (UITableViewCell *)[sender superview];
+    
+    int i = 0;
+    while (![[[cell subviews] objectAtIndex:i] isKindOfClass:[JBAsyncImageView class]]) {
+        i++;
+    }
+    
+    JBAsyncImageView *picture = (JBAsyncImageView *)[[cell subviews] objectAtIndex:i];
+    
+    _photos = [[NSMutableArray alloc] init];
+    
+    [_photos insertObject:[MWPhoto photoWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", picture.imageURL]]] atIndex:0];
+    
+    MWPhotoBrowser *picController = [[MWPhotoBrowser alloc] initWithDelegate:self];
+    picController.wantsFullScreenLayout = YES;
+    picController.displayActionButton = NO;
+    [picController setInitialPageIndex:0];
+    
+    UINavigationController *picModal = [[UINavigationController alloc] initWithRootViewController:picController];
+    
+    [self presentModalViewController:picModal animated:YES];
+}
+
+- (NSUInteger)numberOfPhotosInPhotoBrowser:(MWPhotoBrowser *)photoBrowser {
+    return _photos.count;
+}
+
+- (MWPhoto *)photoBrowser:(MWPhotoBrowser *)photoBrowser photoAtIndex:(NSUInteger)index {
+    if (index < _photos.count)
+        return [_photos objectAtIndex:index];
+    return nil;
+}
+
 
 -(void)imageView:(JBAsyncImageView *)sender loadedImage:(UIImage *)imageLoaded fromURL:(NSURL *)url
 {

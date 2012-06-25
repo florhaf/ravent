@@ -102,7 +102,7 @@
     
     _comment = [[models_Comment alloc] initWithDelegate:self andSelector:nil];
     
-    _comment.pictureContent = _base64Picture;
+    _comment.picture = _base64Picture;
     _comment.message = _textView.text;
     _comment.uid = [models_User crtUser].uid;
     

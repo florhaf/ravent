@@ -20,7 +20,10 @@
 #import "controllers_events_Pic_big.h"
 #import <QuartzCore/QuartzCore.h>
 
+
 @implementation controllers_events_Details
+
+@synthesize photos = _photos;
 
 - (id)initWithEvent:(models_Event *)event
 {
@@ -36,9 +39,29 @@
         _headerSize = CGSizeMake(_header.frame.size.width, _header.frame.size.height);
         _headerTitleSize = CGSizeMake(_headerNameLabel.frame.size.width, _headerNameLabel.frame.size.height);
         _headerSubTitleSize = CGSizeMake(_headerLocationLabel.frame.size.width, _headerLocationLabel.frame.size.height);
+        
+        NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+        
+        [params setValue:_event.eid forKey:@"eid"];
+        [params setValue:[models_User crtUser].accessToken forKey:@"access_token"];
+        
+        _picturesLoader = [[models_Comment alloc] initWithDelegate:self andSelector:@selector(onPicturesLoad:)];
+        [_picturesLoader loadPicturesWithParams:params];
+        _photos = [[NSMutableArray alloc] init];
     }
     
     return self;
+}
+
+- (void)onPicturesLoad:(NSArray *)objects
+{
+    if (objects != nil) {
+        
+        for (models_Comment *pic in objects) {
+        
+            [_photos addObject:[MWPhoto photoWithURL:[NSURL URLWithString:pic.picture]]];
+        }
+    }
 }
 
 - (void)share:(NSArray *)friends
@@ -246,10 +269,26 @@
 {
     _isButtonTap = YES;
     
-    controllers_events_Pic_big *picController = [[controllers_events_Pic_big alloc] initWithPic:_event.pic_big];
-    UINavigationController *picModal = [[UINavigationController alloc] initWithRootViewController:picController];
+    [_photos insertObject:[MWPhoto photoWithURL:[NSURL URLWithString:_event.pic_big]] atIndex:0];
     
+    MWPhotoBrowser *picController = [[MWPhotoBrowser alloc] initWithDelegate:self];
+    picController.wantsFullScreenLayout = YES;
+    picController.displayActionButton = NO;
+    [picController setInitialPageIndex:0];
+    
+    
+    UINavigationController *picModal = [[UINavigationController alloc] initWithRootViewController:picController];
     [self presentModalViewController:picModal animated:YES];
+}
+
+- (NSUInteger)numberOfPhotosInPhotoBrowser:(MWPhotoBrowser *)photoBrowser {
+    return self.photos.count;
+}
+
+- (MWPhoto *)photoBrowser:(MWPhotoBrowser *)photoBrowser photoAtIndex:(NSUInteger)index {
+    if (index < self.photos.count)
+        return [self.photos objectAtIndex:index];
+    return nil;
 }
 
 - (void)newRating:(int)rating

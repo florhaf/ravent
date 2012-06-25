@@ -371,7 +371,12 @@
             
             NSMutableArray *array = [[NSMutableArray alloc] init];
             [array addObject:e];
-            [result setObject:array forKey:group];
+            
+            //group = (group == nil) ? @"?" : group;
+            if (group != nil) {
+             
+                [result setObject:array forKey:group];
+            }
         }
     }
     

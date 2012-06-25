@@ -40,7 +40,8 @@ static controllers_events_Map_p2p *_ctrl;
     if (_hud != nil) {
         
         [MBProgressHUD hideHUDForView:self.view animated:NO];
-        [MBProgressHUD showHUDAddedTo:self.view animated:NO withText:text];
+        [MBProgressHUD showHUDAddedTo:self.view animated:NO];
+        
     }
 }
 
