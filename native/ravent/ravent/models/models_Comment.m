@@ -16,7 +16,7 @@
 @synthesize lastName = _lastName;
 @synthesize pictureUser = _pictureUser;
 @synthesize message = _message;
-@synthesize pictureContent = _pictureContent;
+@synthesize picture = _picture;
 @synthesize time = _time;
 @synthesize uid = _uid;
 
@@ -44,7 +44,7 @@
     [objectMapping mapKeyPath:@"first_name" toAttribute:@"firstName"];
     [objectMapping mapKeyPath:@"last_name" toAttribute:@"lastName"];
     [objectMapping mapKeyPath:@"picture_user" toAttribute:@"pictureUser"];
-    [objectMapping mapKeyPath:@"picture_content" toAttribute:@"pictureContent"];
+    [objectMapping mapKeyPath:@"picture" toAttribute:@"picture"];
     [objectMapping mapKeyPath:@"message" toAttribute:@"message"];
     [objectMapping mapKeyPath:@"time" toAttribute:@"time"];
     
@@ -60,9 +60,30 @@
     [self performSelector:@selector(updateLoadingMessage3:) withObject:resourcePath afterDelay:5];
 }
 
+- (void)loadPicturesWithParams:(NSMutableDictionary *)params
+{
+    NSString *resourcePath = [@"pictures" appendQueryParams:params];
+    
+    RKObjectMapping *objectMapping = [RKObjectMapping mappingForClass:[models_Comment class]];
+    [objectMapping mapKeyPath:@"first_name" toAttribute:@"firstName"];
+    [objectMapping mapKeyPath:@"last_name" toAttribute:@"lastName"];
+    [objectMapping mapKeyPath:@"picture" toAttribute:@"picture"];
+    [objectMapping mapKeyPath:@"message" toAttribute:@"message"];
+    
+    if (_manager == nil) {
+        
+        _manager = [RKObjectManager objectManagerWithBaseURL:SERVICE_URL];
+    }
+    
+    [_manager.mappingProvider setMapping:objectMapping forKeyPath:@"records"];
+    [_manager loadObjectsAtResourcePath:resourcePath objectMapping:objectMapping delegate:self]; 
+    
+    _isRequesting = YES;
+    [self performSelector:@selector(updateLoadingMessage3:) withObject:resourcePath afterDelay:5];
+}
+
 - (void)post:(NSMutableDictionary *)params success:(SEL)success failure:(SEL)failure
 {
-    RKLogConfigureByName("RestKit/*", RKLogLevelTrace);
     _callbackResponseSuccess = success;
     _callbackResponseFailure = failure;
     
@@ -156,6 +177,7 @@
 
 - (void)objectLoader:(RKObjectLoader *)objectLoader didLoadObjects:(NSArray *)objects
 {  
+    
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
     [_delegate performSelector:_callback withObject:objects];
