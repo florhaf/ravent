@@ -19,15 +19,15 @@ public class Attending extends Model {
 	String first_name;
 	@Facebook
 	String last_name;
-	@Facebook
-	String pic;
+	@Facebook("pic")
+	String picture;
 	@Facebook
 	String sex;
 	@Facebook
 	String rsvp_status;
 	
 	Long eid;
-	String picture;
+	//String picture;
 	
 	public Attending() {
 		super();
@@ -53,7 +53,6 @@ public class Attending extends Model {
 		
 			Attending a = multiqueryResult.invited_info.get(i);
 			
-			a.picture = a.pic;
 			a.eid = eid_long;
 			
 			a.rsvp_status = multiqueryResult.invited_rsvp.get(i).rsvp_status;
@@ -76,8 +75,7 @@ public class Attending extends Model {
 	}
 	
 	/* 
-	 * - Get the list of users ATTENDING (not all the invited people) to the event (pic name rsvp status)
-	 * - Fill the number of user invited (this.nb_invited)
+	 * - Get the list (picture) of users ATTENDING (not all the invited people) to the event
 	 */
 	public static ArrayList<Model> GetAttendingAllList(String accessToken, String eid) throws FacebookException {
 		
@@ -98,10 +96,7 @@ public class Attending extends Model {
 		
 			Attending a = multiqueryResult.invited_info.get(i);
 			
-			a.picture = a.pic;
 			a.eid = eid_long;
-			
-			a.rsvp_status = multiqueryResult.invited_rsvp.get(i).rsvp_status;
 			
 			result.add(a);
 		}
