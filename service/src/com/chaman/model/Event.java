@@ -99,10 +99,6 @@ public class Event extends Model implements Serializable {
 		DateTime now = DateTime.now(TZ);	
 		long actual_time = now.getMillis() / 1000;
 		
-		/*DateTimeZone PST = DateTimeZone.forID("America/Los_Angeles");		
-		DateTime now = DateTime.now(PST).plusMinutes(timeZoneInMinutes);
-		long actual_time = now.getMillis() / 1000;*/
-		
 		FacebookClient client 	= new DefaultFacebookClient(accessToken);
 		String properties 		= "eid, name, pic_big, start_time, end_time, venue, location, privacy, update_time";
 		String query 			= "SELECT " + properties + " FROM event WHERE eid IN (SELECT eid FROM event_member WHERE uid = " + userID + ") AND end_time > " + actual_time + " ORDER BY start_time"; /*need to check privacy CLOSED AND SECRET */
@@ -134,7 +130,7 @@ public class Event extends Model implements Serializable {
     	    		e.longitude = JSON.GetValueFor("longitude", v_graph.location);
     	    	}	
 			
-    	    	if (e.latitude != null && e.latitude != "" && e.longitude != null && e.longitude != "") {
+    	    	if (e.latitude != null && e.latitude != "" && e.longitude != null && e.longitude != "" && e.privacy == "OPEN") {
 				
     	    		EventLocationCapable elc = dao.ofy().find(EventLocationCapable.class, e.eid);
     	    		
@@ -143,16 +139,6 @@ public class Event extends Model implements Serializable {
     	    		} else if (elc.getTimeStampStart() != Long.parseLong(e.start_time) || elc.getTimeStampEnd() != Long.parseLong(e.end_time)){
     	    			dao.ofy().put(elc);
     	    		}
-    	    		
-    	    		/*Query<EventLocationCapable> q = dao.ofy().query(EventLocationCapable.class);
-    	    		q.filter("eid", e.eid); //can be optimized with a get (filter = 1 read + 1small op)
-					
-    	    		if (q.count() == 0) {
-			        	
-    	    			EventLocationCapable elc = new EventLocationCapable(e);
-    	    			dao.ofy().put(elc);
-    	    		}*/
-    	    		
     	    	}    	    	
     	    	e.Score(v_graph);
     	    }
@@ -280,7 +266,7 @@ public class Event extends Model implements Serializable {
 						
 						FacebookClient client 	= new DefaultFacebookClient(u.getAccess_token());
 						String properties 		= "eid, name, pic_big, start_time, end_time, venue, location, privacy, update_time";
-						String query 			= "SELECT " + properties + " FROM event WHERE eid IN (SELECT eid FROM event_member WHERE uid = " + l.getUid() + ") AND end_time > " + TAS; /*need to check privacy CLOSED AND SECRET */
+						String query 			= "SELECT " + properties + " FROM event WHERE eid IN (SELECT eid FROM event_member WHERE uid = " + l.getUid() + ") AND privacy = OPEN AND end_time > " + TAS; /*need to check privacy CLOSED AND SECRET */
 						List<Event> fbevents 	= client.executeQuery(query, Event.class);
 										
 						Event e_cache; 
@@ -319,16 +305,6 @@ public class Event extends Model implements Serializable {
 					    	    		} else if (elc.getTimeStampStart() != Long.parseLong(e.start_time) || elc.getTimeStampEnd() != Long.parseLong(e.end_time)){
 					    	    			dao.ofy().put(elc);
 					    	    		}
-					    	    		
-					    	    		/*Query<EventLocationCapable> q = dao.ofy().query(EventLocationCapable.class);
-					    	    		q.filter("eid", e.eid); //can be optimized with a get (filter = 1 read + 1small op)
-										
-					    	    		if (q.count() == 0) {
-								        	
-					    	    			EventLocationCapable elc = new EventLocationCapable(e);
-					    	    			dao.ofy().put(elc);
-					    	    		}*/
-					    	    		
 					    	    	}   	
 					    	    }
 				    	    }
