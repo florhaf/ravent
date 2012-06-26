@@ -40,8 +40,7 @@ public class Following extends Model implements Serializable  {
 		ArrayList<Model> users = new ArrayList<Model>();
 		
 		Dao dao = new Dao();
-		
-		Following fcache = null;
+
 		User ucache = null;
 		
 	    MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
@@ -53,44 +52,29 @@ public class Following extends Model implements Serializable  {
         	
         	User u = new User();
         	u.uid = isFollowing ? f.friendID : f.userID;
-
-    	    fcache = (Following) syncCache.get(f.id); // read from following cache
-    	    if (fcache == null) {
     	    	
+        	ucache = (User) syncCache.get(u.uid); //read from user cache to get the nb following/ers values
+        	if (ucache != null) {
+    	    		
+        		u.nb_of_following = ucache.nb_of_following;
+        		u.nb_of_followers = ucache.nb_of_followers;
+        	} else {
+    	    		
+        		//this "else" case should not happen but just in case
         		Query<Following> qfollowings = dao.ofy().query(Following.class);
-    	    	qfollowings.filter("userID", u.uid);
-    	    	u.nb_of_following = qfollowings.count();
-    	    	
-    			Query<Following> qfollowers = dao.ofy().query(Following.class);    	
-    	    	qfollowers.filter("friendID", u.uid);
-    	    	u.nb_of_followers = qfollowers.count();   	
-    	    	
-    	    	syncCache.put(f.id, f, null); // populate following cache
-    	    } else {
-    	    	
-    	    	ucache = (User) syncCache.get(u.uid); //read from user cache to get the nb following/ers values
-    	    	if (ucache != null) {
-    	    		
-    	    		u.nb_of_following = ucache.nb_of_following;
-    	    		u.nb_of_followers = ucache.nb_of_followers;
-    	    	} else {
-    	    		
-    	    		//this "else" case should not happen but just in case
-    	    		Query<Following> qfollowings = dao.ofy().query(Following.class);
-        	    	qfollowings.filter("userID", u.uid);
-        	    	u.nb_of_following = qfollowings.count();
+        		qfollowings.filter("userID", u.uid);
+        		u.nb_of_following = qfollowings.count();
+        		
+        		Query<Following> qfollowers = dao.ofy().query(Following.class);   
+        		qfollowers.filter("friendID", u.uid);
+        		u.nb_of_followers = qfollowers.count();
         	    	
-        	    	Query<Following> qfollowers = dao.ofy().query(Following.class);   
-        	    	qfollowers.filter("friendID", u.uid);
-        	    	u.nb_of_followers = qfollowers.count();
-        	    	
-        	    	syncCache.put(f.id, f, null); // populate following cache
-    	    	}
-    	    }
+        		syncCache.put(f.id, f, null); // populate following cache
+        	}
         	users.add(u);
         }
                
-        return User.GetMultiples(accessToken, users);
+        return User.GetMultiples(accessToken, users, syncCache);
 	}
 	
 	public static void Put(String userID, String friendID) {

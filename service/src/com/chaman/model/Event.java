@@ -94,7 +94,6 @@ public class Event extends Model implements Serializable {
 		int timeZoneInMinutes = Integer.parseInt(timeZone);
 		
 		 //Prepare a timestamp to filter the facebook DB on the upcoming events
-		
 		DateTimeZone TZ = DateTimeZone.forOffsetMillis(timeZoneInMinutes*60*1000);
 		DateTime now = DateTime.now(TZ);	
 		long actual_time = now.getMillis() / 1000;

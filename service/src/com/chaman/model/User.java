@@ -164,9 +164,10 @@ public class User extends Model implements Serializable {
 		return result;
 	}
 	
-	public static ArrayList<Model> GetMultiples(String accessToken, ArrayList<Model> dbUsers) {
+	public static ArrayList<Model> GetMultiples(String accessToken, ArrayList<Model> dbUsers, MemcacheService syncCache) {
 		
 		ArrayList<Model> result = new ArrayList<Model>();
+		User ucache = null;
 		
 		if (dbUsers.size() == 0) {
 			
@@ -186,7 +187,7 @@ public class User extends Model implements Serializable {
 		}
 		
 		FacebookClient client 	= new DefaultFacebookClient(accessToken);
-		String properties 		= "uid, first_name, last_name, pic, email, sex, birthday_date, relationship_status";
+		String properties 		= "uid, first_name, last_name, pic";
 		String query 			= "SELECT " + properties + " FROM user WHERE " + strUids + " ORDER BY last_name";
 		List<User> users 		= client.executeQuery(query, User.class);
 		
@@ -199,21 +200,29 @@ public class User extends Model implements Serializable {
 		String eventQuery = "SELECT eid from event_member where uid = ";
 		
 		for (User u : users) {
-			
+		
 			u.picture = u.pic;
 			
-			List<JsonObject> event_member = client.executeQuery(eventQuery + u.uid + " AND start_time > " + TAS, JsonObject.class);
-
-			u.nb_of_events = event_member.size();
-					
-			User dbu = User.getUserByUID(u.uid, dbUsers);
+			ucache = (User) syncCache.get(u.uid);
 			
-			if (dbu != null) {
+			if (ucache == null) {
 				
-				u.nb_of_followers = dbu.nb_of_followers;
-				u.nb_of_following = dbu.nb_of_following;
+				List<JsonObject> event_member = client.executeQuery(eventQuery + u.uid + " AND start_time > " + TAS, JsonObject.class);
+
+				u.nb_of_events = event_member.size();
+						
+				User dbu = User.getUserByUID(u.uid, dbUsers);
 				
-				u.access_token = accessToken;	
+				if (dbu != null) {
+					
+					u.nb_of_followers = dbu.nb_of_followers;
+					u.nb_of_following = dbu.nb_of_following;
+				}
+			} else {
+				
+				u.nb_of_events = ucache.nb_of_events;
+				u.nb_of_followers = ucache.nb_of_followers;
+				u.nb_of_following = ucache.nb_of_following;
 			}
 			result.add(u);
 		}
