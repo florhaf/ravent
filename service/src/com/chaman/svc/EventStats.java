@@ -23,7 +23,7 @@ public class EventStats extends ServerResource {
 			events.add(Attending.GetNb_attending_and_gender_ratio(accessToken, eid));
 			
 			result.setSuccess(true);
-			result.setRecords(events);
+			result.setRecords(events.get(0) == null ? null : events);
 			
 		} catch (Exception ex) {
 			
