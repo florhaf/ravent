@@ -40,15 +40,25 @@ public class Attending extends Model {
 		FacebookClient client 		= new DefaultFacebookClient(accessToken);
 		
 		Long eid_long = Long.parseLong(eid);
-
+		
 		//initiate multiquery for FB (one call for multiple queries = optimization)
 		Map<String, String> queries = new HashMap<String, String>();
-		queries.put("friends", "SELECT uid2 FROM friend WHERE uid1 = me()");
-		queries.put("invited_rsvp", "SELECT uid, rsvp_status FROM event_member WHERE eid = " + eid + " AND uid in (select uid2 from #friends)");
-		queries.put("invited_info", "SELECT uid, first_name, last_name, pic FROM user WHERE uid in (select uid from #invited_rsvp)");
+		MultiqueryResults multiqueryResult;
 
-		MultiqueryResults multiqueryResult = client.executeMultiquery(queries, MultiqueryResults.class);
-		
+		try {
+			
+			queries.put("friends", "SELECT uid2 FROM friend WHERE uid1 = me()");
+			queries.put("invited_rsvp", "SELECT uid, rsvp_status FROM event_member WHERE eid = " + eid + " AND uid in (select uid2 from #friends)");
+			queries.put("invited_info", "SELECT uid, first_name, last_name, pic FROM user WHERE uid in (select uid from #invited_rsvp)");
+			multiqueryResult = client.executeMultiquery(queries, MultiqueryResults.class);
+		} catch (Exception ex) {
+			
+			queries.put("friends", "SELECT uid2 FROM friend WHERE uid1 = me() LIMIT 175");
+			queries.put("invited_rsvp", "SELECT uid, rsvp_status FROM event_member WHERE eid = " + eid + " AND uid in (select uid2 from #friends) LIMIT 30");
+			queries.put("invited_info", "SELECT uid, first_name, last_name, pic FROM user WHERE uid in (select uid from #invited_rsvp)");
+			multiqueryResult = client.executeMultiquery(queries, MultiqueryResults.class);
+		}
+	
 		for (int i=0; i<multiqueryResult.invited_info.size(); i++) {
 		
 			Attending a = multiqueryResult.invited_info.get(i);
