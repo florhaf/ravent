@@ -17,14 +17,15 @@
 @implementation postController
 
 @synthesize isForEvent = _isForEvent;
+@synthesize isForPicture = _isForPicture;
 @synthesize toId = _toId;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil isForPicture:(BOOL)value
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        
+        _isForPicture = value;
         self.title = @"Ravent";
     }
     return self;
@@ -70,6 +71,11 @@
     
     [_textView becomeFirstResponder];
     _isKeyboardShowing = YES;
+    
+    if (_isForPicture) {
+     
+        [self onPictureTap:nil];
+    }
     
     _picUser.imageURL = [NSURL URLWithString:[models_User crtUser].picture];
     _labelName.text = [NSString stringWithFormat:@"%@ %@", [models_User crtUser].firstName, [models_User crtUser].lastName];

@@ -69,15 +69,18 @@ typedef enum {
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.backgroundColor = [UIColor clearColor];
     
-    if (_refreshHeaderView == nil) {
+    if (!_isNotReloadable) { 
+        
+        if(_refreshHeaderView == nil) {
 		
-		EGORefreshTableHeaderView *view = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.tableView.bounds.size.height, self.view.frame.size.width, self.tableView.bounds.size.height)];
-		view.delegate = self;
-		[self.tableView addSubview:view];
-		_refreshHeaderView = view;
-	}
+            EGORefreshTableHeaderView *view = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.tableView.bounds.size.height, self.view.frame.size.width, self.tableView.bounds.size.height)];
+            view.delegate = self;
+            [self.tableView addSubview:view];
+            _refreshHeaderView = view;
+        }
 	
-	[_refreshHeaderView refreshLastUpdatedDate];
+        [_refreshHeaderView refreshLastUpdatedDate];
+    }
     
     UIImageView *bg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bg"]];
     bg.frame = self.tableView.frame;
@@ -211,12 +214,18 @@ typedef enum {
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {		
-	[_refreshHeaderView egoRefreshScrollViewDidScroll:scrollView];
+    if (!_isNotReloadable) {
+     
+        [_refreshHeaderView egoRefreshScrollViewDidScroll:scrollView];
+    }
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {	
-	[_refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
+    if (!_isNotReloadable) {
+     
+        [_refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
+    }
 }
 
 #pragma mark -

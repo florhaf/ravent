@@ -10,4 +10,6 @@
 
 @interface utils : NSObject
 
++ (UIBarButtonItem *)createSquareBarButtonItemWithTitle:(NSString *)t imageNamed:(NSString *)img imageSelectedNamed:(NSString *)imgSelected target:(id)tgt action:(SEL)a;
+
 @end

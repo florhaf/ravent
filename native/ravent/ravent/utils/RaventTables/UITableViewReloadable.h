@@ -13,6 +13,7 @@
 #import "MBProgressHUD.h"
 #import "EGORefreshTableHeaderView.h"
 #import "JBAsyncImageView.h"
+#import "utils.h"
 
 typedef void (^success)();
 
@@ -38,6 +39,7 @@ typedef void (^success)();
     BOOL _reloading;
     BOOL _isDirty;
     BOOL _showEmptyMessage;
+    BOOL _isNotReloadable;
     IBOutlet UIView *_emptyMessageView;
     
     NSArray *_data;

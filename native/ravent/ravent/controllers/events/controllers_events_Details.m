@@ -10,10 +10,9 @@
 #import "YRDropdownView.h"
 #import "JBAsyncImageView.h"
 #import "MBProgressHUD.h"
-#import "controllers_friends_share.h"
-#import "controllers_events_Description.h"
-#import "controllers_events_FeedContainer.h"
+
 #import "controllers_events_Details_Map.h"
+#import "postController.h"
 #import "Store.h"
 #import "ActionDispatcher.h"
 #import "controllers_App.h"
@@ -25,12 +24,18 @@
 @implementation controllers_events_Details
 
 @synthesize photos = _photos;
+@synthesize delegateBack = _delegateBack;
+@synthesize selectorBack = _selectorBack;
 
-- (id)initWithEvent:(models_Event *)event
+- (id)initWithEvent:(models_Event *)event withBackDelegate:(id)delegate backSelector:(SEL)sel
 {
     self = [super initWithEvent:event];
     
     if (self != nil) {
+        
+        _isNotReloadable = YES;
+        _delegateBack = delegate;
+        _selectorBack = sel;
         
         [[NSBundle mainBundle] loadNibNamed:@"views_events_Details" owner:self options:nil];
         
@@ -198,6 +203,14 @@
 
 #pragma mark - Button event handler
 
+- (IBAction)backButton_Tap:(id)sender
+{
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+    [_delegateBack performSelector:_selectorBack];
+#pragma clang diagnostic pop
+}
+
 - (IBAction)addToListButton_Tap:(id)sender
 {
     NSString *msg = [[Store instance]saveEvent:_event];
@@ -214,47 +227,26 @@
                               animated:YES];
 }
 
-- (IBAction)shareButton_Tap:(id)sender
+- (IBAction)snap_Tap:(id)sender
 {
     if (_event.rsvp_status == nil || [_event.rsvp_status isEqualToString:@""] || [_event.rsvp_status isEqualToString:@"not replied"]) {
         
         [YRDropdownView showDropdownInView:[controllers_App instance].view 
                                      title:@"Warning" 
-                                    detail:@"You must RSVP to share this event"
+                                    detail:@"You must RSVP to post a picture"
                                      image:[UIImage imageNamed:@"dropdown-alert"]
                                   animated:YES];
         
         return;
     }
     
- 
-    _isButtonTap = YES;
+    postController *post = [[postController alloc] initWithNibName:@"views_Post" bundle:nil isForPicture:YES];
+    post.isForEvent = YES;
+    post.toId = _event.eid;
     
-    controllers_friends_share *shareController = [[controllers_friends_share alloc] initWithUser:[_user copy] invited:_data];
-    UINavigationController *shareModal = [[UINavigationController alloc] initWithRootViewController:shareController];
+    UINavigationController *postModal = [[UINavigationController alloc] initWithRootViewController:post];
     
-    [self presentModalViewController:shareModal animated:YES];
-}
-
-- (IBAction)descriptionButton_Tap:(id)sender
-{
-    _isButtonTap = YES;
-    
-    controllers_events_Description *descController = [[controllers_events_Description alloc] initWithNibName:@"views_events_Description" bundle:[NSBundle mainBundle] event:[_event copy]];
-    UINavigationController *descModal = [[UINavigationController alloc] initWithRootViewController:descController];
-    
-    [self presentModalViewController:descModal animated:YES];
-}
-
-- (IBAction)feedButton_Tap:(id)sender
-{
-    _isButtonTap = YES;
-    
-    controllers_events_FeedContainer *feedController = [[controllers_events_FeedContainer alloc] initWithEvent:[_event copy]];
-    
-    UINavigationController *feedModal = [[UINavigationController alloc] initWithRootViewController:feedController];
-    
-    [self presentModalViewController:feedModal animated:YES];
+    [self presentModalViewController:postModal animated:YES];
 }
 
 - (IBAction)mapButton_Tap:(id)sender
@@ -344,15 +336,18 @@
 - (IBAction)rsvp:(id)sender
 {
     NSString *rsvpValue = @"yes";
+    _event.rsvp_status = @"attending";
     
     if (_segment.selectedSegmentIndex == 1) {
         
         rsvpValue = @"maybe";
+        _event.rsvp_status = @"maybe attending";
     } else {
         
         if (_segment.selectedSegmentIndex == 2) {
             
             rsvpValue = @"no";
+            _event.rsvp_status = @"not attending";
         }
     }
     
@@ -361,6 +356,7 @@
     [params setValue:rsvpValue forKey:@"rsvp"];
     [params setValue:_event.eid forKey:@"eventID"];
     [params setValue:[models_User crtUser].accessToken forKey:@"access_token"];
+    
     
     _event.delegate = self;
     [_event rsvp:params success:@selector(onRsvpSuccess:) failure:@selector(onRsvpFailure:) sender:_rsvp];
@@ -373,11 +369,14 @@
                                 detail:@"RSVP submitted"
                                  image:[UIImage imageNamed:@"dropdown-alert"]
                               animated:YES];
+    
 }
 
 - (void)onRsvpFailure:(NSMutableDictionary *)response
 {
     [_segment setSelected:NO];
+    
+    _event.rsvp_status = @"";
     
     NSString *errorMsg = (NSString *)[response valueForKey:@"statusCode"];
     
@@ -390,15 +389,32 @@
 
 #pragma mark - View lifecycle
 
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    if (scrollView.contentOffset.y < 0) {
+        
+        _mapImage.frame = CGRectMake(0, scrollView.contentOffset.y, _mapImage.frame.size.width, _mapImageHeight - scrollView.contentOffset.y);
+        
+        _backButton.frame = CGRectMake(_backButton.frame.origin.x, scrollView.contentOffset.y + 6, _backButton.frame.size.width, _backButton.frame.size.height);
+    }
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    // override to avoid getting the pull to refresh
+}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    _refreshHeaderView.delegate = nil;
+    [_refreshHeaderView removeFromSuperview];
        
     [[NSBundle mainBundle] loadNibNamed:@"views_events_Details" owner:self options:nil];
         
-    _headerGroupLabel.text = [NSString stringWithFormat:@"%@", _event.groupTitle];
-    _headerDateLabel.text = [NSString stringWithFormat:@"(%@ to %@)", _event.dateStart, _event.dateEnd];
+    // HEADER
+    _headerDateLabel.text = [NSString stringWithFormat:@"%@ to %@", _event.dateStart, _event.dateEnd];
     _headerNameLabel.text = _event.name;
     _headerLocationLabel.text = _event.location;
     _headerImage.imageURL = [NSURL URLWithString:_event.pic_big];
@@ -407,12 +423,14 @@
     _headerTimeLabel.text = [NSString stringWithFormat:@"%@ - %@", _event.timeStart, _event.timeEnd];
     _headerDistanceLabel.text = [NSString stringWithFormat:@"%@ mi.", _event.distance];
     
+    // SCORE
     for (int i = 0; i < [_event.score intValue]; i++) {
         
         UIImageView *image = (UIImageView *)[_headerScore.subviews objectAtIndex:i];
         image.image = [UIImage imageNamed:@"diamond"];
     }
     
+    // VOTE
     _voteView = [[DLStarRatingControl alloc] initWithFrame:_headerVoteLabel.frame andStars: 5];
     [_voteView setRating:1];
     [_voteView setAlpha:0.8];
@@ -420,28 +438,25 @@
     [_header addSubview:_voteView];
     [_headerVoteLabel removeFromSuperview];
     
+    // RSVP
     NSArray *objects = [NSArray arrayWithObjects:@"Yes", @"Maybe", @"No", nil];
-    
     _segment = [[STSegmentedControl alloc] initWithItems:objects];
-	_segment.frame = CGRectMake(15, 510, 290, 40);
-	
+	_segment.frame = CGRectMake(20, 637, 280, 40);
 	_segment.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 	[_header addSubview:_segment];
     
+    // MAP
     if (_event.latitude != nil && ![_event.latitude isEqualToString:@""]) {
         
         NSString *mapUrl = @"http://maps.googleapis.com/maps/api/staticmap";
-        
         NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
-        
         [params setValue:[NSString stringWithFormat:@"%@,%@", _event.latitude, _event.longitude] forKey:@"center"];
-        [params setValue:@"16" forKey:@"zoom"];
-        [params setValue:@"320x160" forKey:@"size"];
+        [params setValue:@"14" forKey:@"zoom"];
+        [params setValue:@"320x360" forKey:@"size"];
         [params setValue:@"roadmap" forKey:@"maptype"];
         [params setValue:@"2" forKey:@"scale"];
-        [params setValue:[NSString stringWithFormat:@"%@,%@", _event.latitude, _event.longitude] forKey:@"markers"];
+        [params setValue:[NSString stringWithFormat:@"size:mid|%@,%@", _event.latitude, _event.longitude] forKey:@"markers"];
         [params setValue:@"true" forKey:@"sensor"];
-        
         mapUrl = [mapUrl appendQueryParams:params];
         _mapImage.imageURL = [NSURL URLWithString:mapUrl];
     } else {
@@ -449,12 +464,13 @@
         _mapImage.image = [UIImage imageNamed:@"noMap"];
     }
     
-    _headerNameLabel.font = [_headerNameLabel.font fontWithSize:[self getFontSizeForLabel:_headerNameLabel]];
+    _mapImage.clipsToBounds = YES;
+    _mapImage.contentMode = UIViewContentModeScaleAspectFill;
+    _mapImageHeight = _mapImage.frame.size.height;
     
-    [_headerGroupLabel sizeToFit];
-    _headerDateLabel.frame = CGRectMake(_headerGroupLabel.frame.origin.x + _headerGroupLabel.frame.size.width + 4, _headerDateLabel.frame.origin.y, _headerDateLabel.frame.size.width, _headerDateLabel.frame.size.height);
+    [_headerNameLabel sizeToFit];
     
-    
+    // STATS
     NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
     
     [params setValue:_event.eid forKey:@"eid"];
@@ -472,6 +488,10 @@
     [_eventLoader loadRsvpWithParams:params andTarget:self andSelector:@selector(onRsvpLoad:)];
     
     self.tableView.tableHeaderView = _header;
+    self.tableView.scrollsToTop = YES;
+    
+    _tickerItems = [[NSArray alloc] initWithObjects:_event.name, nil];
+    [_ticker reloadData];
 }
 
 - (void)onEventStatsLoad:(NSArray *)objects
@@ -496,8 +516,8 @@
             double d = [e.female_ratio doubleValue];
             d = d * 100;
         
-            _labelFemaleRatio.text = [NSString stringWithFormat:@"%.0f %%", d + 1];
-            _labelMaleRatio.text = [NSString stringWithFormat:@"%.0f %%", 100 - (d + 1)];
+            _labelFemaleRatio.text = [NSString stringWithFormat:@"%.0f%%", d + 1];
+            _labelMaleRatio.text = [NSString stringWithFormat:@"%.0f%%", 100 - (d + 1)];
             _labelTotalAttendings.text = e.nb_attending;
         }
     }
@@ -554,6 +574,32 @@
     }
     
     _isButtonTap = NO;
+}
+
+
+- (UIColor*) backgroundColorForTickerView:(MKTickerView *)vertMenu
+{
+    return [UIColor clearColor];
+}
+
+- (int) numberOfItemsForTickerView:(MKTickerView *)tabView
+{
+    return [_tickerItems count];
+}
+
+- (NSString*) tickerView:(MKTickerView *)tickerView titleForItemAtIndex:(NSUInteger)index
+{
+    return [_tickerItems objectAtIndex:index];
+}
+
+- (NSString*) tickerView:(MKTickerView *)tickerView valueForItemAtIndex:(NSUInteger)index
+{
+    return nil;
+}
+
+- (UIImage*) tickerView:(MKTickerView*) tickerView imageForItemAtIndex:(NSUInteger) index
+{
+    return nil;
 }
 
 @end

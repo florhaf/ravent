@@ -156,6 +156,7 @@
 		DF2A31D51551AD5C00AC01B0 /* allButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF2A31D31551AD5C00AC01B0 /* allButton@2x.png */; };
 		DF2A31D81551E05A00AC01B0 /* backgroundLight.png in Resources */ = {isa = PBXBuildFile; fileRef = DF2A31D61551E05A00AC01B0 /* backgroundLight.png */; };
 		DF2A31D91551E05A00AC01B0 /* backgroundLight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF2A31D71551E05A00AC01B0 /* backgroundLight@2x.png */; };
+		DF30ED8615993372008F6AC1 /* grayDetails.png in Resources */ = {isa = PBXBuildFile; fileRef = DF30ED8515993372008F6AC1 /* grayDetails.png */; };
 		DF3170371575DDAC00EB8319 /* doneButton.png in Resources */ = {isa = PBXBuildFile; fileRef = DF3170331575DDAC00EB8319 /* doneButton.png */; };
 		DF3170381575DDAC00EB8319 /* doneButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF3170341575DDAC00EB8319 /* doneButton@2x.png */; };
 		DF3170391575DDAC00EB8319 /* postButton.png in Resources */ = {isa = PBXBuildFile; fileRef = DF3170351575DDAC00EB8319 /* postButton.png */; };
@@ -203,6 +204,13 @@
 		DF629EA115408E0400BCA804 /* libfacebook_ios_sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DF629E9915408E0400BCA804 /* libfacebook_ios_sdk.a */; };
 		DF6C8653152E4CA70077E027 /* UItableViewEvents.m in Sources */ = {isa = PBXBuildFile; fileRef = DF6C8652152E4CA70077E027 /* UItableViewEvents.m */; };
 		DF6C8656152E4E4B0077E027 /* controllers_events_List_p2p.m in Sources */ = {isa = PBXBuildFile; fileRef = DF6C8655152E4E4B0077E027 /* controllers_events_List_p2p.m */; };
+		DF6CA426159A9C9300FFBB90 /* greenArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = DF6CA422159A9C9300FFBB90 /* greenArrow.png */; };
+		DF6CA427159A9C9300FFBB90 /* MKTickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = DF6CA424159A9C9300FFBB90 /* MKTickerView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		DF6CA428159A9C9300FFBB90 /* redArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = DF6CA425159A9C9300FFBB90 /* redArrow.png */; };
+		DF6CA42D159AB06100FFBB90 /* graySnap.png in Resources */ = {isa = PBXBuildFile; fileRef = DF6CA429159AB06100FFBB90 /* graySnap.png */; };
+		DF6CA42E159AB06100FFBB90 /* graySnapSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = DF6CA42A159AB06100FFBB90 /* graySnapSelected.png */; };
+		DF6CA42F159AB06100FFBB90 /* grayWatch.png in Resources */ = {isa = PBXBuildFile; fileRef = DF6CA42B159AB06100FFBB90 /* grayWatch.png */; };
+		DF6CA430159AB06100FFBB90 /* grayWatchSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = DF6CA42C159AB06100FFBB90 /* grayWatchSelected.png */; };
 		DF6DA7991514011C00F98F05 /* EGORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = DF6DA7981514011C00F98F05 /* EGORefreshTableHeaderView.m */; };
 		DF6DA79B1514060300F98F05 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF6DA79A1514060200F98F05 /* QuartzCore.framework */; };
 		DF75ACC11541CE4C00150465 /* controllers_SlidingInitial.m in Sources */ = {isa = PBXBuildFile; fileRef = DF75ACC01541CE4C00150465 /* controllers_SlidingInitial.m */; };
@@ -240,6 +248,15 @@
 		DF8ADB92157EC7FD0034BB3B /* invited.png in Resources */ = {isa = PBXBuildFile; fileRef = DF8ADB90157EC7FD0034BB3B /* invited.png */; };
 		DF8ADB96157EC9590034BB3B /* inviteHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = DF8ADB95157EC9590034BB3B /* inviteHighlighted.png */; };
 		DF8C0651158C0DC1009D3400 /* GPSManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DF8C0650158C0DC1009D3400 /* GPSManager.m */; };
+		DF8D4153159A45F700351A6F /* grayToolbar.png in Resources */ = {isa = PBXBuildFile; fileRef = DF8D4152159A45F700351A6F /* grayToolbar.png */; };
+		DF8D4157159A6A6100351A6F /* grayIconComments.png in Resources */ = {isa = PBXBuildFile; fileRef = DF8D4154159A6A6100351A6F /* grayIconComments.png */; };
+		DF8D4158159A6A6100351A6F /* grayIconDescription.png in Resources */ = {isa = PBXBuildFile; fileRef = DF8D4155159A6A6100351A6F /* grayIconDescription.png */; };
+		DF8D4159159A6A6100351A6F /* grayIconShare.png in Resources */ = {isa = PBXBuildFile; fileRef = DF8D4156159A6A6100351A6F /* grayIconShare.png */; };
+		DF8D415F159A758A00351A6F /* grayIconShareSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = DF8D415C159A758A00351A6F /* grayIconShareSelected.png */; };
+		DF8D4162159A761900351A6F /* utils.m in Sources */ = {isa = PBXBuildFile; fileRef = DF8D4161159A761900351A6F /* utils.m */; };
+		DF8D4164159A7AC100351A6F /* grayIconCommentsSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = DF8D4163159A7AC100351A6F /* grayIconCommentsSelected.png */; };
+		DF8D4166159A7AED00351A6F /* grayIconDescriptionSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = DF8D4165159A7AED00351A6F /* grayIconDescriptionSelected.png */; };
+		DF8D4168159A82D500351A6F /* backButtonGray.png in Resources */ = {isa = PBXBuildFile; fileRef = DF8D4167159A82D500351A6F /* backButtonGray.png */; };
 		DF8DA067155889FF00002A57 /* Store.m in Sources */ = {isa = PBXBuildFile; fileRef = DF8DA066155889FF00002A57 /* Store.m */; };
 		DF8DA0A51559654600002A57 /* ravent.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DF8DA0A31559654600002A57 /* ravent.xcdatamodeld */; };
 		DF8DA0B5155AB3C200002A57 /* dataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = DF8DA0B4155AB3C200002A57 /* dataSource.m */; };
@@ -611,6 +628,7 @@
 		DF2A31D31551AD5C00AC01B0 /* allButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "allButton@2x.png"; sourceTree = "<group>"; };
 		DF2A31D61551E05A00AC01B0 /* backgroundLight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = backgroundLight.png; sourceTree = "<group>"; };
 		DF2A31D71551E05A00AC01B0 /* backgroundLight@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "backgroundLight@2x.png"; sourceTree = "<group>"; };
+		DF30ED8515993372008F6AC1 /* grayDetails.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grayDetails.png; sourceTree = "<group>"; };
 		DF3170331575DDAC00EB8319 /* doneButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = doneButton.png; sourceTree = "<group>"; };
 		DF3170341575DDAC00EB8319 /* doneButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "doneButton@2x.png"; sourceTree = "<group>"; };
 		DF3170351575DDAC00EB8319 /* postButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = postButton.png; sourceTree = "<group>"; };
@@ -686,6 +704,14 @@
 		DF6C8652152E4CA70077E027 /* UItableViewEvents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UItableViewEvents.m; sourceTree = "<group>"; };
 		DF6C8654152E4E4B0077E027 /* controllers_events_List_p2p.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = controllers_events_List_p2p.h; sourceTree = "<group>"; };
 		DF6C8655152E4E4B0077E027 /* controllers_events_List_p2p.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = controllers_events_List_p2p.m; sourceTree = "<group>"; };
+		DF6CA422159A9C9300FFBB90 /* greenArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = greenArrow.png; sourceTree = "<group>"; };
+		DF6CA423159A9C9300FFBB90 /* MKTickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKTickerView.h; sourceTree = "<group>"; };
+		DF6CA424159A9C9300FFBB90 /* MKTickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKTickerView.m; sourceTree = "<group>"; };
+		DF6CA425159A9C9300FFBB90 /* redArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redArrow.png; sourceTree = "<group>"; };
+		DF6CA429159AB06100FFBB90 /* graySnap.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = graySnap.png; sourceTree = "<group>"; };
+		DF6CA42A159AB06100FFBB90 /* graySnapSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = graySnapSelected.png; sourceTree = "<group>"; };
+		DF6CA42B159AB06100FFBB90 /* grayWatch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grayWatch.png; sourceTree = "<group>"; };
+		DF6CA42C159AB06100FFBB90 /* grayWatchSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grayWatchSelected.png; sourceTree = "<group>"; };
 		DF6DA7971514011C00F98F05 /* EGORefreshTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGORefreshTableHeaderView.h; sourceTree = "<group>"; };
 		DF6DA7981514011C00F98F05 /* EGORefreshTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGORefreshTableHeaderView.m; sourceTree = "<group>"; };
 		DF6DA79A1514060200F98F05 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -731,6 +757,16 @@
 		DF8ADB95157EC9590034BB3B /* inviteHighlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = inviteHighlighted.png; path = buttons/inviteHighlighted.png; sourceTree = "<group>"; };
 		DF8C064F158C0DC1009D3400 /* GPSManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPSManager.h; sourceTree = "<group>"; };
 		DF8C0650158C0DC1009D3400 /* GPSManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPSManager.m; sourceTree = "<group>"; };
+		DF8D4152159A45F700351A6F /* grayToolbar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grayToolbar.png; sourceTree = "<group>"; };
+		DF8D4154159A6A6100351A6F /* grayIconComments.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grayIconComments.png; sourceTree = "<group>"; };
+		DF8D4155159A6A6100351A6F /* grayIconDescription.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grayIconDescription.png; sourceTree = "<group>"; };
+		DF8D4156159A6A6100351A6F /* grayIconShare.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grayIconShare.png; sourceTree = "<group>"; };
+		DF8D415C159A758A00351A6F /* grayIconShareSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grayIconShareSelected.png; sourceTree = "<group>"; };
+		DF8D4160159A761900351A6F /* utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utils.h; sourceTree = "<group>"; };
+		DF8D4161159A761900351A6F /* utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = utils.m; sourceTree = "<group>"; };
+		DF8D4163159A7AC100351A6F /* grayIconCommentsSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grayIconCommentsSelected.png; sourceTree = "<group>"; };
+		DF8D4165159A7AED00351A6F /* grayIconDescriptionSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grayIconDescriptionSelected.png; sourceTree = "<group>"; };
+		DF8D4167159A82D500351A6F /* backButtonGray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = backButtonGray.png; sourceTree = "<group>"; };
 		DF8DA065155889FF00002A57 /* Store.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Store.h; sourceTree = "<group>"; };
 		DF8DA066155889FF00002A57 /* Store.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Store.m; sourceTree = "<group>"; };
 		DF8DA0A41559654600002A57 /* ravent.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ravent.xcdatamodel; sourceTree = "<group>"; };
@@ -1326,6 +1362,11 @@
 		DF629E6D153F8A5900BCA804 /* buttons */ = {
 			isa = PBXGroup;
 			children = (
+				DF6CA429159AB06100FFBB90 /* graySnap.png */,
+				DF6CA42A159AB06100FFBB90 /* graySnapSelected.png */,
+				DF6CA42B159AB06100FFBB90 /* grayWatch.png */,
+				DF6CA42C159AB06100FFBB90 /* grayWatchSelected.png */,
+				DF8D4167159A82D500351A6F /* backButtonGray.png */,
 				DF9CED40158356DF002B1024 /* searchoptions.png */,
 				DF9CED3E158339EA002B1024 /* postcomment.png */,
 				DF86A1A71581B1C2009B3257 /* diamond.png */,
@@ -1431,9 +1472,22 @@
 				DF8ADB85157E81A10034BB3B /* UIToolbar+CustomImage.m */,
 				DF8C064F158C0DC1009D3400 /* GPSManager.h */,
 				DF8C0650158C0DC1009D3400 /* GPSManager.m */,
+				DF8D4160159A761900351A6F /* utils.h */,
+				DF8D4161159A761900351A6F /* utils.m */,
 			);
 			name = Ravent;
 			path = RaventTables;
+			sourceTree = "<group>";
+		};
+		DF6CA421159A9C9300FFBB90 /* MKTickerView */ = {
+			isa = PBXGroup;
+			children = (
+				DF6CA422159A9C9300FFBB90 /* greenArrow.png */,
+				DF6CA423159A9C9300FFBB90 /* MKTickerView.h */,
+				DF6CA424159A9C9300FFBB90 /* MKTickerView.m */,
+				DF6CA425159A9C9300FFBB90 /* redArrow.png */,
+			);
+			path = MKTickerView;
 			sourceTree = "<group>";
 		};
 		DF6DA7961514011B00F98F05 /* EGOPullToRefresh */ = {
@@ -1448,6 +1502,8 @@
 		DF75ACC91541E7D400150465 /* background */ = {
 			isa = PBXGroup;
 			children = (
+				DF8D4152159A45F700351A6F /* grayToolbar.png */,
+				DF30ED8515993372008F6AC1 /* grayDetails.png */,
 				DF9CED3C15833640002B1024 /* picbg3.png */,
 				DF86A1AB15827810009B3257 /* empty.png */,
 				DF245937158066D00095027E /* details2.png */,
@@ -1483,6 +1539,12 @@
 		DF86A1AD1582D7FA009B3257 /* icon */ = {
 			isa = PBXGroup;
 			children = (
+				DF8D4165159A7AED00351A6F /* grayIconDescriptionSelected.png */,
+				DF8D4163159A7AC100351A6F /* grayIconCommentsSelected.png */,
+				DF8D415C159A758A00351A6F /* grayIconShareSelected.png */,
+				DF8D4154159A6A6100351A6F /* grayIconComments.png */,
+				DF8D4155159A6A6100351A6F /* grayIconDescription.png */,
+				DF8D4156159A6A6100351A6F /* grayIconShare.png */,
 				DF9CED7A1586F46E002B1024 /* noMap.png */,
 				DF9CED42158416A3002B1024 /* mapIcon.png */,
 				DF86A1B01582D834009B3257 /* allIcon.png */,
@@ -1645,6 +1707,7 @@
 		DF8F1511150BD54B00008ABC /* utils */ = {
 			isa = PBXGroup;
 			children = (
+				DF6CA421159A9C9300FFBB90 /* MKTickerView */,
 				DFB28CB11598166D00D0F999 /* STSegmentedControl */,
 				DFB28C751597E3A800D0F999 /* MWPhotoBrowser */,
 				DF36FF3A15532B9300C3CB53 /* Anims */,
@@ -2286,6 +2349,21 @@
 				DFB28CCD15981B2300D0F999 /* selected_right.png in Resources */,
 				DFB28CCE15981B2300D0F999 /* selected_right@2x.png in Resources */,
 				DFB28CCF15981B2300D0F999 /* SomeIcon.png in Resources */,
+				DF30ED8615993372008F6AC1 /* grayDetails.png in Resources */,
+				DF8D4153159A45F700351A6F /* grayToolbar.png in Resources */,
+				DF8D4157159A6A6100351A6F /* grayIconComments.png in Resources */,
+				DF8D4158159A6A6100351A6F /* grayIconDescription.png in Resources */,
+				DF8D4159159A6A6100351A6F /* grayIconShare.png in Resources */,
+				DF8D415F159A758A00351A6F /* grayIconShareSelected.png in Resources */,
+				DF8D4164159A7AC100351A6F /* grayIconCommentsSelected.png in Resources */,
+				DF8D4166159A7AED00351A6F /* grayIconDescriptionSelected.png in Resources */,
+				DF8D4168159A82D500351A6F /* backButtonGray.png in Resources */,
+				DF6CA426159A9C9300FFBB90 /* greenArrow.png in Resources */,
+				DF6CA428159A9C9300FFBB90 /* redArrow.png in Resources */,
+				DF6CA42D159AB06100FFBB90 /* graySnap.png in Resources */,
+				DF6CA42E159AB06100FFBB90 /* graySnapSelected.png in Resources */,
+				DF6CA42F159AB06100FFBB90 /* grayWatch.png in Resources */,
+				DF6CA430159AB06100FFBB90 /* grayWatchSelected.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2415,6 +2493,8 @@
 				DFB28CAE1597E3A800D0F999 /* UIButton+WebCache.m in Sources */,
 				DFB28CAF1597E3A800D0F999 /* UIImageView+WebCache.m in Sources */,
 				DFB28CB41598166D00D0F999 /* STSegmentedControl.m in Sources */,
+				DF8D4162159A761900351A6F /* utils.m in Sources */,
+				DF6CA427159A9C9300FFBB90 /* MKTickerView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2465,13 +2545,13 @@
 					"$(SOURCE_ROOT)/Kal",
 					"\"$(SOURCE_ROOT)/RestKit/Build\"",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
 				LIBRARY_SEARCH_PATHS = "";
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-all_load",
 				);
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "6FE3BADE-B80B-49F5-AED0-EB2F94301E72";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "7BFED110-E70C-42EA-B867-3828A020ACEC";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				VALID_ARCHS = "armv7 armv6";
@@ -2495,14 +2575,14 @@
 					"$(SOURCE_ROOT)/Kal",
 					"\"$(SOURCE_ROOT)/RestKit/Build\"",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
 				LIBRARY_SEARCH_PATHS = "\"$(SOURCE_ROOT)/RestKit/Build/$(BUILD_STYLE)-$(PLATFORM_NAME)\"";
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-all_load",
 				);
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "6FE3BADE-B80B-49F5-AED0-EB2F94301E72";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "7BFED110-E70C-42EA-B867-3828A020ACEC";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				VALIDATE_PRODUCT = YES;
@@ -2523,13 +2603,13 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ravent/ravent-Prefix.pch";
 				INFOPLIST_FILE = "ravent/ravent-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/facebook-ios-sdk\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "6FE3BADE-B80B-49F5-AED0-EB2F94301E72";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "7BFED110-E70C-42EA-B867-3828A020ACEC";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = NO;
 				USER_HEADER_SEARCH_PATHS = "";
@@ -2551,13 +2631,13 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ravent/ravent-Prefix.pch";
 				INFOPLIST_FILE = "ravent/ravent-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/facebook-ios-sdk\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "6FE3BADE-B80B-49F5-AED0-EB2F94301E72";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "7BFED110-E70C-42EA-B867-3828A020ACEC";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = NO;
 				USER_HEADER_SEARCH_PATHS = "";

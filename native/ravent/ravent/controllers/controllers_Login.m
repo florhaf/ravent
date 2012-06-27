@@ -8,6 +8,7 @@
 
 #import "controllers_Login.h"
 #import "ActionDispatcher.h"
+#import <RestKit/RKErrorMessage.h>
 
 @implementation controllers_Login
 
@@ -179,7 +180,7 @@ static controllers_Login *_ctrl;
         return;
     }
     
-    if ([[objects objectAtIndex:0] isKindOfClass:[NSError class]]) {
+    if ([[objects objectAtIndex:0] isKindOfClass:[NSError class]] || [[objects objectAtIndex:0] isKindOfClass:[RKErrorMessage class]]) {
         
         NSError *error = [objects objectAtIndex:0];
         _errorLabel.text = error.localizedDescription;

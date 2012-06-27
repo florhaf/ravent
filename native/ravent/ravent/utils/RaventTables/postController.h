@@ -34,6 +34,7 @@ typedef enum {
     
     BOOL _isKeyboardShowing;
     BOOL _isForEvent;
+    BOOL _isForPicture;
     BOOL _isPlaceHolderShowing;
     
     NSString *_toId; // id for an event of a friend
@@ -45,7 +46,10 @@ typedef enum {
 }
 
 @property (nonatomic, assign) BOOL isForEvent;
+@property (nonatomic, assign) BOOL isForPicture;
 @property (nonatomic, retain) NSString *toId;
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil isForPicture:(BOOL)value;
 
 - (void)hideModal;
 

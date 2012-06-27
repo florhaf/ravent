@@ -7,6 +7,12 @@
 //
 
 #import "controllers_events_DetailsContainer.h"
+#import "controllers_friends_share.h"
+#import "controllers_events_Description.h"
+#import "controllers_events_FeedContainer.h"
+#import "YRDropdownView.h"
+#import "controllers_App.h"
+#import "models_User.h"
 
 @interface controllers_events_DetailsContainer ()
 
@@ -14,17 +20,25 @@
 
 @implementation controllers_events_DetailsContainer
 
-- (id)initWithEvent:(models_Event *)event
+@synthesize delegateBack = _delegateBack;
+@synthesize selectorBack = _selectorBack;
+@synthesize backButton = _backButton;
+
+- (id)initWithEvent:(models_Event *)event withBackDelegate:(id)delegate backSelector:(SEL)sel
 {
     self = [super initWithNibName:@"views_events_Details_Container" bundle:nil];
     
     if (self != nil) {
         
+        _delegateBack = delegate;
+        _selectorBack = sel;
+        
         self.title = @"Ravent";
         _event = event;
-        _detailsController = [[controllers_events_Details alloc] initWithEvent:event];
-        _detailsController.view.frame = CGRectMake(0, 0, 320, 460);
-        [self.view addSubview:_detailsController.view];
+        _detailsController = [[controllers_events_Details alloc] initWithEvent:event withBackDelegate:delegate backSelector:sel];
+        _detailsController.view.frame = CGRectMake(0, 0, _detailsController.view.frame.size.width, _detailsController.view.frame.size.height);
+        
+        [self addChildViewController:_detailsController];
     }
     
     return self;
@@ -55,35 +69,90 @@
 {
     [super viewDidLoad];
     
-//    UIImageView *buttonCalView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"buttonCal"]];
-//    UIImageView *buttonShareView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"buttonShare"]];
-//    UIImageView *buttonDescView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"buttonDesc"]];
-//    UIImageView *buttonFeedView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"buttonFeed"]];
-//    
-//    buttonCalView.frame = CGRectMake(0, 0, 68, 32);
-//    buttonShareView.frame = CGRectMake(0, 0, 68, 32);
-//    buttonDescView.frame = CGRectMake(0, 0, 68, 32);
-//    buttonFeedView.frame = CGRectMake(0, 0, 68, 32);
-//    
-//    UIBarButtonItem *buttonCal = [[UIBarButtonItem alloc] initWithCustomView:buttonCalView];
-//    UIBarButtonItem *buttonShare = [[UIBarButtonItem alloc] initWithCustomView:buttonShareView];
-//    UIBarButtonItem *buttonDesc = [[UIBarButtonItem alloc] initWithCustomView:buttonDescView];
-//    UIBarButtonItem *buttonFeed = [[UIBarButtonItem alloc] initWithCustomView:buttonFeedView];
-//    
-//    [buttonCal setWidth:buttonCalView.frame.size.width];
-//    [buttonShare setWidth:buttonShareView.frame.size.width];
-//    [buttonDesc setWidth:buttonDescView.frame.size.width];
-//    [buttonFeed setWidth:buttonFeedView.frame.size.width];
-//    
-//    [_toolbar insertSubview:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"toolbar"]] atIndex:1];
-//    
-//    NSMutableArray *items = [[NSMutableArray alloc] init];
-//    [items addObject:buttonCal];
-//    [items addObject:buttonShare];
-//    [items addObject:buttonDesc];
-//    [items addObject:buttonFeed];
-//    [_toolbar setItems:items animated:NO];
-//    [self.view addSubview:_toolbar];
+    _detailsController.view.frame = _container.frame;
+    [_container addSubview:_detailsController.view];
+
+    UIButton *buttonShareView = [UIButton buttonWithType:UIButtonTypeCustom];
+    UIButton *buttonDescView = [UIButton buttonWithType:UIButtonTypeCustom];
+    UIButton *buttonFeedView = [UIButton buttonWithType:UIButtonTypeCustom];
+    
+    buttonShareView.frame = CGRectMake(0, 0, 40, 40);
+    buttonDescView.frame = CGRectMake(0, 0, 40, 40);
+    buttonFeedView.frame = CGRectMake(0, 0, 40, 40);
+    
+    [buttonShareView setImage:[UIImage imageNamed:@"grayIconShare"] forState:UIControlStateNormal];
+    [buttonDescView setImage:[UIImage imageNamed:@"grayIconDescription"] forState:UIControlStateNormal];
+    [buttonFeedView setImage:[UIImage imageNamed:@"grayIconComments"] forState:UIControlStateNormal];
+    
+    [buttonShareView setImage:[UIImage imageNamed:@"grayIconShareSelected"] forState:UIControlStateHighlighted];
+    [buttonDescView setImage:[UIImage imageNamed:@"grayIconDescriptionSelected"] forState:UIControlStateHighlighted];
+    [buttonFeedView setImage:[UIImage imageNamed:@"grayIconCommentsSelected"] forState:UIControlStateHighlighted];
+    
+    [buttonShareView addTarget:self action:@selector(shareButton_Tap:) forControlEvents:UIControlEventTouchUpInside];
+    [buttonDescView addTarget:self action:@selector(descriptionButton_Tap:) forControlEvents:UIControlEventTouchUpInside];
+    [buttonFeedView addTarget:self action:@selector(feedButton_Tap:) forControlEvents:UIControlEventTouchUpInside];
+
+    UIBarButtonItem *buttonShare = [[UIBarButtonItem alloc] initWithCustomView:buttonShareView];
+    UIBarButtonItem *buttonDesc = [[UIBarButtonItem alloc] initWithCustomView:buttonDescView];
+    UIBarButtonItem *buttonFeed = [[UIBarButtonItem alloc] initWithCustomView:buttonFeedView];
+
+    [buttonShare setWidth:buttonShareView.frame.size.width];
+    [buttonDesc setWidth:buttonDescView.frame.size.width];
+    [buttonFeed setWidth:buttonFeedView.frame.size.width];
+    
+    [_toolbar insertSubview:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"grayToolbar"]] atIndex:1];
+    [_toolbar setBackgroundColor:[UIColor clearColor]];
+    //[_toolbar setAlpha:0.8];
+    
+    NSMutableArray *items = [[NSMutableArray alloc] init];
+    UIBarButtonItem *flexibleSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    
+    [items addObject:flexibleSpace];
+    [items addObject:buttonShare];
+    [items addObject:flexibleSpace];
+    [items addObject:buttonDesc];
+    [items addObject:flexibleSpace];
+    [items addObject:buttonFeed];
+    [items addObject:flexibleSpace];
+    [_toolbar setItems:items animated:NO];
+    //[self.view addSubview:_toolbar];
+    [self.view bringSubviewToFront:_toolbar];
+}
+
+- (IBAction)shareButton_Tap:(id)sender
+{
+    if (_event.rsvp_status == nil || [_event.rsvp_status isEqualToString:@""] || [_event.rsvp_status isEqualToString:@"not replied"]) {
+        
+        [YRDropdownView showDropdownInView:[controllers_App instance].view 
+                                     title:@"Warning" 
+                                    detail:@"You must RSVP to share this event"
+                                     image:[UIImage imageNamed:@"dropdown-alert"]
+                                  animated:YES];
+        
+        return;
+    }
+    
+    controllers_friends_share *shareController = [[controllers_friends_share alloc] initWithUser:[[models_User crtUser] copy] invited:_detailsController.data];
+    UINavigationController *shareModal = [[UINavigationController alloc] initWithRootViewController:shareController];
+    
+    [self presentModalViewController:shareModal animated:YES];
+}
+
+- (IBAction)descriptionButton_Tap:(id)sender
+{
+    controllers_events_Description *descController = [[controllers_events_Description alloc] initWithNibName:@"views_events_Description" bundle:[NSBundle mainBundle] event:[_event copy]];
+    UINavigationController *descModal = [[UINavigationController alloc] initWithRootViewController:descController];
+    
+    [self presentModalViewController:descModal animated:YES];
+}
+
+- (IBAction)feedButton_Tap:(id)sender
+{
+    controllers_events_FeedContainer *feedController = [[controllers_events_FeedContainer alloc] initWithEvent:[_event copy]];
+    
+    UINavigationController *feedModal = [[UINavigationController alloc] initWithRootViewController:feedController];
+    
+    [self presentModalViewController:feedModal animated:YES];
 }
 
 - (void)cancelAllRequests
@@ -102,6 +171,16 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-
+//- (void)setDelegateBack:(id)delegateBack
+//{
+//    _delegateBack = delegateBack;
+//    _detailsController.delegateBack = _delegateBack;
+//}
+//
+//- (void)setSelectorBack:(SEL)selectorBack
+//{
+//    _selectorBack = selectorBack;
+//    _detailsController.selectorBack = _selectorBack;
+//}
 
 @end

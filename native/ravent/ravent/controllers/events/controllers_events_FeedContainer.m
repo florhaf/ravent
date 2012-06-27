@@ -93,7 +93,7 @@
 {
     [self dismissModalViewControllerAnimated:YES];
     
-    [_feedController cancelAllRequests];
+    //[_feedController cancelAllRequests];
 }
 
 - (void)viewDidUnload
