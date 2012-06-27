@@ -82,9 +82,7 @@ typedef enum {
         [_refreshHeaderView refreshLastUpdatedDate];
     }
     
-    UIImageView *bg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bg"]];
-    bg.frame = self.tableView.frame;
-    self.tableView.backgroundView = bg;
+    self.tableView.backgroundColor = [UIColor colorWithRed:227 green:222 blue:216 alpha:1];
 }
 
 - (void)viewDidUnload

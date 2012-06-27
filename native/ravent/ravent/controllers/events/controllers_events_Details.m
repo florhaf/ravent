@@ -222,7 +222,7 @@
     }
     
     [YRDropdownView showDropdownInView:[controllers_App instance].view 
-                                 title:@"Calendar" 
+                                 title:@"Watchlist" 
                                 detail:msg
                                  image:[UIImage imageNamed:@"dropdown-alert"]
                               animated:YES];
@@ -264,8 +264,6 @@
 {
     _isButtonTap = YES;
     
-    [_photos insertObject:[MWPhoto photoWithURL:[NSURL URLWithString:_event.pic_big]] atIndex:0];
-    
     MWPhotoBrowser *picController = [[MWPhotoBrowser alloc] initWithDelegate:self];
     picController.wantsFullScreenLayout = YES;
     picController.displayActionButton = NO;
@@ -276,6 +274,8 @@
     [self presentModalViewController:picModal animated:YES];
 }
 
+#pragma mark - Album delegate
+
 - (NSUInteger)numberOfPhotosInPhotoBrowser:(MWPhotoBrowser *)photoBrowser {
     return self.photos.count;
 }
@@ -285,6 +285,9 @@
         return [self.photos objectAtIndex:index];
     return nil;
 }
+
+
+#pragma mark - vote and rsvp delegate
 
 - (void)newRating:(int)rating
 {
@@ -394,7 +397,9 @@
 {
     if (scrollView.contentOffset.y < 0) {
         
-        _mapImage.frame = CGRectMake(0, scrollView.contentOffset.y, _mapImage.frame.size.width, _mapImageHeight - scrollView.contentOffset.y);
+//        _mapImage.frame = CGRectMake(0, scrollView.contentOffset.y, _mapImage.frame.size.width, _mapImageHeight - scrollView.contentOffset.y);
+        
+        _map.frame = CGRectMake(0, scrollView.contentOffset.y, _map.frame.size.width, _mapImageHeight - scrollView.contentOffset.y);
         
         _backButton.frame = CGRectMake(_backButton.frame.origin.x, scrollView.contentOffset.y + 6, _backButton.frame.size.width, _backButton.frame.size.height);
     }
@@ -403,6 +408,13 @@
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
     // override to avoid getting the pull to refresh
+    
+    _zoomLocation.latitude = [_event.latitude floatValue];
+    _zoomLocation.longitude= [_event.longitude floatValue];
+    _viewRegion = MKCoordinateRegionMakeWithDistance(_zoomLocation, 0.3*METERS_PER_MILE, 0.3*METERS_PER_MILE);
+    MKCoordinateRegion adjustedRegion = [_map regionThatFits:_viewRegion];                
+    [_map setRegion:adjustedRegion animated:NO];
+    //_map.frame = CGRectMake(0, 0, _map.frame.size.width, _mapImageHeight);
 }
 
 - (void)viewDidLoad
@@ -423,6 +435,8 @@
     _headerImage.contentMode = UIViewContentModeScaleAspectFill;
     _headerTimeLabel.text = [NSString stringWithFormat:@"%@ - %@", _event.timeStart, _event.timeEnd];
     _headerDistanceLabel.text = [NSString stringWithFormat:@"%@ mi.", _event.distance];
+    [_photos insertObject:[MWPhoto photoWithURL:[NSURL URLWithString:_event.pic_big]] atIndex:0];
+    [_headerNameLabel sizeToFit];
     
     // SCORE
     for (int i = 0; i < [_event.score intValue]; i++) {
@@ -435,7 +449,7 @@
     _voteView = [[DLStarRatingControl alloc] initWithFrame:_headerVoteLabel.frame andStars: 5];
     [_voteView setRating:1];
     [_voteView setAlpha:0.8];
-    _voteView.delegate = self;
+    [_voteView setDelegate:self];
     [_header addSubview:_voteView];
     [_headerVoteLabel removeFromSuperview];
     
@@ -447,43 +461,27 @@
 	[_header addSubview:_segment];
     
     // MAP
+    _mapImageHeight = _map.frame.size.height;
     if (_event.latitude != nil && ![_event.latitude isEqualToString:@""]) {
         
-//        NSString *mapUrl = @"http://maps.googleapis.com/maps/api/staticmap";
-//        NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
-//        [params setValue:[NSString stringWithFormat:@"%@,%@", _event.latitude, _event.longitude] forKey:@"center"];
-//        [params setValue:@"14" forKey:@"zoom"];
-//        [params setValue:@"320x360" forKey:@"size"];
-//        [params setValue:@"roadmap" forKey:@"maptype"];
-//        [params setValue:@"2" forKey:@"scale"];
-//        [params setValue:[NSString stringWithFormat:@"size:mid|%@,%@", _event.latitude, _event.longitude] forKey:@"markers"];
-//        [params setValue:@"true" forKey:@"sensor"];
-//        mapUrl = [mapUrl appendQueryParams:params];
-//        _mapImage.imageURL = [NSURL URLWithString:mapUrl];
+        _zoomLocation.latitude = [_event.latitude floatValue];
+        _zoomLocation.longitude= [_event.longitude floatValue];
+        _viewRegion = MKCoordinateRegionMakeWithDistance(_zoomLocation, 0.3*METERS_PER_MILE, 0.3*METERS_PER_MILE);
+        MKCoordinateRegion adjustedRegion = [_map regionThatFits:_viewRegion];                
+        [_map setRegion:adjustedRegion animated:NO];
         
-        CLLocationCoordinate2D zoomLocation;
-        
-        zoomLocation.latitude = [_event.latitude floatValue];
-        zoomLocation.longitude= [_event.longitude floatValue];
-        MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(zoomLocation, 0.2*METERS_PER_MILE, 0.2*METERS_PER_MILE);
-        MKCoordinateRegion adjustedRegion = [_map regionThatFits:viewRegion];                
-        [_map setRegion:adjustedRegion animated:YES];
+        //_map.showsUserLocation = YES;
         
         CLLocationCoordinate2D coord;
         coord.latitude = [_event.latitude doubleValue];
         coord.longitude = [_event.longitude doubleValue];
         _event.coordinate = coord;
         [_map addAnnotation:_event];
+        
     } else {
         
         _mapImage.image = [UIImage imageNamed:@"noMap"];
     }
-    
-    _mapImage.clipsToBounds = YES;
-    _mapImage.contentMode = UIViewContentModeScaleAspectFill;
-    _mapImageHeight = _mapImage.frame.size.height;
-    
-    [_headerNameLabel sizeToFit];
     
     // STATS
     NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
@@ -591,6 +589,7 @@
     _isButtonTap = NO;
 }
 
+#pragma mark - Ticker delegate
 
 - (UIColor*) backgroundColorForTickerView:(MKTickerView *)vertMenu
 {
@@ -617,8 +616,7 @@
     return nil;
 }
 
-
-
+#pragma mark - Map delegate
 
 - (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views {
     

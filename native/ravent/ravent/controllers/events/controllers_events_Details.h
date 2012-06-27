@@ -43,6 +43,8 @@
     IBOutlet JBAsyncImageView *_headerImage;
     IBOutlet JBAsyncImageView *_mapImage;
     IBOutlet MKMapView *_map;
+    MKCoordinateRegion _viewRegion;
+    CLLocationCoordinate2D _zoomLocation;
     
     STSegmentedControl *_segment;
     
