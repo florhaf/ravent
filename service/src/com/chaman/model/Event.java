@@ -97,10 +97,11 @@ public class Event extends Model implements Serializable {
 		DateTimeZone TZ = DateTimeZone.forOffsetMillis(timeZoneInMinutes*60*1000);
 		DateTime now = DateTime.now(TZ);	
 		long actual_time = now.getMillis() / 1000;
+		String str_actual_time = String.valueOf(actual_time);
 		
 		FacebookClient client 	= new DefaultFacebookClient(accessToken);
 		String properties 		= "eid, name, pic_big, start_time, end_time, venue, location, privacy, update_time";
-		String query 			= "SELECT " + properties + " FROM event WHERE eid IN (SELECT eid FROM event_member WHERE uid = " + userID + ") AND end_time > " + actual_time + " ORDER BY start_time"; /*need to check privacy CLOSED AND SECRET */
+		String query 			= "SELECT " + properties + " FROM event WHERE eid IN (SELECT eid FROM event_member WHERE uid = " + userID + ") AND end_time > " + str_actual_time + " ORDER BY start_time";
 		List<Event> fbevents 	= client.executeQuery(query, Event.class);
 		
 		Dao dao = new Dao();
@@ -267,7 +268,7 @@ public class Event extends Model implements Serializable {
 						
 						FacebookClient client 	= new DefaultFacebookClient(u.getAccess_token());
 						String properties 		= "eid, name, pic_big, start_time, end_time, venue, location, privacy, update_time";
-						String query 			= "SELECT " + properties + " FROM event WHERE eid IN (SELECT eid FROM event_member WHERE uid = " + l.getUid() + ") AND privacy = OPEN AND end_time > " + TAS; /*need to check privacy CLOSED AND SECRET */
+						String query 			= "SELECT " + properties + " FROM event WHERE eid IN (SELECT eid FROM event_member WHERE uid = " + l.getUid() + ") AND privacy = 'OPEN' AND end_time > " + TAS;
 						List<Event> fbevents 	= client.executeQuery(query, Event.class);
 										
 						Event e_cache; 

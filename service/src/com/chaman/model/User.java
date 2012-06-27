@@ -217,6 +217,7 @@ public class User extends Model implements Serializable {
 					
 					u.nb_of_followers = dbu.nb_of_followers;
 					u.nb_of_following = dbu.nb_of_following;
+					syncCache.put(u.uid, u, null); // populate User cache
 				}
 			} else {
 				
