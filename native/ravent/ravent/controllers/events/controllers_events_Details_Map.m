@@ -40,7 +40,7 @@
     
     zoomLocation.latitude = [_event.latitude floatValue];
     zoomLocation.longitude= [_event.longitude floatValue];
-    MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(zoomLocation, 0.1*METERS_PER_MILE, 0.1*METERS_PER_MILE);
+    MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(zoomLocation, 0.3*METERS_PER_MILE, 0.3*METERS_PER_MILE);
     MKCoordinateRegion adjustedRegion = [_map regionThatFits:viewRegion];                
     [_map setRegion:adjustedRegion animated:YES];
     

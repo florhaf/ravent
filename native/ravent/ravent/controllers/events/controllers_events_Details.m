@@ -234,7 +234,7 @@
         
         [YRDropdownView showDropdownInView:[controllers_App instance].view 
                                      title:@"Warning" 
-                                    detail:@"You must RSVP to post a picture"
+                                    detail:@"Per Facebook policy, you must RSVP to post a picture...\nHint: you can RSVP no"
                                      image:[UIImage imageNamed:@"dropdown-alert"]
                                   animated:YES];
         
@@ -522,8 +522,8 @@
             double d = [e.female_ratio doubleValue];
             d = d * 100;
         
-            _labelFemaleRatio.text = [NSString stringWithFormat:@"%.0f%%", d + 1];
-            _labelMaleRatio.text = [NSString stringWithFormat:@"%.0f%%", 100 - (d + 1)];
+            _labelFemaleRatio.text = [NSString stringWithFormat:@"%.0f%%", (d + 1 <= 100) ? d + 1 : 100 ];
+            _labelMaleRatio.text = [NSString stringWithFormat:@"%.0f%%", (100 - (d + 1) >= 0) ? 100 - (d + 1) : 0];
             _labelTotalAttendings.text = e.nb_attending;
         }
     }
