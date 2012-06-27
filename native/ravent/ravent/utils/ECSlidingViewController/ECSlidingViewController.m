@@ -170,15 +170,16 @@ NSString *const ECSlidingViewTopDidReset          = @"ECSlidingViewTopDidReset";
 - (void)viewDidLoad
 {
   [super viewDidLoad];
-  self.shouldAllowUserInteractionsWhenAnchored = NO;
+  self.shouldAllowUserInteractionsWhenAnchored = YES;
   self.resetTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(resetTopView)];
   _panGesture          = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(updateTopViewHorizontalCenterWithRecognizer:)];
-  self.resetTapGesture.enabled = NO;
+  self.resetTapGesture.enabled = YES;
   self.resetStrategy = ECTapping | ECPanning;
   
   self.topViewSnapshot = [[UIView alloc] initWithFrame:self.topView.bounds];
   [self.topViewSnapshot setAutoresizingMask:self.autoResizeToFillScreen];
   [self.topViewSnapshot addGestureRecognizer:self.resetTapGesture];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -213,6 +214,8 @@ NSString *const ECSlidingViewTopDidReset          = @"ECSlidingViewTopDidReset";
 - (void)setResetStrategy:(ECResetStrategy)theResetStrategy
 {
   _resetStrategy = theResetStrategy;
+    self.panGesture.enabled = YES;
+    
   if (_resetStrategy & ECTapping) {
     self.resetTapGesture.enabled = YES;
   } else {
@@ -300,11 +303,13 @@ NSString *const ECSlidingViewTopDidReset          = @"ECSlidingViewTopDidReset";
     }
     [self updateTopViewHorizontalCenter:newCenter];
   } completion:^(BOOL finished){
-    if (_resetStrategy & ECPanning) {
+//    if (_resetStrategy & ECPanning) {
+//      self.panGesture.enabled = YES;
+//    } else {
+//      self.panGesture.enabled = NO;
+//    }
+      
       self.panGesture.enabled = YES;
-    } else {
-      self.panGesture.enabled = NO;
-    }
     if (complete) {
       complete();
     }
@@ -355,13 +360,6 @@ NSString *const ECSlidingViewTopDidReset          = @"ECSlidingViewTopDidReset";
 - (void)resetTopView
 {
   [self resetTopViewWithAnimations:nil onComplete:nil];
-    
-    // TODO FLO
-    // check if top view is kind of controllers_friends_people here
-    // if yes, check if controllers_friends_All isDirty
-    // if yes, reload controllers_friends_following
-    
-    // set maplocation NO
 }
 
 - (void)resetTopViewWithAnimations:(void(^)())animations onComplete:(void(^)())complete
