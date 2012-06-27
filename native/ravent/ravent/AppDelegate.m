@@ -10,6 +10,13 @@
 #import "JMC.h"
 #import "Store.h"
 
+@implementation UINavigationBar (UINavigationBarCategory)
+- (void)drawRect:(CGRect)rect {
+    UIImage *img = [UIImage imageNamed:@"navbar.png"];
+    [img drawInRect:rect];
+}
+@end
+
 @implementation AppDelegate
 
 @synthesize window = _window;

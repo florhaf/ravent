@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface customNavigationController : UINavigationController
+@interface customNavigationController : UINavigationController <UINavigationControllerDelegate>
 
 @property (nonatomic, retain) UIViewController *rootController;
+
+- (id)initWithRootViewController:(UIViewController *)rootViewController translucnet:(BOOL)value;
 
 @end

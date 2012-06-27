@@ -25,7 +25,7 @@ static Store *_store;
             
         if ([e isEqualToString:eid]) {
                 
-            return @"event already in calendar";
+            return @"event already in your Watchlist";
         }
     }
     
@@ -45,7 +45,7 @@ static Store *_store;
         return error.localizedDescription;
     }
     
-    return @"event added to your calendar";
+    return @"event added to your Watchlist";
 }
 
 - (NSString *)saveEvent:(models_Event *)event
@@ -58,7 +58,7 @@ static Store *_store;
         
         if ([eid isEqualToString:event.eid]) {
             
-            return @"event already in calendar";
+            return @"event already in your Watchlist";
         }
     }
     
@@ -86,7 +86,7 @@ static Store *_store;
         return error.localizedDescription;
     }
     
-    return @"event added to your calendar";
+    return @"event added to your Watchlist";
 }
 
 #pragma mark - Fetched results controller

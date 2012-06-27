@@ -275,10 +275,15 @@
         return;
     }
     
-    #pragma clang diagnostic push
-    #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-    [_delegate performSelector:_callback withObject:objects];
-    #pragma clang diagnostic pop
+    
+    if (_delegate != nil && [_delegate respondsToSelector:_callback]) {
+        
+     
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+        [_delegate performSelector:_callback withObject:objects];
+#pragma clang diagnostic pop
+    }
 }
 
 - (void)objectLoader:(RKObjectLoader *)objectLoader didFailWithError:(NSError *)error
