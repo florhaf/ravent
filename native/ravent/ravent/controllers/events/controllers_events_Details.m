@@ -396,25 +396,16 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     if (scrollView.contentOffset.y < 0) {
-        
-//        _mapImage.frame = CGRectMake(0, scrollView.contentOffset.y, _mapImage.frame.size.width, _mapImageHeight - scrollView.contentOffset.y);
-        
-        _map.frame = CGRectMake(0, scrollView.contentOffset.y, _map.frame.size.width, _mapImageHeight - scrollView.contentOffset.y);
-        
+                
         _backButton.frame = CGRectMake(_backButton.frame.origin.x, scrollView.contentOffset.y + 6, _backButton.frame.size.width, _backButton.frame.size.height);
+        
+        _map.frame = CGRectMake(0, -260 + scrollView.contentOffset.y / 2, _map.frame.size.width, _map.frame.size.height);
     }
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
-    // override to avoid getting the pull to refresh
-    
-    _zoomLocation.latitude = [_event.latitude floatValue];
-    _zoomLocation.longitude= [_event.longitude floatValue];
-    _viewRegion = MKCoordinateRegionMakeWithDistance(_zoomLocation, 0.3*METERS_PER_MILE, 0.3*METERS_PER_MILE);
-    MKCoordinateRegion adjustedRegion = [_map regionThatFits:_viewRegion];                
-    [_map setRegion:adjustedRegion animated:NO];
-    //_map.frame = CGRectMake(0, 0, _map.frame.size.width, _mapImageHeight);
+
 }
 
 - (void)viewDidLoad
@@ -462,6 +453,8 @@
     
     // MAP
     _mapImageHeight = _map.frame.size.height;
+    _map.scrollEnabled = NO;
+    _map.zoomEnabled = NO;
     if (_event.latitude != nil && ![_event.latitude isEqualToString:@""]) {
         
         _zoomLocation.latitude = [_event.latitude floatValue];
