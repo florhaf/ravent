@@ -152,6 +152,7 @@
 		DF245943158082F30095027E /* buttonDesc.png in Resources */ = {isa = PBXBuildFile; fileRef = DF245940158082F30095027E /* buttonDesc.png */; };
 		DF245944158082F30095027E /* buttonFeed.png in Resources */ = {isa = PBXBuildFile; fileRef = DF245941158082F30095027E /* buttonFeed.png */; };
 		DF245945158082F30095027E /* buttonShare.png in Resources */ = {isa = PBXBuildFile; fileRef = DF245942158082F30095027E /* buttonShare.png */; };
+		DF295464159BC8FF0042265F /* UncaughtExceptionHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = DF295463159BC8FF0042265F /* UncaughtExceptionHandler.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		DF2A31D41551AD5C00AC01B0 /* allButton.png in Resources */ = {isa = PBXBuildFile; fileRef = DF2A31D21551AD5C00AC01B0 /* allButton.png */; };
 		DF2A31D51551AD5C00AC01B0 /* allButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF2A31D31551AD5C00AC01B0 /* allButton@2x.png */; };
 		DF2A31D81551E05A00AC01B0 /* backgroundLight.png in Resources */ = {isa = PBXBuildFile; fileRef = DF2A31D61551E05A00AC01B0 /* backgroundLight.png */; };
@@ -624,6 +625,8 @@
 		DF245940158082F30095027E /* buttonDesc.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = buttonDesc.png; sourceTree = "<group>"; };
 		DF245941158082F30095027E /* buttonFeed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = buttonFeed.png; sourceTree = "<group>"; };
 		DF245942158082F30095027E /* buttonShare.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = buttonShare.png; sourceTree = "<group>"; };
+		DF295462159BC8FF0042265F /* UncaughtExceptionHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UncaughtExceptionHandler.h; sourceTree = "<group>"; };
+		DF295463159BC8FF0042265F /* UncaughtExceptionHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UncaughtExceptionHandler.m; sourceTree = "<group>"; };
 		DF2A31D21551AD5C00AC01B0 /* allButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = allButton.png; sourceTree = "<group>"; };
 		DF2A31D31551AD5C00AC01B0 /* allButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "allButton@2x.png"; sourceTree = "<group>"; };
 		DF2A31D61551E05A00AC01B0 /* backgroundLight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = backgroundLight.png; sourceTree = "<group>"; };
@@ -1452,6 +1455,8 @@
 		DF6C864A152E47340077E027 /* Ravent */ = {
 			isa = PBXGroup;
 			children = (
+				DF295462159BC8FF0042265F /* UncaughtExceptionHandler.h */,
+				DF295463159BC8FF0042265F /* UncaughtExceptionHandler.m */,
 				DFDA1480156D945000877686 /* KalViewController.h */,
 				DFDA1481156D945000877686 /* KalViewController.m */,
 				DF9F6412156D925400304C0F /* UITableViewReloadable.h */,
@@ -2495,6 +2500,7 @@
 				DFB28CB41598166D00D0F999 /* STSegmentedControl.m in Sources */,
 				DF8D4162159A761900351A6F /* utils.m in Sources */,
 				DF6CA427159A9C9300FFBB90 /* MKTickerView.m in Sources */,
+				DF295464159BC8FF0042265F /* UncaughtExceptionHandler.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
