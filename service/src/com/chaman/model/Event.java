@@ -118,7 +118,7 @@ public class Event extends Model implements Serializable {
     	    	e.venue_category = v_graph.category;
 			
     	    	e.Filter_category();
-    	    	
+    	    	e.Score(v_graph);
     	    	e.latitude 	= JSON.GetValueFor("latitude", e.venue);
     	    	e.longitude = JSON.GetValueFor("longitude", e.venue);
 			
@@ -128,18 +128,20 @@ public class Event extends Model implements Serializable {
     	    		e.latitude = JSON.GetValueFor("latitude", v_graph.location);
     	    		e.longitude = JSON.GetValueFor("longitude", v_graph.location);
     	    	}	
-			
-    	    	if (e.latitude != null && e.latitude != "" && e.longitude != null && e.longitude != "" && e.privacy == "OPEN") {
+    	    	
+    	    	if (e.latitude != null && e.latitude != "" && e.longitude != null && e.longitude != "" && (e.privacy != null && e.privacy.equals("OPEN"))) {
 				
     	    		EventLocationCapable elc = dao.ofy().find(EventLocationCapable.class, e.eid);
     	    		
     	    		if (elc == null) {
-    	    			dao.ofy().put(elc);
+    	    			dao.ofy().put(new EventLocationCapable(e));
     	    		} else if (elc.getTimeStampStart() != Long.parseLong(e.start_time) || elc.getTimeStampEnd() != Long.parseLong(e.end_time)){
     	    			dao.ofy().put(elc);
     	    		}
     	    	}    	    	
-    	    	e.Score(v_graph);
+    	    } else {
+    	    	
+    	    	e = e_cache;
     	    }
 	
 	    	e.Format(timeZoneInMinutes, 0);
@@ -300,7 +302,7 @@ public class Event extends Model implements Serializable {
 					    	    		EventLocationCapable elc = dao.ofy().find(EventLocationCapable.class, e.eid);
 					    	    		
 					    	    		if (elc == null) {
-					    	    			dao.ofy().put(elc);
+					    	    			dao.ofy().put(new EventLocationCapable(e));
 					    	    		} else if (elc.getTimeStampStart() != Long.parseLong(e.start_time) || elc.getTimeStampEnd() != Long.parseLong(e.end_time)){
 					    	    			dao.ofy().put(elc);
 					    	    		}
