@@ -26,6 +26,7 @@
 @synthesize photos = _photos;
 @synthesize delegateBack = _delegateBack;
 @synthesize selectorBack = _selectorBack;
+@synthesize coordinate = _coordinate;
 
 - (id)initWithEvent:(models_Event *)event withBackDelegate:(id)delegate backSelector:(SEL)sel
 {
@@ -448,17 +449,31 @@
     // MAP
     if (_event.latitude != nil && ![_event.latitude isEqualToString:@""]) {
         
-        NSString *mapUrl = @"http://maps.googleapis.com/maps/api/staticmap";
-        NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
-        [params setValue:[NSString stringWithFormat:@"%@,%@", _event.latitude, _event.longitude] forKey:@"center"];
-        [params setValue:@"14" forKey:@"zoom"];
-        [params setValue:@"320x360" forKey:@"size"];
-        [params setValue:@"roadmap" forKey:@"maptype"];
-        [params setValue:@"2" forKey:@"scale"];
-        [params setValue:[NSString stringWithFormat:@"size:mid|%@,%@", _event.latitude, _event.longitude] forKey:@"markers"];
-        [params setValue:@"true" forKey:@"sensor"];
-        mapUrl = [mapUrl appendQueryParams:params];
-        _mapImage.imageURL = [NSURL URLWithString:mapUrl];
+//        NSString *mapUrl = @"http://maps.googleapis.com/maps/api/staticmap";
+//        NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+//        [params setValue:[NSString stringWithFormat:@"%@,%@", _event.latitude, _event.longitude] forKey:@"center"];
+//        [params setValue:@"14" forKey:@"zoom"];
+//        [params setValue:@"320x360" forKey:@"size"];
+//        [params setValue:@"roadmap" forKey:@"maptype"];
+//        [params setValue:@"2" forKey:@"scale"];
+//        [params setValue:[NSString stringWithFormat:@"size:mid|%@,%@", _event.latitude, _event.longitude] forKey:@"markers"];
+//        [params setValue:@"true" forKey:@"sensor"];
+//        mapUrl = [mapUrl appendQueryParams:params];
+//        _mapImage.imageURL = [NSURL URLWithString:mapUrl];
+        
+        CLLocationCoordinate2D zoomLocation;
+        
+        zoomLocation.latitude = [_event.latitude floatValue];
+        zoomLocation.longitude= [_event.longitude floatValue];
+        MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(zoomLocation, 0.2*METERS_PER_MILE, 0.2*METERS_PER_MILE);
+        MKCoordinateRegion adjustedRegion = [_map regionThatFits:viewRegion];                
+        [_map setRegion:adjustedRegion animated:YES];
+        
+        CLLocationCoordinate2D coord;
+        coord.latitude = [_event.latitude doubleValue];
+        coord.longitude = [_event.longitude doubleValue];
+        _event.coordinate = coord;
+        [_map addAnnotation:_event];
     } else {
         
         _mapImage.image = [UIImage imageNamed:@"noMap"];
@@ -599,6 +614,39 @@
 
 - (UIImage*) tickerView:(MKTickerView*) tickerView imageForItemAtIndex:(NSUInteger) index
 {
+    return nil;
+}
+
+
+
+
+- (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views {
+    
+    id<MKAnnotation> myAnnotation = [_map.annotations objectAtIndex:0];
+    [_map selectAnnotation:myAnnotation animated:YES];
+}
+
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation {
+    
+    static NSString *identifier = @"MyLocation";   
+    
+    if ([annotation isKindOfClass:[models_Event class]]) {
+        
+        models_Event *e = (models_Event *)annotation;
+        MKAnnotationView *annotationView = (MKAnnotationView *) [_map dequeueReusableAnnotationViewWithIdentifier:identifier];
+        
+        if (annotationView == nil) {
+            
+            annotationView = [[MKAnnotationView alloc] initWithAnnotation:e reuseIdentifier:identifier];
+        } else {
+            
+            annotationView.annotation = e;
+        }
+        
+        annotationView.enabled = YES;
+        return annotationView;
+    }
+    
     return nil;
 }
 

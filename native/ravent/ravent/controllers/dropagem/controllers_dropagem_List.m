@@ -117,11 +117,6 @@ static controllers_dropagem_List *_ctrl;
         _groupedData = [models_Event getGroupedData:_data];
         _sortedKeys = [[_groupedData allKeys] sortedArrayUsingSelector:@selector(compare:)];
     }];
-    
-    if (_data != nil && [_data count] == 1) {
-        
-        //[self loadEventDetails:[_data objectAtIndex:0]];
-    }
 }
 
 - (void)loadEventDetails:(models_Event *)event

@@ -10,6 +10,7 @@
 #import "models_User.h"
 #import "ActionDispatcher.h"
 #import "Store.h"
+#import <RestKit/RKERrorMessage.h>
 
 @implementation models_Event
 
@@ -254,6 +255,19 @@
 
 - (void)objectLoader:(RKObjectLoader *)objectLoader didLoadObjects:(NSArray *)objects
 {  
+    if (objects != nil && [objects count] > 0) {
+        
+        id obj = [objects objectAtIndex:0];
+        
+        if ([obj isKindOfClass:[RKErrorMessage class]]) {
+            
+            RKErrorMessage *rkErr = (RKErrorMessage *) obj;
+            NSError *nsErr = [NSError errorWithDomain:rkErr.errorMessage code:42 userInfo:nil];
+            
+            objects = [[NSArray alloc] initWithObjects:nsErr, nil];
+        }
+    }
+    
     
     if ([objectLoader.URL.path rangeOfString:@"eventstats"].location != NSNotFound) {
         
@@ -355,6 +369,11 @@
 + (NSMutableDictionary *)getGroupedData:(NSArray *)data
 {
     NSMutableDictionary *result = [[NSMutableDictionary alloc] init];
+    
+    if (data == nil) {
+        
+        return result;
+    }
     
     for (int i = 0; i < [data count]; i++) {
         

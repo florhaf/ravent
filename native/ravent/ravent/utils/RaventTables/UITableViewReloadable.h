@@ -60,6 +60,7 @@ typedef void (^success)();
 - (void)loadData;
 - (void)loadDataWithSpinner;
 - (void)onLoadData:(NSArray *)objects withSuccess:(success)success;
+- (id)getObjForSection:(NSInteger)section andRow:(NSInteger)row;
 
 - (void)updateLoadingMessageWith:(NSString *)text;
 

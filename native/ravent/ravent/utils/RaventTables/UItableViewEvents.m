@@ -37,10 +37,12 @@
 {
     [self onLoadData:objects withSuccess:^ {
         
-        _data = objects;
-        _groupedData = [models_Event getGroupedData:_data];
-        _sortedKeys = [[_groupedData allKeys] sortedArrayUsingSelector:@selector(compare:)];
-        
+        if (objects != nil) {
+            
+            _data = objects;
+            _groupedData = [models_Event getGroupedData:_data];
+            _sortedKeys = [[_groupedData allKeys] sortedArrayUsingSelector:@selector(compare:)];
+        }
     }];
 }
 
@@ -65,11 +67,22 @@
     [self onLoadEvents:objects];
 }
 
+- (models_Event *)getEventForSection:(NSInteger)section andRow:(NSInteger)row
+{
+    return (models_Event *)[self getObjForSection:section andRow:row];
+}
+
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    NSString *key = [_sortedKeys objectAtIndex:section];
-    models_Event *e = (models_Event *)[[_groupedData valueForKey:key]objectAtIndex:0];
-    return [e.groupTitle uppercaseString];
+    models_Event *e = [self getEventForSection:section andRow:0];
+    
+    if (e != nil && e.groupTitle != nil && ![e.groupTitle isEqualToString:@""]) {
+        
+        return [e.groupTitle uppercaseString];
+    } else {
+        
+        return @"";
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -99,33 +112,32 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {   
     UITableViewCell *cell = [super tableView:tableView cellForRowAtIndexPath:indexPath];
-    //cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    models_Event *event = [self getEventForSection:indexPath.section andRow:indexPath.row];
     
-    NSString *section = [_sortedKeys objectAtIndex:indexPath.section];
-    NSMutableArray *rows = [_groupedData objectForKey:section];
-    models_Event *event = [rows objectAtIndex:indexPath.row];
+    if (event != nil) {
     
-    [[NSBundle mainBundle] loadNibNamed:@"views_events_item_Event" owner:self options:nil];
+        [[NSBundle mainBundle] loadNibNamed:@"views_events_item_Event" owner:self options:nil];
     
-    _itemTitle.text = event.name;
-    _itemSubTitle.text = event.location;
-    _itemImage.imageURL = [NSURL URLWithString:event.pic_big];
-    _itemImage.clipsToBounds = YES;
-    _itemImage.contentMode = UIViewContentModeScaleAspectFill;
-    _itemTime.text = [[NSString stringWithFormat:@"%@ - %@", event.timeStart, event.timeEnd] lowercaseString];
-    _itemDistance.text = [NSString stringWithFormat:@"%@ mi.", event.distance];
+        _itemTitle.text = event.name;
+        _itemSubTitle.text = event.location;
+        _itemImage.imageURL = [NSURL URLWithString:event.pic_big];
+        _itemImage.clipsToBounds = YES;
+        _itemImage.contentMode = UIViewContentModeScaleAspectFill;
+        _itemTime.text = [[NSString stringWithFormat:@"%@ - %@", event.timeStart, event.timeEnd] lowercaseString];
+        _itemDistance.text = [NSString stringWithFormat:@"%@ mi.", event.distance];
         
-    for (int i = 0; i < [event.score intValue]; i++) {
+        for (int i = 0; i < [event.score intValue]; i++) {
         
-        UIImageView *image = (UIImageView *)[_itemScore.subviews objectAtIndex:i];
-        image.image = [UIImage imageNamed:@"diamond"];
+            UIImageView *image = (UIImageView *)[_itemScore.subviews objectAtIndex:i];
+            image.image = [UIImage imageNamed:@"diamond"];
+        }
+    
+        _itemTitle.font = [_itemTitle.font fontWithSize:[self getFontSizeForLabel:_itemTitle]];
+    
+        //[self resizeAndPositionCellItem];
+    
+        [cell.contentView addSubview:_item];
     }
-    
-    _itemTitle.font = [_itemTitle.font fontWithSize:[self getFontSizeForLabel:_itemTitle]];
-    
-    //[self resizeAndPositionCellItem];
-    
-    [cell.contentView addSubview:_item];
     
     return cell;
 }
@@ -141,12 +153,12 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *section = [_sortedKeys objectAtIndex:indexPath.section];
-    NSMutableArray *rows = [_groupedData objectForKey:section];
+    models_Event *event = [self getEventForSection:indexPath.section andRow:indexPath.row];
     
-    models_Event *event = [rows objectAtIndex:indexPath.row];
-    
-    [self loadEventDetails:event];
+    if (event != nil) {
+     
+        [self loadEventDetails:event];
+    }
 }
 
 - (void)loadEventDetails:(models_Event *)event

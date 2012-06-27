@@ -18,14 +18,17 @@ static Store *_store;
 - (NSString *)saveEid:(NSString *)eid forDate:(NSString *)startDate
 {
     NSMutableArray *array = [self findEidsForDate:startDate];
-        
-    for (int i = 0; i < [array count]; i++) {
+    
+    if (array != nil) {
+     
+        for (int i = 0; i < [array count]; i++) {
             
-        NSString *e = [array objectAtIndex:i];
+            NSString *e = [array objectAtIndex:i];
             
-        if ([e isEqualToString:eid]) {
+            if ([e isEqualToString:eid]) {
                 
-            return @"event already in your Watchlist";
+                return @"event already in your Watchlist";
+            }
         }
     }
     
@@ -188,24 +191,27 @@ static Store *_store;
     
     NSMutableArray *result = [[NSMutableArray alloc] init];
     
-    for (int i = 0; i < [objects count]; i++) {
-        
-        NSManagedObject *match = [objects objectAtIndex:i];
-        
-        models_Event *e = [[models_Event alloc] init];
-        
-        e.eid = [match valueForKey:@"eid"];
-        e.name = [match valueForKey:@"name"];
-        e.location = [match valueForKey:@"location"];
-        e.pic_big = [match valueForKey:@"picture"];
-        e.latitude = [match valueForKey:@"latitude"];
-        e.longitude = [match valueForKey:@"longitude"];
-        e.dateStart = [match valueForKey:@"startDate"];
-        e.dateEnd = [match valueForKey:@"endDate"];
-        e.timeStart = [match valueForKey:@"startTime"];
-        e.timeEnd = [match valueForKey:@"endTime"];
-        
-        [result addObject:e];
+    if (objects != nil) {
+     
+        for (int i = 0; i < [objects count]; i++) {
+            
+            NSManagedObject *match = [objects objectAtIndex:i];
+            
+            models_Event *e = [[models_Event alloc] init];
+            
+            e.eid = [match valueForKey:@"eid"];
+            e.name = [match valueForKey:@"name"];
+            e.location = [match valueForKey:@"location"];
+            e.pic_big = [match valueForKey:@"picture"];
+            e.latitude = [match valueForKey:@"latitude"];
+            e.longitude = [match valueForKey:@"longitude"];
+            e.dateStart = [match valueForKey:@"startDate"];
+            e.dateEnd = [match valueForKey:@"endDate"];
+            e.timeStart = [match valueForKey:@"startTime"];
+            e.timeEnd = [match valueForKey:@"endTime"];
+            
+            [result addObject:e];
+        }
     }
     
     return result;

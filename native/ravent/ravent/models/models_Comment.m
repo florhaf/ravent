@@ -9,6 +9,7 @@
 #import "models_Comment.h"
 #import "ActionDispatcher.h"
 #import <RestKit/JSONKit.h>
+#import <RestKit/RKErrorMessage.h>
 
 @implementation models_Comment
 
@@ -177,6 +178,18 @@
 
 - (void)objectLoader:(RKObjectLoader *)objectLoader didLoadObjects:(NSArray *)objects
 {  
+    if (objects != nil && [objects count] > 0) {
+        
+        id obj = [objects objectAtIndex:0];
+        
+        if ([obj isKindOfClass:[RKErrorMessage class]]) {
+            
+            RKErrorMessage *rkErr = (RKErrorMessage *) obj;
+            NSError *nsErr = [NSError errorWithDomain:rkErr.errorMessage code:42 userInfo:nil];
+            
+            objects = [[NSArray alloc] initWithObjects:nsErr, nil];
+        }
+    }
     
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"

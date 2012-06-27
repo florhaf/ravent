@@ -55,55 +55,73 @@
     
     [super onLoadData:objects withSuccess:^ {
         
-        _data = [[NSMutableArray alloc] initWithArray:objects]; 
+        if (objects != nil) {
+         
+            _data = [[NSMutableArray alloc] initWithArray:objects]; 
+        }
     }];
+}
+
+- (models_User *)getUserForRow:(NSInteger)row
+{
+    if (_data != nil && row < [_data count]) {
+        
+        return [_data objectAtIndex:row];
+    }
+    
+    return nil;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [super tableView:tableView cellForRowAtIndexPath:indexPath];
-    //cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
     [[NSBundle mainBundle] loadNibNamed:@"views_friends_item_Invited" owner:self options:nil];
     
-    models_User *u = [_data objectAtIndex:indexPath.row];
+    models_User *u = [self getUserForRow:indexPath.row];
     
-    _itemTitle.text = [NSString stringWithFormat:@"%@ %@", u.firstName, u.lastName];
-    _itemSubTitle.text = (u.rsvpStatus != nil && ![u.rsvpStatus isEqualToString:@""]) ? u.rsvpStatus : @"not replied";
-    _itemImage.imageURL = [NSURL URLWithString:u.picture];
-    _itemImage.clipsToBounds = YES;
-    _itemImage.contentMode = UIViewContentModeScaleAspectFill;
-    
-    [cell.contentView addSubview:_item];
+    if (u != nil) {
+     
+        _itemTitle.text = [NSString stringWithFormat:@"%@ %@", u.firstName, u.lastName];
+        _itemSubTitle.text = (u.rsvpStatus != nil && ![u.rsvpStatus isEqualToString:@""]) ? u.rsvpStatus : @"not replied";
+        _itemImage.imageURL = [NSURL URLWithString:u.picture];
+        _itemImage.clipsToBounds = YES;
+        _itemImage.contentMode = UIViewContentModeScaleAspectFill;
+        
+        [cell.contentView addSubview:_item];
+    }
     
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    models_User *user = [_data objectAtIndex:indexPath.row];
+    models_User *user = [self getUserForRow:indexPath.row];
     
-    _details = [[controllers_friends_Details alloc] initWithUser:[user copy]];
-    
-    UIImage *backi = [UIImage imageNamed:@"backButton"];
-    
-    UIButton *backb = [UIButton buttonWithType:UIButtonTypeCustom];
-    [backb addTarget:self action:@selector(onBackTap) forControlEvents:UIControlEventTouchUpInside];
-    [backb setImage:backi forState:UIControlStateNormal];
-    [backb setFrame:CGRectMake(0, 0, backi.size.width, backi.size.height)];
-    
-    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:backb];
-    
-    UIViewController *rootController = self;
-    
-    while (![rootController.parentViewController isKindOfClass:[UINavigationController class]]) {
+    if (user != nil) {
+     
+        _details = [[controllers_friends_Details alloc] initWithUser:[user copy]];
         
-        rootController = rootController.parentViewController;
+        UIImage *backi = [UIImage imageNamed:@"backButton"];
+        
+        UIButton *backb = [UIButton buttonWithType:UIButtonTypeCustom];
+        [backb addTarget:self action:@selector(onBackTap) forControlEvents:UIControlEventTouchUpInside];
+        [backb setImage:backi forState:UIControlStateNormal];
+        [backb setFrame:CGRectMake(0, 0, backi.size.width, backi.size.height)];
+        
+        UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:backb];
+        
+        UIViewController *rootController = self;
+        
+        while (![rootController.parentViewController isKindOfClass:[UINavigationController class]]) {
+            
+            rootController = rootController.parentViewController;
+        }
+        
+        [rootController.navigationItem hidesBackButton];
+        [_details.navigationItem setLeftBarButtonItem:backButton];
+        [self.navigationController pushViewController:_details animated:YES];
     }
-    
-    [rootController.navigationItem hidesBackButton];
-    [_details.navigationItem setLeftBarButtonItem:backButton];
-    [self.navigationController pushViewController:_details animated:YES];
 }
 
 - (void)onBackTap

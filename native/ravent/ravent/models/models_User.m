@@ -9,6 +9,7 @@
 #import "models_User.h"
 #import "ActionDispatcher.h"
 #import "GPSManager.h"
+#import <RestKit/RKErrorMessage.h>
 
 @implementation models_User
 
@@ -318,6 +319,19 @@ static models_User *_crtUser = nil;
 
 - (void)objectLoader:(RKObjectLoader *)objectLoader didLoadObjects:(NSArray *)objects
 {
+    
+    if (objects != nil && [objects count] > 0) {
+        
+        id obj = [objects objectAtIndex:0];
+        
+        if ([obj isKindOfClass:[RKErrorMessage class]]) {
+            
+            RKErrorMessage *rkErr = (RKErrorMessage *) obj;
+            NSError *nsErr = [NSError errorWithDomain:rkErr.errorMessage code:42 userInfo:nil];
+            
+            objects = [[NSArray alloc] initWithObjects:nsErr, nil];
+        }
+    }
         
     NSSortDescriptor* sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"lastName" ascending:YES selector:@selector(caseInsensitiveCompare:)];
     NSArray* sortedObjects = [objects sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
@@ -426,6 +440,11 @@ static models_User *_crtUser = nil;
 + (NSMutableDictionary *)getGroupedData:(NSArray *)data
 {  
     NSMutableDictionary *result = [[NSMutableDictionary alloc] init];
+    
+    if (data == nil) {
+        
+        return result;
+    }
     
     for (int i = 0; i < [data count]; i++) {
         

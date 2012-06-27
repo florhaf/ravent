@@ -150,25 +150,26 @@
     }
     else
     {
-        NSString *section = [_sortedKeys objectAtIndex:indexPath.section];
-        NSMutableArray *rows = [_groupedData objectForKey:section];
-        u = [rows objectAtIndex:indexPath.row];
+        u = (models_User *)[self getObjForSection:indexPath.section andRow:indexPath.row];
     }
     
-    [[NSBundle mainBundle] loadNibNamed:@"views_friends_item_Share" owner:self options:nil];
-    
-    _itemTitle.text = [NSString stringWithFormat:@"%@ %@", u.firstName, u.lastName];
-    _itemImage.imageURL = [NSURL URLWithString:u.picture];
-    _itemImage.clipsToBounds = YES;
-    _itemImage.contentMode = UIViewContentModeScaleAspectFill;
-    
-    //if ([u.isInvited isEqualToString:@"true"]) {
-    if ([self contains:_invited user:u] || [self contains:_friends user:u]) {
+    if (u != nil) {
         
-        [_inviteButton setEnabled:NO];
+        [[NSBundle mainBundle] loadNibNamed:@"views_friends_item_Share" owner:self options:nil];
+        
+        _itemTitle.text = [NSString stringWithFormat:@"%@ %@", u.firstName, u.lastName];
+        _itemImage.imageURL = [NSURL URLWithString:u.picture];
+        _itemImage.clipsToBounds = YES;
+        _itemImage.contentMode = UIViewContentModeScaleAspectFill;
+        
+        //if ([u.isInvited isEqualToString:@"true"]) {
+        if ([self contains:_invited user:u] || [self contains:_friends user:u]) {
+            
+            [_inviteButton setEnabled:NO];
+        }
+        
+        [cell.contentView addSubview:_item];
     }
-    
-    [cell.contentView addSubview:_item];
     
     return cell;
 }

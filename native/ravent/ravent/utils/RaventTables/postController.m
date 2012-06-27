@@ -202,6 +202,12 @@
     [_textView becomeFirstResponder];
     _isKeyboardShowing = YES;
     
+    if (_isForPicture) {
+        
+        [self hideModal];
+        return;
+    }
+    
     [_buttonsContainer raceTo:CGPointMake(0, 415) withSnapBack:NO];
 }
 

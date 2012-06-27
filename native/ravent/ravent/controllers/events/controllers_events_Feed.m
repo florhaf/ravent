@@ -71,6 +71,11 @@
     CGFloat result = [super tableView:tableView heightForRowAtIndexPath:indexPath];
     CGFloat actualHeight;
     
+    if (_data == nil) {
+        
+        return result;
+    }
+    
     models_Comment *c = [_data objectAtIndex:indexPath.row];
     NSString *name = [NSString stringWithFormat:@"%@ %@", c.firstName, c.lastName];
     

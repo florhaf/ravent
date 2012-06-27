@@ -153,8 +153,7 @@ typedef enum {
     [MBProgressHUD hideHUDForView:self.view animated:YES];
     _hud = nil;
     
-    
-    if ([objects count] > 0) {
+    if (objects != nil && [objects count] > 0) {
         
         id object = [objects objectAtIndex:0];
         
@@ -449,6 +448,30 @@ typedef enum {
     }
     
     return delta1 + delta2;
+}
+
+- (id)getObjForSection:(NSInteger)section andRow:(NSInteger)row
+{
+    if (_sortedKeys != nil && [_sortedKeys count] > 0) {
+        
+        NSString *key = [_sortedKeys objectAtIndex:section];
+        
+        if (key != nil) {
+            
+            if (_groupedData != nil) {
+                
+                NSArray *ar = [_groupedData valueForKey:key];
+                
+                if (ar != nil && [ar count] > 0) {
+                    
+                    id obj = [ar objectAtIndex:row];
+                    return obj;         
+                }
+            }
+        }
+    }
+    
+    return nil;
 }
 
 @end

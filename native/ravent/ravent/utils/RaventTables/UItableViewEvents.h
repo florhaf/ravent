@@ -24,5 +24,6 @@
 - (void)onLoadEvents:(NSArray *)objects;
 - (void)loadDataWithUserLocation;
 - (void)loadEventDetails:(models_Event *)event;
+- (models_Event *)getEventForSection:(NSInteger)section andRow:(NSInteger)row;
 
 @end

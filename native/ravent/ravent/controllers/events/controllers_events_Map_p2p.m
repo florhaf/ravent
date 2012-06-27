@@ -61,7 +61,7 @@ static controllers_events_Map_p2p *_ctrl;
         [_map removeAnnotation:annotation];
     }
     
-    if ([objects count] > 0) {
+    if (objects != nil && [objects count] > 0) {
         
         id object = [objects objectAtIndex:0];
         

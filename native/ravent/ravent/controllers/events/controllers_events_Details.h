@@ -14,7 +14,7 @@
 #import "STSegmentedControl.h"
 #import "MKTickerView.h"
 
-@interface controllers_events_Details : UITableViewFriends<DLStarRatingDelegate, MWPhotoBrowserDelegate, MKTickerViewDataSource> {
+@interface controllers_events_Details : UITableViewFriends<DLStarRatingDelegate, MWPhotoBrowserDelegate, MKTickerViewDataSource, MKMapViewDelegate, MKAnnotation> {
         
     CGSize _headerSize;
     CGSize _headerTitleSize;
@@ -42,6 +42,7 @@
     
     IBOutlet JBAsyncImageView *_headerImage;
     IBOutlet JBAsyncImageView *_mapImage;
+    IBOutlet MKMapView *_map;
     
     STSegmentedControl *_segment;
     

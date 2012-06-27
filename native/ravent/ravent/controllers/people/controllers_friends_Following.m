@@ -118,56 +118,56 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {   
     UITableViewCell *cell = [super tableView:tableView cellForRowAtIndexPath:indexPath];
-    //cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
-    NSString *section = [_sortedKeys objectAtIndex:indexPath.section];
-    NSMutableArray *rows = [_groupedData objectForKey:section];
-    models_User *u = [rows objectAtIndex:indexPath.row];
+    models_User *u = (models_User *)[self getObjForSection:indexPath.section andRow:indexPath.row];
     
-    [[NSBundle mainBundle] loadNibNamed:@"views_friends_item_Following" owner:self options:nil];
-    
-    _itemTitle.text = [NSString stringWithFormat:@"%@ %@", u.firstName, u.lastName];
-    _itemImage.imageURL = [NSURL URLWithString:u.picture];
-    _itemImage.clipsToBounds = YES;
-    _itemImage.contentMode = UIViewContentModeScaleAspectFill;
-    
-    _followersLabel.text = u.nbOfFollowers;
-    _followingLabel.text = u.nbOfFollowing;
-    _eventsLabel.text = u.nbOfEvents;
-    
-    [cell.contentView addSubview:_item];
+    if (u != nil) {
+     
+        [[NSBundle mainBundle] loadNibNamed:@"views_friends_item_Following" owner:self options:nil];
+        
+        _itemTitle.text = [NSString stringWithFormat:@"%@ %@", u.firstName, u.lastName];
+        _itemImage.imageURL = [NSURL URLWithString:u.picture];
+        _itemImage.clipsToBounds = YES;
+        _itemImage.contentMode = UIViewContentModeScaleAspectFill;
+        
+        _followersLabel.text = u.nbOfFollowers;
+        _followingLabel.text = u.nbOfFollowing;
+        _eventsLabel.text = u.nbOfEvents;
+        
+        [cell.contentView addSubview:_item];
+    }
     
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *section = [_sortedKeys objectAtIndex:indexPath.section];
-    NSMutableArray *rows = [_groupedData objectForKey:section];
+    models_User *user = (models_User *)[self getObjForSection:indexPath.section andRow:indexPath.row];
     
-    models_User *user = [rows objectAtIndex:indexPath.row];
-    
-    _details = [[controllers_friends_Details alloc] initWithUser:[user copy]];
-    
-    UIImage *backi = [UIImage imageNamed:@"backButton"];
-    
-    UIButton *backb = [UIButton buttonWithType:UIButtonTypeCustom];
-    [backb addTarget:self action:@selector(onBackTap) forControlEvents:UIControlEventTouchUpInside];
-    [backb setImage:backi forState:UIControlStateNormal];
-    [backb setFrame:CGRectMake(0, 0, backi.size.width, backi.size.height)];
-    
-    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:backb];
-    
-    UIViewController *rootController = self;
-    
-    while (![rootController.parentViewController isKindOfClass:[UINavigationController class]]) {
+    if (user != nil) {
+     
+        _details = [[controllers_friends_Details alloc] initWithUser:[user copy]];
         
-        rootController = rootController.parentViewController;
+        UIImage *backi = [UIImage imageNamed:@"backButton"];
+        
+        UIButton *backb = [UIButton buttonWithType:UIButtonTypeCustom];
+        [backb addTarget:self action:@selector(onBackTap) forControlEvents:UIControlEventTouchUpInside];
+        [backb setImage:backi forState:UIControlStateNormal];
+        [backb setFrame:CGRectMake(0, 0, backi.size.width, backi.size.height)];
+        
+        UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:backb];
+        
+        UIViewController *rootController = self;
+        
+        while (![rootController.parentViewController isKindOfClass:[UINavigationController class]]) {
+            
+            rootController = rootController.parentViewController;
+        }
+        
+        [rootController.navigationItem hidesBackButton];
+        [_details.navigationItem setLeftBarButtonItem:backButton];
+        [self.navigationController pushViewController:_details animated:YES];
     }
-    
-    [rootController.navigationItem hidesBackButton];
-    [_details.navigationItem setLeftBarButtonItem:backButton];
-    [self.navigationController pushViewController:_details animated:YES];
 }
 
 - (void)onBackTap
