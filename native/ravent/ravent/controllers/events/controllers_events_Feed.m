@@ -110,7 +110,7 @@
         [[NSBundle mainBundle] loadNibNamed:@"views_events_item_Comment" owner:self options:nil];
     }
     
-    _itemTitle.text = [NSString stringWithFormat:@"%@ %@", c.firstName, c.lastName];
+    _itemTitle.text = [NSString stringWithFormat:@"%@", c.firstName];
     _itemSubTitle.text = c.message;
     _itemImage.imageURL = [NSURL URLWithString:c.pictureUser];
     _itemImage.clipsToBounds = YES;
