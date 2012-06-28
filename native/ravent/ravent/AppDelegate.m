@@ -36,7 +36,7 @@
 {
     [self performSelector:@selector(installUncaughtExceptionHandler) withObject:nil afterDelay:0];
     
-    [self performSelector:@selector(badAccess) withObject:nil afterDelay:4.0];
+    //[self performSelector:@selector(badAccess) withObject:nil afterDelay:4.0];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.

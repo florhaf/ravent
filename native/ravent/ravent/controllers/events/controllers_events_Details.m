@@ -234,7 +234,7 @@
         
         [YRDropdownView showDropdownInView:[controllers_App instance].view 
                                      title:@"Warning" 
-                                    detail:@"Per Facebook policy, you must RSVP to post a picture...\nHint: you can RSVP no"
+                                    detail:@"Per Facebook policy, you must RSVP to post a picture...\n\nHint: you can RSVP no"
                                      image:[UIImage imageNamed:@"dropdown-alert"]
                                   animated:YES];
         
