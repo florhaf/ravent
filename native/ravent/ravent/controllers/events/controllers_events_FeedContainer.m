@@ -48,7 +48,7 @@
         
         [YRDropdownView showDropdownInView:[controllers_App instance].view 
                                      title:@"Warning" 
-                                    detail:@"Per Facebook policy, you must RSVP to post a comment...\nHint: you can RSVP no"
+                                    detail:@"Per Facebook policy, you must RSVP to post a comment...\n\nHint: you can RSVP no"
                                      image:[UIImage imageNamed:@"dropdown-alert"]
                                   animated:YES];
         
@@ -93,7 +93,7 @@
 {
     [self dismissModalViewControllerAnimated:YES];
     
-    //[_feedController cancelAllRequests];
+    [_feedController cancelAllRequests];
 }
 
 - (void)viewDidUnload

@@ -9,13 +9,7 @@
 #import "AppDelegate.h"
 #import "JMC.h"
 #import "Store.h"
-
-@implementation UINavigationBar (UINavigationBarCategory)
-- (void)drawRect:(CGRect)rect {
-    UIImage *img = [UIImage imageNamed:@"navbar.png"];
-    [img drawInRect:rect];
-}
-@end
+#import "UncaughtExceptionHandler.h"
 
 @implementation AppDelegate
 
@@ -26,8 +20,24 @@
 @synthesize managedObjectModel = __managedObjectModel;
 @synthesize persistentStoreCoordinator = __persistentStoreCoordinator;
 
+- (void)installUncaughtExceptionHandler
+{
+	InstallUncaughtExceptionHandler();
+}
+
+- (void)badAccess
+{
+    void (*nullFunction)() = NULL;
+    
+    nullFunction();
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [self performSelector:@selector(installUncaughtExceptionHandler) withObject:nil afterDelay:0];
+    
+    //[self performSelector:@selector(badAccess) withObject:nil afterDelay:4.0];
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     
@@ -43,6 +53,8 @@
     [[JMC sharedInstance] configureJiraConnect:@"https://ravent.atlassian.net/"
                                     projectKey:@"RAV"
                                         apiKey:@"eb74bda1-a5a5-4ac8-80ea-b0ce502c926a"];
+    
+    
     
     return YES;
 }

@@ -29,7 +29,7 @@ static controllers_SlidingMenu *_ctrl;
     
     if (self) {
         
-        self.menuItems = [NSArray arrayWithObjects:@"Events", @"Friends", @"Watchlist", @"Locate me", @"Contact us", nil];
+        self.menuItems = [NSArray arrayWithObjects:@"Events", @"Friends", @"Watchlist", @"Contact us", nil];
     }
     
     return self;

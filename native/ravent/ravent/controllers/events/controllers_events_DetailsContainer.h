@@ -17,6 +17,8 @@
     IBOutlet UIToolbar *_toolbar;
     IBOutlet UIView *_container;
     
+    BOOL _isButtonTap;
+    
     id _delegateBack;
     SEL _selectorBack;
     

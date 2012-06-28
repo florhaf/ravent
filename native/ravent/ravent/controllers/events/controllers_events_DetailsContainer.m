@@ -125,12 +125,14 @@
         
         [YRDropdownView showDropdownInView:[controllers_App instance].view 
                                      title:@"Warning" 
-                                    detail:@"Per Facebook policy, you must RSVP to share this event...\nHint: you can RSVP no"
+                                    detail:@"Per Facebook policy, you must RSVP to share this event...\n\nHint: you can RSVP no"
                                      image:[UIImage imageNamed:@"dropdown-alert"]
                                   animated:YES];
         
         return;
     }
+    
+    _isButtonTap = YES;
     
     controllers_friends_share *shareController = [[controllers_friends_share alloc] initWithUser:[[models_User crtUser] copy] invited:_detailsController.data];
     UINavigationController *shareModal = [[UINavigationController alloc] initWithRootViewController:shareController];
@@ -140,6 +142,8 @@
 
 - (IBAction)descriptionButton_Tap:(id)sender
 {
+    _isButtonTap = YES;
+    
     controllers_events_Description *descController = [[controllers_events_Description alloc] initWithNibName:@"views_events_Description" bundle:[NSBundle mainBundle] event:[_event copy]];
     UINavigationController *descModal = [[UINavigationController alloc] initWithRootViewController:descController];
     
@@ -148,6 +152,8 @@
 
 - (IBAction)feedButton_Tap:(id)sender
 {
+    _isButtonTap = YES;
+    
     controllers_events_FeedContainer *feedController = [[controllers_events_FeedContainer alloc] initWithEvent:[_event copy]];
     
     UINavigationController *feedModal = [[UINavigationController alloc] initWithRootViewController:feedController];
@@ -158,6 +164,18 @@
 - (void)cancelAllRequests
 {
     [_detailsController cancelAllRequests];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    if (!_isButtonTap) {
+        
+        [self cancelAllRequests];
+    }
+    
+    _isButtonTap = NO;
 }
 
 - (void)viewDidUnload
