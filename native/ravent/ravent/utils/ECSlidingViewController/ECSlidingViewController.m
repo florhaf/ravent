@@ -357,7 +357,7 @@ NSString *const ECSlidingViewTopDidReset          = @"ECSlidingViewTopDidReset";
   [self resetTopViewWithAnimations:nil onComplete:nil];
     
     
-    [self.topView removeGestureRecognizer:_panGesture];
+    
     
     // TODO FLO
     // check if top view is kind of controllers_friends_people here
