@@ -173,13 +173,12 @@ NSString *const ECSlidingViewTopDidReset          = @"ECSlidingViewTopDidReset";
   self.shouldAllowUserInteractionsWhenAnchored = NO;
   self.resetTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(resetTopView)];
   _panGesture          = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(updateTopViewHorizontalCenterWithRecognizer:)];
-  self.resetTapGesture.enabled = YES;
-  self.resetStrategy = ECPanning | ECTapping;
+  self.resetTapGesture.enabled = NO;
+  self.resetStrategy = ECTapping | ECPanning;
   
   self.topViewSnapshot = [[UIView alloc] initWithFrame:self.topView.bounds];
   [self.topViewSnapshot setAutoresizingMask:self.autoResizeToFillScreen];
-  [self.topViewSnapshot addGestureRecognizer:_panGesture];
-    
+  [self.topViewSnapshot addGestureRecognizer:self.resetTapGesture];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -214,8 +213,6 @@ NSString *const ECSlidingViewTopDidReset          = @"ECSlidingViewTopDidReset";
 - (void)setResetStrategy:(ECResetStrategy)theResetStrategy
 {
   _resetStrategy = theResetStrategy;
-    self.panGesture.enabled = YES;
-    
   if (_resetStrategy & ECTapping) {
     self.resetTapGesture.enabled = YES;
   } else {
@@ -303,14 +300,11 @@ NSString *const ECSlidingViewTopDidReset          = @"ECSlidingViewTopDidReset";
     }
     [self updateTopViewHorizontalCenter:newCenter];
   } completion:^(BOOL finished){
-//    if (_resetStrategy & ECPanning) {
-//      self.panGesture.enabled = YES;
-//    } else {
-//      self.panGesture.enabled = NO;
-//    }
-      
+    if (_resetStrategy & ECPanning) {
       self.panGesture.enabled = YES;
-      [self.topViewSnapshot addGestureRecognizer:_panGesture];
+    } else {
+      self.panGesture.enabled = NO;
+    }
     if (complete) {
       complete();
     }
@@ -361,6 +355,16 @@ NSString *const ECSlidingViewTopDidReset          = @"ECSlidingViewTopDidReset";
 - (void)resetTopView
 {
   [self resetTopViewWithAnimations:nil onComplete:nil];
+    
+    
+    
+    
+    // TODO FLO
+    // check if top view is kind of controllers_friends_people here
+    // if yes, check if controllers_friends_All isDirty
+    // if yes, reload controllers_friends_following
+    
+    // set maplocation NO
 }
 
 - (void)resetTopViewWithAnimations:(void(^)())animations onComplete:(void(^)())complete
@@ -432,11 +436,10 @@ NSString *const ECSlidingViewTopDidReset          = @"ECSlidingViewTopDidReset";
 
 - (void)addTopViewSnapshot
 {
-    
   if (!self.topViewSnapshot.superview && !self.shouldAllowUserInteractionsWhenAnchored) {
     topViewSnapshot.layer.contents = (id)[UIImage imageWithUIView:self.topView].CGImage;
     [self.topView addSubview:self.topViewSnapshot];
-      [self.topViewSnapshot addGestureRecognizer:_panGesture];
+      [self.topView addGestureRecognizer:_panGesture];
   }
 }
 
@@ -533,10 +536,6 @@ NSString *const ECSlidingViewTopDidReset          = @"ECSlidingViewTopDidReset";
   _underLeftShowing   = NO;
   _underRightShowing  = NO;
   _topViewIsOffScreen = NO;
-    
-    
-    self.panGesture.enabled = YES;
-    [self.topView addGestureRecognizer:_panGesture];
 }
 
 - (BOOL)topViewHasFocus
