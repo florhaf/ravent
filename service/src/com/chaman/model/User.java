@@ -34,13 +34,16 @@ public class User extends Model implements Serializable {
 	@Id
 	@Facebook
 	long uid;
+	@NotSaved
 	@Facebook
 	String first_name;
+	@NotSaved
 	@Facebook
 	String last_name;
 	@NotSaved
 	@Facebook
 	String pic;
+	@NotSaved
 	@Facebook
 	String email;
 	@NotSaved
@@ -61,8 +64,6 @@ public class User extends Model implements Serializable {
 	int nb_of_events;
 	int nb_of_followers;
 	int nb_of_following;
-	@NotSaved
-	float searchRadius;
 	
 	public User() {
 		
@@ -87,7 +88,7 @@ public class User extends Model implements Serializable {
 		ArrayList<Model> result = new ArrayList<Model>();
 		
 		FacebookClient client 	= new DefaultFacebookClient(accessToken);
-		String properties 		= "uid, first_name, last_name, pic, email, sex, birthday_date, relationship_status";
+		String properties 		= "uid, first_name, last_name, pic";
 		String userQuery 		= "SELECT " + properties + " FROM user WHERE uid  = " + userID;
 		
 		List<User> users 		= client.executeQuery(userQuery, User.class);
@@ -127,7 +128,7 @@ public class User extends Model implements Serializable {
     	    	qfollowers.filter("friendID", u.uid);
     	    	u.nb_of_followers = qfollowers.count();
     	    	u.access_token = accessToken;
-    	    	if (appuser == "yes") {dao.ofy().put(u);} //add the user to the data store
+    	    	if (appuser.equals("yes")) {dao.ofy().put(u);} //add the user to the data store
     	    	syncCache.put(u.uid, u, null); // populate User cache
     	    	
     	    } else {
@@ -287,11 +288,6 @@ public class User extends Model implements Serializable {
 	public String getRelationship_status() {
 		
 		return this.relationship_status;
-	}
-	
-	public float getSearchRadius() {
-		
-		return this.searchRadius;
 	}
 	
 	public int getNb_of_events() {

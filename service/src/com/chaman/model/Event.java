@@ -211,7 +211,7 @@ public class Event extends Model implements Serializable {
         				
 	    	    		if (e.getTimeStampStart() != Long.parseLong(event.start_time) || e.getTimeStampEnd() != Long.parseLong(event.end_time)){
 	    	    			e.setTimeStampStart(Long.parseLong(event.start_time));
-	    	    			e.setTimeStampStart(Long.parseLong(event.end_time));
+	    	    			e.setTimeStampEnd(Long.parseLong(event.end_time));
 	    	    			dao.ofy().put(e);
 	    	    		}
             		}
