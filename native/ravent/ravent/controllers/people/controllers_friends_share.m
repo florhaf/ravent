@@ -222,7 +222,7 @@
     
     if (_user != nil) {
         
-        [_user cancelAllRequests];
+        //[_user cancelAllRequests];
     }
     
     if (_event != nil) {

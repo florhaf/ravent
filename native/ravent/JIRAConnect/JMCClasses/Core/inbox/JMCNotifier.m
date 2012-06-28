@@ -71,13 +71,14 @@ static CGRect endFrame;
         NSString *notificationFmt = count != 1 ? JMCLocalizedString(@"JMCInAppNotification-Plural", @"%d new notification%@ from developer") : 
         JMCLocalizedString(@"JMCInAppNotification-Singular", @"");
         
-        if ([JMC sharedInstance].options.notifyViaAlertView) { 
+        //if ([JMC sharedInstance].options.notifyViaAlertView) { 
+        if (true) {
             UIAlertView* alert = 
                             [[UIAlertView alloc] initWithTitle:@"Feedback"  
                                                       message:[NSString stringWithFormat:notificationFmt, count] 
                                                      delegate:self 
-                                            cancelButtonTitle:@"Cancel" 
-                                            otherButtonTitles:@"View", nil];
+                                            cancelButtonTitle:@"OK" 
+                                            otherButtonTitles:nil];
             [alert show];
             [alert release];
             return;

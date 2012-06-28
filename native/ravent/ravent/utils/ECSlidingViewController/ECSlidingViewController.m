@@ -533,6 +533,10 @@ NSString *const ECSlidingViewTopDidReset          = @"ECSlidingViewTopDidReset";
   _underLeftShowing   = NO;
   _underRightShowing  = NO;
   _topViewIsOffScreen = NO;
+    
+    
+    self.panGesture.enabled = YES;
+    [self.topViewSnapshot addGestureRecognizer:_panGesture];
 }
 
 - (BOOL)topViewHasFocus
