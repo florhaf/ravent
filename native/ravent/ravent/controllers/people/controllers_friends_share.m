@@ -222,12 +222,12 @@
     
     if (_user != nil) {
         
-        //[_user cancelAllRequests];
+        [_user cancelAllRequests];
     }
     
     if (_event != nil) {
         
-        //[_event cancelAllRequests];
+        [_event cancelAllRequests];
     }
     
     [[ActionDispatcher instance] execute:@"share" with:_friends];

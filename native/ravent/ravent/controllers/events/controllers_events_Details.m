@@ -573,13 +573,6 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    
-    if (!_isButtonTap) {
-        
-        [self cancelAllRequests];   
-    }
-    
-    _isButtonTap = NO;
 }
 
 #pragma mark - Ticker delegate

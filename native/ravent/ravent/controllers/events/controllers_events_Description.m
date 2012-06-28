@@ -140,7 +140,7 @@
     
     if (_event != nil) {
         
-        //[_event cancelAllRequests];
+        [_event cancelAllRequests];
     }
 }
 
