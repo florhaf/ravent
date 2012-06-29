@@ -102,7 +102,7 @@
     
     [_toolbar insertSubview:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"grayToolbar"]] atIndex:1];
     [_toolbar setBackgroundColor:[UIColor clearColor]];
-    //[_toolbar setAlpha:0.8];
+    [_toolbar setAlpha:0.8];
     
     NSMutableArray *items = [[NSMutableArray alloc] init];
     UIBarButtonItem *flexibleSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];

@@ -372,6 +372,8 @@
 		DFF02DE11540B39500FED164 /* controllers_App.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF02DE01540B39500FED164 /* controllers_App.m */; };
 		DFF134001593E897004190AC /* controllers_watchlist_WatchList.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF133FF1593E897004190AC /* controllers_watchlist_WatchList.m */; };
 		DFF134031593EDA8004190AC /* controllers_watchlist_Container.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF134021593EDA8004190AC /* controllers_watchlist_Container.m */; };
+		DFF1775A159C352600F1FBA9 /* grayNavbar.png in Resources */ = {isa = PBXBuildFile; fileRef = DFF17759159C352600F1FBA9 /* grayNavbar.png */; };
+		DFF1775C159C360D00F1FBA9 /* grayToolbar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DFF1775B159C360D00F1FBA9 /* grayToolbar@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -928,6 +930,8 @@
 		DFF133FF1593E897004190AC /* controllers_watchlist_WatchList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = controllers_watchlist_WatchList.m; sourceTree = "<group>"; };
 		DFF134011593EDA8004190AC /* controllers_watchlist_Container.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = controllers_watchlist_Container.h; sourceTree = "<group>"; };
 		DFF134021593EDA8004190AC /* controllers_watchlist_Container.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = controllers_watchlist_Container.m; sourceTree = "<group>"; };
+		DFF17759159C352600F1FBA9 /* grayNavbar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grayNavbar.png; sourceTree = "<group>"; };
+		DFF1775B159C360D00F1FBA9 /* grayToolbar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grayToolbar@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1507,6 +1511,8 @@
 		DF75ACC91541E7D400150465 /* background */ = {
 			isa = PBXGroup;
 			children = (
+				DFF1775B159C360D00F1FBA9 /* grayToolbar@2x.png */,
+				DFF17759159C352600F1FBA9 /* grayNavbar.png */,
 				DF8D4152159A45F700351A6F /* grayToolbar.png */,
 				DF30ED8515993372008F6AC1 /* grayDetails.png */,
 				DF9CED3C15833640002B1024 /* picbg3.png */,
@@ -2369,6 +2375,8 @@
 				DF6CA42E159AB06100FFBB90 /* graySnapSelected.png in Resources */,
 				DF6CA42F159AB06100FFBB90 /* grayWatch.png in Resources */,
 				DF6CA430159AB06100FFBB90 /* grayWatchSelected.png in Resources */,
+				DFF1775A159C352600F1FBA9 /* grayNavbar.png in Resources */,
+				DFF1775C159C360D00F1FBA9 /* grayToolbar@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2533,7 +2541,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: florian haftman (247VK6949Z)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: florian haftman";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -2557,7 +2565,7 @@
 					"-ObjC",
 					"-all_load",
 				);
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "67C20EBB-AA59-4A4B-B4BF-60479C59B59C";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "03F07150-4C42-424F-B8E9-97E11E91035C";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				VALID_ARCHS = "armv7 armv6";
@@ -2570,7 +2578,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: florian haftman (247VK6949Z)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: florian haftman";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -2588,7 +2596,7 @@
 					"-ObjC",
 					"-all_load",
 				);
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "67C20EBB-AA59-4A4B-B4BF-60479C59B59C";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "03F07150-4C42-424F-B8E9-97E11E91035C";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				VALIDATE_PRODUCT = YES;
@@ -2600,7 +2608,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: florian haftman (247VK6949Z)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: florian haftman";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/RestKit/Specs/Runner/OCHamcrest\"",
@@ -2615,7 +2623,7 @@
 					"\"$(SRCROOT)/facebook-ios-sdk\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "67C20EBB-AA59-4A4B-B4BF-60479C59B59C";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "03F07150-4C42-424F-B8E9-97E11E91035C";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = NO;
 				USER_HEADER_SEARCH_PATHS = "";
@@ -2628,7 +2636,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: florian haftman (247VK6949Z)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: florian haftman";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/RestKit/Specs/Runner/OCHamcrest\"",
@@ -2643,7 +2651,7 @@
 					"\"$(SRCROOT)/facebook-ios-sdk\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "67C20EBB-AA59-4A4B-B4BF-60479C59B59C";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "03F07150-4C42-424F-B8E9-97E11E91035C";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = NO;
 				USER_HEADER_SEARCH_PATHS = "";

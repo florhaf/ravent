@@ -167,7 +167,36 @@
 
     [self.navigationController pushViewController:_details animated:YES];    
     self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
-    self.navigationController.navigationBar.alpha = 0.0;
+    
+    UIImage *backi = [UIImage imageNamed:@"backButton"];
+    
+    UIButton *backb = [UIButton buttonWithType:UIButtonTypeCustom];
+    [backb addTarget:self action:@selector(onBackTap) forControlEvents:UIControlEventTouchUpInside];
+    [backb setImage:backi forState:UIControlStateNormal];
+    [backb setFrame:CGRectMake(0, 0, backi.size.width, backi.size.height)];
+    
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:backb];
+    
+    UIViewController *rootController = self;
+    
+    while (![rootController.parentViewController isKindOfClass:[UINavigationController class]]) {
+        
+        rootController = rootController.parentViewController;
+    }
+    
+    [rootController.navigationItem hidesBackButton];
+    [_details.navigationItem setLeftBarButtonItem:backButton];
+    
+    
+    [self performSelector:@selector(fadeToolbar) withObject:nil afterDelay:0.3];
+}
+
+- (void)fadeToolbar
+{
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:0.5];
+    [self.navigationController.navigationBar setAlpha:0.5];
+    [UIView commitAnimations];
 }
 
 - (void)onBackTap

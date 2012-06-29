@@ -32,7 +32,7 @@
         
         // ios5 check
         if ([[UINavigationBar class] respondsToSelector:@selector(appearance)]) {
-            [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed: @"navBar"] forBarMetrics:UIBarMetricsDefault];
+            [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed: @"grayNavbar"] forBarMetrics:UIBarMetricsDefault];
         }
         
         

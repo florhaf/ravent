@@ -11,7 +11,7 @@
 
 @interface controllers_SlidingMenu : UIViewController<UITableViewDataSource, UITableViewDelegate, UITabBarControllerDelegate> {
     
-    
+    UIViewController *_jiraConnect;
 }
 
 @property (nonatomic, strong) NSArray *menuItems;

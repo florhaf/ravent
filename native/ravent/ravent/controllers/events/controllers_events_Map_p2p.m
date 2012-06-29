@@ -14,11 +14,14 @@
 #import "ActionDispatcher.h"
 #import "UIView+Animation.h"
 #import "controllers_events_List_p2p.h"
+#import "controllers_App.h"
 #import <RestKit/RKErrorMessage.h>
 
 @implementation controllers_events_Map_p2p
 
 static controllers_events_Map_p2p *_ctrl;
+
+static int _retryCounter;
 
 @synthesize coordinate;
 @synthesize peekLeftAmount;
@@ -196,7 +199,33 @@ static controllers_events_Map_p2p *_ctrl;
     region.span = span;
     region.center = location;
     
-    [mapView setRegion:region animated:YES];
+    
+    @try {
+        
+        [mapView setRegion:region animated:YES];
+    }
+    @catch (NSException *exception) {
+        
+        // retry a few times...
+        if (_retryCounter < 4) {
+            
+            _retryCounter++;
+            
+            [self mapView:mapView didUpdateUserLocation:userLocation];
+        } else {
+            
+            _retryCounter = 0;
+            
+            [YRDropdownView showDropdownInView:[controllers_App instance].view 
+                                         title:@"Map Error" 
+                                        detail:exception.reason
+                                         image:[UIImage imageNamed:@"dropdown-alert"]
+                                      animated:YES];
+        }
+    }
+    @finally {
+        // nothing
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -274,31 +303,23 @@ static controllers_events_Map_p2p *_ctrl;
 
     NSArray *array = [[NSArray alloc] initWithObjects:event, nil];
     [[ActionDispatcher instance] execute:@"controller_events_List_p2p_loadDetails" with:array];
-    
-//    controllers_events_Details *details = [[controllers_events_Details alloc] initWithEvent:[event copy]];
-//    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle: @"Back" style: UIBarButtonItemStyleBordered target: self action:nil];
-//    UIViewController *rootController = self;
-//    
-//    while (![rootController.parentViewController isKindOfClass:[UINavigationController class]]) {
-//        
-//        rootController = rootController.parentViewController;
-//    }
-//    
-//    [rootController.navigationItem setBackBarButtonItem: backButton];
-//    [self.navigationController pushViewController:details animated:YES];
 }
 
 -(void)imageView:(JBAsyncImageView *)sender loadedImage:(UIImage *)imageLoaded fromURL:(NSURL *)url
 {
-    MKAnnotationView *annotation = [((NSMutableArray *)[_imageLoading objectForKey:url]) objectAtIndex:0];
     
-    UIGraphicsBeginImageContext(annotation.image.size);
-    [annotation.image drawInRect:CGRectMake(0, 0, annotation.image.size.width, annotation.image.size.height)];
-    [imageLoaded drawInRect:CGRectMake(8, 8, 56, 56)];
-    annotation.image = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    
-    [_imageLoading removeObjectForKey:url];
+    if (url != nil) {
+     
+        MKAnnotationView *annotation = [((NSMutableArray *)[_imageLoading objectForKey:url]) objectAtIndex:0];
+        
+        UIGraphicsBeginImageContext(annotation.image.size);
+        [annotation.image drawInRect:CGRectMake(0, 0, annotation.image.size.width, annotation.image.size.height)];
+        [imageLoaded drawInRect:CGRectMake(8, 8, 56, 56)];
+        annotation.image = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        
+        [_imageLoading removeObjectForKey:url];
+    }
 }
 
 
@@ -423,6 +444,8 @@ static controllers_events_Map_p2p *_ctrl;
     if (_ctrl == nil) {
         
         _ctrl = [[controllers_events_Map_p2p alloc] initWithNibName:@"views_events_Map" bundle:nil user:[[models_User crtUser] copy]];        
+        
+        _retryCounter = 0;
     }
     
     return _ctrl;

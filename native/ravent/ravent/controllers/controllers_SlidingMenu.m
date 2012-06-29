@@ -78,6 +78,8 @@ static controllers_SlidingMenu *_ctrl;
     
     [self.slidingViewController setAnchorRightRevealAmount:280.0f];
     self.slidingViewController.underLeftWidthLayout = ECFullWidth;
+    
+    _jiraConnect = [[JMC sharedInstance] issuesViewController];
 }
 
 - (void)logout
@@ -167,7 +169,7 @@ static controllers_SlidingMenu *_ctrl;
                     newTopViewController = [controllers_dropagem_DropAGemViewController instance];
                 } else {
                     
-                    newTopViewController = [[JMC sharedInstance] issuesViewController];
+                    newTopViewController = _jiraConnect;
                 }
             }
         }

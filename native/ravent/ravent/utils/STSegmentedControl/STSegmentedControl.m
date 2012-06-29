@@ -259,7 +259,7 @@
 	/*
 	 Making sure we don't call out of bounds
 	 */
-	if(index <= numberOfSegments && (int)index >= 0)
+	if(index <= numberOfSegments && (int)index >= 0 && object != nil)
 	{
 		[segments insertObject:object atIndex:index];
 		[self resetSegments];
