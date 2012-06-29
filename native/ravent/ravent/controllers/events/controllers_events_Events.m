@@ -118,13 +118,13 @@ static customNavigationController *_ctrl;
     _radiusStepper.value = [models_User crtUser].searchRadius;
     _radiusStepper.minimumValue = 1;
     _radiusStepper.maximumValue = 50;
-    _radiusStepper.stepValue = 5;
+    _radiusStepper.stepValue = 15;
     _radiusStepper.continuous = NO;
     
-    _windowStepper.value = [models_User crtUser].searchRadius;
+    _windowStepper.value = [models_User crtUser].searchWindow / 24;
     _windowStepper.minimumValue = 1;
     _windowStepper.maximumValue = 15;
-    _windowStepper.stepValue = 1;
+    _windowStepper.stepValue = 2;
     _windowStepper.continuous = NO;
 }
 
@@ -144,9 +144,16 @@ static customNavigationController *_ctrl;
     if (_optionsView.frame.origin.y == 200) {
         
         [_optionsView raceTo:CGPointMake(0, 372) withSnapBack:YES];   
+        [_optionsButton setTitle:@"Search Options" forState:UIControlStateNormal];
+        if (_isDirty) {
+            
+            _isDirty = NO;
+            [[controllers_events_List_p2p instance] loadDataWithSpinner];
+        }
     } else {
         
-        [_optionsView raceTo:CGPointMake(0, 200) withSnapBack:YES];   
+        [_optionsView raceTo:CGPointMake(0, 200) withSnapBack:YES];  
+        [_optionsButton setTitle:@"Done" forState:UIControlStateNormal];
     }
 }
 
@@ -154,16 +161,20 @@ static customNavigationController *_ctrl;
 {
     [models_User crtUser].searchRadius = (int)sender.value;
     _labelRadiusValue.text = [NSString stringWithFormat:@"%d mi.",  (int)sender.value];
+    _isDirty = YES;
 }
 
 - (IBAction)stepperWindowPressed:(UIStepper *)sender
 {
     [models_User crtUser].searchWindow = (int)sender.value * 24; // need to send in hours to the WS
     _labelWindowValue.text = [NSString stringWithFormat:@"%d day", (int)sender.value];    
+    _isDirty = YES;
 }
 
 - (IBAction)onPartyButton_Tap:(id)sender
 {
+    [[controllers_events_List_p2p instance].tableView scrollRectToVisible:CGRectMake(0, -55, 1, 1) animated:YES];
+    
     [[controllers_events_List_p2p instance] reloadTableViewDataSourceWithIndex:0];
     
     [[controllers_events_Map_p2p instance] loadData:[controllers_events_List_p2p instance].data];
@@ -171,6 +182,8 @@ static customNavigationController *_ctrl;
 
 - (IBAction)onChillButton_Tap:(id)sender
 {
+    [[controllers_events_List_p2p instance].tableView scrollRectToVisible:CGRectMake(0, -55, 1, 1) animated:YES];
+    
     [[controllers_events_List_p2p instance] reloadTableViewDataSourceWithIndex:1];
     
     [[controllers_events_Map_p2p instance] loadData:[controllers_events_List_p2p instance].data];
@@ -178,6 +191,8 @@ static customNavigationController *_ctrl;
 
 - (IBAction)onArtButton_Tap:(id)sender
 {
+    [[controllers_events_List_p2p instance].tableView scrollRectToVisible:CGRectMake(0, -55, 1, 1) animated:YES];
+    
     [[controllers_events_List_p2p instance] reloadTableViewDataSourceWithIndex:2];
     
     [[controllers_events_Map_p2p instance] loadData:[controllers_events_List_p2p instance].data];
@@ -185,6 +200,8 @@ static customNavigationController *_ctrl;
 
 - (IBAction)onMiscButton_Tap:(id)sender
 {
+    [[controllers_events_List_p2p instance].tableView scrollRectToVisible:CGRectMake(0, -55, 1, 1) animated:YES];
+    
     [[controllers_events_List_p2p instance] reloadTableViewDataSourceWithIndex:3];
     
     [[controllers_events_Map_p2p instance] loadData:[controllers_events_List_p2p instance].data];

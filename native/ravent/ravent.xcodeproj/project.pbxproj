@@ -2565,7 +2565,7 @@
 					"-ObjC",
 					"-all_load",
 				);
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "03F07150-4C42-424F-B8E9-97E11E91035C";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "007E08C6-60F7-42AC-8047-646651240FE9";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				VALID_ARCHS = "armv7 armv6";
@@ -2596,7 +2596,7 @@
 					"-ObjC",
 					"-all_load",
 				);
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "03F07150-4C42-424F-B8E9-97E11E91035C";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "007E08C6-60F7-42AC-8047-646651240FE9";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				VALIDATE_PRODUCT = YES;
@@ -2623,7 +2623,7 @@
 					"\"$(SRCROOT)/facebook-ios-sdk\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "03F07150-4C42-424F-B8E9-97E11E91035C";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "007E08C6-60F7-42AC-8047-646651240FE9";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = NO;
 				USER_HEADER_SEARCH_PATHS = "";
@@ -2651,7 +2651,7 @@
 					"\"$(SRCROOT)/facebook-ios-sdk\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "03F07150-4C42-424F-B8E9-97E11E91035C";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "007E08C6-60F7-42AC-8047-646651240FE9";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = NO;
 				USER_HEADER_SEARCH_PATHS = "";

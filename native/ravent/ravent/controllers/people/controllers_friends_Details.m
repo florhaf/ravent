@@ -93,9 +93,9 @@
 {
     if (objects == nil || [objects count] == 0) {
         
-        _eventsLabel.text = @"X";
-        _followersLabel.text = @"X";
-        _followingLabel.text = @"X";
+        _eventsLabel.text = @"0";
+        _followersLabel.text = @"0";
+        _followingLabel.text = @"0";
         return;
     }
     

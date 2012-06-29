@@ -41,6 +41,8 @@
     IBOutlet UIButton *_miscButton;
     
     models_User *_user;
+    
+    BOOL _isDirty;
 }
 
 - (IBAction)onValueChanged:(id)sender;

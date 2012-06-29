@@ -111,8 +111,8 @@ static models_User *_crtUser = nil;
     _crtUser.picture = u.picture;
     _crtUser.latitude = @"";
     _crtUser.longitude = @"";
-    _crtUser.searchWindow = 24;
-    _crtUser.searchRadius = 10;
+    _crtUser.searchWindow = 48;
+    _crtUser.searchRadius = 15;
     _crtUser.timeZone = [NSString stringWithFormat:@"%d", [[NSTimeZone localTimeZone] secondsFromGMT] / 60 ];
     _crtUser.accessToken = u.accessToken;
 
