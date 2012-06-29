@@ -210,6 +210,10 @@
 - (void)cancelAllRequests
 {
     [[_manager requestQueue] cancelAllRequests];
+    
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(updateLoadingMessage:) object:nil];
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(updateLoadingMessage2:) object:nil];
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(updateLoadingMessage3:) object:nil];
 }
 
 @end

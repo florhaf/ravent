@@ -169,6 +169,10 @@ static controllers_SlidingMenu *_ctrl;
                     newTopViewController = [controllers_dropagem_DropAGemViewController instance];
                 } else {
                     
+                    // prevent slide right
+                    self.slidingViewController.underRightViewController = nil;
+                    
+                    // instance already created to prevent crash
                     newTopViewController = _jiraConnect;
                 }
             }

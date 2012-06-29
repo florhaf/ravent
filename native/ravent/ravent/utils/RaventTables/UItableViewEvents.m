@@ -125,6 +125,7 @@
         _itemImage.contentMode = UIViewContentModeScaleAspectFill;
         _itemTime.text = [[NSString stringWithFormat:@"%@ - %@", event.timeStart, event.timeEnd] lowercaseString];
         _itemDistance.text = [NSString stringWithFormat:@"%@ mi.", event.distance];
+        _itemVenueCategory.text = event.venue_category;
         
         for (int i = 0; i < [event.score intValue]; i++) {
         

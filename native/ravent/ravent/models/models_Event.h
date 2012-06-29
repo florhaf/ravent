@@ -30,6 +30,7 @@
     
     
     BOOL _isRequesting;
+    BOOL _isCancelled;
     
     RKObjectManager *_manager;    
     

@@ -366,6 +366,10 @@ static models_User *_crtUser = nil;
 {
     [[_manager requestQueue] cancelAllRequests];
     [[[RKClient sharedClient] requestQueue] cancelAllRequests];
+    
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(updateLoadingMessage:) object:nil];
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(updateLoadingMessage2:) object:nil];
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(updateLoadingMessage3:) object:nil];
 }
 
 - (void)follow:(NSMutableDictionary *)params success:(SEL)success failure:(SEL)failure sender:(id)sender
