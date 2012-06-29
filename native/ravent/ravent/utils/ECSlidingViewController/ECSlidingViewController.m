@@ -255,9 +255,21 @@ NSString *const ECSlidingViewTopDidReset          = @"ECSlidingViewTopDidReset";
       newCenterPosition = self.resettedCenter;
     }
     
-    [self topViewHorizontalCenterWillChange:newCenterPosition];
-    [self updateTopViewHorizontalCenter:newCenterPosition];
-    [self topViewHorizontalCenterDidChange:newCenterPosition];
+      if (self.underRightViewController == nil) {
+          
+          if (newCenterPosition > self.initialHoizontalCenter) {
+           
+              [self topViewHorizontalCenterWillChange:newCenterPosition];
+              [self updateTopViewHorizontalCenter:newCenterPosition];
+              [self topViewHorizontalCenterDidChange:newCenterPosition];
+          }
+          
+      } else {
+       
+          [self topViewHorizontalCenterWillChange:newCenterPosition];
+          [self updateTopViewHorizontalCenter:newCenterPosition];
+          [self topViewHorizontalCenterDidChange:newCenterPosition];
+      }
   } else if (recognizer.state == UIGestureRecognizerStateEnded || recognizer.state == UIGestureRecognizerStateCancelled) {
     CGPoint currentVelocityPoint = [recognizer velocityInView:self.view];
     CGFloat currentVelocityX     = currentVelocityPoint.x;
