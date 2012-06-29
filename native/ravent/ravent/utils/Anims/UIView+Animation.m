@@ -35,7 +35,8 @@ float radiansForDegrees(int degrees) {
                      }];
 }
 
-- (void)raceTo:(CGPoint)destination withSnapBack:(BOOL)withSnapBack {
+- (void)raceTo:(CGPoint)destination withSnapBack:(BOOL)withSnapBack withDelegate:(id)delegate withSelector:(SEL)selector {
+    
     CGPoint stopPoint = destination;
     if (withSnapBack) {
         // Determine our stop point, from which we will "snap back" to the final destination
@@ -70,9 +71,22 @@ float radiansForDegrees(int degrees) {
                                               animations:^{
                                                   self.frame = CGRectMake(destination.x, destination.y, self.frame.size.width, self.frame.size.height);
                                               }
-                                              completion:nil];
+                                              completion:^(BOOL finished) {
+                                                  
+                                                  if (delegate != nil) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+                                                      [delegate performSelector:selector];
+                                                      #pragma clang diagnostic pop
+                                                  }
+                                              }];
                          }
-                     }];    
+                     }]; 
+}
+
+- (void)raceTo:(CGPoint)destination withSnapBack:(BOOL)withSnapBack {
+       
+    [self raceTo:destination withSnapBack:withSnapBack withDelegate:nil withSelector:nil];
 }
 
 

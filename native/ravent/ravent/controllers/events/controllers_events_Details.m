@@ -312,8 +312,8 @@ static int _retryCounter;
     [_header bringSubviewToFront:_voteView];
     
     [YRDropdownView showDropdownInView:[controllers_App instance].view 
-                                 title:@"Success" 
-                                detail:@"Vote submitted"
+                                 title:@"Woooo" 
+                                detail:@"You just dropped a Gem!"
                                  image:[UIImage imageNamed:@"dropdown-alert"]
                               animated:YES];
 }
@@ -671,6 +671,15 @@ static int _retryCounter;
     }
     
     return nil;
+}
+
+- (void)cancelAllRequests
+{
+    if (!_isButtonTap) {
+        
+        [super cancelAllRequests];
+        _isButtonTap = NO;   
+    }
 }
 
 @end
