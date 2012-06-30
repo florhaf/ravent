@@ -11,6 +11,7 @@
 #import "controllers_friends_Details.h"
 #import "models_User.h"
 #import "ActionDispatcher.h"
+#import "UIView+Animation.h"
 
 @implementation controllers_friends_People
 
@@ -24,6 +25,7 @@ static customNavigationController *_ctrl;
         
         self.title = @"Ravent";
         _user = user;
+        _isSegTapAllowed = YES;
           
         Action *loadAction = [[Action alloc] initWithDelegate:self andSelector:@selector(loadData)];
         [[ActionDispatcher instance] add:loadAction named:@"reloadCurrentUser"];
@@ -158,67 +160,41 @@ static customNavigationController *_ctrl;
 
 - (IBAction)onSegmentedControlValueChanged
 {    
-    if (!_isFollowersVisible) {
-     
-        _isFollowersVisible = YES;
-        [_followers.view setHidden:NO];
-        [self uiview:_following.view raceTo:CGPointMake(-320, 0) withSnapBack:NO];
-        [self uiview:_followers.view raceTo:CGPointMake(0, 0) withSnapBack:YES];
+    
+    if (_isSegTapAllowed) {
+
+        _isSegTapAllowed = NO;
+        _segmentedControl.enabled = NO;
         
-    } else {
-        
-        _isFollowersVisible = NO;
-        [self uiview:_following.view raceTo:CGPointMake(0, 0) withSnapBack:YES];
-        [self uiview:_followers.view raceTo:CGPointMake(320, 0) withSnapBack:NO];
-        
+        if (!_isFollowersVisible) {
+            
+            [_followers.view setHidden:NO];
+            _isFollowersVisible = YES;
+            [_followers.view setHidden:NO];
+            [_following.view raceTo:CGPointMake(-320, 0) withSnapBack:NO];
+            
+            
+            [_followers.view raceTo:CGPointMake(0, 0) withSnapBack:YES withDelegate:self withSelector:@selector(resetIsSegTapAllowed)];
+            
+        } else {
+            
+            _isFollowersVisible = NO;
+            [_following.view raceTo:CGPointMake(0, 0) withSnapBack:YES];
+            [_followers.view raceTo:CGPointMake(320, 0) withSnapBack:YES withDelegate:self withSelector:@selector(resetIsSegTapAllowed)];
+            
+        }
     }
 }
 
-- (void)uiview:(UIView *)uiview raceTo:(CGPoint)destination withSnapBack:(BOOL)withSnapBack
+- (void)resetIsSegTapAllowed
 {
-    CGPoint stopPoint = destination;
-    if (withSnapBack) {
-        // Determine our stop point, from which we will "snap back" to the final destination
-        int diffx = destination.x - uiview.frame.origin.x;
-        int diffy = destination.y - uiview.frame.origin.y;
-        if (diffx < 0) {
-            // Destination is to the left of current position
-            stopPoint.x -= 10.0;
-        } else if (diffx > 0) {
-            stopPoint.x += 10.0;
-        }
-        if (diffy < 0) {
-            // Destination is to the left of current position
-            stopPoint.y -= 10.0;
-        } else if (diffy > 0) {
-            stopPoint.y += 10.0;
-        }
-    }
+    _isSegTapAllowed = YES;
+    _segmentedControl.enabled = YES;
     
-    // Do the animation
-    [UIView animateWithDuration:0.5 
-                          delay:0.0 
-                        options:UIViewAnimationCurveEaseIn
-                     animations:^{
-                         uiview.frame = CGRectMake(stopPoint.x, stopPoint.y, uiview.frame.size.width, uiview.frame.size.height);
-                     }
-                     completion:^(BOOL finished) {
-                         if (withSnapBack) {
-                             [UIView animateWithDuration:0.2 
-                                                   delay:0.0 
-                                                 options:UIViewAnimationCurveLinear
-                                              animations:^{
-                                                  uiview.frame = CGRectMake(destination.x, destination.y, uiview.frame.size.width, uiview.frame.size.height);
-                                              }
-                                              completion:^(BOOL value){
-                                                  
-                                                  if (!_isFollowersVisible) {
-                                                      
-                                                      [_followers.view setHidden:YES];
-                                                  }
-                                              }];
-                         }
-                     }];    
+    if (!_isFollowersVisible) {
+        
+        [_followers.view setHidden:YES];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated

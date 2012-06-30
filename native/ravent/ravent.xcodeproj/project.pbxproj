@@ -372,6 +372,8 @@
 		DFF02DE11540B39500FED164 /* controllers_App.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF02DE01540B39500FED164 /* controllers_App.m */; };
 		DFF134001593E897004190AC /* controllers_watchlist_WatchList.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF133FF1593E897004190AC /* controllers_watchlist_WatchList.m */; };
 		DFF134031593EDA8004190AC /* controllers_watchlist_Container.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF134021593EDA8004190AC /* controllers_watchlist_Container.m */; };
+		DFF1775A159C352600F1FBA9 /* grayNavbar.png in Resources */ = {isa = PBXBuildFile; fileRef = DFF17759159C352600F1FBA9 /* grayNavbar.png */; };
+		DFF1775C159C360D00F1FBA9 /* grayToolbar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DFF1775B159C360D00F1FBA9 /* grayToolbar@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -928,6 +930,8 @@
 		DFF133FF1593E897004190AC /* controllers_watchlist_WatchList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = controllers_watchlist_WatchList.m; sourceTree = "<group>"; };
 		DFF134011593EDA8004190AC /* controllers_watchlist_Container.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = controllers_watchlist_Container.h; sourceTree = "<group>"; };
 		DFF134021593EDA8004190AC /* controllers_watchlist_Container.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = controllers_watchlist_Container.m; sourceTree = "<group>"; };
+		DFF17759159C352600F1FBA9 /* grayNavbar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grayNavbar.png; sourceTree = "<group>"; };
+		DFF1775B159C360D00F1FBA9 /* grayToolbar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grayToolbar@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1507,6 +1511,8 @@
 		DF75ACC91541E7D400150465 /* background */ = {
 			isa = PBXGroup;
 			children = (
+				DFF1775B159C360D00F1FBA9 /* grayToolbar@2x.png */,
+				DFF17759159C352600F1FBA9 /* grayNavbar.png */,
 				DF8D4152159A45F700351A6F /* grayToolbar.png */,
 				DF30ED8515993372008F6AC1 /* grayDetails.png */,
 				DF9CED3C15833640002B1024 /* picbg3.png */,
@@ -2369,6 +2375,8 @@
 				DF6CA42E159AB06100FFBB90 /* graySnapSelected.png in Resources */,
 				DF6CA42F159AB06100FFBB90 /* grayWatch.png in Resources */,
 				DF6CA430159AB06100FFBB90 /* grayWatchSelected.png in Resources */,
+				DFF1775A159C352600F1FBA9 /* grayNavbar.png in Resources */,
+				DFF1775C159C360D00F1FBA9 /* grayToolbar@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2551,7 +2559,7 @@
 					"$(SOURCE_ROOT)/Kal",
 					"\"$(SOURCE_ROOT)/RestKit/Build\"",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = "";
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -2581,7 +2589,7 @@
 					"$(SOURCE_ROOT)/Kal",
 					"\"$(SOURCE_ROOT)/RestKit/Build\"",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = "\"$(SOURCE_ROOT)/RestKit/Build/$(BUILD_STYLE)-$(PLATFORM_NAME)\"";
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				OTHER_LDFLAGS = (
@@ -2609,11 +2617,12 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ravent/ravent-Prefix.pch";
 				INFOPLIST_FILE = "ravent/ravent-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/facebook-ios-sdk\"",
 				);
+				"OTHER_CFLAGS[arch=*]" = "-mthumb";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "67C20EBB-AA59-4A4B-B4BF-60479C59B59C";
 				SDKROOT = iphoneos;
@@ -2637,11 +2646,12 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ravent/ravent-Prefix.pch";
 				INFOPLIST_FILE = "ravent/ravent-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/facebook-ios-sdk\"",
 				);
+				"OTHER_CFLAGS[arch=*]" = "-mthumb";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "67C20EBB-AA59-4A4B-B4BF-60479C59B59C";
 				SDKROOT = iphoneos;

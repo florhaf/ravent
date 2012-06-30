@@ -7,7 +7,8 @@
 //
 
 #import "controllers_events_Details_Map.h"
-
+#import "YRDropdownView.h"
+#import "controllers_App.h"
 #import "models_User.h"
 
 @implementation controllers_events_Details_Map
@@ -42,7 +43,23 @@
     zoomLocation.longitude= [_event.longitude floatValue];
     MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(zoomLocation, 0.3*METERS_PER_MILE, 0.3*METERS_PER_MILE);
     MKCoordinateRegion adjustedRegion = [_map regionThatFits:viewRegion];                
-    [_map setRegion:adjustedRegion animated:YES];
+    //[_map setRegion:adjustedRegion animated:YES];
+    
+    @try {
+        
+        [_map setRegion:adjustedRegion animated:YES];
+    }
+    @catch (NSException *exception) {
+        
+        [YRDropdownView showDropdownInView:[controllers_App instance].view 
+                                     title:@"Map Error" 
+                                    detail:exception.reason
+                                     image:[UIImage imageNamed:@"dropdown-alert"]
+                                  animated:YES];
+    }
+    @finally {
+        // nothing
+    }
     
     //_map.showsUserLocation = YES;
     

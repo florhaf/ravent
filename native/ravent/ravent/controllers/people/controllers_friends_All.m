@@ -192,10 +192,19 @@ static controllers_friends_All *_ctrl;
      
         [[NSBundle mainBundle] loadNibNamed:@"views_friends_item_All" owner:self options:nil];
         
-        _itemTitle.text = [NSString stringWithFormat:@"%@ %@", u.firstName, u.lastName];
-        _itemImage.imageURL = [NSURL URLWithString:u.picture];
+        // image
+        if ([_imagesCache.allKeys containsObject:u.picture]) {
+            
+            _itemImage.image = (UIImage *)[_imagesCache objectForKey:u.picture];
+        } else {
+            
+            _itemImage.imageURL = [NSURL URLWithString:u.picture];
+            _itemImage.delegate = self;
+        }
         _itemImage.clipsToBounds = YES;
         _itemImage.contentMode = UIViewContentModeScaleAspectFill;
+        
+        _itemTitle.text = [NSString stringWithFormat:@"%@ %@", u.firstName, u.lastName];
         
         //if ([u.isFollowed isEqualToString:@"true"]) {
         
@@ -262,11 +271,7 @@ static controllers_friends_All *_ctrl;
     } else {
         
         path = [self.tableView indexPathForCell:cell];
-        
-        NSString *key = [_sortedKeys objectAtIndex:path.section];
-        NSMutableArray *rows = [_groupedData objectForKey:key];
-        
-        friend = [rows objectAtIndex:path.row]; 
+        friend = [self getObjForSection:path.section andRow:path.row];
     }
     
     [params setValue:friend.uid forKey:@"friendID"];
@@ -295,9 +300,15 @@ static controllers_friends_All *_ctrl;
                 
                 NSMutableArray *array = (NSMutableArray *)[_following objectForKey:key];
                 
-                [array removeObject:userToRemove];
-                
-                [_following setObject:array forKey:key];
+                if (array != nil) {
+                    
+                    [array removeObject:userToRemove];
+                    
+                    if (key != nil) {
+                     
+                        [_following setObject:array forKey:key]; 
+                    }
+                }
                 
                 break;
             }
@@ -314,20 +325,25 @@ static controllers_friends_All *_ctrl;
         NSMutableArray *a = [[NSMutableArray alloc] init];
         NSString *key = [[friend.lastName uppercaseString] substringToIndex:1];
         
-        if (_following == nil) {
+        if (key != nil) {
+         
+            if (_following == nil) {
+                
+                _following = [[NSMutableDictionary alloc] init];
+            } else {
+                
+                if ((NSMutableArray *)[_following objectForKey:key] != nil) {
+                    
+                    a = (NSMutableArray *)[_following objectForKey:key];
+                }
+            }
             
-            _following = [[NSMutableDictionary alloc] init];
-        } else {
-        
-            if ((NSMutableArray *)[_following objectForKey:key] != nil) {
-             
-                a = (NSMutableArray *)[_following objectForKey:key];
+            if (friend != nil && a != nil && key != nil) {
+                
+                [a addObject:friend];
+                [_following setObject:a forKey:key];   
             }
         }
-        
-        [a addObject:friend];
-        [_following setObject:a forKey:key];
-        
     }
     
     _isDirty = YES;

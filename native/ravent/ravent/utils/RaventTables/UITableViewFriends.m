@@ -82,11 +82,22 @@
     
     if (u != nil) {
      
-        _itemTitle.text = [NSString stringWithFormat:@"%@ %@", u.firstName, u.lastName];
-        _itemSubTitle.text = (u.rsvpStatus != nil && ![u.rsvpStatus isEqualToString:@""]) ? u.rsvpStatus : @"not replied";
-        _itemImage.imageURL = [NSURL URLWithString:u.picture];
+        
+        // image
+        if ([_imagesCache.allKeys containsObject:u.picture]) {
+            
+            _itemImage.image = (UIImage *)[_imagesCache objectForKey:u.picture];
+        } else {
+            
+            _itemImage.imageURL = [NSURL URLWithString:u.picture];
+            _itemImage.delegate = self;
+        }
         _itemImage.clipsToBounds = YES;
         _itemImage.contentMode = UIViewContentModeScaleAspectFill;
+        
+        _itemTitle.text = [NSString stringWithFormat:@"%@ %@", u.firstName, u.lastName];
+        _itemSubTitle.text = (u.rsvpStatus != nil && ![u.rsvpStatus isEqualToString:@""]) ? u.rsvpStatus : @"not replied";
+
         
         [cell.contentView addSubview:_item];
     }

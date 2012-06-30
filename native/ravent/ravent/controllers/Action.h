@@ -10,11 +10,11 @@
 
 @interface Action : NSObject {
     
-    id __unsafe_unretained _delegate;
+    id __weak _delegate;
     SEL _selector;
 }
 
-@property (unsafe_unretained) id delegate;
+@property (weak) id delegate;
 @property (nonatomic, assign) SEL selector;
 
 - (id)initWithDelegate:(id)delegate andSelector:(SEL)selector;

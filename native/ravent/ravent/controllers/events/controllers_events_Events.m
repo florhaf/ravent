@@ -12,6 +12,7 @@
 #import "controllers_events_Details.h"
 #import "controllers_events_Options_p2p.h"
 #import "ActionDispatcher.h"
+#import "UIView+Animation.h"
 
 @implementation controllers_events_Events
 
@@ -49,6 +50,8 @@ static customNavigationController *_ctrl;
     
     [self addChildViewController:[controllers_events_Map_p2p instance]];
     [self addChildViewController:[controllers_events_List_p2p instance]];
+    
+    [controllers_events_List_p2p instance].view.frame = CGRectMake(0, 0, 320, 416);
     
     [self.view addSubview:[controllers_events_List_p2p instance].view];
     
@@ -109,6 +112,22 @@ static customNavigationController *_ctrl;
     [_toolbar insertSubview:bg atIndex:1];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onValueChanged:) name:@"onLoadEventsP2P" object:[controllers_events_List_p2p instance]];
+    
+    
+    // OPTIONS
+    [self.view bringSubviewToFront:_optionsView];
+    
+    _radiusStepper.value = [models_User crtUser].searchRadius;
+    _radiusStepper.minimumValue = 1;
+    _radiusStepper.maximumValue = 50;
+    _radiusStepper.stepValue = 15;
+    _radiusStepper.continuous = NO;
+    
+    _windowStepper.value = [models_User crtUser].searchWindow / 24;
+    _windowStepper.minimumValue = 1;
+    _windowStepper.maximumValue = 15;
+    _windowStepper.stepValue = 2;
+    _windowStepper.continuous = NO;
 }
 
 - (IBAction)onValueChanged:(id)sender
@@ -117,6 +136,75 @@ static customNavigationController *_ctrl;
     int selectedIndex = seg.selectedSegmentIndex;
     
     [[controllers_events_List_p2p instance] reloadTableViewDataSourceWithIndex:selectedIndex];
+    
+    [[controllers_events_Map_p2p instance] loadData:[controllers_events_List_p2p instance].data];
+}
+
+- (IBAction)onSO_Tap:(id)sender
+{
+    
+    if (_optionsView.frame.origin.y == 200) {
+        
+        [_optionsView raceTo:CGPointMake(0, 372) withSnapBack:YES];   
+        [_optionsButton setTitle:@"Search Options" forState:UIControlStateNormal];
+        if (_isDirty) {
+            
+            _isDirty = NO;
+            [[controllers_events_List_p2p instance] loadDataWithSpinner];
+        }
+    } else {
+        
+        [_optionsView raceTo:CGPointMake(0, 200) withSnapBack:YES];  
+        [_optionsButton setTitle:@"Done" forState:UIControlStateNormal];
+    }
+}
+
+- (IBAction)stepperRadiusPressed:(UIStepper *)sender
+{
+    [models_User crtUser].searchRadius = (int)sender.value;
+    _labelRadiusValue.text = [NSString stringWithFormat:@"%d mi.",  (int)sender.value];
+    _isDirty = YES;
+}
+
+- (IBAction)stepperWindowPressed:(UIStepper *)sender
+{
+    [models_User crtUser].searchWindow = (int)sender.value * 24; // need to send in hours to the WS
+    _labelWindowValue.text = [NSString stringWithFormat:@"%d day", (int)sender.value];    
+    _isDirty = YES;
+}
+
+- (IBAction)onPartyButton_Tap:(id)sender
+{
+    [[controllers_events_List_p2p instance].tableView scrollRectToVisible:CGRectMake(0, -55, 1, 1) animated:YES];
+    
+    [[controllers_events_List_p2p instance] reloadTableViewDataSourceWithIndex:0];
+    
+    [[controllers_events_Map_p2p instance] loadData:[controllers_events_List_p2p instance].data];
+}
+
+- (IBAction)onChillButton_Tap:(id)sender
+{
+    [[controllers_events_List_p2p instance].tableView scrollRectToVisible:CGRectMake(0, -55, 1, 1) animated:YES];
+    
+    [[controllers_events_List_p2p instance] reloadTableViewDataSourceWithIndex:1];
+    
+    [[controllers_events_Map_p2p instance] loadData:[controllers_events_List_p2p instance].data];
+}
+
+- (IBAction)onArtButton_Tap:(id)sender
+{
+    [[controllers_events_List_p2p instance].tableView scrollRectToVisible:CGRectMake(0, -55, 1, 1) animated:YES];
+    
+    [[controllers_events_List_p2p instance] reloadTableViewDataSourceWithIndex:2];
+    
+    [[controllers_events_Map_p2p instance] loadData:[controllers_events_List_p2p instance].data];
+}
+
+- (IBAction)onMiscButton_Tap:(id)sender
+{
+    [[controllers_events_List_p2p instance].tableView scrollRectToVisible:CGRectMake(0, -55, 1, 1) animated:YES];
+    
+    [[controllers_events_List_p2p instance] reloadTableViewDataSourceWithIndex:3];
     
     [[controllers_events_Map_p2p instance] loadData:[controllers_events_List_p2p instance].data];
 }

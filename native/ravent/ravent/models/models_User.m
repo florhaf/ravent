@@ -111,8 +111,8 @@ static models_User *_crtUser = nil;
     _crtUser.picture = u.picture;
     _crtUser.latitude = @"";
     _crtUser.longitude = @"";
-    _crtUser.searchWindow = 24;
-    _crtUser.searchRadius = 10;
+    _crtUser.searchWindow = 48;
+    _crtUser.searchRadius = 15;
     _crtUser.timeZone = [NSString stringWithFormat:@"%d", [[NSTimeZone localTimeZone] secondsFromGMT] / 60 ];
     _crtUser.accessToken = u.accessToken;
 
@@ -366,6 +366,10 @@ static models_User *_crtUser = nil;
 {
     [[_manager requestQueue] cancelAllRequests];
     [[[RKClient sharedClient] requestQueue] cancelAllRequests];
+    
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(updateLoadingMessage:) object:nil];
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(updateLoadingMessage2:) object:nil];
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(updateLoadingMessage3:) object:nil];
 }
 
 - (void)follow:(NSMutableDictionary *)params success:(SEL)success failure:(SEL)failure sender:(id)sender
@@ -477,6 +481,16 @@ static models_User *_crtUser = nil;
     }
     
     return result;
+}
+
+- (void)dealloc
+{
+    [self cancelAllRequests];
+    self.delegate = nil;
+    self.locationDelegate = nil;
+    _sender = nil;
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:GPSDone object:[GPSManager instance]];
 }
 
 @end

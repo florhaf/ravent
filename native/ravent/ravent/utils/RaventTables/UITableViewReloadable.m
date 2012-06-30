@@ -37,8 +37,6 @@ typedef enum {
         
         self.title = @"Ravent";
         _showEmptyMessage = NO;
-        
-        
     }
     return self;
 }
@@ -46,6 +44,10 @@ typedef enum {
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
+    
+    _imagesCache = nil;
+    
+    _imagesCache = [[NSMutableDictionary alloc] init];
 }
 
 - (void)updateLoadingMessageWith:(NSString *)text
@@ -66,8 +68,10 @@ typedef enum {
 {
     [super viewDidLoad];
     
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    self.tableView.backgroundColor = [UIColor clearColor];
+    if (_imagesCache == nil) {
+     
+        _imagesCache = [[NSMutableDictionary alloc] init];
+    }
     
     if (!_isNotReloadable) { 
         
@@ -75,13 +79,15 @@ typedef enum {
 		
             EGORefreshTableHeaderView *view = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.tableView.bounds.size.height, self.view.frame.size.width, self.tableView.bounds.size.height)];
             view.delegate = self;
-            [self.tableView addSubview:view];
             _refreshHeaderView = view;
         }
 	
         [_refreshHeaderView refreshLastUpdatedDate];
     }
     
+    [self.tableView addSubview:_refreshHeaderView];
+    
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.backgroundColor = [UIColor colorWithRed:227 green:222 blue:216 alpha:1];
 }
 
@@ -470,6 +476,14 @@ typedef enum {
     }
     
     return nil;
+}
+
+-(void)imageView:(JBAsyncImageView *)sender loadedImage:(UIImage *)imageLoaded fromURL:(NSURL *)url
+{
+    if (imageLoaded != nil && url != nil) {
+        
+        [_imagesCache setObject:imageLoaded forKey:[NSString stringWithFormat:@"%@", url]];
+    }
 }
 
 @end

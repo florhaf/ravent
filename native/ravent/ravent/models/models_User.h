@@ -12,7 +12,7 @@
 
 @interface models_User : NSObject<RKObjectLoaderDelegate, RKRequestDelegate/*, CLLocationManagerDelegate*/> {
     
-    id __unsafe_unretained _delegate;
+    id __weak _delegate;
     // callback for object loading
     SEL _callback;
     // callback for raw response
@@ -21,7 +21,7 @@
     id _sender;
     
 //    CLLocationManager *_locationManager;
-    id __unsafe_unretained _locationDelegate;
+    id __weak  _locationDelegate;
     SEL _locationSuccess;
     SEL _locationFailure;
 //    NSDate *_locationLastUpdateTime;
@@ -54,13 +54,13 @@
     int _searchWindow;
 }
 
-@property (unsafe_unretained) id delegate;
+@property (weak) id delegate;
 @property (nonatomic, assign) SEL callback;
 @property (nonatomic, assign) SEL callbackResponseSuccess;
 @property (nonatomic, assign) SEL callbackResponseFailure;
 
 //@property (nonatomic, retain) CLLocationManager *locationManager;
-@property (unsafe_unretained) id locationDelegate;
+@property (weak) id locationDelegate;
 @property (nonatomic, assign) SEL locationSuccess;
 @property (nonatomic, assign) SEL locationFailure;
 

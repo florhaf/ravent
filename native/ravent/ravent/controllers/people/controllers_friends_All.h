@@ -16,7 +16,7 @@
     IBOutlet UISwitch *_switch;
 }
 
-@property (nonatomic, unsafe_unretained) CGFloat peekLeftAmount;
+@property (nonatomic, assign) CGFloat peekLeftAmount;
 @property (nonatomic, retain) NSMutableDictionary *following;
 
 - (id)initWithUser:(models_User *)user following:(NSMutableDictionary *)following;

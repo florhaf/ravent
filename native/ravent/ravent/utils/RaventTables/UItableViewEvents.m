@@ -24,10 +24,14 @@
         _titleSize = CGSizeMake(_itemTitle.frame.size.width, _itemTitle.frame.size.height);
         _subTitleSize = CGSizeMake(_itemSubTitle.frame.size.width, _itemSubTitle.frame.size.height);
         
+        
+        
         _user = user;
         _event = [[models_Event alloc] initWithDelegate:self andSelector:@selector(onLoadEvents:)];
         
         [self loadDataWithUserLocation];
+        
+        _hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     }
     
     return self;
@@ -117,14 +121,25 @@
     if (event != nil) {
     
         [[NSBundle mainBundle] loadNibNamed:@"views_events_item_Event" owner:self options:nil];
-    
-        _itemTitle.text = event.name;
-        _itemSubTitle.text = event.location;
-        _itemImage.imageURL = [NSURL URLWithString:event.pic_big];
+
+        
+        // image
+        if ([_imagesCache.allKeys containsObject:event.pic_big]) {
+            
+            _itemImage.image = (UIImage *)[_imagesCache objectForKey:event.pic_big];
+        } else {
+            
+            _itemImage.imageURL = [NSURL URLWithString:event.pic_big];
+            _itemImage.delegate = self;
+        }
         _itemImage.clipsToBounds = YES;
         _itemImage.contentMode = UIViewContentModeScaleAspectFill;
+        
+        _itemTitle.text = event.name;
+        _itemSubTitle.text = event.location;
         _itemTime.text = [[NSString stringWithFormat:@"%@ - %@", event.timeStart, event.timeEnd] lowercaseString];
         _itemDistance.text = [NSString stringWithFormat:@"%@ mi.", event.distance];
+        _itemVenueCategory.text = event.venue_category;
         
         for (int i = 0; i < [event.score intValue]; i++) {
         
@@ -133,8 +148,6 @@
         }
     
         _itemTitle.font = [_itemTitle.font fontWithSize:[self getFontSizeForLabel:_itemTitle]];
-    
-        //[self resizeAndPositionCellItem];
     
         [cell.contentView addSubview:_item];
     }
@@ -167,7 +180,36 @@
 
     [self.navigationController pushViewController:_details animated:YES];    
     self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
-    self.navigationController.navigationBar.alpha = 0.0;
+    
+    UIImage *backi = [UIImage imageNamed:@"backButton"];
+    
+    UIButton *backb = [UIButton buttonWithType:UIButtonTypeCustom];
+    [backb addTarget:self action:@selector(onBackTap) forControlEvents:UIControlEventTouchUpInside];
+    [backb setImage:backi forState:UIControlStateNormal];
+    [backb setFrame:CGRectMake(0, 0, backi.size.width, backi.size.height)];
+    
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:backb];
+    
+    UIViewController *rootController = self;
+    
+    while (![rootController.parentViewController isKindOfClass:[UINavigationController class]]) {
+        
+        rootController = rootController.parentViewController;
+    }
+    
+    [rootController.navigationItem hidesBackButton];
+    [_details.navigationItem setLeftBarButtonItem:backButton];
+    
+    
+    [self performSelector:@selector(fadeToolbar) withObject:nil afterDelay:0.3];
+}
+
+- (void)fadeToolbar
+{
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:0.5];
+    [self.navigationController.navigationBar setAlpha:0.5];
+    [UIView commitAnimations];
 }
 
 - (void)onBackTap
@@ -187,6 +229,8 @@
     [super viewDidUnload];
     
     [_event cancelAllRequests];
+    
+    _imagesCache = nil;
 }
 
 @end

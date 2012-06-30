@@ -34,6 +34,7 @@
     IBOutlet UIView *_container;
     
     BOOL _isFollowersVisible;
+    BOOL _isSegTapAllowed;
     
     UIViewController *_details;
 }
@@ -48,7 +49,6 @@
 
 - (IBAction)onSegmentedControlValueChanged;
 
-- (void)uiview:(UIView *)uiview raceTo:(CGPoint)destination withSnapBack:(BOOL)withSnapBack;
 
 + (customNavigationController *)instance;
 + (void)release;

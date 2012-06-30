@@ -53,7 +53,7 @@ const NSInteger UncaughtExceptionHandlerReportAddressCount = 5;
 {
 	if (anIndex == 0)
 	{
-		//dismissed = YES;
+		dismissed = YES;
 	}
 }
 
@@ -75,8 +75,8 @@ const NSInteger UncaughtExceptionHandlerReportAddressCount = 5;
 				[exception reason],
 				[[exception userInfo] objectForKey:UncaughtExceptionHandlerAddressesKey]]
 			delegate:self
-			cancelButtonTitle:nil
-			otherButtonTitles:NSLocalizedString(@"Continue", nil), nil]
+          cancelButtonTitle:NSLocalizedString(@"Quit", nil)
+          otherButtonTitles:NSLocalizedString(@"Continue", nil), nil]
 		autorelease];
 	[alert show];
 	
@@ -87,6 +87,8 @@ const NSInteger UncaughtExceptionHandlerReportAddressCount = 5;
 	{
 		for (NSString *mode in (NSArray *)allModes)
 		{
+            NSLog(@"%@", mode);
+            
 			CFRunLoopRunInMode((CFStringRef)mode, 0.001, false);
 		}
 	}

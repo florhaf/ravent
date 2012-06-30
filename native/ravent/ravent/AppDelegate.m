@@ -20,6 +20,7 @@
 @synthesize managedObjectModel = __managedObjectModel;
 @synthesize persistentStoreCoordinator = __persistentStoreCoordinator;
 
+
 - (void)installUncaughtExceptionHandler
 {
 	InstallUncaughtExceptionHandler();
@@ -34,8 +35,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [self performSelector:@selector(installUncaughtExceptionHandler) withObject:nil afterDelay:0];
-    
+    //[self performSelector:@selector(installUncaughtExceptionHandler) withObject:nil afterDelay:0];
     //[self performSelector:@selector(badAccess) withObject:nil afterDelay:4.0];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -53,7 +53,6 @@
     [[JMC sharedInstance] configureJiraConnect:@"https://ravent.atlassian.net/"
                                     projectKey:@"RAV"
                                         apiKey:@"eb74bda1-a5a5-4ac8-80ea-b0ce502c926a"];
-    
     
     
     return YES;
@@ -87,6 +86,13 @@
     /*
      Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
      */
+    
+    if (_isNotStarting) {
+        
+        [[JMC sharedInstance] ping];   
+        
+    }
+    _isNotStarting = YES;
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
@@ -104,10 +110,7 @@
     NSManagedObjectContext *managedObjectContext = self.managedObjectContext;
     if (managedObjectContext != nil) {
         if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
-            // Replace this implementation with code to handle the error appropriately.
-            // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
             NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-            abort();
         } 
     }
 }
@@ -159,31 +162,8 @@
     NSError *error = nil;
     __persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
     if (![__persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]) {
-        /*
-         Replace this implementation with code to handle the error appropriately.
-         
-         abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
-         
-         Typical reasons for an error here include:
-         * The persistent store is not accessible;
-         * The schema for the persistent store is incompatible with current managed object model.
-         Check the error message to determine what the actual problem was.
-         
-         
-         If the persistent store is not accessible, there is typically something wrong with the file path. Often, a file URL is pointing into the application's resources directory instead of a writeable directory.
-         
-         If you encounter schema incompatibility errors during development, you can reduce their frequency by:
-         * Simply deleting the existing store:
-         [[NSFileManager defaultManager] removeItemAtURL:storeURL error:nil]
-         
-         * Performing automatic lightweight migration by passing the following dictionary as the options parameter: 
-         [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:YES], NSMigratePersistentStoresAutomaticallyOption, [NSNumber numberWithBool:YES], NSInferMappingModelAutomaticallyOption, nil];
-         
-         Lightweight migration will only work for a limited set of schema changes; consult "Core Data Model Versioning and Data Migration Programming Guide" for details.
-         
-         */
+        
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-        abort();
     }    
     
     return __persistentStoreCoordinator;

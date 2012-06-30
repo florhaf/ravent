@@ -93,9 +93,9 @@
 {
     if (objects == nil || [objects count] == 0) {
         
-        _eventsLabel.text = @"?";
-        _followersLabel.text = @"?";
-        _followingLabel.text = @"?";
+        _eventsLabel.text = @"0";
+        _followersLabel.text = @"0";
+        _followingLabel.text = @"0";
         return;
     }
     
@@ -103,9 +103,9 @@
     
     if ([u isKindOfClass:[NSError class]]) {
         
-        _eventsLabel.text = @"?";
-        _followersLabel.text = @"?";
-        _followingLabel.text = @"?";
+        _eventsLabel.text = @"X";
+        _followersLabel.text = @"X";
+        _followingLabel.text = @"X";
         return;
     }
 

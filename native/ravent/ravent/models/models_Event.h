@@ -12,7 +12,7 @@
 
 @interface models_Event : NSObject<RKObjectLoaderDelegate, RKRequestDelegate, MKAnnotation> {
     
-    id __unsafe_unretained _delegate;
+    id __weak _delegate;
     SEL _callback;
     
     // callback for raw response
@@ -30,6 +30,7 @@
     
     
     BOOL _isRequesting;
+    BOOL _isCancelled;
     
     RKObjectManager *_manager;    
     
@@ -58,9 +59,8 @@
     CLLocationCoordinate2D _coordinate;
 }
 
-@property (unsafe_unretained) id delegate;
+@property (nonatomic, weak) id delegate;
 @property (nonatomic, assign) SEL callback;
-
 @property (nonatomic, assign) SEL callbackResponseSuccess;
 @property (nonatomic, assign) SEL callbackResponseFailure;
 

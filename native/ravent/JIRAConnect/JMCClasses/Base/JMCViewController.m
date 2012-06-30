@@ -704,7 +704,10 @@ static NSInteger kJMCTag = 10133;
         if (attachment.thumbnail) {
             UIImageView *iconView = [[UIImageView alloc] initWithImage:attachment.thumbnail];
             iconView.tag = kJMCTag;
-            [subviews insertObject:iconView atIndex:0];
+            if (iconView != nil) {
+             
+                [subviews insertObject:iconView atIndex:0];
+            }
             [iconView release];
         }
     }

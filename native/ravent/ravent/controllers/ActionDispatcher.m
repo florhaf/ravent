@@ -39,7 +39,10 @@ static ActionDispatcher *dispatcher = nil;
 
 - (void)add:(Action *)action named:(NSString *)name
 {
-    [_actions setValue:action forKey:name];
+    if (action != nil && name != nil) {
+     
+        [_actions setValue:action forKey:name];
+    }
 }
 
 - (void)del:(NSString *)name

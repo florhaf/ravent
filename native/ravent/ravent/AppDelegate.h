@@ -10,7 +10,10 @@
 #import "controllers_App.h"
 
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate> {
+    
+    BOOL _isNotStarting;
+}
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) controllers_App *appController;

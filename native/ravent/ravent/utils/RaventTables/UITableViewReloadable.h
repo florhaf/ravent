@@ -17,7 +17,7 @@
 
 typedef void (^success)();
 
-@interface UITableViewReloadable : UITableViewController <EGORefreshTableHeaderDelegate, UITableViewDelegate, UITableViewDataSource> {
+@interface UITableViewReloadable : UITableViewController <EGORefreshTableHeaderDelegate, UITableViewDelegate, UITableViewDataSource, JBAsyncImageViewDelegate> {
     
     models_User *_user;
     models_Event *_event;
@@ -48,6 +48,8 @@ typedef void (^success)();
     
     NSString *_url;
     MBProgressHUD *_hud;
+    
+    NSMutableDictionary *_imagesCache;
 }
 
 @property (nonatomic, retain) NSArray *data;

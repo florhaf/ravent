@@ -28,15 +28,20 @@
 @synthesize selectorBack = _selectorBack;
 @synthesize coordinate = _coordinate;
 
+static int _retryCounter;
+
 - (id)initWithEvent:(models_Event *)event withBackDelegate:(id)delegate backSelector:(SEL)sel
 {
     self = [super initWithEvent:event];
     
     if (self != nil) {
         
+        _retryCounter = 0;
         _isNotReloadable = YES;
         _delegateBack = delegate;
         _selectorBack = sel;
+        
+        self.title = @"";
         
         [[NSBundle mainBundle] loadNibNamed:@"views_events_Details" owner:self options:nil];
         
@@ -58,17 +63,6 @@
     }
     
     return self;
-}
-
-- (void)onPicturesLoad:(NSArray *)objects
-{
-    if (objects != nil) {
-        
-        for (models_Comment *pic in objects) {
-        
-            [_photos addObject:[MWPhoto photoWithURL:[NSURL URLWithString:pic.picture]]];
-        }
-    }
 }
 
 - (void)share:(NSArray *)friends
@@ -318,8 +312,8 @@
     [_header bringSubviewToFront:_voteView];
     
     [YRDropdownView showDropdownInView:[controllers_App instance].view 
-                                 title:@"Success" 
-                                detail:@"Vote submitted"
+                                 title:@"Woooo" 
+                                detail:@"You just dropped a Gem!"
                                  image:[UIImage imageNamed:@"dropdown-alert"]
                               animated:YES];
 }
@@ -342,7 +336,11 @@
     NSString *rsvpValue = @"yes";
     _event.rsvp_status = @"attending";
     
-    if (_segment.selectedSegmentIndex == 1) {
+    if (_segment.selectedSegmentIndex == 0) {  
+    
+        [[Store instance]saveEvent:_event];
+        
+    } else if (_segment.selectedSegmentIndex == 1) {
         
         rsvpValue = @"maybe";
         _event.rsvp_status = @"maybe attending";
@@ -399,7 +397,7 @@
                 
         _backButton.frame = CGRectMake(_backButton.frame.origin.x, scrollView.contentOffset.y + 6, _backButton.frame.size.width, _backButton.frame.size.height);
         
-        _map.frame = CGRectMake(0, -260 + scrollView.contentOffset.y / 2, _map.frame.size.width, _map.frame.size.height);
+        _map.frame = CGRectMake(0, -240 + scrollView.contentOffset.y / 2, _map.frame.size.width, _map.frame.size.height);
     }
 }
 
@@ -461,7 +459,24 @@
         _zoomLocation.longitude= [_event.longitude floatValue];
         _viewRegion = MKCoordinateRegionMakeWithDistance(_zoomLocation, 0.3*METERS_PER_MILE, 0.3*METERS_PER_MILE);
         MKCoordinateRegion adjustedRegion = [_map regionThatFits:_viewRegion];                
-        [_map setRegion:adjustedRegion animated:NO];
+        //[_map setRegion:adjustedRegion animated:NO];
+        
+        
+        @try {
+            
+            [_map setRegion:adjustedRegion animated:YES];
+        }
+        @catch (NSException *exception) {
+            
+            [YRDropdownView showDropdownInView:[controllers_App instance].view 
+                                             title:@"Map Error" 
+                                            detail:exception.reason
+                                             image:[UIImage imageNamed:@"dropdown-alert"]
+                                          animated:YES];
+        }
+        @finally {
+            // nothing
+        }
         
         //_map.showsUserLocation = YES;
         
@@ -504,13 +519,13 @@
 {
     if (objects != nil && [objects count] > 0) {
         
-        if ([[objects objectAtIndex:0] isKindOfClass:[RKErrorMessage class]]) {
+        if ([[objects objectAtIndex:0] isKindOfClass:[NSError class]]) {
             
-            RKErrorMessage *error = (RKErrorMessage *)[objects objectAtIndex:0];
+            NSError *error = (NSError *)[objects objectAtIndex:0];
             
             [YRDropdownView showDropdownInView:[controllers_App instance].view 
-                                         title:@"Error stats" 
-                                        detail:error.errorMessage
+                                         title:@"Error loading stats" 
+                                        detail:error.localizedDescription
                                          image:[UIImage imageNamed:@"dropdown-alert"]
                                       animated:YES];
             
@@ -536,13 +551,13 @@
     if (objects != nil && [objects count] > 0) {
         
         
-        if ([[objects objectAtIndex:0] isKindOfClass:[RKErrorMessage class]]) {
+        if ([[objects objectAtIndex:0] isKindOfClass:[NSError class]]) {
             
-            RKErrorMessage *error = (RKErrorMessage *)[objects objectAtIndex:0];
+            NSError *error = (NSError *)[objects objectAtIndex:0];
             
             [YRDropdownView showDropdownInView:[controllers_App instance].view 
-                                         title:@"Error RSVP" 
-                                        detail:error.errorMessage
+                                         title:@"Error loading RSVP status" 
+                                        detail:error.localizedDescription
                                          image:[UIImage imageNamed:@"dropdown-alert"]
                                       animated:YES];
             
@@ -568,6 +583,34 @@
     }
     
     [_segment addTarget:self action:@selector(rsvp:) forControlEvents:UIControlEventValueChanged];
+}
+
+- (void)onPicturesLoad:(NSArray *)objects
+{
+    if (objects != nil) {
+        
+        if ([objects count] > 0) {
+            
+            id obj = [objects objectAtIndex:0];
+            
+            if ([obj isKindOfClass:[NSError class]]) {
+                
+                NSError *error = (NSError *)obj;
+                
+                [YRDropdownView showDropdownInView:[controllers_App instance].view 
+                                             title:@"Error loading pictures" 
+                                            detail:error.localizedDescription
+                                             image:[UIImage imageNamed:@"dropdown-alert"]
+                                          animated:YES];
+            } else {
+                
+                for (models_Comment *pic in objects) {
+                    
+                    [_photos addObject:[MWPhoto photoWithURL:[NSURL URLWithString:pic.picture]]];
+                }
+            }
+        }
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -632,6 +675,32 @@
     }
     
     return nil;
+}
+
+- (void)cancelAllRequests
+{
+    if (!_isButtonTap) {
+        
+        [super cancelAllRequests];
+        _isButtonTap = NO;   
+        
+        
+    }
+}
+
+- (void)dealloc 
+{
+    [self cancelAllRequests];
+    
+    _delegateBack = nil;
+    
+    _user = nil;
+    _event = nil;
+    _eventLoader = nil;
+    
+    _map = nil;
+
+    
 }
 
 @end

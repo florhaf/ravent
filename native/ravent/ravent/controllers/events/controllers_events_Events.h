@@ -26,10 +26,33 @@
     IBOutlet UIToolbar *_toolbar;
     IBOutlet UISegmentedControl *_seg;
     
+    IBOutlet UIView *_optionsView;
+    IBOutlet UIButton *_optionsButton;
+    
+    IBOutlet UIStepper *_radiusStepper;
+    IBOutlet UIStepper *_windowStepper;
+    
+    IBOutlet UILabel *_labelRadiusValue;
+    IBOutlet UILabel *_labelWindowValue;
+    
+    IBOutlet UIButton *_partyButton;
+    IBOutlet UIButton *_chillbutton;
+    IBOutlet UIButton *_artButton;
+    IBOutlet UIButton *_miscButton;
+    
     models_User *_user;
+    
+    BOOL _isDirty;
 }
 
 - (IBAction)onValueChanged:(id)sender;
+- (IBAction)onSO_Tap:(id)sender;
+- (IBAction)stepperWindowPressed:(UIStepper *)sender;
+- (IBAction)stepperRadiusPressed:(UIStepper *)sender;
+- (IBAction)onPartyButton_Tap:(id)sender;
+- (IBAction)onChillButton_Tap:(id)sender;
+- (IBAction)onArtButton_Tap:(id)sender;
+- (IBAction)onMiscButton_Tap:(id)sender;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil forUser:(models_User *)user;
 
