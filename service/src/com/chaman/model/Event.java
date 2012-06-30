@@ -189,6 +189,8 @@ public class Event extends Model implements Serializable {
 		
 		Event event;
 		
+		String previous_venue_time = "";
+		
         for (EventLocationCapable e : l) {
         	
         	if (actual_time < e.getTimeStampEnd()) { //if event not in the past
@@ -218,20 +220,25 @@ public class Event extends Model implements Serializable {
             		}
             	}
           	
-            	if (event != null && (event.venue_category == null || (event.venue_category != null && !event.venue_category.equals("city")))) {
+            	if (!previous_venue_time.equals(event.venue_id + event.start_time)) {  // to remove duplicate events
             		
-        			if (event.Format(timeZoneInMinutes, searchTimeFrame)){
-        				
-            			event.latitude 	= Double.toString(e.getLatitude());
-            			event.longitude = Double.toString(e.getLongitude());
-            			
-            			float distance = Geo.Fence(userLatitude, userLongitude, event.latitude, event.longitude);
-            			event.distance = String.format("%.2f", distance);
-
-            			syncCache.put(event.eid, event, null); //add event to cache
+                	if (event != null && (event.venue_category == null || (event.venue_category != null && !event.venue_category.equals("city")))) {
                 		
-            			result.add(event);
-        			}
+            			if (event.Format(timeZoneInMinutes, searchTimeFrame)){
+            				
+                			event.latitude 	= Double.toString(e.getLatitude());
+                			event.longitude = Double.toString(e.getLongitude());
+                			
+                			float distance = Geo.Fence(userLatitude, userLongitude, event.latitude, event.longitude);
+                			event.distance = String.format("%.2f", distance);
+
+                			previous_venue_time = event.venue_id + event.start_time;
+                			
+                			syncCache.put(event.eid, event, null); //add event to cache
+                    		
+                			result.add(event);
+            			}
+                	}
             	} 
         	} else { // event in the past
 					
