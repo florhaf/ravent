@@ -3,7 +3,7 @@ package com.chaman.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Collections;
+//import java.util.Collections;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -116,7 +116,7 @@ public class Event extends Model implements Serializable {
     	    if (e_cache == null) {
 			 	    	
     	    	e.venue_id = JSON.GetValueFor("id", e.venue);    	
-    	    	Venue v_graph = new Venue(accessToken, e.venue_id);
+    	    	Venue v_graph = Venue.getVenue(client, e.venue_id);
     	    	e.venue_category = v_graph.category;
 			
     	    	e.Filter_category();
@@ -203,9 +203,9 @@ public class Event extends Model implements Serializable {
         	
             			event = fbevents.get(0);
             			event.venue_id = JSON.GetValueFor("id", event.venue);
-        				Venue v_graph = new Venue(accessToken, event.venue_id);
+        				Venue v_graph =  Venue.getVenue(client, event.venue_id);
         				event.venue_category = v_graph.category;
-        				if (event.venue_category == null || (event.venue_category != null && !event.venue_category.equals("City"))) {
+        				if (event.venue_category == null || (event.venue_category != null && !event.venue_category.equals("city"))) {
         					event.Score(v_graph);
         					event.Filter_category();
         				}
@@ -218,7 +218,7 @@ public class Event extends Model implements Serializable {
             		}
             	}
           	
-            	if (event != null && (event.venue_category == null || (event.venue_category != null && !event.venue_category.equals("City")))) {
+            	if (event != null && (event.venue_category == null || (event.venue_category != null && !event.venue_category.equals("city")))) {
             		
         			if (event.Format(timeZoneInMinutes, searchTimeFrame)){
         				
@@ -280,10 +280,10 @@ public class Event extends Model implements Serializable {
 				    	    if (e_cache == null) {
 							 	    	
 				    	    	e.venue_id = JSON.GetValueFor("id", e.venue);    	
-				    	    	Venue v_graph = new Venue(u.getAccess_token(), e.venue_id);
+				    	    	Venue v_graph =  Venue.getVenue(client, e.venue_id);
 				    	    	e.venue_category = v_graph.category;
 							
-				    	    	if (e.venue_category == null || (e.venue_category != null && !e.venue_category.equals("City"))) {
+				    	    	if (e.venue_category == null || (e.venue_category != null && !e.venue_category.equals("city"))) {
 				    	    	
 					    	    	e.Score(v_graph);
 					    	    	
@@ -311,7 +311,7 @@ public class Event extends Model implements Serializable {
 					    	    	}   	
 					    	    }
 				    	    }
-				    	    if (e.venue_category == null || (e.venue_category != null && !e.venue_category.equals("City"))) {syncCache.put(e.eid, e, null);} // Add Event to cache
+				    	    if (e.venue_category == null || (e.venue_category != null && !e.venue_category.equals("city"))) {syncCache.put(e.eid, e, null);} // Add Event to cache
 						}
 					} catch (Exception ex ) {}
 				}		
@@ -347,7 +347,7 @@ public class Event extends Model implements Serializable {
 		e.Format(timeZoneInMinutes, 0);
 		
 		e.venue_id = JSON.GetValueFor("id", e.venue);
-		Venue v_graph = new Venue(accessToken, e.venue_id);
+		Venue v_graph = Venue.getVenue(client, e.venue_id);
 		e.venue_category = v_graph.category;
 		e.latitude 	= JSON.GetValueFor("latitude", e.venue);
 		e.longitude = JSON.GetValueFor("longitude", e.venue);
@@ -449,25 +449,19 @@ public class Event extends Model implements Serializable {
 		
 		if (this.venue_category != null) {
 			
-			if (this.venue_category.equals("Bar")) {
+			if (this.venue_category.contains("bar") || this.venue_category.contains("lounge")) {
 				
-				this.filter = "Party/Chill";
-			} else if (this.venue_category.equals("Restaurant/cafe")) {
+				this.filter = "Chill";
+			} else if (this.venue_category.contains("cafe") || this.venue_category.contains("restaurant")) {
 			
 				this.filter = "Chill";
-			} else if (this.venue_category.equals("Club")) {
+			} else if (this.venue_category.contains("club") || this.venue_category.contains("nightlife")) {
 			
 				this.filter = "Party";
-			} else if (this.venue_category.equals("Concert venue")) {
+			} else if (this.venue_category.contains("concert venue")) {
 			
 				this.filter = "Party";
-			} else if (this.venue_category.equals("Arts/entertainment/nightlife")) {
-			
-				this.filter = "Entertain";
-			} else if (this.venue_category.equals("Museum/art gallery")) {
-			
-				this.filter = "Entertain";
-			} else if (this.venue_category.equals("Movie theater")) {
+			} else if (this.venue_category.contains("art") || this.venue_category.contains("theater") || this.venue_category.contains("museum")) {
 			
 				this.filter = "Entertain";
 			} else {
