@@ -437,4 +437,13 @@
     return _location;
 }
 
+- (void)dealloc
+{
+    [self cancelAllRequests];
+    self.delegate = nil;
+    _sender = nil;
+    _senderStats = nil;
+    _senderRsvp = nil;
+}
+
 @end

@@ -72,6 +72,7 @@ static controllers_App *_ctrl;
         [UIView setAnimationDelay:1.2];
         
 		[login removeFromSuperview];
+        login = nil;
 		[self.view addSubview:slide];
     }
     

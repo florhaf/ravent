@@ -483,4 +483,14 @@ static models_User *_crtUser = nil;
     return result;
 }
 
+- (void)dealloc
+{
+    [self cancelAllRequests];
+    self.delegate = nil;
+    self.locationDelegate = nil;
+    _sender = nil;
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:GPSDone object:[GPSManager instance]];
+}
+
 @end

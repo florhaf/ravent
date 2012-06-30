@@ -24,10 +24,14 @@
         _titleSize = CGSizeMake(_itemTitle.frame.size.width, _itemTitle.frame.size.height);
         _subTitleSize = CGSizeMake(_itemSubTitle.frame.size.width, _itemSubTitle.frame.size.height);
         
+        
+        
         _user = user;
         _event = [[models_Event alloc] initWithDelegate:self andSelector:@selector(onLoadEvents:)];
         
         [self loadDataWithUserLocation];
+        
+        _hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     }
     
     return self;
@@ -118,11 +122,20 @@
     
         [[NSBundle mainBundle] loadNibNamed:@"views_events_item_Event" owner:self options:nil];
     
-        _itemTitle.text = event.name;
-        _itemSubTitle.text = event.location;
-        _itemImage.imageURL = [NSURL URLWithString:event.pic_big];
+        // image
+        if ([_imagesCache.allKeys containsObject:event.pic_big]) {
+            
+            _itemImage.image = (UIImage *)[_imagesCache objectForKey:event.pic_big];
+        } else {
+            
+            _itemImage.imageURL = [NSURL URLWithString:event.pic_big];
+            _itemImage.delegate = self;
+        }
         _itemImage.clipsToBounds = YES;
         _itemImage.contentMode = UIViewContentModeScaleAspectFill;
+        
+        _itemTitle.text = event.name;
+        _itemSubTitle.text = event.location;
         _itemTime.text = [[NSString stringWithFormat:@"%@ - %@", event.timeStart, event.timeEnd] lowercaseString];
         _itemDistance.text = [NSString stringWithFormat:@"%@ mi.", event.distance];
         _itemVenueCategory.text = event.venue_category;
@@ -134,8 +147,6 @@
         }
     
         _itemTitle.font = [_itemTitle.font fontWithSize:[self getFontSizeForLabel:_itemTitle]];
-    
-        //[self resizeAndPositionCellItem];
     
         [cell.contentView addSubview:_item];
     }
@@ -217,6 +228,8 @@
     [super viewDidUnload];
     
     [_event cancelAllRequests];
+    
+    _imagesCache = nil;
 }
 
 @end

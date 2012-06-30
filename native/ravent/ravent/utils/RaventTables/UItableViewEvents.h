@@ -19,6 +19,8 @@
     IBOutlet UIImageView *_bg;
     
     UIViewController *_details;
+    
+    
 }
 
 - (id)initWithUser:(models_User *)user;

@@ -336,7 +336,11 @@ static int _retryCounter;
     NSString *rsvpValue = @"yes";
     _event.rsvp_status = @"attending";
     
-    if (_segment.selectedSegmentIndex == 1) {
+    if (_segment.selectedSegmentIndex == 0) {  
+    
+        [[Store instance]saveEvent:_event];
+        
+    } else if (_segment.selectedSegmentIndex == 1) {
         
         rsvpValue = @"maybe";
         _event.rsvp_status = @"maybe attending";
@@ -679,7 +683,24 @@ static int _retryCounter;
         
         [super cancelAllRequests];
         _isButtonTap = NO;   
+        
+        
     }
+}
+
+- (void)dealloc 
+{
+    [self cancelAllRequests];
+    
+    _delegateBack = nil;
+    
+    _user = nil;
+    _event = nil;
+    _eventLoader = nil;
+    
+    _map = nil;
+
+    
 }
 
 @end

@@ -58,12 +58,12 @@
     BOOL _isButtonTap;
     int _mapImageHeight;
     
-    id _delegateBack;
+    id __weak _delegateBack;
     SEL _selectorBack;
 }
 
 @property (nonatomic, retain) NSMutableArray *photos;
-@property (nonatomic, retain) id delegateBack;
+@property (nonatomic, weak) id delegateBack;
 @property (nonatomic, assign) SEL selectorBack;
 
 - (id)initWithReloadEvent:(models_Event *)event;

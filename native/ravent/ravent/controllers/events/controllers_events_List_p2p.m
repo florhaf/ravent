@@ -20,8 +20,6 @@ static controllers_events_List_p2p *_ctrl;
     [super viewDidLoad];
     
     self.tableView.tableFooterView = [[UIView alloc] init];
-    
-    _hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
 }
 
 - (void)loadDataWithUserLocation

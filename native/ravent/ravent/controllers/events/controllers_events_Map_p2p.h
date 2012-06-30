@@ -41,7 +41,7 @@
     int _prevWindowValue;
 }
 
-@property (nonatomic, unsafe_unretained) CGFloat peekLeftAmount;
+@property (nonatomic, assign) CGFloat peekLeftAmount;
 
 - (IBAction)buttonTap:(id)sender;
 

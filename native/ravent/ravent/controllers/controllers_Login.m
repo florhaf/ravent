@@ -235,6 +235,11 @@ static controllers_Login *_ctrl;
 	[UIView commitAnimations];
 }
 
+- (void)viewDidUnload
+{
+    NSLog(@"YO");
+}
+
 + (controllers_Login *)instance
 {
     if (_ctrl == nil) {

@@ -216,4 +216,11 @@
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(updateLoadingMessage3:) object:nil];
 }
 
+- (void)dealloc
+{
+    [self cancelAllRequests];
+    _delegate = nil;
+    _targetPictures = nil;
+}
+
 @end
