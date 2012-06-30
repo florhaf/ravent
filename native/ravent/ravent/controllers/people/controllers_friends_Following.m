@@ -125,10 +125,19 @@
      
         [[NSBundle mainBundle] loadNibNamed:@"views_friends_item_Following" owner:self options:nil];
         
-        _itemTitle.text = [NSString stringWithFormat:@"%@ %@", u.firstName, u.lastName];
-        _itemImage.imageURL = [NSURL URLWithString:u.picture];
+        // image
+        if ([_imagesCache.allKeys containsObject:u.picture]) {
+            
+            _itemImage.image = (UIImage *)[_imagesCache objectForKey:u.picture];
+        } else {
+            
+            _itemImage.imageURL = [NSURL URLWithString:u.picture];
+            _itemImage.delegate = self;
+        }
         _itemImage.clipsToBounds = YES;
         _itemImage.contentMode = UIViewContentModeScaleAspectFill;
+        
+        _itemTitle.text = [NSString stringWithFormat:@"%@ %@", u.firstName, u.lastName];
         
         _followersLabel.text = u.nbOfFollowers;
         _followingLabel.text = u.nbOfFollowing;
