@@ -447,6 +447,8 @@ public class Event extends Model implements Serializable {
 	
 	public void Filter_category () {
 		
+		this.filter = "Other";
+		
 		if (this.venue_category != null) {
 			
 			if (this.venue_category.contains("bar") || this.venue_category.contains("lounge")) {
@@ -464,9 +466,6 @@ public class Event extends Model implements Serializable {
 			} else if (this.venue_category.contains("art") || this.venue_category.contains("theater") || this.venue_category.contains("museum")) {
 			
 				this.filter = "Entertain";
-			} else {
-			
-				this.filter = "Other";
 			}
 		}		
 	}
