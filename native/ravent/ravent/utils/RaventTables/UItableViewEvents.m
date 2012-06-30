@@ -121,7 +121,8 @@
     if (event != nil) {
     
         [[NSBundle mainBundle] loadNibNamed:@"views_events_item_Event" owner:self options:nil];
-    
+
+        
         // image
         if ([_imagesCache.allKeys containsObject:event.pic_big]) {
             
