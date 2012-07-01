@@ -47,28 +47,19 @@
         _user.callback = @selector(onUserLoad:);
         [_user loadUser];
     }
+      
+    if ([_user.uid isEqualToString:[models_User crtUser].uid]) {
         
-    //_fbButton.titleLabel.text = [NSString stringWithFormat:@"Ask where %@ is going", _user.firstName];
-
-    //self.tableView.tableHeaderView = _detailsView;
+        [_fbButton setTitle:@"Post on my Timeline" forState:UIControlStateNormal];
+    } else {
+        
+        [_fbButton setTitle:[NSString stringWithFormat:@"Ask %@ where to go", _user.firstName] forState:UIControlStateNormal];
+    }
     
     self.tableView.tableHeaderView = [[UIView alloc] initWithFrame:_detailsView.frame];
     [self.tableView.tableHeaderView addSubview:_detailsView];
     
-    UILabel *labelLoading = [[UILabel alloc] init];
-    labelLoading.backgroundColor = [UIColor clearColor];
-    labelLoading.text = @"Loading";
-    labelLoading.frame = CGRectMake(0, 0, 300, 50);
-    labelLoading.textAlignment= UITextAlignmentCenter;
-    
-    UIActivityIndicatorView *myIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    myIndicator.center = CGPointMake(110, 27);
-    
-    [myIndicator startAnimating];
-    
     UIView *footer = [[UIView alloc] init];
-    [footer addSubview:labelLoading];
-    [footer addSubview:myIndicator];
     footer.backgroundColor = [UIColor clearColor];
     
     footer.frame = CGRectMake(0, 0, 320, 160);

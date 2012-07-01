@@ -111,6 +111,14 @@
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(hideAllModal)];        
     self.navigationItem.rightBarButtonItem = doneButton;
     
+    NSArray *objects = [NSArray arrayWithObjects:@"Driving", @"Walking", nil];
+    _segmentedControl = [[STSegmentedControl alloc] initWithItems:objects];
+	_segmentedControl.frame = CGRectMake(44, 380, 232, 30);
+	_segmentedControl.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    _segmentedControl.selectedSegmentIndex = 0;
+    [_segmentedControl addTarget:self action:@selector(onSegmentedControlValueChanged:) forControlEvents:UIControlEventValueChanged];
+	[self.view addSubview:_segmentedControl];
+    
     routeOverlayView = [[UICRouteOverlayMapView alloc] initWithMapView:_map];
     
     startPoint = [NSString stringWithFormat:@"%@,%@", [models_User crtUser].latitude, [models_User crtUser].longitude];
@@ -138,6 +146,21 @@
     @finally {
         // nothing
     }
+}
+
+- (void)onSegmentedControlValueChanged:(id)sender
+{
+    int i = _segmentedControl.selectedSegmentIndex;
+    
+    if (i == 0) {
+        
+        travelMode = UICGTravelModeDriving;
+    } else {
+        
+        travelMode = UICGTravelModeWalking;
+    }
+    
+    [self update];
 }
 
 - (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views {

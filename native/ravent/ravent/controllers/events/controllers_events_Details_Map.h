@@ -11,12 +11,14 @@
 #import <MapKit/MapKit.h>
 #import "UICGDirections.h"
 #import "UICRouteOverlayMapView.h"
+#import "STSegmentedControl.h"
 
 #define METERS_PER_MILE 1609.344
 
 @interface controllers_events_Details_Map : UIViewController<MKMapViewDelegate, MKAnnotation, UICGDirectionsDelegate> {
     
     IBOutlet MKMapView *_map;
+    STSegmentedControl *_segmentedControl;
     UICRouteOverlayMapView *routeOverlayView;
 	UICGDirections *diretions;
 	NSString *startPoint;
