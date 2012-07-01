@@ -26,6 +26,11 @@
     NSMutableDictionary *_groupedOther;
 }
 
+@property (nonatomic, retain) NSMutableArray *party;
+@property (nonatomic, retain) NSMutableArray *chill;
+@property (nonatomic, retain) NSMutableArray *art;
+@property (nonatomic, retain) NSMutableArray *other;
+
 - (void)reloadTableViewDataSourceWithIndex:(int)index;
 
 + (controllers_events_List_p2p *)instance;

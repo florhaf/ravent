@@ -75,7 +75,7 @@ static customNavigationController *_ctrl;
     UIBarButtonItem *mapButton = [[UIBarButtonItem alloc] initWithCustomView:mapb];        
     self.navigationItem.rightBarButtonItem = mapButton;
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onPartyButton_Tap:) name:@"onLoadEventsP2P" object:[controllers_events_List_p2p instance]];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectFirstNonEmptyList) name:@"onLoadEventsP2P" object:[controllers_events_List_p2p instance]];
     
     
     // OPTIONS
@@ -92,6 +92,29 @@ static customNavigationController *_ctrl;
     _windowStepper.maximumValue = 15;
     _windowStepper.stepValue = 2;
     _windowStepper.continuous = NO;
+}
+
+- (void)selectFirstNonEmptyList
+{
+    controllers_events_List_p2p *c = [controllers_events_List_p2p instance];
+    
+    if (c.party != nil && [c.party count] > 0) {
+        
+        [self onPartyButton_Tap:nil];
+    } else if (c.chill != nil && [c.chill count] > 0) {
+        
+        [self onChillButton_Tap:nil];
+    } else if (c.art != nil && [c.art count] > 0) {
+        
+        [self onArtButton_Tap:nil];
+    } else if (c.other != nil && [c.other count] > 0) {
+        
+        [self onMiscButton_Tap:nil];
+    } else {
+        
+        // default to party if everything is empty
+        [self onPartyButton_Tap:nil];
+    }
 }
 
 - (IBAction)onSO_Tap:(id)sender

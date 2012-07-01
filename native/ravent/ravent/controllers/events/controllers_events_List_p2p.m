@@ -13,6 +13,11 @@
 
 @implementation controllers_events_List_p2p
 
+@synthesize party = _party;
+@synthesize chill = _chill;
+@synthesize art = _art;
+@synthesize other = _other;
+
 static controllers_events_List_p2p *_ctrl;
 
 - (void)viewDidLoad
