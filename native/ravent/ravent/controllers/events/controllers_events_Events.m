@@ -51,8 +51,6 @@ static customNavigationController *_ctrl;
 {
     [super viewDidLoad];
     
-    [controllers_events_List_p2p instance].view.frame = CGRectMake(0, 0, 320, 416);
-    
     [self.view addSubview:[controllers_events_List_p2p instance].view];
     
     UIImage *menui = [UIImage imageNamed:@"menuButton"];
