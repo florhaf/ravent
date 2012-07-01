@@ -68,6 +68,11 @@ static customNavigationController *_ctrl;
     [self.view addGestureRecognizer:self.slidingViewController.panGesture];
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [self.slidingViewController.topViewController.view removeGestureRecognizer:[self.slidingViewController panGesture]];
+}
+
 - (void)revealMenu:(id)sender
 {
     [self.slidingViewController anchorTopViewTo:ECRight];

@@ -47,7 +47,6 @@
 - (void)revealAll:(id)sender;
 - (void)cancelAllRequests;
 
-- (IBAction)onSegmentedControlValueChanged;
 
 
 + (customNavigationController *)instance;

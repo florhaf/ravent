@@ -234,6 +234,11 @@ static customNavigationController *_ctrl;
     [_following cancelAllRequests];
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [self.slidingViewController.topViewController.view removeGestureRecognizer:[self.slidingViewController panGesture]];
+}
+
 + (customNavigationController *)instance 
 {
     if (_ctrl == nil) {

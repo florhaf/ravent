@@ -117,19 +117,27 @@
     endPoint = [NSString stringWithFormat:@"%@,%@", _event.latitude, _event.longitude];
     travelMode = UICGTravelModeDriving;
     
-    diretions = [UICGDirections sharedDirections];
-	diretions.delegate = self;
-    
-    CLLocationCoordinate2D coord;
-    coord.latitude = [_event.latitude doubleValue];
-    coord.longitude = [_event.longitude doubleValue];
-    _event.coordinate = coord;
-    [_map addAnnotation:_event];
-    
-    
-    if (diretions.isInitialized) {
-		[self update];
-	}
+    @try {
+        diretions = [UICGDirections sharedDirections];
+        diretions.delegate = self;
+        
+        CLLocationCoordinate2D coord;
+        coord.latitude = [_event.latitude doubleValue];
+        coord.longitude = [_event.longitude doubleValue];
+        _event.coordinate = coord;
+        [_map addAnnotation:_event];
+        
+        
+        if (diretions.isInitialized) {
+            [self update];
+        }
+    }
+    @catch (NSException *exception) {
+        // NOTHING
+    }
+    @finally {
+        // nothing
+    }
 }
 
 - (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views {
