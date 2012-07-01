@@ -45,7 +45,7 @@
 							<object class="IBUIImageView" id="127471743">
 								<reference key="NSNextResponder" ref="1023945954"/>
 								<int key="NSvFlags">274</int>
-								<string key="NSFrameSize">{320, 64}</string>
+								<string key="NSFrameSize">{320, 44}</string>
 								<reference key="NSSuperview" ref="1023945954"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="180141802"/>
@@ -90,11 +90,11 @@
 								</object>
 								<object class="IBUIFontDescription" key="IBUIFontDescription">
 									<int key="type">2</int>
-									<int key="size">2</int>
+									<double key="pointSize">14</double>
 								</object>
-								<object class="NSFont" key="IBUIFont" id="646245768">
+								<object class="NSFont" key="IBUIFont">
 									<string key="NSName">Helvetica-Bold</string>
-									<double key="NSSize">18</double>
+									<double key="NSSize">14</double>
 									<int key="NSfFlags">16</int>
 								</object>
 							</object>
@@ -202,7 +202,11 @@
 											<int key="type">2</int>
 											<double key="pointSize">18</double>
 										</object>
-										<reference key="IBUIFont" ref="646245768"/>
+										<object class="NSFont" key="IBUIFont" id="820633627">
+											<string key="NSName">Helvetica-Bold</string>
+											<double key="NSSize">18</double>
+											<int key="NSfFlags">16</int>
+										</object>
 									</object>
 									<object class="IBUIButton" id="942220381">
 										<reference key="NSNextResponder" ref="387358071"/>
@@ -222,7 +226,7 @@
 										<reference key="IBUINormalTitleColor" ref="415489210"/>
 										<reference key="IBUINormalTitleShadowColor" ref="829017077"/>
 										<reference key="IBUIFontDescription" ref="538710911"/>
-										<reference key="IBUIFont" ref="646245768"/>
+										<reference key="IBUIFont" ref="820633627"/>
 									</object>
 									<object class="IBUIButton" id="983897029">
 										<reference key="NSNextResponder" ref="387358071"/>
@@ -242,7 +246,7 @@
 										<reference key="IBUINormalTitleColor" ref="415489210"/>
 										<reference key="IBUINormalTitleShadowColor" ref="829017077"/>
 										<reference key="IBUIFontDescription" ref="538710911"/>
-										<reference key="IBUIFont" ref="646245768"/>
+										<reference key="IBUIFont" ref="820633627"/>
 									</object>
 									<object class="IBUIButton" id="525427412">
 										<reference key="NSNextResponder" ref="387358071"/>
@@ -262,7 +266,7 @@
 										<reference key="IBUINormalTitleColor" ref="415489210"/>
 										<reference key="IBUINormalTitleShadowColor" ref="829017077"/>
 										<reference key="IBUIFontDescription" ref="538710911"/>
-										<reference key="IBUIFont" ref="646245768"/>
+										<reference key="IBUIFont" ref="820633627"/>
 									</object>
 									<object class="IBUILabel" id="854408742">
 										<reference key="NSNextResponder" ref="387358071"/>
@@ -375,14 +379,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">_optionsButton</string>
-						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="180141802"/>
-					</object>
-					<int key="connectionID">15</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">_labelRadiusValue</string>
 						<reference key="source" ref="372490531"/>
 						<reference key="destination" ref="854408742"/>
@@ -412,6 +408,14 @@
 						<reference key="destination" ref="800596418"/>
 					</object>
 					<int key="connectionID">43</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">_optionsButton</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="180141802"/>
+					</object>
+					<int key="connectionID">15</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
@@ -508,20 +512,15 @@
 						<int key="objectID">11</int>
 						<reference key="object" ref="1023945954"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="180141802"/>
 							<reference ref="127471743"/>
 							<reference ref="387358071"/>
+							<reference ref="180141802"/>
 						</array>
 						<reference key="parent" ref="191373211"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">12</int>
 						<reference key="object" ref="127471743"/>
-						<reference key="parent" ref="1023945954"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">13</int>
-						<reference key="object" ref="180141802"/>
 						<reference key="parent" ref="1023945954"/>
 					</object>
 					<object class="IBObjectRecord">
@@ -591,6 +590,11 @@
 						<reference key="object" ref="782521806"/>
 						<reference key="parent" ref="387358071"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">13</int>
+						<reference key="object" ref="180141802"/>
+						<reference key="parent" ref="1023945954"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -623,6 +627,14 @@
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
 				<object class="IBPartialClassDescription">
+					<string key="className">STSegmentedControl</string>
+					<string key="superclassName">UIControl</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/STSegmentedControl.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
 					<string key="className">controllers_events_Events</string>
 					<string key="superclassName">UIViewController</string>
 					<dictionary class="NSMutableDictionary" key="actions">
@@ -631,7 +643,6 @@
 						<string key="onMiscButton_Tap:">id</string>
 						<string key="onPartyButton_Tap:">id</string>
 						<string key="onSO_Tap:">id</string>
-						<string key="onValueChanged:">id</string>
 						<string key="stepperRadiusPressed:">UIStepper</string>
 						<string key="stepperWindowPressed:">UIStepper</string>
 					</dictionary>
@@ -656,10 +667,6 @@
 							<string key="name">onSO_Tap:</string>
 							<string key="candidateClassName">id</string>
 						</object>
-						<object class="IBActionInfo" key="onValueChanged:">
-							<string key="name">onValueChanged:</string>
-							<string key="candidateClassName">id</string>
-						</object>
 						<object class="IBActionInfo" key="stepperRadiusPressed:">
 							<string key="name">stepperRadiusPressed:</string>
 							<string key="candidateClassName">UIStepper</string>
@@ -675,7 +682,7 @@
 						<string key="_labelRadiusValue">UILabel</string>
 						<string key="_labelWindowValue">UILabel</string>
 						<string key="_miscButton">UIButton</string>
-						<string key="_optionsButton">UIButton</string>
+						<string key="_optionsButton">STSegmentedControl</string>
 						<string key="_optionsView">UIView</string>
 						<string key="_partyButton">UIButton</string>
 						<string key="_radiusStepper">UIStepper</string>
@@ -706,7 +713,7 @@
 						</object>
 						<object class="IBToOneOutletInfo" key="_optionsButton">
 							<string key="name">_optionsButton</string>
-							<string key="candidateClassName">UIButton</string>
+							<string key="candidateClassName">STSegmentedControl</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="_optionsView">
 							<string key="name">_optionsView</string>
