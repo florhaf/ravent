@@ -368,15 +368,6 @@ NSString *const ECSlidingViewTopDidReset          = @"ECSlidingViewTopDidReset";
 {
   [self resetTopViewWithAnimations:nil onComplete:nil];
     
-    
-    
-    
-    // TODO FLO
-    // check if top view is kind of controllers_friends_people here
-    // if yes, check if controllers_friends_All isDirty
-    // if yes, reload controllers_friends_following
-    
-    // set maplocation NO
 }
 
 - (void)resetTopViewWithAnimations:(void(^)())animations onComplete:(void(^)())complete

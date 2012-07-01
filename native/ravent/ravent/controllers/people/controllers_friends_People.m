@@ -23,7 +23,7 @@ static customNavigationController *_ctrl;
     
     if (self) {
         
-        self.title = @"Ravent";
+        self.title = @"People";
         _user = user;
         _isSegTapAllowed = YES;
           
@@ -75,7 +75,6 @@ static customNavigationController *_ctrl;
 
 - (void)onMeTap
 {
-    
     _details = [[controllers_friends_Details alloc] initWithUser:[[models_User crtUser] copy]];
     
     UIImage *backi = [UIImage imageNamed:@"backButton"];
@@ -108,15 +107,6 @@ static customNavigationController *_ctrl;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    //[_toolbar insertSubview:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"toolbar"]] atIndex:1];
-    
-    UIView *v = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
-    [v setBackgroundColor:[UIColor darkGrayColor]];
-    [v setAlpha:0.3];
-    
-    [_toolbar setBackgroundColor:[UIColor clearColor]];
-    [_toolbar insertSubview:v atIndex:1];
     
     UIImage *menui = [UIImage imageNamed:@"menuButton"];
     UIButton *menub = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -155,10 +145,17 @@ static customNavigationController *_ctrl;
     [_container setBackgroundColor:[UIColor clearColor]];
     [_followers.view setHidden:YES];
     
-    [_segmentedControl setTintColor:[UIColor darkGrayColor]];
+    
+    NSArray *objects = [NSArray arrayWithObjects:@"Following", @"Followers", nil];
+    _segmentedControl = [[STSegmentedControl alloc] initWithItems:objects];
+	_segmentedControl.frame = CGRectMake(44, 380, 232, 30);
+	_segmentedControl.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    _segmentedControl.selectedSegmentIndex = 0;
+    [_segmentedControl addTarget:self action:@selector(onSegmentedControlValueChanged:) forControlEvents:UIControlEventValueChanged];
+	[self.view addSubview:_segmentedControl];
 }
 
-- (IBAction)onSegmentedControlValueChanged
+- (void)onSegmentedControlValueChanged:(id)sender
 {    
     
     if (_isSegTapAllowed) {
@@ -235,6 +232,11 @@ static customNavigationController *_ctrl;
 {
     [_followers cancelAllRequests];
     [_following cancelAllRequests];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [self.slidingViewController.topViewController.view removeGestureRecognizer:[self.slidingViewController panGesture]];
 }
 
 + (customNavigationController *)instance 

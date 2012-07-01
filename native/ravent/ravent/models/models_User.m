@@ -52,6 +52,7 @@ static models_User *_crtUser = nil;
 - (id)init
 {
     self = [super init];
+    
     if (self != nil) {
         
 //        _locationManager = [[CLLocationManager alloc] init];
@@ -59,6 +60,46 @@ static models_User *_crtUser = nil;
     }
     
     return self;
+}
+
+- (void)saveToNSUserDefaults
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    [defaults setObject:_uid forKey:@"_uid"];
+    [defaults setObject:_firstName forKey:@"_firstName"];
+    [defaults setObject:_lastName forKey:@"_lastName"];
+    [defaults setObject:_picture forKey:@"_picture"];
+    [defaults setObject:_accessToken forKey:@"_accessToken"];
+    [defaults setObject:[NSNumber numberWithInt:_searchRadius] forKey:@"_searchRadius"];
+    [defaults setObject:[NSNumber numberWithInt:_searchWindow] forKey:@"_searchWindow"];
+    [defaults synchronize];
+}
+
+- (void)delFromNSUserDefaults
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    [defaults removeObjectForKey:@"_uid"];
+    [defaults removeObjectForKey:@"_firstName"];
+    [defaults removeObjectForKey:@"_lastName"];
+    [defaults removeObjectForKey:@"_picture"];
+    [defaults removeObjectForKey:@"_accessToken"];
+    [defaults removeObjectForKey:@"_searchRadius"];
+    [defaults removeObjectForKey:@"_searchWindow"];
+    [defaults synchronize];
+}
+
+- (void)loadFromNSUserDefaults
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    self.uid = [defaults objectForKey:@"_uid"];
+    self.firstName = [defaults objectForKey:@"_firstName"];
+    self.lastName = [defaults objectForKey:@"_lastName"];
+    self.picture = [defaults objectForKey:@"_picture"];
+    self.accessToken = [defaults objectForKey:@"_accessToken"];
+    self.searchRadius = [((NSNumber *)[defaults objectForKey:@"_searchRadius"]) intValue];
+    self.searchWindow = [((NSNumber *)[defaults objectForKey:@"_searchWindow"]) intValue];
 }
 
 - (id)initWithDelegate:(NSObject *)del andSelector:(SEL)sel
@@ -126,8 +167,7 @@ static models_User *_crtUser = nil;
 
 + (void)release
 {
-    _allListSingleton = nil;
-    _crtUser = nil;
+
 }
 
 - (void)getLocation
@@ -489,6 +529,7 @@ static models_User *_crtUser = nil;
     self.delegate = nil;
     self.locationDelegate = nil;
     _sender = nil;
+    
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:GPSDone object:[GPSManager instance]];
 }

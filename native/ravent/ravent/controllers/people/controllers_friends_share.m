@@ -26,7 +26,7 @@
         
         _invited = invited;
         
-        self.title = @"Ravent";
+        self.title = @"Gemster";
         _friends = [[NSMutableArray alloc] init];
         
         [self loadData];

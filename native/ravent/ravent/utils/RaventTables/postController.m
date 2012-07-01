@@ -26,7 +26,7 @@
     if (self) {
         // Custom initialization
         _isForPicture = value;
-        self.title = @"Ravent";
+        self.title = @"Gemster";
     }
     return self;
 }

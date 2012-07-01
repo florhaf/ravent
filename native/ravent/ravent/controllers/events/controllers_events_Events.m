@@ -25,7 +25,7 @@ static customNavigationController *_ctrl;
     if (self) {
         
         _user = user;
-        self.title = @"Ravent";
+        self.title = @"Gemster";
         
         Action *loadDetailsAction = [[Action alloc] initWithDelegate:self andSelector:@selector(loadEventDetailsFromMap:)];
         [[ActionDispatcher instance] add:loadDetailsAction named:@"controller_events_List_p2p_loadDetails"];
@@ -75,43 +75,7 @@ static customNavigationController *_ctrl;
     UIBarButtonItem *mapButton = [[UIBarButtonItem alloc] initWithCustomView:mapb];        
     self.navigationItem.rightBarButtonItem = mapButton;
     
-//    _toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 416, 320, 44)];
-//    [_toolbar setBarStyle:UIBarStyleBlackTranslucent];
-//    [_toolbar sizeToFit];
-//    
-//    UISegmentedControl *seg = [[UISegmentedControl alloc] initWithItems:[[NSArray alloc] initWithObjects:@"Party", @"Chill", @"Art", @"All", nil]];
-//    [seg setFrame:CGRectMake(0, 0, 200, 40)];
-//    [seg setSegmentedControlStyle:UISegmentedControlStyleBar];
-//    
-//    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:seg];
-//    
-//    [_toolbar setItems:[[NSArray alloc] initWithObjects:item, nil]];
-//    
-//    [self.view addSubview:_toolbar];
-    
-    UISegmentedControl *seg = [[UISegmentedControl alloc] initWithItems:[[NSArray alloc] initWithObjects:@"Party", @"Chill", @"Art", @"Other", nil]];
-    [seg setSegmentedControlStyle:UISegmentedControlStyleBar];
-    [seg setTintColor:[UIColor darkGrayColor]];
-    [seg setFrame:CGRectMake(0, 0, 310, 30)];
-    [seg setSelectedSegmentIndex:0];
-    [seg addTarget:self action:@selector(onValueChanged:) forControlEvents:UIControlEventValueChanged];
-    
-    UIBarButtonItem *btn = [[UIBarButtonItem alloc] initWithCustomView:seg];
-    
-    [_toolbar setItems:[[NSArray alloc] initWithObjects:btn, nil]];
-    
-    [self.view bringSubviewToFront:_toolbar];
-    
-    UIView *v = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
-    [v setBackgroundColor:[UIColor darkGrayColor]];
-    [v setAlpha:0.3];
-    
-    UIImageView *bg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"grayToolbar"]];
-    
-    [_toolbar setBackgroundColor:[UIColor clearColor]];
-    [_toolbar insertSubview:bg atIndex:1];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onValueChanged:) name:@"onLoadEventsP2P" object:[controllers_events_List_p2p instance]];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectFirstNonEmptyList) name:@"onLoadEventsP2P" object:[controllers_events_List_p2p instance]];
     
     
     // OPTIONS
@@ -130,14 +94,27 @@ static customNavigationController *_ctrl;
     _windowStepper.continuous = NO;
 }
 
-- (IBAction)onValueChanged:(id)sender
+- (void)selectFirstNonEmptyList
 {
-    UISegmentedControl *seg = (UISegmentedControl *)((UIBarButtonItem *)[_toolbar.items objectAtIndex:0]).customView;
-    int selectedIndex = seg.selectedSegmentIndex;
+    controllers_events_List_p2p *c = [controllers_events_List_p2p instance];
     
-    [[controllers_events_List_p2p instance] reloadTableViewDataSourceWithIndex:selectedIndex];
-    
-    [[controllers_events_Map_p2p instance] loadData:[controllers_events_List_p2p instance].data];
+    if (c.party != nil && [c.party count] > 0) {
+        
+        [self onPartyButton_Tap:nil];
+    } else if (c.chill != nil && [c.chill count] > 0) {
+        
+        [self onChillButton_Tap:nil];
+    } else if (c.art != nil && [c.art count] > 0) {
+        
+        [self onArtButton_Tap:nil];
+    } else if (c.other != nil && [c.other count] > 0) {
+        
+        [self onMiscButton_Tap:nil];
+    } else {
+        
+        // default to party if everything is empty
+        [self onPartyButton_Tap:nil];
+    }
 }
 
 - (IBAction)onSO_Tap:(id)sender
@@ -175,6 +152,8 @@ static customNavigationController *_ctrl;
 
 - (IBAction)onPartyButton_Tap:(id)sender
 {
+    self.title = @"Party";
+    
     [[controllers_events_List_p2p instance].tableView scrollRectToVisible:CGRectMake(0, -55, 1, 1) animated:YES];
     
     [[controllers_events_List_p2p instance] reloadTableViewDataSourceWithIndex:0];
@@ -184,6 +163,8 @@ static customNavigationController *_ctrl;
 
 - (IBAction)onChillButton_Tap:(id)sender
 {
+    self.title = @"Chill";
+    
     [[controllers_events_List_p2p instance].tableView scrollRectToVisible:CGRectMake(0, -55, 1, 1) animated:YES];
     
     [[controllers_events_List_p2p instance] reloadTableViewDataSourceWithIndex:1];
@@ -193,6 +174,8 @@ static customNavigationController *_ctrl;
 
 - (IBAction)onArtButton_Tap:(id)sender
 {
+    self.title = @"Art";
+    
     [[controllers_events_List_p2p instance].tableView scrollRectToVisible:CGRectMake(0, -55, 1, 1) animated:YES];
     
     [[controllers_events_List_p2p instance] reloadTableViewDataSourceWithIndex:2];
@@ -202,6 +185,8 @@ static customNavigationController *_ctrl;
 
 - (IBAction)onMiscButton_Tap:(id)sender
 {
+    self.title = @"Unsual";
+    
     [[controllers_events_List_p2p instance].tableView scrollRectToVisible:CGRectMake(0, -55, 1, 1) animated:YES];
     
     [[controllers_events_List_p2p instance] reloadTableViewDataSourceWithIndex:3];

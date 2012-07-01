@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "controllers_friends_Following.h"
 #import "customNavigationController.h"
-
+#import "STSegmentedControl.h"
 #import <QuartzCore/QuartzCore.h>
 #import "ECSlidingViewController.h"
 #import "controllers_SlidingMenu.h"
@@ -29,7 +29,7 @@
     IBOutlet UILabel *_headerEventsLabel;
     IBOutlet JBAsyncImageView *_headerImage;
     
-    IBOutlet UISegmentedControl *_segmentedControl;
+    IBOutlet STSegmentedControl *_segmentedControl;
     IBOutlet UIToolbar *_toolbar;
     IBOutlet UIView *_container;
     
@@ -47,7 +47,6 @@
 - (void)revealAll:(id)sender;
 - (void)cancelAllRequests;
 
-- (IBAction)onSegmentedControlValueChanged;
 
 
 + (customNavigationController *)instance;

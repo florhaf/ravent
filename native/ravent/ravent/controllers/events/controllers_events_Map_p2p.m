@@ -141,25 +141,6 @@ static int _retryCounter;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(startGps) name:ECSlidingViewUnderRightWillAppear object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(stopGps) name:ECSlidingViewTopDidReset object:nil];
-        
-//    UIImageView *imgTop = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"toolbar"]];
-//    UIImageView *imgBottom = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"toolbar"]];
-//    imgTop.frame = CGRectMake(0, 0, 320, 44);
-//    imgBottom.frame = CGRectMake(0, 0, 320, 44);
-    
-    //[_toolbarTop insertSubview:imgTop atIndex:1];
-    //[_toolbarBottom insertSubview:imgBottom atIndex:1];
-    
-    
-//    UIImage *soi = [UIImage imageNamed:@"searchoptions"];
-//    UIButton *sob = [UIButton buttonWithType:UIButtonTypeCustom];
-//    [sob addTarget:self action:@selector(buttonTap:) forControlEvents:UIControlEventTouchUpInside];
-//    [sob setImage:soi forState:UIControlStateNormal];
-//    [sob setFrame:CGRectMake(-20, 0, 270, 44)];
-//    UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithCustomView:sob];
-//    NSArray *items = [[NSArray alloc] initWithObjects:button, nil];
-//    [_toolbarBottom setItems:items];
-    
     
     self.peekLeftAmount = 40.0f;
     [self.slidingViewController setAnchorLeftPeekAmount:self.peekLeftAmount];
@@ -169,6 +150,7 @@ static int _retryCounter;
 - (void)stopGps
 {
     _map.showsUserLocation = NO;
+    _isMapSet = NO;
 }
 
 - (void)startGps
@@ -185,6 +167,13 @@ static int _retryCounter;
 
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
 {    
+    if (_isMapSet) {
+        
+        return;
+    }
+    
+    _isMapSet = YES;
+    
     MKCoordinateRegion region;
     MKCoordinateSpan span;
     

@@ -68,13 +68,38 @@
     return self;
 }
 
+- (id)initWithItems:(NSArray *)items andFrame:(CGRect)frame {
+    if((self = [super init])) {
+		self.backgroundColor = [UIColor clearColor];
+		
+		/*
+		 Set the standard images
+		 */
+		normalImageLeft = [[UIImage imageNamed:@"normal_left.png"] retain];
+		normalImageMiddle = [[UIImage imageNamed:@"normal_middle.png"] retain];
+		normalImageRight= [[UIImage imageNamed:@"normal_right.png"] retain];
+		selectedImageLeft = [[UIImage imageNamed:@"selected_left.png"] retain];
+		selectedImageMiddle = [[UIImage imageNamed:@"selected_middle.png"] retain];
+		selectedImageRight = [[UIImage imageNamed:@"selected_right.png"] retain];
+		
+		selectedSegmentIndex = STSegmentedControlNoSegment;
+		momentary = NO;
+		
+		/*
+		 Set items
+		 */
+		self.segments = [NSMutableArray arrayWithArray:items];
+    }
+    return self;
+}
+
 #pragma mark -
 #pragma mark initWithCoder for IB support
 
 - (id)initWithCoder:(NSCoder *)decoder {
     if(self == [super initWithCoder:decoder]) {
 		self.backgroundColor = [UIColor clearColor];
-		self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width, STSegmentedControlHeight);
+		//self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width, STSegmentedControlHeight);
 		
 		/*
 		 Set the standard images
@@ -369,7 +394,7 @@
 }
 
 - (void)setFrame:(CGRect)rect {
-	[super setFrame:CGRectMake(rect.origin.x, rect.origin.y, rect.size.width, STSegmentedControlHeight)];
+	[super setFrame:CGRectMake(rect.origin.x, rect.origin.y, rect.size.width, rect.size.height)];
 	[self updateUI];
 }
 

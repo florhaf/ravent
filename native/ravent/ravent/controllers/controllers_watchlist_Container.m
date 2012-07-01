@@ -20,7 +20,7 @@ static customNavigationController *_ctrl;
     if (self) {
         
         _user = user;
-        self.title = @"Ravent";
+        self.title = @"Watchlist";
         
     }
     return self;
@@ -66,6 +66,11 @@ static customNavigationController *_ctrl;
     }
     
     [self.view addGestureRecognizer:self.slidingViewController.panGesture];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [self.slidingViewController.topViewController.view removeGestureRecognizer:[self.slidingViewController panGesture]];
 }
 
 - (void)revealMenu:(id)sender

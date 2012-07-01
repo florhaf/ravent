@@ -41,7 +41,7 @@ static int _retryCounter;
         _delegateBack = delegate;
         _selectorBack = sel;
         
-        self.title = @"";
+        self.title = @"Gemster";
         
         [[NSBundle mainBundle] loadNibNamed:@"views_events_Details" owner:self options:nil];
         

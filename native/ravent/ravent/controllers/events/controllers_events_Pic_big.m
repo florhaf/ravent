@@ -27,7 +27,7 @@
 {
     self = [super initWithNibName:@"views_events_Pic_Big" bundle:nil];
     if (self) {
-        self.title = @"Ravent";
+        self.title = @"Gemster";
         _url = url;
     }
     return self;

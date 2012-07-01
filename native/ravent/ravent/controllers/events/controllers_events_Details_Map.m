@@ -10,10 +10,16 @@
 #import "YRDropdownView.h"
 #import "controllers_App.h"
 #import "models_User.h"
+#import "UICRouteOverlayMapView.h"
+#import "UICRouteAnnotation.h"
 
 @implementation controllers_events_Details_Map
 
 @synthesize coordinate;
+@synthesize startPoint;
+@synthesize endPoint;
+@synthesize wayPoints;
+@synthesize travelMode;
 
 - (id)initWithEvent:(models_Event *)event
 {
@@ -22,10 +28,78 @@
     if (self != nil) {
         
         _event = event;
-        self.title = @"Ravent";
+        self.title = @"Gemster";
+        
+        
+        
     }
     
     return self;
+}
+
+#pragma mark <UICGDirectionsDelegate> Methods
+
+- (void)directionsDidFinishInitialize:(UICGDirections *)directions {
+	[self update];
+}
+
+- (void)directions:(UICGDirections *)directions didFailInitializeWithError:(NSError *)error {
+	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+	
+	UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Map Directions" message:[error localizedFailureReason] delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+	[alertView show];
+}
+
+- (void)directionsDidUpdateDirections:(UICGDirections *)directions {
+	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+	
+	// Overlay polylines
+	UICGPolyline *polyline = [directions polyline];
+	NSArray *routePoints = [polyline routePoints];
+	[routeOverlayView setRoutes:routePoints];
+	
+	// Add annotations
+	UICRouteAnnotation *startAnnotation = [[UICRouteAnnotation alloc] initWithCoordinate:[[routePoints objectAtIndex:0] coordinate]
+																					title:startPoint
+																		   annotationType:UICRouteAnnotationTypeStart] ;
+	UICRouteAnnotation *endAnnotation = [[UICRouteAnnotation alloc] initWithCoordinate:[[routePoints lastObject] coordinate]
+                                                                                  title:endPoint
+                                                                         annotationType:UICRouteAnnotationTypeEnd];
+	if ([wayPoints count] > 0) {
+		NSInteger numberOfRoutes = [directions numberOfRoutes];
+		for (NSInteger index = 0; index < numberOfRoutes; index++) {
+			UICGRoute *route = [directions routeAtIndex:index];
+			CLLocation *location = [route endLocation];
+			UICRouteAnnotation *annotation = [[UICRouteAnnotation alloc] initWithCoordinate:[location coordinate]
+																					   title:[[route endGeocode] objectForKey:@"address"]
+																			  annotationType:UICRouteAnnotationTypeWayPoint];
+			[_map addAnnotation:annotation];
+		}
+	}
+    
+	[_map addAnnotations:[NSArray arrayWithObjects:startAnnotation, endAnnotation, nil]];
+}
+
+- (void)directions:(UICGDirections *)directions didFailWithMessage:(NSString *)message {
+	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+	UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Map Directions" message:message delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+	[alertView show];
+}
+
+
+- (void)update {
+	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+	
+	UICGDirectionsOptions *options = [[UICGDirectionsOptions alloc] init];
+	options.travelMode = travelMode;
+	if ([wayPoints count] > 0) {
+		NSArray *routePoints = [NSArray arrayWithObject:startPoint];
+		routePoints = [routePoints arrayByAddingObjectsFromArray:wayPoints];
+		routePoints = [routePoints arrayByAddingObject:endPoint];
+		[diretions loadFromWaypoints:routePoints options:options];
+	} else {
+		[diretions loadWithStartPoint:startPoint endPoint:endPoint options:options];
+	}
 }
 
 #pragma mark - View lifecycle
@@ -37,43 +111,60 @@
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(hideAllModal)];        
     self.navigationItem.rightBarButtonItem = doneButton;
     
-    CLLocationCoordinate2D zoomLocation;
+    NSArray *objects = [NSArray arrayWithObjects:@"Driving", @"Walking", nil];
+    _segmentedControl = [[STSegmentedControl alloc] initWithItems:objects];
+	_segmentedControl.frame = CGRectMake(44, 380, 232, 30);
+	_segmentedControl.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    _segmentedControl.selectedSegmentIndex = 0;
+    [_segmentedControl addTarget:self action:@selector(onSegmentedControlValueChanged:) forControlEvents:UIControlEventValueChanged];
+	[self.view addSubview:_segmentedControl];
     
-    zoomLocation.latitude = [_event.latitude floatValue];
-    zoomLocation.longitude= [_event.longitude floatValue];
-    MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(zoomLocation, 0.3*METERS_PER_MILE, 0.3*METERS_PER_MILE);
-    MKCoordinateRegion adjustedRegion = [_map regionThatFits:viewRegion];                
-    //[_map setRegion:adjustedRegion animated:YES];
+    routeOverlayView = [[UICRouteOverlayMapView alloc] initWithMapView:_map];
+    
+    startPoint = [NSString stringWithFormat:@"%@,%@", [models_User crtUser].latitude, [models_User crtUser].longitude];
+    endPoint = [NSString stringWithFormat:@"%@,%@", _event.latitude, _event.longitude];
+    travelMode = UICGTravelModeDriving;
     
     @try {
+        diretions = [UICGDirections sharedDirections];
+        diretions.delegate = self;
         
-        [_map setRegion:adjustedRegion animated:YES];
+        CLLocationCoordinate2D coord;
+        coord.latitude = [_event.latitude doubleValue];
+        coord.longitude = [_event.longitude doubleValue];
+        _event.coordinate = coord;
+        [_map addAnnotation:_event];
+        
+        
+        if (diretions.isInitialized) {
+            [self update];
+        }
     }
     @catch (NSException *exception) {
-        
-        [YRDropdownView showDropdownInView:[controllers_App instance].view 
-                                     title:@"Map Error" 
-                                    detail:exception.reason
-                                     image:[UIImage imageNamed:@"dropdown-alert"]
-                                  animated:YES];
+        // NOTHING
     }
     @finally {
         // nothing
     }
+}
+
+- (void)onSegmentedControlValueChanged:(id)sender
+{
+    int i = _segmentedControl.selectedSegmentIndex;
     
-    //_map.showsUserLocation = YES;
+    if (i == 0) {
+        
+        travelMode = UICGTravelModeDriving;
+    } else {
+        
+        travelMode = UICGTravelModeWalking;
+    }
     
-    CLLocationCoordinate2D coord;
-    coord.latitude = [_event.latitude doubleValue];
-    coord.longitude = [_event.longitude doubleValue];
-    _event.coordinate = coord;
-    [_map addAnnotation:_event];
+    [self update];
 }
 
 - (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views {
     
-    id<MKAnnotation> myAnnotation = [_map.annotations objectAtIndex:0];
-    [_map selectAnnotation:myAnnotation animated:YES];
 }
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation {
@@ -100,8 +191,23 @@
     return nil;
 }
 
+- (void)mapView:(MKMapView *)mapView regionWillChangeAnimated:(BOOL)animated {
+	routeOverlayView.hidden = YES;
+}
+
+- (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated {
+	routeOverlayView.hidden = NO;
+	[routeOverlayView setNeedsDisplay];
+}
+
 - (void)hideAllModal
 {
+    [_map setShowsUserLocation:NO];
+    _map = nil;
+    routeOverlayView = nil;
+    startPoint = nil;
+    endPoint = nil;
+    diretions = nil;
     [self dismissModalViewControllerAnimated:YES];
 }
 
