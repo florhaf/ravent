@@ -368,6 +368,16 @@
 		DFD28965151E70E6007A0873 /* libKal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DFD28964151E70A5007A0873 /* libKal.a */; };
 		DFD28967151E731A007A0873 /* Kal.bundle in Resources */ = {isa = PBXBuildFile; fileRef = DFD28966151E731A007A0873 /* Kal.bundle */; };
 		DFDA1482156D945000877686 /* KalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFDA1481156D945000877686 /* KalViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		DFE3EF5215A04D82000B8537 /* UICGClientGeocoder.m in Sources */ = {isa = PBXBuildFile; fileRef = DFE3EF4115A04D82000B8537 /* UICGClientGeocoder.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		DFE3EF5315A04D82000B8537 /* UICGDirections.m in Sources */ = {isa = PBXBuildFile; fileRef = DFE3EF4315A04D82000B8537 /* UICGDirections.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		DFE3EF5415A04D82000B8537 /* UICGDirectionsOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = DFE3EF4515A04D82000B8537 /* UICGDirectionsOptions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		DFE3EF5515A04D82000B8537 /* UICGoogleMapsAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = DFE3EF4715A04D82000B8537 /* UICGoogleMapsAPI.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		DFE3EF5615A04D82000B8537 /* UICGPolyline.m in Sources */ = {isa = PBXBuildFile; fileRef = DFE3EF4915A04D82000B8537 /* UICGPolyline.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		DFE3EF5715A04D82000B8537 /* UICGRoute.m in Sources */ = {isa = PBXBuildFile; fileRef = DFE3EF4B15A04D82000B8537 /* UICGRoute.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		DFE3EF5815A04D82000B8537 /* UICGStep.m in Sources */ = {isa = PBXBuildFile; fileRef = DFE3EF4D15A04D82000B8537 /* UICGStep.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		DFE3EF5915A04D82000B8537 /* UICRouteAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = DFE3EF4F15A04D82000B8537 /* UICRouteAnnotation.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		DFE3EF5A15A04D82000B8537 /* UICRouteOverlayMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = DFE3EF5115A04D82000B8537 /* UICRouteOverlayMapView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		DFE3EF5C15A05AB7000B8537 /* api.html in Resources */ = {isa = PBXBuildFile; fileRef = DFE3EF5B15A05AB7000B8537 /* api.html */; };
 		DFF02DDE1540B0AA00FED164 /* controllers_TabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF02DDD1540B0AA00FED164 /* controllers_TabBar.m */; };
 		DFF02DE11540B39500FED164 /* controllers_App.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF02DE01540B39500FED164 /* controllers_App.m */; };
 		DFF134001593E897004190AC /* controllers_watchlist_WatchList.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF133FF1593E897004190AC /* controllers_watchlist_WatchList.m */; };
@@ -922,6 +932,25 @@
 		DFD28966151E731A007A0873 /* Kal.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Kal.bundle; path = Kal/Kal.bundle; sourceTree = "<group>"; };
 		DFDA1480156D945000877686 /* KalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KalViewController.h; sourceTree = "<group>"; };
 		DFDA1481156D945000877686 /* KalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KalViewController.m; sourceTree = "<group>"; };
+		DFE3EF4015A04D82000B8537 /* UICGClientGeocoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICGClientGeocoder.h; sourceTree = "<group>"; };
+		DFE3EF4115A04D82000B8537 /* UICGClientGeocoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UICGClientGeocoder.m; sourceTree = "<group>"; };
+		DFE3EF4215A04D82000B8537 /* UICGDirections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICGDirections.h; sourceTree = "<group>"; };
+		DFE3EF4315A04D82000B8537 /* UICGDirections.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UICGDirections.m; sourceTree = "<group>"; };
+		DFE3EF4415A04D82000B8537 /* UICGDirectionsOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICGDirectionsOptions.h; sourceTree = "<group>"; };
+		DFE3EF4515A04D82000B8537 /* UICGDirectionsOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UICGDirectionsOptions.m; sourceTree = "<group>"; };
+		DFE3EF4615A04D82000B8537 /* UICGoogleMapsAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICGoogleMapsAPI.h; sourceTree = "<group>"; };
+		DFE3EF4715A04D82000B8537 /* UICGoogleMapsAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UICGoogleMapsAPI.m; sourceTree = "<group>"; };
+		DFE3EF4815A04D82000B8537 /* UICGPolyline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICGPolyline.h; sourceTree = "<group>"; };
+		DFE3EF4915A04D82000B8537 /* UICGPolyline.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UICGPolyline.m; sourceTree = "<group>"; };
+		DFE3EF4A15A04D82000B8537 /* UICGRoute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICGRoute.h; sourceTree = "<group>"; };
+		DFE3EF4B15A04D82000B8537 /* UICGRoute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UICGRoute.m; sourceTree = "<group>"; };
+		DFE3EF4C15A04D82000B8537 /* UICGStep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICGStep.h; sourceTree = "<group>"; };
+		DFE3EF4D15A04D82000B8537 /* UICGStep.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UICGStep.m; sourceTree = "<group>"; };
+		DFE3EF4E15A04D82000B8537 /* UICRouteAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICRouteAnnotation.h; sourceTree = "<group>"; };
+		DFE3EF4F15A04D82000B8537 /* UICRouteAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UICRouteAnnotation.m; sourceTree = "<group>"; };
+		DFE3EF5015A04D82000B8537 /* UICRouteOverlayMapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICRouteOverlayMapView.h; sourceTree = "<group>"; };
+		DFE3EF5115A04D82000B8537 /* UICRouteOverlayMapView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UICRouteOverlayMapView.m; sourceTree = "<group>"; };
+		DFE3EF5B15A05AB7000B8537 /* api.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = api.html; sourceTree = "<group>"; };
 		DFF02DDC1540B0AA00FED164 /* controllers_TabBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = controllers_TabBar.h; sourceTree = "<group>"; };
 		DFF02DDD1540B0AA00FED164 /* controllers_TabBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = controllers_TabBar.m; sourceTree = "<group>"; };
 		DFF02DDF1540B39500FED164 /* controllers_App.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = controllers_App.h; sourceTree = "<group>"; };
@@ -2028,6 +2057,25 @@
 		DFD2804B151DBA06007A0873 /* Map */ = {
 			isa = PBXGroup;
 			children = (
+				DFE3EF5B15A05AB7000B8537 /* api.html */,
+				DFE3EF4015A04D82000B8537 /* UICGClientGeocoder.h */,
+				DFE3EF4115A04D82000B8537 /* UICGClientGeocoder.m */,
+				DFE3EF4215A04D82000B8537 /* UICGDirections.h */,
+				DFE3EF4315A04D82000B8537 /* UICGDirections.m */,
+				DFE3EF4415A04D82000B8537 /* UICGDirectionsOptions.h */,
+				DFE3EF4515A04D82000B8537 /* UICGDirectionsOptions.m */,
+				DFE3EF4615A04D82000B8537 /* UICGoogleMapsAPI.h */,
+				DFE3EF4715A04D82000B8537 /* UICGoogleMapsAPI.m */,
+				DFE3EF4815A04D82000B8537 /* UICGPolyline.h */,
+				DFE3EF4915A04D82000B8537 /* UICGPolyline.m */,
+				DFE3EF4A15A04D82000B8537 /* UICGRoute.h */,
+				DFE3EF4B15A04D82000B8537 /* UICGRoute.m */,
+				DFE3EF4C15A04D82000B8537 /* UICGStep.h */,
+				DFE3EF4D15A04D82000B8537 /* UICGStep.m */,
+				DFE3EF4E15A04D82000B8537 /* UICRouteAnnotation.h */,
+				DFE3EF4F15A04D82000B8537 /* UICRouteAnnotation.m */,
+				DFE3EF5015A04D82000B8537 /* UICRouteOverlayMapView.h */,
+				DFE3EF5115A04D82000B8537 /* UICRouteOverlayMapView.m */,
 				DFD2804C151DBA36007A0873 /* AWIconAnnotation.h */,
 				DFD2804D151DBA36007A0873 /* AWIconAnnotation.m */,
 			);
@@ -2377,6 +2425,7 @@
 				DF6CA430159AB06100FFBB90 /* grayWatchSelected.png in Resources */,
 				DFF1775A159C352600F1FBA9 /* grayNavbar.png in Resources */,
 				DFF1775C159C360D00F1FBA9 /* grayToolbar@2x.png in Resources */,
+				DFE3EF5C15A05AB7000B8537 /* api.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2509,6 +2558,15 @@
 				DF8D4162159A761900351A6F /* utils.m in Sources */,
 				DF6CA427159A9C9300FFBB90 /* MKTickerView.m in Sources */,
 				DF295464159BC8FF0042265F /* UncaughtExceptionHandler.m in Sources */,
+				DFE3EF5215A04D82000B8537 /* UICGClientGeocoder.m in Sources */,
+				DFE3EF5315A04D82000B8537 /* UICGDirections.m in Sources */,
+				DFE3EF5415A04D82000B8537 /* UICGDirectionsOptions.m in Sources */,
+				DFE3EF5515A04D82000B8537 /* UICGoogleMapsAPI.m in Sources */,
+				DFE3EF5615A04D82000B8537 /* UICGPolyline.m in Sources */,
+				DFE3EF5715A04D82000B8537 /* UICGRoute.m in Sources */,
+				DFE3EF5815A04D82000B8537 /* UICGStep.m in Sources */,
+				DFE3EF5915A04D82000B8537 /* UICRouteAnnotation.m in Sources */,
+				DFE3EF5A15A04D82000B8537 /* UICRouteOverlayMapView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
