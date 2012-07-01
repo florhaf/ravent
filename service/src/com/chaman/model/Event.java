@@ -219,11 +219,11 @@ public class Event extends Model implements Serializable {
 	    	    		}
             		}
             	}
-          	
-            	if (!previous_venue_time.equals(event.venue_id + event.start_time)) {  // to remove duplicate events
+          			
+            	if (event != null && (event.venue_category == null || (event.venue_category != null && !event.venue_category.equals("city")))) {
             		
-                	if (event != null && (event.venue_category == null || (event.venue_category != null && !event.venue_category.equals("city")))) {
-                		
+            		if (!previous_venue_time.equals(event.venue_id + event.start_time)) {  // to remove duplicate events
+            		
             			if (event.Format(timeZoneInMinutes, searchTimeFrame)){
             				
                 			event.latitude 	= Double.toString(e.getLatitude());
@@ -238,7 +238,7 @@ public class Event extends Model implements Serializable {
                     		
                 			result.add(event);
             			}
-                	}
+            		}
             	} 
         	} else { // event in the past
 					
