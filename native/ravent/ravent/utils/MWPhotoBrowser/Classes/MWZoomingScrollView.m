@@ -98,7 +98,7 @@
 	if (_photo && _photoImageView.image == nil) {
 		
 		// Reset
-		self.maximumZoomScale = 1;
+		self.maximumZoomScale = 4;
 		self.minimumZoomScale = 1;
 		self.zoomScale = 1;
 		self.contentSize = CGSizeMake(0, 0);
@@ -145,7 +145,7 @@
 - (void)setMaxMinZoomScalesForCurrentBounds {
 	
 	// Reset
-	self.maximumZoomScale = 1;
+	self.maximumZoomScale = 4;
 	self.minimumZoomScale = 1;
 	self.zoomScale = 1;
 	
@@ -176,7 +176,7 @@
 	}
 	
 	// Set
-	self.maximumZoomScale = maxScale;
+	self.maximumZoomScale = 4;//maxScale;
 	self.minimumZoomScale = minScale;
 	self.zoomScale = minScale;
 	

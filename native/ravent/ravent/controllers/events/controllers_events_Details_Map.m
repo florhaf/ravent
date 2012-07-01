@@ -119,13 +119,16 @@
     [_segmentedControl addTarget:self action:@selector(onSegmentedControlValueChanged:) forControlEvents:UIControlEventValueChanged];
 	[self.view addSubview:_segmentedControl];
     
-    routeOverlayView = [[UICRouteOverlayMapView alloc] initWithMapView:_map];
     
-    startPoint = [NSString stringWithFormat:@"%@,%@", [models_User crtUser].latitude, [models_User crtUser].longitude];
-    endPoint = [NSString stringWithFormat:@"%@,%@", _event.latitude, _event.longitude];
-    travelMode = UICGTravelModeDriving;
     
     @try {
+        routeOverlayView = [[UICRouteOverlayMapView alloc] initWithMapView:_map];
+        
+        startPoint = [NSString stringWithFormat:@"%@,%@", [models_User crtUser].latitude, [models_User crtUser].longitude];
+        endPoint = [NSString stringWithFormat:@"%@,%@", _event.latitude, _event.longitude];
+        travelMode = UICGTravelModeDriving;
+        
+        
         diretions = [UICGDirections sharedDirections];
         diretions.delegate = self;
         
@@ -192,12 +195,20 @@
 }
 
 - (void)mapView:(MKMapView *)mapView regionWillChangeAnimated:(BOOL)animated {
-	routeOverlayView.hidden = YES;
+    
+    if (routeOverlayView != nil) {
+        
+        routeOverlayView.hidden = YES;
+    }
 }
 
 - (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated {
-	routeOverlayView.hidden = NO;
-	[routeOverlayView setNeedsDisplay];
+    
+    if (routeOverlayView != nil) {
+        
+        routeOverlayView.hidden = NO;
+        [routeOverlayView setNeedsDisplay];   
+    }
 }
 
 - (void)hideAllModal

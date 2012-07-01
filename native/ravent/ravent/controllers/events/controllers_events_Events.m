@@ -30,6 +30,9 @@ static customNavigationController *_ctrl;
         Action *loadDetailsAction = [[Action alloc] initWithDelegate:self andSelector:@selector(loadEventDetailsFromMap:)];
         [[ActionDispatcher instance] add:loadDetailsAction named:@"controller_events_List_p2p_loadDetails"];
         
+        //[self addChildViewController:[controllers_events_Map_p2p instance]];
+        [self addChildViewController:[controllers_events_List_p2p instance]];
+        
     }
     return self;
 }
@@ -47,9 +50,6 @@ static customNavigationController *_ctrl;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    [self addChildViewController:[controllers_events_Map_p2p instance]];
-    [self addChildViewController:[controllers_events_List_p2p instance]];
     
     [controllers_events_List_p2p instance].view.frame = CGRectMake(0, 0, 320, 416);
     
