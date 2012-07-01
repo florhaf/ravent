@@ -100,9 +100,6 @@ static models_User *_crtUser = nil;
     self.accessToken = [defaults objectForKey:@"_accessToken"];
     self.searchRadius = [((NSNumber *)[defaults objectForKey:@"_searchRadius"]) intValue];
     self.searchWindow = [((NSNumber *)[defaults objectForKey:@"_searchWindow"]) intValue];
-    
-    
-    NSLog(@"FUCK YOU");
 }
 
 - (id)initWithDelegate:(NSObject *)del andSelector:(SEL)sel
@@ -170,8 +167,7 @@ static models_User *_crtUser = nil;
 
 + (void)release
 {
-    _allListSingleton = nil;
-    _crtUser = nil;
+
 }
 
 - (void)getLocation
@@ -533,6 +529,7 @@ static models_User *_crtUser = nil;
     self.delegate = nil;
     self.locationDelegate = nil;
     _sender = nil;
+    
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:GPSDone object:[GPSManager instance]];
 }

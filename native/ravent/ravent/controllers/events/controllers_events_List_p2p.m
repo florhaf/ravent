@@ -100,6 +100,7 @@ static controllers_events_List_p2p *_ctrl;
     [params setValue:[NSNumber numberWithInt:[models_User crtUser].searchWindow] forKey:@"timeframe"];
     
     _url = [@"events" appendQueryParams:params];
+
     Action *upadteLoadingMessageAction = [[Action alloc] initWithDelegate:self andSelector:@selector(updateLoadingMessageWith:)];
     [[ActionDispatcher instance] add:upadteLoadingMessageAction named:_url];
     

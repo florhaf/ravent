@@ -75,7 +75,6 @@ static customNavigationController *_ctrl;
 
 - (void)onMeTap
 {
-    
     _details = [[controllers_friends_Details alloc] initWithUser:[[models_User crtUser] copy]];
     
     UIImage *backi = [UIImage imageNamed:@"backButton"];

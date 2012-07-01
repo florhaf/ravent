@@ -91,6 +91,7 @@
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="273871149"/>
 						<string key="NSReuseIdentifierKey">_NS:567</string>
+						<bool key="IBUIClipsSubviews">YES</bool>
 						<int key="IBUIContentMode">2</int>
 						<int key="IBUITag">10</int>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>

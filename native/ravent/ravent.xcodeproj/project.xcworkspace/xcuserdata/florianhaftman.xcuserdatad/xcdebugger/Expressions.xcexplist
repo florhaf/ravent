@@ -3,13 +3,10 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "-[dataSource eventsFrom:to:]:dataSource.m">
+         contextName = "-[controllers_events_List loadEvents]:controllers_events_List.m">
          <PersistentStrings>
             <PersistentString
-               value = "toDate">
-            </PersistentString>
-            <PersistentString
-               value = "event.dateStart">
+               value = "_user.timeZone">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -39,6 +36,9 @@
                value = "[[resultDictionary allKeys]objectAtIndex:0]">
             </PersistentString>
          </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "+[models_User setCrtUser:]:models_User.m">
       </ContextState>
       <ContextState
          contextName = "-[KalViewController loadedDataSource:]:KalViewController.m">
@@ -277,10 +277,10 @@
          contextName = "-[controllers_events_Details viewDidLoad]:controllers_events_Details.m">
          <PersistentStrings>
             <PersistentString
-               value = "_headerNameLabel.frame.size.height">
+               value = "NSLog(mapUrl)">
             </PersistentString>
             <PersistentString
-               value = "NSLog(mapUrl)">
+               value = "_headerNameLabel.frame.size.height">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -323,10 +323,18 @@
          contextName = "-[models_User locationManager:didUpdateToLocation:fromLocation:]:models_User.m">
          <PersistentStrings>
             <PersistentString
-               value = "newLocation.horizontalAccuracy">
+               value = "_bestEffortAtLocation.horizontalAccuracy &gt; newLocation.horizontalAccuracy">
             </PersistentString>
             <PersistentString
-               value = "_bestEffortAtLocation.horizontalAccuracy &gt; newLocation.horizontalAccuracy">
+               value = "newLocation.horizontalAccuracy">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[controllers_events_List_p2p loadData]:controllers_events_List_p2p.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "_url">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -356,10 +364,13 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "-[controllers_events_List loadEvents]:controllers_events_List.m">
+         contextName = "-[dataSource eventsFrom:to:]:dataSource.m">
          <PersistentStrings>
             <PersistentString
-               value = "_user.timeZone">
+               value = "toDate">
+            </PersistentString>
+            <PersistentString
+               value = "event.dateStart">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

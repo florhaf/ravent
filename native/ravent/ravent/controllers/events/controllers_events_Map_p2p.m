@@ -169,6 +169,7 @@ static int _retryCounter;
 - (void)stopGps
 {
     _map.showsUserLocation = NO;
+    _isMapSet = NO;
 }
 
 - (void)startGps
@@ -185,6 +186,13 @@ static int _retryCounter;
 
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
 {    
+    if (_isMapSet) {
+        
+        return;
+    }
+    
+    _isMapSet = YES;
+    
     MKCoordinateRegion region;
     MKCoordinateSpan span;
     
