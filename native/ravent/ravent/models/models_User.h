@@ -20,12 +20,9 @@
     SEL _callbackResponseFailure;
     id _sender;
     
-//    CLLocationManager *_locationManager;
     id __weak  _locationDelegate;
     SEL _locationSuccess;
     SEL _locationFailure;
-//    NSDate *_locationLastUpdateTime;
-//    CLLocation *_bestEffortAtLocation;
     
     BOOL _isRequesting;
     BOOL _isLoadingAllFriends;
@@ -59,7 +56,6 @@
 @property (nonatomic, assign) SEL callbackResponseSuccess;
 @property (nonatomic, assign) SEL callbackResponseFailure;
 
-//@property (nonatomic, retain) CLLocationManager *locationManager;
 @property (weak) id locationDelegate;
 @property (nonatomic, assign) SEL locationSuccess;
 @property (nonatomic, assign) SEL locationFailure;
@@ -89,12 +85,13 @@
 - (void)loadInvitedWithParams:(NSMutableDictionary *)params;
 - (void)loadShareWithParams:(NSMutableDictionary *)params force:(BOOL)force;
 - (void)cancelAllRequests;
-
 - (void)getLocation;
 - (void)dispatchLocation:(NSError *)error;
-
 - (void)follow:(NSMutableDictionary *)params success:(SEL)success failure:(SEL)failure sender:(id)sender;
 - (void)unfollow:(NSMutableDictionary *)params success:(SEL)success failure:(SEL)failure sender:(id)sender;
+- (void)saveToNSUserDefaults;
+- (void)delFromNSUserDefaults;
+- (void)loadFromNSUserDefaults;
 
 + (NSMutableDictionary *)getGroupedData:(NSArray *)data;
 + (models_User *) crtUser;

@@ -20,7 +20,7 @@ static customNavigationController *_ctrl;
     if (self) {
         
         _user = user;
-        self.title = @"Ravent";
+        self.title = @"Watchlist";
         
     }
     return self;

@@ -21,7 +21,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         
-        self.title = @"Ravent";
+        self.title = @"Gemster";
         
         //self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"backgroundLight"]];
 

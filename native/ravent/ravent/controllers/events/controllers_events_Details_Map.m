@@ -22,7 +22,7 @@
     if (self != nil) {
         
         _event = event;
-        self.title = @"Ravent";
+        self.title = @"Gemster";
     }
     
     return self;

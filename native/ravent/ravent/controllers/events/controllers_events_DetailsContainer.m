@@ -33,7 +33,7 @@
         _delegateBack = delegate;
         _selectorBack = sel;
         
-        self.title = @"Ravent";
+        self.title = @"Gemster";
         _event = event;
         _detailsController = [[controllers_events_Details alloc] initWithEvent:event withBackDelegate:delegate backSelector:sel];
         _detailsController.view.frame = CGRectMake(0, 0, _detailsController.view.frame.size.width, _detailsController.view.frame.size.height);

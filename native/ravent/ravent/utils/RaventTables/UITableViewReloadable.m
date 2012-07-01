@@ -35,7 +35,7 @@ typedef enum {
     self = [super init];
     if (self) {
         
-        self.title = @"Ravent";
+        self.title = @"Gemster";
         _showEmptyMessage = NO;
     }
     return self;

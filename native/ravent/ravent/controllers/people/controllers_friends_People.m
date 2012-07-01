@@ -23,7 +23,7 @@ static customNavigationController *_ctrl;
     
     if (self) {
         
-        self.title = @"Ravent";
+        self.title = @"People";
         _user = user;
         _isSegTapAllowed = YES;
           

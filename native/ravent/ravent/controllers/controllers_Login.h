@@ -12,7 +12,7 @@
 
 @interface controllers_Login : UIViewController<FBRequestDelegate, FBDialogDelegate, FBSessionDelegate> {
     
-    IBOutlet UIImageView *_titleImage;
+    IBOutlet UIView *_titleImage;
     IBOutlet UIButton *_loginButton;
     IBOutlet UIActivityIndicatorView *_spinner;
     

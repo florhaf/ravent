@@ -646,10 +646,10 @@
 		DF36FF4915557D0400C3CB53 /* views_Post.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = views_Post.xib; sourceTree = "<group>"; };
 		DF36FF4B1555868900C3CB53 /* postController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = postController.h; sourceTree = "<group>"; };
 		DF36FF4C1555868900C3CB53 /* postController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = postController.m; sourceTree = "<group>"; };
-		DF39E8071525275E0080EDA0 /* ActionDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActionDispatcher.h; sourceTree = "<group>"; };
-		DF39E8081525275E0080EDA0 /* ActionDispatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActionDispatcher.m; sourceTree = "<group>"; };
-		DF39E80A152527A50080EDA0 /* Action.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Action.h; sourceTree = "<group>"; };
-		DF39E80B152527A50080EDA0 /* Action.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Action.m; sourceTree = "<group>"; };
+		DF39E8071525275E0080EDA0 /* ActionDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = ActionDispatcher.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		DF39E8081525275E0080EDA0 /* ActionDispatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ActionDispatcher.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		DF39E80A152527A50080EDA0 /* Action.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Action.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		DF39E80B152527A50080EDA0 /* Action.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = Action.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		DF4E475A157883590015616B /* itemBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = itemBackground.png; sourceTree = "<group>"; };
 		DF4E475B157883590015616B /* itemBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "itemBackground@2x.png"; sourceTree = "<group>"; };
 		DF4E475E15789DC60015616B /* itemNext@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "itemNext@2x.png"; sourceTree = "<group>"; };
@@ -785,8 +785,8 @@
 		DF8F14D6150BD48200008ABC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		DF8F14D8150BD48200008ABC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		DF8F14DA150BD48200008ABC /* ravent-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ravent-Prefix.pch"; sourceTree = "<group>"; };
-		DF8F14DB150BD48200008ABC /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		DF8F14DC150BD48200008ABC /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		DF8F14DB150BD48200008ABC /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = AppDelegate.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		DF8F14DC150BD48200008ABC /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AppDelegate.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		DF8F1513150BD84200008ABC /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		DF8F1514150BD84200008ABC /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		DF8F151B150BD94B00008ABC /* 37x-Checkmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "37x-Checkmark.png"; sourceTree = "<group>"; };
@@ -913,7 +913,7 @@
 		DFCB87AF154619BC00DDB85B /* menuButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menuButton@2x.png"; sourceTree = "<group>"; };
 		DFD28047151D6742007A0873 /* AnnotationEvent@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AnnotationEvent@2x.png"; sourceTree = "<group>"; };
 		DFD28048151D6742007A0873 /* AnnotationEvent.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AnnotationEvent.png; sourceTree = "<group>"; };
-		DFD2804C151DBA36007A0873 /* AWIconAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWIconAnnotation.h; sourceTree = "<group>"; };
+		DFD2804C151DBA36007A0873 /* AWIconAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = AWIconAnnotation.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		DFD2804D151DBA36007A0873 /* AWIconAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWIconAnnotation.m; sourceTree = "<group>"; };
 		DFD28957151DD2E0007A0873 /* controllers_calendar_Calendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = controllers_calendar_Calendar.h; path = ravent/controllers/calendar/controllers_calendar_Calendar.h; sourceTree = SOURCE_ROOT; };
 		DFD28958151DD2E0007A0873 /* controllers_calendar_Calendar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = controllers_calendar_Calendar.m; path = ravent/controllers/calendar/controllers_calendar_Calendar.m; sourceTree = SOURCE_ROOT; };

@@ -45,7 +45,6 @@
     BOOL _isDirty;
 }
 
-- (IBAction)onValueChanged:(id)sender;
 - (IBAction)onSO_Tap:(id)sender;
 - (IBAction)stepperWindowPressed:(UIStepper *)sender;
 - (IBAction)stepperRadiusPressed:(UIStepper *)sender;

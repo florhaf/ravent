@@ -4,19 +4,6 @@
    version = "1.0">
    <FileBreakpoints>
       <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "ravent/utils/RaventTables/postController.m"
-         timestampString = "362459702.116023"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "117"
-         endingLineNumber = "117"
-         landmarkName = "-post"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
          shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
@@ -33,13 +20,13 @@
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "ravent/controllers/controllers_Login.m"
-         timestampString = "362706033.4962"
+         filePath = "ravent/AppDelegate.m"
+         timestampString = "362799928.368657"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "240"
-         endingLineNumber = "240"
-         landmarkName = "-viewDidUnload"
+         startingLineNumber = "108"
+         endingLineNumber = "108"
+         landmarkName = "-applicationWillTerminate:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

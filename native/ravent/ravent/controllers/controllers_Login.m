@@ -26,12 +26,34 @@ static controllers_Login *_ctrl;
         _user = [[models_User alloc] initWithDelegate:self andSelector:@selector(onUserLoad:)];
         
         // should be at the controllers_App level
-//        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-//        if ([defaults objectForKey:@"FBAccessTokenKey"] 
-//            && [defaults objectForKey:@"FBExpirationDateKey"]) {
-//            _facebook.accessToken = [defaults objectForKey:@"FBAccessTokenKey"];
-//            _facebook.expirationDate = [defaults objectForKey:@"FBExpirationDateKey"];
-//        }
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        if ([defaults objectForKey:@"FBAccessTokenKey"] 
+            && [defaults objectForKey:@"FBExpirationDateKey"]) {
+            _facebook.accessToken = [defaults objectForKey:@"FBAccessTokenKey"];
+            _facebook.expirationDate = [defaults objectForKey:@"FBExpirationDateKey"];
+            
+            models_User *u = [[models_User alloc] init];
+            [u loadFromNSUserDefaults];
+            [self onUserLoad:[NSArray arrayWithObjects:u, nil]];
+        } else {
+            
+            [UIView beginAnimations:nil context:NULL];
+            [UIView setAnimationDuration:1];
+            [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+            
+            _titleImage.frame = CGRectMake(_titleImage.frame.origin.x, 90, _titleImage.frame.size.width, _titleImage.frame.size.height);
+            
+            [UIView commitAnimations];
+            
+            [UIView beginAnimations:nil context:NULL];
+            [UIView setAnimationDuration:1];
+            [UIView setAnimationDelay:0.5];
+            [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+            
+            _loginButton.alpha = 1;
+            
+            [UIView commitAnimations];
+        }
     }
     return self;
 }
@@ -106,6 +128,11 @@ static controllers_Login *_ctrl;
     _user = nil;
     
     [models_User setCrtUser:nil];
+    [[models_User crtUser] delFromNSUserDefaults];
+    
+    
+    _titleImage.frame = CGRectMake(_titleImage.frame.origin.x, 90, _titleImage.frame.size.width, _titleImage.frame.size.height);
+    _loginButton.alpha = 1;
 }
 
 - (void)fbSessionInvalidated
@@ -144,19 +171,29 @@ static controllers_Login *_ctrl;
 
 - (void)request:(FBRequest*)request didLoad:(id)result
 {
-    NSString* uid = [result objectForKey:@"id"];
-
-    _user.uid = uid;
     
-    
-    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
-    
-    [params setValue:_user.accessToken forKey:@"access_token"];
-    [params setValue:_user.uid forKey:@"userID"];
-    _userLoader = [[models_User alloc] init];
-    
-    [_userLoader loadAllWithParams:params force:YES];
-    [_user loadUser];
+    if ([result isKindOfClass:[NSDictionary class]] && [((NSDictionary *)result).allKeys containsObject:@"id"]) {
+     
+        NSString* uid = [result objectForKey:@"id"];
+        
+        _user.uid = uid;
+        
+        
+        NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+        
+        [params setValue:_user.accessToken forKey:@"access_token"];
+        [params setValue:_user.uid forKey:@"userID"];
+        _userLoader = [[models_User alloc] init];
+        
+        [_userLoader loadAllWithParams:params force:YES];
+        [_user loadUser];
+    } else {
+        
+        _errorLabel.text = @"Facebook login error\nTry again";
+        [_loginButton setEnabled:YES];
+        [_spinner setAlpha:0];
+        [_spinner stopAnimating];
+    }
 }
 
 - (void)onUserLoad:(NSArray *)objects
@@ -175,6 +212,8 @@ static controllers_Login *_ctrl;
             [defaults removeObjectForKey:@"FBAccessTokenKey"];
             [defaults removeObjectForKey:@"FBExpirationDateKey"];
             [defaults synchronize];
+            
+            [[models_User crtUser] delFromNSUserDefaults];
         }
         
         return;
@@ -193,6 +232,8 @@ static controllers_Login *_ctrl;
             [defaults removeObjectForKey:@"FBAccessTokenKey"];
             [defaults removeObjectForKey:@"FBExpirationDateKey"];
             [defaults synchronize];
+            
+            [[models_User crtUser] delFromNSUserDefaults];
         }
         
         return;
@@ -202,12 +243,21 @@ static controllers_Login *_ctrl;
     
     [models_User setCrtUser:user];
     [models_User crtUser].accessToken = _user.accessToken;
+    [[models_User crtUser] saveToNSUserDefaults];
     
-    [[ActionDispatcher instance] execute:@"onFacebookLogin"];
+    
+    
+    
+    [self performSelector:@selector(onFacebookLogin) withObject:nil afterDelay:0.5];
     
     [_loginButton setEnabled:YES];
     [_spinner setAlpha:0];
     [_spinner stopAnimating];
+}
+
+- (void) onFacebookLogin
+{
+    [[ActionDispatcher instance] execute:@"onFacebookLogin"];
 }
 
 #pragma mark - View lifecycle
@@ -216,23 +266,6 @@ static controllers_Login *_ctrl;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    [UIView beginAnimations:nil context:NULL];
-	[UIView setAnimationDuration:1];
-    [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
-    
-    _titleImage.frame = CGRectMake(_titleImage.frame.origin.x, 90, _titleImage.frame.size.width, _titleImage.frame.size.height);
-    
-	[UIView commitAnimations];
-
-    [UIView beginAnimations:nil context:NULL];
-	[UIView setAnimationDuration:1];
-    [UIView setAnimationDelay:0.5];
-    [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
-    
-    _loginButton.alpha = 1;
-    
-	[UIView commitAnimations];
 }
 
 - (void)viewDidUnload
