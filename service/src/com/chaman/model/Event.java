@@ -470,7 +470,7 @@ public class Event extends Model implements Serializable {
 			} else if (this.venue_category.contains("concert venue")) {
 			
 				this.filter = "Party";
-			} else if (this.venue_category.contains("art") || this.venue_category.contains("theater") || this.venue_category.contains("museum")) {
+			} else if (this.venue_category.contains("art") || this.venue_category.contains("theater") || this.venue_category.contains("theatre") || this.venue_category.contains("museum")) {
 			
 				this.filter = "Entertain";
 			}
