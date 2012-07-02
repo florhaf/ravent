@@ -111,23 +111,26 @@
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(hideAllModal)];        
     self.navigationItem.rightBarButtonItem = doneButton;
     
-    NSArray *objects = [NSArray arrayWithObjects:@"Driving", @"Walking", nil];
+    NSArray *objects = [NSArray arrayWithObjects:@"", @"Direction", @"", nil];
     _segmentedControl = [[STSegmentedControl alloc] initWithItems:objects];
 	_segmentedControl.frame = CGRectMake(44, 380, 232, 30);
 	_segmentedControl.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-    _segmentedControl.selectedSegmentIndex = 0;
+    _segmentedControl.momentary = YES;
     [_segmentedControl addTarget:self action:@selector(onSegmentedControlValueChanged:) forControlEvents:UIControlEventValueChanged];
 	[self.view addSubview:_segmentedControl];
     
-    routeOverlayView = [[UICRouteOverlayMapView alloc] initWithMapView:_map];
     
-    startPoint = [NSString stringWithFormat:@"%@,%@", [models_User crtUser].latitude, [models_User crtUser].longitude];
-    endPoint = [NSString stringWithFormat:@"%@,%@", _event.latitude, _event.longitude];
-    travelMode = UICGTravelModeDriving;
     
     @try {
-        diretions = [UICGDirections sharedDirections];
-        diretions.delegate = self;
+//        routeOverlayView = [[UICRouteOverlayMapView alloc] initWithMapView:_map];
+//        
+//        startPoint = [NSString stringWithFormat:@"%@,%@", [models_User crtUser].latitude, [models_User crtUser].longitude];
+//        endPoint = [NSString stringWithFormat:@"%@,%@", _event.latitude, _event.longitude];
+//        travelMode = UICGTravelModeDriving;
+//        
+//        
+//        diretions = [UICGDirections sharedDirections];
+//        diretions.delegate = self;
         
         CLLocationCoordinate2D coord;
         coord.latitude = [_event.latitude doubleValue];
@@ -135,10 +138,15 @@
         _event.coordinate = coord;
         [_map addAnnotation:_event];
         
+        MKCoordinateSpan span = MKCoordinateSpanMake(0.3 * METERS_PER_MILE, 0.3 * METERS_PER_MILE);
+        MKCoordinateRegion region = MKCoordinateRegionMake(coord, span);
         
-        if (diretions.isInitialized) {
-            [self update];
-        }
+        [_map setRegion:region animated:YES];
+        
+        
+//        if (diretions.isInitialized) {
+//            [self update];
+//        }
     }
     @catch (NSException *exception) {
         // NOTHING
@@ -150,17 +158,22 @@
 
 - (void)onSegmentedControlValueChanged:(id)sender
 {
-    int i = _segmentedControl.selectedSegmentIndex;
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://maps.google.com/maps?saddr=Current%20Location&daddr=%@,%@", _event.latitude, _event.longitude]]];
     
-    if (i == 0) {
-        
-        travelMode = UICGTravelModeDriving;
-    } else {
-        
-        travelMode = UICGTravelModeWalking;
-    }
+//    int i = _segmentedControl.selectedSegmentIndex;
+//    
+//    if (i == 0) {
+//        
+//        travelMode = UICGTravelModeDriving;
+//    } else {
+//        
+//        travelMode = UICGTravelModeWalking;
+//    }
+//    
+//    [self update];
     
-    [self update];
+    
+    
 }
 
 - (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views {
@@ -192,12 +205,20 @@
 }
 
 - (void)mapView:(MKMapView *)mapView regionWillChangeAnimated:(BOOL)animated {
-	routeOverlayView.hidden = YES;
+    
+    if (routeOverlayView != nil) {
+        
+        routeOverlayView.hidden = YES;
+    }
 }
 
 - (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated {
-	routeOverlayView.hidden = NO;
-	[routeOverlayView setNeedsDisplay];
+    
+    if (routeOverlayView != nil) {
+        
+        routeOverlayView.hidden = NO;
+        [routeOverlayView setNeedsDisplay];   
+    }
 }
 
 - (void)hideAllModal

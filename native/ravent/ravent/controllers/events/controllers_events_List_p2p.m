@@ -24,7 +24,7 @@ static controllers_events_List_p2p *_ctrl;
 {
     [super viewDidLoad];
     
-    self.tableView.tableFooterView = [[UIView alloc] init];
+    self.view.frame = CGRectMake(0, 0, 320, 416);
 }
 
 - (void)loadDataWithUserLocation

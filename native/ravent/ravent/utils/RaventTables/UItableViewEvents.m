@@ -24,7 +24,7 @@
         _titleSize = CGSizeMake(_itemTitle.frame.size.width, _itemTitle.frame.size.height);
         _subTitleSize = CGSizeMake(_itemSubTitle.frame.size.width, _itemSubTitle.frame.size.height);
         
-        
+        self.tableView.tableFooterView = [[UIView alloc] init];
         
         _user = user;
         _event = [[models_Event alloc] initWithDelegate:self andSelector:@selector(onLoadEvents:)];
