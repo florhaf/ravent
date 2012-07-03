@@ -435,12 +435,12 @@ static int _retryCounter;
     }
     
     // VOTE
-    _voteView = [[DLStarRatingControl alloc] initWithFrame:_headerVoteLabel.frame andStars: 5];
-    [_voteView setRating:1];
-    [_voteView setAlpha:0.8];
-    [_voteView setDelegate:self];
-    [_header addSubview:_voteView];
-    [_headerVoteLabel removeFromSuperview];
+//    _voteView = [[DLStarRatingControl alloc] initWithFrame:_headerVoteLabel.frame andStars: 5];
+//    [_voteView setRating:1];
+//    [_voteView setAlpha:0.8];
+//    [_voteView setDelegate:self];
+//    [_header addSubview:_voteView];
+//    [_headerVoteLabel removeFromSuperview];
     
     // RSVP
     NSArray *objects = [NSArray arrayWithObjects:@"Yes", @"Maybe", @"No", nil];

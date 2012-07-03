@@ -53,22 +53,26 @@ static customNavigationController *_ctrl;
     
     [self.view addSubview:[controllers_events_List_p2p instance].view];
     
-    UIImage *menui = [UIImage imageNamed:@"menuButton"];
+    UIImage *menubg = [UIImage imageNamed:@"navBarBG"];
+    UIImage *menui = [UIImage imageNamed:@"navBarMenu"];
     
     UIButton *menub = [UIButton buttonWithType:UIButtonTypeCustom];
     [menub addTarget:self action:@selector(revealMenu:) forControlEvents:UIControlEventTouchUpInside];
     [menub setImage:menui forState:UIControlStateNormal];
-    [menub setFrame:CGRectMake(0, 0, menui.size.width, menui.size.height)];
+    [menub setBackgroundImage:menubg forState:UIControlStateNormal];
+    [menub setFrame:CGRectMake(0, 0, 40, 29)];
     
     UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithCustomView:menub];
     self.navigationItem.leftBarButtonItem = menuButton;
 
-    UIImage *mapi = [UIImage imageNamed:@"mapButton"];
+    UIImage *mapbg = [UIImage imageNamed:@"navBarBG"];
+    UIImage *mapi = [UIImage imageNamed:@"navBarMap"];
     
     UIButton *mapb = [UIButton buttonWithType:UIButtonTypeCustom];
     [mapb addTarget:self action:@selector(revealMap:) forControlEvents:UIControlEventTouchUpInside];
     [mapb setImage:mapi forState:UIControlStateNormal];
-    [mapb setFrame:CGRectMake(0, 0, mapi.size.width, mapi.size.height)];
+    [mapb setBackgroundImage:mapbg forState:UIControlStateNormal];
+    [mapb setFrame:CGRectMake(0, 0, 40, 29)];
     
     UIBarButtonItem *mapButton = [[UIBarButtonItem alloc] initWithCustomView:mapb];        
     self.navigationItem.rightBarButtonItem = mapButton;

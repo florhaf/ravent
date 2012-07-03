@@ -64,7 +64,7 @@
 							<object class="IBUIButton" id="180141802">
 								<reference key="NSNextResponder" ref="1023945954"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{65, 5}, {190, 34}}</string>
+								<string key="NSFrame">{{30, 4}, {260, 35}}</string>
 								<reference key="NSSuperview" ref="1023945954"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="387358071"/>
@@ -73,9 +73,7 @@
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<int key="IBUIContentHorizontalAlignment">0</int>
 								<int key="IBUIContentVerticalAlignment">0</int>
-								<int key="IBUIButtonType">1</int>
 								<string key="IBUITitleShadowOffset">{0, -1}</string>
-								<string key="IBUINormalTitle">Search Options</string>
 								<object class="NSColor" key="IBUIHighlightedTitleColor" id="415489210">
 									<int key="NSColorSpace">3</int>
 									<bytes key="NSWhite">MQA</bytes>
@@ -87,6 +85,10 @@
 								<object class="NSColor" key="IBUINormalTitleShadowColor" id="829017077">
 									<int key="NSColorSpace">3</int>
 									<bytes key="NSWhite">MC41AA</bytes>
+								</object>
+								<object class="NSCustomResource" key="IBUINormalImage">
+									<string key="NSClassName">NSImage</string>
+									<string key="NSResourceName">searchoptions.png</string>
 								</object>
 								<object class="IBUIFontDescription" key="IBUIFontDescription">
 									<int key="type">2</int>
@@ -123,7 +125,6 @@
 										<string key="NSFrame">{{206, 117}, {94, 27}}</string>
 										<reference key="NSSuperview" ref="387358071"/>
 										<reference key="NSWindow"/>
-										<reference key="NSNextKeyView"/>
 										<string key="NSReuseIdentifierKey">_NS:9</string>
 										<bool key="IBUIOpaque">NO</bool>
 										<bool key="IBUIClipsSubviews">YES</bool>
@@ -346,11 +347,8 @@
 				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="1023945954"/>
 				<object class="NSColor" key="IBUIBackgroundColor">
-					<int key="NSColorSpace">3</int>
-					<bytes key="NSWhite">MQA</bytes>
-					<object class="NSColorSpace" key="NSCustomColorSpace">
-						<int key="NSID">2</int>
-					</object>
+					<int key="NSColorSpace">2</int>
+					<bytes key="NSRGB">MC44OTAxOTYwNzg0IDAuODcwNTg4MjM1MyAwLjg0NzA1ODgyMzUAA</bytes>
 				</object>
 				<object class="IBUISimulatedStatusBarMetrics" key="IBUISimulatedStatusBarMetrics"/>
 				<object class="IBUISimulatedNavigationBarMetrics" key="IBUISimulatedTopBarMetrics">
@@ -627,14 +625,6 @@
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
 				<object class="IBPartialClassDescription">
-					<string key="className">STSegmentedControl</string>
-					<string key="superclassName">UIControl</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/STSegmentedControl.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
 					<string key="className">controllers_events_Events</string>
 					<string key="superclassName">UIViewController</string>
 					<dictionary class="NSMutableDictionary" key="actions">
@@ -682,7 +672,7 @@
 						<string key="_labelRadiusValue">UILabel</string>
 						<string key="_labelWindowValue">UILabel</string>
 						<string key="_miscButton">UIButton</string>
-						<string key="_optionsButton">STSegmentedControl</string>
+						<string key="_optionsButton">UIButton</string>
 						<string key="_optionsView">UIView</string>
 						<string key="_partyButton">UIButton</string>
 						<string key="_radiusStepper">UIStepper</string>
@@ -713,7 +703,7 @@
 						</object>
 						<object class="IBToOneOutletInfo" key="_optionsButton">
 							<string key="name">_optionsButton</string>
-							<string key="candidateClassName">STSegmentedControl</string>
+							<string key="candidateClassName">UIButton</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="_optionsView">
 							<string key="name">_optionsView</string>
@@ -755,10 +745,10 @@
 		</object>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
-		<object class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
-			<string key="NS.key.0">grayToolbar.png</string>
-			<string key="NS.object.0">{320, 46}</string>
-		</object>
+		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
+			<string key="grayToolbar.png">{320, 44}</string>
+			<string key="searchoptions.png">{520, 70}</string>
+		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">1181</string>
 	</data>
 </archive>

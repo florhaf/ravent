@@ -320,8 +320,10 @@ typedef enum {
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if ([self tableView:tableView titleForHeaderInSection:section] != nil) {
-        return 21;;
+    NSString *str = [self tableView:tableView titleForHeaderInSection:section];
+    
+    if (str != nil && ![str isEqualToString:@""]) {
+        return 16;
     }
     else {
         // If no section header title, no section header needed
@@ -333,16 +335,16 @@ typedef enum {
 {
     // Create label with section title
     UILabel *label = [[UILabel alloc] init]; 
-    label.frame = CGRectMake(10, 0, 300, 21);
+    label.frame = CGRectMake(10, 2, 300, 14);
     label.backgroundColor = [UIColor clearColor];
     label.textColor = [UIColor colorWithRed:228 green:230 blue:234 alpha:1.0];
     label.shadowColor = [UIColor darkGrayColor];
-    label.shadowOffset = CGSizeMake(0.0, 1.0);
-    label.font = [UIFont boldSystemFontOfSize:16];
+    label.shadowOffset = CGSizeMake(0.0, 0.0);
+    label.font = [UIFont systemFontOfSize:12];
     label.text = [self tableView:tableView titleForHeaderInSection:section];
     
     // Create header view and add label as a subview
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 21)];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 16)];
     
     UIImageView *bg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"sectionHeader"]];
     bg.frame = view.frame;

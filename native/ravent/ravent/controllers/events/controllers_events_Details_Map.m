@@ -111,13 +111,13 @@
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(hideAllModal)];        
     self.navigationItem.rightBarButtonItem = doneButton;
     
-    NSArray *objects = [NSArray arrayWithObjects:@"", @"Direction", @"", nil];
-    _segmentedControl = [[STSegmentedControl alloc] initWithItems:objects];
-	_segmentedControl.frame = CGRectMake(44, 380, 232, 30);
-	_segmentedControl.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-    _segmentedControl.momentary = YES;
-    [_segmentedControl addTarget:self action:@selector(onSegmentedControlValueChanged:) forControlEvents:UIControlEventValueChanged];
-	[self.view addSubview:_segmentedControl];
+//    NSArray *objects = [NSArray arrayWithObjects:@"", @"Direction", @"", nil];
+//    _segmentedControl = [[STSegmentedControl alloc] initWithItems:objects];
+//	_segmentedControl.frame = CGRectMake(44, 380, 232, 30);
+//	_segmentedControl.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+//    _segmentedControl.momentary = YES;
+//    [_segmentedControl addTarget:self action:@selector(onSegmentedControlValueChanged:) forControlEvents:UIControlEventValueChanged];
+//	[self.view addSubview:_segmentedControl];
     
     
     
@@ -133,15 +133,18 @@
 //        diretions.delegate = self;
         
         CLLocationCoordinate2D coord;
-        coord.latitude = [_event.latitude doubleValue];
-        coord.longitude = [_event.longitude doubleValue];
+        coord.latitude = [_event.latitude floatValue];
+        coord.longitude = [_event.longitude floatValue];
         _event.coordinate = coord;
+        
+        
+        //MKCoordinateSpan span = MKCoordinateSpanMake(coord, 0.3 * METERS_PER_MILE, 0.3 * METERS_PER_MILE);
+        MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(coord, 0.3*METERS_PER_MILE, 0.3*METERS_PER_MILE);
+        
+        MKCoordinateRegion adjustedRegion = [_map regionThatFits:region];
+        
+        [_map setRegion:adjustedRegion animated:YES];
         [_map addAnnotation:_event];
-        
-        MKCoordinateSpan span = MKCoordinateSpanMake(0.3 * METERS_PER_MILE, 0.3 * METERS_PER_MILE);
-        MKCoordinateRegion region = MKCoordinateRegionMake(coord, span);
-        
-        [_map setRegion:region animated:YES];
         
         
 //        if (diretions.isInitialized) {
@@ -156,7 +159,7 @@
     }
 }
 
-- (void)onSegmentedControlValueChanged:(id)sender
+- (IBAction)onDirections_Tap:(id)sender
 {
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://maps.google.com/maps?saddr=Current%20Location&daddr=%@,%@", _event.latitude, _event.longitude]]];
     
@@ -178,6 +181,8 @@
 
 - (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views {
     
+    id<MKAnnotation> myAnnotation = [_map.annotations objectAtIndex:0];
+    [_map selectAnnotation:myAnnotation animated:YES];
 }
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation {

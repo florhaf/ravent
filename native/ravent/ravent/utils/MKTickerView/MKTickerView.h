@@ -49,6 +49,8 @@
   NSString *_title;
   NSString *_value;
   UIImage *_image;
+    
+    UIColor *_myBlueColor;
 }
 
 - (void) setTitle:(NSString *) title value:(NSString*) value image:(UIImage*) image;
