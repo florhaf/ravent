@@ -460,8 +460,11 @@ public class Event extends Model implements Serializable {
 		
 		if (this.venue_category != null) {
 			
-			if (this.venue_category.contains("bar") || this.venue_category.contains("lounge")) {
+			if (this.venue_category.contains("art") || this.venue_category.contains("theat") || this.venue_category.contains("museum")) {
 				
+				this.filter = "Entertain";
+			} else if (this.venue_category.contains("bar") || this.venue_category.contains("lounge")) {
+			
 				this.filter = "Chill";
 			} else if (this.venue_category.contains("cafe") || this.venue_category.contains("restaurant")) {
 			
@@ -469,12 +472,9 @@ public class Event extends Model implements Serializable {
 			} else if (this.venue_category.contains("club") || this.venue_category.contains("nightlife")) {
 			
 				this.filter = "Party";
-			} else if (this.venue_category.contains("concert venue")) {
+			} else if  (this.venue_category.contains("concert venue")) {
 			
 				this.filter = "Party";
-			} else if (this.venue_category.contains("art") || this.venue_category.contains("theater") || this.venue_category.contains("theatre") || this.venue_category.contains("museum")) {
-			
-				this.filter = "Entertain";
 			}
 		}		
 	}
