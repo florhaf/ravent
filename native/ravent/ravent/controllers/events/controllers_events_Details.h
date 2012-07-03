@@ -46,6 +46,13 @@
     MKCoordinateRegion _viewRegion;
     CLLocationCoordinate2D _zoomLocation;
     
+    IBOutlet UIActivityIndicatorView *_actPic;
+    IBOutlet UIActivityIndicatorView *_actRatio1;
+    IBOutlet UIActivityIndicatorView *_actRatio2;
+    IBOutlet UIActivityIndicatorView *_actRatio3;
+    
+    IBOutlet UILabel *im;
+    
     STSegmentedControl *_segment;
     
     DLStarRatingControl *_voteView;

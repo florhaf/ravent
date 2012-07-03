@@ -30,6 +30,8 @@
         _friends = [[NSMutableArray alloc] init];
         
         [self loadData];
+        
+        [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"grayBG"]]];
     }
     
     return self;

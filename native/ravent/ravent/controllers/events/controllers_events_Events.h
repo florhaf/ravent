@@ -43,6 +43,7 @@
     models_User *_user;
     
     BOOL _isDirty;
+    BOOL _isUp;
 }
 
 - (IBAction)onSO_Tap:(id)sender;

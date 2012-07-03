@@ -394,10 +394,15 @@ static int _retryCounter;
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     if (scrollView.contentOffset.y < 0) {
-                
-        _backButton.frame = CGRectMake(_backButton.frame.origin.x, scrollView.contentOffset.y + 6, _backButton.frame.size.width, _backButton.frame.size.height);
+
+        //NSLog(@"%f", scrollView.contentOffset.y);
+    //[im setFrame:CGRectMake(0, 10, im.frame.size.width, im.frame.size.height)];
+      
+        //im.text = [NSString stringWithFormat:@"YO"];
         
-        _map.frame = CGRectMake(0, -240 + scrollView.contentOffset.y / 2, _map.frame.size.width, _map.frame.size.height);
+        //[_map setHidden:NO];
+        
+        [_map setFrame:CGRectMake(0, -240 + scrollView.contentOffset.y / 2, _map.frame.size.width, _map.frame.size.height)];
     }
 }
 
@@ -478,8 +483,6 @@ static int _retryCounter;
             // nothing
         }
         
-        //_map.showsUserLocation = YES;
-        
         CLLocationCoordinate2D coord;
         coord.latitude = [_event.latitude doubleValue];
         coord.longitude = [_event.longitude doubleValue];
@@ -517,6 +520,23 @@ static int _retryCounter;
 
 - (void)onEventStatsLoad:(NSArray *)objects
 {
+    [_actRatio1 stopAnimating];
+    [_actRatio2 stopAnimating];
+    [_actRatio3 stopAnimating];
+
+    
+//    [_actRatio1 removeFromSuperview];
+//    [_actRatio2 removeFromSuperview];
+//    [_actRatio3 removeFromSuperview];
+//    
+//    _actRatio1 = nil;
+//    _actRatio2 = nil;
+//    _actRatio3 = nil;
+    
+    [_labelFemaleRatio setHidden:NO];
+    [_labelMaleRatio setHidden:NO];
+    [_labelTotalAttendings setHidden:NO];
+    
     if (objects != nil && [objects count] > 0) {
         
         if ([[objects objectAtIndex:0] isKindOfClass:[NSError class]]) {
@@ -587,6 +607,10 @@ static int _retryCounter;
 
 - (void)onPicturesLoad:(NSArray *)objects
 {
+    [_actPic stopAnimating];
+    [_actPic setHidden:YES];
+    _actPic = nil;
+    
     if (objects != nil) {
         
         if ([objects count] > 0) {
@@ -649,8 +673,11 @@ static int _retryCounter;
 
 - (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views {
     
-    id<MKAnnotation> myAnnotation = [_map.annotations objectAtIndex:0];
-    [_map selectAnnotation:myAnnotation animated:YES];
+    if (_map.annotations != nil && [_map.annotations count] > 0) {
+        
+        id<MKAnnotation> myAnnotation = [_map.annotations objectAtIndex:0];
+        [_map selectAnnotation:myAnnotation animated:YES];   
+    }
 }
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation {

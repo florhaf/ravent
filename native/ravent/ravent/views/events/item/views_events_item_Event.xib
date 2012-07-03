@@ -381,19 +381,27 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">_itemTime</string>
-						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="827719698"/>
-					</object>
-					<int key="connectionID">56</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">_special</string>
 						<reference key="source" ref="372490531"/>
 						<reference key="destination" ref="773469251"/>
 					</object>
 					<int key="connectionID">81</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">_itemStartTime</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="827719698"/>
+					</object>
+					<int key="connectionID">82</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">_itemEndTime</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="929665303"/>
+					</object>
+					<int key="connectionID">83</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -537,7 +545,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">81</int>
+			<int key="maxID">83</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -555,8 +563,9 @@
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="_bg">UIImageView</string>
 						<string key="_itemDistance">UILabel</string>
+						<string key="_itemEndTime">UILabel</string>
 						<string key="_itemScore">UIView</string>
-						<string key="_itemTime">UILabel</string>
+						<string key="_itemStartTime">UILabel</string>
 						<string key="_itemVenueCategory">UILabel</string>
 						<string key="_special">UIImageView</string>
 					</dictionary>
@@ -569,12 +578,16 @@
 							<string key="name">_itemDistance</string>
 							<string key="candidateClassName">UILabel</string>
 						</object>
+						<object class="IBToOneOutletInfo" key="_itemEndTime">
+							<string key="name">_itemEndTime</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
 						<object class="IBToOneOutletInfo" key="_itemScore">
 							<string key="name">_itemScore</string>
 							<string key="candidateClassName">UIView</string>
 						</object>
-						<object class="IBToOneOutletInfo" key="_itemTime">
-							<string key="name">_itemTime</string>
+						<object class="IBToOneOutletInfo" key="_itemStartTime">
+							<string key="name">_itemStartTime</string>
 							<string key="candidateClassName">UILabel</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="_itemVenueCategory">

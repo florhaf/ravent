@@ -37,6 +37,9 @@ typedef enum {
         
         self.title = @"Gemster";
         _showEmptyMessage = NO;
+        
+        
+        //[self.view setBackgroundColor:[UIColor colorWithRed:227 green:222 blue:216 alpha:1]];
     }
     return self;
 }
@@ -88,7 +91,6 @@ typedef enum {
     [self.tableView addSubview:_refreshHeaderView];
     
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    self.tableView.backgroundColor = [UIColor colorWithRed:227 green:222 blue:216 alpha:1];
 }
 
 - (void)viewDidUnload
@@ -486,6 +488,14 @@ typedef enum {
         
         [_imagesCache setObject:imageLoaded forKey:[NSString stringWithFormat:@"%@", url]];
     }
+}
+
+- (void)dealloc
+{
+    _item = nil;
+    _itemTitle = nil;
+    _itemSubTitle = nil;
+    _itemImage = nil;    
 }
 
 @end

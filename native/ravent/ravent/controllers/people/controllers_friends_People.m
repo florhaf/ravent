@@ -31,6 +31,8 @@ static customNavigationController *_ctrl;
         [[ActionDispatcher instance] add:loadAction named:@"reloadCurrentUser"];
         
         [[NSBundle mainBundle] loadNibNamed:@"views_friends_header_Following" owner:self options:nil];
+        
+        //[self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"grayBG"]]];
     }
     
     return self;

@@ -32,6 +32,7 @@
         _hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         
         self.tableView.tableFooterView = [[UIView alloc] init];
+        [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"grayBG"]]];
     }
     
     return self;
@@ -135,10 +136,24 @@
         _itemImage.clipsToBounds = YES;
         _itemImage.contentMode = UIViewContentModeScaleAspectFill;
         
+        NSString * startDateWOYear = @"?";
+        NSString * endDateWOYear = @"?";
+        
+        if (event.dateStart != nil && ![event.dateStart isEqualToString:@""]) {
+            
+            startDateWOYear = [event.dateStart substringToIndex:[event.dateStart rangeOfString:@","].location];
+        }
+        
+        if (event.dateStart != nil && ![event.dateEnd isEqualToString:@""]) {
+            
+            endDateWOYear = [event.dateEnd substringToIndex:[event.dateEnd rangeOfString:@","].location];
+        }
+        
         _itemTitle.text = event.name;
         _itemSubTitle.text = event.location;
-        _itemTime.text = [[NSString stringWithFormat:@"%@ - %@", event.timeStart, event.timeEnd] lowercaseString];
-        _itemDistance.text = [NSString stringWithFormat:@"%@ mi.", event.distance];
+        _itemStartTime.text = [[NSString stringWithFormat:@"%@ @ %@", startDateWOYear, event.timeStart] lowercaseString];
+        _itemEndTime.text = [[NSString stringWithFormat:@"%@ @ %@", endDateWOYear, event.timeEnd] lowercaseString];
+        _itemDistance.text = [NSString stringWithFormat:@"%@ miles away", event.distance];
         _itemVenueCategory.text = event.venue_category;
         
         
@@ -157,6 +172,10 @@
         //_itemTitle.font = [_itemTitle.font fontWithSize:[self getFontSizeForLabel:_itemTitle]];
     
         [cell.contentView addSubview:_item];
+        
+        event = nil;
+        startDateWOYear = nil;
+        endDateWOYear = nil;
     }
     
     return cell;
@@ -238,6 +257,18 @@
     [_event cancelAllRequests];
     
     _imagesCache = nil;
+}
+
+- (void)dealloc
+{
+    _itemScore = nil;
+    _itemStartTime = nil;
+    _itemEndTime = nil;
+    _itemDistance = nil;
+    _itemVenueCategory = nil;
+    
+    _bg = nil;
+    _special = nil;
 }
 
 @end

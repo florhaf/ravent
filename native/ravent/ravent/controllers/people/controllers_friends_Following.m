@@ -33,6 +33,8 @@
 
         _hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         [self loadData];
+        
+        [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"grayBG"]]];
     }
     
     return self;

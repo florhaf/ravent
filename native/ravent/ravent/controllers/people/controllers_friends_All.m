@@ -218,6 +218,8 @@ static controllers_friends_All *_ctrl;
         [cell.contentView addSubview:_item];
     }
     
+    u = nil;
+    
     return cell;
 }
 
@@ -317,7 +319,6 @@ static controllers_friends_All *_ctrl;
         // update _data
         
         
-        
     } else {
         
         [_user follow:params success:@selector(onFollowSuccess:) failure:@selector(onFollowFailure:) sender:sender];
@@ -359,8 +360,6 @@ static controllers_friends_All *_ctrl;
 - (void)onFollowSuccess:(NSString *)response
 {
     _isDirty = YES;
-    
-    
 }
 
 - (void)onFollowFailure:(NSMutableDictionary *)response
@@ -409,6 +408,9 @@ static controllers_friends_All *_ctrl;
     self.peekLeftAmount = 40.0f;
     [self.slidingViewController setAnchorLeftPeekAmount:self.peekLeftAmount];
     self.slidingViewController.underRightWidthLayout = ECVariableRevealWidth;
+    
+    
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"grayBG"]]];
 }
 
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar

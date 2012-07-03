@@ -13,6 +13,8 @@
 #import "controllers_events_Options_p2p.h"
 #import "ActionDispatcher.h"
 #import "UIView+Animation.h"
+#import "TSPopoverController.h"
+#import "TSActionSheet.h"
 
 @implementation controllers_events_Events
 
@@ -26,11 +28,11 @@ static customNavigationController *_ctrl;
         
         _user = user;
         self.title = @"Gemster";
+        _isUp = YES;
         
         Action *loadDetailsAction = [[Action alloc] initWithDelegate:self andSelector:@selector(loadEventDetailsFromMap:)];
         [[ActionDispatcher instance] add:loadDetailsAction named:@"controller_events_List_p2p_loadDetails"];
         
-        //[self addChildViewController:[controllers_events_Map_p2p instance]];
         [self addChildViewController:[controllers_events_List_p2p instance]];
         
     }
@@ -84,16 +86,28 @@ static customNavigationController *_ctrl;
     [self.view bringSubviewToFront:_optionsView];
     
     _radiusStepper.value = [models_User crtUser].searchRadius;
-    _radiusStepper.minimumValue = 1;
+    _radiusStepper.minimumValue = 5;
     _radiusStepper.maximumValue = 50;
-    _radiusStepper.stepValue = 15;
+    _radiusStepper.stepValue = 5;
     _radiusStepper.continuous = NO;
     
     _windowStepper.value = [models_User crtUser].searchWindow / 24;
     _windowStepper.minimumValue = 1;
-    _windowStepper.maximumValue = 15;
-    _windowStepper.stepValue = 2;
+    _windowStepper.maximumValue = 30;
+    _windowStepper.stepValue = 1;
     _windowStepper.continuous = NO;
+    
+    
+    
+    UIImage *i = [UIImage imageNamed:@"navBarTitle"];
+    UIImageView *iv = [[UIImageView alloc] initWithImage:i];
+    iv.frame = CGRectMake(0, 0, 80, 36);
+    
+    UIButton *btn = [[UIButton alloc] initWithFrame:iv.frame];
+    [btn addTarget:self action:@selector(onSO_Tap:) forControlEvents:UIControlEventTouchUpInside];
+    [btn addSubview:iv];
+    
+    self.navigationItem.titleView = btn;
 }
 
 - (void)selectFirstNonEmptyList
@@ -122,20 +136,52 @@ static customNavigationController *_ctrl;
 - (IBAction)onSO_Tap:(id)sender
 {
     
-    if (_optionsView.frame.origin.y == 200) {
+    if (_isUp) {
         
-        [_optionsView raceTo:CGPointMake(0, 372) withSnapBack:YES];   
-        [_optionsButton setTitle:@"Search Options" forState:UIControlStateNormal];
+        _isUp = NO;
+        [_optionsView raceTo:CGPointMake(0, -44) withSnapBack:YES];   
+       
+    } else {
+        
+        _isUp = YES;
+        [_optionsView raceTo:CGPointMake(0, -244) withSnapBack:YES];
         if (_isDirty) {
             
             _isDirty = NO;
             [[controllers_events_List_p2p instance] loadDataWithSpinner];
         }
-    } else {
-        
-        [_optionsView raceTo:CGPointMake(0, 200) withSnapBack:YES];  
-        [_optionsButton setTitle:@"Done" forState:UIControlStateNormal];
     }
+}
+
+-(void)showPopover:(id)sender forEvent:(UIEvent*)event
+{
+    UITableViewController *tableViewController = [[UITableViewController alloc] initWithStyle:UITableViewStylePlain];
+    tableViewController.view.frame = CGRectMake(0,0, 320, 400);
+    TSPopoverController *popoverController = [[TSPopoverController alloc] initWithContentViewController:tableViewController];
+    
+    popoverController.cornerRadius = 5;
+    popoverController.titleText = @"change order";
+    popoverController.popoverBaseColor = [UIColor lightGrayColor];
+    popoverController.popoverGradient= NO;
+    //    popoverController.arrowPosition = TSPopoverArrowPositionHorizontal;
+    [popoverController showPopoverWithTouch:event];
+    
+}
+
+-(void) showActionSheet:(id)sender forEvent:(UIEvent*)event
+{
+    TSActionSheet *actionSheet = [[TSActionSheet alloc] initWithTitle:@"action sheet"];
+    [actionSheet destructiveButtonWithTitle:@"hoge" block:nil];
+    [actionSheet addButtonWithTitle:@"hoge1" block:^{
+        NSLog(@"pushed hoge1 button");
+    }];
+    [actionSheet addButtonWithTitle:@"moge2" block:^{
+        NSLog(@"pushed hoge2 button");
+    }];
+    [actionSheet cancelButtonWithTitle:@"Cancel" block:nil];
+    actionSheet.cornerRadius = 5;
+    
+    [actionSheet showWithTouch:event];
 }
 
 - (IBAction)stepperRadiusPressed:(UIStepper *)sender

@@ -25,6 +25,8 @@ static controllers_events_List_p2p *_ctrl;
     self.view.frame = CGRectMake(0, 0, 320, 416);
     
     [super viewDidLoad];
+    
+    [self.view setBackgroundColor:[UIColor colorWithRed:227 green:222 blue:216 alpha:1]];
 }
 
 - (void)loadDataWithUserLocation

@@ -30,6 +30,8 @@
         _user.callback = @selector(onLoadInvited:);
         
         [self loadData];
+        
+        [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"grayBG"]]];
     }
     
     return self;
@@ -163,7 +165,7 @@
     
     footer.frame = CGRectMake(0, 0, 320, 160);
     
-    self.tableView.tableFooterView = footer;
+    //self.tableView.tableFooterView = footer;
 }
 
 - (void)viewDidUnload

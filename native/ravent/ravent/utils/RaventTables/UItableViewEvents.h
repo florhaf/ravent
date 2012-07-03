@@ -12,7 +12,8 @@
 @interface UITableViewEvents : UITableViewReloadable {
     
     IBOutlet UIView *_itemScore;
-    IBOutlet UILabel *_itemTime;
+    IBOutlet UILabel *_itemStartTime;
+    IBOutlet UILabel *_itemEndTime;
     IBOutlet UILabel *_itemDistance;
     IBOutlet UILabel *_itemVenueCategory;
 
