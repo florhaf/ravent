@@ -3,7 +3,7 @@ package com.chaman.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-//import java.util.Collections;
+import java.util.Collections;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -245,6 +245,8 @@ public class Event extends Model implements Serializable {
         		dao.ofy().delete(e); //clean the datastore by removing old events TODO: call a task doesn't have to be deleted right away
         	}
         }
+        
+        Collections.sort(result, new EventComparator());
         return result;    
 	}
 
@@ -458,8 +460,11 @@ public class Event extends Model implements Serializable {
 		
 		if (this.venue_category != null) {
 			
-			if (this.venue_category.contains("bar") || this.venue_category.contains("lounge")) {
+			if (this.venue_category.contains("art") || this.venue_category.contains("theat") || this.venue_category.contains("museum")) {
 				
+				this.filter = "Entertain";
+			} else if (this.venue_category.contains("bar") || this.venue_category.contains("lounge")) {
+			
 				this.filter = "Chill";
 			} else if (this.venue_category.contains("cafe") || this.venue_category.contains("restaurant")) {
 			
@@ -467,12 +472,9 @@ public class Event extends Model implements Serializable {
 			} else if (this.venue_category.contains("club") || this.venue_category.contains("nightlife")) {
 			
 				this.filter = "Party";
-			} else if (this.venue_category.contains("concert venue")) {
+			} else if  (this.venue_category.contains("concert venue")) {
 			
 				this.filter = "Party";
-			} else if (this.venue_category.contains("art") || this.venue_category.contains("theater") || this.venue_category.contains("theatre") || this.venue_category.contains("museum")) {
-			
-				this.filter = "Entertain";
 			}
 		}		
 	}
