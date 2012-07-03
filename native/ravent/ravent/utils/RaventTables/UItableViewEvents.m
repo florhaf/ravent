@@ -24,14 +24,14 @@
         _titleSize = CGSizeMake(_itemTitle.frame.size.width, _itemTitle.frame.size.height);
         _subTitleSize = CGSizeMake(_itemSubTitle.frame.size.width, _itemSubTitle.frame.size.height);
         
-        self.tableView.tableFooterView = [[UIView alloc] init];
-        
         _user = user;
         _event = [[models_Event alloc] initWithDelegate:self andSelector:@selector(onLoadEvents:)];
         
         [self loadDataWithUserLocation];
         
         _hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        
+        self.tableView.tableFooterView = [[UIView alloc] init];
     }
     
     return self;
@@ -141,13 +141,20 @@
         _itemDistance.text = [NSString stringWithFormat:@"%@ mi.", event.distance];
         _itemVenueCategory.text = event.venue_category;
         
+        
+        if (indexPath.row == 0) {
+            
+            [_special setHidden:NO];
+        }
+        
         for (int i = 0; i < [event.score intValue]; i++) {
         
             UIImageView *image = (UIImageView *)[_itemScore.subviews objectAtIndex:i];
             image.image = [UIImage imageNamed:@"diamond"];
+            image.alpha = 0.8;
         }
     
-        _itemTitle.font = [_itemTitle.font fontWithSize:[self getFontSizeForLabel:_itemTitle]];
+        //_itemTitle.font = [_itemTitle.font fontWithSize:[self getFontSizeForLabel:_itemTitle]];
     
         [cell.contentView addSubview:_item];
     }

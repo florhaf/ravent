@@ -36,4 +36,6 @@
 - (id)initWithEvent:(models_Event *)event;
 - (void)update;
 
+- (IBAction)onDirections_Tap:(id)sender;
+
 @end

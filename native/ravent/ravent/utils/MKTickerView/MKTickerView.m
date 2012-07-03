@@ -39,6 +39,7 @@ static UIFont *valueFont = nil;
     self.contentMode = UIViewContentModeCenter;
       
       [self setBackgroundColor:[UIColor clearColor]];
+      _myBlueColor = [UIColor colorWithRed:27 green:116 blue:189 alpha:1];
   }
   
   return self;
@@ -106,6 +107,7 @@ static UIFont *valueFont = nil;
 	CGContextFillRect(context, CGRectMake(0, 0, self.frame.size.width, self.frame.size.height));
 
   CGContextSetFillColorWithColor(UIGraphicsGetCurrentContext(), [UIColor darkGrayColor].CGColor);
+    //CGContextSetFillColorWithColor(UIGraphicsGetCurrentContext(), _myBlueColor.CGColor);
     CGContextSetShadowWithColor(context, CGSizeMake(0, -1), 0.5, [UIColor whiteColor].CGColor);
 
   [_image drawInRect:CGRectMake(0, 9, 12, 7)];

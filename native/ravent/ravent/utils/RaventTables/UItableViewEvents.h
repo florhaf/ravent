@@ -17,6 +17,7 @@
     IBOutlet UILabel *_itemVenueCategory;
 
     IBOutlet UIImageView *_bg;
+    IBOutlet UIImageView *_special;
     
     UIViewController *_details;
     
