@@ -37,9 +37,6 @@ typedef enum {
         
         self.title = @"Gemster";
         _showEmptyMessage = NO;
-        
-        
-        //[self.view setBackgroundColor:[UIColor colorWithRed:227 green:222 blue:216 alpha:1]];
     }
     return self;
 }
@@ -91,6 +88,11 @@ typedef enum {
     [self.tableView addSubview:_refreshHeaderView];
     
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"grayBG"]]];
+    
+    [[NSBundle mainBundle] loadNibNamed:@"views_Empty" owner:self options:nil];
+    self.tableView.tableFooterView = _emptyView;
 }
 
 - (void)viewDidUnload
@@ -144,9 +146,6 @@ typedef enum {
 
 - (void)onLoadData:(NSArray *)objects withSuccess:(success)success
 {
-    [[NSBundle mainBundle] loadNibNamed:@"views_Empty" owner:self options:nil];
-    self.tableView.tableFooterView = _emptyView;
-    
     _data = nil;
     _groupedData = nil;
     _sortedKeys = nil;

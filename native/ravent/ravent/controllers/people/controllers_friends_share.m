@@ -31,7 +31,6 @@
         
         [self loadData];
         
-        [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"grayBG"]]];
     }
     
     return self;
@@ -223,7 +222,7 @@
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithCustomView:doneb];       
     self.navigationItem.rightBarButtonItem = doneButton;
     
-    self.tableView.tableFooterView = [[UIView alloc] init];
+
     _hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
 }
 

@@ -98,8 +98,18 @@ static customNavigationController *_ctrl;
     _windowStepper.continuous = NO;
     
     
+    _optionsView.layer.shadowOffset = CGSizeZero;
+    _optionsView.layer.shadowPath = [UIBezierPath bezierPathWithRect:_optionsView.layer.bounds].CGPath;
     
-    UIImage *i = [UIImage imageNamed:@"navBarTitle"];
+    _optionsView.layer.shadowOpacity = 0.75f;
+    _optionsView.layer.shadowRadius = 10.0f;
+    _optionsView.layer.shadowColor = [UIColor blackColor].CGColor;
+}
+
+- (void)setNavBarTitle:(NSString *)imageName
+{
+    
+    UIImage *i = [UIImage imageNamed:imageName];
     UIImageView *iv = [[UIImageView alloc] initWithImage:i];
     iv.frame = CGRectMake(0, 0, 80, 36);
     
@@ -139,6 +149,7 @@ static customNavigationController *_ctrl;
     if (_isUp) {
         
         _isUp = NO;
+        
         [_optionsView raceTo:CGPointMake(0, -44) withSnapBack:YES];   
        
     } else {
@@ -200,7 +211,7 @@ static customNavigationController *_ctrl;
 
 - (IBAction)onPartyButton_Tap:(id)sender
 {
-    self.title = @"Party";
+    [self setNavBarTitle:@"navbarTitleParty"];
     
     [[controllers_events_List_p2p instance].tableView scrollRectToVisible:CGRectMake(0, -55, 1, 1) animated:YES];
     
@@ -211,7 +222,7 @@ static customNavigationController *_ctrl;
 
 - (IBAction)onChillButton_Tap:(id)sender
 {
-    self.title = @"Chill";
+    [self setNavBarTitle:@"navbarTitleChill"];
     
     [[controllers_events_List_p2p instance].tableView scrollRectToVisible:CGRectMake(0, -55, 1, 1) animated:YES];
     
@@ -222,7 +233,7 @@ static customNavigationController *_ctrl;
 
 - (IBAction)onArtButton_Tap:(id)sender
 {
-    self.title = @"Art";
+    [self setNavBarTitle:@"navbarTitleArt"];
     
     [[controllers_events_List_p2p instance].tableView scrollRectToVisible:CGRectMake(0, -55, 1, 1) animated:YES];
     
@@ -233,7 +244,7 @@ static customNavigationController *_ctrl;
 
 - (IBAction)onMiscButton_Tap:(id)sender
 {
-    self.title = @"Unsual";
+    [self setNavBarTitle:@"navbarTitleMisc"];
     
     [[controllers_events_List_p2p instance].tableView scrollRectToVisible:CGRectMake(0, -55, 1, 1) animated:YES];
     

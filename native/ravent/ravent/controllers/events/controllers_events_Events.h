@@ -59,6 +59,8 @@
 - (void)revealMenu:(id)sender;
 - (void)revealMap:(id)sender;
 
+- (void)setNavBarTitle:(NSString *)imageName;
+
 + (customNavigationController *)instance;
 + (void)release;
 

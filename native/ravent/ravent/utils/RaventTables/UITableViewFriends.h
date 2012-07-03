@@ -13,6 +13,8 @@
 @interface UITableViewFriends : UITableViewReloadable {
     
     controllers_friends_Details *_details;
+    
+    UIView *_footer;
 }
 
 - (id)initWithEvent:(models_Event *)event;

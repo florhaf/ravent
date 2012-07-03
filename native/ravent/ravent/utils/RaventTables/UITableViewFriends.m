@@ -30,8 +30,6 @@
         _user.callback = @selector(onLoadInvited:);
         
         [self loadData];
-        
-        [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"grayBG"]]];
     }
     
     return self;
@@ -49,6 +47,29 @@
 
 - (void)onLoadInvited:(NSArray *)objects
 {
+    UIView *v = nil;
+    
+    for (int i = 0; i < [[_footer subviews] count]; i++) {
+        
+        v = [[_footer subviews] objectAtIndex:i];
+        
+        if ([v isKindOfClass:[UIActivityIndicatorView class]]) {
+            
+            [v setHidden:YES];
+        }
+        
+        if ([v isKindOfClass:[UILabel class]]) {
+            
+            UILabel *l = (UILabel *)v;
+            if ([l.text isEqualToString:@"Loading"]) {
+                
+                [v setHidden:YES];   
+            }
+        }
+    }
+    
+
+    
     if (objects == nil || [objects count] == 0) {
         
         [[NSBundle mainBundle]loadNibNamed:@"views_Empty_Generic" owner:self options:nil];
@@ -152,20 +173,21 @@
     label.text = @"Loading";
     label.frame = CGRectMake(0, 0, 320, 50);
     label.textAlignment= UITextAlignmentCenter;
+    label.textColor = [UIColor grayColor];
     
     UIActivityIndicatorView *myIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     myIndicator.center = CGPointMake(110, 27);
     
     [myIndicator startAnimating];
     
-    UIView *footer = [[UIView alloc] init];
-    [footer addSubview:label];
-    [footer addSubview:myIndicator];
-    footer.backgroundColor = [UIColor clearColor];
+    _footer = [[UIView alloc] init];
+    [_footer addSubview:label];
+    [_footer addSubview:myIndicator];
+    _footer.backgroundColor = [UIColor clearColor];
     
-    footer.frame = CGRectMake(0, 0, 320, 160);
+    _footer.frame = CGRectMake(0, 0, 320, 160);
     
-    //self.tableView.tableFooterView = footer;
+    [self.tableView.tableFooterView addSubview:_footer];;
 }
 
 - (void)viewDidUnload

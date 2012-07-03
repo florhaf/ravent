@@ -31,8 +31,7 @@
         
         _hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         
-        self.tableView.tableFooterView = [[UIView alloc] init];
-        [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"grayBG"]]];
+        //self.tableView.tableFooterView = [[UIView alloc] init];
     }
     
     return self;

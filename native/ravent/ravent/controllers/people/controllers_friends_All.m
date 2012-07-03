@@ -402,8 +402,6 @@ static controllers_friends_All *_ctrl;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(closeDrawer) name:ECSlidingViewTopDidReset object:nil];
 
     _hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    
-    self.tableView.tableFooterView = [[UIView alloc] init];
 
     self.peekLeftAmount = 40.0f;
     [self.slidingViewController setAnchorLeftPeekAmount:self.peekLeftAmount];

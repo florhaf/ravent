@@ -191,8 +191,7 @@ static int _retryCounter;
         }
     } else {
         
-        [[NSBundle mainBundle] loadNibNamed:@"views_Empty" owner:self options:nil];
-        self.tableView.tableFooterView = _emptyView;
+        // nothing anymore
     }
 }
 
@@ -402,7 +401,7 @@ static int _retryCounter;
         
         //[_map setHidden:NO];
         
-        [_map setFrame:CGRectMake(0, -240 + scrollView.contentOffset.y / 2, _map.frame.size.width, _map.frame.size.height)];
+        [_map setFrame:CGRectMake(0, -80 + scrollView.contentOffset.y / 2, _map.frame.size.width, _map.frame.size.height)];
     }
 }
 
@@ -460,12 +459,17 @@ static int _retryCounter;
     _map.zoomEnabled = NO;
     if (_event.latitude != nil && ![_event.latitude isEqualToString:@""]) {
         
+        CLLocationCoordinate2D coord;
+        coord.latitude = [_event.latitude doubleValue];
+        coord.longitude = [_event.longitude doubleValue];
+        _event.coordinate = coord;
+        [_map addAnnotation:_event];
+        
         _zoomLocation.latitude = [_event.latitude floatValue];
         _zoomLocation.longitude= [_event.longitude floatValue];
         _viewRegion = MKCoordinateRegionMakeWithDistance(_zoomLocation, 0.3*METERS_PER_MILE, 0.3*METERS_PER_MILE);
         MKCoordinateRegion adjustedRegion = [_map regionThatFits:_viewRegion];                
         //[_map setRegion:adjustedRegion animated:NO];
-        
         
         @try {
             
@@ -483,11 +487,7 @@ static int _retryCounter;
             // nothing
         }
         
-        CLLocationCoordinate2D coord;
-        coord.latitude = [_event.latitude doubleValue];
-        coord.longitude = [_event.longitude doubleValue];
-        _event.coordinate = coord;
-        [_map addAnnotation:_event];
+        
         
     } else {
         
@@ -525,13 +525,13 @@ static int _retryCounter;
     [_actRatio3 stopAnimating];
 
     
-//    [_actRatio1 removeFromSuperview];
-//    [_actRatio2 removeFromSuperview];
-//    [_actRatio3 removeFromSuperview];
-//    
-//    _actRatio1 = nil;
-//    _actRatio2 = nil;
-//    _actRatio3 = nil;
+    [_actRatio1 removeFromSuperview];
+    [_actRatio2 removeFromSuperview];
+    [_actRatio3 removeFromSuperview];
+    
+    _actRatio1 = nil;
+    _actRatio2 = nil;
+    _actRatio3 = nil;
     
     [_labelFemaleRatio setHidden:NO];
     [_labelMaleRatio setHidden:NO];
@@ -670,6 +670,11 @@ static int _retryCounter;
 }
 
 #pragma mark - Map delegate
+
+- (void)mapViewDidFinishLoadingMap:(MKMapView *)mapView
+{
+    NSLog(@"HEY");
+}
 
 - (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views {
     
