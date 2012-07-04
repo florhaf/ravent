@@ -104,6 +104,21 @@ static customNavigationController *_ctrl;
     
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectFirstNonEmptyList) name:@"onLoadEventsP2P" object:[controllers_events_List_p2p instance]];
+    
+    
+    
+    // shadows
+    UIImageView *ivright = [[UIImageView alloc] initWithFrame:CGRectMake(320, 0, 40, 460)];
+    [ivright setImage:[UIImage imageNamed:@"shadowRight"]];
+    [self.slidingViewController.topViewController.view addSubview:ivright];
+    
+    UIImageView *ivleft = [[UIImageView alloc] initWithFrame:CGRectMake(-40, 0, 40, 460)];
+    [ivleft setImage:[UIImage imageNamed:@"shadowLeft"]];
+    [self.slidingViewController.topViewController.view addSubview:ivleft];
+    
+    UIImageView *ivtop = [[UIImageView alloc] initWithFrame:CGRectMake(0, _optionsView.frame.size.height, 320, 20)];
+    [ivtop setImage:[UIImage imageNamed:@"shadowTop"]];
+    [_optionsView addSubview:ivtop];
 }
 
 - (void)setNavBarTitle:(NSString *)imageName
@@ -267,9 +282,9 @@ static customNavigationController *_ctrl;
     
     // shadowPath, shadowOffset, and rotation is handled by ECSlidingViewController.
     // You just need to set the opacity, radius, and color.
-    self.parentViewController.view.layer.shadowOpacity = 0.75f;
-    self.parentViewController.view.layer.shadowRadius = 10.0f;
-    self.parentViewController.view.layer.shadowColor = [UIColor blackColor].CGColor;
+//    self.parentViewController.view.layer.shadowOpacity = 0.75f;
+//    self.parentViewController.view.layer.shadowRadius = 10.0f;
+//    self.parentViewController.view.layer.shadowColor = [UIColor blackColor].CGColor;
     
     
     if (![self.slidingViewController.underLeftViewController isKindOfClass:[controllers_SlidingMenu class]]) {
