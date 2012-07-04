@@ -164,16 +164,26 @@ static customNavigationController *_ctrl;
     [_segmentedControl addTarget:self action:@selector(onSegmentedControlValueChanged:) forControlEvents:UIControlEventValueChanged];
 	[self.view addSubview:_segmentedControl];
     
-    UIView *shadow = [[UIView alloc] initWithFrame:CGRectMake(0, -44, 320, 44)];
-    [shadow setBackgroundColor:[UIColor blackColor]];
+//    UIView *shadow = [[UIView alloc] initWithFrame:CGRectMake(0, -44, 320, 44)];
+//    [shadow setBackgroundColor:[UIColor blackColor]];
+//    
+//    shadow.layer.shadowOffset = CGSizeZero;
+//    shadow.layer.shadowPath = [UIBezierPath bezierPathWithRect:shadow.layer.bounds].CGPath;
+//    shadow.layer.shadowOpacity = 0.75f;
+//    shadow.layer.shadowRadius = 10.0f;
+//    shadow.layer.shadowColor = [UIColor blackColor].CGColor;
+//    
+//    [self.view addSubview:shadow];
     
-    shadow.layer.shadowOffset = CGSizeZero;
-    shadow.layer.shadowPath = [UIBezierPath bezierPathWithRect:shadow.layer.bounds].CGPath;
-    shadow.layer.shadowOpacity = 0.75f;
-    shadow.layer.shadowRadius = 10.0f;
-    shadow.layer.shadowColor = [UIColor blackColor].CGColor;
     
-    [self.view addSubview:shadow];
+    // shadows
+    UIImageView *ivright = [[UIImageView alloc] initWithFrame:CGRectMake(320, 0, 40, 460)];
+    [ivright setImage:[UIImage imageNamed:@"shadowRight"]];
+    [self.slidingViewController.topViewController.view addSubview:ivright];
+    
+    UIImageView *ivleft = [[UIImageView alloc] initWithFrame:CGRectMake(-40, 0, 40, 460)];
+    [ivleft setImage:[UIImage imageNamed:@"shadowLeft"]];
+    [self.slidingViewController.topViewController.view addSubview:ivleft];
 }
 
 - (void)onSegmentedControlValueChanged:(id)sender
@@ -221,9 +231,9 @@ static customNavigationController *_ctrl;
     
     // shadowPath, shadowOffset, and rotation is handled by ECSlidingViewController.
     // You just need to set the opacity, radius, and color.
-    self.parentViewController.view.layer.shadowOpacity = 0.75f;
-    self.parentViewController.view.layer.shadowRadius = 10.0f;
-    self.parentViewController.view.layer.shadowColor = [UIColor blackColor].CGColor;
+//    self.parentViewController.view.layer.shadowOpacity = 0.75f;
+//    self.parentViewController.view.layer.shadowRadius = 10.0f;
+//    self.parentViewController.view.layer.shadowColor = [UIColor blackColor].CGColor;
     
     
     if (![self.slidingViewController.underLeftViewController isKindOfClass:[controllers_SlidingMenu class]]) {
