@@ -149,7 +149,7 @@ static customNavigationController *_ctrl;
         
         _isUp = NO;
         
-        [_optionsView raceTo:CGPointMake(0, -44) withSnapBack:YES];   
+        [_optionsView raceTo:CGPointMake(0, -50) withSnapBack:YES];   
        
     } else {
         

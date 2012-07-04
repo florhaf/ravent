@@ -80,6 +80,12 @@ typedef enum {
             EGORefreshTableHeaderView *view = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.tableView.bounds.size.height, self.view.frame.size.width, self.tableView.bounds.size.height)];
             view.delegate = self;
             _refreshHeaderView = view;
+            
+            UIImageView *tableTop = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"tableTop"]];
+            [tableTop setFrame:CGRectMake(0, _refreshHeaderView.frame.size.height - 21, 320, 21)];
+            
+            [_refreshHeaderView addSubview:tableTop];
+            [_refreshHeaderView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"grayBG"]]];
         }
 	
         [_refreshHeaderView refreshLastUpdatedDate];
