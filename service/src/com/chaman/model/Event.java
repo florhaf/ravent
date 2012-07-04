@@ -3,7 +3,6 @@ package com.chaman.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Collections;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -245,8 +244,7 @@ public class Event extends Model implements Serializable {
         		dao.ofy().delete(e); //clean the datastore by removing old events TODO: call a task doesn't have to be deleted right away
         	}
         }
-        
-        Collections.sort(result, new EventComparator());
+
         return result;    
 	}
 
@@ -400,6 +398,13 @@ public class Event extends Model implements Serializable {
 		this.date_start = dtStart.toString("MMM d, Y");
 		this.date_end = dtEnd.toString("MMM d, Y");
 		
+		if (this.filter.equals("Other") || this.filter.equals("Entertain")) {
+			
+			if (dtEnd.getHourOfDay() >= 3 &&  dtEnd.getHourOfDay() <= 7) {
+				this.filter = "Party";
+			}
+		}
+		
 		DateTimeZone TZ = DateTimeZone.forOffsetMillis(timeZoneInMinutes*60*1000);
 		DateTime now = DateTime.now(TZ);	
 		long timeStampNow = now.getMillis();
@@ -476,7 +481,9 @@ public class Event extends Model implements Serializable {
 			
 				this.filter = "Party";
 			}
-		}		
+		}
+		
+		// also some adjustment on the category done in format()
 	}
 	
 	public boolean Filter_bogus_events(DateTime now_userTZ, int searchTimeFrame) {
