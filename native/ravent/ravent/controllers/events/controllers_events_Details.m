@@ -10,7 +10,7 @@
 #import "YRDropdownView.h"
 #import "JBAsyncImageView.h"
 #import "MBProgressHUD.h"
-
+#import "UIImage+ImageWithUIView.h"
 #import "controllers_events_Details_Map.h"
 #import "postController.h"
 #import "Store.h"
@@ -390,6 +390,8 @@ static int _retryCounter;
 
 #pragma mark - View lifecycle
 
+
+
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     if (scrollView.contentOffset.y < 0) {
@@ -401,13 +403,24 @@ static int _retryCounter;
         
         //[_map setHidden:NO];
         
-        [_map setFrame:CGRectMake(0, -80 + scrollView.contentOffset.y / 2, _map.frame.size.width, _map.frame.size.height)];
+        [_mapImage setFrame:CGRectMake(0, -80 + scrollView.contentOffset.y / 2, _mapImage.frame.size.width, _mapImage.frame.size.height)];
     }
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
 
+}
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    if (!_isMapImageSet) {
+        
+        _isMapImageSet = YES;
+        _mapImage.layer.contents = (id)[UIImage imageWithUIView:_map].CGImage;
+        [_map removeFromSuperview];
+        _map = nil;
+    }
 }
 
 - (void)viewDidLoad
@@ -491,7 +504,7 @@ static int _retryCounter;
         
     } else {
         
-        _mapImage.image = [UIImage imageNamed:@"noMap"];
+        //_mapImage.image = [UIImage imageNamed:@"noMap"];
     }
     
     // STATS

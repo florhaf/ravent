@@ -100,7 +100,6 @@ static customNavigationController *_ctrl;
     
     _optionsView.layer.shadowOffset = CGSizeZero;
     _optionsView.layer.shadowPath = [UIBezierPath bezierPathWithRect:_optionsView.layer.bounds].CGPath;
-    
     _optionsView.layer.shadowOpacity = 0.75f;
     _optionsView.layer.shadowRadius = 10.0f;
     _optionsView.layer.shadowColor = [UIColor blackColor].CGColor;

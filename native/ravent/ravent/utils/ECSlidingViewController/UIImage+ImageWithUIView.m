@@ -10,14 +10,22 @@
 
 + (UIImage *)imageWithUIView:(UIView *)view
 {
-  CGSize screenShotSize = view.bounds.size;
-  UIImage *img;  
-  UIGraphicsBeginImageContext(screenShotSize);
-  CGContextRef ctx = UIGraphicsGetCurrentContext();
-  [view drawLayer:view.layer inContext:ctx];
-  img = UIGraphicsGetImageFromCurrentImageContext();
-  UIGraphicsEndImageContext();
+//  CGSize screenShotSize = view.bounds.size;
+//  UIImage *img;  
+//  UIGraphicsBeginImageContext(screenShotSize);
+//  CGContextRef ctx = UIGraphicsGetCurrentContext();
+//  [view drawLayer:view.layer inContext:ctx];
+//  img = UIGraphicsGetImageFromCurrentImageContext();
+//  UIGraphicsEndImageContext();
+    
+    
+    
+    UIGraphicsBeginImageContextWithOptions(view.bounds.size, NO, [UIScreen mainScreen].scale);
+    [view.layer renderInContext:UIGraphicsGetCurrentContext()];
+    UIImage *resultingImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
   
-  return img;
+  return resultingImage;
 }
 @end

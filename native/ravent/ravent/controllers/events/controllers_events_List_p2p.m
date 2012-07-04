@@ -22,9 +22,9 @@ static controllers_events_List_p2p *_ctrl;
 
 - (void)viewDidLoad
 {
-    self.view.frame = CGRectMake(0, 0, 320, 416);
-    
     [super viewDidLoad];
+    
+    self.view.frame = CGRectMake(0, 0, 320, 416);
 }
 
 - (void)loadDataWithUserLocation
