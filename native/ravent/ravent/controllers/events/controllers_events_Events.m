@@ -117,9 +117,8 @@ static customNavigationController *_ctrl;
     [self.slidingViewController.topViewController.view addSubview:ivleft];
     
     UIImageView *ivtop = [[UIImageView alloc] initWithFrame:CGRectMake(0, _optionsView.frame.size.height, 320, 20)];
-    [ivleft setImage:[UIImage imageNamed:@"shadowTop"]];
+    [ivtop setImage:[UIImage imageNamed:@"shadowTop"]];
     [_optionsView addSubview:ivtop];
-    
 }
 
 - (void)setNavBarTitle:(NSString *)imageName

@@ -68,6 +68,10 @@ static customNavigationController *_ctrl;
     UIImageView *ivleft = [[UIImageView alloc] initWithFrame:CGRectMake(-40, 0, 40, 460)];
     [ivleft setImage:[UIImage imageNamed:@"shadowLeft"]];
     [self.slidingViewController.topViewController.view addSubview:ivleft];
+    
+    UIImageView *ivtop = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 20)];
+    [ivtop setImage:[UIImage imageNamed:@"shadowTop"]];
+    [self.view addSubview:ivtop];
 }
 
 - (void)viewWillAppear:(BOOL)animated
