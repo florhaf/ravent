@@ -117,15 +117,17 @@ static NSString *cellId = @"CommentCell";
     [super viewWillAppear:animated];
 
     // Added by Flo
-    UIImage *menui = [UIImage imageNamed:@"menuButton"];
+    UIImage *menubg = [UIImage imageNamed:@"navBarBG"];
+    UIImage *menui = [UIImage imageNamed:@"navBarMenu"];
     
     UIButton *menub = [UIButton buttonWithType:UIButtonTypeCustom];
     [menub addTarget:self action:@selector(revealMenu:) forControlEvents:UIControlEventTouchUpInside];
     [menub setImage:menui forState:UIControlStateNormal];
-    [menub setFrame:CGRectMake(0, 0, menui.size.width, menui.size.height)];
+    [menub setBackgroundImage:menubg forState:UIControlStateNormal];
+    [menub setFrame:CGRectMake(0, 0, 40, 29)];
     
     UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithCustomView:menub];
-    self.navigationItem.leftBarButtonItem = menuButton;
+    self.navigationItem.leftBarButtonItem = menuButton; 
     
     self.parentViewController.view.layer.shadowOpacity = 0.75f;
     self.parentViewController.view.layer.shadowRadius = 10.0f;

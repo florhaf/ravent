@@ -27,14 +27,11 @@
         _user.callback = @selector(onLoadFollowings:);
         
         self.tableView.frame = CGRectMake(0, 0, 320, 392);
-        self.tableView.tableFooterView = [[UIView alloc] init];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadDataWithSpinner) name:@"reloadFollowing" object:nil];
 
         _hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         [self loadData];
-        
-        [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"grayBG"]]];
     }
     
     return self;
@@ -185,6 +182,11 @@
 {
     [(controllers_friends_Details *)_details cancelAllRequests];
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
 }
 
 @end

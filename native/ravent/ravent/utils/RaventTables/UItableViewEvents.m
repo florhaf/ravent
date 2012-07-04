@@ -30,9 +30,6 @@
         [self loadDataWithUserLocation];
         
         _hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        
-        self.tableView.tableFooterView = [[UIView alloc] init];
-        [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"grayBG"]]];
     }
     
     return self;
@@ -93,24 +90,6 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     CGFloat result = [super tableView:tableView heightForRowAtIndexPath:indexPath];
-//    CGFloat actualHeight;
-//    
-//    NSString *section = [_sortedKeys objectAtIndex:indexPath.section];
-//    NSMutableArray *rows = [_groupedData objectForKey:section];
-//    models_Event *e = [rows objectAtIndex:indexPath.row];
-//    
-//    actualHeight = [e.name sizeWithFont:_itemTitle.font constrainedToSize:CGSizeMake(_titleSize.width, 2000) lineBreakMode:UILineBreakModeWordWrap].height;
-//    if (actualHeight > _titleSize.height) {
-//        
-//        result = result + (actualHeight - _titleSize.height);
-//    }
-//    
-//    actualHeight = [e.location sizeWithFont:_itemSubTitle.font constrainedToSize:CGSizeMake(_subTitleSize.width, 2000) lineBreakMode:UILineBreakModeWordWrap].height;
-//    if (actualHeight > _subTitleSize.height) {
-//        
-//        result = result + (actualHeight - _subTitleSize.height);
-//    }
-    
     return result;
 }
 
@@ -169,8 +148,6 @@
             image.alpha = 0.8;
         }
     
-        //_itemTitle.font = [_itemTitle.font fontWithSize:[self getFontSizeForLabel:_itemTitle]];
-    
         [cell.contentView addSubview:_item];
         
         event = nil;
@@ -184,8 +161,6 @@
 - (CGFloat)resizeAndPositionCellItem
 {
     CGFloat delta = [super resizeAndPositionCellItem] + 21;
-    
-    //_bg.frame = CGRectMake(_item.frame.origin.x, _item.frame.origin.y, _item.frame.size.width, _item.frame.size.height);
     
     return delta;
 }

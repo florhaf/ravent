@@ -39,6 +39,7 @@
     NSString *_location;
     NSString *_venue_category;
     NSString *_pic_big;
+    NSString *_pic_small;
     NSString *_score;
     NSString *_timeStart;
     NSString *_timeEnd;
@@ -69,6 +70,7 @@
 @property (nonatomic, retain) NSString *location;
 @property (nonatomic, retain) NSString *venue_category;
 @property (nonatomic, retain) NSString *pic_big;
+@property (nonatomic, retain) NSString *pic_small;
 @property (nonatomic, retain) NSString *score;
 @property (nonatomic, retain) NSString *timeStart;
 @property (nonatomic, retain) NSString *timeEnd;

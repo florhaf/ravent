@@ -37,9 +37,6 @@ typedef enum {
         
         self.title = @"Gemster";
         _showEmptyMessage = NO;
-        
-        
-        //[self.view setBackgroundColor:[UIColor colorWithRed:227 green:222 blue:216 alpha:1]];
     }
     return self;
 }
@@ -83,6 +80,12 @@ typedef enum {
             EGORefreshTableHeaderView *view = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.tableView.bounds.size.height, self.view.frame.size.width, self.tableView.bounds.size.height)];
             view.delegate = self;
             _refreshHeaderView = view;
+            
+            UIImageView *tableTop = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"tableTop"]];
+            [tableTop setFrame:CGRectMake(0, _refreshHeaderView.frame.size.height - 21, 320, 21)];
+            
+            [_refreshHeaderView addSubview:tableTop];
+            [_refreshHeaderView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"grayBG"]]];
         }
 	
         [_refreshHeaderView refreshLastUpdatedDate];
@@ -91,6 +94,11 @@ typedef enum {
     [self.tableView addSubview:_refreshHeaderView];
     
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"grayBG"]]];
+    
+    [[NSBundle mainBundle] loadNibNamed:@"views_Empty" owner:self options:nil];
+    self.tableView.tableFooterView = _emptyView;
 }
 
 - (void)viewDidUnload
@@ -144,9 +152,6 @@ typedef enum {
 
 - (void)onLoadData:(NSArray *)objects withSuccess:(success)success
 {
-    [[NSBundle mainBundle] loadNibNamed:@"views_Empty" owner:self options:nil];
-    self.tableView.tableFooterView = _emptyView;
-    
     _data = nil;
     _groupedData = nil;
     _sortedKeys = nil;

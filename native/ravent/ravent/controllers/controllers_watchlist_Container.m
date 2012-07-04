@@ -35,15 +35,30 @@ static customNavigationController *_ctrl;
     
     [self.view addSubview:[controllers_watchlist_WatchList instance].view];
     
-    UIImage *menui = [UIImage imageNamed:@"menuButton"];
+    UIImage *menubg = [UIImage imageNamed:@"navBarBG"];
+    UIImage *menui = [UIImage imageNamed:@"navBarMenu"];
     
     UIButton *menub = [UIButton buttonWithType:UIButtonTypeCustom];
     [menub addTarget:self action:@selector(revealMenu:) forControlEvents:UIControlEventTouchUpInside];
     [menub setImage:menui forState:UIControlStateNormal];
-    [menub setFrame:CGRectMake(0, 0, menui.size.width, menui.size.height)];
+    [menub setBackgroundImage:menubg forState:UIControlStateNormal];
+    [menub setFrame:CGRectMake(0, 0, 40, 29)];
     
     UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithCustomView:menub];
-    self.navigationItem.leftBarButtonItem = menuButton;
+    self.navigationItem.leftBarButtonItem = menuButton; 
+    
+    
+    
+    UIView *shadow = [[UIView alloc] initWithFrame:CGRectMake(0, -44, 320, 44)];
+    [shadow setBackgroundColor:[UIColor blackColor]];
+    
+    shadow.layer.shadowOffset = CGSizeZero;
+    shadow.layer.shadowPath = [UIBezierPath bezierPathWithRect:shadow.layer.bounds].CGPath;
+    shadow.layer.shadowOpacity = 0.75f;
+    shadow.layer.shadowRadius = 10.0f;
+    shadow.layer.shadowColor = [UIColor blackColor].CGColor;
+    
+    [self.view addSubview:shadow];
 }
 
 - (void)viewWillAppear:(BOOL)animated

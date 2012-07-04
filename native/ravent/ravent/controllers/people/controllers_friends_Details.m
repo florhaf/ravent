@@ -64,7 +64,7 @@
     
     footer.frame = CGRectMake(0, 0, 320, 160);
     
-    self.tableView.tableFooterView = footer;
+    //self.tableView.tableFooterView = footer;
     
 }
 

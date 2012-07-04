@@ -34,6 +34,7 @@
     NSString *_fistName;
     NSString *_lastName;
     NSString *_picture;
+    NSString *_pic_small;
     NSString *_group;
     NSString *_isFollowed;
     NSString *_isInvited;
@@ -64,6 +65,7 @@
 @property (nonatomic, retain) NSString *firstName;
 @property (nonatomic, retain) NSString *lastName;
 @property (nonatomic, retain) NSString *picture;
+@property (nonatomic, retain) NSString *pic_small;
 @property (nonatomic, retain) NSString *group;
 @property (nonatomic, retain) NSString *isFollowed;
 @property (nonatomic, retain) NSString *isInvited;

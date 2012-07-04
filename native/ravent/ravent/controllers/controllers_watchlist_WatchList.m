@@ -41,8 +41,6 @@ static controllers_watchlist_WatchList *_ctrl;
 {
     [super viewDidLoad];
     
-    self.tableView.tableFooterView = [[UIView alloc] init];
-    
     //_hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
 }
 

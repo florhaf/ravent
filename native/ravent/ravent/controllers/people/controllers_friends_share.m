@@ -24,14 +24,13 @@
         _user.delegate = self;
         _user.callback = @selector(onLoadAll:);
         
-        _invited = invited;
+        _invited = [[NSMutableArray alloc] initWithArray:invited];
         
         self.title = @"Gemster";
         _friends = [[NSMutableArray alloc] init];
         
         [self loadData];
         
-        [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"grayBG"]]];
     }
     
     return self;
@@ -223,7 +222,7 @@
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithCustomView:doneb];       
     self.navigationItem.rightBarButtonItem = doneButton;
     
-    self.tableView.tableFooterView = [[UIView alloc] init];
+
     _hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
 }
 

@@ -41,8 +41,8 @@
     IBOutlet MKTickerView *_ticker;
     
     IBOutlet JBAsyncImageView *_headerImage;
-    IBOutlet JBAsyncImageView *_mapImage;
     IBOutlet MKMapView *_map;
+    IBOutlet UIView *_mapImage;
     MKCoordinateRegion _viewRegion;
     CLLocationCoordinate2D _zoomLocation;
     
@@ -63,6 +63,7 @@
     NSArray *_friendsSharedTo;
     NSArray *_tickerItems;
     BOOL _isButtonTap;
+    BOOL _isMapImageSet;
     int _mapImageHeight;
     
     id __weak _delegateBack;

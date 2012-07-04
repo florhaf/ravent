@@ -197,7 +197,6 @@
 {
     [super viewDidLoad];
     
-    self.tableView.tableFooterView = [[UIView alloc] init];
     _hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
 }
 

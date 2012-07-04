@@ -27,6 +27,7 @@
 @synthesize firstName = _firstName;
 @synthesize lastName = _lastName;
 @synthesize picture = _picture;
+@synthesize pic_small = _pic_small;
 @synthesize group = _group;
 @synthesize isFollowed = _isFollowed;
 @synthesize isInvited = _isInvited;
@@ -496,6 +497,8 @@ static models_User *_crtUser = nil;
         
         u.group = [u.lastName substringToIndex:1];
         u.group = [NSString stringWithFormat:@"%@%@",[[u.group substringToIndex:1] uppercaseString],[u.group substringFromIndex:1] ];
+        
+        u.pic_small = [u.picture stringByReplacingOccurrencesOfString:@"_n.jpg" withString:@"_s.jpg"];
         
         int j = 0;
         

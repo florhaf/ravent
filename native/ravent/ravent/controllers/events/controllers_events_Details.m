@@ -10,7 +10,7 @@
 #import "YRDropdownView.h"
 #import "JBAsyncImageView.h"
 #import "MBProgressHUD.h"
-
+#import "UIImage+ImageWithUIView.h"
 #import "controllers_events_Details_Map.h"
 #import "postController.h"
 #import "Store.h"
@@ -73,25 +73,26 @@ static int _retryCounter;
     }
     
     _eventLoader.callbackResponseFailure = @selector(shareFailure:);
+
+    NSMutableDictionary *params = nil;    
+    NSMutableArray *newData = [[NSMutableArray alloc] initWithArray:_data];
     
-    _friendsSharedTo = [friends copy];
-    NSMutableDictionary *params = nil;
-    NSMutableArray *array = [[NSMutableArray alloc] initWithArray:_data];
+    [newData addObjectsFromArray:friends];
+    _data = nil;
+    _data = [[NSArray alloc] initWithArray:newData];
     
     for (int i = 0; i < [friends count]; i++) {
-        
-        params = [[NSMutableDictionary alloc] init];
-        [params setValue:[models_User crtUser].accessToken forKey:@"access_token"];
-        [params setValue:[models_User crtUser].uid forKey:@"userID"];
-        [params setValue:_event.eid forKey:@"eventID"];
-        [params setValue:((models_User *)[friends objectAtIndex:i]).uid forKey:@"friendID"];
-        
-        [array addObject:[friends objectAtIndex:i]];
-        
-        [_eventLoader share:params];
+            
+            params = [[NSMutableDictionary alloc] init];
+            [params setValue:[models_User crtUser].accessToken forKey:@"access_token"];
+            [params setValue:[models_User crtUser].uid forKey:@"userID"];
+            [params setValue:_event.eid forKey:@"eventID"];
+            [params setValue:((models_User *)[friends objectAtIndex:i]).uid forKey:@"friendID"];
+            
+            [_eventLoader share:params];
     }
-
-    [self onLoadInvited:array];
+    
+    [self.tableView reloadData];
 }
 
 - (void)shareFailure:(NSMutableDictionary *)error
@@ -191,8 +192,7 @@ static int _retryCounter;
         }
     } else {
         
-        [[NSBundle mainBundle] loadNibNamed:@"views_Empty" owner:self options:nil];
-        self.tableView.tableFooterView = _emptyView;
+        // nothing anymore
     }
 }
 
@@ -391,6 +391,8 @@ static int _retryCounter;
 
 #pragma mark - View lifecycle
 
+
+
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     if (scrollView.contentOffset.y < 0) {
@@ -402,13 +404,24 @@ static int _retryCounter;
         
         //[_map setHidden:NO];
         
-        [_map setFrame:CGRectMake(0, -240 + scrollView.contentOffset.y / 2, _map.frame.size.width, _map.frame.size.height)];
+        [_mapImage setFrame:CGRectMake(0, -80 + scrollView.contentOffset.y / 2, _mapImage.frame.size.width, _mapImage.frame.size.height)];
     }
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
 
+}
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    if (!_isMapImageSet) {
+        
+        _isMapImageSet = YES;
+        _mapImage.layer.contents = (id)[UIImage imageWithUIView:_map].CGImage;
+        [_map removeFromSuperview];
+        _map = nil;
+    }
 }
 
 - (void)viewDidLoad
@@ -460,12 +473,17 @@ static int _retryCounter;
     _map.zoomEnabled = NO;
     if (_event.latitude != nil && ![_event.latitude isEqualToString:@""]) {
         
+        CLLocationCoordinate2D coord;
+        coord.latitude = [_event.latitude doubleValue];
+        coord.longitude = [_event.longitude doubleValue];
+        _event.coordinate = coord;
+        [_map addAnnotation:_event];
+        
         _zoomLocation.latitude = [_event.latitude floatValue];
         _zoomLocation.longitude= [_event.longitude floatValue];
         _viewRegion = MKCoordinateRegionMakeWithDistance(_zoomLocation, 0.3*METERS_PER_MILE, 0.3*METERS_PER_MILE);
         MKCoordinateRegion adjustedRegion = [_map regionThatFits:_viewRegion];                
         //[_map setRegion:adjustedRegion animated:NO];
-        
         
         @try {
             
@@ -483,15 +501,11 @@ static int _retryCounter;
             // nothing
         }
         
-        CLLocationCoordinate2D coord;
-        coord.latitude = [_event.latitude doubleValue];
-        coord.longitude = [_event.longitude doubleValue];
-        _event.coordinate = coord;
-        [_map addAnnotation:_event];
+        
         
     } else {
         
-        _mapImage.image = [UIImage imageNamed:@"noMap"];
+        //_mapImage.image = [UIImage imageNamed:@"noMap"];
     }
     
     // STATS
@@ -525,13 +539,13 @@ static int _retryCounter;
     [_actRatio3 stopAnimating];
 
     
-//    [_actRatio1 removeFromSuperview];
-//    [_actRatio2 removeFromSuperview];
-//    [_actRatio3 removeFromSuperview];
-//    
-//    _actRatio1 = nil;
-//    _actRatio2 = nil;
-//    _actRatio3 = nil;
+    [_actRatio1 removeFromSuperview];
+    [_actRatio2 removeFromSuperview];
+    [_actRatio3 removeFromSuperview];
+    
+    _actRatio1 = nil;
+    _actRatio2 = nil;
+    _actRatio3 = nil;
     
     [_labelFemaleRatio setHidden:NO];
     [_labelMaleRatio setHidden:NO];
@@ -670,6 +684,11 @@ static int _retryCounter;
 }
 
 #pragma mark - Map delegate
+
+- (void)mapViewDidFinishLoadingMap:(MKMapView *)mapView
+{
+    NSLog(@"HEY");
+}
 
 - (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views {
     

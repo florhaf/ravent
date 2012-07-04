@@ -23,6 +23,7 @@
 @synthesize location = _location;
 @synthesize venue_category = _venue_category;
 @synthesize pic_big = _pic_big;
+@synthesize pic_small = _pic_small;
 @synthesize score = _score;
 @synthesize timeStart = _timeStart;
 @synthesize timeEnd = _timeEnd;
@@ -385,6 +386,8 @@
         
         models_Event *e = [data objectAtIndex:i];
         NSString *group = e.group;
+        e.pic_small = [e.pic_big stringByReplacingOccurrencesOfString:@"_n.jpg" withString:@"_s.jpg"];
+        
         int j = 0;
         
         for (; j < [result count]; j++) {

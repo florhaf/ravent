@@ -110,21 +110,29 @@ static customNavigationController *_ctrl;
 {
     [super viewDidLoad];
     
-    UIImage *menui = [UIImage imageNamed:@"menuButton"];
+    UIImage *menubg = [UIImage imageNamed:@"navBarBG"];
+    UIImage *menui = [UIImage imageNamed:@"navBarMenu"];
+    
     UIButton *menub = [UIButton buttonWithType:UIButtonTypeCustom];
     [menub addTarget:self action:@selector(revealMenu:) forControlEvents:UIControlEventTouchUpInside];
     [menub setImage:menui forState:UIControlStateNormal];
-    [menub setFrame:CGRectMake(0, 0, menui.size.width, menui.size.height)];
-    UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithCustomView:menub];
-    self.navigationItem.leftBarButtonItem = menuButton;        
+    [menub setBackgroundImage:menubg forState:UIControlStateNormal];
+    [menub setFrame:CGRectMake(0, 0, 40, 29)];
     
-    UIImage *alli = [UIImage imageNamed:@"allButton"];
-    UIButton *allb = [UIButton buttonWithType:UIButtonTypeCustom];
-    [allb addTarget:self action:@selector(revealAll:) forControlEvents:UIControlEventTouchUpInside];
-    [allb setImage:alli forState:UIControlStateNormal];
-    [allb setFrame:CGRectMake(0, 0, alli.size.width, alli.size.height)];
-    UIBarButtonItem *allButton = [[UIBarButtonItem alloc] initWithCustomView:allb];       
-    self.navigationItem.rightBarButtonItem = allButton;
+    UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithCustomView:menub];
+    self.navigationItem.leftBarButtonItem = menuButton;       
+    
+    UIImage *mapbg = [UIImage imageNamed:@"navBarBG"];
+    UIImage *mapi = [UIImage imageNamed:@"navBarAll"];
+    
+    UIButton *mapb = [UIButton buttonWithType:UIButtonTypeCustom];
+    [mapb addTarget:self action:@selector(revealAll:) forControlEvents:UIControlEventTouchUpInside];
+    [mapb setImage:mapi forState:UIControlStateNormal];
+    [mapb setBackgroundImage:mapbg forState:UIControlStateNormal];
+    [mapb setFrame:CGRectMake(0, 0, 40, 29)];
+    
+    UIBarButtonItem *mapButton = [[UIBarButtonItem alloc] initWithCustomView:mapb];        
+    self.navigationItem.rightBarButtonItem = mapButton;
     
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame = _header.frame;
@@ -155,6 +163,17 @@ static customNavigationController *_ctrl;
     _segmentedControl.selectedSegmentIndex = 0;
     [_segmentedControl addTarget:self action:@selector(onSegmentedControlValueChanged:) forControlEvents:UIControlEventValueChanged];
 	[self.view addSubview:_segmentedControl];
+    
+    UIView *shadow = [[UIView alloc] initWithFrame:CGRectMake(0, -44, 320, 44)];
+    [shadow setBackgroundColor:[UIColor blackColor]];
+    
+    shadow.layer.shadowOffset = CGSizeZero;
+    shadow.layer.shadowPath = [UIBezierPath bezierPathWithRect:shadow.layer.bounds].CGPath;
+    shadow.layer.shadowOpacity = 0.75f;
+    shadow.layer.shadowRadius = 10.0f;
+    shadow.layer.shadowColor = [UIColor blackColor].CGColor;
+    
+    [self.view addSubview:shadow];
 }
 
 - (void)onSegmentedControlValueChanged:(id)sender

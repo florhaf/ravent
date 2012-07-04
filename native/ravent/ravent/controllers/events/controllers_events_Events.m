@@ -55,6 +55,7 @@ static customNavigationController *_ctrl;
     
     [self.view addSubview:[controllers_events_List_p2p instance].view];
     
+    // TOLBAR BUTTONS
     UIImage *menubg = [UIImage imageNamed:@"navBarBG"];
     UIImage *menui = [UIImage imageNamed:@"navBarMenu"];
     
@@ -79,35 +80,52 @@ static customNavigationController *_ctrl;
     UIBarButtonItem *mapButton = [[UIBarButtonItem alloc] initWithCustomView:mapb];        
     self.navigationItem.rightBarButtonItem = mapButton;
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectFirstNonEmptyList) name:@"onLoadEventsP2P" object:[controllers_events_List_p2p instance]];
-    
     
     // OPTIONS
     [self.view bringSubviewToFront:_optionsView];
+    
+//    _optionsView.layer.shadowOffset = CGSizeZero;
+//    _optionsView.layer.shadowPath = [UIBezierPath bezierPathWithRect:_optionsView.layer.bounds].CGPath;
+//    _optionsView.layer.shadowOpacity = 0.75f;
+//    _optionsView.layer.shadowRadius = 10.0f;
+//    _optionsView.layer.shadowColor = [UIColor blackColor].CGColor;
     
     _radiusStepper.value = [models_User crtUser].searchRadius;
     _radiusStepper.minimumValue = 5;
     _radiusStepper.maximumValue = 50;
     _radiusStepper.stepValue = 5;
-    _radiusStepper.continuous = NO;
+    _radiusStepper.continuous = YES;
     
     _windowStepper.value = [models_User crtUser].searchWindow / 24;
     _windowStepper.minimumValue = 1;
     _windowStepper.maximumValue = 30;
     _windowStepper.stepValue = 1;
-    _windowStepper.continuous = NO;
+    _windowStepper.continuous = YES;
     
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectFirstNonEmptyList) name:@"onLoadEventsP2P" object:[controllers_events_List_p2p instance]];
+}
+
+- (void)setNavBarTitle:(NSString *)imageName
+{
+    self.navigationItem.titleView = nil;
     
-    UIImage *i = [UIImage imageNamed:@"navBarTitle"];
-    UIImageView *iv = [[UIImageView alloc] initWithImage:i];
-    iv.frame = CGRectMake(0, 0, 80, 36);
-    
-    UIButton *btn = [[UIButton alloc] initWithFrame:iv.frame];
+    UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(0, 1, 80, 43)];
     [btn addTarget:self action:@selector(onSO_Tap:) forControlEvents:UIControlEventTouchUpInside];
-    [btn addSubview:iv];
+    [btn setBackgroundImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
+
+    
+    UIImageView *arrow = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"arrow"]];
+    [arrow setFrame:CGRectMake(28, 28, 22, 12.5)];
+    
+    [btn addSubview:arrow];
     
     self.navigationItem.titleView = btn;
+    
+    if (!_isUp) {
+     
+        [self onSO_Tap:nil];
+    }
 }
 
 - (void)selectFirstNonEmptyList
@@ -139,7 +157,8 @@ static customNavigationController *_ctrl;
     if (_isUp) {
         
         _isUp = NO;
-        [_optionsView raceTo:CGPointMake(0, -44) withSnapBack:YES];   
+        
+        [_optionsView raceTo:CGPointMake(0, -50) withSnapBack:YES];   
        
     } else {
         
@@ -168,7 +187,7 @@ static customNavigationController *_ctrl;
     
 }
 
--(void) showActionSheet:(id)sender forEvent:(UIEvent*)event
+-(void)showActionSheet:(id)sender forEvent:(UIEvent*)event
 {
     TSActionSheet *actionSheet = [[TSActionSheet alloc] initWithTitle:@"action sheet"];
     [actionSheet destructiveButtonWithTitle:@"hoge" block:nil];
@@ -200,7 +219,7 @@ static customNavigationController *_ctrl;
 
 - (IBAction)onPartyButton_Tap:(id)sender
 {
-    self.title = @"Party";
+    [self setNavBarTitle:@"navbarTitleParty"];
     
     [[controllers_events_List_p2p instance].tableView scrollRectToVisible:CGRectMake(0, -55, 1, 1) animated:YES];
     
@@ -211,7 +230,7 @@ static customNavigationController *_ctrl;
 
 - (IBAction)onChillButton_Tap:(id)sender
 {
-    self.title = @"Chill";
+    [self setNavBarTitle:@"navbarTitleChill"];
     
     [[controllers_events_List_p2p instance].tableView scrollRectToVisible:CGRectMake(0, -55, 1, 1) animated:YES];
     
@@ -222,7 +241,7 @@ static customNavigationController *_ctrl;
 
 - (IBAction)onArtButton_Tap:(id)sender
 {
-    self.title = @"Art";
+    [self setNavBarTitle:@"navbarTitleArt"];
     
     [[controllers_events_List_p2p instance].tableView scrollRectToVisible:CGRectMake(0, -55, 1, 1) animated:YES];
     
@@ -233,7 +252,7 @@ static customNavigationController *_ctrl;
 
 - (IBAction)onMiscButton_Tap:(id)sender
 {
-    self.title = @"Unsual";
+    [self setNavBarTitle:@"navbarTitleMisc"];
     
     [[controllers_events_List_p2p instance].tableView scrollRectToVisible:CGRectMake(0, -55, 1, 1) animated:YES];
     
