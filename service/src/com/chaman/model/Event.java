@@ -400,6 +400,13 @@ public class Event extends Model implements Serializable {
 		this.date_start = dtStart.toString("MMM d, Y");
 		this.date_end = dtEnd.toString("MMM d, Y");
 		
+		if (this.filter.equals("Other") || this.filter.equals("Entertain")) {
+			
+			if (dtEnd.getHourOfDay() >= 3 &&  dtEnd.getHourOfDay() <= 7) {
+				this.filter = "Party";
+			}
+		}
+		
 		DateTimeZone TZ = DateTimeZone.forOffsetMillis(timeZoneInMinutes*60*1000);
 		DateTime now = DateTime.now(TZ);	
 		long timeStampNow = now.getMillis();
@@ -476,7 +483,9 @@ public class Event extends Model implements Serializable {
 			
 				this.filter = "Party";
 			}
-		}		
+		}
+		
+		// also some adjustment on the category done in format()
 	}
 	
 	public boolean Filter_bogus_events(DateTime now_userTZ, int searchTimeFrame) {
