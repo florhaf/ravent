@@ -89,13 +89,13 @@ static customNavigationController *_ctrl;
     _radiusStepper.minimumValue = 5;
     _radiusStepper.maximumValue = 50;
     _radiusStepper.stepValue = 5;
-    _radiusStepper.continuous = NO;
+    _radiusStepper.continuous = YES;
     
     _windowStepper.value = [models_User crtUser].searchWindow / 24;
     _windowStepper.minimumValue = 1;
     _windowStepper.maximumValue = 30;
     _windowStepper.stepValue = 1;
-    _windowStepper.continuous = NO;
+    _windowStepper.continuous = YES;
     
     
     _optionsView.layer.shadowOffset = CGSizeZero;
@@ -107,16 +107,24 @@ static customNavigationController *_ctrl;
 
 - (void)setNavBarTitle:(NSString *)imageName
 {
+    self.navigationItem.titleView = nil;
     
-    UIImage *i = [UIImage imageNamed:imageName];
-    UIImageView *iv = [[UIImageView alloc] initWithImage:i];
-    iv.frame = CGRectMake(0, 0, 80, 36);
-    
-    UIButton *btn = [[UIButton alloc] initWithFrame:iv.frame];
+    UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(0, 1, 80, 43)];
     [btn addTarget:self action:@selector(onSO_Tap:) forControlEvents:UIControlEventTouchUpInside];
-    [btn addSubview:iv];
+    [btn setBackgroundImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
+
+    
+    UIImageView *arrow = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"arrow"]];
+    [arrow setFrame:CGRectMake(28, 28, 22, 12.5)];
+    
+    [btn addSubview:arrow];
     
     self.navigationItem.titleView = btn;
+    
+    if (!_isUp) {
+     
+        [self onSO_Tap:nil];
+    }
 }
 
 - (void)selectFirstNonEmptyList
@@ -178,7 +186,7 @@ static customNavigationController *_ctrl;
     
 }
 
--(void) showActionSheet:(id)sender forEvent:(UIEvent*)event
+-(void)showActionSheet:(id)sender forEvent:(UIEvent*)event
 {
     TSActionSheet *actionSheet = [[TSActionSheet alloc] initWithTitle:@"action sheet"];
     [actionSheet destructiveButtonWithTitle:@"hoge" block:nil];
