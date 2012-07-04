@@ -55,6 +55,7 @@ static customNavigationController *_ctrl;
     
     [self.view addSubview:[controllers_events_List_p2p instance].view];
     
+    // TOLBAR BUTTONS
     UIImage *menubg = [UIImage imageNamed:@"navBarBG"];
     UIImage *menui = [UIImage imageNamed:@"navBarMenu"];
     
@@ -79,11 +80,15 @@ static customNavigationController *_ctrl;
     UIBarButtonItem *mapButton = [[UIBarButtonItem alloc] initWithCustomView:mapb];        
     self.navigationItem.rightBarButtonItem = mapButton;
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectFirstNonEmptyList) name:@"onLoadEventsP2P" object:[controllers_events_List_p2p instance]];
-    
     
     // OPTIONS
     [self.view bringSubviewToFront:_optionsView];
+    
+//    _optionsView.layer.shadowOffset = CGSizeZero;
+//    _optionsView.layer.shadowPath = [UIBezierPath bezierPathWithRect:_optionsView.layer.bounds].CGPath;
+//    _optionsView.layer.shadowOpacity = 0.75f;
+//    _optionsView.layer.shadowRadius = 10.0f;
+//    _optionsView.layer.shadowColor = [UIColor blackColor].CGColor;
     
     _radiusStepper.value = [models_User crtUser].searchRadius;
     _radiusStepper.minimumValue = 5;
@@ -98,11 +103,7 @@ static customNavigationController *_ctrl;
     _windowStepper.continuous = YES;
     
     
-    _optionsView.layer.shadowOffset = CGSizeZero;
-    _optionsView.layer.shadowPath = [UIBezierPath bezierPathWithRect:_optionsView.layer.bounds].CGPath;
-    _optionsView.layer.shadowOpacity = 0.75f;
-    _optionsView.layer.shadowRadius = 10.0f;
-    _optionsView.layer.shadowColor = [UIColor blackColor].CGColor;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectFirstNonEmptyList) name:@"onLoadEventsP2P" object:[controllers_events_List_p2p instance]];
 }
 
 - (void)setNavBarTitle:(NSString *)imageName

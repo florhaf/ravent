@@ -73,25 +73,26 @@ static int _retryCounter;
     }
     
     _eventLoader.callbackResponseFailure = @selector(shareFailure:);
+
+    NSMutableDictionary *params = nil;    
+    NSMutableArray *newData = [[NSMutableArray alloc] initWithArray:_data];
     
-    _friendsSharedTo = [friends copy];
-    NSMutableDictionary *params = nil;
-    NSMutableArray *array = [[NSMutableArray alloc] initWithArray:_data];
+    [newData addObjectsFromArray:friends];
+    _data = nil;
+    _data = [[NSArray alloc] initWithArray:newData];
     
     for (int i = 0; i < [friends count]; i++) {
-        
-        params = [[NSMutableDictionary alloc] init];
-        [params setValue:[models_User crtUser].accessToken forKey:@"access_token"];
-        [params setValue:[models_User crtUser].uid forKey:@"userID"];
-        [params setValue:_event.eid forKey:@"eventID"];
-        [params setValue:((models_User *)[friends objectAtIndex:i]).uid forKey:@"friendID"];
-        
-        [array addObject:[friends objectAtIndex:i]];
-        
-        [_eventLoader share:params];
+            
+            params = [[NSMutableDictionary alloc] init];
+            [params setValue:[models_User crtUser].accessToken forKey:@"access_token"];
+            [params setValue:[models_User crtUser].uid forKey:@"userID"];
+            [params setValue:_event.eid forKey:@"eventID"];
+            [params setValue:((models_User *)[friends objectAtIndex:i]).uid forKey:@"friendID"];
+            
+            [_eventLoader share:params];
     }
-
-    [self onLoadInvited:array];
+    
+    [self.tableView reloadData];
 }
 
 - (void)shareFailure:(NSMutableDictionary *)error

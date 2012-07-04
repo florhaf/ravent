@@ -68,8 +68,6 @@
         }
     }
     
-
-    
     if (objects == nil || [objects count] == 0) {
         
         [[NSBundle mainBundle]loadNibNamed:@"views_Empty_Generic" owner:self options:nil];

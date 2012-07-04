@@ -24,7 +24,7 @@
         _user.delegate = self;
         _user.callback = @selector(onLoadAll:);
         
-        _invited = invited;
+        _invited = [[NSMutableArray alloc] initWithArray:invited];
         
         self.title = @"Gemster";
         _friends = [[NSMutableArray alloc] init];

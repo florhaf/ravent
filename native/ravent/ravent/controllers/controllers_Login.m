@@ -218,15 +218,15 @@ static controllers_Login *_ctrl;
     NSLog(@"%@",[models_User crtUser].accessToken);
     
     [self performSelector:@selector(onFacebookLogin) withObject:nil afterDelay:1];
-    
-    [_loginButton setEnabled:YES];
-    [_spinner setAlpha:0];
-    [_spinner stopAnimating];
 }
 
 - (void) onFacebookLogin
 {
     [[ActionDispatcher instance] execute:@"onFacebookLogin"];
+    
+    [_loginButton setEnabled:YES];
+    [_spinner setAlpha:0];
+    [_spinner stopAnimating];
 }
 
 #pragma mark - View lifecycle
