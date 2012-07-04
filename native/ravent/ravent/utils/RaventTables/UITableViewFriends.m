@@ -56,6 +56,8 @@
         if ([v isKindOfClass:[UIActivityIndicatorView class]]) {
             
             [v setHidden:YES];
+            
+            [((UIActivityIndicatorView *)v) stopAnimating];
         }
         
         if ([v isKindOfClass:[UILabel class]]) {
