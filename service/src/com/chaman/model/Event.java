@@ -3,7 +3,6 @@ package com.chaman.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Collections;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -245,8 +244,7 @@ public class Event extends Model implements Serializable {
         		dao.ofy().delete(e); //clean the datastore by removing old events TODO: call a task doesn't have to be deleted right away
         	}
         }
-        
-        Collections.sort(result, new EventComparator());
+
         return result;    
 	}
 
