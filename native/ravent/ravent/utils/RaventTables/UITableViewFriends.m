@@ -125,8 +125,6 @@
         [cell.contentView addSubview:_item];
     }
     
-    [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
-    
     return cell;
 }
 

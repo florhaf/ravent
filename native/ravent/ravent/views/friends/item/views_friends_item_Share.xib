@@ -49,7 +49,7 @@
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<object class="NSCustomResource" key="IBUIImage">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">comment.png</string>
+							<string key="NSResourceName">all.png</string>
 						</object>
 					</object>
 					<object class="IBUILabel" id="120700328">
@@ -69,7 +69,7 @@
 						<string key="IBUIText">Name unknown</string>
 						<object class="NSColor" key="IBUITextColor">
 							<int key="NSColorSpace">2</int>
-							<bytes key="NSRGB">MC4yNTQ5MDE5NzU0IDAuMzY4NjI3NDU4OCAwLjYwNzg0MzE2MDYAA</bytes>
+							<bytes key="NSRGB">MC41MjU0OTAyMjQ0IDAuNTI1NDkwMjI0NCAwLjUyNTQ5MDIyNDQAA</bytes>
 						</object>
 						<nil key="IBUIHighlightedColor"/>
 						<int key="IBUIBaselineAdjustment">1</int>
@@ -87,7 +87,7 @@
 					<object class="IBUIImageView" id="623504167">
 						<reference key="NSNextResponder" ref="358972489"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{21, 4}, {34, 34}}</string>
+						<string key="NSFrame">{{19, 5}, {34, 34}}</string>
 						<reference key="NSSuperview" ref="358972489"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="120700328"/>
@@ -386,7 +386,7 @@
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
-			<string key="comment.png">{640, 22}</string>
+			<string key="all.png">{640, 95}</string>
 			<string key="invite.png">{191, 67}</string>
 			<string key="inviteHighlighted.png">{191, 67}</string>
 			<string key="invited.png">{191, 68}</string>

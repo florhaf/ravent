@@ -198,10 +198,10 @@ static controllers_friends_All *_ctrl;
         // image
         if ([_imagesCache.allKeys containsObject:u.picture]) {
             
-            _itemImage.image = (UIImage *)[_imagesCache objectForKey:u.picture];
+            _itemImage.image = (UIImage *)[_imagesCache objectForKey:u.pic_small];
         } else {
             
-            _itemImage.imageURL = [NSURL URLWithString:u.picture];
+            _itemImage.imageURL = [NSURL URLWithString:u.pic_small];
             _itemImage.delegate = self;
         }
         _itemImage.clipsToBounds = YES;
