@@ -45,7 +45,10 @@ static controllers_friends_All *_ctrl;
 {
     [MBProgressHUD hideHUDForView:self.view animated:YES];
     
-    _following = [[NSMutableDictionary alloc] initWithDictionary:[notification userInfo]];
+    if (notification != nil) {
+        
+        _following = [[NSMutableDictionary alloc] initWithDictionary:[notification userInfo]];   
+    }
     
     if (_following != nil) {
         
@@ -355,6 +358,8 @@ static controllers_friends_All *_ctrl;
     [super viewWillAppear:animated];
     
     _isDirty = NO;
+    
+    [self onFollowingLoaded:nil];
 }
 
 - (void)onFollowSuccess:(NSString *)response
@@ -409,6 +414,8 @@ static controllers_friends_All *_ctrl;
     
     
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"grayBG"]]];
+    
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLineEtched;
 }
 
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar

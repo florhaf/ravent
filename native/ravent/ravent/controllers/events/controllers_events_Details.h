@@ -37,6 +37,7 @@
     IBOutlet UILabel *_labelFemaleRatio;
     IBOutlet UILabel *_labelMaleRatio;
     IBOutlet UILabel *_labelTotalAttendings;
+    IBOutlet UILabel *_venueCategory;
     IBOutlet UIButton *_backButton;
     IBOutlet MKTickerView *_ticker;
     

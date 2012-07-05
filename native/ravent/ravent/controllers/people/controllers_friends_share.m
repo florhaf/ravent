@@ -224,6 +224,8 @@
     
 
     _hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLineEtched;
 }
 
 - (void)hideAllModal

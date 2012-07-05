@@ -49,7 +49,7 @@
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<object class="NSCustomResource" key="IBUIImage">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">userHeader.png</string>
+							<string key="NSResourceName">comment.png</string>
 						</object>
 					</object>
 					<object class="IBUILabel" id="1059775984">
@@ -184,6 +184,7 @@
 						<string key="NSFrame">{{15, 81}, {290, 35}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -200,6 +201,10 @@
 							<bytes key="NSRGB">MC4xOTYwNzg0MzE0IDAuMiAwLjIxMTc2NDcwNTkAA</bytes>
 						</object>
 						<reference key="IBUINormalTitleShadowColor" ref="74561627"/>
+						<object class="NSCustomResource" key="IBUINormalBackgroundImage">
+							<string key="NSClassName">NSImage</string>
+							<string key="NSResourceName">button.png</string>
+						</object>
 						<object class="IBUIFontDescription" key="IBUIFontDescription">
 							<int key="type">2</int>
 							<double key="pointSize">14</double>
@@ -411,9 +416,11 @@
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="_bg">UIImageView</string>
 						<string key="_itemDistance">UILabel</string>
+						<string key="_itemEndTime">UILabel</string>
 						<string key="_itemScore">UIView</string>
-						<string key="_itemTime">UILabel</string>
+						<string key="_itemStartTime">UILabel</string>
 						<string key="_itemVenueCategory">UILabel</string>
+						<string key="_special">UIImageView</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
 						<object class="IBToOneOutletInfo" key="_bg">
@@ -424,17 +431,25 @@
 							<string key="name">_itemDistance</string>
 							<string key="candidateClassName">UILabel</string>
 						</object>
+						<object class="IBToOneOutletInfo" key="_itemEndTime">
+							<string key="name">_itemEndTime</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
 						<object class="IBToOneOutletInfo" key="_itemScore">
 							<string key="name">_itemScore</string>
 							<string key="candidateClassName">UIView</string>
 						</object>
-						<object class="IBToOneOutletInfo" key="_itemTime">
-							<string key="name">_itemTime</string>
+						<object class="IBToOneOutletInfo" key="_itemStartTime">
+							<string key="name">_itemStartTime</string>
 							<string key="candidateClassName">UILabel</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="_itemVenueCategory">
 							<string key="name">_itemVenueCategory</string>
 							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="_special">
+							<string key="name">_special</string>
+							<string key="candidateClassName">UIImageView</string>
 						</object>
 					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
@@ -562,10 +577,10 @@
 		</object>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
-		<object class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
-			<string key="NS.key.0">userHeader.png</string>
-			<string key="NS.object.0">{640, 244}</string>
-		</object>
+		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
+			<string key="button.png">{599, 85}</string>
+			<string key="comment.png">{640, 22}</string>
+		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">1181</string>
 	</data>
 </archive>

@@ -236,44 +236,44 @@ static customNavigationController *_ctrl;
 {
     [self setNavBarTitle:@"navbarTitleParty"];
     
-    [[controllers_events_List_p2p instance].tableView scrollRectToVisible:CGRectMake(0, -55, 1, 1) animated:YES];
-    
     [[controllers_events_List_p2p instance] reloadTableViewDataSourceWithIndex:0];
     
     [[controllers_events_Map_p2p instance] loadData:[controllers_events_List_p2p instance].data];
+    
+    [[controllers_events_List_p2p instance].tableView setContentOffset:CGPointZero animated:YES];
 }
 
 - (IBAction)onChillButton_Tap:(id)sender
 {
     [self setNavBarTitle:@"navbarTitleChill"];
     
-    [[controllers_events_List_p2p instance].tableView scrollRectToVisible:CGRectMake(0, -55, 1, 1) animated:YES];
-    
     [[controllers_events_List_p2p instance] reloadTableViewDataSourceWithIndex:1];
     
     [[controllers_events_Map_p2p instance] loadData:[controllers_events_List_p2p instance].data];
+    
+    [[controllers_events_List_p2p instance].tableView setContentOffset:CGPointZero animated:YES];
 }
 
 - (IBAction)onArtButton_Tap:(id)sender
 {
     [self setNavBarTitle:@"navbarTitleArt"];
     
-    [[controllers_events_List_p2p instance].tableView scrollRectToVisible:CGRectMake(0, -55, 1, 1) animated:YES];
-    
     [[controllers_events_List_p2p instance] reloadTableViewDataSourceWithIndex:2];
     
     [[controllers_events_Map_p2p instance] loadData:[controllers_events_List_p2p instance].data];
+    
+    [[controllers_events_List_p2p instance].tableView setContentOffset:CGPointZero animated:YES];
 }
 
 - (IBAction)onMiscButton_Tap:(id)sender
 {
     [self setNavBarTitle:@"navbarTitleMisc"];
     
-    [[controllers_events_List_p2p instance].tableView scrollRectToVisible:CGRectMake(0, -55, 1, 1) animated:YES];
-    
     [[controllers_events_List_p2p instance] reloadTableViewDataSourceWithIndex:3];
     
     [[controllers_events_Map_p2p instance] loadData:[controllers_events_List_p2p instance].data];
+    
+    [[controllers_events_List_p2p instance].tableView setContentOffset:CGPointZero animated:YES];
 }
 
 - (void)viewWillAppear:(BOOL)animated

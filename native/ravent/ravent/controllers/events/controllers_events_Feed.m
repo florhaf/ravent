@@ -132,9 +132,11 @@
     
     _itemTime.text = timeStr;
     
-    [self resizeAndPositionCellItem];
+    CGFloat delta = [self resizeAndPositionCellItem];
     
     [cell.contentView addSubview:_item];
+    
+    [_bg setFrame:CGRectMake(0, 0, 320, _bg.frame.size.height + delta)];
     
     return cell;
 }

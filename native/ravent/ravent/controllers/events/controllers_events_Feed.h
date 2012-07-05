@@ -18,6 +18,7 @@
     
     IBOutlet UILabel *_itemTime;
     IBOutlet JBAsyncImageView *_commentImg;
+    IBOutlet UIImageView *_bg;
     
     NSMutableArray *_photos;
     

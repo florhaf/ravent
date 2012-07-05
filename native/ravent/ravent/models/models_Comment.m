@@ -134,7 +134,7 @@
 - (void)request:(RKRequest *)request didLoadResponse:(RKResponse *)response
 {
     _isRequesting = NO;
-    [[ActionDispatcher instance] execute:request.resourcePath withString:@"Got a response..."];
+    [[ActionDispatcher instance] execute:request.resourcePath withString:@"Analyzing data..."];
     
     [self performSelector:@selector(updateLoadingMessage:) withObject:request.resourcePath afterDelay:2];
     
