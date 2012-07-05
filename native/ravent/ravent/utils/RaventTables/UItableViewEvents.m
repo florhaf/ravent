@@ -139,6 +139,7 @@
         if (indexPath.row == 0) {
             
             [_special setHidden:NO];
+            [_itemTitle setFrame:CGRectMake(_itemTitle.frame.origin.x, _itemTitle.frame.origin.y, 265, _itemTitle.frame.size.height)];
         }
         
         for (int i = 0; i < [event.score intValue]; i++) {

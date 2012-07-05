@@ -40,6 +40,8 @@
     IBOutlet UIButton *_artButton;
     IBOutlet UIButton *_miscButton;
     
+    UIView *_menuArrow;
+    
     models_User *_user;
     
     BOOL _isDirty;

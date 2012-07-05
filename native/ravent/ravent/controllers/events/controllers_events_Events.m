@@ -15,6 +15,7 @@
 #import "UIView+Animation.h"
 #import "TSPopoverController.h"
 #import "TSActionSheet.h"
+#import <QuartzCore/QuartzCore.h>
 
 @implementation controllers_events_Events
 
@@ -130,10 +131,10 @@ static customNavigationController *_ctrl;
     [btn setBackgroundImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
 
     
-    UIImageView *arrow = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"arrow"]];
-    [arrow setFrame:CGRectMake(28, 28, 22, 12.5)];
+    _menuArrow = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"arrow"]];
+    [_menuArrow setFrame:CGRectMake(28, 28, 22, 12.5)];
     
-    [btn addSubview:arrow];
+    [btn addSubview:_menuArrow];
     
     self.navigationItem.titleView = btn;
     
@@ -168,12 +169,16 @@ static customNavigationController *_ctrl;
 
 - (IBAction)onSO_Tap:(id)sender
 {
-    
     if (_isUp) {
         
         _isUp = NO;
         
         [_optionsView raceTo:CGPointMake(0, -50) withSnapBack:YES];   
+        
+        [CATransaction begin];
+        [CATransaction setAnimationDuration:1.5f];
+        _menuArrow.layer.transform = CATransform3DMakeRotation((M_PI / 180.0) * 180.0f, 0.0f, 0.0f, 1.0f);
+        [CATransaction commit];
        
     } else {
         
@@ -184,6 +189,11 @@ static customNavigationController *_ctrl;
             _isDirty = NO;
             [[controllers_events_List_p2p instance] loadDataWithSpinner];
         }
+        
+        [CATransaction begin];
+        [CATransaction setAnimationDuration:1.5f];
+        _menuArrow.layer.transform = CATransform3DIdentity;
+        [CATransaction commit];
     }
 }
 
