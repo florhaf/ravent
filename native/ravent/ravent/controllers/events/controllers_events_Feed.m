@@ -136,7 +136,7 @@
     
     [cell.contentView addSubview:_item];
     
-    [_bg setFrame:CGRectMake(0, 0, 320, _bg.frame.size.height + delta)];
+    [_bg setFrame:CGRectMake(0, 0, 320, cell.contentView.frame.size.height)];
     
     return cell;
 }
