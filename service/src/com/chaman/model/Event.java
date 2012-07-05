@@ -350,7 +350,9 @@ public class Event extends Model implements Serializable {
     	List<Event> fbevents 	= client.executeQuery(query, Event.class);
 		
 		e = fbevents.get(0);
-
+		
+		e.Filter_category();
+		
 		e.Format(timeZoneInMinutes, 0);
 		
 		e.venue_id = JSON.GetValueFor("id", e.venue);
@@ -398,7 +400,7 @@ public class Event extends Model implements Serializable {
 		this.date_start = dtStart.toString("MMM d, Y");
 		this.date_end = dtEnd.toString("MMM d, Y");
 		
-		if (this.filter.equals("Other") || this.filter.equals("Entertain")) {
+		if (this.filter != null && (this.filter.equals("Other") || this.filter.equals("Entertain"))) {
 			
 			if (dtEnd.getHourOfDay() >= 3 &&  dtEnd.getHourOfDay() <= 7) {
 				this.filter = "Party";
