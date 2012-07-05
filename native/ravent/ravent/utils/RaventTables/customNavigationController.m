@@ -8,7 +8,7 @@
 
 #import "customNavigationController.h"
 #import "UITableViewReloadable.h"
-#import "controllers_events_Details.h"
+#import "controllers_events_DetailsContainer.h"
 #import "controllers_friends_Details.h"
 
 @implementation UINavigationBar (CustomBackground)
@@ -69,35 +69,41 @@
     
 }
 
-- (UIViewController *)popViewControllerAnimated:(BOOL)animated
+- (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
-		UIViewController *viewController = [super popViewControllerAnimated:YES];
-        UITableViewReloadable *table = (UITableViewReloadable *)viewController;
-        
-        [table cancelAllRequests];
-
-    if (![self.topViewController isKindOfClass:[controllers_events_Details class]]) {
+    [super pushViewController:viewController animated:animated];
+    
+    UIViewController *topvc = self.topViewController;
+    
+    if (![topvc isKindOfClass:[controllers_events_DetailsContainer class]]) {
         
         self.navigationBar.barStyle = UIBarStyleDefault;
-self.navigationBar.alpha = 1;   
-    }
-    
-//    if (self.topViewController.childViewControllers != nil &&
-//        [self.topViewController.childViewControllers count] > 0) {
-//        
-//        if (![[self.topViewController.childViewControllers objectAtIndex:0] isKindOfClass:[controllers_events_Details class]] && 
-//            ![[self.topViewController.childViewControllers objectAtIndex:0] isKindOfClass:[controllers_friends_Details class]]) {
-//            
-//            self.navigationBar.barStyle = UIBarStyleDefault;
-//            self.navigationBar.alpha = 1;   
-//        }   
-//    } else {
-//        
-//        self.navigationBar.barStyle = UIBarStyleDefault;
-//        self.navigationBar.alpha = 1;   
-//    }
+        self.navigationBar.alpha = 1;   
+    } else {
         
-		return viewController;
+        self.navigationBar.barStyle = UIBarStyleBlackTranslucent;
+        self.navigationBar.alpha = 0.5;
+    }
+}
+
+- (UIViewController *)popViewControllerAnimated:(BOOL)animated
+{
+    UIViewController *viewController = [super popViewControllerAnimated:YES];
+    UITableViewReloadable *table = (UITableViewReloadable *)viewController;
+    [table cancelAllRequests];
+
+    UIViewController *topvc = self.topViewController;
+    
+    if (![topvc isKindOfClass:[controllers_events_DetailsContainer class]]) {
+        
+        self.navigationBar.barStyle = UIBarStyleDefault;
+        self.navigationBar.alpha = 1;   
+    } else {
+        
+        self.navigationBar.barStyle = UIBarStyleBlackTranslucent;
+        self.navigationBar.alpha = 0.5;
+    }
+    return viewController;
 }
 
 @end

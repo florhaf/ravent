@@ -155,7 +155,17 @@
         [rootController.navigationItem hidesBackButton];
         [_details.navigationItem setLeftBarButtonItem:backButton];
         [self.navigationController pushViewController:_details animated:YES];
+        
+        [self performSelector:@selector(fadeInToolbar) withObject:nil afterDelay:0.3];
     }
+}
+
+- (void)fadeInToolbar
+{
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:0.5];
+    [self.navigationController.navigationBar setAlpha:1];
+    [UIView commitAnimations];
 }
 
 - (void)onBackTap

@@ -64,7 +64,9 @@
     
     footer.frame = CGRectMake(0, 0, 320, 160);
     
-    //self.tableView.tableFooterView = footer;
+    UIImageView *ivtop = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 20)];
+    [ivtop setImage:[UIImage imageNamed:@"shadowTop"]];
+    [self.view addSubview:ivtop];
     
 }
 

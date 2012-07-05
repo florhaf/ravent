@@ -203,7 +203,7 @@
     [_details.navigationItem setLeftBarButtonItem:backButton];
     
     
-    [self performSelector:@selector(fadeToolbar) withObject:nil afterDelay:0.3];
+    //[self performSelector:@selector(fadeToolbar) withObject:nil afterDelay:0.3];
 }
 
 - (void)fadeToolbar
