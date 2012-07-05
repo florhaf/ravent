@@ -31,6 +31,8 @@
         _comment = [[models_Comment alloc] initWithDelegate:self andSelector:@selector(onLoadFeed:)];
         
         [self loadData];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadDataWithSpinner) name:@"reloadComments" object:nil];
     }
     return self;
 }
@@ -61,6 +63,12 @@
     [super onLoadData:objects withSuccess:^ {
         
         _data = [[NSMutableArray alloc] initWithArray:objects]; 
+        
+//        for (models_Comment *c in _data) {
+//            
+//            c.message = [NSString stringWithFormat:@"%@\n\n", c.message];
+//        }
+        
     }];
 }
 
@@ -95,6 +103,8 @@
         
         result = result + 75;
     }
+    
+    c.cellHeight = result;
     
     return result;
 }
@@ -136,7 +146,9 @@
     
     [cell.contentView addSubview:_item];
     
-    [_bg setFrame:CGRectMake(0, 0, 320, cell.contentView.frame.size.height)];
+    delta = (delta == 0) ? 20 : delta;
+    
+    [_bg setFrame:CGRectMake(0, 0, 320, c.cellHeight)];
     
     return cell;
 }
@@ -200,6 +212,11 @@
     [super viewDidLoad];
     
     _hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"reloadComments" object:nil];
 }
 
 @end

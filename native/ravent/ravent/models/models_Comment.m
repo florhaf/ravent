@@ -20,6 +20,7 @@
 @synthesize picture = _picture;
 @synthesize time = _time;
 @synthesize uid = _uid;
+@synthesize cellHeight = _cellHeight;
 
 //#define SERVICE_URL @"http://air.local:8888"
 #define SERVICE_URL @"http://raventsvc.appspot.com"

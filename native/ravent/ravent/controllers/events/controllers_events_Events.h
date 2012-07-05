@@ -40,6 +40,11 @@
     IBOutlet UIButton *_artButton;
     IBOutlet UIButton *_miscButton;
     
+    IBOutlet UILabel *_labelNbParty;
+    IBOutlet UILabel *_labelNbChill;
+    IBOutlet UILabel *_labelNbArt;
+    IBOutlet UILabel *_labelNbMisc;
+    
     UIView *_menuArrow;
     
     models_User *_user;

@@ -442,7 +442,7 @@ static int _retryCounter;
     _headerImage.contentMode = UIViewContentModeScaleAspectFill;
     _headerTimeLabel.text = [NSString stringWithFormat:@"%@ - %@", _event.timeStart, _event.timeEnd];
     _headerDistanceLabel.text = [NSString stringWithFormat:@"%@ mi.", _event.distance];
-    _venueCategory.text = (![_event.venue_category isEqualToString:@""]) ? _event.venue_category : @"unknown venue category";
+    _venueCategory.text = (![_event.venue_category isEqualToString:@""] && _event.venue_category != nil) ? _event.venue_category : @"venue category: N/A";
     [_photos insertObject:[MWPhoto photoWithURL:[NSURL URLWithString:_event.pic_big]] atIndex:0];
     [_headerNameLabel sizeToFit];
     

@@ -64,10 +64,6 @@
     
     footer.frame = CGRectMake(0, 0, 320, 160);
     
-    UIImageView *ivtop = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 20)];
-    [ivtop setImage:[UIImage imageNamed:@"shadowTop"]];
-    [self.view.superview addSubview:ivtop];
-    
 }
 
 - (IBAction)onCommentTap:(id)sender

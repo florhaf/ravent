@@ -179,6 +179,11 @@ static customNavigationController *_ctrl;
         [CATransaction setAnimationDuration:1.5f];
         _menuArrow.layer.transform = CATransform3DMakeRotation((M_PI / 180.0) * 180.0f, 0.0f, 0.0f, 1.0f);
         [CATransaction commit];
+
+        _labelNbParty.text = [NSString stringWithFormat:@"(%d)", [[controllers_events_List_p2p instance].party count]];
+        _labelNbChill.text = [NSString stringWithFormat:@"(%d)", [[controllers_events_List_p2p instance].chill count]];
+        _labelNbArt.text = [NSString stringWithFormat:@"(%d)", [[controllers_events_List_p2p instance].art count]];
+        _labelNbMisc.text = [NSString stringWithFormat:@"(%d)", [[controllers_events_List_p2p instance].other count]];
        
     } else {
         

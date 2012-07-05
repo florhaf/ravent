@@ -134,6 +134,8 @@
 {
     [MBProgressHUD hideHUDForView:self.view animated:YES];
     [self hideModal];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadComments" object:nil];
 }
 
 - (void)onPostFailure:(NSMutableDictionary *)response

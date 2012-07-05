@@ -156,6 +156,8 @@ typedef enum {
     _groupedData = nil;
     _sortedKeys = nil;
 
+    
+    
     if (_url != nil) {
     
         [[ActionDispatcher instance] del:_url];
