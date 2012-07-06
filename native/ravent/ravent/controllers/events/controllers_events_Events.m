@@ -175,28 +175,51 @@ static customNavigationController *_ctrl;
 {
     controllers_events_List_p2p *c = [controllers_events_List_p2p instance];
     
-    if (c.party != nil && [c.party count] > 0) {
-        
-        _currentCategory = 0;
-        [self onPartyButton_Tap:nil];
-    } else if (c.chill != nil && [c.chill count] > 0) {
-        
-        _currentCategory = 1;
-        [self onChillButton_Tap:nil];
-    } else if (c.art != nil && [c.art count] > 0) {
-        
-        _currentCategory = 2;
-        [self onArtButton_Tap:nil];
-    } else if (c.other != nil && [c.other count] > 0) {
-        
-        _currentCategory = 3;
-        [self onMiscButton_Tap:nil];
+    if (_currentCategory == 0) {
+    
+        if (c.party != nil && [c.party count] > 0) {
+            
+            _currentCategory = 0;
+            [self onPartyButton_Tap:nil];
+        } else if (c.chill != nil && [c.chill count] > 0) {
+            
+            _currentCategory = 1;
+            [self onChillButton_Tap:nil];
+        } else if (c.art != nil && [c.art count] > 0) {
+            
+            _currentCategory = 2;
+            [self onArtButton_Tap:nil];
+        } else if (c.other != nil && [c.other count] > 0) {
+            
+            _currentCategory = 3;
+            [self onMiscButton_Tap:nil];
+        } else {
+            
+            // default to party if everything is empty
+            _currentCategory = 0;
+            [self onPartyButton_Tap:nil];
+        }   
     } else {
         
-        // default to party if everything is empty
-        _currentCategory = 0;
-        [self onPartyButton_Tap:nil];
+        switch (_currentCategory) {
+                
+            case 0:
+                [self onPartyButton_Tap:nil];
+                break;
+            case 1:
+                [self onChillButton_Tap:nil];
+                break;
+            case 2:
+                [self onArtButton_Tap:nil];
+                break;
+            case 3:
+                [self onMiscButton_Tap:nil];
+                break;
+            default:
+                break;
+        }
     }
+        
 }
 
 - (IBAction)onSO_Tap:(id)sender
