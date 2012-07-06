@@ -9,8 +9,8 @@
 #import "controllers_SlidingMenu.h"
 #import "controllers_events_Events.h"
 #import "controllers_friends_People.h"
-#import "controllers_calendar_Calendar.h"
-#import "controllers_stats_Stats.h"
+
+
 #import "controllers_dropagem_DropAGemViewController.h"
 #import "controllers_watchlist_Container.h"
 #import "customNavigationController.h"
@@ -200,7 +200,7 @@ static controllers_SlidingMenu *_ctrl;
 + (void)release
 {
     [controllers_friends_People release];
-    [controllers_calendar_Calendar release];
+
     _ctrl = nil;
 }
 

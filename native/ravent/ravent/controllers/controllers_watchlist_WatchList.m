@@ -77,10 +77,11 @@ static controllers_watchlist_WatchList *_ctrl;
     [MBProgressHUD hideHUDForView:self.view animated:YES];
     _hud = nil;
     
-    if ([objects count] == 0) {
-        
-        [[NSBundle mainBundle] loadNibNamed:@"views_Empty_EventP2P" owner:self options:nil];
-    }
+//    if ([objects count] == 0) {
+//        
+//        [[NSBundle mainBundle] loadNibNamed:@"views_Empty_Generic" owner:self options:nil];
+//        _emptyMessageView
+//    }
     
     [self onLoadData:objects withSuccess:^ {
         

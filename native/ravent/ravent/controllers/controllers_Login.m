@@ -197,9 +197,10 @@ static controllers_Login *_ctrl;
     [defaults removeObjectForKey:@"FBExpirationDateKey"];
     [defaults synchronize];
     
-    [[ActionDispatcher instance] execute:@"onFacebookLogout"];
     
-    //[self showLoggedOut];
+    [self performSelector:@selector(moveNameUp) withObject:nil afterDelay:0.5];
+    
+    [[ActionDispatcher instance] execute:@"onFacebookLogout"];
 }
 
 /**
