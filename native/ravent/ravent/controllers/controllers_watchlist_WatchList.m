@@ -77,11 +77,10 @@ static controllers_watchlist_WatchList *_ctrl;
     [MBProgressHUD hideHUDForView:self.view animated:YES];
     _hud = nil;
     
-//    if ([objects count] == 0) {
-//        
-//        [[NSBundle mainBundle] loadNibNamed:@"views_Empty_Generic" owner:self options:nil];
-//        _emptyMessageView
-//    }
+    if ([objects count] == 0) {
+        
+        [[NSBundle mainBundle] loadNibNamed:@"views_Empty_WL" owner:self options:nil];
+    }
     
     [self onLoadData:objects withSuccess:^ {
         

@@ -12,6 +12,8 @@
 		DF04017E15A76C2E0064C1D2 /* LoginWithFacebookNormal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF04017A15A76C2E0064C1D2 /* LoginWithFacebookNormal@2x.png */; };
 		DF04017F15A76C2E0064C1D2 /* LoginWithFacebookPressed.png in Resources */ = {isa = PBXBuildFile; fileRef = DF04017B15A76C2E0064C1D2 /* LoginWithFacebookPressed.png */; };
 		DF04018015A76C2E0064C1D2 /* LoginWithFacebookPressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF04017C15A76C2E0064C1D2 /* LoginWithFacebookPressed@2x.png */; };
+		DF04018215A79EEA0064C1D2 /* views_Empty_WL.xib in Resources */ = {isa = PBXBuildFile; fileRef = DF04018115A79EEA0064C1D2 /* views_Empty_WL.xib */; };
+		DF04018415A7A1780064C1D2 /* watch.png in Resources */ = {isa = PBXBuildFile; fileRef = DF04018315A7A1780064C1D2 /* watch.png */; };
 		DF09BF7F154F053100FFD51E /* detailsButtonCal.png in Resources */ = {isa = PBXBuildFile; fileRef = DF09BF77154F053100FFD51E /* detailsButtonCal.png */; };
 		DF09BF80154F053100FFD51E /* detailsButtonCal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF09BF78154F053100FFD51E /* detailsButtonCal@2x.png */; };
 		DF09BF81154F053100FFD51E /* detailsButtonDesc.png in Resources */ = {isa = PBXBuildFile; fileRef = DF09BF79154F053100FFD51E /* detailsButtonDesc.png */; };
@@ -455,6 +457,8 @@
 		DF04017A15A76C2E0064C1D2 /* LoginWithFacebookNormal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "LoginWithFacebookNormal@2x.png"; path = "../../../facebook-ios-sdk/FBConnect.bundle/images/LoginWithFacebookNormal@2x.png"; sourceTree = "<group>"; };
 		DF04017B15A76C2E0064C1D2 /* LoginWithFacebookPressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LoginWithFacebookPressed.png; path = "../../../facebook-ios-sdk/FBConnect.bundle/images/LoginWithFacebookPressed.png"; sourceTree = "<group>"; };
 		DF04017C15A76C2E0064C1D2 /* LoginWithFacebookPressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "LoginWithFacebookPressed@2x.png"; path = "../../../facebook-ios-sdk/FBConnect.bundle/images/LoginWithFacebookPressed@2x.png"; sourceTree = "<group>"; };
+		DF04018115A79EEA0064C1D2 /* views_Empty_WL.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = views_Empty_WL.xib; path = ../../../../../Desktop/views_Empty_WL.xib; sourceTree = "<group>"; };
+		DF04018315A7A1780064C1D2 /* watch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = watch.png; sourceTree = "<group>"; };
 		DF09BF77154F053100FFD51E /* detailsButtonCal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = detailsButtonCal.png; sourceTree = "<group>"; };
 		DF09BF78154F053100FFD51E /* detailsButtonCal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "detailsButtonCal@2x.png"; sourceTree = "<group>"; };
 		DF09BF79154F053100FFD51E /* detailsButtonDesc.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = detailsButtonDesc.png; sourceTree = "<group>"; };
@@ -1664,6 +1668,7 @@
 		DF86A1AD1582D7FA009B3257 /* icon */ = {
 			isa = PBXGroup;
 			children = (
+				DF04018315A7A1780064C1D2 /* watch.png */,
 				DF9690F615A421190059BD0B /* arrow.png */,
 				DF8D4165159A7AED00351A6F /* grayIconDescriptionSelected.png */,
 				DF8D4163159A7AC100351A6F /* grayIconCommentsSelected.png */,
@@ -1787,6 +1792,7 @@
 		DF8F1505150BD50F00008ABC /* views */ = {
 			isa = PBXGroup;
 			children = (
+				DF04018115A79EEA0064C1D2 /* views_Empty_WL.xib */,
 				DF629E6B153F8A3F00BCA804 /* views_Login.xib */,
 				DFA23E2B151D15D200B8A8B5 /* calendar */,
 				DF9DA504150C46DB0006E61A /* friends */,
@@ -2521,6 +2527,8 @@
 				DF04017E15A76C2E0064C1D2 /* LoginWithFacebookNormal@2x.png in Resources */,
 				DF04017F15A76C2E0064C1D2 /* LoginWithFacebookPressed.png in Resources */,
 				DF04018015A76C2E0064C1D2 /* LoginWithFacebookPressed@2x.png in Resources */,
+				DF04018215A79EEA0064C1D2 /* views_Empty_WL.xib in Resources */,
+				DF04018415A7A1780064C1D2 /* watch.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
