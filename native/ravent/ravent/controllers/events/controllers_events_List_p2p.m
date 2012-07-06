@@ -41,6 +41,53 @@ static controllers_events_List_p2p *_ctrl;
     [[controllers_events_Map_p2p instance] updateLoadingMessageWith:text];
 }
 
+- (void)reloadTableViewDataSourceWithNoFadeWithIndex:(int)index
+{
+    _data = nil;
+    _groupedData = nil;
+    _sortedKeys = nil;
+    
+    switch (index) {
+            
+        case 0:
+            if (_party != nil && [_party count] > 0) {
+                
+                _data = _party;
+                _groupedData = _groupedParty;
+                _sortedKeys = _sortedKeysParty;
+            }
+            break;
+        case 1:
+            if (_chill != nil && [_chill count] > 0) {
+                
+                _data = _chill;
+                _groupedData = _groupedChill;
+                _sortedKeys = _sortedKeysChill;
+            }
+            break;
+        case 2:
+            if (_art != nil && [_art count] > 0) {
+                
+                _data = _art;
+                _groupedData = _groupedArt;
+                _sortedKeys = _sortedKeysArt;
+            }
+            break;
+        case 3:
+            if (_other != nil && [_other count] > 0) {
+                
+                _data = _other;
+                _groupedData = _groupedOther;
+                _sortedKeys = _sortedKeysOther;
+            }
+            break;
+        default:
+            break;
+    }
+    
+    [self.tableView reloadData];
+}
+
 - (void)reloadTableViewDataSourceWithIndex:(int)index
 {    
     _data = nil;
@@ -85,7 +132,7 @@ static controllers_events_List_p2p *_ctrl;
             break;
     }
     
-    [UIView animateWithDuration:0.3 animations:^{
+    [UIView animateWithDuration:0.15 animations:^{
         
         [self.tableView setAlpha:0];
     } completion:^(BOOL finished) {
@@ -93,14 +140,12 @@ static controllers_events_List_p2p *_ctrl;
         
         [self.tableView reloadData];
         
-        [self.tableView setContentOffset:CGPointZero animated:YES];
-        [UIView animateWithDuration:0.3 animations:^(){
+        [self.tableView setContentOffset:CGPointZero animated:NO];
+        [UIView animateWithDuration:0.15 animations:^(){
             
             [self.tableView setAlpha:1];    
         }];
     }];
-    
-    
 }
 
 - (void)loadData

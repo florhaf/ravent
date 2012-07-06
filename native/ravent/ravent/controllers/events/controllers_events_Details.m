@@ -428,6 +428,7 @@ static int _retryCounter;
 {
     [super viewDidLoad];
     
+    _map.delegate = self;
     _refreshHeaderView.delegate = nil;
     [_refreshHeaderView removeFromSuperview];
        
@@ -686,42 +687,9 @@ static int _retryCounter;
 
 #pragma mark - Map delegate
 
-- (void)mapViewDidFinishLoadingMap:(MKMapView *)mapView
-{
-    NSLog(@"HEY");
-}
-
 - (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views {
     
-    if (_map.annotations != nil && [_map.annotations count] > 0) {
-        
-        id<MKAnnotation> myAnnotation = [_map.annotations objectAtIndex:0];
-        [_map selectAnnotation:myAnnotation animated:YES];   
-    }
-}
-
-- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation {
-    
-    static NSString *identifier = @"MyLocation";   
-    
-    if ([annotation isKindOfClass:[models_Event class]]) {
-        
-        models_Event *e = (models_Event *)annotation;
-        MKAnnotationView *annotationView = (MKAnnotationView *) [_map dequeueReusableAnnotationViewWithIdentifier:identifier];
-        
-        if (annotationView == nil) {
-            
-            annotationView = [[MKAnnotationView alloc] initWithAnnotation:e reuseIdentifier:identifier];
-        } else {
-            
-            annotationView.annotation = e;
-        }
-        
-        annotationView.enabled = YES;
-        return annotationView;
-    }
-    
-    return nil;
+    NSLog(@"HEY");
 }
 
 - (void)cancelAllRequests

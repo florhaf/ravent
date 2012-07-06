@@ -53,6 +53,8 @@
     
     BOOL _isDirty;
     BOOL _isUp;
+    
+    int _currentCategory;
 }
 
 - (IBAction)onSO_Tap:(id)sender;

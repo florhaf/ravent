@@ -1,153 +1,253 @@
-//
-//  controllers_Login.m
-//  ravent
-//
-//  Created by florian haftman on 4/18/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
-//
-
 #import "controllers_Login.h"
+#import "AppDelegate.h"
+#import "FBConnect.h"
 #import "ActionDispatcher.h"
-#import <RestKit/RKErrorMessage.h>
 
 @implementation controllers_Login
 
-static controllers_Login *_ctrl;
+@synthesize permissions;
 
-@synthesize facebook = _facebook;
+static controllers_Login *_ctrl;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-                
-        _facebook = [[Facebook alloc] initWithAppId:@"299292173427947" andDelegate:self];
+    self = [super initWithNibName:nibNameOrNil bundle:nil];
+    
+    if (self != nil) {
+        
+        permissions = [[NSArray alloc] initWithObjects:
+                       @"offline_access",
+                       @"user_events",
+                       @"friends_events",
+                       @"status_update",
+                       @"photo_upload",
+                       @"read_stream",
+                       @"publish_stream",
+                       @"create_event",
+                       @"rsvp_event",
+                       nil];
         _user = [[models_User alloc] initWithDelegate:self andSelector:@selector(onUserLoad:)];
     }
+    
     return self;
 }
 
-- (IBAction)onLoginButtonTap
-{
-    if (_facebook == nil) {
-        
-        _facebook = [[Facebook alloc] initWithAppId:@"299292173427947" andDelegate:self];
-        _user = [[models_User alloc] initWithDelegate:self andSelector:@selector(onUserLoad:)];
-    }
+- (void)dealloc {
     
-    
-    if (![_facebook isSessionValid]) {
-        
-        NSArray *permissions = [[NSArray alloc] initWithObjects:
-                                @"offline_access",
-                                @"user_events",
-                                @"friends_events",
-                                @"status_update",
-                                @"photo_upload",
-                                @"read_stream",
-                                @"publish_stream",
-                                @"create_event",
-                                @"rsvp_event",
-                                nil];
-        
-        [_facebook authorize:permissions];
-    } else {
-        
-        [self fbDidLogin];
-    }
-}
-
-- (void)onLogoutButtonTap
-{
-    [_facebook logout];
-}
-
-- (void)fbDidNotLogin:(BOOL)cancelled
-{
-    NSLog(@"didnotloggedin");
-}
-
-- (void)fbDidExtendToken:(NSString*)accessToken
-               expiresAt:(NSDate*)expiresAt
-{
     
 }
 
-- (void)fbDidLogout
-{
-    // Remove saved authorization information if it exists
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if ([defaults objectForKey:@"FBAccessTokenKey"]) {
-        [defaults removeObjectForKey:@"FBAccessTokenKey"];
-        [defaults removeObjectForKey:@"FBExpirationDateKey"];
-        [defaults synchronize];
-    }
+#pragma mark - Facebook API Calls
+/**
+ * Make a Graph API Call to get information about the current logged in user.
+ */
+- (void)apiFQLIMe {
     
-    [[ActionDispatcher instance] execute:@"onFacebookLogout"];
+    _errorLabel.text = [NSString stringWithFormat:@"%@\nGetting your Facebook id...",_errorLabel.text];
     
-    _facebook.accessToken = nil;
-    NSHTTPCookie *cookie;
-    NSHTTPCookieStorage *storage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
-    for (cookie in [storage cookies]) {
-        
-        [storage deleteCookie:cookie];
-    }
-    
-    _facebook = nil;
-    _user = nil;
-    
-    [models_User setCrtUser:nil];
-    [[models_User crtUser] delFromNSUserDefaults];
-    
-    
-    _titleImage.frame = CGRectMake(_titleImage.frame.origin.x, 90, _titleImage.frame.size.width, _titleImage.frame.size.height);
-    _loginButton.alpha = 1;
+    // Using the "pic" picture since this currently has a maximum width of 100 pixels
+    // and since the minimum profile picture size is 180 pixels wide we should be able
+    // to get a 100 pixel wide version of the profile picture
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                   @"SELECT uid FROM user WHERE uid=me()", @"query",
+                                   nil];
+    AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    [[delegate facebook] requestWithMethodName:@"fql.query"
+                                     andParams:params
+                                 andHttpMethod:@"POST"
+                                   andDelegate:self];
 }
 
-- (void)fbSessionInvalidated
-{
-    
+- (void)apiGraphUserPermissions {
+    AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    [[delegate facebook] requestWithGraphPath:@"me/permissions" andDelegate:self];
 }
 
-// Pre iOS 4.2 support
-- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
-    
-    return [_facebook handleOpenURL:url]; 
-}
 
-// For iOS 4.2+ support
-- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
-  sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-    
-    return [_facebook handleOpenURL:url]; 
-}
+#pragma - Private Helper Methods
 
-- (void)fbDidLogin {
-    
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:_facebook.accessToken forKey:@"FBAccessTokenKey"];
-    [defaults setObject:_facebook.expirationDate forKey:@"FBExpirationDateKey"];
-    [defaults synchronize];
-    
-    _user.accessToken = _facebook.accessToken;
+/**
+ * Show the authorization dialog.
+ */
+- (IBAction)onLoginButtonTap:(id)sender {
     
     [_loginButton setEnabled:NO];
     [_spinner setAlpha:1];
     [_spinner startAnimating];
     
-    [_facebook requestWithGraphPath:@"/me?fields=id" andDelegate:self];
+    _errorLabel.text = @"Connecting to Facebook...";
+    
+    AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    if (![[delegate facebook] isSessionValid]) {
+        [[delegate facebook] authorize:permissions];
+    } else {
+        [self apiFQLIMe];
+    }
 }
 
-- (void)request:(FBRequest*)request didLoad:(id)result
-{
+/**
+ * Invalidate the access token and clear the cookie.
+ */
+- (void)onLogoutButtonTap {
+    AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    [[delegate facebook] logout];
     
-    if ([result isKindOfClass:[NSDictionary class]] && [((NSDictionary *)result).allKeys containsObject:@"id"]) {
-     
-        NSString* uid = [result objectForKey:@"id"];
+    _nameLabel.frame = CGRectMake(_nameLabel.frame.origin.x, 90, _nameLabel.frame.size.width, _nameLabel.frame.size.height);
+    
+    _loginButton.alpha = 1;
+}
+
+
+#pragma mark - View lifecycle
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    
+    //if (![[delegate facebook] isSessionValid]) {
+      
+    
+    if ([delegate facebook].accessToken != nil && ![[delegate facebook].accessToken isEqualToString:@""]) {
         
-        _user.uid = uid;
+        [_loginButton setEnabled:NO];
+        [_spinner setAlpha:1];
+        [_spinner startAnimating];
+        [self apiFQLIMe];
+    } else {
         
+        [self moveNameUp];   
+    }
+    //}
+}
+
+- (void)viewDidUnload {
+    [super viewDidUnload];
+    // Release any retained subviews of the main view.
+    // e.g. self.myOutlet = nil;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    //[self.navigationController setNavigationBarHidden:YES animated:animated];
+    [super viewWillAppear:animated];
+    
+    
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [self.navigationController setNavigationBarHidden:NO animated:animated];
+    [super viewWillDisappear:animated];
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+    return YES;
+}
+
+#pragma mark - store
+
+- (void)storeAuthData:(NSString *)accessToken expiresAt:(NSDate *)expiresAt {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:accessToken forKey:@"FBAccessTokenKey"];
+    [defaults setObject:expiresAt forKey:@"FBExpirationDateKey"];
+    [defaults synchronize];
+}
+
+#pragma mark - FBSessionDelegate Methods
+/**
+ * Called when the user has logged in successfully.
+ */
+- (void)fbDidLogin {
+    
+    _errorLabel.text = [NSString stringWithFormat:@"%@\nLogged in Facebook",_errorLabel.text];
+    
+    [self apiFQLIMe];
+    
+    AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    [self storeAuthData:[[delegate facebook] accessToken] expiresAt:[[delegate facebook] expirationDate]];
+    
+//    [pendingApiCallsController userDidGrantPermission];
+}
+
+-(void)fbDidExtendToken:(NSString *)accessToken expiresAt:(NSDate *)expiresAt {
+
+    [self storeAuthData:accessToken expiresAt:expiresAt];
+    [models_User crtUser].accessToken = accessToken;
+}
+
+/**
+ * Called when the user canceled the authorization dialog.
+ */
+-(void)fbDidNotLogin:(BOOL)cancelled {
+//    [pendingApiCallsController userDidNotGrantPermission];
+}
+
+/**
+ * Called when the request logout has succeeded.
+ */
+- (void)fbDidLogout {
+//    pendingApiCallsController = nil;
+    
+    _errorLabel.text = @"";
+    
+    // Remove saved authorization information if it exists and it is
+    // ok to clear it (logout, session invalid, app unauthorized)
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults removeObjectForKey:@"FBAccessTokenKey"];
+    [defaults removeObjectForKey:@"FBExpirationDateKey"];
+    [defaults synchronize];
+    
+    [[ActionDispatcher instance] execute:@"onFacebookLogout"];
+    
+    //[self showLoggedOut];
+}
+
+/**
+ * Called when the session has expired.
+ */
+- (void)fbSessionInvalidated {
+    UIAlertView *alertView = [[UIAlertView alloc]
+                              initWithTitle:@"Auth Exception"
+                              message:@"Your session has expired."
+                              delegate:nil
+                              cancelButtonTitle:@"OK"
+                              otherButtonTitles:nil,
+                              nil];
+    [alertView show];
+
+    [self fbDidLogout];
+    
+    [self moveNameUp];
+}
+
+#pragma mark - FBRequestDelegate Methods
+
+/**
+ * Called when a request returns and its response has been parsed into
+ * an object.
+ *
+ * The resulting object may be a dictionary, an array or a string, depending
+ * on the format of the API response. If you need access to the raw response,
+ * use:
+ *
+ * (void)request:(FBRequest *)request
+ *      didReceiveResponse:(NSURLResponse *)response
+ */
+- (void)request:(FBRequest *)request didLoad:(id)result {
+    
+    if ([result isKindOfClass:[NSArray class]]) {
+        result = [result objectAtIndex:0];
+    }
+    
+    if ([result objectForKey:@"uid"]) {
+        
+        _errorLabel.text = [NSString stringWithFormat:@"%@\nGetting your profile on Gemster...",_errorLabel.text];
+        
+        AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+        NSString* uid = [result objectForKey:@"uid"];
+        
+        _user.accessToken = [[delegate facebook] accessToken];
+         _user.uid = uid;
         
         NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
         
@@ -157,22 +257,37 @@ static controllers_Login *_ctrl;
         
         [_userLoader loadAllWithParams:params force:YES];
         [_user loadUser];
+        
+       
     } else {
         
-        _errorLabel.text = @"Facebook login error\nTry again";
+    _errorLabel.text = [NSString stringWithFormat:@"%@\nError getting your Facebook id\nTry again",_errorLabel.text];
         [_loginButton setEnabled:YES];
         [_spinner setAlpha:0];
         [_spinner stopAnimating];
     }
 }
 
+/**
+ * Called when an error prevents the Facebook API request from completing
+ * successfully.
+ */
+- (void)request:(FBRequest *)request didFailWithError:(NSError *)error {
+    NSLog(@"Err message: %@", [[error userInfo] objectForKey:@"error_msg"]);
+    NSLog(@"Err code: %d", [error code]);
+}
+
+
+
+#pragma flo stuff
+
 - (void)onUserLoad:(NSArray *)objects
 {
-    _errorLabel.text = @"";
+    _errorLabel.text = [NSString stringWithFormat:@"%@\nLaunching...",_errorLabel.text];
     
     if (objects == nil || [objects count] == 0) {
         
-        _errorLabel.text = @"Google App Engine limit, try again later...";
+        _errorLabel.text = [NSString stringWithFormat:@"%@\nGoogle App Engine limit, try again later...",_errorLabel.text];
         [_spinner stopAnimating];
         [_spinner setAlpha:0];
         [_loginButton setEnabled:YES];
@@ -189,10 +304,10 @@ static controllers_Login *_ctrl;
         return;
     }
     
-    if ([[objects objectAtIndex:0] isKindOfClass:[NSError class]] || [[objects objectAtIndex:0] isKindOfClass:[RKErrorMessage class]]) {
+    if ([[objects objectAtIndex:0] isKindOfClass:[NSError class]]) {
         
         NSError *error = [objects objectAtIndex:0];
-        _errorLabel.text = error.localizedDescription;
+        _errorLabel.text = [NSString stringWithFormat:@"%@\n%@, try again later...",_errorLabel.text, error.localizedDescription];
         [_spinner stopAnimating];
         [_spinner setAlpha:0];
         [_loginButton setEnabled:YES];
@@ -210,12 +325,11 @@ static controllers_Login *_ctrl;
     }
     
     models_User *user = [objects objectAtIndex:0];
+    AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     
     [models_User setCrtUser:user];
-    [models_User crtUser].accessToken = _facebook.accessToken;
+    [models_User crtUser].accessToken = [delegate facebook].accessToken;
     [[models_User crtUser] saveToNSUserDefaults];
-    
-    NSLog(@"%@",[models_User crtUser].accessToken);
     
     [self performSelector:@selector(onFacebookLogin) withObject:nil afterDelay:1];
 }
@@ -229,47 +343,24 @@ static controllers_Login *_ctrl;
     [_spinner stopAnimating];
 }
 
-#pragma mark - View lifecycle
-
-// Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
-- (void)viewDidLoad
+- (void)moveNameUp
 {
-    [super viewDidLoad];
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:1];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
     
-    // should be at the controllers_App level
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if ([defaults objectForKey:@"FBAccessTokenKey"] 
-        && [defaults objectForKey:@"FBExpirationDateKey"]) {
-        _facebook.accessToken = [defaults objectForKey:@"FBAccessTokenKey"];
-        _facebook.expirationDate = [defaults objectForKey:@"FBExpirationDateKey"];
-        
-        models_User *u = [[models_User alloc] init];
-        [u loadFromNSUserDefaults];
-        [self onUserLoad:[NSArray arrayWithObjects:u, nil]];
-    } else {
-        
-        [UIView beginAnimations:nil context:NULL];
-        [UIView setAnimationDuration:1];
-        [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
-        
-        _titleImage.frame = CGRectMake(_titleImage.frame.origin.x, 90, _titleImage.frame.size.width, _titleImage.frame.size.height);
-        
-        [UIView commitAnimations];
-        
-        [UIView beginAnimations:nil context:NULL];
-        [UIView setAnimationDuration:1];
-        [UIView setAnimationDelay:0.5];
-        [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
-        
-        _loginButton.alpha = 1;
-        
-        [UIView commitAnimations];
-    }
-}
-
-- (void)viewDidUnload
-{
-    NSLog(@"YO");
+    _nameLabel.frame = CGRectMake(_nameLabel.frame.origin.x, 90, _nameLabel.frame.size.width, _nameLabel.frame.size.height);
+    
+    [UIView commitAnimations];
+    
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:1];
+    [UIView setAnimationDelay:0.5];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+    
+    _loginButton.alpha = 1;
+    
+    [UIView commitAnimations];
 }
 
 + (controllers_Login *)instance

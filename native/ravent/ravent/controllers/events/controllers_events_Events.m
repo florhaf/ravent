@@ -140,7 +140,8 @@ static customNavigationController *_ctrl;
         _menuLabel.backgroundColor = [UIColor clearColor];
         _menuLabel.textAlignment = UITextAlignmentCenter;
         
-        _menuButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 1, 80, 43)];
+        _menuButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 1, 80, 42)];
+        [_menuButton setClipsToBounds:YES];
         [_menuButton addTarget:self action:@selector(onSO_Tap:) forControlEvents:UIControlEventTouchUpInside];
         [_menuButton setBackgroundImage:[UIImage imageNamed:@"navbarTitle"] forState:UIControlStateNormal];
         [_menuButton addSubview:_menuArrow];
@@ -176,19 +177,24 @@ static customNavigationController *_ctrl;
     
     if (c.party != nil && [c.party count] > 0) {
         
+        _currentCategory = 0;
         [self onPartyButton_Tap:nil];
     } else if (c.chill != nil && [c.chill count] > 0) {
         
+        _currentCategory = 1;
         [self onChillButton_Tap:nil];
     } else if (c.art != nil && [c.art count] > 0) {
         
+        _currentCategory = 2;
         [self onArtButton_Tap:nil];
     } else if (c.other != nil && [c.other count] > 0) {
         
+        _currentCategory = 3;
         [self onMiscButton_Tap:nil];
     } else {
         
         // default to party if everything is empty
+        _currentCategory = 0;
         [self onPartyButton_Tap:nil];
     }
 }
@@ -276,40 +282,73 @@ static customNavigationController *_ctrl;
 
 - (IBAction)onPartyButton_Tap:(id)sender
 {
-    [self setNavBarTitle:@"Party"];
+    if (_currentCategory != 0) {
     
-    
-    
-    [[controllers_events_List_p2p instance] reloadTableViewDataSourceWithIndex:0];
-    
+        [[controllers_events_List_p2p instance] reloadTableViewDataSourceWithIndex:0];
+    } else {
+        
+        [[controllers_events_List_p2p instance] reloadTableViewDataSourceWithNoFadeWithIndex:0];
+    }
+
     [[controllers_events_Map_p2p instance] loadData:[controllers_events_List_p2p instance].data];
+    
+    _currentCategory = 0;
+    
+    [self setNavBarTitle:@"Party"];
 }
 
 - (IBAction)onChillButton_Tap:(id)sender
 {
-    [self setNavBarTitle:@"Chill"];
     
-    [[controllers_events_List_p2p instance] reloadTableViewDataSourceWithIndex:1];
+    if (_currentCategory != 1) {
+    
+        [[controllers_events_List_p2p instance] reloadTableViewDataSourceWithIndex:1];
+    } else {
+        
+        [[controllers_events_List_p2p instance] reloadTableViewDataSourceWithNoFadeWithIndex:1];
+    }
     
     [[controllers_events_Map_p2p instance] loadData:[controllers_events_List_p2p instance].data];
+    
+    _currentCategory = 1;
+    
+    [self setNavBarTitle:@"Chill"];
+    
+    
 }
 
 - (IBAction)onArtButton_Tap:(id)sender
 {
-    [self setNavBarTitle:@"Art"];
+    if (_currentCategory != 2) {
     
-    [[controllers_events_List_p2p instance] reloadTableViewDataSourceWithIndex:2];
+        [[controllers_events_List_p2p instance] reloadTableViewDataSourceWithIndex:2];
+    } else {
+        
+        [[controllers_events_List_p2p instance] reloadTableViewDataSourceWithNoFadeWithIndex:2];        
+    }
     
     [[controllers_events_Map_p2p instance] loadData:[controllers_events_List_p2p instance].data];
+    
+    _currentCategory = 2;
+    
+    [self setNavBarTitle:@"Art"];
 }
 
 - (IBAction)onMiscButton_Tap:(id)sender
 {
-    [self setNavBarTitle:@"Misc."];
-    
-    [[controllers_events_List_p2p instance] reloadTableViewDataSourceWithIndex:3];
+    if (_currentCategory != 3) {
+        
+        [[controllers_events_List_p2p instance] reloadTableViewDataSourceWithIndex:3];
+    } else {
+        
+        [[controllers_events_List_p2p instance] reloadTableViewDataSourceWithNoFadeWithIndex:3];
+    }
     
     [[controllers_events_Map_p2p instance] loadData:[controllers_events_List_p2p instance].data];
+    
+    _currentCategory = 3;
+    
+    [self setNavBarTitle:@"Misc."];
 }
 
 - (void)viewWillAppear:(BOOL)animated

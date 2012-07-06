@@ -32,6 +32,7 @@
 @property (nonatomic, retain) NSMutableArray *other;
 
 - (void)reloadTableViewDataSourceWithIndex:(int)index;
+- (void)reloadTableViewDataSourceWithNoFadeWithIndex:(int)index;
 
 + (controllers_events_List_p2p *)instance;
 + (void)release;
