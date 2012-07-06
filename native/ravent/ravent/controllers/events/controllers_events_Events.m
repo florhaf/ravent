@@ -122,21 +122,47 @@ static customNavigationController *_ctrl;
     [_optionsView addSubview:ivtop];
 }
 
-- (void)setNavBarTitle:(NSString *)imageName
+- (void)setNavBarTitle:(NSString *)title
 {
-    self.navigationItem.titleView = nil;
+    //self.navigationItem.titleView = nil;
+    self.title = @"";
     
-    UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(0, 1, 80, 43)];
-    [btn addTarget:self action:@selector(onSO_Tap:) forControlEvents:UIControlEventTouchUpInside];
-    [btn setBackgroundImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
+    if (_menuButton == nil) {
+        
+        _menuArrow = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"arrow"]];
+        [_menuArrow setFrame:CGRectMake(28, 28, 22, 12.5)];
+        
+        _menuLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, -6, 80, 38)];
+        _menuLabel.textColor = [UIColor whiteColor];
+        _menuLabel.font = [UIFont boldSystemFontOfSize:22];
+        _menuLabel.shadowColor = [UIColor darkGrayColor];
+        _menuLabel.shadowOffset = CGSizeMake(0, -1);
+        _menuLabel.backgroundColor = [UIColor clearColor];
+        _menuLabel.textAlignment = UITextAlignmentCenter;
+        
+        _menuButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 1, 80, 43)];
+        [_menuButton addTarget:self action:@selector(onSO_Tap:) forControlEvents:UIControlEventTouchUpInside];
+        [_menuButton setBackgroundImage:[UIImage imageNamed:@"navbarTitle"] forState:UIControlStateNormal];
+        [_menuButton addSubview:_menuArrow];
 
+        self.navigationItem.titleView = [[UIView alloc] initWithFrame:_menuButton.frame];
+        [self.navigationItem.titleView addSubview:_menuButton];
+        [self.navigationItem.titleView addSubview:_menuArrow];
+        [self.navigationItem.titleView addSubview:_menuLabel];
+    }
     
-    _menuArrow = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"arrow"]];
-    [_menuArrow setFrame:CGRectMake(28, 28, 22, 12.5)];
-    
-    [btn addSubview:_menuArrow];
-    
-    self.navigationItem.titleView = btn;
+    [UIView animateWithDuration:0.15 animations:^{
+        
+        [_menuLabel setAlpha:0];
+    } completion:^(BOOL finished) {
+        
+        
+        _menuLabel.text = title;
+        [UIView animateWithDuration:0.15 animations:^(){
+           
+            [_menuLabel setAlpha:1];    
+        }];
+    }];
     
     if (!_isUp) {
      
@@ -175,10 +201,10 @@ static customNavigationController *_ctrl;
         
         [_optionsView raceTo:CGPointMake(0, -50) withSnapBack:YES];   
         
-        [CATransaction begin];
-        [CATransaction setAnimationDuration:1.5f];
-        _menuArrow.layer.transform = CATransform3DMakeRotation((M_PI / 180.0) * 180.0f, 0.0f, 0.0f, 1.0f);
-        [CATransaction commit];
+        [UIView animateWithDuration:0.5 animations:^() {
+           
+            _menuArrow.transform = CGAffineTransformMakeRotation((M_PI / 180.0) * 180.0f);
+        }];
 
         _labelNbParty.text = [NSString stringWithFormat:@"(%d)", [[controllers_events_List_p2p instance].party count]];
         _labelNbChill.text = [NSString stringWithFormat:@"(%d)", [[controllers_events_List_p2p instance].chill count]];
@@ -195,10 +221,11 @@ static customNavigationController *_ctrl;
             [[controllers_events_List_p2p instance] loadDataWithSpinner];
         }
         
-        [CATransaction begin];
-        [CATransaction setAnimationDuration:1.5f];
-        _menuArrow.layer.transform = CATransform3DIdentity;
-        [CATransaction commit];
+        [UIView animateWithDuration:0.5 animations:^() {
+            
+            _menuArrow.transform = CGAffineTransformMakeRotation((M_PI / 180.0) * 0.0f);
+        }];
+
     }
 }
 
@@ -249,46 +276,40 @@ static customNavigationController *_ctrl;
 
 - (IBAction)onPartyButton_Tap:(id)sender
 {
-    [self setNavBarTitle:@"navbarTitleParty"];
+    [self setNavBarTitle:@"Party"];
+    
+    
     
     [[controllers_events_List_p2p instance] reloadTableViewDataSourceWithIndex:0];
     
     [[controllers_events_Map_p2p instance] loadData:[controllers_events_List_p2p instance].data];
-    
-    [[controllers_events_List_p2p instance].tableView setContentOffset:CGPointZero animated:YES];
 }
 
 - (IBAction)onChillButton_Tap:(id)sender
 {
-    [self setNavBarTitle:@"navbarTitleChill"];
+    [self setNavBarTitle:@"Chill"];
     
     [[controllers_events_List_p2p instance] reloadTableViewDataSourceWithIndex:1];
     
     [[controllers_events_Map_p2p instance] loadData:[controllers_events_List_p2p instance].data];
-    
-    [[controllers_events_List_p2p instance].tableView setContentOffset:CGPointZero animated:YES];
 }
 
 - (IBAction)onArtButton_Tap:(id)sender
 {
-    [self setNavBarTitle:@"navbarTitleArt"];
+    [self setNavBarTitle:@"Art"];
     
     [[controllers_events_List_p2p instance] reloadTableViewDataSourceWithIndex:2];
     
     [[controllers_events_Map_p2p instance] loadData:[controllers_events_List_p2p instance].data];
-    
-    [[controllers_events_List_p2p instance].tableView setContentOffset:CGPointZero animated:YES];
 }
 
 - (IBAction)onMiscButton_Tap:(id)sender
 {
-    [self setNavBarTitle:@"navbarTitleMisc"];
+    [self setNavBarTitle:@"Misc."];
     
     [[controllers_events_List_p2p instance] reloadTableViewDataSourceWithIndex:3];
     
     [[controllers_events_Map_p2p instance] loadData:[controllers_events_List_p2p instance].data];
-    
-    [[controllers_events_List_p2p instance].tableView setContentOffset:CGPointZero animated:YES];
 }
 
 - (void)viewWillAppear:(BOOL)animated

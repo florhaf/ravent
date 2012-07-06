@@ -46,6 +46,8 @@
     IBOutlet UILabel *_labelNbMisc;
     
     UIView *_menuArrow;
+    UILabel *_menuLabel;
+    UIButton *_menuButton;
     
     models_User *_user;
     

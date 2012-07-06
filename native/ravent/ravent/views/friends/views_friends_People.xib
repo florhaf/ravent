@@ -44,8 +44,8 @@
 						<reference key="NSNextKeyView" ref="19182054"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
-							<int key="NSColorSpace">1</int>
-							<bytes key="NSRGB">MC43Njg2Mjc0NTEgMC44MDM5MjE1Njg2IDAuODc4NDMxMzcyNQA</bytes>
+							<int key="NSColorSpace">2</int>
+							<bytes key="NSRGB">MC45NzI1NDkwODA4IDAuOTUyOTQxMjM4OSAwLjkyNTQ5MDI2MDEAA</bytes>
 						</object>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 					</object>
@@ -55,7 +55,6 @@
 						<string key="NSFrame">{{0, 372}, {320, 44}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">3</int>
@@ -75,7 +74,7 @@
 				<reference key="NSNextKeyView" ref="564694052"/>
 				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">2</int>
-					<bytes key="NSRGB">MC43NzI1NDkwOTI4IDAuODAwMDAwMDcxNSAwLjg3ODQzMTQzOTQAA</bytes>
+					<bytes key="NSRGB">MC45NzI1NDkwODA4IDAuOTUyOTQxMjM4OSAwLjkyNTQ5MDI2MDEAA</bytes>
 				</object>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 			</object>
@@ -166,19 +165,16 @@
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
+					<string key="className">STSegmentedControl</string>
+					<string key="superclassName">UIControl</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/STSegmentedControl.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
 					<string key="className">controllers_friends_People</string>
 					<string key="superclassName">UIViewController</string>
-					<object class="NSMutableDictionary" key="actions">
-						<string key="NS.key.0">onSegmentedControlValueChanged</string>
-						<string key="NS.object.0">id</string>
-					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<string key="NS.key.0">onSegmentedControlValueChanged</string>
-						<object class="IBActionInfo" key="NS.object.0">
-							<string key="name">onSegmentedControlValueChanged</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</object>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="_container">UIView</string>
 						<string key="_header">UIView</string>
@@ -187,7 +183,7 @@
 						<string key="_headerFollowingLabel">UILabel</string>
 						<string key="_headerImage">JBAsyncImageView</string>
 						<string key="_headerNameLabel">UILabel</string>
-						<string key="_segmentedControl">UISegmentedControl</string>
+						<string key="_segmentedControl">STSegmentedControl</string>
 						<string key="_toolbar">UIToolbar</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
@@ -221,7 +217,7 @@
 						</object>
 						<object class="IBToOneOutletInfo" key="_segmentedControl">
 							<string key="name">_segmentedControl</string>
-							<string key="candidateClassName">UISegmentedControl</string>
+							<string key="candidateClassName">STSegmentedControl</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="_toolbar">
 							<string key="name">_toolbar</string>
@@ -245,7 +241,7 @@
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<object class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
 			<string key="NS.key.0">grayToolbar.png</string>
-			<string key="NS.object.0">{320, 46}</string>
+			<string key="NS.object.0">{320, 44}</string>
 		</object>
 		<string key="IBCocoaTouchPluginVersion">1181</string>
 	</data>

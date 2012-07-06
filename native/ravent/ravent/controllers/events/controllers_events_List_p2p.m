@@ -85,7 +85,22 @@ static controllers_events_List_p2p *_ctrl;
             break;
     }
     
-    [self.tableView reloadData];
+    [UIView animateWithDuration:0.3 animations:^{
+        
+        [self.tableView setAlpha:0];
+    } completion:^(BOOL finished) {
+        
+        
+        [self.tableView reloadData];
+        
+        [self.tableView setContentOffset:CGPointZero animated:YES];
+        [UIView animateWithDuration:0.3 animations:^(){
+            
+            [self.tableView setAlpha:1];    
+        }];
+    }];
+    
+    
 }
 
 - (void)loadData
