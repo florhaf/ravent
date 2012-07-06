@@ -116,45 +116,21 @@
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithCustomView:doneb];       
     self.navigationItem.rightBarButtonItem = doneButton;
     
-//    NSArray *objects = [NSArray arrayWithObjects:@"", @"Direction", @"", nil];
-//    _segmentedControl = [[STSegmentedControl alloc] initWithItems:objects];
-//	_segmentedControl.frame = CGRectMake(44, 380, 232, 30);
-//	_segmentedControl.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-//    _segmentedControl.momentary = YES;
-//    [_segmentedControl addTarget:self action:@selector(onSegmentedControlValueChanged:) forControlEvents:UIControlEventValueChanged];
-//	[self.view addSubview:_segmentedControl];
     
     
     
     @try {
-//        routeOverlayView = [[UICRouteOverlayMapView alloc] initWithMapView:_map];
-//        
-//        startPoint = [NSString stringWithFormat:@"%@,%@", [models_User crtUser].latitude, [models_User crtUser].longitude];
-//        endPoint = [NSString stringWithFormat:@"%@,%@", _event.latitude, _event.longitude];
-//        travelMode = UICGTravelModeDriving;
-//        
-//        
-//        diretions = [UICGDirections sharedDirections];
-//        diretions.delegate = self;
-        
         CLLocationCoordinate2D coord;
         coord.latitude = [_event.latitude floatValue];
         coord.longitude = [_event.longitude floatValue];
         _event.coordinate = coord;
         
-        
-        //MKCoordinateSpan span = MKCoordinateSpanMake(coord, 0.3 * METERS_PER_MILE, 0.3 * METERS_PER_MILE);
         MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(coord, 0.3*METERS_PER_MILE, 0.3*METERS_PER_MILE);
         
         MKCoordinateRegion adjustedRegion = [_map regionThatFits:region];
         
         [_map setRegion:adjustedRegion animated:YES];
         [_map addAnnotation:_event];
-        
-        
-//        if (diretions.isInitialized) {
-//            [self update];
-//        }
     }
     @catch (NSException *exception) {
         // NOTHING
@@ -166,22 +142,19 @@
 
 - (IBAction)onDirections_Tap:(id)sender
 {
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://maps.google.com/maps?saddr=Current%20Location&daddr=%@,%@", _event.latitude, _event.longitude]]];
+    NSString *slat = _event.latitude;
+    NSString *slon = _event.longitude;
+    NSString *sAddr = @"http://maps.google.com/maps?saddr=Current%20Location&daddr";
+    NSString *sUrl = [NSString stringWithFormat:@"%@=%@,%@", sAddr, slat, slon];
     
-//    int i = _segmentedControl.selectedSegmentIndex;
+    NSURL *uUrl = [NSURL URLWithString:sUrl];
+
+    UIApplication *app = [UIApplication sharedApplication];
+    
+    
+    [app openURL:uUrl];
 //    
-//    if (i == 0) {
-//        
-//        travelMode = UICGTravelModeDriving;
-//    } else {
-//        
-//        travelMode = UICGTravelModeWalking;
-//    }
-//    
-//    [self update];
-    
-    
-    
+//    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://maps.google.com/maps?saddr=Current%20Location&daddr=%@,%@", _event.latitude, _event.longitude]]];    
 }
 
 - (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views {

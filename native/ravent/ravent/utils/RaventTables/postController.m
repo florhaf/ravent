@@ -99,7 +99,7 @@
 
 - (void)post
 {
-    if (_base64Picture == nil && (_textView.text == nil || [_textView.text isEqualToString:@""])) {
+    if (_imageData == nil && (_textView.text == nil || [_textView.text isEqualToString:@""])) {
         
         return;
     }
@@ -108,7 +108,6 @@
     
     _comment = [[models_Comment alloc] initWithDelegate:self andSelector:nil];
     
-    _comment.picture = _base64Picture;
     _comment.message = _textView.text;
     _comment.uid = [models_User crtUser].uid;
     
@@ -220,7 +219,7 @@
     [_pictureBorder setHidden:YES];
     [_removeButton setHidden:YES];
     
-    _base64Picture = nil;
+    //_base64Picture = nil;
     _imageData = nil;
 }
 
@@ -239,7 +238,7 @@
     [_removeButton setHidden:NO];
     
     _imageData = UIImageJPEGRepresentation(image, 1.0);
-    _base64Picture = [_imageData base64EncodingWithLineLength:0];
+    //_base64Picture = [_imageData base64EncodingWithLineLength:0];
 }
 
 @end

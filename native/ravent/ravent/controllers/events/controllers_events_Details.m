@@ -224,6 +224,8 @@ static int _retryCounter;
 
 - (IBAction)snap_Tap:(id)sender
 {
+    _isButtonTap = YES;
+    
     if (_event.rsvp_status == nil || [_event.rsvp_status isEqualToString:@""] || [_event.rsvp_status isEqualToString:@"not replied"]) {
         
         [YRDropdownView showDropdownInView:[controllers_App instance].view 
@@ -390,8 +392,6 @@ static int _retryCounter;
 }
 
 #pragma mark - View lifecycle
-
-
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
