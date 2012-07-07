@@ -202,10 +202,6 @@ static customNavigationController *_ctrl;
     } else {
         
         switch (_currentCategory) {
-                
-            case 0:
-                [self onPartyButton_Tap:nil];
-                break;
             case 1:
                 [self onChillButton_Tap:nil];
                 break;
@@ -228,7 +224,7 @@ static customNavigationController *_ctrl;
         
         _isUp = NO;
         
-        [_optionsView raceTo:CGPointMake(0, -50) withSnapBack:YES];   
+        [_optionsView raceTo:CGPointMake(0, -20) withSnapBack:YES];   
         
         [UIView animateWithDuration:0.5 animations:^() {
            
@@ -243,11 +239,35 @@ static customNavigationController *_ctrl;
     } else {
         
         _isUp = YES;
-        [_optionsView raceTo:CGPointMake(0, -244) withSnapBack:YES];
+        [_optionsView raceTo:CGPointMake(0, -264) withSnapBack:YES];
+        
+        // change in radius or timeframe, need to call the WS
         if (_isDirty) {
             
             _isDirty = NO;
             [[controllers_events_List_p2p instance] loadDataWithSpinner];
+            
+            // change sorting no need to call WS
+        } else if (_isSemiDirty) {
+            
+            _isSemiDirty = NO;
+            
+            switch (_currentCategory) {
+                case 0:
+                    [self onPartyButton_Tap:nil];
+                    break;
+                case 1:
+                    [self onChillButton_Tap:nil];
+                    break;
+                case 2:
+                    [self onArtButton_Tap:nil];
+                    break;
+                case 3:
+                    [self onMiscButton_Tap:nil];
+                    break;
+                default:
+                    break;
+            }
         }
         
         [UIView animateWithDuration:0.5 animations:^() {
@@ -256,6 +276,12 @@ static customNavigationController *_ctrl;
         }];
 
     }
+}
+
+- (IBAction)onSortChanged:(id)sender
+{    
+    [controllers_events_List_p2p instance].sort = _seg.selectedSegmentIndex;
+    _isSemiDirty = YES;
 }
 
 -(void)showPopover:(id)sender forEvent:(UIEvent*)event
@@ -305,14 +331,8 @@ static customNavigationController *_ctrl;
 
 - (IBAction)onPartyButton_Tap:(id)sender
 {
-    if (_currentCategory != 0) {
+    [[controllers_events_List_p2p instance] reloadTableViewDataSourceWithIndex:0];
     
-        [[controllers_events_List_p2p instance] reloadTableViewDataSourceWithIndex:0];
-    } else {
-        
-        [[controllers_events_List_p2p instance] reloadTableViewDataSourceWithNoFadeWithIndex:0];
-    }
-
     [[controllers_events_Map_p2p instance] loadData:[controllers_events_List_p2p instance].data];
     
     _currentCategory = 0;
@@ -323,13 +343,7 @@ static customNavigationController *_ctrl;
 - (IBAction)onChillButton_Tap:(id)sender
 {
     
-    if (_currentCategory != 1) {
-    
-        [[controllers_events_List_p2p instance] reloadTableViewDataSourceWithIndex:1];
-    } else {
-        
-        [[controllers_events_List_p2p instance] reloadTableViewDataSourceWithNoFadeWithIndex:1];
-    }
+    [[controllers_events_List_p2p instance] reloadTableViewDataSourceWithIndex:1];
     
     [[controllers_events_Map_p2p instance] loadData:[controllers_events_List_p2p instance].data];
     
@@ -342,13 +356,7 @@ static customNavigationController *_ctrl;
 
 - (IBAction)onArtButton_Tap:(id)sender
 {
-    if (_currentCategory != 2) {
-    
-        [[controllers_events_List_p2p instance] reloadTableViewDataSourceWithIndex:2];
-    } else {
-        
-        [[controllers_events_List_p2p instance] reloadTableViewDataSourceWithNoFadeWithIndex:2];        
-    }
+    [[controllers_events_List_p2p instance] reloadTableViewDataSourceWithIndex:2];
     
     [[controllers_events_Map_p2p instance] loadData:[controllers_events_List_p2p instance].data];
     
@@ -359,13 +367,7 @@ static customNavigationController *_ctrl;
 
 - (IBAction)onMiscButton_Tap:(id)sender
 {
-    if (_currentCategory != 3) {
-        
-        [[controllers_events_List_p2p instance] reloadTableViewDataSourceWithIndex:3];
-    } else {
-        
-        [[controllers_events_List_p2p instance] reloadTableViewDataSourceWithNoFadeWithIndex:3];
-    }
+    [[controllers_events_List_p2p instance] reloadTableViewDataSourceWithIndex:3];
     
     [[controllers_events_Map_p2p instance] loadData:[controllers_events_List_p2p instance].data];
     

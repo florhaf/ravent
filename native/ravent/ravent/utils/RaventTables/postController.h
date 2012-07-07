@@ -15,7 +15,7 @@ typedef enum {
     user
 } postTo;
 
-@interface postController : UIViewController<UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITextViewDelegate> {
+@interface postController : UIViewController<UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITextViewDelegate, UIAlertViewDelegate> {
     
     IBOutlet UITextView *_textView;
     IBOutlet UILabel *_labelName;

@@ -56,6 +56,8 @@ typedef void (^success)();
 @property (nonatomic, retain) NSMutableDictionary *groupedData;
 @property (nonatomic, retain) NSString *emptyMessage;
 
+- (NSDate *)lastLoadTime;
+
 - (void)reloadTableViewDataSource;
 - (void)doneLoadingTableViewData;
 

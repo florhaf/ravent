@@ -259,6 +259,11 @@ typedef enum {
 	return [NSDate date];
 }
 
+- (NSDate *)lastLoadTime
+{
+    return _refreshHeaderView.dLastUpdated;
+}
+
 #pragma mark -
 #pragma mark Data Source Loading / Reloading Methods
 

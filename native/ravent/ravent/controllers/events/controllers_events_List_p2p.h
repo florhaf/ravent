@@ -8,6 +8,12 @@
 
 #import "UItableViewEvents.h"
 
+typedef enum {
+    byScore,
+    byDistance,
+    byTime
+} sort;
+
 @interface controllers_events_List_p2p : UITableViewEvents {
     
     NSMutableArray *_party;
@@ -24,15 +30,21 @@
     NSMutableDictionary *_groupedChill;
     NSMutableDictionary *_groupedArt;
     NSMutableDictionary *_groupedOther;
+    
+    sort _sort;
 }
 
 @property (nonatomic, retain) NSMutableArray *party;
 @property (nonatomic, retain) NSMutableArray *chill;
 @property (nonatomic, retain) NSMutableArray *art;
 @property (nonatomic, retain) NSMutableArray *other;
+@property (nonatomic, assign) sort sort;
 
 - (void)reloadTableViewDataSourceWithIndex:(int)index;
 - (void)reloadTableViewDataSourceWithNoFadeWithIndex:(int)index;
+- (void)sortByScore;
+- (void)sortByDistance;
+- (void)sortByTime;
 
 + (controllers_events_List_p2p *)instance;
 + (void)release;

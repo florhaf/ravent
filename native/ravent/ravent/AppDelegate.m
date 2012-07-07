@@ -10,6 +10,7 @@
 #import "JMC.h"
 #import "Store.h"
 #import "UncaughtExceptionHandler.h"
+#import "controllers_events_List_p2p.h"
 #import "models_User.h"
 
 @implementation AppDelegate
@@ -115,12 +116,24 @@
     
     [[self facebook] extendAccessTokenIfNeeded];
     
-//    if (_isNotStarting) {
-//        
-//        [[JMC sharedInstance] ping];   
-//        
-//    }
-//    _isNotStarting = YES;
+    if (_isNotStarting) {
+        
+        [[JMC sharedInstance] ping];
+        
+        NSDate *lastLoadTime = [[controllers_events_List_p2p instance] lastLoadTime];
+        NSDateComponents *thirtyMins = [[NSDateComponents alloc] init];
+        [thirtyMins setMinute:30];
+        NSCalendar *cal = [NSCalendar currentCalendar];
+        NSDate *lastLoadPlus30 = [cal dateByAddingComponents:thirtyMins toDate:lastLoadTime options:0];
+        NSDate *now = [NSDate date];
+        
+        if ([lastLoadPlus30 compare:now] == NSOrderedAscending) {
+            
+            [[controllers_events_List_p2p instance] loadDataWithSpinner];
+        }
+        
+    }
+    _isNotStarting = YES;
 }
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {

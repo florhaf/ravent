@@ -16,6 +16,7 @@
 #import "ECSlidingViewController.h"
 #import "controllers_SlidingMenu.h"
 #import "customNavigationController.h"
+#import "STSegmentedControl.h"
 
 @interface controllers_events_Events : UIViewController {
     
@@ -45,6 +46,8 @@
     IBOutlet UILabel *_labelNbArt;
     IBOutlet UILabel *_labelNbMisc;
     
+    IBOutlet STSegmentedControl *_segment;
+    
     UIView *_menuArrow;
     UILabel *_menuLabel;
     UIButton *_menuButton;
@@ -52,6 +55,7 @@
     models_User *_user;
     
     BOOL _isDirty;
+    BOOL _isSemiDirty;
     BOOL _isUp;
     
     int _currentCategory;
@@ -64,6 +68,7 @@
 - (IBAction)onChillButton_Tap:(id)sender;
 - (IBAction)onArtButton_Tap:(id)sender;
 - (IBAction)onMiscButton_Tap:(id)sender;
+- (IBAction)onSortChanged:(id)sender;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil forUser:(models_User *)user;
 

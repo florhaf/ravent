@@ -45,11 +45,11 @@
 
 - (IBAction)onCommentTap:(id)sender
 {
-    if (_event.rsvp_status == nil || [_event.rsvp_status isEqualToString:@""] || [_event.rsvp_status isEqualToString:@"not replied"]) {
+    if (_event.rsvp_status == nil || [_event.rsvp_status isEqualToString:@""] || [_event.rsvp_status isEqualToString:@"not replied"] || [_event.rsvp_status isEqualToString:@"not attending"]) {
         
         [YRDropdownView showDropdownInView:[controllers_App instance].view 
                                      title:@"Warning" 
-                                    detail:@"Per Facebook policy, you must RSVP to post a comment...\n\nHint: you can RSVP no"
+                                    detail:@"Per Facebook policy, you must RSVP yes or maybe to post a comment...\n"
                                      image:[UIImage imageNamed:@"dropdown-alert"]
                                   animated:YES];
         

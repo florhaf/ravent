@@ -103,7 +103,7 @@
         
         return;
     }
-    
+    [_textView resignFirstResponder];
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
     _comment = [[models_Comment alloc] initWithDelegate:self andSelector:nil];
@@ -115,7 +115,7 @@
     
     if (_isForEvent) {
         
-        [params setValue:_toId forKey:@"eid"];
+        [params setValue:_toId forKey:@"eventID"];
     } else {
     
         [params setValue:_toId forKey:@"friendid"];
@@ -152,7 +152,35 @@
 
 - (void)hideModal
 {
+    if ((_textView.text != nil && ![_textView.text isEqualToString:@""]) || _imageData != nil) {
+        
+        UIAlertView *alertView = [[UIAlertView alloc]
+                                  initWithTitle:@"Gemster"
+                                  message:@"Send your message?"
+                                  delegate:self
+                                  cancelButtonTitle:@"NO"
+                                  otherButtonTitles:@"YES",
+                                  nil];
+        [alertView show];
+        
+        return;
+    }
+    
+    
     [self dismissModalViewControllerAnimated:YES];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1) {
+        
+        [self post];
+        [self dismissModalViewControllerAnimated:YES];
+        
+    } else {
+        
+        [self dismissModalViewControllerAnimated:YES];
+    }
 }
 
 - (IBAction)onPictureTap:(id)sender

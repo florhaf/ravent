@@ -230,7 +230,7 @@ static int _retryCounter;
         
         [YRDropdownView showDropdownInView:[controllers_App instance].view 
                                      title:@"Warning" 
-                                    detail:@"Per Facebook policy, you must RSVP to post a picture...\n\nHint: you can RSVP no"
+                                    detail:@"Per Facebook policy, you must RSVP yes or maybe to post a picture...\n"
                                      image:[UIImage imageNamed:@"dropdown-alert"]
                                   animated:YES];
         
@@ -686,11 +686,6 @@ static int _retryCounter;
 }
 
 #pragma mark - Map delegate
-
-- (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views {
-    
-    NSLog(@"HEY");
-}
 
 - (void)cancelAllRequests
 {
