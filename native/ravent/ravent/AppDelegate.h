@@ -13,7 +13,6 @@
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate> {
     
-    BOOL _isNotStarting;
 }
 
 @property (strong, nonatomic) UIWindow *window;

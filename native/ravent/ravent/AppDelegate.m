@@ -107,6 +107,20 @@
     /*
      Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
      */
+    
+        [[JMC sharedInstance] ping];
+                NSDate *lastLoadTime = [[controllers_events_List_p2p instance] lastLoadTime];
+                NSDateComponents *thirtyMins = [[NSDateComponents alloc] init];
+                [thirtyMins setMinute:30];
+                NSCalendar *cal = [NSCalendar currentCalendar];
+                NSDate *lastLoadPlus30 = [cal dateByAddingComponents:thirtyMins toDate:lastLoadTime options:0];
+                NSDate *now = [NSDate date];
+                
+                if ([lastLoadPlus30 compare:now] == NSOrderedAscending) {
+                    
+                    [[controllers_events_List_p2p instance] loadDataWithSpinner];
+                }
+        
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
@@ -116,25 +130,6 @@
      */
     
     [[self facebook] extendAccessTokenIfNeeded];
-    
-    if (_isNotStarting) {
-        
-//        [[JMC sharedInstance] ping];
-//        
-//        NSDate *lastLoadTime = [[controllers_events_List_p2p instance] lastLoadTime];
-//        NSDateComponents *thirtyMins = [[NSDateComponents alloc] init];
-//        [thirtyMins setMinute:30];
-//        NSCalendar *cal = [NSCalendar currentCalendar];
-//        NSDate *lastLoadPlus30 = [cal dateByAddingComponents:thirtyMins toDate:lastLoadTime options:0];
-//        NSDate *now = [NSDate date];
-//        
-//        if ([lastLoadPlus30 compare:now] == NSOrderedAscending) {
-//            
-//            [[controllers_events_List_p2p instance] loadDataWithSpinner];
-//        }
-        
-    }
-    _isNotStarting = YES;
 }
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {

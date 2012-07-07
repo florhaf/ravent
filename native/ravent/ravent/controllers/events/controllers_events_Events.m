@@ -122,7 +122,7 @@ static customNavigationController *_ctrl;
     [_optionsView addSubview:ivtop];
     
     
-    [self onPartyButton_Tap:nil];
+    //[self onPartyButton_Tap:nil];
 }
 
 - (void)setNavBarTitle:(NSString *)title
