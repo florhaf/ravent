@@ -85,12 +85,6 @@ static customNavigationController *_ctrl;
     // OPTIONS
     [self.view bringSubviewToFront:_optionsView];
     
-//    _optionsView.layer.shadowOffset = CGSizeZero;
-//    _optionsView.layer.shadowPath = [UIBezierPath bezierPathWithRect:_optionsView.layer.bounds].CGPath;
-//    _optionsView.layer.shadowOpacity = 0.75f;
-//    _optionsView.layer.shadowRadius = 10.0f;
-//    _optionsView.layer.shadowColor = [UIColor blackColor].CGColor;
-    
     _radiusStepper.value = [models_User crtUser].searchRadius;
     _radiusStepper.minimumValue = 5;
     _radiusStepper.maximumValue = 50;
@@ -229,6 +223,8 @@ static customNavigationController *_ctrl;
         
         [_optionsView raceTo:CGPointMake(0, -20) withSnapBack:YES];   
         
+        //[[self.view.subviews objectAtIndex:0] raceTo:CGPointMake(0, 244) withSnapBack:YES];
+        
         [UIView animateWithDuration:0.5 animations:^() {
            
             _menuArrow.transform = CGAffineTransformMakeRotation((M_PI / 180.0) * 180.0f);
@@ -243,6 +239,7 @@ static customNavigationController *_ctrl;
         
         _isUp = YES;
         [_optionsView raceTo:CGPointMake(0, -264) withSnapBack:YES];
+        //[[self.view.subviews objectAtIndex:0] raceTo:CGPointMake(0, 0) withSnapBack:YES];
         
         // change in radius or timeframe, need to call the WS
         if (_isDirty) {
