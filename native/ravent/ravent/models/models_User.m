@@ -195,6 +195,11 @@ static models_User *_crtUser = nil;
 - (void)dispatchLocation:(NSError *)error
 {
 
+    if (_locationDelegate == nil) {
+        
+        return;
+    }
+    
     if (error != nil) {
         
 #pragma clang diagnostic push

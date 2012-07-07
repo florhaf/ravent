@@ -120,6 +120,9 @@ static customNavigationController *_ctrl;
     UIImageView *ivtop = [[UIImageView alloc] initWithFrame:CGRectMake(0, _optionsView.frame.size.height, 320, 20)];
     [ivtop setImage:[UIImage imageNamed:@"shadowTop"]];
     [_optionsView addSubview:ivtop];
+    
+    
+    [self onPartyButton_Tap:nil];
 }
 
 - (void)setNavBarTitle:(NSString *)title

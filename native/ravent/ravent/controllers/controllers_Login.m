@@ -49,7 +49,7 @@ static controllers_Login *_ctrl;
     // and since the minimum profile picture size is 180 pixels wide we should be able
     // to get a 100 pixel wide version of the profile picture
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                   @"SELECT uid FROM user WHERE uid=me()", @"query",
+                                   @"SELECT uid, first_name, last_name, pic FROM user WHERE uid=me()", @"query",
                                    nil];
     AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     [[delegate facebook] requestWithMethodName:@"fql.query"
@@ -175,7 +175,7 @@ static controllers_Login *_ctrl;
     [models_User crtUser].accessToken = accessToken;
 }
 
-/**
+/**we
  * Called when the user canceled the authorization dialog.
  */
 -(void)fbDidNotLogin:(BOOL)cancelled {
@@ -242,22 +242,32 @@ static controllers_Login *_ctrl;
     
     if ([result objectForKey:@"uid"]) {
         
-        _errorLabel.text = [NSString stringWithFormat:@"%@\nGetting your profile on Gemster...",_errorLabel.text];
+        _errorLabel.text = [NSString stringWithFormat:@"%@\nLaunching...",_errorLabel.text];
         
         AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-        NSString* uid = [result objectForKey:@"uid"];
         
-        _user.accessToken = [[delegate facebook] accessToken];
-         _user.uid = uid;
+        models_User *u = [[models_User alloc] init];
+        [models_User setCrtUser:u];
+        [models_User crtUser].uid = [((NSDecimalNumber *)[result objectForKey:@"uid"]) stringValue];
+        [models_User crtUser].accessToken = [delegate facebook].accessToken;
+        [models_User crtUser].firstName = [result objectForKey:@"first_name"];
+        [models_User crtUser].lastName = [result objectForKey:@"last_name"];
+        [models_User crtUser].picture = [result objectForKey:@"pic"];
+        
+        [[models_User crtUser] saveToNSUserDefaults];
+        
+        u = [models_User crtUser];
+        
         
         NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
         
-        [params setValue:_user.accessToken forKey:@"access_token"];
-        [params setValue:_user.uid forKey:@"userID"];
+        [params setValue:[models_User crtUser].accessToken forKey:@"access_token"];
+        [params setValue:[models_User crtUser].uid forKey:@"userID"];
         _userLoader = [[models_User alloc] init];
         
         [_userLoader loadAllWithParams:params force:YES];
-        [_user loadUser];
+        
+        [self performSelector:@selector(onFacebookLogin) withObject:nil afterDelay:1];
         
        
     } else {

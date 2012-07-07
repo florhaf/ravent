@@ -67,16 +67,16 @@ static GPSManager *_gps;
 	NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
 	[formatter setTimeStyle:NSDateFormatterMediumStyle];
 
-    
     if (newLocation.horizontalAccuracy < 0) 
         return;
 
     if (_bestEffortAtLocation == nil || _bestEffortAtLocation.horizontalAccuracy > newLocation.horizontalAccuracy) {
-
+        
         _bestEffortAtLocation = newLocation;
         _locationLastUpdateTime = [NSDate date];
 
         if (newLocation.horizontalAccuracy <= _locationManager.desiredAccuracy) {
+            
             _isLoading = NO;
             _currentLocation = newLocation;
             [_locationManager stopUpdatingLocation];

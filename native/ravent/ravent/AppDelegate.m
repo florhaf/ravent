@@ -12,6 +12,7 @@
 #import "UncaughtExceptionHandler.h"
 #import "controllers_events_List_p2p.h"
 #import "models_User.h"
+#import "GPSManager.h"
 
 @implementation AppDelegate
 
@@ -43,7 +44,7 @@
     //[self performSelector:@selector(installUncaughtExceptionHandler) withObject:nil afterDelay:0];
     //[self performSelector:@selector(badAccess) withObject:nil afterDelay:4.0];
     
-    
+    [[GPSManager instance] startGps];
     
     [Store instance].managedObjectContext = self.managedObjectContext;
     
@@ -118,19 +119,19 @@
     
     if (_isNotStarting) {
         
-        [[JMC sharedInstance] ping];
-        
-        NSDate *lastLoadTime = [[controllers_events_List_p2p instance] lastLoadTime];
-        NSDateComponents *thirtyMins = [[NSDateComponents alloc] init];
-        [thirtyMins setMinute:30];
-        NSCalendar *cal = [NSCalendar currentCalendar];
-        NSDate *lastLoadPlus30 = [cal dateByAddingComponents:thirtyMins toDate:lastLoadTime options:0];
-        NSDate *now = [NSDate date];
-        
-        if ([lastLoadPlus30 compare:now] == NSOrderedAscending) {
-            
-            [[controllers_events_List_p2p instance] loadDataWithSpinner];
-        }
+//        [[JMC sharedInstance] ping];
+//        
+//        NSDate *lastLoadTime = [[controllers_events_List_p2p instance] lastLoadTime];
+//        NSDateComponents *thirtyMins = [[NSDateComponents alloc] init];
+//        [thirtyMins setMinute:30];
+//        NSCalendar *cal = [NSCalendar currentCalendar];
+//        NSDate *lastLoadPlus30 = [cal dateByAddingComponents:thirtyMins toDate:lastLoadTime options:0];
+//        NSDate *now = [NSDate date];
+//        
+//        if ([lastLoadPlus30 compare:now] == NSOrderedAscending) {
+//            
+//            [[controllers_events_List_p2p instance] loadDataWithSpinner];
+//        }
         
     }
     _isNotStarting = YES;
