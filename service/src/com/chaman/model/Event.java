@@ -22,6 +22,7 @@ import com.restfb.DefaultFacebookClient;
 import com.restfb.Facebook;
 import com.restfb.FacebookClient;
 import com.restfb.exception.FacebookException;
+import java.util.Random;
 
 /*
  * Event object from FB + formatting for our app
@@ -67,11 +68,10 @@ public class Event extends Model implements Serializable {
 	String distance;
 	String groupTitle;
 	String venue_category; // (club, bar etc)
-	String offer_link; // for the future, could be a barcode etc.
 	String offer_title;
 	String offer_description;
+	String featured;
 	String ticket_link; //link to a website provided by promoter (later a link to our own ticket system)
-	String guest_list; // Open, close, full or no guest list
 	double female_ratio; // female:%
 	User user;
 	DateTime dtStart;
@@ -407,6 +407,33 @@ public class Event extends Model implements Serializable {
 			}
 		}
 		
+		
+		// TODO: to delete
+		List<String> offer_t = new ArrayList<String>();
+		offer_t.add("");
+		offer_t.add("");
+		offer_t.add("");
+		offer_t.add("");
+		offer_t.add("");
+		offer_t.add("");
+		offer_t.add("");
+		offer_t.add("");
+		offer_t.add("");
+		offer_t.add("");
+		offer_t.add("");
+		offer_t.add("Buy 1 Drink get 1 FREE");
+		offer_t.add("Free for the lady's until 12PM");
+		offer_t.add("Bottles for $100");
+		Random r = new Random();
+		this.offer_title = offer_t.get(r.nextInt(14));
+		if (!this.offer_title.equals("")) {
+			this.offer_description = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.";
+		}
+		
+		this.featured = offer_t.get(r.nextInt(14));
+		this.ticket_link = offer_t.get(r.nextInt(14));
+		
+		
 		DateTimeZone TZ = DateTimeZone.forOffsetMillis(timeZoneInMinutes*60*1000);
 		DateTime now = DateTime.now(TZ);	
 		long timeStampNow = now.getMillis();
@@ -710,14 +737,6 @@ public class Event extends Model implements Serializable {
 		this.venue_category = category;
 	}
 
-	public String getOffer_link() {
-		return offer_link;
-	}
-
-	public void setOffer_link(String offer_link) {
-		this.offer_link = offer_link;
-	}
-
 	public String getOffer_title() {
 		return offer_title;
 	}
@@ -742,14 +761,6 @@ public class Event extends Model implements Serializable {
 		this.ticket_link = ticket_link;
 	}
 
-	public String getGuest_list() {
-		return guest_list;
-	}
-
-	public void setGuest_list(String guest_list) {
-		this.guest_list = guest_list;
-	}
-
 	public double getFemale_ratio() {
 		return female_ratio;
 	}
@@ -772,5 +783,13 @@ public class Event extends Model implements Serializable {
 
 	public void setFilter(String filter) {
 		this.filter = filter;
+	}
+
+	public String getFeatured() {
+		return featured;
+	}
+
+	public void setFeatured(String featured) {
+		this.featured = featured;
 	}
 }

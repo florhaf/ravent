@@ -42,7 +42,7 @@ public class Post  extends Model {
 		
 		FacebookClient client	= new DefaultFacebookClient(accessToken);
 		//TODO: add reference to ravent
-		client.publish(friendID + "/feed", FacebookType.class, Parameter.with("message", message));
+		client.publish(friendID + "/feed", FacebookType.class, Parameter.with("message", message), Parameter.with("link", "http://facebook.com/" + friendID));
 	}
 
 	public static void FriendWallPostWithAttachment(String accessToken, String friendID, String attachment, String message) {
@@ -69,13 +69,21 @@ public class Post  extends Model {
 		client.publish(eventID + "/feed", FacebookType.class, BinaryAttachment.with("Ravent", data), Parameter.with("message", message));
 	}
 	
-	public static void ShareEvent(String accessToken, String friendID, String eventID) {
-		
+	public static String ShareEvent(String accessToken, String friendID, String eventID) throws FacebookException {
+
 		FacebookClient client	= new DefaultFacebookClient(accessToken);
-			
-		client.publish(eventID + "/invited/", Boolean.class, Parameter.with("users", friendID));
 		
-		client.publish(friendID + "/feed", FacebookType.class, Parameter.with("message", "I'm inviting you to go to this event #5" + eventID)); //add link;
+		try {
+			
+			client.publish(eventID + "/invited/", Boolean.class, Parameter.with("users", friendID));
+		}
+		catch (Exception ex ) {
+			
+			client.publish(friendID + "/feed", FacebookType.class, Parameter.with("message", "I'm inviting you to an event"), Parameter.with("link", "http://facebook.com/" + eventID)); //add link;
+			return "Your friend cannot be invited directly to this event. A message has been posted on your friend's Timeline."; //TODO: do we want the user to choose if he wants to write on his friend time line?
+		}
+		
+		return null;
 	}
 	
 	public String getType() {

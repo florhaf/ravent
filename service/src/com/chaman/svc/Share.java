@@ -18,7 +18,16 @@ public class Share extends ServerResource {
 			String friendID		= getQuery().getValues("friendID");
 			String eventID 		= getQuery().getValues("eventID");
 			
-			Post.ShareEvent(accessToken, friendID, eventID);
+			String res;
+			
+			res = Post.ShareEvent(accessToken, friendID, eventID);
+			
+			if (res != null) {
+				// not invited but message posted on friend's timeline
+				result.setSuccess(false);
+				result.setError(res);
+				return result;
+			}
 			
 			result.setSuccess(true);
 			result.setRecords(null);
