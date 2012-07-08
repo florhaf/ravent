@@ -30,6 +30,8 @@ static controllers_App *_ctrl;
         [[ActionDispatcher instance] add:logoutAction named:@"onFacebookLogout"];
         
         [self.view addSubview:[controllers_Login instance].view];
+        [self.view setBackgroundColor:[UIColor blackColor]];
+        
         
         _ctrl = self;
     }

@@ -19,6 +19,8 @@
 
     IBOutlet UIImageView *_bg;
     IBOutlet UIImageView *_special;
+    IBOutlet UIImageView *_featured;
+    IBOutlet UIImageView *_ticket_link;
     
     UIViewController *_details;
     

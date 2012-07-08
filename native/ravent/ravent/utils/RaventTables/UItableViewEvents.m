@@ -128,20 +128,36 @@
             endDateWOYear = [event.dateEnd substringToIndex:[event.dateEnd rangeOfString:@","].location];
         }
         
+        // text
         _itemTitle.text = event.name;
         _itemSubTitle.text = event.location;
         _itemStartTime.text = [[NSString stringWithFormat:@"%@ @ %@", startDateWOYear, event.timeStart] lowercaseString];
         _itemEndTime.text = [[NSString stringWithFormat:@"%@ @ %@", endDateWOYear, event.timeEnd] lowercaseString];
-        _itemDistance.text = [NSString stringWithFormat:@"%@ miles away", event.distance];
+        _itemDistance.text = [NSString stringWithFormat:@"%@ mi.", event.distance];
         _itemVenueCategory.text = event.venue_category;
         
         
-        if (indexPath.row == 0) {
+        // special and features
+        if (event.featured != nil && ![event.featured isEqualToString:@""]) {
+            
+            [_featured setHidden:NO];
+        }
+        if (event.offerTitle != nil && ![event.offerTitle isEqualToString:@""]) {
             
             [_special setHidden:NO];
-            [_itemTitle setFrame:CGRectMake(_itemTitle.frame.origin.x, _itemTitle.frame.origin.y, 265, _itemTitle.frame.size.height)];
+        }
+        if (event.ticket_link != nil && ![event.ticket_link isEqualToString:@""]) {
+            
+            if (_special.hidden) {
+                
+                _ticket_link.frame = CGRectMake(_ticket_link.frame.origin.x + 20, _ticket_link.frame.origin.y, _ticket_link.frame.size.width, _ticket_link.frame.size.height);
+            }
+            
+            [_ticket_link setHidden:NO];
         }
         
+        
+        // score
         for (int i = 0; i < [event.score intValue]; i++) {
         
             UIImageView *image = (UIImageView *)[_itemScore.subviews objectAtIndex:i];

@@ -10,24 +10,26 @@
 #import "FBConnect.h"
 #import "models_User.h"
 
-@interface controllers_Login : UIViewController<FBRequestDelegate, FBDialogDelegate, FBSessionDelegate> {
+@interface controllers_Login : UIViewController
+<FBRequestDelegate,
+FBDialogDelegate,
+FBSessionDelegate>{
+    NSArray *permissions;
     
-    IBOutlet UIView *_titleImage;
+    IBOutlet UILabel *_nameLabel;
     IBOutlet UIButton *_loginButton;
     IBOutlet UIActivityIndicatorView *_spinner;
-    
     IBOutlet UILabel *_errorLabel;
-    
-    Facebook *_facebook;
     
     models_User *_user;
     models_User *_userLoader;
 }
 
-@property (nonatomic, retain) Facebook *facebook;
+@property (nonatomic, retain) NSArray *permissions;
 
-- (IBAction)onLoginButtonTap;
-- (void)onLogoutButtonTap;
+
+- (IBAction)onLoginButtonTap:(id)sender;
+
 
 + (controllers_Login *)instance;
 

@@ -85,12 +85,6 @@ static customNavigationController *_ctrl;
     // OPTIONS
     [self.view bringSubviewToFront:_optionsView];
     
-//    _optionsView.layer.shadowOffset = CGSizeZero;
-//    _optionsView.layer.shadowPath = [UIBezierPath bezierPathWithRect:_optionsView.layer.bounds].CGPath;
-//    _optionsView.layer.shadowOpacity = 0.75f;
-//    _optionsView.layer.shadowRadius = 10.0f;
-//    _optionsView.layer.shadowColor = [UIColor blackColor].CGColor;
-    
     _radiusStepper.value = [models_User crtUser].searchRadius;
     _radiusStepper.minimumValue = 5;
     _radiusStepper.maximumValue = 50;
@@ -120,23 +114,53 @@ static customNavigationController *_ctrl;
     UIImageView *ivtop = [[UIImageView alloc] initWithFrame:CGRectMake(0, _optionsView.frame.size.height, 320, 20)];
     [ivtop setImage:[UIImage imageNamed:@"shadowTop"]];
     [_optionsView addSubview:ivtop];
+    
+    
+    //[self onPartyButton_Tap:nil];
 }
 
-- (void)setNavBarTitle:(NSString *)imageName
+- (void)setNavBarTitle:(NSString *)title
 {
-    self.navigationItem.titleView = nil;
+    //self.navigationItem.titleView = nil;
+    self.title = @"";
     
-    UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(0, 1, 80, 43)];
-    [btn addTarget:self action:@selector(onSO_Tap:) forControlEvents:UIControlEventTouchUpInside];
-    [btn setBackgroundImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
+    if (_menuButton == nil) {
+        
+        _menuArrow = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"arrow"]];
+        [_menuArrow setFrame:CGRectMake(28, 28, 22, 12.5)];
+        
+        _menuLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, -6, 80, 38)];
+        _menuLabel.textColor = [UIColor whiteColor];
+        _menuLabel.font = [UIFont boldSystemFontOfSize:22];
+        _menuLabel.shadowColor = [UIColor darkGrayColor];
+        _menuLabel.shadowOffset = CGSizeMake(0, -1);
+        _menuLabel.backgroundColor = [UIColor clearColor];
+        _menuLabel.textAlignment = UITextAlignmentCenter;
+        
+        _menuButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 1, 80, 42)];
+        [_menuButton setClipsToBounds:YES];
+        [_menuButton addTarget:self action:@selector(onSO_Tap:) forControlEvents:UIControlEventTouchUpInside];
+        [_menuButton setBackgroundImage:[UIImage imageNamed:@"navbarTitle"] forState:UIControlStateNormal];
+        [_menuButton addSubview:_menuArrow];
 
+        self.navigationItem.titleView = [[UIView alloc] initWithFrame:_menuButton.frame];
+        [self.navigationItem.titleView addSubview:_menuButton];
+        [self.navigationItem.titleView addSubview:_menuArrow];
+        [self.navigationItem.titleView addSubview:_menuLabel];
+    }
     
-    _menuArrow = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"arrow"]];
-    [_menuArrow setFrame:CGRectMake(28, 28, 22, 12.5)];
-    
-    [btn addSubview:_menuArrow];
-    
-    self.navigationItem.titleView = btn;
+    [UIView animateWithDuration:0.15 animations:^{
+        
+        [_menuLabel setAlpha:0];
+    } completion:^(BOOL finished) {
+        
+        
+        _menuLabel.text = title;
+        [UIView animateWithDuration:0.15 animations:^(){
+           
+            [_menuLabel setAlpha:1];    
+        }];
+    }];
     
     if (!_isUp) {
      
@@ -148,23 +172,47 @@ static customNavigationController *_ctrl;
 {
     controllers_events_List_p2p *c = [controllers_events_List_p2p instance];
     
-    if (c.party != nil && [c.party count] > 0) {
-        
-        [self onPartyButton_Tap:nil];
-    } else if (c.chill != nil && [c.chill count] > 0) {
-        
-        [self onChillButton_Tap:nil];
-    } else if (c.art != nil && [c.art count] > 0) {
-        
-        [self onArtButton_Tap:nil];
-    } else if (c.other != nil && [c.other count] > 0) {
-        
-        [self onMiscButton_Tap:nil];
+    if (_currentCategory == 0) {
+    
+        if (c.party != nil && [c.party count] > 0) {
+            
+            _currentCategory = 0;
+            [self onPartyButton_Tap:nil];
+        } else if (c.chill != nil && [c.chill count] > 0) {
+            
+            _currentCategory = 1;
+            [self onChillButton_Tap:nil];
+        } else if (c.art != nil && [c.art count] > 0) {
+            
+            _currentCategory = 2;
+            [self onArtButton_Tap:nil];
+        } else if (c.other != nil && [c.other count] > 0) {
+            
+            _currentCategory = 3;
+            [self onMiscButton_Tap:nil];
+        } else {
+            
+            // default to party if everything is empty
+            _currentCategory = 0;
+            [self onPartyButton_Tap:nil];
+        }   
     } else {
         
-        // default to party if everything is empty
-        [self onPartyButton_Tap:nil];
+        switch (_currentCategory) {
+            case 1:
+                [self onChillButton_Tap:nil];
+                break;
+            case 2:
+                [self onArtButton_Tap:nil];
+                break;
+            case 3:
+                [self onMiscButton_Tap:nil];
+                break;
+            default:
+                break;
+        }
     }
+        
 }
 
 - (IBAction)onSO_Tap:(id)sender
@@ -173,12 +221,14 @@ static customNavigationController *_ctrl;
         
         _isUp = NO;
         
-        [_optionsView raceTo:CGPointMake(0, -50) withSnapBack:YES];   
+        [_optionsView raceTo:CGPointMake(0, -20) withSnapBack:YES];   
         
-        [CATransaction begin];
-        [CATransaction setAnimationDuration:1.5f];
-        _menuArrow.layer.transform = CATransform3DMakeRotation((M_PI / 180.0) * 180.0f, 0.0f, 0.0f, 1.0f);
-        [CATransaction commit];
+        //[[self.view.subviews objectAtIndex:0] raceTo:CGPointMake(0, 244) withSnapBack:YES];
+        
+        [UIView animateWithDuration:0.5 animations:^() {
+           
+            _menuArrow.transform = CGAffineTransformMakeRotation((M_PI / 180.0) * 180.0f);
+        }];
 
         _labelNbParty.text = [NSString stringWithFormat:@"(%d)", [[controllers_events_List_p2p instance].party count]];
         _labelNbChill.text = [NSString stringWithFormat:@"(%d)", [[controllers_events_List_p2p instance].chill count]];
@@ -188,18 +238,50 @@ static customNavigationController *_ctrl;
     } else {
         
         _isUp = YES;
-        [_optionsView raceTo:CGPointMake(0, -244) withSnapBack:YES];
+        [_optionsView raceTo:CGPointMake(0, -264) withSnapBack:YES];
+        //[[self.view.subviews objectAtIndex:0] raceTo:CGPointMake(0, 0) withSnapBack:YES];
+        
+        // change in radius or timeframe, need to call the WS
         if (_isDirty) {
             
             _isDirty = NO;
             [[controllers_events_List_p2p instance] loadDataWithSpinner];
+            
+            // change sorting no need to call WS
+        } else if (_isSemiDirty) {
+            
+            _isSemiDirty = NO;
+            
+            switch (_currentCategory) {
+                case 0:
+                    [self onPartyButton_Tap:nil];
+                    break;
+                case 1:
+                    [self onChillButton_Tap:nil];
+                    break;
+                case 2:
+                    [self onArtButton_Tap:nil];
+                    break;
+                case 3:
+                    [self onMiscButton_Tap:nil];
+                    break;
+                default:
+                    break;
+            }
         }
         
-        [CATransaction begin];
-        [CATransaction setAnimationDuration:1.5f];
-        _menuArrow.layer.transform = CATransform3DIdentity;
-        [CATransaction commit];
+        [UIView animateWithDuration:0.5 animations:^() {
+            
+            _menuArrow.transform = CGAffineTransformMakeRotation((M_PI / 180.0) * 0.0f);
+        }];
+
     }
+}
+
+- (IBAction)onSortChanged:(id)sender
+{    
+    [controllers_events_List_p2p instance].sort = _seg.selectedSegmentIndex;
+    _isSemiDirty = YES;
 }
 
 -(void)showPopover:(id)sender forEvent:(UIEvent*)event
@@ -249,46 +331,49 @@ static customNavigationController *_ctrl;
 
 - (IBAction)onPartyButton_Tap:(id)sender
 {
-    [self setNavBarTitle:@"navbarTitleParty"];
-    
     [[controllers_events_List_p2p instance] reloadTableViewDataSourceWithIndex:0];
     
     [[controllers_events_Map_p2p instance] loadData:[controllers_events_List_p2p instance].data];
     
-    [[controllers_events_List_p2p instance].tableView setContentOffset:CGPointZero animated:YES];
+    _currentCategory = 0;
+    
+    [self setNavBarTitle:@"Party"];
 }
 
 - (IBAction)onChillButton_Tap:(id)sender
 {
-    [self setNavBarTitle:@"navbarTitleChill"];
     
     [[controllers_events_List_p2p instance] reloadTableViewDataSourceWithIndex:1];
     
     [[controllers_events_Map_p2p instance] loadData:[controllers_events_List_p2p instance].data];
     
-    [[controllers_events_List_p2p instance].tableView setContentOffset:CGPointZero animated:YES];
+    _currentCategory = 1;
+    
+    [self setNavBarTitle:@"Chill"];
+    
+    
 }
 
 - (IBAction)onArtButton_Tap:(id)sender
 {
-    [self setNavBarTitle:@"navbarTitleArt"];
-    
     [[controllers_events_List_p2p instance] reloadTableViewDataSourceWithIndex:2];
     
     [[controllers_events_Map_p2p instance] loadData:[controllers_events_List_p2p instance].data];
     
-    [[controllers_events_List_p2p instance].tableView setContentOffset:CGPointZero animated:YES];
+    _currentCategory = 2;
+    
+    [self setNavBarTitle:@"Art"];
 }
 
 - (IBAction)onMiscButton_Tap:(id)sender
 {
-    [self setNavBarTitle:@"navbarTitleMisc"];
-    
     [[controllers_events_List_p2p instance] reloadTableViewDataSourceWithIndex:3];
     
     [[controllers_events_Map_p2p instance] loadData:[controllers_events_List_p2p instance].data];
     
-    [[controllers_events_List_p2p instance].tableView setContentOffset:CGPointZero animated:YES];
+    _currentCategory = 3;
+    
+    [self setNavBarTitle:@"Misc."];
 }
 
 - (void)viewWillAppear:(BOOL)animated

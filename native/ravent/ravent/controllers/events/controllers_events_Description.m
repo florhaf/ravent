@@ -13,6 +13,7 @@
 #import "YRDropdownView.h"
 #import "controllers_App.h"
 #import "ActionDispatcher.h"
+#import "models_User.h"
 
 @implementation controllers_events_Description
 

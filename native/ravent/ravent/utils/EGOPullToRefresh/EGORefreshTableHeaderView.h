@@ -49,6 +49,7 @@ typedef enum{
 
 @property (unsafe_unretained) id <EGORefreshTableHeaderDelegate> delegate;
 @property (unsafe_unretained) UILabel *statusLabel;
+@property (nonatomic, retain) NSDate *dLastUpdated;
 
 - (id)initWithFrame:(CGRect)frame arrowImageName:(NSString *)arrow textColor:(UIColor *)textColor;
 

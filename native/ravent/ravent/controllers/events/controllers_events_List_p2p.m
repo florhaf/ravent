@@ -17,6 +17,7 @@
 @synthesize chill = _chill;
 @synthesize art = _art;
 @synthesize other = _other;
+@synthesize sort = _sort;
 
 static controllers_events_List_p2p *_ctrl;
 
@@ -41,8 +42,73 @@ static controllers_events_List_p2p *_ctrl;
     [[controllers_events_Map_p2p instance] updateLoadingMessageWith:text];
 }
 
-- (void)reloadTableViewDataSourceWithIndex:(int)index
+- (void)reloadTableViewDataSourceWithNoFadeWithIndex:(int)index
 {    
+    _data = nil;
+    _groupedData = nil;
+    _sortedKeys = nil;
+    
+    switch (index) {
+            
+        case 0:
+            if (_party != nil && [_party count] > 0) {
+                
+                _data = _party;
+                _groupedData = _groupedParty;
+                _sortedKeys = _sortedKeysParty;
+            }
+            break;
+        case 1:
+            if (_chill != nil && [_chill count] > 0) {
+                
+                _data = _chill;
+                _groupedData = _groupedChill;
+                _sortedKeys = _sortedKeysChill;
+            }
+            break;
+        case 2:
+            if (_art != nil && [_art count] > 0) {
+                
+                _data = _art;
+                _groupedData = _groupedArt;
+                _sortedKeys = _sortedKeysArt;
+            }
+            break;
+        case 3:
+            if (_other != nil && [_other count] > 0) {
+                
+                _data = _other;
+                _groupedData = _groupedOther;
+                _sortedKeys = _sortedKeysOther;
+            }
+            break;
+        default:
+            break;
+    }
+    
+    switch (_sort) {
+            
+        case byScore:
+            [self sortByScore];
+            break;
+        case byDistance:
+            [self sortByDistance];
+            break;
+        case byTime:
+            [self sortByTime];
+            break;
+        default:
+            break;
+    }
+    
+    [self.tableView reloadData];
+}
+
+- (void)reloadTableViewDataSourceWithIndex:(int)index
+{   
+    BOOL bFade = (_data != nil);
+    
+    // load data to display
     _data = nil;
     _groupedData = nil;
     _sortedKeys = nil;
@@ -85,7 +151,152 @@ static controllers_events_List_p2p *_ctrl;
             break;
     }
     
-    [self.tableView reloadData];
+    // sort data
+    switch (_sort) {
+            
+        case byScore:
+            [self sortByScore];
+            break;
+        case byDistance:
+            [self sortByDistance];
+            break;
+        case byTime:
+            [self sortByTime];
+            break;
+        default:
+            break;
+    }
+    
+    if (bFade) {
+     
+        // transition animation
+        [UIView animateWithDuration:0.15 animations:^{
+            
+            [self.tableView setAlpha:0];
+        } completion:^(BOOL finished) {
+            
+            
+            [self.tableView reloadData];
+            
+            [self.tableView setContentOffset:CGPointZero animated:NO];
+            [UIView animateWithDuration:0.15 animations:^(){
+                
+                [self.tableView setAlpha:1];    
+            }];
+        }];
+    } else {
+        
+        [self.tableView setAlpha:0];
+        [self.tableView reloadData];
+        
+        [self.tableView setContentOffset:CGPointZero animated:NO];
+        [UIView animateWithDuration:0.15 animations:^(){
+            
+            [self.tableView setAlpha:1];    
+        }];
+    }
+}
+
+- (void)sortByScore
+{
+    NSMutableDictionary *sortedDic = [[NSMutableDictionary alloc] init];
+    
+    for (NSString *key in _sortedKeys) {
+        
+        NSArray *ar = [_groupedData objectForKey:key];
+            
+        NSArray *sortedAr = [ar sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
+            
+            models_Event *e1 = (models_Event *)a;
+            models_Event *e2 = (models_Event *)b;
+            
+            NSInteger score1 = [e1.score intValue];
+            NSInteger score2 = [e2.score intValue];
+            
+            if (score1 == score2) {
+                
+                return NSOrderedSame;
+            } else if (score1 > score2) {
+                
+                return NSOrderedAscending;
+            } else {
+                
+                return NSOrderedDescending;
+            }
+        }];
+        
+        [sortedDic setObject:sortedAr forKey:key];
+    }
+    
+    _groupedData = sortedDic;
+}
+
+- (void)sortByDistance
+{
+    NSMutableDictionary *sortedDic = [[NSMutableDictionary alloc] init];
+    
+    for (NSString *key in _sortedKeys) {
+        
+        NSArray *ar = [_groupedData objectForKey:key];
+        
+        NSArray *sortedAr = [ar sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
+            
+            models_Event *e1 = (models_Event *)a;
+            models_Event *e2 = (models_Event *)b;
+            
+            NSInteger d1 = [e1.distance intValue];
+            NSInteger d2 = [e2.distance intValue];
+            
+            if (d1 == d2) {
+                
+                return NSOrderedSame;
+            } else if (d1 > d2) {
+                
+                return NSOrderedDescending;
+            } else {
+                
+                return NSOrderedAscending;
+            }
+        }];
+        
+        [sortedDic setObject:sortedAr forKey:key];
+    }
+    
+    _groupedData = sortedDic;
+}
+
+- (void)sortByTime
+{
+    NSMutableDictionary *sortedDic = [[NSMutableDictionary alloc] init];
+    
+    
+    
+    for (NSString *key in _sortedKeys) {
+        
+        NSArray *ar = [_groupedData objectForKey:key];
+        
+        NSArray *sortedAr = [ar sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
+            
+            models_Event *e1 = (models_Event *)a;
+            models_Event *e2 = (models_Event *)b;
+            
+            NSDateFormatter *dateFormat1 = [[NSDateFormatter alloc] init];
+            [dateFormat1 setDateFormat:@"LLL d, yyyy h:mm a"];
+            NSString *sDateTime1 = [NSString stringWithFormat:@"%@ %@", e1.dateStart, e1.timeStart];
+            NSDate *d1 = [dateFormat1 dateFromString:sDateTime1];
+            
+            NSDateFormatter *dateFormat2 = [[NSDateFormatter alloc] init];
+            [dateFormat2 setDateFormat:@"LLL d, yyyy h:mm a"];
+            NSString *sDateTime2 = [NSString stringWithFormat:@"%@ %@", e2.dateStart, e2.timeStart];
+            NSDate *d2 = [dateFormat2 dateFromString:sDateTime2];
+            
+            return [d1 compare:d2];
+        }];
+        
+        [sortedDic setObject:sortedAr forKey:key];
+    }
+    
+    _groupedData = sortedDic;
 }
 
 - (void)loadData

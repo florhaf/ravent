@@ -41,6 +41,10 @@
 @synthesize male_ratio = _male_ratio;
 @synthesize nb_attending = _nb_attending;
 @synthesize rsvp_status = _rsvp_status;
+@synthesize offerTitle = _offerTitle;
+@synthesize offerDescription = _offerDescription;
+@synthesize featured = _featured;
+@synthesize ticket_link = _ticket_link;
 
 //#define SERVICE_URL @"http://air.local:8888"
 #define SERVICE_URL @"http://raventsvc.appspot.com"
@@ -80,6 +84,9 @@
     another.coordinate = _coordinate;
     another.filter = _filter;
     another.rsvp_status = _rsvp_status;
+    another.offerTitle = _offerTitle;
+    another.offerDescription = _offerDescription;
+    another.ticket_link = _ticket_link;
     
     return another;
 }
@@ -106,6 +113,10 @@
     [objectMapping mapKeyPath:@"longitude" toAttribute:@"longitude"];
     [objectMapping mapKeyPath:@"groupTitle" toAttribute:@"groupTitle"];
     [objectMapping mapKeyPath:@"filter" toAttribute:@"filter"];
+    [objectMapping mapKeyPath:@"offer_title" toAttribute:@"offerTitle"];
+    [objectMapping mapKeyPath:@"offer_description" toAttribute:@"offerDescription"];
+    [objectMapping mapKeyPath:@"featured" toAttribute:@"featured"];
+    [objectMapping mapKeyPath:@"ticket_link" toAttribute:@"ticket_link"];
 
     if (_manager == nil) {
         
@@ -153,6 +164,10 @@
     [objectMapping mapKeyPath:@"longitude" toAttribute:@"longitude"];
     [objectMapping mapKeyPath:@"groupTitle" toAttribute:@"groupTitle"];
     [objectMapping mapKeyPath:@"filter" toAttribute:@"filter"];
+    [objectMapping mapKeyPath:@"offer_title" toAttribute:@"offerTitle"];
+    [objectMapping mapKeyPath:@"offer_description" toAttribute:@"offerDescription"];
+    [objectMapping mapKeyPath:@"featured" toAttribute:@"featured"];
+    [objectMapping mapKeyPath:@"ticket_link" toAttribute:@"ticket_link"];
     
     if (_manager == nil) {
         

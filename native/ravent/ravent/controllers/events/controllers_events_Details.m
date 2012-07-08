@@ -43,7 +43,7 @@ static int _retryCounter;
         
         self.title = @"Gemster";
         
-        [[NSBundle mainBundle] loadNibNamed:@"views_events_Details" owner:self options:nil];
+        
         
         Action *shareAction = [[Action alloc] initWithDelegate:self andSelector:@selector(share:)];
         [[ActionDispatcher instance] add:shareAction named:@"share"];
@@ -60,6 +60,7 @@ static int _retryCounter;
         _picturesLoader = [[models_Comment alloc] initWithDelegate:self andSelector:@selector(onPicturesLoad:)];
         [_picturesLoader loadPicturesWithParams:params];
         _photos = [[NSMutableArray alloc] init];
+        
     }
     
     return self;
@@ -224,11 +225,13 @@ static int _retryCounter;
 
 - (IBAction)snap_Tap:(id)sender
 {
+    _isButtonTap = YES;
+    
     if (_event.rsvp_status == nil || [_event.rsvp_status isEqualToString:@""] || [_event.rsvp_status isEqualToString:@"not replied"]) {
         
         [YRDropdownView showDropdownInView:[controllers_App instance].view 
                                      title:@"Warning" 
-                                    detail:@"Per Facebook policy, you must RSVP to post a picture...\n\nHint: you can RSVP no"
+                                    detail:@"Per Facebook policy, you must RSVP yes or maybe to post a picture...\n"
                                      image:[UIImage imageNamed:@"dropdown-alert"]
                                   animated:YES];
         
@@ -391,8 +394,6 @@ static int _retryCounter;
 
 #pragma mark - View lifecycle
 
-
-
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     if (scrollView.contentOffset.y < 0) {
@@ -428,11 +429,33 @@ static int _retryCounter;
 {
     [super viewDidLoad];
     
+    _map.delegate = self;
     _refreshHeaderView.delegate = nil;
     [_refreshHeaderView removeFromSuperview];
        
-    [[NSBundle mainBundle] loadNibNamed:@"views_events_Details" owner:self options:nil];
+    CGFloat segY = 0;
+    
+
+    if ((_event.ticket_link == nil || [_event.ticket_link isEqualToString:@""]) &&
+        (_event.offerTitle == nil || [_event.offerTitle isEqualToString:@""])) {
         
+        _detailsVersion = nogoodies;
+        [[NSBundle mainBundle] loadNibNamed:@"views_events_Details" owner:self options:nil];
+        segY = 568;
+        
+    } else if ((_event.ticket_link != nil && ![_event.ticket_link isEqualToString:@""]) &&
+               (_event.offerTitle != nil && ![_event.offerTitle isEqualToString:@""])) {
+        
+        _detailsVersion = twogoodies;
+        [[NSBundle mainBundle] loadNibNamed:@"views_events_Details2" owner:self options:nil];
+        segY = 695;
+    } else {
+        
+        _detailsVersion = onegoodies;
+        [[NSBundle mainBundle] loadNibNamed:@"views_events_Details1" owner:self options:nil];
+        segY = 665;
+    }
+    
     // HEADER
     _headerDateLabel.text = [NSString stringWithFormat:@"%@ to %@", _event.dateStart, _event.dateEnd];
     _headerNameLabel.text = _event.name;
@@ -464,7 +487,7 @@ static int _retryCounter;
     // RSVP
     NSArray *objects = [NSArray arrayWithObjects:@"Yes", @"Maybe", @"No", nil];
     _segment = [[STSegmentedControl alloc] initWithItems:objects];
-	_segment.frame = CGRectMake(20, 637, 280, 40);
+	_segment.frame = CGRectMake(20, segY, 280, 40);
 	_segment.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 	[_header addSubview:_segment];
     
@@ -484,25 +507,7 @@ static int _retryCounter;
         _zoomLocation.longitude= [_event.longitude floatValue];
         _viewRegion = MKCoordinateRegionMakeWithDistance(_zoomLocation, 0.3*METERS_PER_MILE, 0.3*METERS_PER_MILE);
         MKCoordinateRegion adjustedRegion = [_map regionThatFits:_viewRegion];                
-        //[_map setRegion:adjustedRegion animated:NO];
-        
-        @try {
-            
-            [_map setRegion:adjustedRegion animated:YES];
-        }
-        @catch (NSException *exception) {
-            
-            [YRDropdownView showDropdownInView:[controllers_App instance].view 
-                                             title:@"Map Error" 
-                                            detail:exception.reason
-                                             image:[UIImage imageNamed:@"dropdown-alert"]
-                                          animated:YES];
-        }
-        @finally {
-            // nothing
-        }
-        
-        
+        [_map setRegion:adjustedRegion animated:YES];
         
     } else {
         
@@ -531,6 +536,27 @@ static int _retryCounter;
     
     _tickerItems = [[NSArray alloc] initWithObjects:_event.name, nil];
     [_ticker reloadData];
+    
+    
+    
+    // goodies
+    if (_detailsVersion == onegoodies) {
+        
+        if (_event.offerTitle != nil && ![_event.offerTitle isEqualToString:@""]) {
+            
+            _goodiesIcon.image = [UIImage imageNamed:@"goodiesGift"];
+            _specialLabel.text = _event.offerTitle;
+            
+        } else {
+            
+            _goodiesIcon.image = [UIImage imageNamed:@"goodiesTicket"];
+            _specialLabel.text = @"tickets available";
+        }
+        
+    } else {
+        
+        _specialLabel.text = _event.offerTitle;
+    }
 }
 
 - (void)onEventStatsLoad:(NSArray *)objects
@@ -685,44 +711,6 @@ static int _retryCounter;
 }
 
 #pragma mark - Map delegate
-
-- (void)mapViewDidFinishLoadingMap:(MKMapView *)mapView
-{
-    NSLog(@"HEY");
-}
-
-- (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views {
-    
-    if (_map.annotations != nil && [_map.annotations count] > 0) {
-        
-        id<MKAnnotation> myAnnotation = [_map.annotations objectAtIndex:0];
-        [_map selectAnnotation:myAnnotation animated:YES];   
-    }
-}
-
-- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation {
-    
-    static NSString *identifier = @"MyLocation";   
-    
-    if ([annotation isKindOfClass:[models_Event class]]) {
-        
-        models_Event *e = (models_Event *)annotation;
-        MKAnnotationView *annotationView = (MKAnnotationView *) [_map dequeueReusableAnnotationViewWithIdentifier:identifier];
-        
-        if (annotationView == nil) {
-            
-            annotationView = [[MKAnnotationView alloc] initWithAnnotation:e reuseIdentifier:identifier];
-        } else {
-            
-            annotationView.annotation = e;
-        }
-        
-        annotationView.enabled = YES;
-        return annotationView;
-    }
-    
-    return nil;
-}
 
 - (void)cancelAllRequests
 {

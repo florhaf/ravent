@@ -14,6 +14,12 @@
 #import "STSegmentedControl.h"
 #import "MKTickerView.h"
 
+typedef enum {
+    nogoodies,
+    onegoodies,
+    twogoodies
+} detailsVersion;
+
 @interface controllers_events_Details : UITableViewFriends<DLStarRatingDelegate, MWPhotoBrowserDelegate, MKTickerViewDataSource, MKMapViewDelegate, MKAnnotation> {
         
     CGSize _headerSize;
@@ -54,6 +60,11 @@
     
     IBOutlet UILabel *im;
     
+    IBOutlet UILabel *_specialLabel;
+    IBOutlet UIImageView *_goodiesIcon;
+    
+    detailsVersion _detailsVersion;
+    
     STSegmentedControl *_segment;
     
     DLStarRatingControl *_voteView;
@@ -66,6 +77,7 @@
     BOOL _isButtonTap;
     BOOL _isMapImageSet;
     int _mapImageHeight;
+
     
     id __weak _delegateBack;
     SEL _selectorBack;

@@ -57,6 +57,11 @@
     NSString *_nb_attending;
     NSString *_rsvp_status;
     
+    NSString *_offerTitle;
+    NSString *_offerDescription;
+    NSString *_featured;
+    NSString *_ticket_link;
+    
     CLLocationCoordinate2D _coordinate;
 }
 
@@ -87,6 +92,10 @@
 @property (nonatomic, retain) NSString *male_ratio;
 @property (nonatomic, retain) NSString *nb_attending;
 @property (nonatomic, retain) NSString *rsvp_status;
+@property (nonatomic, retain) NSString *offerTitle;
+@property (nonatomic, retain) NSString *offerDescription;
+@property (nonatomic, retain) NSString *featured;
+@property (nonatomic, retain) NSString *ticket_link;
 
 @property (nonatomic, assign) CLLocationCoordinate2D coordinate;
 

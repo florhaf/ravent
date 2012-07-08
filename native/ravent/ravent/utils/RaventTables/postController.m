@@ -99,16 +99,15 @@
 
 - (void)post
 {
-    if (_base64Picture == nil && (_textView.text == nil || [_textView.text isEqualToString:@""])) {
+    if (_imageData == nil && (_textView.text == nil || [_textView.text isEqualToString:@""])) {
         
         return;
     }
-    
+    [_textView resignFirstResponder];
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
     _comment = [[models_Comment alloc] initWithDelegate:self andSelector:nil];
     
-    _comment.picture = _base64Picture;
     _comment.message = _textView.text;
     _comment.uid = [models_User crtUser].uid;
     
@@ -116,7 +115,7 @@
     
     if (_isForEvent) {
         
-        [params setValue:_toId forKey:@"eid"];
+        [params setValue:_toId forKey:@"eventID"];
     } else {
     
         [params setValue:_toId forKey:@"friendid"];
@@ -153,7 +152,35 @@
 
 - (void)hideModal
 {
+    if ((_textView.text != nil && ![_textView.text isEqualToString:@""]) || _imageData != nil) {
+        
+        UIAlertView *alertView = [[UIAlertView alloc]
+                                  initWithTitle:@"Gemster"
+                                  message:@"Send your message?"
+                                  delegate:self
+                                  cancelButtonTitle:@"NO"
+                                  otherButtonTitles:@"YES",
+                                  nil];
+        [alertView show];
+        
+        return;
+    }
+    
+    
     [self dismissModalViewControllerAnimated:YES];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1) {
+        
+        [self post];
+        [self dismissModalViewControllerAnimated:YES];
+        
+    } else {
+        
+        [self dismissModalViewControllerAnimated:YES];
+    }
 }
 
 - (IBAction)onPictureTap:(id)sender
@@ -220,7 +247,7 @@
     [_pictureBorder setHidden:YES];
     [_removeButton setHidden:YES];
     
-    _base64Picture = nil;
+    //_base64Picture = nil;
     _imageData = nil;
 }
 
@@ -239,7 +266,7 @@
     [_removeButton setHidden:NO];
     
     _imageData = UIImageJPEGRepresentation(image, 1.0);
-    _base64Picture = [_imageData base64EncodingWithLineLength:0];
+    //_base64Picture = [_imageData base64EncodingWithLineLength:0];
 }
 
 @end

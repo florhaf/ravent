@@ -11,8 +11,8 @@
 #import "customNavigationController.h"
 #import "controllers_events_Events.h"
 #import "controllers_friends_People.h"
-#import "controllers_calendar_Calendar.h"
-#import "controllers_stats_Stats.h"
+
+
 
 @implementation controllers_TabBar
 
@@ -40,24 +40,9 @@
         friendsNav.title = @"People";
         friendsNav.tabBarItem.image = [UIImage imageNamed:@"first"];
         // *******************************************************
+
         
-        // TAB 3
-        // *******************************************************
-        controllers_calendar_Calendar *calendar = [[controllers_calendar_Calendar alloc] init];
-        
-        calendar.title = @"Calendar";
-        calendar.tabBarItem.image = [UIImage imageNamed:@"first"];
-        // *******************************************************
-        
-        // TAB 4
-        // *******************************************************
-        controllers_stats_Stats *options = [[controllers_stats_Stats alloc] initWithNibName:@"views_stats_Stats" bundle:[NSBundle mainBundle]];
-        
-        options.title = @"Stats";
-        options.tabBarItem.image = [UIImage imageNamed:@"first"];
-        // *******************************************************
-        
-        self.viewControllers = [NSArray arrayWithObjects:eventsNav, friendsNav, calendar, options, nil];
+        self.viewControllers = [NSArray arrayWithObjects:eventsNav, friendsNav, nil];
     }
     
     return self;

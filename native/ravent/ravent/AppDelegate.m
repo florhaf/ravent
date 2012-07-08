@@ -10,6 +10,9 @@
 #import "JMC.h"
 #import "Store.h"
 #import "UncaughtExceptionHandler.h"
+#import "controllers_events_List_p2p.h"
+#import "models_User.h"
+#import "GPSManager.h"
 
 @implementation AppDelegate
 
@@ -19,6 +22,9 @@
 @synthesize managedObjectContext = __managedObjectContext;
 @synthesize managedObjectModel = __managedObjectModel;
 @synthesize persistentStoreCoordinator = __persistentStoreCoordinator;
+
+@synthesize facebook = _facebook;
+@synthesize userPermissions = _userPermissions;
 
 
 - (void)installUncaughtExceptionHandler
@@ -38,6 +44,30 @@
     //[self performSelector:@selector(installUncaughtExceptionHandler) withObject:nil afterDelay:0];
     //[self performSelector:@selector(badAccess) withObject:nil afterDelay:4.0];
     
+    [[GPSManager instance] startGps];
+    
+    [Store instance].managedObjectContext = self.managedObjectContext;
+    
+    [[JMC sharedInstance] configureJiraConnect:@"https://ravent.atlassian.net/"
+                                    projectKey:@"RAV"
+                                        apiKey:@"eb74bda1-a5a5-4ac8-80ea-b0ce502c926a"];
+    
+    
+    // Initialize Facebook
+    _facebook = [[Facebook alloc] initWithAppId:@"299292173427947" andDelegate:[controllers_Login instance]];
+    
+    // Check and retrieve authorization information
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if ([defaults objectForKey:@"FBAccessTokenKey"] && [defaults objectForKey:@"FBExpirationDateKey"]) {
+        _facebook.accessToken = [defaults objectForKey:@"FBAccessTokenKey"];
+        _facebook.expirationDate = [defaults objectForKey:@"FBExpirationDateKey"];
+    }
+    
+    // Initialize user permissions
+    _userPermissions = [[NSMutableDictionary alloc] initWithCapacity:1];
+    
+    
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     
@@ -48,11 +78,7 @@
     
     [self.window makeKeyAndVisible];
     
-    [Store instance].managedObjectContext = self.managedObjectContext;
     
-    [[JMC sharedInstance] configureJiraConnect:@"https://ravent.atlassian.net/"
-                                    projectKey:@"RAV"
-                                        apiKey:@"eb74bda1-a5a5-4ac8-80ea-b0ce502c926a"];
     
     
     return YES;
@@ -81,6 +107,20 @@
     /*
      Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
      */
+    
+        [[JMC sharedInstance] ping];
+                NSDate *lastLoadTime = [[controllers_events_List_p2p instance] lastLoadTime];
+                NSDateComponents *thirtyMins = [[NSDateComponents alloc] init];
+                [thirtyMins setMinute:30];
+                NSCalendar *cal = [NSCalendar currentCalendar];
+                NSDate *lastLoadPlus30 = [cal dateByAddingComponents:thirtyMins toDate:lastLoadTime options:0];
+                NSDate *now = [NSDate date];
+                
+                if ([lastLoadPlus30 compare:now] == NSOrderedAscending) {
+                    
+                    [[controllers_events_List_p2p instance] loadDataWithSpinner];
+                }
+        
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
@@ -89,12 +129,15 @@
      Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
      */
     
-    if (_isNotStarting) {
-        
-        [[JMC sharedInstance] ping];   
-        
-    }
-    _isNotStarting = YES;
+    [[self facebook] extendAccessTokenIfNeeded];
+}
+
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
+    return [self.facebook handleOpenURL:url];
+}
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    return [self.facebook handleOpenURL:url];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application

@@ -14,8 +14,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "DF8F14C7150BD48200008ABC"
-               BuildableName = "ravent.app"
-               BlueprintName = "ravent"
+               BuildableName = "Gemster.app"
+               BlueprintName = "Gemster"
                ReferencedContainer = "container:ravent.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -32,8 +32,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "DF8F14C7150BD48200008ABC"
-            BuildableName = "ravent.app"
-            BlueprintName = "ravent"
+            BuildableName = "Gemster.app"
+            BlueprintName = "Gemster"
             ReferencedContainer = "container:ravent.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -51,8 +51,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "DF8F14C7150BD48200008ABC"
-            BuildableName = "ravent.app"
-            BlueprintName = "ravent"
+            BuildableName = "Gemster.app"
+            BlueprintName = "Gemster"
             ReferencedContainer = "container:ravent.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -69,8 +69,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "DF8F14C7150BD48200008ABC"
-            BuildableName = "ravent.app"
-            BlueprintName = "ravent"
+            BuildableName = "Gemster.app"
+            BlueprintName = "Gemster"
             ReferencedContainer = "container:ravent.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
