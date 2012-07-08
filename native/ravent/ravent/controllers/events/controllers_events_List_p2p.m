@@ -406,6 +406,11 @@ static controllers_events_List_p2p *_ctrl;
     return _ctrl;
 }
 
++ (BOOL)isIntanciated
+{
+    return (_ctrl != nil);
+}
+
 + (void)release
 {
     [_ctrl cancelAllRequests];

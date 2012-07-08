@@ -47,6 +47,7 @@ typedef enum {
 - (void)sortByTime;
 
 + (controllers_events_List_p2p *)instance;
++ (BOOL)isIntanciated;
 + (void)release;
 
 @end

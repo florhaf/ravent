@@ -20,6 +20,7 @@ static GPSManager *_gps;
 
 - (void)startGps
 {
+    NSLog(@"GPS START");
     _isLoading = YES;
     
     if (_locationManager == nil) {
@@ -40,6 +41,7 @@ static GPSManager *_gps;
 
 - (void)stopGps:(NSError *)error
 {
+    NSLog(@"GPS STOP");
     _isLoading = NO;
     
     [_locationManager stopUpdatingLocation];
@@ -52,6 +54,8 @@ static GPSManager *_gps;
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
 {	
+    
+    NSLog(@"GPS ERROR");
     _error = error;
     _isLoading = NO;
     
@@ -64,6 +68,7 @@ static GPSManager *_gps;
 	didUpdateToLocation:(CLLocation *)newLocation
 		   fromLocation:(CLLocation *)oldLocation
 {
+    NSLog(@"GPS UPDATE LOCATION %f %f", newLocation.coordinate.latitude, newLocation.coordinate.latitude);
 	NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
 	[formatter setTimeStyle:NSDateFormatterMediumStyle];
 
