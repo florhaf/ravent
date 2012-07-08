@@ -352,6 +352,14 @@
 		DF9F301F15A2B424002C85C6 /* navbarTitle.png in Resources */ = {isa = PBXBuildFile; fileRef = DF9F301E15A2B424002C85C6 /* navbarTitle.png */; };
 		DF9F302115A2B463002C85C6 /* navbarTitle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF9F302015A2B463002C85C6 /* navbarTitle@2x.png */; };
 		DF9F6414156D925400304C0F /* UITableViewReloadable.m in Sources */ = {isa = PBXBuildFile; fileRef = DF9F6413156D925400304C0F /* UITableViewReloadable.m */; };
+		DFA20F5315A8FB73007BBEE7 /* featured.png in Resources */ = {isa = PBXBuildFile; fileRef = DFA20F5215A8FB73007BBEE7 /* featured.png */; };
+		DFA20F5515A90EF8007BBEE7 /* ticket.png in Resources */ = {isa = PBXBuildFile; fileRef = DFA20F5415A90EF8007BBEE7 /* ticket.png */; };
+		DFA20F5715A939EC007BBEE7 /* views_events_Details1.xib in Resources */ = {isa = PBXBuildFile; fileRef = DFA20F5615A939EC007BBEE7 /* views_events_Details1.xib */; };
+		DFA20F5915A93A27007BBEE7 /* views_events_Details2.xib in Resources */ = {isa = PBXBuildFile; fileRef = DFA20F5815A93A27007BBEE7 /* views_events_Details2.xib */; };
+		DFA20F5B15A94426007BBEE7 /* grayDetails1.png in Resources */ = {isa = PBXBuildFile; fileRef = DFA20F5A15A94426007BBEE7 /* grayDetails1.png */; };
+		DFA20F5D15A94794007BBEE7 /* grayDetails2.png in Resources */ = {isa = PBXBuildFile; fileRef = DFA20F5C15A94794007BBEE7 /* grayDetails2.png */; };
+		DFA20F6015A94904007BBEE7 /* goodiesGift.png in Resources */ = {isa = PBXBuildFile; fileRef = DFA20F5E15A94904007BBEE7 /* goodiesGift.png */; };
+		DFA20F6115A94904007BBEE7 /* goodiesTicket.png in Resources */ = {isa = PBXBuildFile; fileRef = DFA20F5F15A94904007BBEE7 /* goodiesTicket.png */; };
 		DFA23E2F151D205600B8A8B5 /* views_events_Map.xib in Resources */ = {isa = PBXBuildFile; fileRef = DFA23E2E151D205600B8A8B5 /* views_events_Map.xib */; };
 		DFA903AA1590136800426865 /* views_events_Events.xib in Resources */ = {isa = PBXBuildFile; fileRef = DFA903A91590136800426865 /* views_events_Events.xib */; };
 		DFB28C601596E99900D0F999 /* views_events_item_CommentPic.xib in Resources */ = {isa = PBXBuildFile; fileRef = DFB28C5F1596E99900D0F999 /* views_events_item_CommentPic.xib */; };
@@ -921,6 +929,14 @@
 		DF9F302015A2B463002C85C6 /* navbarTitle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navbarTitle@2x.png"; sourceTree = "<group>"; };
 		DF9F6412156D925400304C0F /* UITableViewReloadable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITableViewReloadable.h; sourceTree = "<group>"; };
 		DF9F6413156D925400304C0F /* UITableViewReloadable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UITableViewReloadable.m; sourceTree = "<group>"; };
+		DFA20F5215A8FB73007BBEE7 /* featured.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = featured.png; path = ravent/resources/cellItems/featured.png; sourceTree = SOURCE_ROOT; };
+		DFA20F5415A90EF8007BBEE7 /* ticket.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ticket.png; path = ravent/resources/cellItems/ticket.png; sourceTree = SOURCE_ROOT; };
+		DFA20F5615A939EC007BBEE7 /* views_events_Details1.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = views_events_Details1.xib; sourceTree = "<group>"; };
+		DFA20F5815A93A27007BBEE7 /* views_events_Details2.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = views_events_Details2.xib; sourceTree = "<group>"; };
+		DFA20F5A15A94426007BBEE7 /* grayDetails1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grayDetails1.png; sourceTree = "<group>"; };
+		DFA20F5C15A94794007BBEE7 /* grayDetails2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grayDetails2.png; sourceTree = "<group>"; };
+		DFA20F5E15A94904007BBEE7 /* goodiesGift.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = goodiesGift.png; sourceTree = "<group>"; };
+		DFA20F5F15A94904007BBEE7 /* goodiesTicket.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = goodiesTicket.png; sourceTree = "<group>"; };
 		DFA23E2E151D205600B8A8B5 /* views_events_Map.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = views_events_Map.xib; path = item/views_events_Map.xib; sourceTree = "<group>"; };
 		DFA903A91590136800426865 /* views_events_Events.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = views_events_Events.xib; sourceTree = "<group>"; };
 		DFA9B5EB150FB454001CD530 /* RestKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RestKit.xcodeproj; path = RestKit/RestKit.xcodeproj; sourceTree = "<group>"; };
@@ -1621,6 +1637,10 @@
 		DF75ACC91541E7D400150465 /* background */ = {
 			isa = PBXGroup;
 			children = (
+				DFA20F5C15A94794007BBEE7 /* grayDetails2.png */,
+				DFA20F5A15A94426007BBEE7 /* grayDetails1.png */,
+				DFA20F5415A90EF8007BBEE7 /* ticket.png */,
+				DFA20F5215A8FB73007BBEE7 /* featured.png */,
 				DF9690FE15A512FD0059BD0B /* comment.png */,
 				DFEDF0D515A3D53200009621 /* tableTop.png */,
 				DF6E873B15A398DD00FF138C /* optionsBG.png */,
@@ -1668,6 +1688,8 @@
 		DF86A1AD1582D7FA009B3257 /* icon */ = {
 			isa = PBXGroup;
 			children = (
+				DFA20F5E15A94904007BBEE7 /* goodiesGift.png */,
+				DFA20F5F15A94904007BBEE7 /* goodiesTicket.png */,
 				DF04018315A7A1780064C1D2 /* watch.png */,
 				DF9690F615A421190059BD0B /* arrow.png */,
 				DF8D4165159A7AED00351A6F /* grayIconDescriptionSelected.png */,
@@ -1900,6 +1922,8 @@
 				DF24593E15807B530095027E /* views_events_Details_Container.xib */,
 				DF9CED4A158450D6002B1024 /* views_events_Pic_Big.xib */,
 				DFA903A91590136800426865 /* views_events_Events.xib */,
+				DFA20F5615A939EC007BBEE7 /* views_events_Details1.xib */,
+				DFA20F5815A93A27007BBEE7 /* views_events_Details2.xib */,
 			);
 			path = events;
 			sourceTree = "<group>";
@@ -2529,6 +2553,14 @@
 				DF04018015A76C2E0064C1D2 /* LoginWithFacebookPressed@2x.png in Resources */,
 				DF04018215A79EEA0064C1D2 /* views_Empty_WL.xib in Resources */,
 				DF04018415A7A1780064C1D2 /* watch.png in Resources */,
+				DFA20F5315A8FB73007BBEE7 /* featured.png in Resources */,
+				DFA20F5515A90EF8007BBEE7 /* ticket.png in Resources */,
+				DFA20F5715A939EC007BBEE7 /* views_events_Details1.xib in Resources */,
+				DFA20F5915A93A27007BBEE7 /* views_events_Details2.xib in Resources */,
+				DFA20F5B15A94426007BBEE7 /* grayDetails1.png in Resources */,
+				DFA20F5D15A94794007BBEE7 /* grayDetails2.png in Resources */,
+				DFA20F6015A94904007BBEE7 /* goodiesGift.png in Resources */,
+				DFA20F6115A94904007BBEE7 /* goodiesTicket.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
