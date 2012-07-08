@@ -253,6 +253,27 @@ static models_User *_crtUser = nil;
     [_manager loadObjectsAtResourcePath:resourcePath objectMapping:objectMapping delegate:self]; 
 }
 
+- (void)refreshToken
+{
+    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+    [params setValue:_uid forKey:@"userID"];
+    
+
+        [params setValue:_accessToken forKey:@"access_token"];
+        [params setValue:@"yes" forKey:@"appuser"];
+
+    
+    NSString *resourcePath = [@"users" appendQueryParams:params];
+    
+    if (_manager == nil) {
+        
+        _manager = [RKObjectManager objectManagerWithBaseURL:SERVICE_URL];
+    }
+    
+    [_manager.mappingProvider setMapping:nil forKeyPath:@""];
+    [_manager loadObjectsAtResourcePath:resourcePath objectMapping:nil delegate:nil]; 
+}
+
 - (void)loadFollowingsWithParams:(NSMutableDictionary *)params
 {
     NSString *resourcePath = [@"followings" appendQueryParams:params];

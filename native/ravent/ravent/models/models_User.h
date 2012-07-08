@@ -94,6 +94,7 @@
 - (void)saveToNSUserDefaults;
 - (void)delFromNSUserDefaults;
 - (void)loadFromNSUserDefaults;
+- (void)refreshToken;
 
 + (NSMutableDictionary *)getGroupedData:(NSArray *)data;
 + (models_User *) crtUser;

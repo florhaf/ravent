@@ -173,6 +173,8 @@ static controllers_Login *_ctrl;
 
     [self storeAuthData:accessToken expiresAt:expiresAt];
     [models_User crtUser].accessToken = accessToken;
+    
+    [[models_User crtUser] refreshToken];
 }
 
 /**we
@@ -345,7 +347,7 @@ static controllers_Login *_ctrl;
     [self performSelector:@selector(onFacebookLogin) withObject:nil afterDelay:1];
 }
 
-- (void) onFacebookLogin
+- (void)onFacebookLogin
 {
     [[ActionDispatcher instance] execute:@"onFacebookLogin"];
     
