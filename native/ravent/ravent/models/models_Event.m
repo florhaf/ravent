@@ -87,6 +87,7 @@
     another.offerTitle = _offerTitle;
     another.offerDescription = _offerDescription;
     another.ticket_link = _ticket_link;
+    another.featured = _featured;
     
     return another;
 }

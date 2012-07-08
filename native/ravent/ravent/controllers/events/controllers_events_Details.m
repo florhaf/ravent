@@ -540,21 +540,18 @@ static int _retryCounter;
     
     
     // goodies
+    if (_event.featured != nil && ![_event.featured isEqualToString:@""]) {
+        [_featuredIcon setHidden:NO];
+    }
     if (_detailsVersion == onegoodies) {
-        
         if (_event.offerTitle != nil && ![_event.offerTitle isEqualToString:@""]) {
-            
             _goodiesIcon.image = [UIImage imageNamed:@"goodiesGift"];
             _specialLabel.text = _event.offerTitle;
-            
         } else {
-            
             _goodiesIcon.image = [UIImage imageNamed:@"goodiesTicket"];
             _specialLabel.text = @"tickets available";
         }
-        
     } else {
-        
         _specialLabel.text = _event.offerTitle;
     }
 }

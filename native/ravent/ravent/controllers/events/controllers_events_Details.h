@@ -62,6 +62,7 @@ typedef enum {
     
     IBOutlet UILabel *_specialLabel;
     IBOutlet UIImageView *_goodiesIcon;
+    IBOutlet UIImageView *_featuredIcon;
     
     detailsVersion _detailsVersion;
     

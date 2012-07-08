@@ -281,7 +281,8 @@ static customNavigationController *_ctrl;
 - (IBAction)onSortChanged:(id)sender
 {    
     [controllers_events_List_p2p instance].sort = _seg.selectedSegmentIndex;
-    _isSemiDirty = YES;
+    //_isSemiDirty = YES;
+    [[controllers_events_List_p2p instance] reloadTableViewDataSourceWithIndex:_currentCategory];
 }
 
 -(void)showPopover:(id)sender forEvent:(UIEvent*)event
