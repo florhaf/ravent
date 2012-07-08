@@ -97,6 +97,8 @@ typedef enum {
 - (IBAction)picButton_Tap:(id)sender;
 - (IBAction)rsvp:(id)sender;
 - (IBAction)backButton_Tap:(id)sender;
+- (IBAction)onTicket_Tap:(id)sender;
+- (IBAction)onSpecials_Tap:(id)sender;
 
 - (void)onVoteSuccess:(NSString *)response;
 - (void)onVoteFailure:(NSMutableDictionary *)response;

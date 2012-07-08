@@ -170,7 +170,10 @@
 
 - (void)onBackTap
 {
-    [_details cancelAllRequests];
+    if ([_details respondsToSelector:@selector(cancelAllRequests)]) {
+     
+        [_details cancelAllRequests];
+    }
     [self.navigationController popViewControllerAnimated:YES];
 }
 

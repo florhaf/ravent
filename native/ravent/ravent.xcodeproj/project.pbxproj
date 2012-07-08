@@ -360,6 +360,11 @@
 		DFA20F5D15A94794007BBEE7 /* grayDetails2.png in Resources */ = {isa = PBXBuildFile; fileRef = DFA20F5C15A94794007BBEE7 /* grayDetails2.png */; };
 		DFA20F6015A94904007BBEE7 /* goodiesGift.png in Resources */ = {isa = PBXBuildFile; fileRef = DFA20F5E15A94904007BBEE7 /* goodiesGift.png */; };
 		DFA20F6115A94904007BBEE7 /* goodiesTicket.png in Resources */ = {isa = PBXBuildFile; fileRef = DFA20F5F15A94904007BBEE7 /* goodiesTicket.png */; };
+		DFA20F6315A95DF6007BBEE7 /* views_events_Tickets.xib in Resources */ = {isa = PBXBuildFile; fileRef = DFA20F6215A95DF6007BBEE7 /* views_events_Tickets.xib */; };
+		DFA20F6615A95E5A007BBEE7 /* controllers_events_Tickets.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA20F6515A95E5A007BBEE7 /* controllers_events_Tickets.m */; };
+		DFA20F6815A96D22007BBEE7 /* specialBG.png in Resources */ = {isa = PBXBuildFile; fileRef = DFA20F6715A96D22007BBEE7 /* specialBG.png */; };
+		DFA20F6C15A96D8F007BBEE7 /* views_events_Specials.xib in Resources */ = {isa = PBXBuildFile; fileRef = DFA20F6B15A96D8F007BBEE7 /* views_events_Specials.xib */; };
+		DFA20F6F15A96F29007BBEE7 /* controllers_events_Specials.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA20F6E15A96F29007BBEE7 /* controllers_events_Specials.m */; };
 		DFA23E2F151D205600B8A8B5 /* views_events_Map.xib in Resources */ = {isa = PBXBuildFile; fileRef = DFA23E2E151D205600B8A8B5 /* views_events_Map.xib */; };
 		DFA903AA1590136800426865 /* views_events_Events.xib in Resources */ = {isa = PBXBuildFile; fileRef = DFA903A91590136800426865 /* views_events_Events.xib */; };
 		DFB28C601596E99900D0F999 /* views_events_item_CommentPic.xib in Resources */ = {isa = PBXBuildFile; fileRef = DFB28C5F1596E99900D0F999 /* views_events_item_CommentPic.xib */; };
@@ -937,6 +942,13 @@
 		DFA20F5C15A94794007BBEE7 /* grayDetails2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grayDetails2.png; sourceTree = "<group>"; };
 		DFA20F5E15A94904007BBEE7 /* goodiesGift.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = goodiesGift.png; sourceTree = "<group>"; };
 		DFA20F5F15A94904007BBEE7 /* goodiesTicket.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = goodiesTicket.png; sourceTree = "<group>"; };
+		DFA20F6215A95DF6007BBEE7 /* views_events_Tickets.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = views_events_Tickets.xib; sourceTree = "<group>"; };
+		DFA20F6415A95E59007BBEE7 /* controllers_events_Tickets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = controllers_events_Tickets.h; sourceTree = "<group>"; };
+		DFA20F6515A95E5A007BBEE7 /* controllers_events_Tickets.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = controllers_events_Tickets.m; sourceTree = "<group>"; };
+		DFA20F6715A96D22007BBEE7 /* specialBG.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = specialBG.png; sourceTree = "<group>"; };
+		DFA20F6B15A96D8F007BBEE7 /* views_events_Specials.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = views_events_Specials.xib; sourceTree = "<group>"; };
+		DFA20F6D15A96F29007BBEE7 /* controllers_events_Specials.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = controllers_events_Specials.h; sourceTree = "<group>"; };
+		DFA20F6E15A96F29007BBEE7 /* controllers_events_Specials.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = controllers_events_Specials.m; sourceTree = "<group>"; };
 		DFA23E2E151D205600B8A8B5 /* views_events_Map.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = views_events_Map.xib; path = item/views_events_Map.xib; sourceTree = "<group>"; };
 		DFA903A91590136800426865 /* views_events_Events.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = views_events_Events.xib; sourceTree = "<group>"; };
 		DFA9B5EB150FB454001CD530 /* RestKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RestKit.xcodeproj; path = RestKit/RestKit.xcodeproj; sourceTree = "<group>"; };
@@ -1637,6 +1649,7 @@
 		DF75ACC91541E7D400150465 /* background */ = {
 			isa = PBXGroup;
 			children = (
+				DFA20F6715A96D22007BBEE7 /* specialBG.png */,
 				DFA20F5C15A94794007BBEE7 /* grayDetails2.png */,
 				DFA20F5A15A94426007BBEE7 /* grayDetails1.png */,
 				DFA20F5415A90EF8007BBEE7 /* ticket.png */,
@@ -1924,6 +1937,8 @@
 				DFA903A91590136800426865 /* views_events_Events.xib */,
 				DFA20F5615A939EC007BBEE7 /* views_events_Details1.xib */,
 				DFA20F5815A93A27007BBEE7 /* views_events_Details2.xib */,
+				DFA20F6215A95DF6007BBEE7 /* views_events_Tickets.xib */,
+				DFA20F6B15A96D8F007BBEE7 /* views_events_Specials.xib */,
 			);
 			path = events;
 			sourceTree = "<group>";
@@ -1953,6 +1968,10 @@
 				DF24593C15807A260095027E /* controllers_events_DetailsContainer.m */,
 				DF9CED4C15845128002B1024 /* controllers_events_Pic_big.h */,
 				DF9CED4D15845128002B1024 /* controllers_events_Pic_big.m */,
+				DFA20F6415A95E59007BBEE7 /* controllers_events_Tickets.h */,
+				DFA20F6515A95E5A007BBEE7 /* controllers_events_Tickets.m */,
+				DFA20F6D15A96F29007BBEE7 /* controllers_events_Specials.h */,
+				DFA20F6E15A96F29007BBEE7 /* controllers_events_Specials.m */,
 			);
 			path = events;
 			sourceTree = "<group>";
@@ -2561,6 +2580,9 @@
 				DFA20F5D15A94794007BBEE7 /* grayDetails2.png in Resources */,
 				DFA20F6015A94904007BBEE7 /* goodiesGift.png in Resources */,
 				DFA20F6115A94904007BBEE7 /* goodiesTicket.png in Resources */,
+				DFA20F6315A95DF6007BBEE7 /* views_events_Tickets.xib in Resources */,
+				DFA20F6815A96D22007BBEE7 /* specialBG.png in Resources */,
+				DFA20F6C15A96D8F007BBEE7 /* views_events_Specials.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2703,6 +2725,8 @@
 				DF9F301B15A2ADE8002C85C6 /* TSPopoverPopoverView.m in Sources */,
 				DF9F301C15A2ADE8002C85C6 /* TSPopoverTouchView.m in Sources */,
 				DF9F301D15A2ADE8002C85C6 /* UIBarButtonItem+WEPopover.m in Sources */,
+				DFA20F6615A95E5A007BBEE7 /* controllers_events_Tickets.m in Sources */,
+				DFA20F6F15A96F29007BBEE7 /* controllers_events_Specials.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

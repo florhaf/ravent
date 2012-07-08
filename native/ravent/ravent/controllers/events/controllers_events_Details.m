@@ -19,6 +19,8 @@
 #import "controllers_events_Pic_big.h"
 #import <RestKit/RKErrorMessage.h>
 #import <QuartzCore/QuartzCore.h>
+#import "controllers_events_Tickets.h"
+#import "controllers_events_Specials.h"
 
 
 @implementation controllers_events_Details
@@ -537,8 +539,6 @@ static int _retryCounter;
     _tickerItems = [[NSArray alloc] initWithObjects:_event.name, nil];
     [_ticker reloadData];
     
-    
-    
     // goodies
     if (_event.featured != nil && ![_event.featured isEqualToString:@""]) {
         [_featuredIcon setHidden:NO];
@@ -555,6 +555,66 @@ static int _retryCounter;
         _specialLabel.text = _event.offerTitle;
     }
 }
+
+- (IBAction)onTicket_Tap:(id)sender
+{
+    //_details = [[controllers_friends_Details alloc] initWithUser:[user copy]];
+    
+    controllers_events_Tickets *ticket = [[controllers_events_Tickets alloc] initWithURL:_event.ticket_link];
+    
+    UIImage *backi = [UIImage imageNamed:@"backButton"];
+    
+    UIButton *backb = [UIButton buttonWithType:UIButtonTypeCustom];
+    [backb addTarget:self action:@selector(onBackTap) forControlEvents:UIControlEventTouchUpInside];
+    [backb setImage:backi forState:UIControlStateNormal];
+    [backb setFrame:CGRectMake(0, 0, backi.size.width, backi.size.height)];
+    
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:backb];
+    
+    UIViewController *rootController = self;
+    
+    while (![rootController.parentViewController isKindOfClass:[UINavigationController class]]) {
+        
+        rootController = rootController.parentViewController;
+    }
+    
+    [rootController.navigationItem hidesBackButton];
+    [ticket.navigationItem setLeftBarButtonItem:backButton];
+    [self.navigationController pushViewController:ticket animated:YES];
+    
+    [self performSelector:@selector(fadeInToolbar) withObject:nil afterDelay:0.3];
+
+}
+
+- (IBAction)onSpecials_Tap:(id)sender
+{
+    //controllers_events_Tickets *ticket = [[controllers_events_Tickets alloc] initWithURL:_event.ticket_link];
+    
+    controllers_events_Specials *spe = [[controllers_events_Specials alloc] initWithEvent:[_event copy]];
+    
+    UIImage *backi = [UIImage imageNamed:@"backButton"];
+    
+    UIButton *backb = [UIButton buttonWithType:UIButtonTypeCustom];
+    [backb addTarget:self action:@selector(onBackTap) forControlEvents:UIControlEventTouchUpInside];
+    [backb setImage:backi forState:UIControlStateNormal];
+    [backb setFrame:CGRectMake(0, 0, backi.size.width, backi.size.height)];
+    
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:backb];
+    
+    UIViewController *rootController = self;
+    
+    while (![rootController.parentViewController isKindOfClass:[UINavigationController class]]) {
+        
+        rootController = rootController.parentViewController;
+    }
+    
+    [rootController.navigationItem hidesBackButton];
+    [spe.navigationItem setLeftBarButtonItem:backButton];
+    [self.navigationController pushViewController:spe animated:YES];
+    
+    [self performSelector:@selector(fadeInToolbar) withObject:nil afterDelay:0.3];
+}
+
 
 - (void)onEventStatsLoad:(NSArray *)objects
 {
