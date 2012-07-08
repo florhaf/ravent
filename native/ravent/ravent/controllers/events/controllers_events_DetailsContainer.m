@@ -189,6 +189,22 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+- (void)dealloc
+{
+    _detailsController = nil;
+    _event = nil;
+    
+    _toolbar = nil;
+    _container = nil;
+    
+    
+    
+    _delegateBack = nil;
+    _selectorBack = nil;
+    
+    _backButton = nil;
+}
+
 //- (void)setDelegateBack:(id)delegateBack
 //{
 //    _delegateBack = delegateBack;

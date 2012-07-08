@@ -217,6 +217,14 @@
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"reloadComments" object:nil];
+    
+    _comment = nil;
+    
+    _itemTime = nil;
+    _commentImg = nil;
+    _bg = nil;
+    
+    _photos = nil;
 }
 
 @end

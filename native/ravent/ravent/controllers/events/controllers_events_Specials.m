@@ -106,5 +106,17 @@
     return nil;
 }
 
+- (void)dealloc
+{
+    _event = nil;
+    _tickerItems = nil;
+    
+    _ticker = nil;
+    _labelLocation = nil;
+    _labelAddress = nil;
+    _labelOfferTitle = nil;
+    _labelOfferDescription = nil;
+    _labelRule = nil;
+}
 
 @end

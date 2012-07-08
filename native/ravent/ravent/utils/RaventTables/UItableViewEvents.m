@@ -259,6 +259,11 @@
     
     _bg = nil;
     _special = nil;
+    
+    _featured = nil;
+    _ticket_link = nil;
+    
+    _details = nil;
 }
 
 @end

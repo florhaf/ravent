@@ -273,4 +273,30 @@
     //_base64Picture = [_imageData base64EncodingWithLineLength:0];
 }
 
+- (void)dealloc
+{
+    _textView = nil;
+    _labelName = nil;
+    _picUser = nil;
+    
+    _buttonPicture = nil;
+    _buttonTake = nil;
+    _buttonLib = nil;
+    _buttonCancel = nil;
+    
+    _picture = nil;
+    _pictureBorder = nil;
+    _removeButton = nil;
+    
+    _buttonsContainer = nil;
+    
+    
+    _toId = nil; // id for an event of a friend
+    _placeHolder = nil;
+    
+    _base64Picture = nil;
+    _imageData = nil;
+    _comment = nil;
+}
+
 @end

@@ -108,4 +108,13 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+- (void)dealloc
+{
+    _feedController = nil;
+    _event = nil;
+    
+    _toolbar = nil;
+    _button = nil;
+}
+
 @end

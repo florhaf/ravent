@@ -208,4 +208,11 @@
     [super viewDidUnload];
 }
 
+- (void)dealloc
+{
+    _details = nil;
+    
+    _footer = nil;
+}
+
 @end

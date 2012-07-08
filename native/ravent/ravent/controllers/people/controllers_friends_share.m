@@ -245,4 +245,14 @@
     [[ActionDispatcher instance] execute:@"share" with:_friends];
 }
 
+- (void)dealloc
+{
+    _invited = nil;
+    
+    _inviteButton = nil;
+    _indic = nil;
+    
+    _friends = nil;
+}
+
 @end

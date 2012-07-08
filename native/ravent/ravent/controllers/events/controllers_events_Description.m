@@ -178,4 +178,18 @@
     return nil;
 }
 
+- (void)dealloc
+{
+    _textView = nil;
+    _tickerItems = nil;
+    
+    _ticker = nil;
+    _labelLocation = nil;
+    _labelAddress = nil;
+    
+    _event = nil;
+    _hud = nil;
+    _url = nil;
+}
+
 @end

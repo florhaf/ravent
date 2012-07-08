@@ -802,7 +802,55 @@ static int _retryCounter;
     
     _map = nil;
 
+    _header = nil;
+    _headerDateLabel = nil;
+    _headerGroupLabel = nil;
+    _headerNameLabel = nil;
+    _headerLocationLabel = nil;
+    _headerTimeLabel = nil;
+    _headerDistanceLabel = nil;
+    _headerVoteLabel = nil;
+    _headerAddButton = nil;
+    _headerScore = nil;
+    _rsvp = nil;
+    _voteLoading = nil;
+    _borderLeft = nil;
+    _borderRight = nil;
+    _labelFemaleRatio = nil;
+    _labelMaleRatio = nil;
+    _labelTotalAttendings = nil;
+    _venueCategory = nil;
+    _backButton = nil;
+    _ticker = nil;
     
+    _headerImage = nil;
+    _map = nil;
+    _mapImage = nil;
+    
+    
+    
+    _actPic = nil;
+    _actRatio1 = nil;
+    _actRatio2 = nil;
+    _actRatio3 = nil;
+    
+    im = nil;
+    
+    _specialLabel = nil;
+    _goodiesIcon = nil;
+    _featuredIcon = nil;
+    
+    
+    
+    _segment = nil;
+    
+    _voteView = nil;
+    _toolbar = nil;
+    _eventLoader = nil;
+    _picturesLoader = nil;
+    
+    _friendsSharedTo = nil;
+    _tickerItems = nil;
 }
 
 @end
