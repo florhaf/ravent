@@ -468,8 +468,8 @@
 											<reference ref="4"/>
 										</array>
 										<object class="NSColor" key="IBTintColor">
-											<int key="NSColorSpace">2</int>
-											<bytes key="NSRGB">MC43OTIxNTY5MzQ3IDAuNzkyMTU2OTM0NyAwLjc5MjE1NjkzNDcAA</bytes>
+											<int key="NSColorSpace">3</int>
+											<bytes key="NSWhite">MC4zMzMzMzMzMzMzAA</bytes>
 										</object>
 									</object>
 								</array>

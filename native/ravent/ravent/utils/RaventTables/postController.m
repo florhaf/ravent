@@ -134,11 +134,15 @@
     [MBProgressHUD hideHUDForView:self.view animated:YES];
     [self hideModal];
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadComments" object:nil];
+    if (_isForEvent) {
+
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadComments" object:nil];   
+    }
 }
 
 - (void)onPostFailure:(NSMutableDictionary *)response
 {
+    [_textView becomeFirstResponder];
     [MBProgressHUD hideHUDForView:self.view animated:YES];
 
     NSString *errorMsg = (NSString *)[response valueForKey:@"statusCode"];

@@ -74,6 +74,11 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+- (void)cancelAllRequests
+{
+    
+}
+
 #pragma mark - Ticker delegate
 
 - (UIColor*) backgroundColorForTickerView:(MKTickerView *)vertMenu

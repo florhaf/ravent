@@ -9,10 +9,16 @@
 #import <UIKit/UIKit.h>
 #import "MBProgressHUD.h"
 #import "models_Event.h"
+#import "MKTickerView.h"
 
 @interface controllers_events_Description : UIViewController {
     
     IBOutlet UITextView *_textView;
+    NSArray *_tickerItems;
+    
+    IBOutlet MKTickerView *_ticker;
+    IBOutlet UILabel *_labelLocation;
+    IBOutlet UILabel *_labelAddress;
     
     models_Event *_event;
     MBProgressHUD *_hud;

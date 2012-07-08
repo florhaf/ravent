@@ -26,4 +26,6 @@
 
 - (id)initWithEvent:(models_Event *)event;
 
+- (void)cancelAllRequests;
+
 @end

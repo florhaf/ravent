@@ -615,6 +615,16 @@ static int _retryCounter;
     [self performSelector:@selector(fadeInToolbar) withObject:nil afterDelay:0.3];
 }
 
+- (IBAction)onGoodies_Tap:(id)sender
+{
+    if (_event.ticket_link != nil && ![_event.ticket_link isEqualToString:@""]) {
+        
+        [self onTicket_Tap:sender];
+    } else {
+        
+        [self onSpecials_Tap:sender];
+    }
+}
 
 - (void)onEventStatsLoad:(NSArray *)objects
 {
