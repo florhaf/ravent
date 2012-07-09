@@ -274,7 +274,7 @@
 						<string key="NSFrame">{{161, 380}, {148, 40}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="449306151"/>
+						<reference key="NSNextKeyView" ref="312819783"/>
 						<string key="NSReuseIdentifierKey">_NS:225</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<int key="IBUITag">11</int>
@@ -442,7 +442,7 @@
 						<string key="NSFrame">{{10, 197}, {140, 139}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="166480579"/>
+						<reference key="NSNextKeyView" ref="582465816"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -643,7 +643,7 @@ AAAAAAAAdGV4dAAAAABDb3B5cmlnaHQgQXBwbGUsIEluYy4sIDIwMDgAA</bytes>
 						<bool key="IBUIAnimating">YES</bool>
 						<int key="IBUIStyle">2</int>
 					</object>
-					<object class="IBUIImageView" id="166480579">
+					<object class="IBUIImageView" id="582465816">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">-2147483356</int>
 						<string key="NSFrame">{{97, 197}, {53, 53}}</string>
@@ -671,7 +671,7 @@ AAAAAAAAdGV4dAAAAABDb3B5cmlnaHQgQXBwbGUsIEluYy4sIDIwMDgAA</bytes>
 						<bool key="IBUIAnimating">YES</bool>
 						<int key="IBUIStyle">2</int>
 					</object>
-					<object class="IBUIImageView" id="449306151">
+					<object class="IBUIImageView" id="312819783">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{15, 430}, {291, 85}}</string>
@@ -684,6 +684,17 @@ AAAAAAAAdGV4dAAAAABDb3B5cmlnaHQgQXBwbGUsIEluYy4sIDIwMDgAA</bytes>
 							<string key="NSClassName">NSImage</string>
 							<string key="NSResourceName">dropagem.png</string>
 						</object>
+					</object>
+					<object class="IBUIActivityIndicatorView" id="647183449">
+						<reference key="NSNextResponder" ref="191373211"/>
+						<int key="NSvFlags">-2147483356</int>
+						<string key="NSFrame">{{150, 466}, {20, 20}}</string>
+						<reference key="NSSuperview" ref="191373211"/>
+						<reference key="NSWindow"/>
+						<string key="NSReuseIdentifierKey">_NS:9</string>
+						<bool key="IBUIOpaque">NO</bool>
+						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+						<int key="IBUIStyle">2</int>
 					</object>
 				</array>
 				<string key="NSFrameSize">{320, 634}</string>
@@ -848,7 +859,7 @@ AAAAAAAAdGV4dAAAAABDb3B5cmlnaHQgQXBwbGUsIEluYy4sIDIwMDgAA</bytes>
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">_featuredIcon</string>
 						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="166480579"/>
+						<reference key="destination" ref="582465816"/>
 					</object>
 					<int key="connectionID">190</int>
 				</object>
@@ -945,8 +956,9 @@ AAAAAAAAdGV4dAAAAABDb3B5cmlnaHQgQXBwbGUsIEluYy4sIDIwMDgAA</bytes>
 							<reference ref="857772377"/>
 							<reference ref="497965919"/>
 							<reference ref="877198820"/>
-							<reference ref="166480579"/>
-							<reference ref="449306151"/>
+							<reference ref="582465816"/>
+							<reference ref="312819783"/>
+							<reference ref="647183449"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -1103,12 +1115,17 @@ AAAAAAAAdGV4dAAAAABDb3B5cmlnaHQgQXBwbGUsIEluYy4sIDIwMDgAA</bytes>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">189</int>
-						<reference key="object" ref="166480579"/>
+						<reference key="object" ref="582465816"/>
 						<reference key="parent" ref="191373211"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">191</int>
-						<reference key="object" ref="449306151"/>
+						<reference key="object" ref="312819783"/>
+						<reference key="parent" ref="191373211"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">192</int>
+						<reference key="object" ref="647183449"/>
 						<reference key="parent" ref="191373211"/>
 					</object>
 				</array>
@@ -1138,6 +1155,7 @@ AAAAAAAAdGV4dAAAAABDb3B5cmlnaHQgQXBwbGUsIEluYy4sIDIwMDgAA</bytes>
 				<string key="182.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="189.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="191.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="192.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="47.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="48.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="49.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -1156,7 +1174,7 @@ AAAAAAAAdGV4dAAAAABDb3B5cmlnaHQgQXBwbGUsIEluYy4sIDIwMDgAA</bytes>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">191</int>
+			<int key="maxID">192</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1300,10 +1318,10 @@ AAAAAAAAdGV4dAAAAABDb3B5cmlnaHQgQXBwbGUsIEluYy4sIDIwMDgAA</bytes>
 						</object>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="_actPic">UIActivityIndicatorView</string>
 						<string key="_actRatio1">UIActivityIndicatorView</string>
 						<string key="_actRatio2">UIActivityIndicatorView</string>
 						<string key="_actRatio3">UIActivityIndicatorView</string>
+						<string key="_actVote">UIActivityIndicatorView</string>
 						<string key="_backButton">UIButton</string>
 						<string key="_borderLeft">UIImageView</string>
 						<string key="_borderRight">UIImageView</string>
@@ -1333,10 +1351,6 @@ AAAAAAAAdGV4dAAAAABDb3B5cmlnaHQgQXBwbGUsIEluYy4sIDIwMDgAA</bytes>
 						<string key="im">UILabel</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<object class="IBToOneOutletInfo" key="_actPic">
-							<string key="name">_actPic</string>
-							<string key="candidateClassName">UIActivityIndicatorView</string>
-						</object>
 						<object class="IBToOneOutletInfo" key="_actRatio1">
 							<string key="name">_actRatio1</string>
 							<string key="candidateClassName">UIActivityIndicatorView</string>
@@ -1347,6 +1361,10 @@ AAAAAAAAdGV4dAAAAABDb3B5cmlnaHQgQXBwbGUsIEluYy4sIDIwMDgAA</bytes>
 						</object>
 						<object class="IBToOneOutletInfo" key="_actRatio3">
 							<string key="name">_actRatio3</string>
+							<string key="candidateClassName">UIActivityIndicatorView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="_actVote">
+							<string key="name">_actVote</string>
 							<string key="candidateClassName">UIActivityIndicatorView</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="_backButton">

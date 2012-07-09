@@ -81,8 +81,8 @@ static Store *_store;
     [newManagedObject setValue:event.latitude forKey:@"latitude"];
     [newManagedObject setValue:event.longitude forKey:@"longitude"];
     [newManagedObject setValue:event.pic_big forKey:@"picture"];
-//    [newManagedObject setValue:event.pic_big forKey:@"isInWatchList"];
-//    [newManagedObject setValue:[event.isGemDroppedje ] forKey:@"isGemDropped"];
+    [newManagedObject setValue:[[NSNumber alloc] initWithBool:event.isInWatchList] forKey:@"isInWatchList"];
+    [newManagedObject setValue:[[NSNumber alloc] initWithBool:event.isGemDropped] forKey:@"isGemDropped"];
     
     // Save the context.
     NSError *error = nil;
@@ -172,7 +172,7 @@ static Store *_store;
         [dateFormatter setDateFormat:@"MMM d, yyyy"];
         NSString *strFromDate = [dateFormatter stringFromDate:start];
         
-        [results addObjectsFromArray:[self findEventsForDate:strFromDate]];
+        [results addObjectsFromArray:[self findEventsForDate:strFromDate listType:watchlist]];
         
         start = [start dateByAddingTimeInterval:60 * 60 * 24];
     }
@@ -180,7 +180,43 @@ static Store *_store;
     return results;
 }
 
-- (NSMutableArray *)findEventsForDate:(NSString *)startDate
+- (NSMutableArray *)findGemDroppedEvents
+{
+    NSDate *start = [NSDate date];
+    NSDate *end = [start dateByAddingTimeInterval:60 * 60 * 24 * 31 * 6];
+    
+    NSMutableArray *results = [[NSMutableArray alloc] init];
+    
+    while ([start compare:end] != NSOrderedDescending) {
+        
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"MMM d, yyyy"];
+        NSString *strFromDate = [dateFormatter stringFromDate:start];
+        
+        [results addObjectsFromArray:[self findEventsForDate:strFromDate listType:gemdropped]];
+        
+        start = [start dateByAddingTimeInterval:60 * 60 * 24];
+    }
+    
+    return results;
+}
+
+- (BOOL)isGemDropped:(NSString *)eid
+{
+    NSMutableArray *ar = [self findGemDroppedEvents];
+    
+    for (models_Event *e in ar) {
+        
+        if ([e.eid isEqualToString:eid]) {
+            
+            return YES;
+        }
+    }
+    
+    return NO;
+}
+
+- (NSMutableArray *)findEventsForDate:(NSString *)startDate listType:(listType)type
 {
     NSEntityDescription *entityDesc = [NSEntityDescription entityForName:@"Event" inManagedObjectContext:[self managedObjectContext]];
     
@@ -203,6 +239,8 @@ static Store *_store;
             
             models_Event *e = [[models_Event alloc] init];
             
+            e.isInWatchList = [((NSNumber *)[match valueForKey:@"isInWatchList"]) boolValue];
+            e.isGemDropped = [((NSNumber *)[match valueForKey:@"isGemDropped"]) boolValue];
             e.eid = [match valueForKey:@"eid"];
             e.name = [match valueForKey:@"name"];
             e.location = [match valueForKey:@"location"];
@@ -214,7 +252,17 @@ static Store *_store;
             e.timeStart = [match valueForKey:@"startTime"];
             e.timeEnd = [match valueForKey:@"endTime"];
             
-            [result addObject:e];
+            NSLog(@"e.isInWatchList: %d", e.isInWatchList);
+            
+            if (e.isInWatchList && type == watchlist) {
+                
+                [result addObject:e];
+            } else if (e.isGemDropped && type == gemdropped) {
+                
+                [result addObject:e];
+            }
+            
+            
         }
     }
     

@@ -22,6 +22,7 @@
 #import "controllers_events_Tickets.h"
 #import "controllers_events_Specials.h"
 #import "NSString+Distance.h"
+#import "Store.h"
 
 
 @implementation controllers_events_Details
@@ -70,6 +71,8 @@ static int _retryCounter;
         [_picturesLoader loadPicturesWithParams:params];
         _photos = [[NSMutableArray alloc] init];
         
+        
+        _event.isGemDropped = [[Store instance] isGemDropped:_event.eid];
     }
     
     return self;
@@ -218,6 +221,8 @@ static int _retryCounter;
 
 - (IBAction)addToListButton_Tap:(id)sender
 {
+    _event.isInWatchList = YES;
+    
     NSString *msg = [[Store instance]saveEvent:_event];
     
     if ([msg rangeOfString:@"added"].location != NSNotFound) {
@@ -320,14 +325,16 @@ static int _retryCounter;
 
 - (void)onVoteSuccess:(NSString *)response
 {
-    [_voteLoading setHidden:YES];
-    [_header bringSubviewToFront:_voteView];
+    [_actVote stopAnimating];
+    // store eid in voted events
+    _event.isGemDropped = YES;
+    [[Store instance] saveEvent:_event];
     
     NSString *msg = @"You just dropped a Gem!";
     
     if (_event.offerTitle != nil && ![_event.offerTitle isEqualToString:@""]) {
 
-        msg = [msg stringByAppendingString:@"\n\nThe special is now unlocked"];
+        msg = [msg stringByAppendingString:@"\n\nGoodies unlocked"];
     }
     
     [YRDropdownView showDropdownInView:[controllers_App instance].view 
@@ -339,7 +346,7 @@ static int _retryCounter;
 
 - (void)onVoteFailure:(NSMutableDictionary *)response
 {
-    [_voteLoading setHidden:YES];
+    [_actVote stopAnimating];
     
     NSString *errorMsg = (NSString *)[response valueForKey:@"statusCode"];
     
@@ -530,7 +537,7 @@ static int _retryCounter;
     // HEADER
     _headerDateLabel.text = [NSString stringWithFormat:@"%@ to %@", _event.dateStart, _event.dateEnd];
     _headerNameLabel.text = _event.name;
-    _headerLocationLabel.text = _event.location;
+    _headerLocationLabel.text = (_event.location != nil && ![_event.location isEqualToString:@""]) ? _event.location : @"N/A";
     _headerImage.imageURL = [NSURL URLWithString:_event.pic_big];
     _headerImage.clipsToBounds = YES;
     _headerImage.contentMode = UIViewContentModeScaleAspectFill;
@@ -576,6 +583,10 @@ static int _retryCounter;
         
         //_mapImage.image = [UIImage imageNamed:@"noMap"];
     }
+    
+    UIImageView *ivtop = [[UIImageView alloc] initWithFrame:CGRectMake(0, _headerDateLabel.frame.origin.y - 10, 320, 20)];
+    [ivtop setImage:[UIImage imageNamed:@"shadowBottom"]];
+    [_header insertSubview:ivtop aboveSubview:_mapImage];
     
     // STATS
     NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
@@ -778,10 +789,6 @@ static int _retryCounter;
 
 - (void)onPicturesLoad:(NSArray *)objects
 {
-    [_actPic stopAnimating];
-    [_actPic setHidden:YES];
-    _actPic = nil;
-    
     if (objects != nil) {
         
         if ([objects count] > 0) {
@@ -855,7 +862,6 @@ static int _retryCounter;
 
 - (void)dealloc 
 {
-    NSLog(@"dealloc*********************************");
     
     [self cancelAllRequests];
     
@@ -894,7 +900,7 @@ static int _retryCounter;
     
     
     
-    _actPic = nil;
+    _actVote = nil;
     _actRatio1 = nil;
     _actRatio2 = nil;
     _actRatio3 = nil;
@@ -1021,9 +1027,7 @@ static int _retryCounter;
     _event.delegate = self;
     [_event vote:params success:@selector(onVoteSuccess:) failure:@selector(onVoteFailure:) sender:_voteView];
     
-    // store eid in voted events
-    
-    
+    [_actVote startAnimating];
 }
 
 

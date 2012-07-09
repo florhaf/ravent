@@ -369,7 +369,10 @@
 		DFA20F7515AA3AB1007BBEE7 /* TKDragView.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA20F7415AA3AB1007BBEE7 /* TKDragView.m */; };
 		DFA20F7715AA56F2007BBEE7 /* dropagem.png in Resources */ = {isa = PBXBuildFile; fileRef = DFA20F7615AA56F2007BBEE7 /* dropagem.png */; };
 		DFA20F7A15AB6DAE007BBEE7 /* NSString+Distance.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA20F7915AB6DAC007BBEE7 /* NSString+Distance.m */; };
+		DFA20F7C15AB851C007BBEE7 /* shadowBottom.png in Resources */ = {isa = PBXBuildFile; fileRef = DFA20F7B15AB851C007BBEE7 /* shadowBottom.png */; };
 		DFA23E2F151D205600B8A8B5 /* views_events_Map.xib in Resources */ = {isa = PBXBuildFile; fileRef = DFA23E2E151D205600B8A8B5 /* views_events_Map.xib */; };
+		DFA806DE15ABA58B00EC858B /* locked.png in Resources */ = {isa = PBXBuildFile; fileRef = DFA806DC15ABA58B00EC858B /* locked.png */; };
+		DFA806DF15ABA58B00EC858B /* unlocked.png in Resources */ = {isa = PBXBuildFile; fileRef = DFA806DD15ABA58B00EC858B /* unlocked.png */; };
 		DFA903AA1590136800426865 /* views_events_Events.xib in Resources */ = {isa = PBXBuildFile; fileRef = DFA903A91590136800426865 /* views_events_Events.xib */; };
 		DFB28C601596E99900D0F999 /* views_events_item_CommentPic.xib in Resources */ = {isa = PBXBuildFile; fileRef = DFB28C5F1596E99900D0F999 /* views_events_item_CommentPic.xib */; };
 		DFB28C721596FB4600D0F999 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFB28C711596FB4600D0F999 /* MessageUI.framework */; };
@@ -959,7 +962,10 @@
 		DFA20F7615AA56F2007BBEE7 /* dropagem.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dropagem.png; sourceTree = "<group>"; };
 		DFA20F7815AB6DA8007BBEE7 /* NSString+Distance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Distance.h"; sourceTree = "<group>"; };
 		DFA20F7915AB6DAC007BBEE7 /* NSString+Distance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Distance.m"; sourceTree = "<group>"; };
+		DFA20F7B15AB851C007BBEE7 /* shadowBottom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = shadowBottom.png; path = shadows/shadowBottom.png; sourceTree = "<group>"; };
 		DFA23E2E151D205600B8A8B5 /* views_events_Map.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = views_events_Map.xib; path = item/views_events_Map.xib; sourceTree = "<group>"; };
+		DFA806DC15ABA58B00EC858B /* locked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = locked.png; sourceTree = "<group>"; };
+		DFA806DD15ABA58B00EC858B /* unlocked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unlocked.png; sourceTree = "<group>"; };
 		DFA903A91590136800426865 /* views_events_Events.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = views_events_Events.xib; sourceTree = "<group>"; };
 		DFA9B5EB150FB454001CD530 /* RestKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RestKit.xcodeproj; path = RestKit/RestKit.xcodeproj; sourceTree = "<group>"; };
 		DFB28C5F1596E99900D0F999 /* views_events_item_CommentPic.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = views_events_item_CommentPic.xib; sourceTree = "<group>"; };
@@ -1715,6 +1721,8 @@
 		DF86A1AD1582D7FA009B3257 /* icon */ = {
 			isa = PBXGroup;
 			children = (
+				DFA806DC15ABA58B00EC858B /* locked.png */,
+				DFA806DD15ABA58B00EC858B /* unlocked.png */,
 				DFA20F5E15A94904007BBEE7 /* goodiesGift.png */,
 				DFA20F5F15A94904007BBEE7 /* goodiesTicket.png */,
 				DF04018315A7A1780064C1D2 /* watch.png */,
@@ -1810,6 +1818,7 @@
 		DF8F14F8150BD4DE00008ABC /* resources */ = {
 			isa = PBXGroup;
 			children = (
+				DFA20F7B15AB851C007BBEE7 /* shadowBottom.png */,
 				DF9690FC15A5072F0059BD0B /* shadowTop.png */,
 				DF9690F815A500870059BD0B /* shadowLeft.png */,
 				DF9690F915A500870059BD0B /* shadowRight.png */,
@@ -2609,6 +2618,9 @@
 				DFA20F6C15A96D8F007BBEE7 /* views_events_Specials.xib in Resources */,
 				DFA20F7115A97823007BBEE7 /* descriptionBG.png in Resources */,
 				DFA20F7715AA56F2007BBEE7 /* dropagem.png in Resources */,
+				DFA20F7C15AB851C007BBEE7 /* shadowBottom.png in Resources */,
+				DFA806DE15ABA58B00EC858B /* locked.png in Resources */,
+				DFA806DF15ABA58B00EC858B /* unlocked.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

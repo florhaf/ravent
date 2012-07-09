@@ -132,11 +132,11 @@
         // text
         // ***********************************************
         _itemTitle.text = event.name;
-        _itemSubTitle.text = event.location;
+        _itemSubTitle.text = (event.location != nil && ![event.location isEqualToString:@""]) ? event.location : @"N/A";
         _itemStartTime.text = [[NSString stringWithFormat:@"%@ @ %@", startDateWOYear, event.timeStart] lowercaseString];
-        _itemEndTime.text = [[NSString stringWithFormat:@"%@ @ %@", endDateWOYear, event.timeEnd] lowercaseString];
+        _itemEndTime.text = [[NSString stringWithFormat:@"%@ @ %@", endDateWOYear, (event.timeEnd != nil && ![event.timeEnd isEqualToString:@""]) ? event.timeEnd : @"N/A"] lowercaseString];
         _itemDistance.text = [NSString stringWithFormat:@"%@", [event.distance stringWithDistance]];
-        _itemVenueCategory.text = event.venue_category;
+        //_itemVenueCategory.text = event.venue_category;
         
         
         // special and features

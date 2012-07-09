@@ -90,6 +90,8 @@
     another.offerDescription = _offerDescription;
     another.ticket_link = _ticket_link;
     another.featured = _featured;
+    another.isInWatchList = _isInWatchList;
+    another.isGemDropped = _isGemDropped;
     
     return another;
 }

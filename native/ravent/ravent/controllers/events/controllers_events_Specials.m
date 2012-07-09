@@ -35,11 +35,6 @@
     return self;
 }
 
-- (BOOL)isGemDropped:(NSString *)eid
-{
-    return true;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -53,12 +48,13 @@
     _labelOfferTitle.text = _event.offerTitle;
     _labelOfferDescription.text = _event.offerDescription;
     
-    if ([self isGemDropped:_event.eid]) {
+    if (_event.isGemDropped) {
         
         _labelRule.text = @"Gem Dropped !";
+        _lockImage.image = [UIImage imageNamed:@"unlocked"];
     } else {
         
-        _labelRule.text = @"Drop a gem to get this special";
+        _labelRule.text = @"Drop a gem to unlock this Goodies";
     }
     
 }

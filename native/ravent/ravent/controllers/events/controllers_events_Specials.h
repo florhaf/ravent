@@ -21,6 +21,7 @@
     IBOutlet UILabel *_labelOfferTitle;
     IBOutlet UILabel *_labelOfferDescription;
     IBOutlet UILabel *_labelRule;
+    IBOutlet UIImageView *_lockImage;
     
 }
 
