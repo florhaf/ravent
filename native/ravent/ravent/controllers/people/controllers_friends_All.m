@@ -357,6 +357,10 @@ static controllers_friends_All *_ctrl;
 {
     [super viewWillAppear:animated];
     
+    self.peekLeftAmount = 40.0f;
+    [self.slidingViewController setAnchorLeftPeekAmount:self.peekLeftAmount];
+    self.slidingViewController.underRightWidthLayout = ECVariableRevealWidth;
+    
     _isDirty = NO;
     
     [self onFollowingLoaded:nil];
@@ -407,11 +411,6 @@ static controllers_friends_All *_ctrl;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(closeDrawer) name:ECSlidingViewTopDidReset object:nil];
 
     _hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-
-    self.peekLeftAmount = 40.0f;
-    [self.slidingViewController setAnchorLeftPeekAmount:self.peekLeftAmount];
-    self.slidingViewController.underRightWidthLayout = ECVariableRevealWidth;
-    
     
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"grayBG"]]];
     

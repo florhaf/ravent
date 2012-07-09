@@ -141,6 +141,11 @@ static int _retryCounter;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(startGps) name:ECSlidingViewUnderRightWillAppear object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(stopGps) name:ECSlidingViewTopDidReset object:nil];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
     
     self.peekLeftAmount = 40.0f;
     [self.slidingViewController setAnchorLeftPeekAmount:self.peekLeftAmount];

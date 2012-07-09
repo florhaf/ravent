@@ -20,7 +20,6 @@ static GPSManager *_gps;
 
 - (void)startGps
 {
-    NSLog(@"GPS START");
     _isLoading = YES;
     
     if (_locationManager == nil) {
@@ -28,20 +27,17 @@ static GPSManager *_gps;
         _locationManager = [[CLLocationManager alloc] init];
         _locationManager.delegate = self;
         _locationManager.desiredAccuracy = 100;
-        
     }
     
     _bestEffortAtLocation = nil;
     
     [_locationManager startUpdatingLocation];
     
-    //NSError *error = [[NSError alloc] initWithDomain:@"GPS Timed Out" code:0 userInfo:nil];
     [self performSelector:@selector(stopGps:) withObject:nil afterDelay:15];
 }
 
 - (void)stopGps:(NSError *)error
 {
-    NSLog(@"GPS STOP");
     _isLoading = NO;
     
     [_locationManager stopUpdatingLocation];
@@ -54,8 +50,6 @@ static GPSManager *_gps;
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
 {	
-    
-    NSLog(@"GPS ERROR");
     _error = error;
     _isLoading = NO;
     
@@ -68,7 +62,6 @@ static GPSManager *_gps;
 	didUpdateToLocation:(CLLocation *)newLocation
 		   fromLocation:(CLLocation *)oldLocation
 {
-    NSLog(@"GPS UPDATE LOCATION %f %f", newLocation.coordinate.latitude, newLocation.coordinate.latitude);
 	NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
 	[formatter setTimeStyle:NSDateFormatterMediumStyle];
 
