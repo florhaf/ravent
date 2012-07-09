@@ -45,6 +45,8 @@
 @synthesize offerDescription = _offerDescription;
 @synthesize featured = _featured;
 @synthesize ticket_link = _ticket_link;
+@synthesize isGemDropped = _isGemDropped;
+@synthesize isInWatchList = _isInWatchList;
 
 //#define SERVICE_URL @"http://air.local:8888"
 #define SERVICE_URL @"http://raventsvc.appspot.com"
@@ -459,10 +461,52 @@
 - (void)dealloc
 {
     [self cancelAllRequests];
-    self.delegate = nil;
+    
+    _delegate = nil;
+    _callback = nil;
+    
+    // callback for raw response
+    _callbackResponseSuccess = nil;
+    _callbackResponseFailure = nil;
     _sender = nil;
+    
+    _callbackStatsSuccess = nil;
+    _callbackStatsFailure = nil;
     _senderStats = nil;
+    
+    _callbackRsvpSuccess = nil;
+    _callbackRsvpFailure = nil;
     _senderRsvp = nil;
+    
+    _manager = nil;
+    
+    _eid = nil;
+    _name = nil;
+    _location = nil;
+    _venue_category = nil;
+    _pic_big = nil;
+    _pic_small = nil;
+    _score = nil;
+    _timeStart = nil;
+    _timeEnd = nil;
+    _distance = nil;
+    _group = nil;
+    _description = nil;
+    _dateStart = nil;
+    _dateEnd = nil;
+    _latitude = nil;
+    _longitude = nil;
+    _groupTitle = nil;
+    _filter = nil;
+    _female_ratio = nil;
+    _male_ratio = nil;
+    _nb_attending = nil;
+    _rsvp_status = nil;
+    
+    _offerTitle = nil;
+    _offerDescription = nil;
+    _featured = nil;
+    _ticket_link = nil;
 }
 
 @end

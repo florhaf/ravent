@@ -166,11 +166,6 @@ static models_User *_crtUser = nil;
     return _crtUser;
 }
 
-+ (void)release
-{
-
-}
-
 - (void)getLocation
 {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onGPSDone) name:GPSDone object:[GPSManager instance]];
@@ -555,10 +550,39 @@ static models_User *_crtUser = nil;
 - (void)dealloc
 {
     [self cancelAllRequests];
-    self.delegate = nil;
-    self.locationDelegate = nil;
+
+    _delegate = nil;
+    // callback for object loading
+    _callback = nil;
+    // callback for raw response
+    _callbackResponseSuccess = nil;
+    _callbackResponseFailure = nil;
     _sender = nil;
     
+    _locationDelegate = nil;
+    _locationSuccess = nil;
+    _locationFailure = nil;
+    
+    _manager = nil;
+    _client = nil;
+    
+    _uid = nil;
+    _fistName = nil;
+    _lastName = nil;
+    _picture = nil;
+    _pic_small = nil;
+    _group = nil;
+    _isFollowed = nil;
+    _isInvited = nil;
+    _rsvpStatus = nil;
+    _latitude = nil;
+    _longitude = nil;
+    _timeZone = nil;
+    _accessToken = nil;
+    
+    _nbOfEvents = nil;
+    _nbOfFollowers = nil;
+    _nbOfFollowing = nil;
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:GPSDone object:[GPSManager instance]];
 }

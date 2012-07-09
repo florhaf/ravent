@@ -50,6 +50,6 @@
 
 
 + (customNavigationController *)instance;
-+ (void)release;
++ (void)deleteInstance;
 
 @end

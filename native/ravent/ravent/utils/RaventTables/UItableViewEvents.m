@@ -9,6 +9,7 @@
 #import "UItableViewEvents.h"
 #import "QuartzCore/CALayer.h"
 #import "controllers_events_DetailsContainer.h"
+#import "NSString+Distance.h"
 
 @implementation UITableViewEvents
 
@@ -134,7 +135,7 @@
         _itemSubTitle.text = event.location;
         _itemStartTime.text = [[NSString stringWithFormat:@"%@ @ %@", startDateWOYear, event.timeStart] lowercaseString];
         _itemEndTime.text = [[NSString stringWithFormat:@"%@ @ %@", endDateWOYear, event.timeEnd] lowercaseString];
-        _itemDistance.text = [NSString stringWithFormat:@"%@ mi.", event.distance];
+        _itemDistance.text = [NSString stringWithFormat:@"%@", [event.distance stringWithDistance]];
         _itemVenueCategory.text = event.venue_category;
         
         

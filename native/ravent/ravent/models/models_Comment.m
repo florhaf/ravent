@@ -220,8 +220,25 @@
 - (void)dealloc
 {
     [self cancelAllRequests];
+
     _delegate = nil;
+    _callback = nil;
+    // callback for raw response
+    _callbackResponseSuccess = nil;
+    _callbackResponseFailure = nil;
+    
     _targetPictures = nil;
+    _selectorPictures = nil;
+    
+    _manager = nil;
+    
+    _firstName = nil;
+    _lastName = nil;
+    _message = nil;
+    _pictureUser = nil;
+    _picture = nil;
+    _time = nil;
+    _uid = nil;
 }
 
 @end

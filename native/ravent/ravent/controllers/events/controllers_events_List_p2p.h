@@ -48,6 +48,6 @@ typedef enum {
 
 + (controllers_events_List_p2p *)instance;
 + (BOOL)isIntanciated;
-+ (void)release;
++ (void)deleteInstance;
 
 @end

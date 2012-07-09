@@ -42,6 +42,9 @@ static NSString *cellId = @"CommentCell";
         UIBarButtonItem *postButton = [[UIBarButtonItem alloc] initWithCustomView:postb];       
         self.navigationItem.rightBarButtonItem = postButton;
         
+        [postb release];
+        [posti release];
+        
 //        self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose
 //                                                                                                target:self
 //                                                                                                action:@selector(compose:)] autorelease];
@@ -128,6 +131,10 @@ static NSString *cellId = @"CommentCell";
     
     UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithCustomView:menub];
     self.navigationItem.leftBarButtonItem = menuButton; 
+    
+    [menub release];
+    [menui release];
+    [menubg release];
     
     self.parentViewController.view.layer.shadowOpacity = 0.75f;
     self.parentViewController.view.layer.shadowRadius = 10.0f;

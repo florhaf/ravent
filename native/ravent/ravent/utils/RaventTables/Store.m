@@ -81,6 +81,8 @@ static Store *_store;
     [newManagedObject setValue:event.latitude forKey:@"latitude"];
     [newManagedObject setValue:event.longitude forKey:@"longitude"];
     [newManagedObject setValue:event.pic_big forKey:@"picture"];
+//    [newManagedObject setValue:event.pic_big forKey:@"isInWatchList"];
+//    [newManagedObject setValue:[event.isGemDroppedje ] forKey:@"isGemDropped"];
     
     // Save the context.
     NSError *error = nil;
@@ -91,6 +93,8 @@ static Store *_store;
     
     return @"event added to your Watchlist";
 }
+
+
 
 #pragma mark - Fetched results controller
 

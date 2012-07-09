@@ -17,6 +17,6 @@
 @property (nonatomic, strong) NSArray *menuItems;
 
 + (controllers_SlidingMenu *)instance;
-+ (void)release;
++ (void)deleteInstance;
 
 @end

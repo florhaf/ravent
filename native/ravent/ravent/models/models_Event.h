@@ -98,6 +98,8 @@
 @property (nonatomic, retain) NSString *ticket_link;
 
 @property (nonatomic, assign) CLLocationCoordinate2D coordinate;
+@property (nonatomic, assign) BOOL isGemDropped;
+@property (nonatomic, assign) BOOL isInWatchList;
 
 - (id)initWithDelegate:(NSObject *)del andSelector:(SEL)sel;
 - (void)loadEventsWithParams:(NSMutableDictionary *)params;

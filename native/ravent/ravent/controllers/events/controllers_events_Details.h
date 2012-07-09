@@ -13,6 +13,7 @@
 #import "models_Comment.h"
 #import "STSegmentedControl.h"
 #import "MKTickerView.h"
+#import "TKDragView.h"
 
 typedef enum {
     nogoodies,
@@ -20,7 +21,7 @@ typedef enum {
     twogoodies
 } detailsVersion;
 
-@interface controllers_events_Details : UITableViewFriends<DLStarRatingDelegate, MWPhotoBrowserDelegate, MKTickerViewDataSource, MKMapViewDelegate, MKAnnotation> {
+@interface controllers_events_Details : UITableViewFriends<DLStarRatingDelegate, MWPhotoBrowserDelegate, MKTickerViewDataSource, MKMapViewDelegate, MKAnnotation, TKDragViewDelegate> {
         
     CGSize _headerSize;
     CGSize _headerTitleSize;
@@ -87,6 +88,12 @@ typedef enum {
 @property (nonatomic, retain) NSMutableArray *photos;
 @property (nonatomic, weak) id delegateBack;
 @property (nonatomic, assign) SEL selectorBack;
+
+@property (nonatomic, strong) NSMutableArray *dragViews;
+@property (nonatomic, strong) NSMutableArray *goodFrames;
+@property (nonatomic, strong) NSMutableArray *badFrames;
+@property BOOL canDragMultipleViewsAtOnce;
+@property BOOL canUseTheSameFrameManyTimes;
 
 - (id)initWithReloadEvent:(models_Event *)event;
 - (id)initWithEvent:(models_Event *)event withBackDelegate:(id)delegate backSelector:(SEL)sel;

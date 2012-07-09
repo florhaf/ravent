@@ -440,7 +440,7 @@ static int _retryCounter;
     return _ctrl;
 }
 
-+ (void)release
++ (void)deleteInstance
 {
     _ctrl = nil;
 }

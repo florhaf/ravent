@@ -83,7 +83,7 @@ static controllers_App *_ctrl;
 
 - (void)resetApp
 {
-    [controllers_events_Events release];
+    [controllers_events_Events deleteInstance];
     _slidingController = nil;
 }
 

@@ -27,6 +27,6 @@
 - (BOOL)contains:(NSMutableDictionary *)array user:(models_User *)u;
 
 + (controllers_friends_All *)instance:(NSMutableDictionary *)following;
-+ (void)release;
++ (void)deleteInstance;
 
 @end

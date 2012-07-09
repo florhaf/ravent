@@ -21,6 +21,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "controllers_events_Tickets.h"
 #import "controllers_events_Specials.h"
+#import "NSString+Distance.h"
 
 
 @implementation controllers_events_Details
@@ -29,6 +30,12 @@
 @synthesize delegateBack = _delegateBack;
 @synthesize selectorBack = _selectorBack;
 @synthesize coordinate = _coordinate;
+
+@synthesize dragViews = dragViews_;
+@synthesize goodFrames =goodFrames_;
+@synthesize badFrames = badFrames_;
+@synthesize canDragMultipleViewsAtOnce =canDragMultipleViewsAtOnce_;
+@synthesize canUseTheSameFrameManyTimes =canUseTheSameFrameManyTimes_;
 
 static int _retryCounter;
 
@@ -316,9 +323,16 @@ static int _retryCounter;
     [_voteLoading setHidden:YES];
     [_header bringSubviewToFront:_voteView];
     
+    NSString *msg = @"You just dropped a Gem!";
+    
+    if (_event.offerTitle != nil && ![_event.offerTitle isEqualToString:@""]) {
+
+        msg = [msg stringByAppendingString:@"\n\nThe special is now unlocked"];
+    }
+    
     [YRDropdownView showDropdownInView:[controllers_App instance].view 
-                                 title:@"Woooo" 
-                                detail:@"You just dropped a Gem!"
+                                 title:@"Congrats" 
+                                detail:msg
                                  image:[UIImage imageNamed:@"dropdown-alert"]
                               animated:YES];
 }
@@ -427,6 +441,61 @@ static int _retryCounter;
     }
 }
 
+- (void)loadDropAGem
+{
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"diamond.png" ofType:nil];
+    
+    UIImage *image = [UIImage imageWithContentsOfFile:path];
+    
+    int framesY = (_detailsVersion == twogoodies) ? 435 : 450;
+    
+    
+    self.goodFrames = [NSMutableArray arrayWithCapacity:1];
+    self.badFrames = [NSMutableArray arrayWithCapacity:0];
+    
+    NSMutableArray *goodFrames = [NSMutableArray arrayWithCapacity:1];
+    NSMutableArray *badFrames = [NSMutableArray arrayWithCapacity:0];
+    self.dragViews = [NSMutableArray arrayWithCapacity:1];
+
+    CGRect endFrame =   CGRectMake(226, framesY, 60, 50);
+        
+    [goodFrames addObject:TKCGRectValue(endFrame)];
+        
+    UIView *endView = [[UIView alloc] initWithFrame:endFrame];
+    endView.layer.borderColor = [UIColor greenColor].CGColor;
+    endView.layer.borderWidth = 1.0f;
+        
+    [self.view addSubview:endView];
+        
+    [self.goodFrames addObject:endView];
+        
+    self.canUseTheSameFrameManyTimes = NO;
+    self.canDragMultipleViewsAtOnce = NO;
+    
+    
+    CGRect startFrame = CGRectMake(30, framesY, 60, 50);
+        
+        
+    TKDragView *dragView = [[TKDragView alloc] initWithImage:image
+                                                      startFrame:startFrame
+                                                      goodFrames:goodFrames
+                                                       badFrames:badFrames
+                                                     andDelegate:self];
+        
+        
+        dragView.canDragMultipleDragViewsAtOnce = NO;
+        dragView.canUseSameEndFrameManyTimes = YES;
+        
+        [self.dragViews addObject:dragView];
+        
+        [self.view addSubview:dragView];
+        
+        UITapGestureRecognizer *g = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(taped:)];
+        [g setNumberOfTapsRequired:2];
+        [dragView addGestureRecognizer:g];
+
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -466,7 +535,7 @@ static int _retryCounter;
     _headerImage.clipsToBounds = YES;
     _headerImage.contentMode = UIViewContentModeScaleAspectFill;
     _headerTimeLabel.text = [NSString stringWithFormat:@"%@ - %@", _event.timeStart, _event.timeEnd];
-    _headerDistanceLabel.text = [NSString stringWithFormat:@"%@ mi.", _event.distance];
+    _headerDistanceLabel.text = [NSString stringWithFormat:@"%@", [_event.distance stringWithDistance]];
     _venueCategory.text = (![_event.venue_category isEqualToString:@""] && _event.venue_category != nil) ? _event.venue_category : @"venue category: N/A";
     [_photos insertObject:[MWPhoto photoWithURL:[NSURL URLWithString:_event.pic_big]] atIndex:0];
     [_headerNameLabel sizeToFit];
@@ -477,14 +546,6 @@ static int _retryCounter;
         UIImageView *image = (UIImageView *)[_headerScore.subviews objectAtIndex:i];
         image.image = [UIImage imageNamed:@"diamond"];
     }
-    
-    // VOTE
-//    _voteView = [[DLStarRatingControl alloc] initWithFrame:_headerVoteLabel.frame andStars: 5];
-//    [_voteView setRating:1];
-//    [_voteView setAlpha:0.8];
-//    [_voteView setDelegate:self];
-//    [_header addSubview:_voteView];
-//    [_headerVoteLabel removeFromSuperview];
     
     // RSVP
     NSArray *objects = [NSArray arrayWithObjects:@"Yes", @"Maybe", @"No", nil];
@@ -554,6 +615,8 @@ static int _retryCounter;
     } else {
         _specialLabel.text = _event.offerTitle;
     }
+    
+    [self loadDropAGem];
 }
 
 - (IBAction)onTicket_Tap:(id)sender
@@ -792,6 +855,8 @@ static int _retryCounter;
 
 - (void)dealloc 
 {
+    NSLog(@"dealloc*********************************");
+    
     [self cancelAllRequests];
     
     _delegateBack = nil;
@@ -851,6 +916,125 @@ static int _retryCounter;
     
     _friendsSharedTo = nil;
     _tickerItems = nil;
+}
+
+#pragma mark - TKDragViewDelegate
+
+- (void)dragViewDidStartDragging:(TKDragView *)dragView{
+    
+    [UIView animateWithDuration:0.2 animations:^{
+        dragView.transform = CGAffineTransformMakeScale(1.2, 1.2);
+    }];
+}
+
+- (void)dragViewDidEndDragging:(TKDragView *)dragView{
+    
+    [UIView animateWithDuration:0.2 animations:^{
+        dragView.transform = CGAffineTransformMakeScale(1.0, 1.0);
+    }];
+}
+
+
+- (void)dragViewDidEnterStartFrame:(TKDragView *)dragView{
+    
+    [UIView animateWithDuration:0.2 animations:^{
+        dragView.alpha = 0.5;
+    }];
+}
+
+- (void)dragViewDidLeaveStartFrame:(TKDragView *)dragView{
+    
+    [UIView animateWithDuration:0.2 animations:^{
+        dragView.alpha = 1.0;
+    }];
+}
+
+
+- (void)dragViewDidEnterGoodFrame:(TKDragView *)dragView atIndex:(NSInteger)index{
+    
+    UIView *view = [self.goodFrames objectAtIndex:index];
+    
+    if (view) view.layer.borderWidth = 4.0f;
+    
+    
+}
+
+- (void)dragViewDidLeaveGoodFrame:(TKDragView *)dragView atIndex:(NSInteger)index{    
+    UIView *view = [self.goodFrames objectAtIndex:index];
+    
+    if (view) view.layer.borderWidth = 1.0f;
+}
+
+
+- (void)dragViewDidEnterBadFrame:(TKDragView *)dragView atIndex:(NSInteger)index{
+    
+    UIView *view = [self.badFrames objectAtIndex:index];
+    
+    if (view) view.layer.borderWidth = 4.0f;
+}
+
+- (void)dragViewDidLeaveBadFrame:(TKDragView *)dragView atIndex:(NSInteger)index{
+    
+    UIView *view = [self.badFrames objectAtIndex:index];
+    
+    if (view) view.layer.borderWidth = 1.0f;
+}
+
+
+- (void)dragViewWillSwapToEndFrame:(TKDragView *)dragView atIndex:(NSInteger)index{
+    
+    
+    
+}
+
+- (void)dragViewDidSwapToEndFrame:(TKDragView *)dragView atIndex:(NSInteger)index{
+    
+    
+    [UIView animateWithDuration:0.4
+                          delay:0.1
+                        options:UIViewAnimationOptionCurveEaseOut
+                     animations:^{
+                         dragView.transform = CGAffineTransformMakeRotation(M_PI);
+                     } 
+                     completion:^(BOOL finished) {
+                         
+                         [UIView animateWithDuration:0.4
+                                               delay:0.1
+                                             options:UIViewAnimationOptionCurveEaseIn
+                                          animations:^{
+                                              dragView.transform = CGAffineTransformMakeRotation(M_PI);
+                                          } 
+                                          completion:^(BOOL finished) {
+                                              
+                                              
+                                          }];
+                     }];
+    
+    // send vote
+    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+    
+    [params setValue:[NSNumber numberWithInt:1] forKey:@"vote"];
+    [params setValue:_user.uid forKey:@"userID"];
+    [params setValue:_event.eid forKey:@"eventID"];
+    [params setValue:[models_User crtUser].accessToken forKey:@"access_token"];
+    
+    _event.delegate = self;
+    [_event vote:params success:@selector(onVoteSuccess:) failure:@selector(onVoteFailure:) sender:_voteView];
+    
+    // store eid in voted events
+    
+    
+}
+
+
+- (void)dragViewWillSwapToStartFrame:(TKDragView *)dragView{
+    [UIView animateWithDuration:0.2 animations:^{
+        dragView.alpha = 1.0f; 
+    }];
+}
+
+- (void)dragViewDidSwapToStartFrame:(TKDragView *)dragView{
+    
 }
 
 @end

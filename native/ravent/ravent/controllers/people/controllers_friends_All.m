@@ -492,9 +492,8 @@ static controllers_friends_All *_ctrl;
     return _ctrl;
 }
 
-+ (void)release
++ (void)deleteInstance
 {
-    [models_User release];
     _ctrl = nil;
 }
 

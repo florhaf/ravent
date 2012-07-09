@@ -9,7 +9,6 @@
 #import "AppDelegate.h"
 #import "JMC.h"
 #import "Store.h"
-#import "UncaughtExceptionHandler.h"
 #import "controllers_events_List_p2p.h"
 #import "models_User.h"
 #import "GPSManager.h"
@@ -27,23 +26,8 @@
 @synthesize userPermissions = _userPermissions;
 
 
-- (void)installUncaughtExceptionHandler
-{
-	InstallUncaughtExceptionHandler();
-}
-
-- (void)badAccess
-{
-    void (*nullFunction)() = NULL;
-    
-    nullFunction();
-}
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    //[self performSelector:@selector(installUncaughtExceptionHandler) withObject:nil afterDelay:0];
-    //[self performSelector:@selector(badAccess) withObject:nil afterDelay:4.0];
-    
     [[GPSManager instance] startGps];
     
     [Store instance].managedObjectContext = self.managedObjectContext;

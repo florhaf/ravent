@@ -411,7 +411,7 @@ static controllers_events_List_p2p *_ctrl;
     return (_ctrl != nil);
 }
 
-+ (void)release
++ (void)deleteInstance
 {
     [_ctrl cancelAllRequests];
     _ctrl = nil;
