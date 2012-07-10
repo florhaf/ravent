@@ -7,6 +7,7 @@ import javax.persistence.Id;
 import com.chaman.dao.Dao;
 import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Unindexed;
 import com.google.appengine.api.memcache.MemcacheService;
 import com.google.appengine.api.memcache.MemcacheServiceFactory;
 
@@ -29,26 +30,25 @@ public class Vote extends Model implements Serializable  {
 	private static final long serialVersionUID = 1850811476103169817L;
 	@Id
 	String eid; //String => can be cached and will be identified differently from the Long in ELC
+	@Unindexed
 	Long nb_vote;
-	Double vote_avg;
 	
 	public Vote () {
 		
 		super();
 	}
 	
-	public Vote (String eid, Long nb_vote, Double vote_avg) {
+	public Vote (String eid, Long nb_vote) {
 		
 		this.eid = eid;
 		this.nb_vote = nb_vote;
-		this.vote_avg = vote_avg;
 	}
 	
 	public Vote(String accessToken, String userid, String eventid, String svote) {
 		
 		Dao dao = new Dao();
 		//FacebookClient client 	= new DefaultFacebookClient(accessToken);
-		Double lvote = Double.valueOf(svote);
+		
 		this.eid = eventid;
 		
 		MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
@@ -62,11 +62,9 @@ public class Vote extends Model implements Serializable  {
 	    	dsvote = dao.getVote(this.eid);
 	    	
 	    	this.nb_vote = dsvote.nb_vote + 1;
-	    	this.vote_avg = ((dsvote.vote_avg * dsvote.nb_vote) + lvote) / this.nb_vote;
 	    } else {
 	    	
 	    	this.nb_vote = v_cache.nb_vote + 1;
-	    	this.vote_avg = ((v_cache.vote_avg * v_cache.nb_vote) + lvote) / this.nb_vote;
 	    }
 		
 		dao.ofy().put(this);
@@ -93,16 +91,6 @@ public class Vote extends Model implements Serializable  {
 	public void setEid(String eventid) {
 		
 		this.eid = eventid;
-	}
-	
-	public Double getVote_avg() {
-		
-		return this.vote_avg;
-	}
-	
-	public void setVote_avg(Double voteavg) {
-		
-		this.vote_avg = voteavg;
 	}
 	
 	public Long getNb_vote() {

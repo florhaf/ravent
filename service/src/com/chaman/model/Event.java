@@ -299,7 +299,7 @@ public class Event extends Model implements Serializable {
 					    	    	e.latitude 	= JSON.GetValueFor("latitude", e.venue);
 					    	    	e.longitude = JSON.GetValueFor("longitude", e.venue);
 								
-					    	    	if ((e.latitude == null || e.latitude == "" || e.longitude == null || e.longitude == "") && v_graph != null) {
+					    	    	if ((e.latitude == null || e.longitude == null || e.latitude == ""  || e.longitude == "") && v_graph != null) {
 									
 					    	    		// take value from venue if event location is null
 					    	    		e.latitude = JSON.GetValueFor("latitude", v_graph.location);
@@ -428,10 +428,25 @@ public class Event extends Model implements Serializable {
 		this.offer_title = offer_t.get(r.nextInt(14));
 		if (!this.offer_title.equals("")) {
 			this.offer_description = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.";
-		}
-		
+		}	
 		this.featured = offer_t.get(r.nextInt(14));
-		this.ticket_link = offer_t.get(r.nextInt(14));
+		
+		List<String> tickets = new ArrayList<String>();
+		tickets.add("");
+		tickets.add("");
+		tickets.add("");
+		tickets.add("");
+		tickets.add("");
+		tickets.add("");
+		tickets.add("");
+		tickets.add("");
+		tickets.add("");
+		tickets.add("");
+		tickets.add("");
+		tickets.add("http://www.ticketmaster.com/event/12004788E26339A4?artistid=837473&majorcatid=10002&minorcatid=207");
+		tickets.add("http://www.ticketmaster.com/event/12004788E26339A4?artistid=837473&majorcatid=10002&minorcatid=207");
+		tickets.add("http://www.ticketmaster.com/event/12004788E26339A4?artistid=837473&majorcatid=10002&minorcatid=207");
+		this.ticket_link = tickets.get(r.nextInt(14));
 		
 		
 		DateTimeZone TZ = DateTimeZone.forOffsetMillis(timeZoneInMinutes*60*1000);
@@ -485,6 +500,13 @@ public class Event extends Model implements Serializable {
 				}
 			}
 		}
+		
+		if (this.featured != null && this.featured.length() > 0) {
+			
+			this.group = "0";
+			this.groupTitle = "Featured";
+		}
+		
 		return true;
 	}
 	
@@ -547,7 +569,7 @@ public class Event extends Model implements Serializable {
 					this.group = "b";
 					this.groupTitle = "Tomorrow";
 					
-					if (searchTimeFrame < 36 && searchTimeFrame != 0) { //TODO change to days
+					if (searchTimeFrame < 36 && searchTimeFrame != 0) {
 						return false;
 					}
 				} else if (day_offset < 0) {
@@ -581,6 +603,12 @@ public class Event extends Model implements Serializable {
 			this.groupTitle = "Today";
 		}
 		
+		if (this.featured != null && this.featured.length() > 0) {
+			
+			this.group = "0";
+			this.groupTitle = "Featured";
+		}
+		
 		return true;
 	}
 	
@@ -608,40 +636,45 @@ public class Event extends Model implements Serializable {
 
 			String eid_string = String.valueOf(this.eid);
 			
-			Vote dsvote = new Vote();
 			Dao dao = new Dao();
 			
 			MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
-			Vote v_cache; 		
-			v_cache = (Vote) syncCache.get(eid_string); // read from vote cache
+
+			Vote dsvote = (Vote) syncCache.get(eid_string); // read from vote cache
 			
-			if (v_cache == null) {
+			if (dsvote == null) {
 		    	
 		    	//get from DS
 		    	dsvote = dao.getVote(eid_string); // returns vote from cache or new Vote(id, 0L, 0D)
-
-		    	res_vote = dsvote.getVote_avg();
 		    	syncCache.put(eid_string, dsvote, null); // Add vote to cache
-			} else {
-				
-				res_vote = v_cache.vote_avg;
 			}
 			
+			if (dsvote != null) {
+				
+				if (dsvote.getNb_vote() >= 1 && likes < 5){
+					res_vote = 3;
+				} else if (dsvote.getNb_vote() >= 5 && likes < 10){
+					res_vote = 4;
+				} else if (dsvote.getNb_vote() >= 10){
+					res_vote =  5;
+				}
+			}
+	
 			//venue score
 			if (likes >= 1 && likes < 1000){
 				res = res + 0.5;
 			} else if (likes >= 1000 && likes < 2000){
 				res = res + 1;
 			} else if (likes >= 2000){
-				res = res + 1;
+				res = res + 1.5;
 			}
 			
 			if (checkins >= 1 && checkins < 100){
 				res = res + 1;
 			} else if (checkins >= 100 && checkins < 200){
-				res = res + 1.5;
-			} else if (checkins >= 200){
 				res = res + 1.25;
+			} else if (checkins >= 200){
+				res = res + 1.5;
 			}
 			
 			if (talking_about_count >= 1 && talking_about_count < 25){
@@ -652,7 +685,7 @@ public class Event extends Model implements Serializable {
 				res = res + 2;
 			}
 			
-			this.score = res_vote == 0 ? res : (res + res_vote) / 2;
+			this.score = res_vote == 0 ? res : (res > res_vote ? res : (res + res_vote) / 2);
 		}
 	}
 	

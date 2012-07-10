@@ -43,7 +43,7 @@ public class Dao extends DAOBase {
     {
         Vote found = ofy().find(Vote.class, id);
         if (found == null)
-            return new Vote(id, 0L, 0D);
+            return new Vote(id, 0L);
         else
             return found;
     }
