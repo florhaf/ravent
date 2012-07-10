@@ -1022,6 +1022,8 @@ static int _retryCounter;
     [params setValue:[NSNumber numberWithInt:1] forKey:@"vote"];
     [params setValue:_user.uid forKey:@"userID"];
     [params setValue:_event.eid forKey:@"eventID"];
+    [params setValue:[models_User crtUser].latitude forKey:@"lat"];
+    [params setValue:[models_User crtUser].longitude forKey:@"lon"];
     [params setValue:[models_User crtUser].accessToken forKey:@"access_token"];
     
     _event.delegate = self;
