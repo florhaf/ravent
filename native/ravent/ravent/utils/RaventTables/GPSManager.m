@@ -27,14 +27,12 @@ static GPSManager *_gps;
         _locationManager = [[CLLocationManager alloc] init];
         _locationManager.delegate = self;
         _locationManager.desiredAccuracy = 100;
-        
     }
     
     _bestEffortAtLocation = nil;
     
     [_locationManager startUpdatingLocation];
     
-    //NSError *error = [[NSError alloc] initWithDomain:@"GPS Timed Out" code:0 userInfo:nil];
     [self performSelector:@selector(stopGps:) withObject:nil afterDelay:15];
 }
 

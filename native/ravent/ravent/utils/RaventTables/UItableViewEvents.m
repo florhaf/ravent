@@ -9,6 +9,7 @@
 #import "UItableViewEvents.h"
 #import "QuartzCore/CALayer.h"
 #import "controllers_events_DetailsContainer.h"
+#import "NSString+Distance.h"
 
 @implementation UITableViewEvents
 
@@ -104,6 +105,7 @@
 
         
         // image
+        // ***********************************************
         if ([_imagesCache.allKeys containsObject:event.pic_big]) {
             
             _itemImage.image = (UIImage *)[_imagesCache objectForKey:event.pic_big];
@@ -115,49 +117,46 @@
         _itemImage.clipsToBounds = YES;
         _itemImage.contentMode = UIViewContentModeScaleAspectFill;
         
+        
+        // date time
+        // ***********************************************
         NSString * startDateWOYear = @"?";
         NSString * endDateWOYear = @"?";
-        
         if (event.dateStart != nil && ![event.dateStart isEqualToString:@""]) {
-            
             startDateWOYear = [event.dateStart substringToIndex:[event.dateStart rangeOfString:@","].location];
         }
-        
         if (event.dateStart != nil && ![event.dateEnd isEqualToString:@""]) {
-            
             endDateWOYear = [event.dateEnd substringToIndex:[event.dateEnd rangeOfString:@","].location];
         }
         
         // text
+        // ***********************************************
         _itemTitle.text = event.name;
-        _itemSubTitle.text = event.location;
+        _itemSubTitle.text = (event.location != nil && ![event.location isEqualToString:@""]) ? event.location : @"N/A";
         _itemStartTime.text = [[NSString stringWithFormat:@"%@ @ %@", startDateWOYear, event.timeStart] lowercaseString];
-        _itemEndTime.text = [[NSString stringWithFormat:@"%@ @ %@", endDateWOYear, event.timeEnd] lowercaseString];
-        _itemDistance.text = [NSString stringWithFormat:@"%@ mi.", event.distance];
-        _itemVenueCategory.text = event.venue_category;
+        _itemEndTime.text = [[NSString stringWithFormat:@"%@ @ %@", endDateWOYear, (event.timeEnd != nil && ![event.timeEnd isEqualToString:@""]) ? event.timeEnd : @"N/A"] lowercaseString];
+        _itemDistance.text = [NSString stringWithFormat:@"%@", [event.distance stringWithDistance]];
+        //_itemVenueCategory.text = event.venue_category;
         
         
         // special and features
+        // ***********************************************
         if (event.featured != nil && ![event.featured isEqualToString:@""]) {
-            
             [_featured setHidden:NO];
         }
         if (event.offerTitle != nil && ![event.offerTitle isEqualToString:@""]) {
-            
             [_special setHidden:NO];
         }
         if (event.ticket_link != nil && ![event.ticket_link isEqualToString:@""]) {
-            
             if (_special.hidden) {
-                
                 _ticket_link.frame = CGRectMake(_ticket_link.frame.origin.x + 20, _ticket_link.frame.origin.y, _ticket_link.frame.size.width, _ticket_link.frame.size.height);
             }
-            
             [_ticket_link setHidden:NO];
         }
         
         
         // score
+        // ***********************************************
         for (int i = 0; i < [event.score intValue]; i++) {
         
             UIImageView *image = (UIImageView *)[_itemScore.subviews objectAtIndex:i];
@@ -261,6 +260,11 @@
     
     _bg = nil;
     _special = nil;
+    
+    _featured = nil;
+    _ticket_link = nil;
+    
+    _details = nil;
 }
 
 @end

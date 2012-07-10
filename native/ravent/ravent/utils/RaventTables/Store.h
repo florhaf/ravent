@@ -10,6 +10,11 @@
 #import <CoreData/CoreData.h>
 #import "models_Event.h"
 
+typedef enum {
+    watchlist,
+    gemdropped
+} listType;
+
 @interface Store : NSObject<NSFetchedResultsControllerDelegate> {
     
 }
@@ -21,8 +26,10 @@
 - (NSString *)saveEid:(NSString *)eid forDate:(NSString *)startDate;
 - (NSString *)saveEvent:(models_Event *)event;
 - (NSMutableArray *)findEidsForDate:(NSString *)startDate;
-- (NSMutableArray *)findEventsForDate:(NSString *)startDate;
+- (NSMutableArray *)findEventsForDate:(NSString *)startDate listType:(listType)type;
 - (NSMutableArray *)findFutureEvents;
+- (NSMutableArray *)findGemDroppedEvents;
+- (BOOL)isGemDropped:(NSString *)eid;
 
 + (Store *)instance;
 

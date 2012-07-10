@@ -117,6 +117,8 @@ static NSInteger kJMCTag = 10133;
 //                                             action:@selector(sendFeedback)] autorelease];
 
     [self addButtonsToView];
+    [postb release];
+    [posti release];
     if (!self.attachments) {
         self.attachments = [NSMutableArray arrayWithCapacity:1];
     }
@@ -156,6 +158,9 @@ static NSInteger kJMCTag = 10133;
         [doneb setFrame:CGRectMake(0, 0, donei.size.width, donei.size.height)];
         UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithCustomView:doneb];       
         self.navigationItem.rightBarButtonItem = doneButton;
+        
+        [doneb release];
+        [donei release];
     }
     
     [self.descriptionField becomeFirstResponder];

@@ -285,10 +285,10 @@ static customNavigationController *_ctrl;
     return _ctrl;
 }
 
-+ (void)release
++ (void)deleteInstance
 {
     [((controllers_friends_People *)_ctrl.rootController) cancelAllRequests];
-    [controllers_friends_All release];
+    [controllers_friends_All deleteInstance];
     _ctrl = nil;
 }
 

@@ -43,11 +43,11 @@ typedef enum {
 
 - (void)didReceiveMemoryWarning
 {
-    [super didReceiveMemoryWarning];
-    
     _imagesCache = nil;
     
     _imagesCache = [[NSMutableDictionary alloc] init];
+    
+    [super didReceiveMemoryWarning];
 }
 
 - (void)updateLoadingMessageWith:(NSString *)text
@@ -504,10 +504,30 @@ typedef enum {
 
 - (void)dealloc
 {
+    _user = nil;
+    _event = nil;
+    
+    _refreshHeaderView = nil;
+    
+    _emptyView = nil;
+    _emptyMessageViewPlaceHolder = nil;
+    _emptyImageView = nil;
     _item = nil;
     _itemTitle = nil;
     _itemSubTitle = nil;
-    _itemImage = nil;    
+    _itemImage = nil;
+    
+    
+    _emptyMessageView = nil;
+    
+    _data = nil;
+    _sortedKeys = nil;
+    _groupedData = nil;
+    
+    _url = nil;
+    _hud = nil;
+    
+    _imagesCache = nil;
 }
 
 @end

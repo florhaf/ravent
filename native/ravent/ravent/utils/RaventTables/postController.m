@@ -134,11 +134,15 @@
     [MBProgressHUD hideHUDForView:self.view animated:YES];
     [self hideModal];
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadComments" object:nil];
+    if (_isForEvent) {
+
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadComments" object:nil];   
+    }
 }
 
 - (void)onPostFailure:(NSMutableDictionary *)response
 {
+    [_textView becomeFirstResponder];
     [MBProgressHUD hideHUDForView:self.view animated:YES];
 
     NSString *errorMsg = (NSString *)[response valueForKey:@"statusCode"];
@@ -267,6 +271,32 @@
     
     _imageData = UIImageJPEGRepresentation(image, 1.0);
     //_base64Picture = [_imageData base64EncodingWithLineLength:0];
+}
+
+- (void)dealloc
+{
+    _textView = nil;
+    _labelName = nil;
+    _picUser = nil;
+    
+    _buttonPicture = nil;
+    _buttonTake = nil;
+    _buttonLib = nil;
+    _buttonCancel = nil;
+    
+    _picture = nil;
+    _pictureBorder = nil;
+    _removeButton = nil;
+    
+    _buttonsContainer = nil;
+    
+    
+    _toId = nil; // id for an event of a friend
+    _placeHolder = nil;
+    
+    _base64Picture = nil;
+    _imageData = nil;
+    _comment = nil;
 }
 
 @end

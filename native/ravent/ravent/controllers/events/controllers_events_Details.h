@@ -13,6 +13,7 @@
 #import "models_Comment.h"
 #import "STSegmentedControl.h"
 #import "MKTickerView.h"
+#import "TKDragView.h"
 
 typedef enum {
     nogoodies,
@@ -20,7 +21,7 @@ typedef enum {
     twogoodies
 } detailsVersion;
 
-@interface controllers_events_Details : UITableViewFriends<DLStarRatingDelegate, MWPhotoBrowserDelegate, MKTickerViewDataSource, MKMapViewDelegate, MKAnnotation> {
+@interface controllers_events_Details : UITableViewFriends<DLStarRatingDelegate, MWPhotoBrowserDelegate, MKTickerViewDataSource, MKMapViewDelegate, MKAnnotation, TKDragViewDelegate> {
         
     CGSize _headerSize;
     CGSize _headerTitleSize;
@@ -53,7 +54,7 @@ typedef enum {
     MKCoordinateRegion _viewRegion;
     CLLocationCoordinate2D _zoomLocation;
     
-    IBOutlet UIActivityIndicatorView *_actPic;
+    IBOutlet UIActivityIndicatorView *_actVote;
     IBOutlet UIActivityIndicatorView *_actRatio1;
     IBOutlet UIActivityIndicatorView *_actRatio2;
     IBOutlet UIActivityIndicatorView *_actRatio3;
@@ -62,6 +63,7 @@ typedef enum {
     
     IBOutlet UILabel *_specialLabel;
     IBOutlet UIImageView *_goodiesIcon;
+    IBOutlet UIImageView *_featuredIcon;
     
     detailsVersion _detailsVersion;
     
@@ -87,6 +89,12 @@ typedef enum {
 @property (nonatomic, weak) id delegateBack;
 @property (nonatomic, assign) SEL selectorBack;
 
+@property (nonatomic, strong) NSMutableArray *dragViews;
+@property (nonatomic, strong) NSMutableArray *goodFrames;
+@property (nonatomic, strong) NSMutableArray *badFrames;
+@property BOOL canDragMultipleViewsAtOnce;
+@property BOOL canUseTheSameFrameManyTimes;
+
 - (id)initWithReloadEvent:(models_Event *)event;
 - (id)initWithEvent:(models_Event *)event withBackDelegate:(id)delegate backSelector:(SEL)sel;
 
@@ -96,6 +104,9 @@ typedef enum {
 - (IBAction)picButton_Tap:(id)sender;
 - (IBAction)rsvp:(id)sender;
 - (IBAction)backButton_Tap:(id)sender;
+- (IBAction)onTicket_Tap:(id)sender;
+- (IBAction)onSpecials_Tap:(id)sender;
+- (IBAction)onGoodies_Tap:(id)sender;
 
 - (void)onVoteSuccess:(NSString *)response;
 - (void)onVoteFailure:(NSMutableDictionary *)response;

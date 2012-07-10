@@ -170,7 +170,10 @@
 
 - (void)onBackTap
 {
-    [_details cancelAllRequests];
+    if ([_details respondsToSelector:@selector(cancelAllRequests)]) {
+     
+        [_details cancelAllRequests];
+    }
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -203,6 +206,13 @@
 - (void)viewDidUnload
 {
     [super viewDidUnload];
+}
+
+- (void)dealloc
+{
+    _details = nil;
+    
+    _footer = nil;
 }
 
 @end

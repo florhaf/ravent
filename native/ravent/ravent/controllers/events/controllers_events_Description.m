@@ -131,6 +131,12 @@
     self.navigationItem.rightBarButtonItem = doneButton;
     
     _hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
+    _tickerItems = [[NSArray alloc] initWithObjects:_event.name, nil];
+    [_ticker reloadData];
+    
+    _labelLocation.text = _event.location;
+    _labelAddress.text = _event.location;
 }
 
 #pragma mark - Private
@@ -143,6 +149,47 @@
         
         [_event cancelAllRequests];
     }
+}
+
+#pragma mark - Ticker delegate
+
+- (UIColor*) backgroundColorForTickerView:(MKTickerView *)vertMenu
+{
+    return [UIColor clearColor];
+}
+
+- (int) numberOfItemsForTickerView:(MKTickerView *)tabView
+{
+    return [_tickerItems count];
+}
+
+- (NSString*) tickerView:(MKTickerView *)tickerView titleForItemAtIndex:(NSUInteger)index
+{
+    return [_tickerItems objectAtIndex:index];
+}
+
+- (NSString*) tickerView:(MKTickerView *)tickerView valueForItemAtIndex:(NSUInteger)index
+{
+    return nil;
+}
+
+- (UIImage*) tickerView:(MKTickerView*) tickerView imageForItemAtIndex:(NSUInteger) index
+{
+    return nil;
+}
+
+- (void)dealloc
+{
+    _textView = nil;
+    _tickerItems = nil;
+    
+    _ticker = nil;
+    _labelLocation = nil;
+    _labelAddress = nil;
+    
+    _event = nil;
+    _hud = nil;
+    _url = nil;
 }
 
 @end

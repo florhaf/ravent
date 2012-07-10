@@ -197,6 +197,25 @@ static controllers_events_List_p2p *_ctrl;
     }
 }
 
+- (NSArray *)bubbleUpFeatured:(NSArray *)original
+{
+    NSMutableArray *featured = [[NSMutableArray alloc] init];
+    NSMutableArray *nonFeatured = [[NSMutableArray alloc] init];
+    
+    for (models_Event *e in original) {
+        
+        if (e.featured != nil && ![e.featured isEqualToString:@""]) {
+            
+            [featured addObject:e];
+        } else {
+            
+            [nonFeatured addObject:e];
+        }
+    }
+    
+    return [featured arrayByAddingObjectsFromArray:nonFeatured];
+}
+
 - (void)sortByScore
 {
     NSMutableDictionary *sortedDic = [[NSMutableDictionary alloc] init];
@@ -225,7 +244,7 @@ static controllers_events_List_p2p *_ctrl;
             }
         }];
         
-        [sortedDic setObject:sortedAr forKey:key];
+        [sortedDic setObject:[self bubbleUpFeatured:sortedAr] forKey:key];
     }
     
     _groupedData = sortedDic;
@@ -259,7 +278,7 @@ static controllers_events_List_p2p *_ctrl;
             }
         }];
         
-        [sortedDic setObject:sortedAr forKey:key];
+        [sortedDic setObject:[self bubbleUpFeatured:sortedAr] forKey:key];
     }
     
     _groupedData = sortedDic;
@@ -293,7 +312,7 @@ static controllers_events_List_p2p *_ctrl;
             return [d1 compare:d2];
         }];
         
-        [sortedDic setObject:sortedAr forKey:key];
+        [sortedDic setObject:[self bubbleUpFeatured:sortedAr] forKey:key];
     }
     
     _groupedData = sortedDic;
@@ -387,7 +406,12 @@ static controllers_events_List_p2p *_ctrl;
     return _ctrl;
 }
 
-+ (void)release
++ (BOOL)isIntanciated
+{
+    return (_ctrl != nil);
+}
+
++ (void)deleteInstance
 {
     [_ctrl cancelAllRequests];
     _ctrl = nil;

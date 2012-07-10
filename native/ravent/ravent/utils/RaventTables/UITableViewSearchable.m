@@ -133,4 +133,9 @@
     return YES;
 }
 
+- (void)dealloc
+{
+    _filteredData = nil;
+}
+
 @end

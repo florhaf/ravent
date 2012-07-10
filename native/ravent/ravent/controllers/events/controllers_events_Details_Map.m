@@ -215,4 +215,17 @@
     [self dismissModalViewControllerAnimated:YES];
 }
 
+- (void)dealloc
+{
+    _map = nil;
+    _segmentedControl = nil;
+    routeOverlayView = nil;
+	diretions = nil;
+	startPoint = nil;
+	endPoint = nil;
+	wayPoints = nil;
+	
+    _event = nil;
+}
+
 @end

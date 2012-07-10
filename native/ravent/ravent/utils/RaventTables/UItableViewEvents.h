@@ -23,8 +23,6 @@
     IBOutlet UIImageView *_ticket_link;
     
     UIViewController *_details;
-    
-    
 }
 
 - (id)initWithUser:(models_User *)user;

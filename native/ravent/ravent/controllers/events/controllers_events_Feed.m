@@ -142,11 +142,9 @@
     
     _itemTime.text = timeStr;
     
-    CGFloat delta = [self resizeAndPositionCellItem];
+    [self resizeAndPositionCellItem];
     
     [cell.contentView addSubview:_item];
-    
-    delta = (delta == 0) ? 20 : delta;
     
     [_bg setFrame:CGRectMake(0, 0, 320, c.cellHeight)];
     
@@ -217,6 +215,14 @@
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"reloadComments" object:nil];
+    
+    _comment = nil;
+    
+    _itemTime = nil;
+    _commentImg = nil;
+    _bg = nil;
+    
+    _photos = nil;
 }
 
 @end

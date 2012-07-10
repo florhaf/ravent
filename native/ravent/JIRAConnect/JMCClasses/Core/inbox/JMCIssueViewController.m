@@ -62,6 +62,9 @@ static float detailLabelHeight = 21.0f;
         
         [self.navigationItem setLeftBarButtonItem:backButton];
         
+        [backb release];
+        [backi release];
+        
         [replyButton release];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTable) name:kJMCNewCommentCreated object:nil];
     }

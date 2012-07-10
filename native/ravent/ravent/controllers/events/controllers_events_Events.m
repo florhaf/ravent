@@ -15,6 +15,7 @@
 #import "UIView+Animation.h"
 #import "TSPopoverController.h"
 #import "TSActionSheet.h"
+#import "NSString+Distance.h"
 #import <QuartzCore/QuartzCore.h>
 
 @implementation controllers_events_Events
@@ -86,10 +87,13 @@ static customNavigationController *_ctrl;
     [self.view bringSubviewToFront:_optionsView];
     
     _radiusStepper.value = [models_User crtUser].searchRadius;
-    _radiusStepper.minimumValue = 5;
+    _radiusStepper.minimumValue = 0;
     _radiusStepper.maximumValue = 50;
     _radiusStepper.stepValue = 5;
     _radiusStepper.continuous = YES;
+    
+    // format label w/ km or mi
+    [self stepperRadiusPressed:_radiusStepper];
     
     _windowStepper.value = [models_User crtUser].searchWindow / 24;
     _windowStepper.minimumValue = 1;
@@ -239,7 +243,6 @@ static customNavigationController *_ctrl;
         
         _isUp = YES;
         [_optionsView raceTo:CGPointMake(0, -264) withSnapBack:YES];
-        //[[self.view.subviews objectAtIndex:0] raceTo:CGPointMake(0, 0) withSnapBack:YES];
         
         // change in radius or timeframe, need to call the WS
         if (_isDirty) {
@@ -281,7 +284,8 @@ static customNavigationController *_ctrl;
 - (IBAction)onSortChanged:(id)sender
 {    
     [controllers_events_List_p2p instance].sort = _seg.selectedSegmentIndex;
-    _isSemiDirty = YES;
+    //_isSemiDirty = YES;
+    [[controllers_events_List_p2p instance] reloadTableViewDataSourceWithIndex:_currentCategory];
 }
 
 -(void)showPopover:(id)sender forEvent:(UIEvent*)event
@@ -317,8 +321,22 @@ static customNavigationController *_ctrl;
 
 - (IBAction)stepperRadiusPressed:(UIStepper *)sender
 {
-    [models_User crtUser].searchRadius = (int)sender.value;
-    _labelRadiusValue.text = [NSString stringWithFormat:@"%d mi.",  (int)sender.value];
+    NSString *format = @"%d";
+    int value = ((int)sender.value == 0) ? 1 : (int)sender.value;
+    
+    BOOL isMetric = [[[NSLocale currentLocale] objectForKey:NSLocaleUsesMetricSystem] boolValue];
+    
+    if (isMetric) {
+        
+        format = @"km.";
+        [models_User crtUser].searchRadius = value * 1.609344;
+    } else {
+        
+        format = @"mi.";
+        [models_User crtUser].searchRadius = value;
+    }
+    
+    _labelRadiusValue.text = [NSString stringWithFormat:@"%d %@",  value, format];
     _isDirty = YES;
 }
 
@@ -380,13 +398,6 @@ static customNavigationController *_ctrl;
 {
     [super viewWillAppear:animated];
     
-    // shadowPath, shadowOffset, and rotation is handled by ECSlidingViewController.
-    // You just need to set the opacity, radius, and color.
-//    self.parentViewController.view.layer.shadowOpacity = 0.75f;
-//    self.parentViewController.view.layer.shadowRadius = 10.0f;
-//    self.parentViewController.view.layer.shadowColor = [UIColor blackColor].CGColor;
-    
-    
     if (![self.slidingViewController.underLeftViewController isKindOfClass:[controllers_SlidingMenu class]]) {
         self.slidingViewController.underLeftViewController  = [controllers_SlidingMenu instance];
     }
@@ -424,11 +435,11 @@ static customNavigationController *_ctrl;
     return _ctrl;
 }
 
-+ (void)release
++ (void)deleteInstance
 {
-    [controllers_events_List_p2p release];
-    [controllers_events_Map_p2p release];
-    [controllers_SlidingMenu release];
+    [controllers_events_List_p2p deleteInstance];
+    [controllers_events_Map_p2p deleteInstance];
+    [controllers_SlidingMenu deleteInstance];
     _ctrl = nil;
 }
 

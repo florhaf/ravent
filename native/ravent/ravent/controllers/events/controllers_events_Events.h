@@ -78,6 +78,6 @@
 - (void)setNavBarTitle:(NSString *)imageName;
 
 + (customNavigationController *)instance;
-+ (void)release;
++ (void)deleteInstance;
 
 @end

@@ -9,7 +9,6 @@
 #import "AppDelegate.h"
 #import "JMC.h"
 #import "Store.h"
-#import "UncaughtExceptionHandler.h"
 #import "controllers_events_List_p2p.h"
 #import "models_User.h"
 #import "GPSManager.h"
@@ -27,23 +26,8 @@
 @synthesize userPermissions = _userPermissions;
 
 
-- (void)installUncaughtExceptionHandler
-{
-	InstallUncaughtExceptionHandler();
-}
-
-- (void)badAccess
-{
-    void (*nullFunction)() = NULL;
-    
-    nullFunction();
-}
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    //[self performSelector:@selector(installUncaughtExceptionHandler) withObject:nil afterDelay:0];
-    //[self performSelector:@selector(badAccess) withObject:nil afterDelay:4.0];
-    
     [[GPSManager instance] startGps];
     
     [Store instance].managedObjectContext = self.managedObjectContext;
@@ -108,18 +92,23 @@
      Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
      */
     
-        [[JMC sharedInstance] ping];
-                NSDate *lastLoadTime = [[controllers_events_List_p2p instance] lastLoadTime];
-                NSDateComponents *thirtyMins = [[NSDateComponents alloc] init];
-                [thirtyMins setMinute:30];
-                NSCalendar *cal = [NSCalendar currentCalendar];
-                NSDate *lastLoadPlus30 = [cal dateByAddingComponents:thirtyMins toDate:lastLoadTime options:0];
-                NSDate *now = [NSDate date];
-                
-                if ([lastLoadPlus30 compare:now] == NSOrderedAscending) {
-                    
-                    [[controllers_events_List_p2p instance] loadDataWithSpinner];
-                }
+    [[JMC sharedInstance] ping];
+    
+    if ([controllers_events_List_p2p isIntanciated]) {
+        
+     
+        NSDate *lastLoadTime = [[controllers_events_List_p2p instance] lastLoadTime];
+        NSDateComponents *thirtyMins = [[NSDateComponents alloc] init];
+        [thirtyMins setMinute:30];
+        NSCalendar *cal = [NSCalendar currentCalendar];
+        NSDate *lastLoadPlus30 = [cal dateByAddingComponents:thirtyMins toDate:lastLoadTime options:0];
+        NSDate *now = [NSDate date];
+        
+        if ([lastLoadPlus30 compare:now] == NSOrderedAscending) {
+            
+            [[controllers_events_List_p2p instance] loadDataWithSpinner];
+        }
+    }
         
 }
 

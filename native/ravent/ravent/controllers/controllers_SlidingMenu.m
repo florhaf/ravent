@@ -147,7 +147,7 @@ static controllers_SlidingMenu *_ctrl;
 {
     NSString *identifier = [self.menuItems objectAtIndex:indexPath.row];
     
-    UIViewController *newTopViewController = [self.storyboard instantiateViewControllerWithIdentifier:identifier];
+    UIViewController *newTopViewController = nil;
     
     if ([identifier isEqualToString:@"Events"]) {
         
@@ -197,9 +197,9 @@ static controllers_SlidingMenu *_ctrl;
     return _ctrl;
 }
 
-+ (void)release
++ (void)deleteInstance
 {
-    [controllers_friends_People release];
+    [controllers_friends_People deleteInstance];
 
     _ctrl = nil;
 }

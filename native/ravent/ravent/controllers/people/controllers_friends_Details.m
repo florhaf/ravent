@@ -103,4 +103,15 @@
     _followingLabel.text = u.nbOfFollowing;
 }
 
+- (void)dealloc
+{
+    _detailsView = nil;
+    _nameLabel = nil;
+    _followingLabel = nil;
+    _followersLabel = nil;
+    _eventsLabel = nil;
+    _userImage = nil;
+    _fbButton = nil;
+}
+
 @end
