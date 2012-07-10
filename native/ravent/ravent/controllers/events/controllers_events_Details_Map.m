@@ -10,8 +10,6 @@
 #import "YRDropdownView.h"
 #import "controllers_App.h"
 #import "models_User.h"
-#import "UICRouteOverlayMapView.h"
-#import "UICRouteAnnotation.h"
 
 @implementation controllers_events_Details_Map
 
@@ -19,7 +17,7 @@
 @synthesize startPoint;
 @synthesize endPoint;
 @synthesize wayPoints;
-@synthesize travelMode;
+
 
 - (id)initWithEvent:(models_Event *)event
 {
@@ -35,71 +33,6 @@
     }
     
     return self;
-}
-
-#pragma mark <UICGDirectionsDelegate> Methods
-
-- (void)directionsDidFinishInitialize:(UICGDirections *)directions {
-	[self update];
-}
-
-- (void)directions:(UICGDirections *)directions didFailInitializeWithError:(NSError *)error {
-	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-	
-	UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Map Directions" message:[error localizedFailureReason] delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
-	[alertView show];
-}
-
-- (void)directionsDidUpdateDirections:(UICGDirections *)directions {
-	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-	
-	// Overlay polylines
-	UICGPolyline *polyline = [directions polyline];
-	NSArray *routePoints = [polyline routePoints];
-	[routeOverlayView setRoutes:routePoints];
-	
-	// Add annotations
-	UICRouteAnnotation *startAnnotation = [[UICRouteAnnotation alloc] initWithCoordinate:[[routePoints objectAtIndex:0] coordinate]
-																					title:startPoint
-																		   annotationType:UICRouteAnnotationTypeStart] ;
-	UICRouteAnnotation *endAnnotation = [[UICRouteAnnotation alloc] initWithCoordinate:[[routePoints lastObject] coordinate]
-                                                                                  title:endPoint
-                                                                         annotationType:UICRouteAnnotationTypeEnd];
-	if ([wayPoints count] > 0) {
-		NSInteger numberOfRoutes = [directions numberOfRoutes];
-		for (NSInteger index = 0; index < numberOfRoutes; index++) {
-			UICGRoute *route = [directions routeAtIndex:index];
-			CLLocation *location = [route endLocation];
-			UICRouteAnnotation *annotation = [[UICRouteAnnotation alloc] initWithCoordinate:[location coordinate]
-																					   title:[[route endGeocode] objectForKey:@"address"]
-																			  annotationType:UICRouteAnnotationTypeWayPoint];
-			[_map addAnnotation:annotation];
-		}
-	}
-    
-	[_map addAnnotations:[NSArray arrayWithObjects:startAnnotation, endAnnotation, nil]];
-}
-
-- (void)directions:(UICGDirections *)directions didFailWithMessage:(NSString *)message {
-	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-	UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Map Directions" message:message delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
-	[alertView show];
-}
-
-
-- (void)update {
-	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-	
-	UICGDirectionsOptions *options = [[UICGDirectionsOptions alloc] init];
-	options.travelMode = travelMode;
-	if ([wayPoints count] > 0) {
-		NSArray *routePoints = [NSArray arrayWithObject:startPoint];
-		routePoints = [routePoints arrayByAddingObjectsFromArray:wayPoints];
-		routePoints = [routePoints arrayByAddingObject:endPoint];
-		[diretions loadFromWaypoints:routePoints options:options];
-	} else {
-		[diretions loadWithStartPoint:startPoint endPoint:endPoint options:options];
-	}
 }
 
 #pragma mark - View lifecycle
@@ -187,31 +120,14 @@
     return nil;
 }
 
-- (void)mapView:(MKMapView *)mapView regionWillChangeAnimated:(BOOL)animated {
-    
-    if (routeOverlayView != nil) {
-        
-        routeOverlayView.hidden = YES;
-    }
-}
-
-- (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated {
-    
-    if (routeOverlayView != nil) {
-        
-        routeOverlayView.hidden = NO;
-        [routeOverlayView setNeedsDisplay];   
-    }
-}
-
 - (void)hideAllModal
 {
     [_map setShowsUserLocation:NO];
     _map = nil;
-    routeOverlayView = nil;
+
     startPoint = nil;
     endPoint = nil;
-    diretions = nil;
+
     [self dismissModalViewControllerAnimated:YES];
 }
 
@@ -219,8 +135,6 @@
 {
     _map = nil;
     _segmentedControl = nil;
-    routeOverlayView = nil;
-	diretions = nil;
 	startPoint = nil;
 	endPoint = nil;
 	wayPoints = nil;

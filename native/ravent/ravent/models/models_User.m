@@ -445,7 +445,7 @@ static models_User *_crtUser = nil;
 
 - (void)unfollow:(NSMutableDictionary *)params success:(SEL)success failure:(SEL)failure sender:(id)sender
 {
-    RKLogConfigureByName("RestKit/*", RKLogLevelTrace);
+    //RKLogConfigureByName("RestKit/*", RKLogLevelTrace);
     _callbackResponseSuccess = success;
     _callbackResponseFailure = failure;
     _sender = sender;

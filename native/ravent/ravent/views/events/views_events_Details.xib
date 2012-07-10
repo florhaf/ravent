@@ -864,6 +864,14 @@ AAAAAAAAdGV4dAAAAABDb3B5cmlnaHQgQXBwbGUsIEluYy4sIDIwMDgAA</bytes>
 					<int key="connectionID">190</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">_actVote</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="647183449"/>
+					</object>
+					<int key="connectionID">193</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">addToListButton_Tap:</string>
 						<reference key="source" ref="182199741"/>
@@ -1174,7 +1182,7 @@ AAAAAAAAdGV4dAAAAABDb3B5cmlnaHQgQXBwbGUsIEluYy4sIDIwMDgAA</bytes>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">192</int>
+			<int key="maxID">193</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">

@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "UITableViewFriends.h"
-#import "DLStarRatingControl.h"
 #import "MWPhotoBrowser.h"
 #import "models_Comment.h"
 #import "STSegmentedControl.h"
@@ -21,7 +20,7 @@ typedef enum {
     twogoodies
 } detailsVersion;
 
-@interface controllers_events_Details : UITableViewFriends<DLStarRatingDelegate, MWPhotoBrowserDelegate, MKTickerViewDataSource, MKMapViewDelegate, MKAnnotation, TKDragViewDelegate> {
+@interface controllers_events_Details : UITableViewFriends<MWPhotoBrowserDelegate, MKTickerViewDataSource, MKMapViewDelegate, MKAnnotation, TKDragViewDelegate> {
         
     CGSize _headerSize;
     CGSize _headerTitleSize;
@@ -68,8 +67,8 @@ typedef enum {
     detailsVersion _detailsVersion;
     
     STSegmentedControl *_segment;
-    
-    DLStarRatingControl *_voteView;
+    TKDragView *_dragView;
+
     UIToolbar *_toolbar;
     models_Event *_eventLoader;
     models_Comment *_picturesLoader;

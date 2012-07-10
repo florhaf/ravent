@@ -13,8 +13,6 @@
 #import "controllers_events_Options_p2p.h"
 #import "ActionDispatcher.h"
 #import "UIView+Animation.h"
-#import "TSPopoverController.h"
-#import "TSActionSheet.h"
 #import "NSString+Distance.h"
 #import <QuartzCore/QuartzCore.h>
 
@@ -284,39 +282,7 @@ static customNavigationController *_ctrl;
 - (IBAction)onSortChanged:(id)sender
 {    
     [controllers_events_List_p2p instance].sort = _seg.selectedSegmentIndex;
-    //_isSemiDirty = YES;
     [[controllers_events_List_p2p instance] reloadTableViewDataSourceWithIndex:_currentCategory];
-}
-
--(void)showPopover:(id)sender forEvent:(UIEvent*)event
-{
-    UITableViewController *tableViewController = [[UITableViewController alloc] initWithStyle:UITableViewStylePlain];
-    tableViewController.view.frame = CGRectMake(0,0, 320, 400);
-    TSPopoverController *popoverController = [[TSPopoverController alloc] initWithContentViewController:tableViewController];
-    
-    popoverController.cornerRadius = 5;
-    popoverController.titleText = @"change order";
-    popoverController.popoverBaseColor = [UIColor lightGrayColor];
-    popoverController.popoverGradient= NO;
-    //    popoverController.arrowPosition = TSPopoverArrowPositionHorizontal;
-    [popoverController showPopoverWithTouch:event];
-    
-}
-
--(void)showActionSheet:(id)sender forEvent:(UIEvent*)event
-{
-    TSActionSheet *actionSheet = [[TSActionSheet alloc] initWithTitle:@"action sheet"];
-    [actionSheet destructiveButtonWithTitle:@"hoge" block:nil];
-    [actionSheet addButtonWithTitle:@"hoge1" block:^{
-        NSLog(@"pushed hoge1 button");
-    }];
-    [actionSheet addButtonWithTitle:@"moge2" block:^{
-        NSLog(@"pushed hoge2 button");
-    }];
-    [actionSheet cancelButtonWithTitle:@"Cancel" block:nil];
-    actionSheet.cornerRadius = 5;
-    
-    [actionSheet showWithTouch:event];
 }
 
 - (IBAction)stepperRadiusPressed:(UIStepper *)sender

@@ -111,7 +111,7 @@ static int _retryCounter;
 - (void)shareFailure:(NSMutableDictionary *)error
 {
     [YRDropdownView showDropdownInView:[controllers_App instance].view 
-                                 title:@"Error sharing" 
+                                 title:@"Error sharing\n" 
                                 detail:[error valueForKey:@"statusCode"]
                                  image:[UIImage imageNamed:@"dropdown-alert"]
                               animated:YES];
@@ -193,7 +193,7 @@ static int _retryCounter;
             NSError *error = (NSError *)object;
             
             [YRDropdownView showDropdownInView:[controllers_App instance].view 
-                                         title:@"Error" 
+                                         title:@"Error\n" 
                                         detail:[error localizedDescription]
                                          image:[UIImage imageNamed:@"dropdown-alert"]
                                       animated:YES];
@@ -231,7 +231,7 @@ static int _retryCounter;
     }
     
     [YRDropdownView showDropdownInView:[controllers_App instance].view 
-                                 title:@"Watchlist" 
+                                 title:@"Watchlist\n" 
                                 detail:msg
                                  image:[UIImage imageNamed:@"dropdown-alert"]
                               animated:YES];
@@ -244,7 +244,7 @@ static int _retryCounter;
     if (_event.rsvp_status == nil || [_event.rsvp_status isEqualToString:@""] || [_event.rsvp_status isEqualToString:@"not replied"]) {
         
         [YRDropdownView showDropdownInView:[controllers_App instance].view 
-                                     title:@"Warning" 
+                                     title:@"Warning\n" 
                                     detail:@"Per Facebook policy, you must RSVP yes or maybe to post a picture...\n"
                                      image:[UIImage imageNamed:@"dropdown-alert"]
                                   animated:YES];
@@ -300,29 +300,6 @@ static int _retryCounter;
 
 #pragma mark - vote and rsvp delegate
 
-- (void)newRating:(int)rating
-{
-    [_voteLoading setHidden:NO];
-    [_voteLoading.layer setBorderColor:[[UIColor grayColor] CGColor]];
-    [_voteLoading.layer setBorderWidth:1];
-    _voteLoading.layer.cornerRadius = 3;
-    _voteLoading.layer.masksToBounds = YES;
-    //_voteLoading.frame = _voteView.frame;
-    [_header bringSubviewToFront:_voteLoading];
-    //[_header sendSubviewToBack:_voteView];
-    [((UIActivityIndicatorView *)[_voteLoading.subviews objectAtIndex:0]) startAnimating];
-        
-    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
-    
-    [params setValue:[NSNumber numberWithInt:rating] forKey:@"vote"];
-    [params setValue:_user.uid forKey:@"userID"];
-    [params setValue:_event.eid forKey:@"eventID"];
-    [params setValue:[models_User crtUser].accessToken forKey:@"access_token"];
-    
-    _event.delegate = self;
-    [_event vote:params success:@selector(onVoteSuccess:) failure:@selector(onVoteFailure:) sender:_voteView];
-}
-
 - (void)onVoteSuccess:(NSString *)response
 {
     [_actVote stopAnimating];
@@ -332,13 +309,20 @@ static int _retryCounter;
     
     NSString *msg = @"You just dropped a Gem!";
     
+    NSString *saveMsg = [[Store instance] saveEvent:_event];
+    
+    if ([saveMsg rangeOfString:@"added"].location != NSNotFound) {
+        
+        msg = [msg stringByAppendingString:[@"\n\n" stringByAppendingString:saveMsg]];
+    }
+    
     if (_event.offerTitle != nil && ![_event.offerTitle isEqualToString:@""]) {
 
-        msg = [msg stringByAppendingString:@"\n\nGoodies unlocked"];
+        msg = [msg stringByAppendingString:@"\nGoodies unlocked"];
     }
     
     [YRDropdownView showDropdownInView:[controllers_App instance].view 
-                                 title:@"Congrats" 
+                                 title:@"Congrats\n" 
                                 detail:msg
                                  image:[UIImage imageNamed:@"dropdown-alert"]
                               animated:YES];
@@ -351,7 +335,7 @@ static int _retryCounter;
     NSString *errorMsg = (NSString *)[response valueForKey:@"statusCode"];
     
     [YRDropdownView showDropdownInView:[controllers_App instance].view
-                                 title:@"Error" 
+                                 title:@"Error\n" 
                                 detail:errorMsg
                                  image:[UIImage imageNamed:@"dropdown-alert"]
                               animated:YES];
@@ -392,9 +376,30 @@ static int _retryCounter;
 
 - (void)onRsvpSuccess:(NSString *)response
 {
+    NSString *txt = nil;
+    
+    if ([_event.rsvp_status isEqualToString:@"attending"]) {
+        
+        txt = @"You are now listed as attending this event";
+        
+        NSString *saveMsg = [[Store instance] saveEvent:_event];
+        
+        if ([saveMsg rangeOfString:@"added"].location != NSNotFound) {
+            
+            txt = [txt stringByAppendingString:[@"\n\n" stringByAppendingString:saveMsg]];
+        }
+    } else if ([_event.rsvp_status isEqualToString:@"maybe attending"]) {
+        
+        txt = @"You are now listed as maybe attending this event";
+    } else if ([_event.rsvp_status isEqualToString:@"not attending"]) {
+        
+        txt = @"You are now listed as not attending this event";
+    }
+    
+    
     [YRDropdownView showDropdownInView:[controllers_App instance].view 
-                                 title:@"Success" 
-                                detail:@"RSVP submitted"
+                                 title:@"RSVP\n" 
+                                detail:txt
                                  image:[UIImage imageNamed:@"dropdown-alert"]
                               animated:YES];
     
@@ -409,7 +414,7 @@ static int _retryCounter;
     NSString *errorMsg = (NSString *)[response valueForKey:@"statusCode"];
     
     [YRDropdownView showDropdownInView:[controllers_App instance].view 
-                                 title:@"Error" 
+                                 title:@"Error\n" 
                                 detail:errorMsg
                                  image:[UIImage imageNamed:@"dropdown-alert"]
                               animated:YES];
@@ -468,9 +473,19 @@ static int _retryCounter;
         
     [goodFrames addObject:TKCGRectValue(endFrame)];
         
-    UIView *endView = [[UIView alloc] initWithFrame:endFrame];
+    UIImageView *endView = [[UIImageView alloc] initWithFrame:endFrame];
     endView.layer.borderColor = [UIColor greenColor].CGColor;
     endView.layer.borderWidth = 1.0f;
+    
+    CGRect startFrame;
+    
+    if (_event.isGemDropped) {
+        
+        endView.image = [UIImage imageNamed:@"diamond.png"];
+
+    }
+    
+    startFrame = CGRectMake(30, framesY, 60, 50);
         
     [self.view addSubview:endView];
         
@@ -479,27 +494,37 @@ static int _retryCounter;
     self.canUseTheSameFrameManyTimes = NO;
     self.canDragMultipleViewsAtOnce = NO;
     
-    
-    CGRect startFrame = CGRectMake(30, framesY, 60, 50);
+    if (_dragView == nil) {
+     
+        _dragView = [[TKDragView alloc] initWithImage:image
+                                           startFrame:startFrame
+                                           goodFrames:goodFrames
+                                            badFrames:badFrames
+                                          andDelegate:self];
         
-        
-    TKDragView *dragView = [[TKDragView alloc] initWithImage:image
-                                                      startFrame:startFrame
-                                                      goodFrames:goodFrames
-                                                       badFrames:badFrames
-                                                     andDelegate:self];
-        
-        
-        dragView.canDragMultipleDragViewsAtOnce = NO;
-        dragView.canUseSameEndFrameManyTimes = YES;
-        
-        [self.dragViews addObject:dragView];
-        
-        [self.view addSubview:dragView];
+        _dragView.canDragMultipleDragViewsAtOnce = NO;
+        _dragView.canUseSameEndFrameManyTimes = YES;
         
         UITapGestureRecognizer *g = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(taped:)];
         [g setNumberOfTapsRequired:2];
-        [dragView addGestureRecognizer:g];
+        [_dragView addGestureRecognizer:g];
+        
+        [self.dragViews addObject:_dragView];
+    } else {
+        
+        [_dragView setStartFrame:startFrame];
+        [_dragView setImageView:nil];
+        [_dragView removeFromSuperview];
+        _dragView = nil;
+    }
+    
+        
+    if (!_event.isGemDropped) {
+        
+        [self.view addSubview:_dragView];
+    }
+        
+    
 
 }
 
@@ -726,7 +751,7 @@ static int _retryCounter;
             NSError *error = (NSError *)[objects objectAtIndex:0];
             
             [YRDropdownView showDropdownInView:[controllers_App instance].view 
-                                         title:@"Error loading stats" 
+                                         title:@"Error loading stats\n" 
                                         detail:error.localizedDescription
                                          image:[UIImage imageNamed:@"dropdown-alert"]
                                       animated:YES];
@@ -758,7 +783,7 @@ static int _retryCounter;
             NSError *error = (NSError *)[objects objectAtIndex:0];
             
             [YRDropdownView showDropdownInView:[controllers_App instance].view 
-                                         title:@"Error loading RSVP status" 
+                                         title:@"Error loading RSVP\n" 
                                         detail:error.localizedDescription
                                          image:[UIImage imageNamed:@"dropdown-alert"]
                                       animated:YES];
@@ -800,7 +825,7 @@ static int _retryCounter;
                 NSError *error = (NSError *)obj;
                 
                 [YRDropdownView showDropdownInView:[controllers_App instance].view 
-                                             title:@"Error loading pictures" 
+                                             title:@"Error loading pictures\n" 
                                             detail:error.localizedDescription
                                              image:[UIImage imageNamed:@"dropdown-alert"]
                                           animated:YES];
@@ -897,7 +922,7 @@ static int _retryCounter;
     _headerImage = nil;
     _map = nil;
     _mapImage = nil;
-    
+    _dragView = nil;
     
     
     _actVote = nil;
@@ -915,7 +940,6 @@ static int _retryCounter;
     
     _segment = nil;
     
-    _voteView = nil;
     _toolbar = nil;
     _eventLoader = nil;
     _picturesLoader = nil;
@@ -1008,11 +1032,11 @@ static int _retryCounter;
                                                delay:0.1
                                              options:UIViewAnimationOptionCurveEaseIn
                                           animations:^{
-                                              dragView.transform = CGAffineTransformMakeRotation(M_PI);
+                                              dragView.transform = CGAffineTransformMakeRotation(2 * M_PI);
                                           } 
                                           completion:^(BOOL finished) {
                                               
-                                              
+                                              [self loadDropAGem];
                                           }];
                      }];
     
@@ -1027,7 +1051,7 @@ static int _retryCounter;
     [params setValue:[models_User crtUser].accessToken forKey:@"access_token"];
     
     _event.delegate = self;
-    [_event vote:params success:@selector(onVoteSuccess:) failure:@selector(onVoteFailure:) sender:_voteView];
+    [_event vote:params success:@selector(onVoteSuccess:) failure:@selector(onVoteFailure:) sender:nil];
     
     [_actVote startAnimating];
 }
