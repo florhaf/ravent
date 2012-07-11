@@ -31,6 +31,8 @@
         
         [self loadData];
         
+        [self trackPageView:@"friends_invite" forEvent:_event.eid];
+        
     }
     
     return self;

@@ -10,6 +10,7 @@
 #import "YRDropdownView.h"
 #import "controllers_App.h"
 #import "models_User.h"
+#import "GANTracker.h"
 
 @implementation controllers_events_Details_Map
 
@@ -18,6 +19,32 @@
 @synthesize endPoint;
 @synthesize wayPoints;
 
+
+- (void)trackPageView:(NSString *)named forEvent:(NSString *)eid
+{
+    NSError *error;
+    
+    if (eid != nil) {
+        
+        [[GANTracker sharedTracker] setCustomVariableAtIndex:1
+                                                        name:@"eid"
+                                                       value:eid
+                                                   withError:&error];
+    }
+    
+    [[GANTracker sharedTracker] setCustomVariableAtIndex:2
+                                                    name:@"uid"
+                                                   value:[models_User crtUser].uid
+                                               withError:&error];
+    
+    [[GANTracker sharedTracker] setCustomVariableAtIndex:3
+                                                    name:@"app_version"
+                                                   value:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]
+                                               withError:&error];
+    
+    [[GANTracker sharedTracker] trackPageview:named
+                                    withError:&error];
+}
 
 - (id)initWithEvent:(models_Event *)event
 {
@@ -29,7 +56,7 @@
         self.title = @"Gemster";
         
         
-        
+        [self trackPageView:@"events_details_map" forEvent:_event.eid];
     }
     
     return self;

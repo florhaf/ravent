@@ -14,6 +14,7 @@
 #import "controllers_App.h"
 #import "ActionDispatcher.h"
 #import "models_User.h"
+#import "GANTracker.h"
 
 @implementation controllers_events_Description
 

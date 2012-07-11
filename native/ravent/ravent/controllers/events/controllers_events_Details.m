@@ -25,6 +25,7 @@
 #import "Store.h"
 
 
+
 @implementation controllers_events_Details
 
 @synthesize photos = _photos;
@@ -73,9 +74,38 @@ static int _retryCounter;
         
         
         _event.isGemDropped = [[Store instance] isGemDropped:_event.eid];
+        
+
+        [self trackPageView:@"events_details" forEvent:_event.eid];
     }
     
     return self;
+}
+
+- (void)trackEvent:(NSString *)named
+{
+    NSError *error;
+    
+    [[GANTracker sharedTracker] setCustomVariableAtIndex:1
+                                                    name:@"eid"
+                                                   value:_event.eid
+                                               withError:&error];
+    
+    [[GANTracker sharedTracker] setCustomVariableAtIndex:2
+                                                    name:@"uid"
+                                                   value:[models_User crtUser].uid
+                                               withError:&error];
+    
+    [[GANTracker sharedTracker] setCustomVariableAtIndex:3
+                                                    name:@"app_version"
+                                                   value:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]
+                                               withError:&error];
+    
+    [[GANTracker sharedTracker] trackEvent:@"events_details"
+                                    action:named
+                                     label:_event.eid
+                                     value:-1
+                                 withError:&error];
 }
 
 - (void)share:(NSArray *)friends
@@ -106,6 +136,8 @@ static int _retryCounter;
     }
     
     [self.tableView reloadData];
+    
+    [self trackEvent:@"invite"];
 }
 
 - (void)shareFailure:(NSMutableDictionary *)error
@@ -328,6 +360,8 @@ static int _retryCounter;
                               animated:YES];
     
     [self loadDropAGem];
+    
+    [self trackEvent:@"drop_a_gem"];
 }
 
 - (void)onVoteFailure:(NSMutableDictionary *)response
@@ -374,6 +408,8 @@ static int _retryCounter;
     
     _event.delegate = self;
     [_event rsvp:params success:@selector(onRsvpSuccess:) failure:@selector(onRsvpFailure:) sender:_rsvp];
+    
+    [self trackEvent:@"rsvp"];
 }
 
 - (void)onRsvpSuccess:(NSString *)response
@@ -683,7 +719,7 @@ static int _retryCounter;
 {
     //_details = [[controllers_friends_Details alloc] initWithUser:[user copy]];
     
-    controllers_events_Tickets *ticket = [[controllers_events_Tickets alloc] initWithURL:_event.ticket_link];
+    controllers_events_Tickets *ticket = [[controllers_events_Tickets alloc] initWithURL:_event.ticket_link event:[_event copy]];
     
     UIImage *backi = [UIImage imageNamed:@"backButton"];
     

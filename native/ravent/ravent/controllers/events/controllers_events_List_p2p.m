@@ -21,6 +21,18 @@
 
 static controllers_events_List_p2p *_ctrl;
 
+- (id)initWithUser:(models_User *)user
+{
+    self = [super initWithUser:user];
+    
+    if (self != nil) {
+        
+        [self trackPageView:@"events_p2p" forEvent:nil];
+    }
+    
+    return self;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];

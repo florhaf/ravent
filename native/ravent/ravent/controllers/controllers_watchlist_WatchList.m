@@ -32,6 +32,8 @@ static controllers_watchlist_WatchList *_ctrl;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadDataWithSpinner) name:@"addedToWatchList" object:nil];
         
         [self loadDataWithSpinner];
+        
+        [self trackPageView:@"watchlist" forEvent:nil];
     }
     
     return self;

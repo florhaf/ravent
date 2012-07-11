@@ -7,12 +7,40 @@
 //
 
 #import "controllers_events_Specials.h"
+#import "models_User.h"
+#import "GANTracker.h"
 
 @interface controllers_events_Specials ()
 
 @end
 
 @implementation controllers_events_Specials
+
+- (void)trackPageView:(NSString *)named forEvent:(NSString *)eid
+{
+    NSError *error;
+    
+    if (eid != nil) {
+        
+        [[GANTracker sharedTracker] setCustomVariableAtIndex:1
+                                                        name:@"eid"
+                                                       value:eid
+                                                   withError:&error];
+    }
+    
+    [[GANTracker sharedTracker] setCustomVariableAtIndex:2
+                                                    name:@"uid"
+                                                   value:[models_User crtUser].uid
+                                               withError:&error];
+    
+    [[GANTracker sharedTracker] setCustomVariableAtIndex:3
+                                                    name:@"app_version"
+                                                   value:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]
+                                               withError:&error];
+    
+    [[GANTracker sharedTracker] trackPageview:named
+                                    withError:&error];
+}
 
 - (id)initWithEvent:(models_Event *)event
 {
@@ -22,6 +50,9 @@
         _event = event;
         
         self.title = @"Gemster";
+        
+        [self trackPageView:@"events_details_specials" forEvent:event.eid];
+        
     }
     return self;
 }

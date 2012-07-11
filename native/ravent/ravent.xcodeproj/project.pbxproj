@@ -146,6 +146,7 @@
 		DF223E82153E201A008CD88A /* views_Empty.xib in Resources */ = {isa = PBXBuildFile; fileRef = DF223E81153E201A008CD88A /* views_Empty.xib */; };
 		DF24593D15807A260095027E /* controllers_events_DetailsContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = DF24593C15807A260095027E /* controllers_events_DetailsContainer.m */; };
 		DF24593F15807B530095027E /* views_events_Details_Container.xib in Resources */ = {isa = PBXBuildFile; fileRef = DF24593E15807B530095027E /* views_events_Details_Container.xib */; };
+		DF30BC3215AD319100CE7105 /* libGoogleAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DF30BC3115AD319100CE7105 /* libGoogleAnalytics.a */; };
 		DF30ED8615993372008F6AC1 /* grayDetails.png in Resources */ = {isa = PBXBuildFile; fileRef = DF30ED8515993372008F6AC1 /* grayDetails.png */; };
 		DF3170371575DDAC00EB8319 /* doneButton.png in Resources */ = {isa = PBXBuildFile; fileRef = DF3170331575DDAC00EB8319 /* doneButton.png */; };
 		DF3170381575DDAC00EB8319 /* doneButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF3170341575DDAC00EB8319 /* doneButton@2x.png */; };
@@ -596,6 +597,9 @@
 		DF24593C15807A260095027E /* controllers_events_DetailsContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = controllers_events_DetailsContainer.m; sourceTree = "<group>"; };
 		DF24593E15807B530095027E /* views_events_Details_Container.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = views_events_Details_Container.xib; sourceTree = "<group>"; };
 		DF30BC2E15AD03E200CE7105 /* Austin.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Austin.gpx; sourceTree = "<group>"; };
+		DF30BC3015AD319100CE7105 /* GANTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GANTracker.h; path = GoogleAnalytics/GANTracker.h; sourceTree = "<group>"; };
+		DF30BC3115AD319100CE7105 /* libGoogleAnalytics.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGoogleAnalytics.a; path = GoogleAnalytics/libGoogleAnalytics.a; sourceTree = "<group>"; };
+		DF30BC3B15AD49D600CE7105 /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		DF30ED8515993372008F6AC1 /* grayDetails.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grayDetails.png; sourceTree = "<group>"; };
 		DF3170331575DDAC00EB8319 /* doneButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = doneButton.png; sourceTree = "<group>"; };
 		DF3170341575DDAC00EB8319 /* doneButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "doneButton@2x.png"; sourceTree = "<group>"; };
@@ -910,6 +914,7 @@
 				DF8F14CD150BD48200008ABC /* UIKit.framework in Frameworks */,
 				DF8F14CF150BD48200008ABC /* Foundation.framework in Frameworks */,
 				DF629EA115408E0400BCA804 /* libfacebook_ios_sdk.a in Frameworks */,
+				DF30BC3215AD319100CE7105 /* libGoogleAnalytics.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1634,6 +1639,8 @@
 		DF8F1511150BD54B00008ABC /* utils */ = {
 			isa = PBXGroup;
 			children = (
+				DF30BC3015AD319100CE7105 /* GANTracker.h */,
+				DF30BC3115AD319100CE7105 /* libGoogleAnalytics.a */,
 				DFA20F7215AA3AB0007BBEE7 /* TKDragView */,
 				DF6CA421159A9C9300FFBB90 /* MKTickerView */,
 				DFB28CB11598166D00D0F999 /* STSegmentedControl */,
@@ -1647,6 +1654,7 @@
 				DF12BD5F15157D2800328B02 /* YRDropDown */,
 				DF6DA7961514011B00F98F05 /* EGOPullToRefresh */,
 				DF8F1512150BD84200008ABC /* MBProgressHUD */,
+				DF30BC3B15AD49D600CE7105 /* Constants.h */,
 			);
 			name = utils;
 			path = ravent/utils;
@@ -2463,6 +2471,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/facebook-ios-sdk\"",
+					"\"$(SRCROOT)/ravent/utils/GoogleAnalytics\"",
 				);
 				"OTHER_CFLAGS[arch=*]" = "-mthumb";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2492,6 +2501,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/facebook-ios-sdk\"",
+					"\"$(SRCROOT)/ravent/utils/GoogleAnalytics\"",
 				);
 				"OTHER_CFLAGS[arch=*]" = "-mthumb";
 				PRODUCT_NAME = "$(TARGET_NAME)";

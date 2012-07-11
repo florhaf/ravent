@@ -32,6 +32,8 @@
 
         _hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         [self loadData];
+        
+        [self trackPageView:@"friends_following" forEvent:nil];
     }
     
     return self;

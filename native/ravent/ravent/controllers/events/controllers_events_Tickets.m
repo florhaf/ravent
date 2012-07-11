@@ -7,6 +7,9 @@
 //
 
 #import "controllers_events_Tickets.h"
+#import "models_Event.h"
+#import "models_User.h"
+#import "GANTracker.h"
 
 @interface controllers_events_Tickets ()
 
@@ -14,7 +17,33 @@
 
 @implementation controllers_events_Tickets
 
-- (id)initWithURL:(NSString *)url
+- (void)trackPageView:(NSString *)named forEvent:(NSString *)eid
+{
+    NSError *error;
+    
+    if (eid != nil) {
+        
+        [[GANTracker sharedTracker] setCustomVariableAtIndex:1
+                                                        name:@"eid"
+                                                       value:eid
+                                                   withError:&error];
+    }
+    
+    [[GANTracker sharedTracker] setCustomVariableAtIndex:2
+                                                    name:@"uid"
+                                                   value:[models_User crtUser].uid
+                                               withError:&error];
+    
+    [[GANTracker sharedTracker] setCustomVariableAtIndex:3
+                                                    name:@"app_version"
+                                                   value:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]
+                                               withError:&error];
+    
+    [[GANTracker sharedTracker] trackPageview:named
+                                    withError:&error];
+}
+
+- (id)initWithURL:(NSString *)url event:(models_Event *)e
 {
     self = [super initWithNibName:@"views_events_Tickets" bundle:nil];
     if (self) {
@@ -22,6 +51,8 @@
         
         self.title = @"Gemster";
         _url = url;
+        
+        [self trackPageView:@"events_details_tickets" forEvent:e.eid];
     }
     return self;
 }
