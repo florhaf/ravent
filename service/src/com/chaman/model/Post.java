@@ -28,7 +28,11 @@ public class Post  extends Model {
 	public static Connection<Post> Get(String accessToken, String eventID) throws FacebookException {
 		
 		FacebookClient client	= new DefaultFacebookClient(accessToken);
-		return client.fetchConnection(eventID + "/feed", Post.class);
+		try {
+			return client.fetchConnection(eventID + "/feed", Post.class);
+		} catch (Exception ex ) { //retry
+			return client.fetchConnection(eventID + "/feed", Post.class);
+		}
 	}
 	
 	public static void WallPost(String accessToken, String userID, String message) {
