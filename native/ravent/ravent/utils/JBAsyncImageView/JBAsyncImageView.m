@@ -241,8 +241,15 @@ imageResponse = imageResponse_;
 		imageData_ = [[NSMutableData alloc] init];
 	}
 	
+    [self setAlpha:0];
+    
 	// Add to the bucket.
 	[imageData_ appendData:data];
+    
+    [UIView animateWithDuration:0.75 animations:^(void) {
+    
+        [self setAlpha:1];
+    }];
 	
 }
 

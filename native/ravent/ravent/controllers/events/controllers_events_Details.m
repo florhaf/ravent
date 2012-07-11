@@ -326,6 +326,8 @@ static int _retryCounter;
                                 detail:msg
                                  image:[UIImage imageNamed:@"dropdown-alert"]
                               animated:YES];
+    
+    [self loadDropAGem];
 }
 
 - (void)onVoteFailure:(NSMutableDictionary *)response
@@ -455,77 +457,99 @@ static int _retryCounter;
 
 - (void)loadDropAGem
 {
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"diamond.png" ofType:nil];
-    
-    UIImage *image = [UIImage imageWithContentsOfFile:path];
-    
     int framesY = (_detailsVersion == twogoodies) ? 435 : 450;
-    
-    
-    self.goodFrames = [NSMutableArray arrayWithCapacity:1];
-    self.badFrames = [NSMutableArray arrayWithCapacity:0];
-    
-    NSMutableArray *goodFrames = [NSMutableArray arrayWithCapacity:1];
-    NSMutableArray *badFrames = [NSMutableArray arrayWithCapacity:0];
-    self.dragViews = [NSMutableArray arrayWithCapacity:1];
-
-    CGRect endFrame =   CGRectMake(226, framesY, 60, 50);
-        
-    [goodFrames addObject:TKCGRectValue(endFrame)];
-        
-    UIImageView *endView = [[UIImageView alloc] initWithFrame:endFrame];
-    endView.layer.borderColor = [UIColor greenColor].CGColor;
-    endView.layer.borderWidth = 1.0f;
-    
-    CGRect startFrame;
     
     if (_event.isGemDropped) {
         
-        endView.image = [UIImage imageNamed:@"diamond.png"];
-
-    }
-    
-    startFrame = CGRectMake(30, framesY, 60, 50);
+        _dropagemLabel.text = @"Gem dropped";
         
-    [self.view addSubview:endView];
+        UIImageView *gem = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"diamond"]];
         
-    [self.goodFrames addObject:endView];
+        [gem setFrame:CGRectMake(226, framesY, 60, 50)];
         
-    self.canUseTheSameFrameManyTimes = NO;
-    self.canDragMultipleViewsAtOnce = NO;
-    
-    if (_dragView == nil) {
-     
-        _dragView = [[TKDragView alloc] initWithImage:image
-                                           startFrame:startFrame
-                                           goodFrames:goodFrames
-                                            badFrames:badFrames
-                                          andDelegate:self];
+        [self.view addSubview:gem];
         
-        _dragView.canDragMultipleDragViewsAtOnce = NO;
-        _dragView.canUseSameEndFrameManyTimes = YES;
-        
-        UITapGestureRecognizer *g = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(taped:)];
-        [g setNumberOfTapsRequired:2];
-        [_dragView addGestureRecognizer:g];
-        
-        [self.dragViews addObject:_dragView];
     } else {
         
-        [_dragView setStartFrame:startFrame];
-        [_dragView setImageView:nil];
-        [_dragView removeFromSuperview];
-        _dragView = nil;
+        NSBundle *bundle = [NSBundle mainBundle];
+        
+        NSString *path = [bundle pathForResource:@"diamond.png" ofType:nil];
+        
+        UIImage *image = [UIImage imageWithContentsOfFile:path];
+        
+        
+        
+        
+        
+        int device = 1;
+        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+            device = 1;
+        }
+        
+        self.goodFrames = [NSMutableArray arrayWithCapacity:device];
+        self.badFrames = [NSMutableArray arrayWithCapacity:device];
+        
+        NSMutableArray *goodFrames = [NSMutableArray arrayWithCapacity:device];
+        NSMutableArray *badFrames = [NSMutableArray arrayWithCapacity:device];
+        self.dragViews = [NSMutableArray arrayWithCapacity:device];
+        
+        for (int i = 0; i< device; i++) {
+            
+            
+            CGRect endFrame =   CGRectMake(226, framesY, 60, 50);
+            
+            CGRect badFrame =   CGRectMake(0, 0, 0, 0);
+            
+            [goodFrames addObject:TKCGRectValue(endFrame)];
+            [badFrames addObject:TKCGRectValue(badFrame)];
+            
+            UIView *endView = [[UIView alloc] initWithFrame:endFrame];
+            endView.layer.borderColor = [UIColor greenColor].CGColor;
+            endView.layer.borderWidth = 1.0f;
+            
+            [self.view addSubview:endView];
+            
+            [self.goodFrames addObject:endView];
+            
+            UIView *badView = [[UIView alloc] initWithFrame:badFrame];
+            badView.layer.borderWidth = 1.0f;
+            badView.layer.borderColor = [UIColor redColor].CGColor;
+            [self.view addSubview:badView];
+            
+            [self.badFrames addObject:badView];
+        }
+        
+        self.canUseTheSameFrameManyTimes = YES;
+        self.canDragMultipleViewsAtOnce = NO;
+        
+        
+        
+        for (int i = 0; i< device; i++) {
+            
+            CGRect startFrame = CGRectMake(30, framesY, 60, 50);
+            
+            
+            _dragView = [[TKDragView alloc] initWithImage:image
+                                                          startFrame:startFrame
+                                                          goodFrames:goodFrames
+                                                           badFrames:badFrames
+                                                         andDelegate:self];
+            
+            
+            _dragView.canDragMultipleDragViewsAtOnce = NO;
+            _dragView.canUseSameEndFrameManyTimes = YES;
+            
+            _dragView.canDragFromEndPosition = NO;
+            
+            [self.dragViews addObject:_dragView];
+            
+            [self.view addSubview:_dragView];
+            
+            UITapGestureRecognizer *g = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(taped:)];
+            [g setNumberOfTapsRequired:2];
+            [_dragView addGestureRecognizer:g];
+        }
     }
-    
-        
-    if (!_event.isGemDropped) {
-        
-        [self.view addSubview:_dragView];
-    }
-        
-    
-
 }
 
 - (void)viewDidLoad
@@ -923,6 +947,7 @@ static int _retryCounter;
     _map = nil;
     _mapImage = nil;
     _dragView = nil;
+    _dropagemLabel = nil;
     
     
     _actVote = nil;
@@ -1036,7 +1061,7 @@ static int _retryCounter;
                                           } 
                                           completion:^(BOOL finished) {
                                               
-                                              [self loadDropAGem];
+                                              
                                           }];
                      }];
     

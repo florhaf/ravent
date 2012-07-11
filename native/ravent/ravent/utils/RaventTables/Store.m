@@ -91,6 +91,8 @@ static Store *_store;
         return error.localizedDescription;
     }
     
+    event.isInWatchList = YES;
+    
     return @"Event added to your Watchlist";
 }
 

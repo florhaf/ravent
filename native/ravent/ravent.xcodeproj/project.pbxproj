@@ -595,6 +595,7 @@
 		DF24593B15807A260095027E /* controllers_events_DetailsContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = controllers_events_DetailsContainer.h; sourceTree = "<group>"; };
 		DF24593C15807A260095027E /* controllers_events_DetailsContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = controllers_events_DetailsContainer.m; sourceTree = "<group>"; };
 		DF24593E15807B530095027E /* views_events_Details_Container.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = views_events_Details_Container.xib; sourceTree = "<group>"; };
+		DF30BC2E15AD03E200CE7105 /* Austin.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Austin.gpx; sourceTree = "<group>"; };
 		DF30ED8515993372008F6AC1 /* grayDetails.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grayDetails.png; sourceTree = "<group>"; };
 		DF3170331575DDAC00EB8319 /* doneButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = doneButton.png; sourceTree = "<group>"; };
 		DF3170341575DDAC00EB8319 /* doneButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "doneButton@2x.png"; sourceTree = "<group>"; };
@@ -1483,6 +1484,7 @@
 		DF8F14BD150BD48200008ABC = {
 			isa = PBXGroup;
 			children = (
+				DF30BC2E15AD03E200CE7105 /* Austin.gpx */,
 				DFB28C731596FB5100D0F999 /* ImageIO.framework */,
 				DFB28C711596FB4600D0F999 /* MessageUI.framework */,
 				DFC55CDF158F9E9800310433 /* Miami.gpx */,
@@ -2448,7 +2450,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: florian haftman";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: florian haftman (247VK6949Z)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/RestKit/Specs/Runner/OCHamcrest\"",
@@ -2464,7 +2466,7 @@
 				);
 				"OTHER_CFLAGS[arch=*]" = "-mthumb";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "73DDFA43-CB71-48B2-8C11-CB392A5FB8D2";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "67C20EBB-AA59-4A4B-B4BF-60479C59B59C";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = NO;
 				USER_HEADER_SEARCH_PATHS = "";
@@ -2477,7 +2479,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: florian haftman";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: florian haftman (247VK6949Z)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/RestKit/Specs/Runner/OCHamcrest\"",
@@ -2493,7 +2495,7 @@
 				);
 				"OTHER_CFLAGS[arch=*]" = "-mthumb";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "73DDFA43-CB71-48B2-8C11-CB392A5FB8D2";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "67C20EBB-AA59-4A4B-B4BF-60479C59B59C";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = NO;
 				USER_HEADER_SEARCH_PATHS = "";

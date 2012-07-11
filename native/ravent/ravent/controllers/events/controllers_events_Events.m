@@ -225,8 +225,6 @@ static customNavigationController *_ctrl;
         
         [_optionsView raceTo:CGPointMake(0, -20) withSnapBack:YES];   
         
-        //[[self.view.subviews objectAtIndex:0] raceTo:CGPointMake(0, 244) withSnapBack:YES];
-        
         [UIView animateWithDuration:0.5 animations:^() {
            
             _menuArrow.transform = CGAffineTransformMakeRotation((M_PI / 180.0) * 180.0f);
@@ -287,8 +285,13 @@ static customNavigationController *_ctrl;
 
 - (IBAction)stepperRadiusPressed:(UIStepper *)sender
 {
+    
+    
     NSString *format = @"%d";
     int value = ((int)sender.value == 0) ? 1 : (int)sender.value;
+    
+    
+    _isDirty = !(value == [models_User crtUser].searchRadius || value * 1.609344 == [models_User crtUser].searchRadius);
     
     BOOL isMetric = [[[NSLocale currentLocale] objectForKey:NSLocaleUsesMetricSystem] boolValue];
     
@@ -303,7 +306,6 @@ static customNavigationController *_ctrl;
     }
     
     _labelRadiusValue.text = [NSString stringWithFormat:@"%d %@",  value, format];
-    _isDirty = YES;
 }
 
 - (IBAction)stepperWindowPressed:(UIStepper *)sender

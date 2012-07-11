@@ -49,12 +49,20 @@ static controllers_App *_ctrl;
 }
 
 - (void)flipView
-{    
-    if (_slidingController == nil) {
+{
+    @try {
+        if (_slidingController == nil) {
+            
+            _slidingController = [[controllers_SlidingInitial alloc] init];
+            _slidingController.view.frame = CGRectMake(0, 0, _slidingController.view.frame.size.width, _slidingController.view.frame.size.height);
+        }    
         
-        _slidingController = [[controllers_SlidingInitial alloc] init];
-        _slidingController.view.frame = CGRectMake(0, 0, _slidingController.view.frame.size.width, _slidingController.view.frame.size.height);
+    } @catch (NSException *ex) {
+        NSLog(@"%@",ex.reason);
     }
+    
+    
+    
     
     UIView *slide = _slidingController.view;
     UIView *login = _loginController.view;

@@ -173,7 +173,7 @@ static UIFont *valueFont = nil;
   CGFloat breakWidth = 0;
   for(int counter = 0 ; breakWidth < self.frame.size.width; counter ++)
   {
-    int i = counter % itemCount;
+      int i =counter % itemCount;
     MKTickerItemView *tickerItemView = [[[MKTickerItemView alloc] init] autorelease];
     [tickerItemView setTitle:[dataSource tickerView:self titleForItemAtIndex:i]
                        value:[dataSource tickerView:self valueForItemAtIndex:i]
