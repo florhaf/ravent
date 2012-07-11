@@ -273,6 +273,16 @@ typedef enum {
 
 - (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view{
 	
+    if (_user != nil) {
+        
+        [_user cancelAllRequests];
+    }
+    
+    if (_event != nil) {
+        
+        [_event cancelAllRequests];
+    }
+    
     [MBProgressHUD hideHUDForView:self.view animated:YES];
 	[self reloadTableViewDataSource];	
 }

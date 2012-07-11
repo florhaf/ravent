@@ -31,7 +31,7 @@
         
         [self loadData];
         
-        [self trackPageView:@"friends_invite" forEvent:_event.eid];
+        
         
     }
     
@@ -228,6 +228,13 @@
     _hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLineEtched;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [self trackPageView:@"friends_invite" forEvent:_event.eid];
 }
 
 - (void)hideAllModal

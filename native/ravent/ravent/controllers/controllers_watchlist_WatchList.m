@@ -32,8 +32,6 @@ static controllers_watchlist_WatchList *_ctrl;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadDataWithSpinner) name:@"addedToWatchList" object:nil];
         
         [self loadDataWithSpinner];
-        
-        [self trackPageView:@"watchlist" forEvent:nil];
     }
     
     return self;
@@ -44,6 +42,13 @@ static controllers_watchlist_WatchList *_ctrl;
     [super viewDidLoad];
     
     //_hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [self trackPageView:@"watchlist" forEvent:nil];
 }
 
 - (void)loadDataWithUserLocation

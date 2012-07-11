@@ -346,6 +346,7 @@ static int _retryCounter;
     if ([saveMsg rangeOfString:@"added"].location != NSNotFound) {
         
         msg = [msg stringByAppendingString:[@"\n\n" stringByAppendingString:saveMsg]];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"addedToWatchList" object:nil]; 
     }
     
     if (_event.offerTitle != nil && ![_event.offerTitle isEqualToString:@""]) {

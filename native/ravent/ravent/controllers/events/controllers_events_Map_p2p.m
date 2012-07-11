@@ -60,7 +60,7 @@ static int _retryCounter;
 //        _imageLoading = [[NSMutableDictionary alloc] init];
         _user = user;
         
-        [self trackPageView:@"events_p2p_map" forEvent:nil];
+        
     }
     return self;
 }
@@ -178,6 +178,8 @@ static int _retryCounter;
     self.peekLeftAmount = 40.0f;
     [self.slidingViewController setAnchorLeftPeekAmount:self.peekLeftAmount];
     self.slidingViewController.underRightWidthLayout = ECVariableRevealWidth;
+    
+    [self trackPageView:@"events_p2p_map" forEvent:nil];
 }
 
 - (void)stopGps

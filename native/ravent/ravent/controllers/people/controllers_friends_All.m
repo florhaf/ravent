@@ -36,8 +36,6 @@ static controllers_friends_All *_ctrl;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onFollowingLoaded:) name:@"followingLoaded" object:nil];
         
         [self loadData];
-        
-        [self trackPageView:@"friends_all" forEvent:nil];
     }
     
     return self;
@@ -366,6 +364,8 @@ static controllers_friends_All *_ctrl;
     _isDirty = NO;
     
     [self onFollowingLoaded:nil];
+    
+    [self trackPageView:@"friends_all" forEvent:nil];
 }
 
 - (void)onFollowSuccess:(NSString *)response

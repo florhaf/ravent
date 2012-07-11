@@ -32,8 +32,6 @@
 
         _hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         [self loadData];
-        
-        [self trackPageView:@"friends_following" forEvent:nil];
     }
     
     return self;
@@ -189,6 +187,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [self trackPageView:@"friends_following" forEvent:nil];
 }
 
 @end
