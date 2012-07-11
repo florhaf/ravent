@@ -52,7 +52,7 @@ public class Event extends Model implements Serializable {
 	@Facebook
 	String privacy;
 	@Facebook
-	String update_time;
+	String update_time; //not used?
 	@Facebook
 	String timezone;
 	
@@ -277,7 +277,7 @@ public class Event extends Model implements Serializable {
 						String TAS = String.valueOf(now.getMillis() / 1000);
 						
 						FacebookClient client 	= new DefaultFacebookClient(u.getAccess_token());
-						String properties 		= "eid, name, pic_big, start_time, end_time, venue, location, privacy, update_time";
+						String properties 		= "eid, name, pic_big, start_time, end_time, venue, location, privacy, update_time, timezone";
 						String query 			= "SELECT " + properties + " FROM event WHERE eid IN (SELECT eid FROM event_member WHERE uid = " + l.getUid() + ") AND privacy = 'OPEN' AND end_time > " + TAS;
 						List<Event> fbevents 	= client.executeQuery(query, Event.class);
 										
@@ -348,7 +348,7 @@ public class Event extends Model implements Serializable {
 		
 		Event e = new Event();
         	
-    	String query 			= "SELECT eid, name, pic_big, start_time, end_time, venue, location, privacy FROM event WHERE eid = " + eid;
+    	String query 			= "SELECT eid, name, pic_big, start_time, end_time, venue, location, privacy, timezone FROM event WHERE eid = " + eid;
     	List<Event> fbevents 	= client.executeQuery(query, Event.class);
 		
 		e = fbevents.get(0);
