@@ -273,12 +273,14 @@ public class Event extends Model implements Serializable {
 						
 						//Prepare a timestamp to filter the facebook DB on the upcoming events
 						DateTimeZone PST = DateTimeZone.forID("America/Los_Angeles"); 	
-						DateTime now = new DateTime(PST);		
-						String TAS = String.valueOf(now.getMillis() / 1000);
+						DateTime now = new DateTime(PST);
+						DateTime now_plus_month = now.plusDays(32);
+						String snow = String.valueOf(now.getMillis() / 1000);
+						String snow_plus_month = String.valueOf(now_plus_month.getMillis() / 1000);
 						
 						FacebookClient client 	= new DefaultFacebookClient(u.getAccess_token());
 						String properties 		= "eid, name, pic_big, start_time, end_time, venue, location, privacy, update_time, timezone";
-						String query 			= "SELECT " + properties + " FROM event WHERE eid IN (SELECT eid FROM event_member WHERE uid = " + l.getUid() + ") AND privacy = 'OPEN' AND end_time > " + TAS;
+						String query 			= "SELECT " + properties + " FROM event WHERE eid IN (SELECT eid FROM event_member WHERE uid = " + l.getUid() + " AND start_time < " + snow_plus_month + ") AND privacy = 'OPEN' AND end_time > " + snow;
 						List<Event> fbevents 	= client.executeQuery(query, Event.class);
 										
 						Event e_cache; 
