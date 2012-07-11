@@ -63,7 +63,7 @@
     [self.window makeKeyAndVisible];
     
     
-    
+    [self.window setBackgroundColor:[UIColor blackColor]];
     
     return YES;
 }

@@ -37,6 +37,7 @@ typedef enum {
         
         self.title = @"Gemster";
         _showEmptyMessage = NO;
+
     }
     return self;
 }

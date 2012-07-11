@@ -161,10 +161,10 @@
          contextName = "-[controllers_friends_All tableView:cellForRowAtIndexPath:]:controllers_friends_All.m">
       </ContextState>
       <ContextState
-         contextName = "-[controllers_events_Events onSO_Tap:]:controllers_events_Events.m">
+         contextName = "-[controllers_events_Events stepperRadiusPressed:]:controllers_events_Events.m">
          <PersistentStrings>
             <PersistentString
-               value = "[[controllers_events_List_p2p instance].party">
+               value = "[models_User crtUser].searchRadius">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -188,6 +188,14 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "-[controllers_events_Events onSO_Tap:]:controllers_events_Events.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "[[controllers_events_List_p2p instance].party">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "-[RKObjectMappingOperation applyAttributeMappings]:RKObjectMappingOperation.m">
          <PersistentStrings>
             <PersistentString
@@ -203,6 +211,14 @@
          <PersistentStrings>
             <PersistentString
                value = "_isFollowersLoaded">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[MKTickerView reloadData]:MKTickerView.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "counter % itemCount">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

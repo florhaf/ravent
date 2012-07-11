@@ -662,7 +662,6 @@ AAAAAAAAdGV4dAAAAABDb3B5cmlnaHQgQXBwbGUsIEluYy4sIDIwMDgAA</bytes>
 						<string key="NSFrame">{{67, 576}, {220, 21}}</string>
 						<reference key="NSSuperview" ref="408714013"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -728,6 +727,17 @@ AAAAAAAAdGV4dAAAAABDb3B5cmlnaHQgQXBwbGUsIEluYy4sIDIwMDgAA</bytes>
 							<string key="NSClassName">NSImage</string>
 							<string key="NSResourceName">dropagem.png</string>
 						</object>
+					</object>
+					<object class="IBUIActivityIndicatorView" id="717215661">
+						<reference key="NSNextResponder" ref="408714013"/>
+						<int key="NSvFlags">-2147483356</int>
+						<string key="NSFrame">{{150, 463}, {20, 20}}</string>
+						<reference key="NSSuperview" ref="408714013"/>
+						<reference key="NSWindow"/>
+						<string key="NSReuseIdentifierKey">_NS:9</string>
+						<bool key="IBUIOpaque">NO</bool>
+						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+						<int key="IBUIStyle">2</int>
 					</object>
 					<object class="IBUIButton" id="593649065">
 						<reference key="NSNextResponder" ref="408714013"/>
@@ -926,6 +936,14 @@ AAAAAAAAdGV4dAAAAABDb3B5cmlnaHQgQXBwbGUsIEluYy4sIDIwMDgAA</bytes>
 					<int key="connectionID">67</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">_actVote</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="717215661"/>
+					</object>
+					<int key="connectionID">71</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">picButton_Tap:</string>
 						<reference key="source" ref="729919304"/>
@@ -1043,6 +1061,7 @@ AAAAAAAAdGV4dAAAAABDb3B5cmlnaHQgQXBwbGUsIEluYy4sIDIwMDgAA</bytes>
 							<reference ref="683132542"/>
 							<reference ref="593649065"/>
 							<reference ref="752051002"/>
+							<reference ref="717215661"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -1211,6 +1230,11 @@ AAAAAAAAdGV4dAAAAABDb3B5cmlnaHQgQXBwbGUsIEluYy4sIDIwMDgAA</bytes>
 						<reference key="object" ref="752051002"/>
 						<reference key="parent" ref="408714013"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">70</int>
+						<reference key="object" ref="717215661"/>
+						<reference key="parent" ref="408714013"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -1252,6 +1276,7 @@ AAAAAAAAdGV4dAAAAABDb3B5cmlnaHQgQXBwbGUsIEluYy4sIDIwMDgAA</bytes>
 				<string key="64.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="69.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="7.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="70.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="8.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="9.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 			</dictionary>
@@ -1259,7 +1284,7 @@ AAAAAAAAdGV4dAAAAABDb3B5cmlnaHQgQXBwbGUsIEluYy4sIDIwMDgAA</bytes>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">69</int>
+			<int key="maxID">71</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1403,10 +1428,10 @@ AAAAAAAAdGV4dAAAAABDb3B5cmlnaHQgQXBwbGUsIEluYy4sIDIwMDgAA</bytes>
 						</object>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="_actPic">UIActivityIndicatorView</string>
 						<string key="_actRatio1">UIActivityIndicatorView</string>
 						<string key="_actRatio2">UIActivityIndicatorView</string>
 						<string key="_actRatio3">UIActivityIndicatorView</string>
+						<string key="_actVote">UIActivityIndicatorView</string>
 						<string key="_backButton">UIButton</string>
 						<string key="_borderLeft">UIImageView</string>
 						<string key="_borderRight">UIImageView</string>
@@ -1436,10 +1461,6 @@ AAAAAAAAdGV4dAAAAABDb3B5cmlnaHQgQXBwbGUsIEluYy4sIDIwMDgAA</bytes>
 						<string key="im">UILabel</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<object class="IBToOneOutletInfo" key="_actPic">
-							<string key="name">_actPic</string>
-							<string key="candidateClassName">UIActivityIndicatorView</string>
-						</object>
 						<object class="IBToOneOutletInfo" key="_actRatio1">
 							<string key="name">_actRatio1</string>
 							<string key="candidateClassName">UIActivityIndicatorView</string>
@@ -1450,6 +1471,10 @@ AAAAAAAAdGV4dAAAAABDb3B5cmlnaHQgQXBwbGUsIEluYy4sIDIwMDgAA</bytes>
 						</object>
 						<object class="IBToOneOutletInfo" key="_actRatio3">
 							<string key="name">_actRatio3</string>
+							<string key="candidateClassName">UIActivityIndicatorView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="_actVote">
+							<string key="name">_actVote</string>
 							<string key="candidateClassName">UIActivityIndicatorView</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="_backButton">

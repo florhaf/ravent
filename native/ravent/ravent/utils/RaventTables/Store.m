@@ -27,7 +27,7 @@ static Store *_store;
             
             if ([e isEqualToString:eid]) {
                 
-                return @"event already in your Watchlist";
+                return @"Event already in your Watchlist";
             }
         }
     }
@@ -48,7 +48,7 @@ static Store *_store;
         return error.localizedDescription;
     }
     
-    return @"event added to your Watchlist";
+    return @"Event added to your Watchlist";
 }
 
 - (NSString *)saveEvent:(models_Event *)event
@@ -61,7 +61,7 @@ static Store *_store;
         
         if ([eid isEqualToString:event.eid]) {
             
-            return @"event already in your Watchlist";
+            return @"Event already in your Watchlist";
         }
     }
     
@@ -91,7 +91,9 @@ static Store *_store;
         return error.localizedDescription;
     }
     
-    return @"event added to your Watchlist";
+    event.isInWatchList = YES;
+    
+    return @"Event added to your Watchlist";
 }
 
 
@@ -153,7 +155,12 @@ static Store *_store;
             
         NSManagedObject *matche = [objects objectAtIndex:i];
             
-        [result addObject:[matche valueForKey:@"eid"]];
+        bool isInWacthList = [((NSNumber *)[matche valueForKey:@"isInWatchList"]) boolValue];
+        
+        if (isInWacthList) {
+         
+            [result addObject:[matche valueForKey:@"eid"]];
+        }
     }
 
     return result;
@@ -252,8 +259,6 @@ static Store *_store;
             e.timeStart = [match valueForKey:@"startTime"];
             e.timeEnd = [match valueForKey:@"endTime"];
             
-            NSLog(@"e.isInWatchList: %d", e.isInWatchList);
-            
             if (e.isInWatchList && type == watchlist) {
                 
                 [result addObject:e];
@@ -261,7 +266,6 @@ static Store *_store;
                 
                 [result addObject:e];
             }
-            
             
         }
     }
