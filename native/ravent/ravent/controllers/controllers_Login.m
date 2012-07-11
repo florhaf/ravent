@@ -106,9 +106,6 @@ static controllers_Login *_ctrl;
     
     AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     
-    //if (![[delegate facebook] isSessionValid]) {
-      
-    
     if ([delegate facebook].accessToken != nil && ![[delegate facebook].accessToken isEqualToString:@""]) {
         
         [_loginButton setEnabled:NO];
@@ -119,7 +116,9 @@ static controllers_Login *_ctrl;
         
         [self moveNameUp];   
     }
-    //}
+    
+    [self.view setBackgroundColor:[UIColor blackColor]];
+
 }
 
 - (void)viewDidUnload {

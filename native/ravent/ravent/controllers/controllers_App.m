@@ -30,7 +30,7 @@ static controllers_App *_ctrl;
         [[ActionDispatcher instance] add:logoutAction named:@"onFacebookLogout"];
         
         [self.view addSubview:[controllers_Login instance].view];
-        [self.view setBackgroundColor:[UIColor blackColor]];
+        
         
         
         _ctrl = self;
@@ -50,16 +50,12 @@ static controllers_App *_ctrl;
 
 - (void)flipView
 {
-    @try {
-        if (_slidingController == nil) {
+    
+    if (_slidingController == nil) {
             
-            _slidingController = [[controllers_SlidingInitial alloc] init];
-            _slidingController.view.frame = CGRectMake(0, 0, _slidingController.view.frame.size.width, _slidingController.view.frame.size.height);
-        }    
-        
-    } @catch (NSException *ex) {
-        NSLog(@"%@",ex.reason);
-    }
+        _slidingController = [[controllers_SlidingInitial alloc] init];
+        _slidingController.view.frame = CGRectMake(0, 0, _slidingController.view.frame.size.width, _slidingController.view.frame.size.height);
+    }    
     
     
     
@@ -99,6 +95,8 @@ static controllers_App *_ctrl;
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    
+    [self.view setBackgroundColor:[UIColor blackColor]];
 }
 
 - (void)viewDidUnload
