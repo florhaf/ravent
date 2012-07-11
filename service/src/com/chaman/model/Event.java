@@ -53,6 +53,8 @@ public class Event extends Model implements Serializable {
 	String privacy;
 	@Facebook
 	String update_time;
+	@Facebook
+	String timezone;
 	
 	String venue_id;
 	double score;
@@ -100,7 +102,7 @@ public class Event extends Model implements Serializable {
 		String str_actual_time = String.valueOf(actual_time);
 		
 		FacebookClient client 	= new DefaultFacebookClient(accessToken);
-		String properties 		= "eid, name, pic_big, start_time, end_time, venue, location, privacy, update_time";
+		String properties 		= "eid, name, pic_big, start_time, end_time, venue, location, privacy, update_time, timezone";
 		String query 			= "SELECT " + properties + " FROM event WHERE eid IN (SELECT eid FROM event_member WHERE uid = " + userID + ") AND end_time > " + str_actual_time + " ORDER BY start_time";
 		List<Event> fbevents 	= client.executeQuery(query, Event.class);
 		
@@ -182,7 +184,7 @@ public class Event extends Model implements Serializable {
 		List<EventLocationCapable> l = GeocellManager.proximityFetch(new Point(Double.parseDouble(userLatitude), Double.parseDouble(userLongitude)), searchLimit, searchRadius * 1000 * 1.61, ofySearch);
 		
 		FacebookClient client 	= new DefaultFacebookClient(accessToken);
-		String properties 		= "eid, name, pic_big, start_time, end_time, venue, location, privacy";
+		String properties 		= "eid, name, pic_big, start_time, end_time, venue, location, privacy, timezone";
 		
 		MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
 		
@@ -387,8 +389,14 @@ public class Event extends Model implements Serializable {
 		long timeStampStart = Long.parseLong(this.start_time) * 1000;
 		long timeStampEnd = Long.parseLong(this.end_time) * 1000;
 		
-		// facebook events timestamp are in PST
-		DateTimeZone T = DateTimeZone.forID("America/Los_Angeles");
+		// facebook events timestamp are in PST // or have a timezone...
+		DateTimeZone T;
+		if (this.timezone == null) {
+			T = DateTimeZone.forID("America/Los_Angeles");
+		} else {
+			T = DateTimeZone.forID(this.timezone);
+		}
+		
 		
 		// so need to add time zone offset to DateTime
 		this.dtStart = new DateTime(timeStampStart, T);
@@ -824,5 +832,9 @@ public class Event extends Model implements Serializable {
 
 	public void setFeatured(String featured) {
 		this.featured = featured;
+	}
+
+	public void setTimezone(String timezone) {
+		this.timezone = timezone;
 	}
 }
