@@ -49,9 +49,11 @@ typedef enum {
     
     if (eid != nil) {
 
+        
         [[GANTracker sharedTracker] setCustomVariableAtIndex:1
                                                         name:@"eid"
                                                        value:eid
+                                                       scope:kGANSessionScope
                                                    withError:&error];
     }
 

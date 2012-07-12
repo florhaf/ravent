@@ -56,7 +56,7 @@ static controllers_Login *_ctrl;
         _user = [[models_User alloc] initWithDelegate:self andSelector:@selector(onUserLoad:)];
         
         
-        [self trackPageView:@"login" forEvent:nil];
+        
     }
     
     return self;
@@ -300,6 +300,7 @@ static controllers_Login *_ctrl;
         
         [self performSelector:@selector(onFacebookLogin) withObject:nil afterDelay:1];
         
+        [self trackPageView:@"login" forEvent:nil];
        
     } else {
         

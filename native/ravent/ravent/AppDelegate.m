@@ -35,7 +35,7 @@
     
     
     [[GANTracker sharedTracker] startTrackerWithAccountID:@"UA-33038234-1"
-                                           dispatchPeriod:10
+                                           dispatchPeriod:1
                                                  delegate:nil];
 
     

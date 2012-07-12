@@ -74,12 +74,17 @@ static int _retryCounter;
         
         
         _event.isGemDropped = [[Store instance] isGemDropped:_event.eid];
-        
 
-        [self trackPageView:@"events_details" forEvent:_event.eid];
     }
     
     return self;
+}
+
+- (void) viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [self trackPageView:@"events_details" forEvent:_event.eid];
 }
 
 - (void)trackEvent:(NSString *)named

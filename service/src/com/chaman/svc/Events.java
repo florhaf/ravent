@@ -1,6 +1,8 @@
 package com.chaman.svc;
 
 import java.util.ArrayList;
+import java.util.logging.Logger;
+
 import org.restlet.resource.Get;
 import org.restlet.resource.ServerResource;
 import com.chaman.model.Event;
@@ -8,6 +10,8 @@ import com.chaman.model.Model;
 
 public class Events extends ServerResource {
 
+	private static final Logger log = Logger.getLogger(Events.class.getName());
+	
 	@Get("json")
 	public Response Read() {
 				
@@ -40,6 +44,9 @@ public class Events extends ServerResource {
 			result.setRecords(events);
 			
 		} catch (Exception ex) {
+			
+			
+			log.severe(ex.toString());
 			
 			result.setSuccess(false);
 			result.setError(ex.toString());
