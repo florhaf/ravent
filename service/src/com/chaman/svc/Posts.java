@@ -1,6 +1,6 @@
 package com.chaman.svc;
 
-import org.restlet.resource.Put;
+import org.restlet.resource.*;
 import org.restlet.resource.ServerResource;
 
 import com.chaman.model.Post;
@@ -41,7 +41,7 @@ public class Posts extends ServerResource {
 		return result;
 	}
 	
-	@Put
+	@org.restlet.resource.Post
 	public Response Create(Representation representation) {
 		
 		Response result = new Response();
