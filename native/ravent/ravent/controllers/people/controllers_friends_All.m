@@ -364,6 +364,8 @@ static controllers_friends_All *_ctrl;
     _isDirty = NO;
     
     [self onFollowingLoaded:nil];
+    
+    [self trackPageView:@"friends_all" forEvent:nil];
 }
 
 - (void)onFollowSuccess:(NSString *)response

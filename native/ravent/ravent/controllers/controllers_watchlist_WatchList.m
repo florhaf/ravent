@@ -44,6 +44,13 @@ static controllers_watchlist_WatchList *_ctrl;
     //_hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [self trackPageView:@"watchlist" forEvent:nil];
+}
+
 - (void)loadDataWithUserLocation
 {
     [super loadDataWithUserLocation];

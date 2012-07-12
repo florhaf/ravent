@@ -15,6 +15,7 @@
 #import "UIView+Animation.h"
 #import "NSString+Distance.h"
 #import <QuartzCore/QuartzCore.h>
+#import "GANTracker.h"
 
 @implementation controllers_events_Events
 
@@ -34,6 +35,9 @@ static customNavigationController *_ctrl;
         [[ActionDispatcher instance] add:loadDetailsAction named:@"controller_events_List_p2p_loadDetails"];
         
         [self addChildViewController:[controllers_events_List_p2p instance]];
+        
+        
+        
         
     }
     return self;

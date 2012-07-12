@@ -26,6 +26,32 @@ static int _retryCounter;
 @synthesize coordinate;
 @synthesize peekLeftAmount;
 
+- (void)trackPageView:(NSString *)named forEvent:(NSString *)eid
+{
+    NSError *error;
+    
+    if (eid != nil) {
+        
+        [[GANTracker sharedTracker] setCustomVariableAtIndex:1
+                                                        name:@"eid"
+                                                       value:eid
+                                                   withError:&error];
+    }
+    
+    [[GANTracker sharedTracker] setCustomVariableAtIndex:2
+                                                    name:@"uid"
+                                                   value:[models_User crtUser].uid
+                                               withError:&error];
+    
+    [[GANTracker sharedTracker] setCustomVariableAtIndex:3
+                                                    name:@"app_version"
+                                                   value:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]
+                                               withError:&error];
+    
+    [[GANTracker sharedTracker] trackPageview:named
+                                    withError:&error];
+}
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil user:(models_User *)user
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -33,6 +59,8 @@ static int _retryCounter;
         
 //        _imageLoading = [[NSMutableDictionary alloc] init];
         _user = user;
+        
+        
     }
     return self;
 }
@@ -150,6 +178,8 @@ static int _retryCounter;
     self.peekLeftAmount = 40.0f;
     [self.slidingViewController setAnchorLeftPeekAmount:self.peekLeftAmount];
     self.slidingViewController.underRightWidthLayout = ECVariableRevealWidth;
+    
+    [self trackPageView:@"events_p2p_map" forEvent:nil];
 }
 
 - (void)stopGps

@@ -12,6 +12,7 @@
 #import "controllers_events_List_p2p.h"
 #import "models_User.h"
 #import "GPSManager.h"
+#import "GANTracker.h"
 
 @implementation AppDelegate
 
@@ -31,6 +32,12 @@
     [[GPSManager instance] startGps];
     
     [Store instance].managedObjectContext = self.managedObjectContext;
+    
+    
+    [[GANTracker sharedTracker] startTrackerWithAccountID:@"UA-33038234-1"
+                                           dispatchPeriod:1
+                                                 delegate:nil];
+
     
     [[JMC sharedInstance] configureJiraConnect:@"https://ravent.atlassian.net/"
                                     projectKey:@"RAV"

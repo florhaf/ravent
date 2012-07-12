@@ -33,6 +33,8 @@
         [self loadData];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadDataWithSpinner) name:@"reloadComments" object:nil];
+        
+        [self trackPageView:@"events_feed" forEvent:_event.eid];
     }
     return self;
 }

@@ -37,9 +37,38 @@ typedef enum {
         
         self.title = @"Gemster";
         _showEmptyMessage = NO;
+        
 
     }
     return self;
+}
+
+- (void)trackPageView:(NSString *)named forEvent:(NSString *)eid
+{
+    NSError *error;
+    
+    if (eid != nil) {
+
+        
+        [[GANTracker sharedTracker] setCustomVariableAtIndex:1
+                                                        name:@"eid"
+                                                       value:eid
+                                                       scope:kGANSessionScope
+                                                   withError:&error];
+    }
+
+    [[GANTracker sharedTracker] setCustomVariableAtIndex:2
+                                                    name:@"uid"
+                                                   value:[models_User crtUser].uid
+                                               withError:&error];
+    
+    [[GANTracker sharedTracker] setCustomVariableAtIndex:3
+                                                    name:@"app_version"
+                                                   value:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]
+                                               withError:&error];
+    
+    [[GANTracker sharedTracker] trackPageview:named
+                                    withError:&error];
 }
 
 - (void)didReceiveMemoryWarning
@@ -246,6 +275,16 @@ typedef enum {
 
 - (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view{
 	
+    if (_user != nil) {
+        
+        [_user cancelAllRequests];
+    }
+    
+    if (_event != nil) {
+        
+        [_event cancelAllRequests];
+    }
+    
     [MBProgressHUD hideHUDForView:self.view animated:YES];
 	[self reloadTableViewDataSource];	
 }

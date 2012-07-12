@@ -14,6 +14,8 @@
 #import "EGORefreshTableHeaderView.h"
 #import "JBAsyncImageView.h"
 #import "utils.h"
+#import "GANTracker.h"
+
 
 typedef void (^success)();
 
@@ -57,7 +59,7 @@ typedef void (^success)();
 @property (nonatomic, retain) NSString *emptyMessage;
 
 - (NSDate *)lastLoadTime;
-
+- (void)trackPageView:(NSString *)named forEvent:(NSString *)eid;
 - (void)reloadTableViewDataSource;
 - (void)doneLoadingTableViewData;
 

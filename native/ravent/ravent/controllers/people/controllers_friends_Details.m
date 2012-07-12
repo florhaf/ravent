@@ -12,6 +12,18 @@
 
 @implementation controllers_friends_Details
 
+- (id)initWithUser:(models_User *)user
+{
+    self = [super initWithUser:user];
+    
+    if (self != nil) {
+        
+        [self trackPageView:@"friends_details" forEvent:nil];
+    }
+    
+    return self;
+}
+
 - (void)loadData
 {
     NSMutableDictionary *params = [[NSMutableDictionary alloc] init];

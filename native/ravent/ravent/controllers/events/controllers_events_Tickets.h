@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "models_Event.h"
 
 @interface controllers_events_Tickets : UIViewController<UIWebViewDelegate> {
     
@@ -19,6 +20,6 @@
 }
 
 - (void)cancelAllRequests;
-- (id)initWithURL:(NSString *)url;
+- (id)initWithURL:(NSString *)url event:(models_Event *)e;
 
 @end

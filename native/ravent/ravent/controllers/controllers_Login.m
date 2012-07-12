@@ -2,12 +2,39 @@
 #import "AppDelegate.h"
 #import "FBConnect.h"
 #import "ActionDispatcher.h"
+#import "GANTracker.h"
 
 @implementation controllers_Login
 
 @synthesize permissions;
 
 static controllers_Login *_ctrl;
+
+- (void)trackPageView:(NSString *)named forEvent:(NSString *)eid
+{
+    NSError *error;
+    
+    if (eid != nil) {
+        
+        [[GANTracker sharedTracker] setCustomVariableAtIndex:1
+                                                        name:@"eid"
+                                                       value:eid
+                                                   withError:&error];
+    }
+    
+    [[GANTracker sharedTracker] setCustomVariableAtIndex:2
+                                                    name:@"uid"
+                                                   value:[models_User crtUser].uid
+                                               withError:&error];
+    
+    [[GANTracker sharedTracker] setCustomVariableAtIndex:3
+                                                    name:@"app_version"
+                                                   value:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]
+                                               withError:&error];
+    
+    [[GANTracker sharedTracker] trackPageview:named
+                                    withError:&error];
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -27,6 +54,9 @@ static controllers_Login *_ctrl;
                        @"rsvp_event",
                        nil];
         _user = [[models_User alloc] initWithDelegate:self andSelector:@selector(onUserLoad:)];
+        
+        
+        
     }
     
     return self;
@@ -270,6 +300,7 @@ static controllers_Login *_ctrl;
         
         [self performSelector:@selector(onFacebookLogin) withObject:nil afterDelay:1];
         
+        [self trackPageView:@"login" forEvent:nil];
        
     } else {
         

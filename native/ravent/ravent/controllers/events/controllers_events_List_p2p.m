@@ -21,11 +21,30 @@
 
 static controllers_events_List_p2p *_ctrl;
 
+- (id)initWithUser:(models_User *)user
+{
+    self = [super initWithUser:user];
+    
+    if (self != nil) {
+        
+        
+    }
+    
+    return self;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
     self.view.frame = CGRectMake(0, 0, 320, 416);
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [self trackPageView:@"events_p2p" forEvent:nil];
 }
 
 - (void)loadDataWithUserLocation
