@@ -16,6 +16,7 @@
 #import "NSString+Distance.h"
 #import <QuartzCore/QuartzCore.h>
 #import "GANTracker.h"
+#import "controllers_TakeTheTour.h"
 
 @implementation controllers_events_Events
 
@@ -35,9 +36,6 @@ static customNavigationController *_ctrl;
         [[ActionDispatcher instance] add:loadDetailsAction named:@"controller_events_List_p2p_loadDetails"];
         
         [self addChildViewController:[controllers_events_List_p2p instance]];
-        
-        
-        
         
     }
     return self;
@@ -123,6 +121,15 @@ static customNavigationController *_ctrl;
     
     
     //[self onPartyButton_Tap:nil];
+    
+    
+    if ([models_User crtUser].isTourTaken == NO) {
+        
+        [controllers_TakeTheTour instance].view.frame = CGRectMake(0, -44, 320, 460);
+        
+        [self addChildViewController:[controllers_TakeTheTour instance]];
+        [self.view addSubview:[controllers_TakeTheTour instance].view];
+    }
 }
 
 - (void)setNavBarTitle:(NSString *)title
