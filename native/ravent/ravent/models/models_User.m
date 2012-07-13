@@ -41,6 +41,7 @@
 @synthesize nbOfFollowing = _nbOfFollowing;
 @synthesize searchRadius = _searchRadius;
 @synthesize searchWindow = _searchWindow;
+@synthesize isTourTaken = _isTourTaken;
 
 //#define SERVICE_URL @"http://air.local:8888"
 #define SERVICE_URL @"http://raventsvc.appspot.com"
@@ -74,6 +75,7 @@ static models_User *_crtUser = nil;
     [defaults setObject:_accessToken forKey:@"_accessToken"];
     [defaults setObject:[NSNumber numberWithInt:_searchRadius] forKey:@"_searchRadius"];
     [defaults setObject:[NSNumber numberWithInt:_searchWindow] forKey:@"_searchWindow"];
+    [defaults setObject:[NSNumber numberWithBool:_isTourTaken] forKey:@"_isTourTaken"];
     [defaults synchronize];
 }
 
@@ -88,6 +90,7 @@ static models_User *_crtUser = nil;
     [defaults removeObjectForKey:@"_accessToken"];
     [defaults removeObjectForKey:@"_searchRadius"];
     [defaults removeObjectForKey:@"_searchWindow"];
+    [defaults removeObjectForKey:@"_isTourTaken"];
     [defaults synchronize];
 }
 
@@ -101,6 +104,7 @@ static models_User *_crtUser = nil;
     self.accessToken = [defaults objectForKey:@"_accessToken"];
     self.searchRadius = [((NSNumber *)[defaults objectForKey:@"_searchRadius"]) intValue];
     self.searchWindow = [((NSNumber *)[defaults objectForKey:@"_searchWindow"]) intValue];
+    self.isTourTaken = [((NSNumber *)[defaults objectForKey:@"_isTourTaken"]) boolValue];
 }
 
 - (id)initWithDelegate:(NSObject *)del andSelector:(SEL)sel
@@ -136,6 +140,7 @@ static models_User *_crtUser = nil;
     another.nbOfFollowing = _nbOfFollowing;
     another.searchRadius = _searchRadius;
     another.searchWindow = _searchWindow;
+    another.isTourTaken = _isTourTaken;
     
     return another;
 }
@@ -157,6 +162,7 @@ static models_User *_crtUser = nil;
     _crtUser.searchRadius = 15;
     _crtUser.timeZone = [NSString stringWithFormat:@"%d", [[NSTimeZone localTimeZone] secondsFromGMT] / 60 ];
     _crtUser.accessToken = u.accessToken;
+    _crtUser.isTourTaken = u.isTourTaken;
 
     return _crtUser;
 }

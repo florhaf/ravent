@@ -26,6 +26,7 @@
     
     BOOL _isRequesting;
     BOOL _isLoadingAllFriends;
+    BOOL _isTourTaken;
     
     RKObjectManager *_manager;
     RKClient *_client;
@@ -79,6 +80,7 @@
 @property (nonatomic, retain) NSString *nbOfFollowing;
 @property (nonatomic, assign) int searchRadius;
 @property (nonatomic, assign) int searchWindow;
+@property (nonatomic, assign) BOOL isTourTaken;
 
 - (id)initWithDelegate:(NSObject *)del andSelector:(SEL)sel;
 - (void)loadUser;

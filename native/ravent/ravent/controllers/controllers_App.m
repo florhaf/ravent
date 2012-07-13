@@ -9,6 +9,7 @@
 #import "controllers_App.h"
 #import "ActionDispatcher.h"
 #import "controllers_events_Events.h"
+#import "controllers_TakeTheTour.h"
 
 @implementation controllers_App
 
@@ -30,8 +31,6 @@ static controllers_App *_ctrl;
         [[ActionDispatcher instance] add:logoutAction named:@"onFacebookLogout"];
         
         [self.view addSubview:[controllers_Login instance].view];
-        
-        
         
         _ctrl = self;
     }
