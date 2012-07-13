@@ -46,7 +46,7 @@ public class Post  extends Model {
 		
 		FacebookClient client	= new DefaultFacebookClient(accessToken);
 		//TODO: add reference to ravent
-		client.publish(friendID + "/feed", FacebookType.class, Parameter.with("message", message), Parameter.with("link", "http://facebook.com/" + friendID));
+		client.publish(friendID + "/feed", FacebookType.class, Parameter.with("message", message));
 	}
 
 	public static void FriendWallPostWithAttachment(String accessToken, String friendID, String attachment, String message) {

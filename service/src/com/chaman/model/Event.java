@@ -393,16 +393,19 @@ public class Event extends Model implements Serializable {
 		
 		// facebook events timestamp are in PST // or have a timezone...
 		DateTimeZone T;
+		
 		if (this.timezone == null) {
 			T = DateTimeZone.forID("America/Los_Angeles");
+			this.dtStart = new DateTime(timeStampStart, T);
+			this.dtEnd = new DateTime(timeStampEnd, T);
 		} else {
 			T = DateTimeZone.forID(this.timezone);
+			this.dtStart = new DateTime(timeStampStart, T).minusHours(3); //TODO: Investigate why those 3 hours diff!!!!
+			this.dtEnd = new DateTime(timeStampEnd, T).minusHours(3);
 		}
-		
-		
+				
 		// so need to add time zone offset to DateTime
-		this.dtStart = new DateTime(timeStampStart, T);
-		this.dtEnd = new DateTime(timeStampEnd, T);
+
 		
 		this.time_start = dtStart.toString("KK:mm a");
 		this.time_end = dtEnd.toString("KK:mm a");
