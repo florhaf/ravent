@@ -70,7 +70,7 @@ public class Post  extends Model {
 		FacebookClient client	= new DefaultFacebookClient(accessToken);
 		InputStream data = new ByteArrayInputStream(attachment.getBytes());
 		//TODO: add reference to ravent
-		client.publish(eventID + "/feed", FacebookType.class, BinaryAttachment.with("Ravent", data), Parameter.with("message", message));
+		client.publish(eventID + "/feed", FacebookType.class, BinaryAttachment.with("IMG.jpg", data), Parameter.with("type", "photo"));
 	}
 	
 	public static String ShareEvent(String accessToken, String friendID, String eventID) throws FacebookException {
