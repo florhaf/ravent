@@ -1,6 +1,5 @@
 package com.chaman.svc;
 
-import org.restlet.resource.*;
 import org.restlet.resource.ServerResource;
 
 import com.chaman.model.Post;
@@ -10,7 +9,7 @@ import org.restlet.representation.*;
 public class Posts extends ServerResource {
 
 	
-	@Put("json")
+	@org.restlet.resource.Post
 	public Response Create() {
 		
 		Response result = new Response();
@@ -45,7 +44,7 @@ public class Posts extends ServerResource {
 	public Response Create(Representation representation) {
 		
 		Response result = new Response();
-
+		
 		try {
 			
 			String accessToken	= getQuery().getValues("access_token");
@@ -73,6 +72,6 @@ public class Posts extends ServerResource {
 		}
 		
 		return result;
-	}	
+	}
 	
 }
