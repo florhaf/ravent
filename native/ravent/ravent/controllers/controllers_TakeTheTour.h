@@ -7,12 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TKDragView.h"
 
-@interface controllers_TakeTheTour : UIViewController {
+@interface controllers_TakeTheTour : UIViewController<TKDragViewDelegate> {
     
     IBOutlet UIView *_container;
     IBOutlet UIButton *_next;
 }
+
+@property (nonatomic, strong) NSMutableArray *dragViews;
+@property (nonatomic, strong) NSMutableArray *goodFrames;
+@property (nonatomic, strong) NSMutableArray *badFrames;
+@property BOOL canDragMultipleViewsAtOnce;
+@property BOOL canUseTheSameFrameManyTimes;
 
 @property (nonatomic, retain) UIView *container;
 @property (nonatomic, retain) UIButton *next;

@@ -115,29 +115,48 @@
     
     if (_isForEvent) {
         
-        [params setValue:_toId forKey:@"eventID"];
+        [params setValue:_toId forKey:@"eid"];
     } else {
     
         [params setValue:_toId forKey:@"friendid"];
     }
-    
+
     [params setValue:_imageData forKey:@"attachment"];
     [params setValue:_textView.text forKey:@"message"];
     [params setValue:[models_User crtUser].accessToken forKey:@"access_token"];
     [params setValue:[models_User crtUser].uid forKey:@"userid"];
     
     [_comment post:params success:@selector(onPostSuccess:) failure:@selector(onPostFailure:)];
+    
+    if (_isForEvent && _imageData != nil) {
+        
+        params = nil;
+        params = [[NSMutableDictionary alloc] init];
+        
+        [params setValue:[models_User crtUser].uid forKey:@"friendid"];
+        
+        [params setValue:_imageData forKey:@"attachment"];
+        [params setValue:_textView.text forKey:@"message"];
+        [params setValue:[models_User crtUser].accessToken forKey:@"access_token"];
+        [params setValue:[models_User crtUser].uid forKey:@"userid"];
+        
+        [_comment post:params success:@selector(onPostSuccess:) failure:@selector(onPostFailure:)];        
+    }
 }
 
 - (void)onPostSuccess:(NSString *)response
 {
-    [MBProgressHUD hideHUDForView:self.view animated:YES];
-    [self hideModal];
+    _textView.text = nil;
+    _imageData = nil;
     
     if (_isForEvent) {
 
         [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadComments" object:nil];   
     }
+    
+    [self performSelector:@selector(hideModal) withObject:nil afterDelay:0.3];
+    
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
 }
 
 - (void)onPostFailure:(NSMutableDictionary *)response
@@ -179,7 +198,7 @@
     if (buttonIndex == 1) {
         
         [self post];
-        [self dismissModalViewControllerAnimated:YES];
+        //[self dismissModalViewControllerAnimated:YES];
         
     } else {
         

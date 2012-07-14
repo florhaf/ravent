@@ -56,9 +56,6 @@ static controllers_App *_ctrl;
         _slidingController.view.frame = CGRectMake(0, 0, _slidingController.view.frame.size.width, _slidingController.view.frame.size.height);
     }    
     
-    
-    
-    
     UIView *slide = _slidingController.view;
     UIView *login = _loginController.view;
     
@@ -79,6 +76,12 @@ static controllers_App *_ctrl;
 		[login removeFromSuperview];
         login = nil;
 		[self.view addSubview:slide];
+        
+        if ([models_User crtUser].isTourTaken == NO) {
+            
+            [self addChildViewController:[controllers_TakeTheTour instance]];
+            [self.view addSubview:[controllers_TakeTheTour instance].view];
+        }
     }
     
 	[UIView commitAnimations];

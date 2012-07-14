@@ -122,14 +122,6 @@ static customNavigationController *_ctrl;
     
     //[self onPartyButton_Tap:nil];
     
-    
-    if ([models_User crtUser].isTourTaken == NO) {
-        
-        [controllers_TakeTheTour instance].view.frame = CGRectMake(0, -44, 320, 460);
-        
-        [self addChildViewController:[controllers_TakeTheTour instance]];
-        [self.view addSubview:[controllers_TakeTheTour instance].view];
-    }
 }
 
 - (void)setNavBarTitle:(NSString *)title

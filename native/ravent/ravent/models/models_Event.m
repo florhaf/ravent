@@ -47,6 +47,7 @@
 @synthesize ticket_link = _ticket_link;
 @synthesize isGemDropped = _isGemDropped;
 @synthesize isInWatchList = _isInWatchList;
+@synthesize isSyncedWithCal = _isSyncedWithCal;
 
 //#define SERVICE_URL @"http://air.local:8888"
 #define SERVICE_URL @"http://raventsvc.appspot.com"
@@ -92,6 +93,7 @@
     another.featured = _featured;
     another.isInWatchList = _isInWatchList;
     another.isGemDropped = _isGemDropped;
+    another.isSyncedWithCal = _isSyncedWithCal;
     
     return another;
 }
@@ -233,7 +235,6 @@
 
 - (void)loadRsvpWithParams:(NSMutableDictionary *)params andTarget:(id)target andSelector:(SEL)success
 {
-    //RKLogConfigureByName("RestKit/*", RKLogLevelTrace);
     NSString *resourcePath = [@"rsvp" appendQueryParams:params];
     
     _callbackRsvpSuccess = success;
@@ -442,7 +443,7 @@
 {    
     if ([_name isKindOfClass:[NSNull class]]) {
      
-        return @"Unknown charge";
+        return @"N/A";
     } else {
         
         if ([_name length] > 23) {

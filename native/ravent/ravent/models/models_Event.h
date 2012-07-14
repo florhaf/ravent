@@ -31,6 +31,7 @@
     
     BOOL _isRequesting;
     BOOL _isCancelled;
+    BOOL _isSyncedWithCal;
     
     RKObjectManager *_manager;    
     
@@ -100,6 +101,7 @@
 @property (nonatomic, assign) CLLocationCoordinate2D coordinate;
 @property (nonatomic, assign) BOOL isGemDropped;
 @property (nonatomic, assign) BOOL isInWatchList;
+@property (nonatomic, assign) BOOL isSyncedWithCal;
 
 - (id)initWithDelegate:(NSObject *)del andSelector:(SEL)sel;
 - (void)loadEventsWithParams:(NSMutableDictionary *)params;
