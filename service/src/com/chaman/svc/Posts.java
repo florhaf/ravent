@@ -3,11 +3,13 @@ package com.chaman.svc;
 import org.restlet.resource.ServerResource;
 
 import com.chaman.model.Post;
+import java.io.InputStream;
 
 import org.restlet.representation.*;
 
 public class Posts extends ServerResource {
 
+	
 	
 	@org.restlet.resource.Post
 	public Response Create() {
@@ -40,7 +42,7 @@ public class Posts extends ServerResource {
 		return result;
 	}
 	
-	@org.restlet.resource.Post
+	@org.restlet.resource.Post("image/jpeg")
 	public Response Create(Representation representation) {
 		
 		Response result = new Response();
@@ -51,17 +53,15 @@ public class Posts extends ServerResource {
 			String userID		= getQuery().getValues("userid");
 			String friendID		= getQuery().getValues("friendid");
 			String eventID 		= getQuery().getValues("eid");
-			String message		= getQuery().getValues("message");
-			
-			//get attachment from header (encoded URL form)
-			String attachment	= representation.getText();
-			
+			String message		= getQuery().getValues("message"); 
+				
+			InputStream attachment	= representation.getStream();
 			if (eventID == null) {
 				Post.FriendWallPostWithAttachment(accessToken, friendID, attachment, message);
 			} else {
 				Post.EventPostWithAttachment(accessToken, userID, eventID, attachment, message);
 			}
-			
+
 			result.setSuccess(true);
 			result.setRecords(null);
 			

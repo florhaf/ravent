@@ -1,7 +1,7 @@
 package com.chaman.model;
 
 import java.io.InputStream;
-import java.io.ByteArrayInputStream;
+//import java.io.ByteArrayInputStream;
 
 import com.restfb.BinaryAttachment;
 import com.restfb.Connection;
@@ -49,13 +49,10 @@ public class Post  extends Model {
 		client.publish(friendID + "/feed", FacebookType.class, Parameter.with("message", message));
 	}
 
-	public static void FriendWallPostWithAttachment(String accessToken, String friendID, String attachment, String message) {
+	public static void FriendWallPostWithAttachment(String accessToken, String friendID, InputStream data, String message) {
 		
 		FacebookClient client	= new DefaultFacebookClient(accessToken);
-		InputStream data = new ByteArrayInputStream(attachment.getBytes());
-		//TODO: add reference to ravent
-		client.publish(friendID + "/feed", FacebookType.class, BinaryAttachment.with("Ravent", data), Parameter.with("message", message));
-		
+		client.publish(friendID + "/photos", FacebookType.class, BinaryAttachment.with("imafgddfge", data), Parameter.with("message", message));
 	}
 	
 	public static void EventPost(String accessToken, String userID, String eventID, String message) {
@@ -65,12 +62,14 @@ public class Post  extends Model {
 		client.publish(eventID + "/feed", FacebookType.class, Parameter.with("message", message));
 	}
 	
-	public static void EventPostWithAttachment(String accessToken, String userID, String eventID, String attachment,String message) {
+	public static void EventPostWithAttachment(String accessToken, String userID, String eventID, InputStream data, String message) {
 		
 		FacebookClient client	= new DefaultFacebookClient(accessToken);
-		InputStream data = new ByteArrayInputStream(attachment.getBytes());
-		//TODO: add reference to ravent
-		client.publish(eventID + "/feed", FacebookType.class, BinaryAttachment.with("IMG.jpg", data), Parameter.with("type", "photo"));
+		
+		Privacy privacy = new Privacy(); 
+		privacy.value = "EVERYONE";
+		
+		client.publish(eventID + "/photos", FacebookType.class, BinaryAttachment.with("image2", data), Parameter.with("message", message), Parameter.with("privacy", privacy));
 	}
 	
 	public static String ShareEvent(String accessToken, String friendID, String eventID) throws FacebookException {
