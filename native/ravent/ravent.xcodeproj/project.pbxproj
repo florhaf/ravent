@@ -307,6 +307,7 @@
 		DFA806DE15ABA58B00EC858B /* locked.png in Resources */ = {isa = PBXBuildFile; fileRef = DFA806DC15ABA58B00EC858B /* locked.png */; };
 		DFA806DF15ABA58B00EC858B /* unlocked.png in Resources */ = {isa = PBXBuildFile; fileRef = DFA806DD15ABA58B00EC858B /* unlocked.png */; };
 		DFA903AA1590136800426865 /* views_events_Events.xib in Resources */ = {isa = PBXBuildFile; fileRef = DFA903A91590136800426865 /* views_events_Events.xib */; };
+		DFA9FC5B15B161F0003F9B5F /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFA9FC5A15B161EF003F9B5F /* EventKit.framework */; };
 		DFAF309A15AFA7EA00B1B9C5 /* controllers_TakeTheTour.m in Sources */ = {isa = PBXBuildFile; fileRef = DFAF309915AFA7EA00B1B9C5 /* controllers_TakeTheTour.m */; };
 		DFAF309C15AFA8E100B1B9C5 /* views_TakeTheTour.xib in Resources */ = {isa = PBXBuildFile; fileRef = DFAF309B15AFA8E100B1B9C5 /* views_TakeTheTour.xib */; };
 		DFAF30A315AFAA2F00B1B9C5 /* step0.png in Resources */ = {isa = PBXBuildFile; fileRef = DFAF309E15AFAA2F00B1B9C5 /* step0.png */; };
@@ -819,6 +820,7 @@
 		DFA806DD15ABA58B00EC858B /* unlocked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unlocked.png; sourceTree = "<group>"; };
 		DFA903A91590136800426865 /* views_events_Events.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = views_events_Events.xib; sourceTree = "<group>"; };
 		DFA9B5EB150FB454001CD530 /* RestKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RestKit.xcodeproj; path = RestKit/RestKit.xcodeproj; sourceTree = "<group>"; };
+		DFA9FC5A15B161EF003F9B5F /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
 		DFAF309815AFA7EA00B1B9C5 /* controllers_TakeTheTour.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = controllers_TakeTheTour.h; sourceTree = "<group>"; };
 		DFAF309915AFA7EA00B1B9C5 /* controllers_TakeTheTour.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = controllers_TakeTheTour.m; sourceTree = "<group>"; };
 		DFAF309B15AFA8E100B1B9C5 /* views_TakeTheTour.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = views_TakeTheTour.xib; sourceTree = "<group>"; };
@@ -910,6 +912,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DFA9FC5B15B161F0003F9B5F /* EventKit.framework in Frameworks */,
 				DFB28C741596FB5100D0F999 /* ImageIO.framework in Frameworks */,
 				DFB28C721596FB4600D0F999 /* MessageUI.framework in Frameworks */,
 				DF09C0661550A3CA00FFD51E /* CrashReporter.framework in Frameworks */,
@@ -1504,6 +1507,7 @@
 		DF8F14BD150BD48200008ABC = {
 			isa = PBXGroup;
 			children = (
+				DFA9FC5A15B161EF003F9B5F /* EventKit.framework */,
 				DF30BC2E15AD03E200CE7105 /* Austin.gpx */,
 				DFB28C731596FB5100D0F999 /* ImageIO.framework */,
 				DFB28C711596FB4600D0F999 /* MessageUI.framework */,
@@ -2513,7 +2517,7 @@
 				);
 				"OTHER_CFLAGS[arch=*]" = "-mthumb";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "67C20EBB-AA59-4A4B-B4BF-60479C59B59C";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "53E41E53-1F1C-4FE6-A271-5A27356F349E";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = NO;
 				USER_HEADER_SEARCH_PATHS = "";

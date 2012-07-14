@@ -289,7 +289,6 @@ static controllers_Login *_ctrl;
         
         u = [models_User crtUser];
         
-        
         NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
         
         [params setValue:[models_User crtUser].accessToken forKey:@"access_token"];

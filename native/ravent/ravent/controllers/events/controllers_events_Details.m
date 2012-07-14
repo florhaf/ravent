@@ -723,7 +723,7 @@ static int _retryCounter;
 
 - (IBAction)onTicket_Tap:(id)sender
 {
-    //_details = [[controllers_friends_Details alloc] initWithUser:[user copy]];
+    _isButtonTap = YES;
     
     controllers_events_Tickets *ticket = [[controllers_events_Tickets alloc] initWithURL:_event.ticket_link event:[_event copy]];
     
@@ -753,7 +753,7 @@ static int _retryCounter;
 
 - (IBAction)onSpecials_Tap:(id)sender
 {
-    //controllers_events_Tickets *ticket = [[controllers_events_Tickets alloc] initWithURL:_event.ticket_link];
+    _isButtonTap = YES;
     
     controllers_events_Specials *spe = [[controllers_events_Specials alloc] initWithEvent:[_event copy]];
     

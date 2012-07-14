@@ -10,6 +10,7 @@
 #import "ActionDispatcher.h"
 #import <RestKit/JSONKit.h>
 #import <RestKit/RKErrorMessage.h>
+#import <RestKit/RKRequestSerialization.h>
 
 @implementation models_Comment
 
@@ -91,7 +92,10 @@
     
     RKParams* rkparams = [RKParams params];
     
+    NSData *imageData;
     NSString *key = nil;
+    NSString *keyAttachment = nil;
+    RKRequestSerialization *serialization = nil;
     int i = 0;
     
     for (; i < [params.allKeys count]; i++) {
@@ -99,18 +103,38 @@
         key = [params.allKeys objectAtIndex:i];
         
         if ([key isEqualToString:@"attachment"]) {
+            
+            keyAttachment = key;
           
-            [rkparams setData:[params valueForKey:@"attachment"] MIMEType:@"image/jpeg" forParam:@"attachment"];
-            break;
+             imageData = [params valueForKey:@"attachment"];
+            
+            [rkparams setData:imageData MIMEType:@"image/jpeg" forParam:@"attachment"];
+            
+            serialization = [RKRequestSerialization serializationWithData:imageData MIMEType:@"image/jpeg"];
+
+        } else {
+            
+            [rkparams setValue:[params objectForKey:key] forParam:key];
         }
     }
     
-    if ([key isEqualToString:@"attachment"]) {
-     
-        [params removeObjectForKey:key];
+    if (keyAttachment != nil) {
+        
+        [params removeObjectForKey:keyAttachment];
     }
     
-    [[RKClient sharedClient] put:[@"/post" appendQueryParams:params] params:rkparams delegate:self];
+    // Let's examine the RKRequestSerializable info...
+    //NSLog(@"RKParams HTTPHeaderValueForContentType = %@", [rkparams HTTPBodyStream]);
+    NSLog(@"RKParams HTTPHeaderValueForContentType = %@", [rkparams HTTPHeaderValueForContentType]);
+    NSLog(@"RKParams HTTPHeaderValueForContentLength = %d", [rkparams HTTPHeaderValueForContentLength]);
+    
+    if (imageData != nil) {
+        
+        [[RKClient sharedClient] post:[@"/post" appendQueryParams:params] params:serialization delegate:self];
+    } else {
+        
+        [[RKClient sharedClient] post:[@"/post" appendQueryParams:params] params:nil delegate:self];
+    }
 }
 
 - (void)updateLoadingMessage:(NSString *)resourcePath

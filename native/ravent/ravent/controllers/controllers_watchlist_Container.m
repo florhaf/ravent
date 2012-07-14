@@ -7,7 +7,11 @@
 //
 
 #import "controllers_watchlist_Container.h"
-
+#import <EventKit/EKEventStore.h>
+#import <EventKit/EKEvent.h>
+#import "Store.h"
+#import "YRDropdownView.h"
+#import "controllers_App.h"
 
 @implementation controllers_watchlist_Container
 
@@ -48,18 +52,6 @@ static customNavigationController *_ctrl;
     self.navigationItem.leftBarButtonItem = menuButton; 
     
     
-    
-//    UIView *shadow = [[UIView alloc] initWithFrame:CGRectMake(0, -44, 320, 44)];
-//    [shadow setBackgroundColor:[UIColor blackColor]];
-//    
-//    shadow.layer.shadowOffset = CGSizeZero;
-//    shadow.layer.shadowPath = [UIBezierPath bezierPathWithRect:shadow.layer.bounds].CGPath;
-//    shadow.layer.shadowOpacity = 0.75f;
-//    shadow.layer.shadowRadius = 10.0f;
-//    shadow.layer.shadowColor = [UIColor blackColor].CGColor;
-//    
-//    [self.view addSubview:shadow];
-    
     // shadows
     UIImageView *ivright = [[UIImageView alloc] initWithFrame:CGRectMake(320, 0, 40, 460)];
     [ivright setImage:[UIImage imageNamed:@"shadowRight"]];
@@ -72,17 +64,65 @@ static customNavigationController *_ctrl;
     UIImageView *ivtop = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 20)];
     [ivtop setImage:[UIImage imageNamed:@"shadowTop"]];
     [self.view addSubview:ivtop];
+    
+    
+    UIImageView *toolbar = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"grayToolbar"]];
+    [toolbar setFrame:CGRectMake(0, 372, 320, 44)];
+    
+    UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(30, 376, 260, 35)];
+    [btn setBackgroundImage:[UIImage imageNamed:@"askButton"] forState:UIControlStateNormal];
+    [btn setTitle:@"Sync with Calendar" forState:UIControlStateNormal];
+    [btn.titleLabel setFont:[UIFont boldSystemFontOfSize:18]];
+    [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [btn.titleLabel setShadowOffset:CGSizeMake(0, -1)];
+    [btn addTarget:self action:@selector(syncWithCal) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.view addSubview:toolbar];
+    [self.view addSubview:btn];
+}
+
+- (void)syncWithCal
+{
+    NSArray *events = [controllers_watchlist_WatchList instance].data;
+    EKEventStore *eventStore = [[EKEventStore alloc] init];    
+    
+    for (models_Event *e in events) {
+        
+        if (!e.isSyncedWithCal) {
+         
+            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+            [dateFormatter setDateFormat:@"MMM d, yyyy hh:mm a"];
+            
+            EKEvent *event  = [EKEvent eventWithEventStore:eventStore];
+            event.title     = e.name;
+            
+            event.startDate = [dateFormatter dateFromString:[NSString stringWithFormat:@"%@ %@",  e.dateStart, e.timeStart]];
+            event.endDate   = [dateFormatter dateFromString:[NSString stringWithFormat:@"%@ %@",  e.dateStart, e.timeStart]];
+            
+            event.location = e.location;
+            
+            event.notes = @"Brought to you by Gemster";
+            
+            [event setCalendar:[eventStore defaultCalendarForNewEvents]];
+            NSError *err;
+            [eventStore saveEvent:event span:EKSpanThisEvent error:&err];
+            
+            e.isSyncedWithCal = YES;
+            
+            [[Store instance] update:e];
+        }
+    }
+    
+    [YRDropdownView showDropdownInView:[controllers_App instance].view 
+                                 title:@"Watchlist" 
+                                detail:@"Watchlist is now synchronized with your calendar"
+                                 image:[UIImage imageNamed:@"dropdown-alert"]
+                              animated:YES];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
-    // shadowPath, shadowOffset, and rotation is handled by ECSlidingViewController.
-    // You just need to set the opacity, radius, and color.
-//    self.parentViewController.view.layer.shadowOpacity = 0.75f;
-//    self.parentViewController.view.layer.shadowRadius = 10.0f;
-//    self.parentViewController.view.layer.shadowColor = [UIColor blackColor].CGColor;
     
     
     if (![self.slidingViewController.underLeftViewController isKindOfClass:[controllers_SlidingMenu class]]) {

@@ -6,6 +6,7 @@
         <attribute name="endTime" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="isGemDropped" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="isInWatchList" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="isSyncedWithCal" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="latitude" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="location" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="longitude" optional="YES" attributeType="String" syncable="YES"/>
@@ -15,6 +16,6 @@
         <attribute name="startTime" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Event" positionX="160" positionY="192" width="128" height="225"/>
+        <element name="Event" positionX="160" positionY="192" width="128" height="240"/>
     </elements>
 </model>

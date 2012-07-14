@@ -40,8 +40,6 @@ static controllers_watchlist_WatchList *_ctrl;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    //_hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -95,11 +93,6 @@ static controllers_watchlist_WatchList *_ctrl;
         _groupedData = [models_Event getGroupedData:_data];
         _sortedKeys = [[_groupedData allKeys] sortedArrayUsingSelector:@selector(compare:)];
     }];
-    
-    if (_data != nil && [_data count] == 1) {
-        
-        //[self loadEventDetails:[_data objectAtIndex:0]];
-    }
 }
 
 + (controllers_watchlist_WatchList *)instance

@@ -149,7 +149,9 @@ NSString* const kRKStringBoundary = @"0xKhTmLbOuNdArY";
 #pragma mark RKRequestSerializable methods
 
 - (NSString *)HTTPHeaderValueForContentType {
-	return [NSString stringWithFormat:@"multipart/form-data; boundary=%@", kRKStringBoundary];
+//	return [NSString stringWithFormat:@"multipart/form-data; boundary=%@", kRKStringBoundary];
+//    return [NSString stringWithFormat:@"application/x-www-form-urlencoded"];
+    return [NSString stringWithFormat:@"image/jpeg"];
 }
 
 - (NSUInteger)HTTPHeaderValueForContentLength {

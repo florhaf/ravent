@@ -30,6 +30,7 @@ typedef enum {
 - (NSMutableArray *)findFutureEvents;
 - (NSMutableArray *)findGemDroppedEvents;
 - (BOOL)isGemDropped:(NSString *)eid;
+- (void)update:(models_Event *)e;
 
 + (Store *)instance;
 

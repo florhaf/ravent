@@ -83,6 +83,7 @@ static Store *_store;
     [newManagedObject setValue:event.pic_big forKey:@"picture"];
     [newManagedObject setValue:[[NSNumber alloc] initWithBool:event.isInWatchList] forKey:@"isInWatchList"];
     [newManagedObject setValue:[[NSNumber alloc] initWithBool:event.isGemDropped] forKey:@"isGemDropped"];
+    [newManagedObject setValue:[[NSNumber alloc] initWithBool:event.isSyncedWithCal] forKey:@"isSyncedWithCal"];
     
     // Save the context.
     NSError *error = nil;
@@ -94,6 +95,37 @@ static Store *_store;
     event.isInWatchList = YES;
     
     return @"Event added to your Watchlist";
+}
+
+- (void)update:(models_Event *)e
+{
+    NSEntityDescription *entityDesc = [NSEntityDescription entityForName:@"Event" inManagedObjectContext:[self managedObjectContext]];
+    
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"(eid = %@)", e.eid];
+    
+    [request setEntity:entityDesc];
+    [request setPredicate:pred];
+    
+    NSError *error;
+    NSArray *objects = [[self managedObjectContext] executeFetchRequest:request error:&error];
+    
+    if (objects != nil) {
+        
+        for (int i = 0; i < [objects count]; i++) {
+            
+            NSManagedObject *match = [objects objectAtIndex:i];
+            
+            [match setValue:[NSNumber numberWithBool:e.isSyncedWithCal] forKey:@"isSyncedWithCal"];
+        }
+    }
+    
+    
+    if (![[self managedObjectContext] save:&error]) {
+        // Replace this implementation with code to handle the error appropriately.
+        NSLog(@"%@", error.localizedDescription);
+    }
+    
 }
 
 
@@ -248,6 +280,7 @@ static Store *_store;
             
             e.isInWatchList = [((NSNumber *)[match valueForKey:@"isInWatchList"]) boolValue];
             e.isGemDropped = [((NSNumber *)[match valueForKey:@"isGemDropped"]) boolValue];
+            e.isSyncedWithCal = [((NSNumber *)[match valueForKey:@"isSyncedWithCal"]) boolValue];
             e.eid = [match valueForKey:@"eid"];
             e.name = [match valueForKey:@"name"];
             e.location = [match valueForKey:@"location"];
