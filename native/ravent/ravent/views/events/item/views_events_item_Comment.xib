@@ -42,7 +42,7 @@
 						<string key="NSFrameSize">{320, 90}</string>
 						<reference key="NSSuperview" ref="453012470"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="720356158"/>
+						<reference key="NSNextKeyView" ref="556552263"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -51,13 +51,13 @@
 							<string key="NSResourceName">comment.png</string>
 						</object>
 					</object>
-					<object class="IBUIImageView" id="720356158">
+					<object class="IBUIImageView" id="556552263">
 						<reference key="NSNextResponder" ref="453012470"/>
 						<int key="NSvFlags">292</int>
 						<string key="NSFrameSize">{320, 90}</string>
 						<reference key="NSSuperview" ref="453012470"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="923444161"/>
+						<reference key="NSNextKeyView" ref="293164968"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<int key="IBUITag">-1</int>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
@@ -141,7 +141,7 @@
 						<string key="NSFrame">{{125, 59}, {175, 21}}</string>
 						<reference key="NSSuperview" ref="453012470"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="58230719"/>
+						<reference key="NSNextKeyView" ref="115413553"/>
 						<string key="NSReuseIdentifierKey">_NS:328</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -161,7 +161,7 @@
 						<reference key="IBUIFontDescription" ref="348726888"/>
 						<reference key="IBUIFont" ref="381726541"/>
 					</object>
-					<object class="IBUIImageView" id="58230719">
+					<object class="IBUIImageView" id="115413553">
 						<reference key="NSNextResponder" ref="453012470"/>
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{0, 80}, {320, 6}}</string>
@@ -176,7 +176,7 @@
 							<string key="NSResourceName">seaparator.png</string>
 						</object>
 					</object>
-					<object class="IBUIImageView" id="923444161">
+					<object class="IBUIImageView" id="293164968">
 						<reference key="NSNextResponder" ref="453012470"/>
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{20, 10}, {62, 62}}</string>
@@ -247,7 +247,7 @@
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">_itemImage</string>
 						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="923444161"/>
+						<reference key="destination" ref="293164968"/>
 					</object>
 					<int key="connectionID">32</int>
 				</object>
@@ -279,9 +279,9 @@
 							<reference ref="929699778"/>
 							<reference ref="810055008"/>
 							<reference ref="320739510"/>
-							<reference ref="720356158"/>
-							<reference ref="58230719"/>
-							<reference ref="923444161"/>
+							<reference ref="556552263"/>
+							<reference ref="115413553"/>
+							<reference ref="293164968"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -307,17 +307,17 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">28</int>
-						<reference key="object" ref="720356158"/>
+						<reference key="object" ref="556552263"/>
 						<reference key="parent" ref="453012470"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">29</int>
-						<reference key="object" ref="58230719"/>
+						<reference key="object" ref="115413553"/>
 						<reference key="parent" ref="453012470"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">30</int>
-						<reference key="object" ref="923444161"/>
+						<reference key="object" ref="293164968"/>
 						<reference key="parent" ref="453012470"/>
 					</object>
 				</array>

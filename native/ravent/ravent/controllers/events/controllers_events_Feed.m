@@ -120,11 +120,9 @@
         }   
     }
 
-    BOOL addingHeight = NO;
     if (c.picture != nil) {
         
-        addingHeight = YES;
-        result = result + 75;
+        result = result + 283;
     }
     
     c.cellHeight = result;
@@ -141,12 +139,12 @@
     
         [[NSBundle mainBundle] loadNibNamed:@"views_events_item_CommentPic" owner:self options:nil];
 
-        if ([_imagesCache.allKeys containsObject:c.pic_small]) {
+        if ([_imagesCache.allKeys containsObject:c.picture]) {
             
-            _commentImg.image = (UIImage *)[_imagesCache objectForKey:c.pic_small];
+            _commentImg.image = (UIImage *)[_imagesCache objectForKey:c.picture];
         } else {
             
-            _commentImg.imageURL = [NSURL URLWithString:c.pic_small];
+            _commentImg.imageURL = [NSURL URLWithString:c.picture];
             _commentImg.delegate = self;
         }
         _commentImg.clipsToBounds = YES;
