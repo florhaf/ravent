@@ -41,6 +41,14 @@
 
 - (void)loadData
 {
+    if (_data != nil) {
+        
+        for (models_Comment *c in _data) {
+            
+            c.cellHeight = _item.frame.size.height;
+        }
+    }
+    
     NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
     
     [params setValue:[models_User crtUser].accessToken forKey:@"access_token"];
@@ -78,6 +86,8 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [[NSBundle mainBundle] loadNibNamed:@"views_events_item_Comment" owner:self options:nil];
+    
     CGFloat result = [super tableView:tableView heightForRowAtIndexPath:indexPath];
     CGFloat actualHeight;
     
@@ -88,6 +98,8 @@
     
     models_Comment *c = [_data objectAtIndex:indexPath.row];
     NSString *name = [NSString stringWithFormat:@"%@ %@", c.firstName, c.lastName];
+    
+    CGFloat initialCellHeight = result;
     
     actualHeight = [name sizeWithFont:_itemTitle.font constrainedToSize:CGSizeMake(_titleSize.width, 2000) lineBreakMode:UILineBreakModeWordWrap].height;
     if (actualHeight > _titleSize.height) {
@@ -104,12 +116,17 @@
         }   
     }
 
+    BOOL addingHeight = NO;
     if (c.picture != nil) {
         
+        addingHeight = YES;
         result = result + 75;
     }
     
     c.cellHeight = result;
+    
+    
+    NSLog(@"%f - %f - %d", initialCellHeight, c.cellHeight, addingHeight);
     
     return result;
 }
