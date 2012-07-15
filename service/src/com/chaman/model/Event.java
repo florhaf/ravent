@@ -406,6 +406,8 @@ public class Event extends Model implements Serializable {
 			T = DateTimeZone.forID(this.timezone);
 			this.dtStart = new DateTime(timeStampStart, T).minusHours(3); //TODO: Investigate why those 3 hours diff!!!!
 			this.dtEnd = new DateTime(timeStampEnd, T).minusHours(3);
+			timeStampStart = this.dtStart.getMillis();
+			timeStampEnd = this.dtEnd.getMillis();
 		}
 				
 		// so need to add time zone offset to DateTime
@@ -531,19 +533,19 @@ public class Event extends Model implements Serializable {
 	
 	public int isNow(DateTime now, DateTime start, DateTime end) {
 		
-		if (start.getHourOfDay() < end.getHourOfDay()) {
-			if (now.getHourOfDay() > start.getHourOfDay() && now.getHourOfDay() < end.getHourOfDay()) {
+		if (start.getMinuteOfDay() < end.getMinuteOfDay()) {
+			if (now.getMinuteOfDay() >= start.getMinuteOfDay() && now.getMinuteOfDay() <= end.getMinuteOfDay()) {
 				this.group = "1";
 				this.groupTitle = "Now";
 				return 1;
 			}
 			
-			if (now.getHourOfDay() > end.getHourOfDay())
+			if (now.getMinuteOfDay() > end.getMinuteOfDay())
 			{
 				return -1; // past -> remove event from list
 			}
 		} else {
-			if (now.getHourOfDay() > start.getHourOfDay() || now.getHourOfDay() < end.getHourOfDay()) {
+			if (now.getMinuteOfDay() >= start.getMinuteOfDay() || now.getMinuteOfDay() <= end.getMinuteOfDay()) {
 				this.group = "1";
 				this.groupTitle = "Now";
 				return 1;
@@ -706,23 +708,23 @@ public class Event extends Model implements Serializable {
 				res = res + 1.5;
 			}
 			
-			if (checkins >= 1 && checkins < 100){
+			if (checkins >= 1 && checkins < 1000){
 				res = res + 1;
-			} else if (checkins >= 100 && checkins < 200){
+			} else if (checkins >= 1000 && checkins < 5000){
 				res = res + 1.25;
-			} else if (checkins >= 200){
+			} else if (checkins >= 5000){
 				res = res + 1.5;
 			}
 			
-			if (talking_about_count >= 1 && talking_about_count < 25){
+			if (talking_about_count >= 1 && talking_about_count < 100){
 				res = res + 1;
-			} else if(talking_about_count >= 25 && talking_about_count < 50){
-				res = res + 2;
-			} else if (talking_about_count >= 50){
+			} else if(talking_about_count >= 100 && talking_about_count < 1000){
+				res = res + 1.5;
+			} else if (talking_about_count >= 1000){
 				res = res + 2;
 			}
 			
-			this.score = res_vote == 0 ? res : (res > res_vote ? res : (res + res_vote) / 2);
+			this.score = res_vote == 0 ? (res > 4 ? 4 : res) : (res > res_vote ? (res > 4 ? 4 : res) : (res + res_vote) / 2D);
 		}
 	}
 	
