@@ -50,6 +50,8 @@ static controllers_App *_ctrl;
 - (void)flipView
 {
     
+    
+    
     if (_slidingController == nil) {
             
         _slidingController = [[controllers_SlidingInitial alloc] init];
@@ -76,6 +78,8 @@ static controllers_App *_ctrl;
 		[login removeFromSuperview];
         login = nil;
 		[self.view addSubview:slide];
+        
+        //[[models_User crtUser] loadFromNSUserDefaults];
         
         if ([models_User crtUser].isTourTaken == NO) {
             
