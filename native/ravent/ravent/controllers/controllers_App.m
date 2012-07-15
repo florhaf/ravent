@@ -50,6 +50,8 @@ static controllers_App *_ctrl;
 - (void)flipView
 {
     
+    
+    
     if (_slidingController == nil) {
             
         _slidingController = [[controllers_SlidingInitial alloc] init];

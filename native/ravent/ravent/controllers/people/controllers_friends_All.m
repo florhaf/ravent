@@ -417,6 +417,26 @@ static controllers_friends_All *_ctrl;
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"grayBG"]]];
     
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLineEtched;
+    
+//    UIView *title = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+//    [title setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"grayBG"]]];
+//    
+//    UIImageView *bg = [[UIImageView alloc] initWithFrame:title.frame];
+//    [bg setImage:[UIImage imageNamed:@"plainRow"]];
+//    
+//    UILabel *titleLabel = [[UILabel alloc] initWithFrame:title.frame];
+//    [titleLabel setTextAlignment:UITextAlignmentCenter];
+//    [titleLabel setBackgroundColor:[UIColor clearColor]];
+//    [titleLabel setFont:[UIFont boldSystemFontOfSize:22]];
+//    [titleLabel setTextColor:[UIColor grayColor]];
+//    [titleLabel setShadowColor:[UIColor darkGrayColor]];
+//    [titleLabel setShadowOffset:CGSizeMake(0, -1)];
+//    [titleLabel setText:@"Follow your friends"];
+//    
+//    [title addSubview:bg];
+//    [title addSubview:titleLabel];
+//    
+//    self.tableView.tableHeaderView = title;
 }
 
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar

@@ -112,9 +112,7 @@
     UIApplication *app = [UIApplication sharedApplication];
     
     
-    [app openURL:uUrl];
-//    
-//    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://maps.google.com/maps?saddr=Current%20Location&daddr=%@,%@", _event.latitude, _event.longitude]]];    
+    [app openURL:uUrl];  
 }
 
 - (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views {
@@ -139,6 +137,9 @@
             
             annotationView.annotation = e;
         }
+        
+
+        annotationView.canShowCallout = YES;
         
         annotationView.enabled = YES;
         return annotationView;

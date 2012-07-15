@@ -464,6 +464,27 @@ static int _retryCounter;
                               animated:YES];
 }
 
+- (void)onAddressLoad:(NSArray *)objects
+{
+    if (objects != nil) {
+        
+        if ([objects count] > 0) {
+            
+            id obj = [objects objectAtIndex:0];
+            
+            if([obj isKindOfClass:[NSError class]]) {
+                
+                
+            } else {
+                
+                models_FormatedAddress *a = (models_FormatedAddress *)obj;
+                
+                _event.address = a.formatted_address;
+            }
+        }
+    }
+}
+
 #pragma mark - View lifecycle
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
@@ -538,7 +559,7 @@ static int _retryCounter;
         for (int i = 0; i< device; i++) {
             
             
-            CGRect endFrame =   CGRectMake(226, framesY, 60, 50);
+            CGRect endFrame =   CGRectMake(206, framesY - 20, 100, 90);
             
             CGRect badFrame =   CGRectMake(0, 0, 0, 0);
             
@@ -546,16 +567,13 @@ static int _retryCounter;
             [badFrames addObject:TKCGRectValue(badFrame)];
             
             UIView *endView = [[UIView alloc] initWithFrame:endFrame];
-            endView.layer.borderColor = [UIColor greenColor].CGColor;
-            endView.layer.borderWidth = 1.0f;
             
             [self.view addSubview:endView];
             
             [self.goodFrames addObject:endView];
             
             UIView *badView = [[UIView alloc] initWithFrame:badFrame];
-            badView.layer.borderWidth = 1.0f;
-            badView.layer.borderColor = [UIColor redColor].CGColor;
+
             [self.view addSubview:badView];
             
             [self.badFrames addObject:badView];
@@ -594,9 +612,26 @@ static int _retryCounter;
     }
 }
 
+- (void)loadFormattedAddress
+{
+    if (_addressLoader == nil) {
+        
+        _addressLoader = [[models_FormatedAddress alloc] initWithEvent:_event delegate:self callback:@selector(onAddressLoad:)];   
+    }
+    
+    [_addressLoader loadAddress];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    if (_event.latitude != nil && _event.longitude != nil &&
+        ![_event.latitude isEqualToString:@""] && ![_event.longitude isEqualToString:@""]) {
+        
+     
+        [self loadFormattedAddress];
+    }
     
     _map.delegate = self;
     _refreshHeaderView.delegate = nil;
@@ -1020,7 +1055,7 @@ static int _retryCounter;
 - (void)dragViewDidStartDragging:(TKDragView *)dragView{
     
     [UIView animateWithDuration:0.2 animations:^{
-        dragView.transform = CGAffineTransformMakeScale(1.2, 1.2);
+        dragView.transform = CGAffineTransformMakeScale(1.5, 1.5);
     }];
 }
 
@@ -1049,32 +1084,22 @@ static int _retryCounter;
 
 - (void)dragViewDidEnterGoodFrame:(TKDragView *)dragView atIndex:(NSInteger)index{
     
-    UIView *view = [self.goodFrames objectAtIndex:index];
-    
-    if (view) view.layer.borderWidth = 4.0f;
-    
-    
+    [UIView animateWithDuration:0.2 animations:^{
+        dragView.alpha = 0.5;
+    }];
 }
 
 - (void)dragViewDidLeaveGoodFrame:(TKDragView *)dragView atIndex:(NSInteger)index{    
-    UIView *view = [self.goodFrames objectAtIndex:index];
-    
-    if (view) view.layer.borderWidth = 1.0f;
+
 }
 
 
 - (void)dragViewDidEnterBadFrame:(TKDragView *)dragView atIndex:(NSInteger)index{
-    
-    UIView *view = [self.badFrames objectAtIndex:index];
-    
-    if (view) view.layer.borderWidth = 4.0f;
+
 }
 
 - (void)dragViewDidLeaveBadFrame:(TKDragView *)dragView atIndex:(NSInteger)index{
     
-    UIView *view = [self.badFrames objectAtIndex:index];
-    
-    if (view) view.layer.borderWidth = 1.0f;
 }
 
 
@@ -1103,7 +1128,7 @@ static int _retryCounter;
                                           } 
                                           completion:^(BOOL finished) {
                                               
-                                              
+                                              [dragView setFrame:CGRectMake(0, 0, 0, 0)];
                                           }];
                      }];
     

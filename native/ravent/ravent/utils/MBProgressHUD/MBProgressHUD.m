@@ -218,7 +218,7 @@
 	MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:view];
     
     hud.dimBackground = NO;
-    hud.labelText = @"Searching...";
+    hud.labelText = @"Loading...";
     
 	[view addSubview:hud];
 	[hud show:animated];

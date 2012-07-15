@@ -279,15 +279,19 @@ static controllers_Login *_ctrl;
         
         models_User *u = [[models_User alloc] init];
         [models_User setCrtUser:u];
+        
+        [[models_User crtUser] loadFromNSUserDefaults];
+        
+        
         [models_User crtUser].uid = [((NSDecimalNumber *)[result objectForKey:@"uid"]) stringValue];
         [models_User crtUser].accessToken = [delegate facebook].accessToken;
         [models_User crtUser].firstName = [result objectForKey:@"first_name"];
         [models_User crtUser].lastName = [result objectForKey:@"last_name"];
         [models_User crtUser].picture = [result objectForKey:@"pic"];
         
+        
         [[models_User crtUser] saveToNSUserDefaults];
         
-        u = [models_User crtUser];
         
         NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
         
