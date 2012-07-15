@@ -147,7 +147,7 @@ public class Event extends Model implements Serializable {
     	    	e = e_cache;
     	    }
 	
-	    	e.Format(timeZoneInMinutes, 0);
+	    	e.Format(timeZoneInMinutes, now, 0);
     	    
 	    	if (e.latitude != null && e.latitude != "" && e.longitude != null && e.longitude != "") {
 
@@ -225,7 +225,7 @@ public class Event extends Model implements Serializable {
             		
             		if (!previous_venue_time.equals(event.venue_id + event.start_time)) {  // to remove duplicate events
             		
-            			if (event.Format(timeZoneInMinutes, searchTimeFrame)){
+            			if (event.Format(timeZoneInMinutes, now, searchTimeFrame)){
             				
                 			event.latitude 	= Double.toString(e.getLatitude());
                 			event.longitude = Double.toString(e.getLongitude());
@@ -260,8 +260,15 @@ public class Event extends Model implements Serializable {
 		//get users and Access tokens from DS		
 		Query<User> quser = dao.ofy().query(User.class);
 		for (User u: quser) {
-
+			
 			try {
+				
+				//Prepare a timestamp to filter the facebook DB on the upcoming events
+				DateTimeZone PST = DateTimeZone.forID("America/Los_Angeles"); 	
+				DateTime now = new DateTime(PST);
+				DateTime now_plus_month = now.plusDays(32);
+				String snow = String.valueOf(now.getMillis() / 1000);
+				String snow_plus_month = String.valueOf(now_plus_month.getMillis() / 1000);
 				
 				//Get friend list 
 				List<Friend> uidList = Friend.GetCron(u.getAccess_token(), Long.toString(u.getUid()), syncCache);
@@ -270,13 +277,6 @@ public class Event extends Model implements Serializable {
 				for (Friend l : uidList) {
 				
 					try {
-						
-						//Prepare a timestamp to filter the facebook DB on the upcoming events
-						DateTimeZone PST = DateTimeZone.forID("America/Los_Angeles"); 	
-						DateTime now = new DateTime(PST);
-						DateTime now_plus_month = now.plusDays(32);
-						String snow = String.valueOf(now.getMillis() / 1000);
-						String snow_plus_month = String.valueOf(now_plus_month.getMillis() / 1000);
 						
 						FacebookClient client 	= new DefaultFacebookClient(u.getAccess_token());
 						String properties 		= "eid, name, pic_big, start_time, end_time, venue, location, privacy, update_time, timezone";
@@ -349,7 +349,10 @@ public class Event extends Model implements Serializable {
 		int timeZoneInMinutes	= Integer.parseInt(timeZone);
 		
 		Event e = new Event();
-        	
+        
+		DateTimeZone TZ = DateTimeZone.forOffsetMillis(timeZoneInMinutes*60*1000);
+		DateTime now = DateTime.now(TZ);	
+		
     	String query 			= "SELECT eid, name, pic_big, start_time, end_time, venue, location, privacy, timezone FROM event WHERE eid = " + eid;
     	List<Event> fbevents 	= client.executeQuery(query, Event.class);
 		
@@ -357,7 +360,7 @@ public class Event extends Model implements Serializable {
 		
 		e.Filter_category();
 		
-		e.Format(timeZoneInMinutes, 0);
+		e.Format(timeZoneInMinutes, now, 0);
 		
 		e.venue_id = JSON.GetValueFor("id", e.venue);
 		Venue v_graph = Venue.getVenue(client, e.venue_id);
@@ -386,8 +389,9 @@ public class Event extends Model implements Serializable {
 		return e;
 	}
 	
-	private boolean Format(int timeZoneInMinutes, int searchTimeFrame) {
+	private boolean Format(int timeZoneInMinutes, DateTime now, int searchTimeFrame) {
 			
+		boolean res = true;
 		long timeStampStart = Long.parseLong(this.start_time) * 1000;
 		long timeStampEnd = Long.parseLong(this.end_time) * 1000;
 		
@@ -462,8 +466,8 @@ public class Event extends Model implements Serializable {
 		this.ticket_link = tickets.get(r.nextInt(14));
 		
 		
-		DateTimeZone TZ = DateTimeZone.forOffsetMillis(timeZoneInMinutes*60*1000);
-		DateTime now = DateTime.now(TZ);	
+		//DateTimeZone TZ = DateTimeZone.forOffsetMillis(timeZoneInMinutes*60*1000);
+		//DateTime now = DateTime.now(TZ);	
 		long timeStampNow = now.getMillis();
 		long timeStampToday = timeStampNow - (timeZoneInMinutes * 60000) + (86400000 - now.getMillisOfDay());
 		
@@ -481,7 +485,7 @@ public class Event extends Model implements Serializable {
 			
 			if (end_minus_start >= 7) { // to filter bogus "Fridays", "Tuesdays" events
 				
-				return this.Filter_bogus_events(now, searchTimeFrame);
+				res = this.Filter_bogus_events(now, searchTimeFrame);
 			} else {
 				
 				this.group = "a";
@@ -518,9 +522,35 @@ public class Event extends Model implements Serializable {
 			
 			this.group = "0";
 			this.groupTitle = "Featured";
+		} else if (this.group.equals("a") && this.isNow(now, this.dtStart, this.dtEnd) < 0) {
+			return false;
 		}
 		
-		return true;
+		return res;
+	}
+	
+	public int isNow(DateTime now, DateTime start, DateTime end) {
+		
+		if (start.getHourOfDay() < end.getHourOfDay()) {
+			if (now.getHourOfDay() > start.getHourOfDay() && now.getHourOfDay() < end.getHourOfDay()) {
+				this.group = "1";
+				this.groupTitle = "Now";
+				return 1;
+			}
+			
+			if (now.getHourOfDay() > end.getHourOfDay())
+			{
+				return -1; // past -> remove event from list
+			}
+		} else {
+			if (now.getHourOfDay() > start.getHourOfDay() || now.getHourOfDay() < end.getHourOfDay()) {
+				this.group = "1";
+				this.groupTitle = "Now";
+				return 1;
+			}
+		}
+		
+		return 0;
 	}
 	
 	public void Filter_category () {
@@ -614,12 +644,6 @@ public class Event extends Model implements Serializable {
 			
 			this.group = "a";
 			this.groupTitle = "Today";
-		}
-		
-		if (this.featured != null && this.featured.length() > 0) {
-			
-			this.group = "0";
-			this.groupTitle = "Featured";
 		}
 		
 		return true;
