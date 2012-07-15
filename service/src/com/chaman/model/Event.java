@@ -406,6 +406,8 @@ public class Event extends Model implements Serializable {
 			T = DateTimeZone.forID(this.timezone);
 			this.dtStart = new DateTime(timeStampStart, T).minusHours(3); //TODO: Investigate why those 3 hours diff!!!!
 			this.dtEnd = new DateTime(timeStampEnd, T).minusHours(3);
+			timeStampStart = this.dtStart.getMillis();
+			timeStampEnd = this.dtEnd.getMillis();
 		}
 				
 		// so need to add time zone offset to DateTime
@@ -531,19 +533,19 @@ public class Event extends Model implements Serializable {
 	
 	public int isNow(DateTime now, DateTime start, DateTime end) {
 		
-		if (start.getHourOfDay() < end.getHourOfDay()) {
-			if (now.getHourOfDay() > start.getHourOfDay() && now.getHourOfDay() < end.getHourOfDay()) {
+		if (start.getMinuteOfDay() < end.getMinuteOfDay()) {
+			if (now.getMinuteOfDay() >= start.getMinuteOfDay() && now.getMinuteOfDay() <= end.getMinuteOfDay()) {
 				this.group = "1";
 				this.groupTitle = "Now";
 				return 1;
 			}
 			
-			if (now.getHourOfDay() > end.getHourOfDay())
+			if (now.getMinuteOfDay() > end.getMinuteOfDay())
 			{
 				return -1; // past -> remove event from list
 			}
 		} else {
-			if (now.getHourOfDay() > start.getHourOfDay() || now.getHourOfDay() < end.getHourOfDay()) {
+			if (now.getMinuteOfDay() >= start.getMinuteOfDay() || now.getMinuteOfDay() <= end.getMinuteOfDay()) {
 				this.group = "1";
 				this.groupTitle = "Now";
 				return 1;
