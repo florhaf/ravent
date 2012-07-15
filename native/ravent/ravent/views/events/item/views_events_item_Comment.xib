@@ -42,7 +42,7 @@
 						<string key="NSFrameSize">{320, 90}</string>
 						<reference key="NSSuperview" ref="453012470"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="38710788"/>
+						<reference key="NSNextKeyView" ref="1713781"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -51,13 +51,13 @@
 							<string key="NSResourceName">comment.png</string>
 						</object>
 					</object>
-					<object class="IBUIImageView" id="38710788">
+					<object class="IBUIImageView" id="1713781">
 						<reference key="NSNextResponder" ref="453012470"/>
 						<int key="NSvFlags">292</int>
 						<string key="NSFrameSize">{320, 90}</string>
 						<reference key="NSSuperview" ref="453012470"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="121463072"/>
+						<reference key="NSNextKeyView" ref="603528581"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -140,7 +140,7 @@
 						<string key="NSFrame">{{125, 59}, {175, 21}}</string>
 						<reference key="NSSuperview" ref="453012470"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="187908497"/>
+						<reference key="NSNextKeyView" ref="182131086"/>
 						<string key="NSReuseIdentifierKey">_NS:328</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -160,10 +160,10 @@
 						<reference key="IBUIFontDescription" ref="348726888"/>
 						<reference key="IBUIFont" ref="381726541"/>
 					</object>
-					<object class="IBUIImageView" id="187908497">
+					<object class="IBUIImageView" id="182131086">
 						<reference key="NSNextResponder" ref="453012470"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{0, 83}, {320, 6}}</string>
+						<string key="NSFrame">{{0, 80}, {320, 6}}</string>
 						<reference key="NSSuperview" ref="453012470"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView"/>
@@ -175,7 +175,7 @@
 							<string key="NSResourceName">seaparator.png</string>
 						</object>
 					</object>
-					<object class="IBUIImageView" id="121463072">
+					<object class="IBUIImageView" id="603528581">
 						<reference key="NSNextResponder" ref="453012470"/>
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{20, 10}, {62, 62}}</string>
@@ -246,7 +246,7 @@
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">_itemImage</string>
 						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="121463072"/>
+						<reference key="destination" ref="603528581"/>
 					</object>
 					<int key="connectionID">31</int>
 				</object>
@@ -278,9 +278,9 @@
 							<reference ref="929699778"/>
 							<reference ref="810055008"/>
 							<reference ref="320739510"/>
-							<reference ref="38710788"/>
-							<reference ref="187908497"/>
-							<reference ref="121463072"/>
+							<reference ref="1713781"/>
+							<reference ref="182131086"/>
+							<reference ref="603528581"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -306,17 +306,17 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">28</int>
-						<reference key="object" ref="38710788"/>
+						<reference key="object" ref="1713781"/>
 						<reference key="parent" ref="453012470"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">29</int>
-						<reference key="object" ref="187908497"/>
+						<reference key="object" ref="182131086"/>
 						<reference key="parent" ref="453012470"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">30</int>
-						<reference key="object" ref="121463072"/>
+						<reference key="object" ref="603528581"/>
 						<reference key="parent" ref="453012470"/>
 					</object>
 				</array>

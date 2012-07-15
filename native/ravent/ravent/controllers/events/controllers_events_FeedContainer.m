@@ -26,6 +26,7 @@
         _event = event;
         _feedController = [[controllers_events_Feed alloc] initWithEvent:event];
         _feedController.view.frame = CGRectMake(0, 0, 320, 416);
+        [self addChildViewController:_feedController];
         [self.view addSubview:_feedController.view];
         [self.view sendSubviewToBack:_feedController.view];
     }

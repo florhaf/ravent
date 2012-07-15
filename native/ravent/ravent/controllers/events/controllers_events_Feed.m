@@ -95,17 +95,23 @@
         result = result + (actualHeight - _titleSize.height);
     }
     
-    actualHeight = [c.message sizeWithFont:_itemSubTitle.font constrainedToSize:CGSizeMake(_subTitleSize.width, 2000) lineBreakMode:UILineBreakModeWordWrap].height;
-    if (actualHeight > _subTitleSize.height) {
+    if (c.message != nil && ![c.message isEqualToString:@""]) {
         
-        result = result + (actualHeight - _subTitleSize.height);
+        actualHeight = [c.message sizeWithFont:_itemSubTitle.font constrainedToSize:CGSizeMake(_subTitleSize.width, 2000) lineBreakMode:UILineBreakModeWordWrap].height;
+        if (actualHeight > _subTitleSize.height) {
+            
+            result = result + (actualHeight - _subTitleSize.height);
+        }   
     }
+
     if (c.picture != nil) {
         
         result = result + 75;
     }
     
     c.cellHeight = result;
+    
+    NSLog(@"%@ - %f", c.message, result);
     
     return result;
 }
@@ -174,7 +180,7 @@
     
     UINavigationController *picModal = [[UINavigationController alloc] initWithRootViewController:picController];
     
-    [self presentModalViewController:picModal animated:YES];
+    [self.parentViewController presentModalViewController:picModal animated:YES];
 }
 
 - (NSUInteger)numberOfPhotosInPhotoBrowser:(MWPhotoBrowser *)photoBrowser {
