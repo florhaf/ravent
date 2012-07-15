@@ -76,20 +76,6 @@ static customNavigationController *_ctrl;
 
 - (void)loadDropAGem
 {
-    //int framesY = (_detailsVersion == twogoodies) ? 435 : 450;
-    
-//    if (_event.isGemDropped) {
-//        
-//        _dropagemLabel.text = @"Gem dropped";
-//        
-//        UIImageView *gem = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"diamond"]];
-//        
-//        [gem setFrame:CGRectMake(226, framesY, 60, 50)];
-//        
-//        [self.view addSubview:gem];
-//        
-//    } else {
-        
         NSBundle *bundle = [NSBundle mainBundle];
         
         NSString *path = [bundle pathForResource:@"diamond.png" ofType:nil];
@@ -107,7 +93,7 @@ static customNavigationController *_ctrl;
         for (int i = 0; i< 1; i++) {
             
             
-            CGRect endFrame =   CGRectMake(866, 225, 60, 50);
+            CGRect endFrame =   CGRectMake(846, 205, 100, 90);
             
             CGRect badFrame =   CGRectMake(0, 0, 0, 0);
             
@@ -217,7 +203,7 @@ static customNavigationController *_ctrl;
 - (void)dragViewDidStartDragging:(TKDragView *)dragView{
     
     [UIView animateWithDuration:0.2 animations:^{
-        dragView.transform = CGAffineTransformMakeScale(1.2, 1.2);
+        dragView.transform = CGAffineTransformMakeScale(1.5, 1.5);
     }];
 }
 
@@ -243,7 +229,12 @@ static customNavigationController *_ctrl;
     }];
 }
 
-
+- (void)dragViewDidEnterGoodFrame:(TKDragView *)dragView atIndex:(NSInteger)index
+{
+    [UIView animateWithDuration:0.2 animations:^{
+        dragView.alpha = 0.5;
+    }];
+}
 
 
 - (void)dragViewWillSwapToEndFrame:(TKDragView *)dragView atIndex:(NSInteger)index{

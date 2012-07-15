@@ -79,8 +79,6 @@ static controllers_App *_ctrl;
         login = nil;
 		[self.view addSubview:slide];
         
-        //[[models_User crtUser] loadFromNSUserDefaults];
-        
         if ([models_User crtUser].isTourTaken == NO) {
             
             [self addChildViewController:[controllers_TakeTheTour instance]];
