@@ -143,6 +143,8 @@ static int _retryCounter;
     [self.tableView reloadData];
     
     [self trackEvent:@"invite"];
+    
+    _noFriendLabel.text = @"";
 }
 
 - (void)shareFailure:(NSMutableDictionary *)error

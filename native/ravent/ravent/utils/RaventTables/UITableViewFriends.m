@@ -47,6 +47,8 @@
 
 - (void)onLoadInvited:(NSArray *)objects
 {
+    [_spinner stopAnimating];
+    
     UIView *v = nil;
     
     for (int i = 0; i < [[_footer subviews] count]; i++) {
@@ -73,7 +75,8 @@
     if (objects == nil || [objects count] == 0) {
         
         [[NSBundle mainBundle]loadNibNamed:@"views_Empty_Generic" owner:self options:nil];
-        ((UILabel *)[_emptyMessageView.subviews objectAtIndex:0]).text = @"no friend invited";
+        _noFriendLabel = (UILabel *)[_emptyMessageView.subviews objectAtIndex:0];
+        _noFriendLabel.text = @"no friend invited";
     }
     
     [super onLoadData:objects withSuccess:^ {
@@ -181,26 +184,28 @@
 {
     [super viewDidLoad];
     
-    UILabel *label = [[UILabel alloc] init];
-    label.backgroundColor = [UIColor clearColor];
-    label.text = @"Loading";
-    label.frame = CGRectMake(0, 0, 320, 50);
-    label.textAlignment= UITextAlignmentCenter;
-    label.textColor = [UIColor grayColor];
+    [_spinner startAnimating];
     
-    UIActivityIndicatorView *myIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    myIndicator.center = CGPointMake(110, 27);
-    
-    [myIndicator startAnimating];
-    
-    _footer = [[UIView alloc] init];
-    [_footer addSubview:label];
-    [_footer addSubview:myIndicator];
-    _footer.backgroundColor = [UIColor clearColor];
-    
-    _footer.frame = CGRectMake(0, 0, 320, 160);
-    
-    [self.tableView.tableFooterView addSubview:_footer];;
+//    UILabel *label = [[UILabel alloc] init];
+//    label.backgroundColor = [UIColor clearColor];
+//    label.text = @"Loading";
+//    label.frame = CGRectMake(0, 0, 320, 50);
+//    label.textAlignment= UITextAlignmentCenter;
+//    label.textColor = [UIColor grayColor];
+//    
+//    UIActivityIndicatorView *myIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+//    myIndicator.center = CGPointMake(110, 27);
+//    
+//    [myIndicator startAnimating];
+//    
+//    _footer = [[UIView alloc] init];
+//    [_footer addSubview:label];
+//    [_footer addSubview:myIndicator];
+//    _footer.backgroundColor = [UIColor clearColor];
+//    
+//    _footer.frame = CGRectMake(0, 0, 320, 160);
+//    
+//    [self.tableView.tableFooterView addSubview:_footer];;
 }
 
 - (void)viewDidUnload

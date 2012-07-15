@@ -22,6 +22,8 @@
     IBOutlet UIImageView *_featured;
     IBOutlet UIImageView *_ticket_link;
     
+    UIActivityIndicatorView *_cellSpinner;
+    
     UIViewController *_details;
 }
 

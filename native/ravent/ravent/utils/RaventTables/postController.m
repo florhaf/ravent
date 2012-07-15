@@ -95,6 +95,8 @@
     [postb setFrame:CGRectMake(0, 0, posti.size.width, posti.size.height)];
     UIBarButtonItem *postButton = [[UIBarButtonItem alloc] initWithCustomView:postb];       
     self.navigationItem.leftBarButtonItem = postButton;
+    
+    self.title = @"";
 }
 
 - (void)post
