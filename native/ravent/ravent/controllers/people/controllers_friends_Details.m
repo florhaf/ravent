@@ -19,6 +19,9 @@
     if (self != nil) {
         
         [self trackPageView:@"friends_details" forEvent:nil];
+        
+        [MBProgressHUD hideHUDForView:self.view animated:NO];
+        _hud = nil;
     }
     
     return self;
@@ -76,6 +79,7 @@
     
     footer.frame = CGRectMake(0, 0, 320, 160);
     
+    [_spinner startAnimating];
 }
 
 - (IBAction)onCommentTap:(id)sender

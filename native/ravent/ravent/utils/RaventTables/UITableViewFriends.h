@@ -15,6 +15,7 @@
     controllers_friends_Details *_details;
     
     UIView *_footer;
+    UILabel *_noFriendLabel;
 }
 
 - (id)initWithEvent:(models_Event *)event;

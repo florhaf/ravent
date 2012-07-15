@@ -33,6 +33,7 @@ typedef void (^success)();
     IBOutlet UILabel *_itemTitle;
     IBOutlet UILabel *_itemSubTitle;
     IBOutlet JBAsyncImageView *_itemImage;
+    IBOutlet UIActivityIndicatorView *_spinner;
     
     CGSize _itemSize;
     CGSize _titleSize;

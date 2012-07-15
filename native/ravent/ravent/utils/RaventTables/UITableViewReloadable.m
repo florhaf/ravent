@@ -193,6 +193,7 @@ typedef enum {
         [[ActionDispatcher instance] del:_url];
     }
     
+    [_spinner stopAnimating];
     [MBProgressHUD hideHUDForView:self.view animated:YES];
     _hud = nil;
     
@@ -557,7 +558,7 @@ typedef enum {
     _itemSubTitle = nil;
     _itemImage = nil;
     
-    
+    _spinner = nil;
     _emptyMessageView = nil;
     
     _data = nil;

@@ -228,6 +228,8 @@
     _hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLineEtched;
+    
+    self.searchDisplayController.searchBar.placeholder = @"Invite a friend";
 }
 
 - (void)viewWillAppear:(BOOL)animated
