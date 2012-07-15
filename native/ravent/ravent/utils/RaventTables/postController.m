@@ -44,23 +44,14 @@
     }
 }
 
-- (void)textViewDidBeginEditing:(UITextView *)textView
+-(void) textViewDidChange:(UITextView *)textView
 {
-    if (_isPlaceHolderShowing) {
+    if(_textView.text.length == 0){
         
-        [textView setTextColor:[UIColor blackColor]];
-        textView.text = @"";
-        _isPlaceHolderShowing = NO;
-    }
-}
-
-- (void)textViewDidEndEditing:(UITextView *)textView
-{
-    if (textView.text == nil || [textView.text isEqualToString:@""]) {
+        [_placeholderLabel setHidden:NO];
+    } else {
         
-        [textView setTextColor:[UIColor lightGrayColor]];
-        textView.text = _placeHolder;
-        _isPlaceHolderShowing = YES;
+        [_placeholderLabel setHidden:YES];
     }
 }
 
@@ -96,7 +87,15 @@
     UIBarButtonItem *postButton = [[UIBarButtonItem alloc] initWithCustomView:postb];       
     self.navigationItem.leftBarButtonItem = postButton;
     
-    self.title = @"";
+    self.title = @"Gemster";
+    
+    if (_isForEvent) {
+        
+        _placeholderLabel.text = @"Post on this event wall";
+    } else {
+        
+        _placeholderLabel.text = @"Post on your friend Timeline";
+    }
 }
 
 - (void)post

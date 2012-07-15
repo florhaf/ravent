@@ -183,22 +183,6 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    UIView *v = [cell.subviews objectAtIndex:0];
-    
-    for (v in cell.subviews) {
-        
-        if ([v isKindOfClass:[UIActivityIndicatorView class]]) {
-            
-            break;
-        }
-    }
-    
-    _cellSpinner = (UIActivityIndicatorView *)v;
-    [_cellSpinner startAnimating];
-    
-    [self performSelector:@selector(stopCellSpinner) withObject:nil afterDelay:1];
-    
     models_Event *event = [self getEventForSection:indexPath.section andRow:indexPath.row];
     
     if (event != nil) {
@@ -237,9 +221,6 @@
     
     [rootController.navigationItem hidesBackButton];
     [_details.navigationItem setLeftBarButtonItem:backButton];
-    
-    
-    //[self performSelector:@selector(fadeToolbar) withObject:nil afterDelay:0.3];
 }
 
 - (void)fadeToolbar

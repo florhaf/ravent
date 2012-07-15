@@ -31,6 +31,7 @@ typedef enum {
     IBOutlet UIButton *_removeButton;
     
     IBOutlet UIView *_buttonsContainer;
+    IBOutlet UILabel *_placeholderLabel;
     
     BOOL _isKeyboardShowing;
     BOOL _isForEvent;

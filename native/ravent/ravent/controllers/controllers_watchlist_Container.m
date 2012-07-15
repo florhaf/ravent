@@ -72,7 +72,7 @@ static customNavigationController *_ctrl;
     UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(30, 376, 260, 35)];
     [btn setBackgroundImage:[UIImage imageNamed:@"askButton"] forState:UIControlStateNormal];
     [btn setTitle:@"Sync with Calendar" forState:UIControlStateNormal];
-    [btn.titleLabel setFont:[UIFont boldSystemFontOfSize:18]];
+    [btn.titleLabel setFont:[UIFont boldSystemFontOfSize:16]];
     [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [btn.titleLabel setShadowOffset:CGSizeMake(0, -1)];
     [btn addTarget:self action:@selector(syncWithCal) forControlEvents:UIControlEventTouchUpInside];
