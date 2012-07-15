@@ -724,7 +724,7 @@ public class Event extends Model implements Serializable {
 				res = res + 2;
 			}
 			
-			this.score = res_vote == 0 ? res : (res > res_vote ? res : (res + res_vote) / 2);
+			this.score = res_vote == 0 ? (res > 4 ? 4 : res) : (res > res_vote ? (res > 4 ? 4 : res) : (res + res_vote) / 2D);
 		}
 	}
 	
