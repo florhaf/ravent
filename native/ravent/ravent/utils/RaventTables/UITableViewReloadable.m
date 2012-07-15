@@ -395,7 +395,7 @@ typedef enum {
     label.textColor = [UIColor colorWithRed:228 green:230 blue:234 alpha:1.0];
     label.shadowColor = [UIColor darkGrayColor];
     label.shadowOffset = CGSizeMake(0.0, 0.0);
-    label.font = [UIFont systemFontOfSize:12];
+    label.font = [UIFont boldSystemFontOfSize:12];
     label.text = [self tableView:tableView titleForHeaderInSection:section];
     
     // Create header view and add label as a subview

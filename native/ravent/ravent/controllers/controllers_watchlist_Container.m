@@ -9,9 +9,12 @@
 #import "controllers_watchlist_Container.h"
 #import <EventKit/EKEventStore.h>
 #import <EventKit/EKEvent.h>
+#import <EventKit/EKSource.h>
+#import <EventKit/EKCalendar.h>
 #import "Store.h"
 #import "YRDropdownView.h"
 #import "controllers_App.h"
+
 
 @implementation controllers_watchlist_Container
 
@@ -81,10 +84,53 @@ static customNavigationController *_ctrl;
     [self.view addSubview:btn];
 }
 
+- (void)saveCalID:(NSString *)calID
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    [defaults setObject:calID forKey:@"GemsterCalID"];
+    [defaults synchronize];
+}
+
+- (NSString *)getCalID
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    return [defaults objectForKey:@"GemsterCalID"];
+}
+
 - (void)syncWithCal
 {
     NSArray *events = [controllers_watchlist_WatchList instance].data;
     EKEventStore *eventStore = [[EKEventStore alloc] init];    
+    
+    EKCalendar *gemsterCal = [eventStore calendarWithIdentifier:[self getCalID]];
+    
+    if (gemsterCal == nil) {
+        
+        EKSource *localSource = nil;
+        for (EKSource *source in eventStore.sources)
+            if (source.sourceType == EKSourceTypeMobileMe)
+            {
+                localSource = source;
+                break;
+            }
+        
+        if (localSource == nil) {
+        
+            for (EKSource *source in eventStore.sources)
+                if (source.sourceType == EKSourceTypeLocal)
+                {
+                    localSource = source;
+                    break;
+                }
+        }
+        
+        gemsterCal = [EKCalendar calendarWithEventStore:eventStore];
+        gemsterCal.title = @"Gemster";
+        gemsterCal.source = localSource;
+        [eventStore saveCalendar:gemsterCal commit:YES error:nil];
+        [self saveCalID:gemsterCal.calendarIdentifier];
+    }
     
     for (models_Event *e in events) {
         
@@ -95,17 +141,17 @@ static customNavigationController *_ctrl;
             
             EKEvent *event  = [EKEvent eventWithEventStore:eventStore];
             event.title     = e.name;
-            
             event.startDate = [dateFormatter dateFromString:[NSString stringWithFormat:@"%@ %@",  e.dateStart, e.timeStart]];
-            event.endDate   = [dateFormatter dateFromString:[NSString stringWithFormat:@"%@ %@",  e.dateStart, e.timeStart]];
-            
+            event.endDate   = [dateFormatter dateFromString:[NSString stringWithFormat:@"%@ %@",  e.dateEnd, e.timeEnd]];
             event.location = e.location;
-            
             event.notes = @"Brought to you by Gemster";
             
-            [event setCalendar:[eventStore defaultCalendarForNewEvents]];
+            [event setCalendar:[eventStore calendarWithIdentifier:[self getCalID]]];
+            [eventStore saveCalendar:gemsterCal commit:YES error:nil];
             NSError *err;
             [eventStore saveEvent:event span:EKSpanThisEvent error:&err];
+            
+            NSLog(@"%@", err);
             
             e.isSyncedWithCal = YES;
             

@@ -116,7 +116,6 @@
 						<string key="NSFrame">{{20, 336}, {280, 104}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -167,7 +166,7 @@
 						<nil key="IBUIHighlightedColor"/>
 						<object class="NSColor" key="IBUIShadowColor">
 							<int key="NSColorSpace">3</int>
-							<bytes key="NSWhite">MCAwLjUAA</bytes>
+							<bytes key="NSWhite">MC4zMzMzMzMzMzMzAA</bytes>
 						</object>
 						<string key="IBUIShadowOffset">{0, -2}</string>
 						<int key="IBUIBaselineAdjustment">0</int>
@@ -385,7 +384,7 @@
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
 			<string key="LoginWithFacebookNormal.png">{159, 29}</string>
 			<string key="LoginWithFacebookPressed.png">{159, 29}</string>
-			<string key="background.png">{640, 920}</string>
+			<string key="background.png">{320, 460}</string>
 		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">1181</string>
 	</data>

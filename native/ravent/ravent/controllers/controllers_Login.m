@@ -288,6 +288,9 @@ static controllers_Login *_ctrl;
         [models_User crtUser].firstName = [result objectForKey:@"first_name"];
         [models_User crtUser].lastName = [result objectForKey:@"last_name"];
         [models_User crtUser].picture = [result objectForKey:@"pic"];
+        [models_User crtUser].searchWindow = 48;
+        [models_User crtUser].searchRadius = 15;
+        
         
         
         [[models_User crtUser] saveToNSUserDefaults];

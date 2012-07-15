@@ -100,7 +100,6 @@
         
         result = result + (actualHeight - _subTitleSize.height);
     }
-    
     if (c.picture != nil) {
         
         result = result + 75;
