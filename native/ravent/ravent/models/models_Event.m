@@ -48,6 +48,7 @@
 @synthesize isGemDropped = _isGemDropped;
 @synthesize isInWatchList = _isInWatchList;
 @synthesize isSyncedWithCal = _isSyncedWithCal;
+@synthesize address = _address;
 
 //#define SERVICE_URL @"http://air.local:8888"
 #define SERVICE_URL @"http://raventsvc.appspot.com"
@@ -94,6 +95,7 @@
     another.isInWatchList = _isInWatchList;
     another.isGemDropped = _isGemDropped;
     another.isSyncedWithCal = _isSyncedWithCal;
+    another.address = _address;
     
     return another;
 }
@@ -290,7 +292,6 @@
         }
     }
     
-    
     if ([objectLoader.URL.path rangeOfString:@"eventstats"].location != NSNotFound) {
         
     #pragma clang diagnostic push
@@ -441,24 +442,12 @@
 
 - (NSString *)title
 {    
-    if ([_name isKindOfClass:[NSNull class]]) {
-     
-        return @"N/A";
-    } else {
-        
-        if ([_name length] > 23) {
-            
-             return [NSString stringWithFormat:@"%@...", [_name substringToIndex:23]];       
-        } else {
-            
-            return _name;
-        }
-    }
+    return _location;
 }
 
 - (NSString *)subtitle
 {    
-    return _location;
+    return _address;
 }
 
 - (void)dealloc

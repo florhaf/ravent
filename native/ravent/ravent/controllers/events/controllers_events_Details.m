@@ -464,6 +464,27 @@ static int _retryCounter;
                               animated:YES];
 }
 
+- (void)onAddressLoad:(NSArray *)objects
+{
+    if (objects != nil) {
+        
+        if ([objects count] > 0) {
+            
+            id obj = [objects objectAtIndex:0];
+            
+            if([obj isKindOfClass:[NSError class]]) {
+                
+                
+            } else {
+                
+                models_FormatedAddress *a = (models_FormatedAddress *)obj;
+                
+                _event.address = a.formatted_address;
+            }
+        }
+    }
+}
+
 #pragma mark - View lifecycle
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
@@ -594,9 +615,26 @@ static int _retryCounter;
     }
 }
 
+- (void)loadFormattedAddress
+{
+    if (_addressLoader == nil) {
+        
+        _addressLoader = [[models_FormatedAddress alloc] initWithEvent:_event delegate:self callback:@selector(onAddressLoad:)];   
+    }
+    
+    [_addressLoader loadAddress];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    if (_event.latitude != nil && _event.longitude != nil &&
+        ![_event.latitude isEqualToString:@""] && ![_event.longitude isEqualToString:@""]) {
+        
+     
+        [self loadFormattedAddress];
+    }
     
     _map.delegate = self;
     _refreshHeaderView.delegate = nil;

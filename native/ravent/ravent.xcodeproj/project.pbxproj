@@ -308,6 +308,7 @@
 		DFA806DF15ABA58B00EC858B /* unlocked.png in Resources */ = {isa = PBXBuildFile; fileRef = DFA806DD15ABA58B00EC858B /* unlocked.png */; };
 		DFA903AA1590136800426865 /* views_events_Events.xib in Resources */ = {isa = PBXBuildFile; fileRef = DFA903A91590136800426865 /* views_events_Events.xib */; };
 		DFA9FC5B15B161F0003F9B5F /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFA9FC5A15B161EF003F9B5F /* EventKit.framework */; };
+		DFA9FC5E15B23E26003F9B5F /* models_FormatedAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA9FC5D15B23E26003F9B5F /* models_FormatedAddress.m */; };
 		DFAF309A15AFA7EA00B1B9C5 /* controllers_TakeTheTour.m in Sources */ = {isa = PBXBuildFile; fileRef = DFAF309915AFA7EA00B1B9C5 /* controllers_TakeTheTour.m */; };
 		DFAF309C15AFA8E100B1B9C5 /* views_TakeTheTour.xib in Resources */ = {isa = PBXBuildFile; fileRef = DFAF309B15AFA8E100B1B9C5 /* views_TakeTheTour.xib */; };
 		DFAF30A315AFAA2F00B1B9C5 /* step0.png in Resources */ = {isa = PBXBuildFile; fileRef = DFAF309E15AFAA2F00B1B9C5 /* step0.png */; };
@@ -821,6 +822,8 @@
 		DFA903A91590136800426865 /* views_events_Events.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = views_events_Events.xib; sourceTree = "<group>"; };
 		DFA9B5EB150FB454001CD530 /* RestKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RestKit.xcodeproj; path = RestKit/RestKit.xcodeproj; sourceTree = "<group>"; };
 		DFA9FC5A15B161EF003F9B5F /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
+		DFA9FC5C15B23E26003F9B5F /* models_FormatedAddress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = models_FormatedAddress.h; sourceTree = "<group>"; };
+		DFA9FC5D15B23E26003F9B5F /* models_FormatedAddress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = models_FormatedAddress.m; sourceTree = "<group>"; };
 		DFAF309815AFA7EA00B1B9C5 /* controllers_TakeTheTour.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = controllers_TakeTheTour.h; sourceTree = "<group>"; };
 		DFAF309915AFA7EA00B1B9C5 /* controllers_TakeTheTour.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = controllers_TakeTheTour.m; sourceTree = "<group>"; };
 		DFAF309B15AFA8E100B1B9C5 /* views_TakeTheTour.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = views_TakeTheTour.xib; sourceTree = "<group>"; };
@@ -1765,6 +1768,8 @@
 				DF9DA513150C4B5C0006E61A /* models_User.m */,
 				DF12BDA2151931DD00328B02 /* models_Comment.h */,
 				DF12BDA3151931DE00328B02 /* models_Comment.m */,
+				DFA9FC5C15B23E26003F9B5F /* models_FormatedAddress.h */,
+				DFA9FC5D15B23E26003F9B5F /* models_FormatedAddress.m */,
 			);
 			name = models;
 			path = ravent/models;
@@ -2401,6 +2406,7 @@
 				DFA20F7515AA3AB1007BBEE7 /* TKDragView.m in Sources */,
 				DFA20F7A15AB6DAE007BBEE7 /* NSString+Distance.m in Sources */,
 				DFAF309A15AFA7EA00B1B9C5 /* controllers_TakeTheTour.m in Sources */,
+				DFA9FC5E15B23E26003F9B5F /* models_FormatedAddress.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

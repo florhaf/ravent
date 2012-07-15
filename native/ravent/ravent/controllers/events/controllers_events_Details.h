@@ -13,6 +13,7 @@
 #import "STSegmentedControl.h"
 #import "MKTickerView.h"
 #import "TKDragView.h"
+#import "models_FormatedAddress.h"
 
 typedef enum {
     nogoodies,
@@ -69,10 +70,11 @@ typedef enum {
     
     STSegmentedControl *_segment;
     TKDragView *_dragView;
-
+    
     UIToolbar *_toolbar;
     models_Event *_eventLoader;
     models_Comment *_picturesLoader;
+    models_FormatedAddress *_addressLoader;
     
     NSArray *_friendsSharedTo;
     NSArray *_tickerItems;

@@ -32,6 +32,7 @@
     BOOL _isRequesting;
     BOOL _isCancelled;
     BOOL _isSyncedWithCal;
+    BOOL _isRequestForAddress;
     
     RKObjectManager *_manager;    
     
@@ -57,6 +58,7 @@
     NSString *_male_ratio;
     NSString *_nb_attending;
     NSString *_rsvp_status;
+    NSString *_address;
     
     NSString *_offerTitle;
     NSString *_offerDescription;
@@ -97,6 +99,7 @@
 @property (nonatomic, retain) NSString *offerDescription;
 @property (nonatomic, retain) NSString *featured;
 @property (nonatomic, retain) NSString *ticket_link;
+@property (nonatomic, retain) NSString *address;
 
 @property (nonatomic, assign) CLLocationCoordinate2D coordinate;
 @property (nonatomic, assign) BOOL isGemDropped;
