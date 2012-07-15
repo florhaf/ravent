@@ -111,8 +111,6 @@
     
     c.cellHeight = result;
     
-    NSLog(@"%@ - %f", c.message, result);
-    
     return result;
 }
 
@@ -124,9 +122,18 @@
     if (c.picture != nil) {
     
         [[NSBundle mainBundle] loadNibNamed:@"views_events_item_CommentPic" owner:self options:nil];
-        _commentImg.imageURL = [NSURL URLWithString:c.picture];
+
+        if ([_imagesCache.allKeys containsObject:c.picture]) {
+            
+            _commentImg.image = (UIImage *)[_imagesCache objectForKey:c.picture];
+        } else {
+            
+            _commentImg.imageURL = [NSURL URLWithString:c.picture];
+            _commentImg.delegate = self;
+        }
         _commentImg.clipsToBounds = YES;
         _commentImg.contentMode = UIViewContentModeScaleAspectFill;
+        
     } else {
         
         [[NSBundle mainBundle] loadNibNamed:@"views_events_item_Comment" owner:self options:nil];
@@ -134,7 +141,17 @@
     
     _itemTitle.text = [NSString stringWithFormat:@"%@", c.firstName];
     _itemSubTitle.text = c.message;
-    _itemImage.imageURL = [NSURL URLWithString:c.pictureUser];
+    
+    // image
+    // ***********************************************
+    if ([_imagesCache.allKeys containsObject:c.pictureUser]) {
+        
+        _itemImage.image = (UIImage *)[_imagesCache objectForKey:c.pictureUser];
+    } else {
+        
+        _itemImage.imageURL = [NSURL URLWithString:c.pictureUser];
+        _itemImage.delegate = self;
+    }
     _itemImage.clipsToBounds = YES;
     _itemImage.contentMode = UIViewContentModeScaleAspectFill;
     
@@ -191,20 +208,6 @@
     if (index < _photos.count)
         return [_photos objectAtIndex:index];
     return nil;
-}
-
-
--(void)imageView:(JBAsyncImageView *)sender loadedImage:(UIImage *)imageLoaded fromURL:(NSURL *)url
-{
-    [sender setFrame:CGRectMake(sender.frame.origin.x, sender.frame.origin.y, imageLoaded.size.width * 0.5, imageLoaded.size.width * 0.5)];
-    
-    UIView *sub = [sender.superview.subviews objectAtIndex:1];
-    
-    sub.frame = CGRectMake(sub.frame.origin.x, sub.frame.origin.y + sender.frame.size.height, sub.frame.size.width, sub.frame.size.height);
-    
-    sub = [sender.superview.subviews objectAtIndex:2];
-    
-    sub.frame = CGRectMake(sub.frame.origin.x, sub.frame.origin.y + sender.frame.size.height, sub.frame.size.width, sub.frame.size.height);
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
