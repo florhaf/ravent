@@ -74,10 +74,16 @@
         
         _data = [[NSMutableArray alloc] initWithArray:objects]; 
         
-//        for (models_Comment *c in _data) {
-//            
-//            c.message = [NSString stringWithFormat:@"%@\n\n", c.message];
-//        }
+        
+        for (models_Comment *c in _data) {
+            
+            if (c.picture != nil) {
+                
+                c.pic_small = [c.picture stringByReplacingOccurrencesOfString:@"_n.jpg" withString:@"_s.jpg"];
+            }
+            
+            c.picUser_small = [c.pictureUser stringByReplacingOccurrencesOfString:@"_n.jpg" withString:@"_s.jpg"];
+        }
         
     }];
 }
@@ -98,8 +104,6 @@
     
     models_Comment *c = [_data objectAtIndex:indexPath.row];
     NSString *name = [NSString stringWithFormat:@"%@ %@", c.firstName, c.lastName];
-    
-    CGFloat initialCellHeight = result;
     
     actualHeight = [name sizeWithFont:_itemTitle.font constrainedToSize:CGSizeMake(_titleSize.width, 2000) lineBreakMode:UILineBreakModeWordWrap].height;
     if (actualHeight > _titleSize.height) {
@@ -125,9 +129,6 @@
     
     c.cellHeight = result;
     
-    
-    NSLog(@"%f - %f - %d", initialCellHeight, c.cellHeight, addingHeight);
-    
     return result;
 }
 
@@ -140,12 +141,12 @@
     
         [[NSBundle mainBundle] loadNibNamed:@"views_events_item_CommentPic" owner:self options:nil];
 
-        if ([_imagesCache.allKeys containsObject:c.picture]) {
+        if ([_imagesCache.allKeys containsObject:c.pic_small]) {
             
-            _commentImg.image = (UIImage *)[_imagesCache objectForKey:c.picture];
+            _commentImg.image = (UIImage *)[_imagesCache objectForKey:c.pic_small];
         } else {
             
-            _commentImg.imageURL = [NSURL URLWithString:c.picture];
+            _commentImg.imageURL = [NSURL URLWithString:c.pic_small];
             _commentImg.delegate = self;
         }
         _commentImg.clipsToBounds = YES;
@@ -161,12 +162,12 @@
     
     // image
     // ***********************************************
-    if ([_imagesCache.allKeys containsObject:c.pictureUser]) {
+    if ([_imagesCache.allKeys containsObject:c.picUser_small]) {
         
-        _itemImage.image = (UIImage *)[_imagesCache objectForKey:c.pictureUser];
+        _itemImage.image = (UIImage *)[_imagesCache objectForKey:c.picUser_small];
     } else {
         
-        _itemImage.imageURL = [NSURL URLWithString:c.pictureUser];
+        _itemImage.imageURL = [NSURL URLWithString:c.picUser_small];
         _itemImage.delegate = self;
     }
     _itemImage.clipsToBounds = YES;

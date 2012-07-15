@@ -63,21 +63,28 @@ static int _retryCounter;
         _headerTitleSize = CGSizeMake(_headerNameLabel.frame.size.width, _headerNameLabel.frame.size.height);
         _headerSubTitleSize = CGSizeMake(_headerLocationLabel.frame.size.width, _headerLocationLabel.frame.size.height);
         
-        NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
-        
-        [params setValue:_event.eid forKey:@"eid"];
-        [params setValue:[models_User crtUser].accessToken forKey:@"access_token"];
-        
-        _picturesLoader = [[models_Comment alloc] initWithDelegate:self andSelector:@selector(onPicturesLoad:)];
-        [_picturesLoader loadPicturesWithParams:params];
-        _photos = [[NSMutableArray alloc] init];
-        
+        [self loadPictures];
         
         _event.isGemDropped = [[Store instance] isGemDropped:_event.eid];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadPictures) name:@"reloadPictures" object:nil];
 
     }
     
     return self;
+}
+
+- (void)loadPictures
+{
+    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+    
+    [params setValue:_event.eid forKey:@"eid"];
+    [params setValue:[models_User crtUser].accessToken forKey:@"access_token"];
+    
+    _picturesLoader = [[models_Comment alloc] initWithDelegate:self andSelector:@selector(onPicturesLoad:)];
+    [_picturesLoader loadPicturesWithParams:params];
+    
+    _photos = [[NSMutableArray alloc] init];
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -1051,6 +1058,8 @@ static int _retryCounter;
     
     _friendsSharedTo = nil;
     _tickerItems = nil;
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"reloadPictures" object:nil];
 }
 
 #pragma mark - TKDragViewDelegate

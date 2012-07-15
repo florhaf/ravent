@@ -176,7 +176,11 @@ typedef enum {
 
 - (void)loadDataWithSpinner
 {
-    _hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    if (_hud == nil) {
+        
+        _hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];   
+    }
+
     [self loadData];
 }
 

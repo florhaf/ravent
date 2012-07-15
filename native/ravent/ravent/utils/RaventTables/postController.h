@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "JBAsyncImageView.h"
 #import "models_Comment.h"
+#import "MBProgressHUD.h"
 
 typedef enum {
     event,
@@ -44,6 +45,8 @@ typedef enum {
     NSString *_base64Picture;
     NSData *_imageData;
     models_Comment *_comment;
+    
+    MBProgressHUD *_hud;
 }
 
 @property (nonatomic, assign) BOOL isForEvent;

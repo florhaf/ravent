@@ -42,6 +42,8 @@
 @property (nonatomic, retain) NSString *time;
 @property (nonatomic, retain) NSString *uid;
 @property (nonatomic, assign) CGFloat cellHeight; // hugly hack to retain the cell height for the image background
+@property (nonatomic, retain) NSString *picUser_small;
+@property (nonatomic, retain) NSString *pic_small;
 
 - (id)initWithDelegate:(NSObject *)del andSelector:(SEL)sel;
 - (void)loadFeedWithParams:(NSMutableDictionary *)params;

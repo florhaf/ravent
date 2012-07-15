@@ -9,7 +9,7 @@
 #import "postController.h"
 #import "models_User.h"
 #import "NSData+Base64.h"
-#import "MBProgressHUD.h"
+
 #import "YRDropdownView.h"
 #import "UIView+Animation.h"
 #import "controllers_App.h"
@@ -104,8 +104,12 @@
         
         return;
     }
-    [_textView resignFirstResponder];
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
+    if (_hud == nil) {
+        
+        [_textView resignFirstResponder];
+        _hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];   
+    }
     
     _comment = [[models_Comment alloc] initWithDelegate:self andSelector:nil];
     
@@ -146,18 +150,25 @@
 }
 
 - (void)onPostSuccess:(NSString *)response
-{
-    _textView.text = nil;
-    _imageData = nil;
-    
+{   
     if (_isForEvent) {
 
         [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadComments" object:nil];   
+        
+        if (_imageData != nil) {
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadPictures" object:nil];
+        }
     }
     
-    [self performSelector:@selector(hideModal) withObject:nil afterDelay:0.3];
+    _textView.text = nil;
+    _imageData = nil;
     
     [MBProgressHUD hideHUDForView:self.view animated:YES];
+    
+    [self performSelector:@selector(hideModal) withObject:nil afterDelay:0.2];
+    
+    
 }
 
 - (void)onPostFailure:(NSMutableDictionary *)response
@@ -197,10 +208,9 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex == 1) {
-        
-        [self post];
-        //[self dismissModalViewControllerAnimated:YES];
-        
+        [_textView resignFirstResponder];
+        _hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        [self performSelector:@selector(post) withObject:nil afterDelay:0.1];
     } else {
         
         [self dismissModalViewControllerAnimated:YES];

@@ -110,6 +110,8 @@ typedef enum {
 - (IBAction)onSpecials_Tap:(id)sender;
 - (IBAction)onGoodies_Tap:(id)sender;
 
+- (void)loadPictures;
+
 - (void)onVoteSuccess:(NSString *)response;
 - (void)onVoteFailure:(NSMutableDictionary *)response;
 
