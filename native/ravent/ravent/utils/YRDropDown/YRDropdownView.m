@@ -100,12 +100,12 @@ static YRDropdownView *currentDropdown = nil;
         titleLabel.text = titleText;
         
         UILabel *x = [[UILabel alloc] initWithFrame:CGRectMake(300, titleLabel.frame.origin.y + 3, 20, 20)];
-        x.font = titleLabel.font;
+        x.font = [UIFont boldSystemFontOfSize:16];
         x.textColor = titleLabel.textColor;
         x.shadowOffset = titleLabel.shadowOffset;
         x.shadowColor = titleLabel.shadowColor;
         x.backgroundColor = [UIColor clearColor];
-        x.text = @"x";
+        x.text = @"X";
         
         [self addSubview:x];
         

@@ -527,6 +527,7 @@ static int _retryCounter;
     if (_event.isGemDropped) {
         
         _dropagemLabel.text = @"Gem dropped";
+        [_dropagemLabel setHidden:NO];
         
         UIImageView *gem = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"diamond"]];
         
@@ -1148,6 +1149,7 @@ static int _retryCounter;
     [_event vote:params success:@selector(onVoteSuccess:) failure:@selector(onVoteFailure:) sender:nil];
     
     [_actVote startAnimating];
+    [_dropagemLabel setHidden:YES];
 }
 
 
