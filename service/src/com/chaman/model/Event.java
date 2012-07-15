@@ -708,19 +708,19 @@ public class Event extends Model implements Serializable {
 				res = res + 1.5;
 			}
 			
-			if (checkins >= 1 && checkins < 100){
+			if (checkins >= 1 && checkins < 1000){
 				res = res + 1;
-			} else if (checkins >= 100 && checkins < 200){
+			} else if (checkins >= 1000 && checkins < 5000){
 				res = res + 1.25;
-			} else if (checkins >= 200){
+			} else if (checkins >= 5000){
 				res = res + 1.5;
 			}
 			
-			if (talking_about_count >= 1 && talking_about_count < 25){
+			if (talking_about_count >= 1 && talking_about_count < 100){
 				res = res + 1;
-			} else if(talking_about_count >= 25 && talking_about_count < 50){
-				res = res + 2;
-			} else if (talking_about_count >= 50){
+			} else if(talking_about_count >= 100 && talking_about_count < 1000){
+				res = res + 1.5;
+			} else if (talking_about_count >= 1000){
 				res = res + 2;
 			}
 			
