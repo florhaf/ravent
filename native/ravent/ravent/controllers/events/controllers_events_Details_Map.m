@@ -142,6 +142,8 @@
             annotationView.annotation = e;
         }
         
+        annotationView.image = [UIImage imageNamed:@"diamond"];
+        [annotationView setFrame:CGRectMake(0, 0, 24, 18)];
 
         annotationView.canShowCallout = YES;
         

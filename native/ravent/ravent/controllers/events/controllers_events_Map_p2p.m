@@ -290,21 +290,7 @@ static int _retryCounter;
         
         annotationView.enabled = YES;
         annotationView.canShowCallout = YES;
-        
-        
-//        NSURL *url = [NSURL URLWithString:e.picture];
-//        
-//        _image = [[JBAsyncImageView alloc] init];
-//        [_image setDelegate:self];
-//        [_image setImageURL:url];
-//        
-//        NSMutableArray *annotAndImage = [[NSMutableArray alloc] initWithCapacity:2];
-//        [annotAndImage addObject:annotationView];
-//        [annotAndImage addObject:_image];
-//        
-//        [_imageLoading setObject:annotAndImage forKey:url];
-        
-//        annotationView.image = [UIImage imageNamed:@"AnnotationEvent"];
+ 
         
         annotationView.image = [UIImage imageNamed:@"diamond"];
         [annotationView setFrame:CGRectMake(0, 0, 24, 18)];

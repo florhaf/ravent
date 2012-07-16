@@ -75,7 +75,7 @@
     [_ticker reloadData];
     
     _labelLocation.text = _event.location;
-    _labelAddress.text = _event.location;
+    _labelAddress.text = _event.address;
     _labelOfferTitle.text = _event.offerTitle;
     _labelOfferDescription.text = _event.offerDescription;
     
