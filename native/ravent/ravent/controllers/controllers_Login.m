@@ -394,22 +394,22 @@ static controllers_Login *_ctrl;
 
 - (void)moveNameUp
 {
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationDuration:1];
-    [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
-    
-    _nameLabel.frame = CGRectMake(_nameLabel.frame.origin.x, 90, _nameLabel.frame.size.width, _nameLabel.frame.size.height);
-    
-    [UIView commitAnimations];
-    
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationDuration:1];
-    [UIView setAnimationDelay:0.5];
-    [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
-    
-    _loginButton.alpha = 1;
-    
-    [UIView commitAnimations];
+//    [UIView beginAnimations:nil context:NULL];
+//    [UIView setAnimationDuration:1];
+//    [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+//    
+//    _nameLabel.frame = CGRectMake(_nameLabel.frame.origin.x, 90, _nameLabel.frame.size.width, _nameLabel.frame.size.height);
+//    
+//    [UIView commitAnimations];
+//    
+//    [UIView beginAnimations:nil context:NULL];
+//    [UIView setAnimationDuration:1];
+//    [UIView setAnimationDelay:0.5];
+//    [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+//    
+//    _loginButton.alpha = 1;
+//    
+//    [UIView commitAnimations];
 }
 
 + (controllers_Login *)instance

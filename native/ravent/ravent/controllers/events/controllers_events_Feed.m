@@ -195,16 +195,11 @@
 {
     UITableViewCell *cell = (UITableViewCell *)[sender superview];
     
-    int i = 0;
-    while (![[[cell subviews] objectAtIndex:i] isKindOfClass:[JBAsyncImageView class]]) {
-        i++;
-    }
-    
-    JBAsyncImageView *picture = (JBAsyncImageView *)[[cell subviews] objectAtIndex:i];
+    JBAsyncImageView *picture = (JBAsyncImageView *)[cell viewWithTag:-42];
     
     _photos = [[NSMutableArray alloc] init];
     
-    [_photos insertObject:[MWPhoto photoWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", picture.imageURL]]] atIndex:0];
+    [_photos insertObject:[MWPhoto photoWithImage:picture.image] atIndex:0];
     
     MWPhotoBrowser *picController = [[MWPhotoBrowser alloc] initWithDelegate:self];
     picController.wantsFullScreenLayout = YES;
@@ -247,6 +242,7 @@
     _itemTime = nil;
     _commentImg = nil;
     _bg = nil;
+    _picButton = nil;
     
     _photos = nil;
 }

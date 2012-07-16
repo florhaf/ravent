@@ -89,6 +89,10 @@
     NSArray *items = [[NSArray alloc] initWithObjects:_button, nil];
     [_toolbar setItems:items];
     
+    UIImageView *ivtop = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 20)];
+    [ivtop setImage:[UIImage imageNamed:@"shadowTop"]];
+    [self.view addSubview:ivtop];
+    
 }
 
 - (void)hideModal
