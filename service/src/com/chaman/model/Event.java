@@ -113,53 +113,56 @@ public class Event extends Model implements Serializable {
 		
 		for (Event e : fbevents) {
 				
-			e_cache = (Event) syncCache.get(e.eid); // read from Event cache
-    	    if (e_cache == null) {
-			 	    	
-    	    	e.venue_id = JSON.GetValueFor("id", e.venue);    	
-    	    	Venue v_graph = Venue.getVenue(client, e.venue_id);
-    	    	e.venue_category = v_graph.category;
-			
-    	    	e.Filter_category();
-    	    	e.Score(v_graph);
-    	    	e.latitude 	= JSON.GetValueFor("latitude", e.venue);
-    	    	e.longitude = JSON.GetValueFor("longitude", e.venue);
-			
-    	    	if ((e.latitude == null || e.latitude == "" || e.longitude == null || e.longitude == "") && v_graph != null) {
+			try {
 				
-    	    		// take value from venue if event location is null
-    	    		e.latitude = JSON.GetValueFor("latitude", v_graph.location);
-    	    		e.longitude = JSON.GetValueFor("longitude", v_graph.location);
-    	    	}	
-    	    	
-    	    	if (e.latitude != null && e.latitude != "" && e.longitude != null && e.longitude != "" && (e.privacy != null && e.privacy.equals("OPEN"))) {
+				e_cache = (Event) syncCache.get(e.eid); // read from Event cache
+	    	    if (e_cache == null) {
+				 	    	
+	    	    	e.venue_id = JSON.GetValueFor("id", e.venue);    	
+	    	    	Venue v_graph = Venue.getVenue(client, e.venue_id);
+	    	    	e.venue_category = v_graph.category;
 				
-    	    		EventLocationCapable elc = dao.ofy().find(EventLocationCapable.class, e.eid);
-    	    		
-    	    		if (elc == null) {
-    	    			dao.ofy().put(new EventLocationCapable(e));
-    	    		} else if (elc.getTimeStampStart() != Long.parseLong(e.start_time) || elc.getTimeStampEnd() != Long.parseLong(e.end_time)){
-    	    			dao.ofy().put(elc);
-    	    		}
-    	    	}    	    	
-    	    } else {
-    	    	
-    	    	e = e_cache;
-    	    }
-	
-	    	e.Format(timeZoneInMinutes, now, 0);
-    	    
-	    	if (e.latitude != null && e.latitude != "" && e.longitude != null && e.longitude != "") {
+	    	    	e.Filter_category();
+	    	    	e.Score(v_graph);
+	    	    	e.latitude 	= JSON.GetValueFor("latitude", e.venue);
+	    	    	e.longitude = JSON.GetValueFor("longitude", e.venue);
+				
+	    	    	if ((e.latitude == null || e.latitude == "" || e.longitude == null || e.longitude == "") && v_graph != null) {
+					
+	    	    		// take value from venue if event location is null
+	    	    		e.latitude = JSON.GetValueFor("latitude", v_graph.location);
+	    	    		e.longitude = JSON.GetValueFor("longitude", v_graph.location);
+	    	    	}	
+	    	    	
+	    	    	if (e.latitude != null && e.latitude != "" && e.longitude != null && e.longitude != "" && (e.privacy != null && e.privacy.equals("OPEN"))) {
+					
+	    	    		EventLocationCapable elc = dao.ofy().find(EventLocationCapable.class, e.eid);
+	    	    		
+	    	    		if (elc == null) {
+	    	    			dao.ofy().put(new EventLocationCapable(e));
+	    	    		} else if (elc.getTimeStampStart() != Long.parseLong(e.start_time) || elc.getTimeStampEnd() != Long.parseLong(e.end_time)){
+	    	    			dao.ofy().put(elc);
+	    	    		}
+	    	    	}    	    	
+	    	    } else {
+	    	    	
+	    	    	e = e_cache;
+	    	    }
+		
+		    	e.Format(timeZoneInMinutes, now, 0);
+	    	    
+		    	if (e.latitude != null && e.latitude != "" && e.longitude != null && e.longitude != "") {
 
-    	    	float distance = Geo.Fence(userLatitude, userLongitude, e.latitude, e.longitude);
-        	    e.distance = String.format("%.2f", distance);
-    	    } else {
-				
-	    		e.distance = "N/A";
-	    	}
-	    
-    	    result.add(e);
-	    	syncCache.put(e.eid, e, null); // Add Event to cache
+	    	    	float distance = Geo.Fence(userLatitude, userLongitude, e.latitude, e.longitude);
+	        	    e.distance = String.format("%.2f", distance);
+	    	    } else {
+					
+		    		e.distance = "N/A";
+		    	}
+		    
+	    	    result.add(e);
+		    	syncCache.put(e.eid, e, null); // Add Event to cache
+			} catch (Exception ex ) {/*retry will lower the speed*/}		
 		}
 		
 		return result;
@@ -195,52 +198,57 @@ public class Event extends Model implements Serializable {
         for (EventLocationCapable e : l) {
         	
         	if (actual_time < e.getTimeStampEnd()) { //if event not in the past
-        		
-            	event = (Event) syncCache.get(e.getEid());
-            	if (event == null) { // if not in the cache
-       	
-            		String query 			= "SELECT " + properties + " FROM event WHERE eid = " + e.getEid();
-            		List<Event> fbevents 	= client.executeQuery(query, Event.class);
+        		try {
             	
-            		if (fbevents != null && fbevents.size() > 0) {
-        	
-            			event = fbevents.get(0);
-            			event.venue_id = JSON.GetValueFor("id", event.venue);
-        				Venue v_graph =  Venue.getVenue(client, event.venue_id);
-        				event.venue_category = v_graph.category;
-        				if (event.venue_category == null || (event.venue_category != null && !event.venue_category.equals("city"))) {
-        					event.Score(v_graph);
-        					event.Filter_category();
-        				}
-        				
-	    	    		if (e.getTimeStampStart() != Long.parseLong(event.start_time) || e.getTimeStampEnd() != Long.parseLong(event.end_time)){
-	    	    			e.setTimeStampStart(Long.parseLong(event.start_time));
-	    	    			e.setTimeStampEnd(Long.parseLong(event.end_time));
-	    	    			dao.ofy().put(e);
-	    	    		}
-            		}
-            	}
-          			
-            	if (event != null && (event.venue_category == null || (event.venue_category != null && !event.venue_category.equals("city")))) {
-            		
-            		if (!previous_venue_time.equals(event.venue_id + event.start_time)) {  // to remove duplicate events
-            		
-            			if (event.Format(timeZoneInMinutes, now, searchTimeFrame)){
-            				
-                			event.latitude 	= Double.toString(e.getLatitude());
-                			event.longitude = Double.toString(e.getLongitude());
+        			event = (Event) syncCache.get(e.getEid());
+                	if (event == null) { // if not in the cache
+                		
                 			
-                			float distance = Geo.Fence(userLatitude, userLongitude, event.latitude, event.longitude);
-                			event.distance = String.format("%.2f", distance);
+                    		String query 			= "SELECT " + properties + " FROM event WHERE eid = " + e.getEid();
+                    		List<Event> fbevents 	= client.executeQuery(query, Event.class);
+                    	
+                    		if (fbevents != null && fbevents.size() > 0) {
+                	
+                    			event = fbevents.get(0);
+                    			event.venue_id = JSON.GetValueFor("id", event.venue);
+                				Venue v_graph =  Venue.getVenue(client, event.venue_id);
+                				event.venue_category = v_graph.category;
+                				if (event.venue_category == null || (event.venue_category != null && !event.venue_category.equals("city"))) {
+                					event.Score(v_graph);
+                					event.Filter_category();
+                				}
+                				
+        	    	    		if (e.getTimeStampStart() != Long.parseLong(event.start_time) || e.getTimeStampEnd() != Long.parseLong(event.end_time)){
+        	    	    			e.setTimeStampStart(Long.parseLong(event.start_time));
+        	    	    			e.setTimeStampEnd(Long.parseLong(event.end_time));
+        	    	    			dao.ofy().put(e);
+        	    	    		}
+                    		}
+                		
 
-                			previous_venue_time = event.venue_id + event.start_time;
-                			
-                			syncCache.put(event.eid, event, null); //add event to cache
-                    		
-                			result.add(event);
-            			}
-            		}
-            	} 
+                	}
+              			
+                	if (event != null && (event.venue_category == null || (event.venue_category != null && !event.venue_category.equals("city")))) {
+                		
+                		if (!previous_venue_time.equals(event.venue_id + event.start_time)) {  // to remove duplicate events
+                		
+                			if (event.Format(timeZoneInMinutes, now, searchTimeFrame)){
+                				
+                    			event.latitude 	= Double.toString(e.getLatitude());
+                    			event.longitude = Double.toString(e.getLongitude());
+                    			
+                    			float distance = Geo.Fence(userLatitude, userLongitude, event.latitude, event.longitude);
+                    			event.distance = String.format("%.2f", distance);
+
+                    			previous_venue_time = event.venue_id + event.start_time;
+                    			
+                    			syncCache.put(event.eid, event, null); //add event to cache
+                        		
+                    			result.add(event);
+                			}
+                		}
+                	} 
+        		} catch (Exception ex ) {/*retry will lower the speed*/}
         	} else { // event in the past
 					
         		dao.ofy().delete(e); //clean the datastore by removing old events TODO: call a task doesn't have to be deleted right away
@@ -331,19 +339,24 @@ public class Event extends Model implements Serializable {
 	}
 	
 	
-	public static ArrayList<Model> getMultiple(String accessToken, String[] eids, String timeZone, String userLatitude, String userLongitude) {
+	public static ArrayList<Model> getMultiple(String accessToken, String[] eids, String timeZone, String userLatitude, String userLongitude) throws FacebookException {
 		
 		ArrayList<Model> result	= new ArrayList<Model>();
 		
 		for (String eid : eids) {
 	    	
-			result.add(getSingle(accessToken, eid, timeZone, userLatitude, userLongitude));
+			try {
+				result.add(getSingle(accessToken, eid, timeZone, userLatitude, userLongitude));
+			} catch (Exception ex ) {
+				result.add(getSingle(accessToken, eid, timeZone, userLatitude, userLongitude));
+			}
+			
 		}
 		
 		return result;
 	}
 	
-	public static Event getSingle(String accessToken, String eid, String timeZone, String userLatitude, String userLongitude) {
+	public static Event getSingle(String accessToken, String eid, String timeZone, String userLatitude, String userLongitude) throws FacebookException{
 		
 		FacebookClient client	= new DefaultFacebookClient(accessToken);
 		int timeZoneInMinutes	= Integer.parseInt(timeZone);
@@ -404,8 +417,8 @@ public class Event extends Model implements Serializable {
 			this.dtEnd = new DateTime(timeStampEnd, T);
 		} else {
 			T = DateTimeZone.forID(this.timezone);
-			this.dtStart = new DateTime(timeStampStart, T).minusHours(3); //TODO: Investigate why those 3 hours diff!!!!
-			this.dtEnd = new DateTime(timeStampEnd, T).minusHours(3);
+			this.dtStart = new DateTime(timeStampStart, T); //TODO: Investigate why those 3 hours diff!!!!
+			this.dtEnd = new DateTime(timeStampEnd, T);
 			timeStampStart = this.dtStart.getMillis();
 			timeStampEnd = this.dtEnd.getMillis();
 		}

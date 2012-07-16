@@ -7,6 +7,7 @@ import com.restfb.Connection;
 import com.restfb.DefaultFacebookClient;
 import com.restfb.FacebookClient;
 import com.restfb.Parameter;
+import com.restfb.exception.FacebookException;
 import com.restfb.types.FacebookType;
 
 public class Comment extends Model {
@@ -38,17 +39,23 @@ public class Comment extends Model {
 		this.picture = p.getPicture();
 	}
 	
-	public static ArrayList<Model> Get(String accessToken, String eventID) {
+	public static ArrayList<Model> Get(String accessToken, String eventID) throws FacebookException {
 
 		Connection<Post> feed = Post.Get(accessToken, eventID);
 		
 		ArrayList<Model> result = new ArrayList<Model>();
 		
+		Comment c = null;
+		
 		for (Post p : feed.getData()) {
 						
 			if (p.getType().equals("status") || p.getType().equals("photo")) {
 				
-				Comment c = new Comment(accessToken, p);
+				try {
+					c = new Comment(accessToken, p);
+				} catch (Exception ex ) {
+					c = new Comment(accessToken, p);
+				}
 				result.add(c);
 			}
 		} 
