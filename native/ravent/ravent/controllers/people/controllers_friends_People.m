@@ -164,17 +164,6 @@ static customNavigationController *_ctrl;
     [_segmentedControl addTarget:self action:@selector(onSegmentedControlValueChanged:) forControlEvents:UIControlEventValueChanged];
 	[self.view addSubview:_segmentedControl];
     
-//    UIView *shadow = [[UIView alloc] initWithFrame:CGRectMake(0, -44, 320, 44)];
-//    [shadow setBackgroundColor:[UIColor blackColor]];
-//    
-//    shadow.layer.shadowOffset = CGSizeZero;
-//    shadow.layer.shadowPath = [UIBezierPath bezierPathWithRect:shadow.layer.bounds].CGPath;
-//    shadow.layer.shadowOpacity = 0.75f;
-//    shadow.layer.shadowRadius = 10.0f;
-//    shadow.layer.shadowColor = [UIColor blackColor].CGColor;
-//    
-//    [self.view addSubview:shadow];
-    
     
     // shadows
     UIImageView *ivright = [[UIImageView alloc] initWithFrame:CGRectMake(320, 0, 40, 460)];

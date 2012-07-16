@@ -102,6 +102,7 @@ static controllers_Login *_ctrl;
 - (IBAction)onLoginButtonTap:(id)sender {
     
     [_loginButton setEnabled:NO];
+    [_loginButton setAlpha:0];
     [_spinner setAlpha:1];
     [_spinner startAnimating];
     
@@ -139,6 +140,7 @@ static controllers_Login *_ctrl;
     if ([delegate facebook].accessToken != nil && ![[delegate facebook].accessToken isEqualToString:@""]) {
         
         [_loginButton setEnabled:NO];
+        [_loginButton setAlpha:0];
         [_spinner setAlpha:1];
         [_spinner startAnimating];
         [self apiFQLIMe];
@@ -312,6 +314,7 @@ static controllers_Login *_ctrl;
         
     _errorLabel.text = [NSString stringWithFormat:@"%@\nError getting your Facebook id\nTry again",_errorLabel.text];
         [_loginButton setEnabled:YES];
+        [_loginButton setAlpha:1];
         [_spinner setAlpha:0];
         [_spinner stopAnimating];
     }
@@ -340,6 +343,7 @@ static controllers_Login *_ctrl;
         [_spinner stopAnimating];
         [_spinner setAlpha:0];
         [_loginButton setEnabled:YES];
+        [_loginButton setAlpha:1];
         
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         if ([defaults objectForKey:@"FBAccessTokenKey"]) {
@@ -360,6 +364,7 @@ static controllers_Login *_ctrl;
         [_spinner stopAnimating];
         [_spinner setAlpha:0];
         [_loginButton setEnabled:YES];
+        [_loginButton setAlpha:1];
         
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         if ([defaults objectForKey:@"FBAccessTokenKey"]) {
@@ -388,6 +393,7 @@ static controllers_Login *_ctrl;
     [[ActionDispatcher instance] execute:@"onFacebookLogin"];
     
     [_loginButton setEnabled:YES];
+    [_loginButton setAlpha:1];
     [_spinner setAlpha:0];
     [_spinner stopAnimating];
 }
@@ -407,7 +413,7 @@ static controllers_Login *_ctrl;
 //    [UIView setAnimationDelay:0.5];
 //    [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
 //    
-//    _loginButton.alpha = 1;
+    _loginButton.alpha = 1;
 //    
 //    [UIView commitAnimations];
 }
