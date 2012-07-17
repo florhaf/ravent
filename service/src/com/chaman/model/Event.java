@@ -498,7 +498,7 @@ public class Event extends Model implements Serializable {
 				return false;
 			}
 			
-			if (end_minus_start >= 7) { // to filter bogus "Fridays", "Tuesdays" events
+			if (end_minus_start >= 6) { // to filter bogus "Fridays", "Tuesdays" events
 				
 				res = this.Filter_bogus_events(now, searchTimeFrame);
 			} else {
