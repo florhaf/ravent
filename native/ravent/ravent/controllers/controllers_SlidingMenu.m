@@ -11,7 +11,7 @@
 #import "controllers_friends_People.h"
 
 
-#import "controllers_dropagem_DropAGemViewController.h"
+#import "controllers_FeatureYourEvent.h"
 #import "controllers_watchlist_Container.h"
 #import "customNavigationController.h"
 #import "controllers_Login.h"
@@ -29,7 +29,7 @@ static controllers_SlidingMenu *_ctrl;
     
     if (self) {
         
-        self.menuItems = [NSArray arrayWithObjects:@"Events", @"People", @"Watchlist", @"Contact us", nil];
+        self.menuItems = [NSArray arrayWithObjects:@"Find an event", @"Friends events", @"Watchlist", @"Feature your event" , @"What do you think", nil];
     }
     
     return self;
@@ -123,6 +123,7 @@ static controllers_SlidingMenu *_ctrl;
     cell.textLabel.shadowOffset = CGSizeMake(0, 1);
     cell.textLabel.text = [self.menuItems objectAtIndex:indexPath.row];
     cell.textLabel.textColor = [UIColor whiteColor];
+    cell.textLabel.font = [UIFont boldSystemFontOfSize:16];
     
         UIImageView *discl = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"disclosure"]];
         cell.accessoryView = discl;
@@ -130,15 +131,15 @@ static controllers_SlidingMenu *_ctrl;
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    if (indexPath.row == 4) {
-        
-        cell.textLabel.textColor = [UIColor grayColor];
-        cell.textLabel.backgroundColor = [UIColor clearColor];
-        cell.textLabel.opaque = YES;
-        cell.textLabel.shadowColor = [UIColor blackColor];
-        cell.textLabel.shadowOffset = CGSizeMake(0, 1);
-        [cell.textLabel setFont:[UIFont boldSystemFontOfSize:17]];
-    }
+//    if (indexPath.row == 4) {
+//        
+//        cell.textLabel.textColor = [UIColor grayColor];
+//        cell.textLabel.backgroundColor = [UIColor clearColor];
+//        cell.textLabel.opaque = YES;
+//        cell.textLabel.shadowColor = [UIColor blackColor];
+//        cell.textLabel.shadowOffset = CGSizeMake(0, 1);
+//        [cell.textLabel setFont:[UIFont boldSystemFontOfSize:17]];
+//    }
     
     return cell;
 }
@@ -149,12 +150,12 @@ static controllers_SlidingMenu *_ctrl;
     
     UIViewController *newTopViewController = nil;
     
-    if ([identifier isEqualToString:@"Events"]) {
+    if ([identifier isEqualToString:@"Find an event"]) {
         
         newTopViewController = [controllers_events_Events instance];
     } else {
         
-        if ([identifier isEqualToString:@"People"]) {
+        if ([identifier isEqualToString:@"Friends events"]) {
             
             newTopViewController = [controllers_friends_People instance];
         } else {
@@ -164,9 +165,9 @@ static controllers_SlidingMenu *_ctrl;
                 newTopViewController = [controllers_watchlist_Container instance];
             } else {
                 
-                if ([identifier isEqualToString:@"Locate me"]) {
+                if ([identifier isEqualToString:@"Feature your event"]) {
                 
-                    newTopViewController = [controllers_dropagem_DropAGemViewController instance];
+                    newTopViewController = [controllers_FeatureYourEvent instance];
                 } else {
                     
                     // prevent slide right

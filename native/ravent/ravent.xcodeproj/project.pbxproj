@@ -315,6 +315,8 @@
 		DFA9FC7115B2C670003F9B5F /* commentPicBG.png in Resources */ = {isa = PBXBuildFile; fileRef = DFA9FC7015B2C670003F9B5F /* commentPicBG.png */; };
 		DFA9FC7915B2CEF6003F9B5F /* gem.png in Resources */ = {isa = PBXBuildFile; fileRef = DFA9FC7715B2CEC6003F9B5F /* gem.png */; };
 		DFA9FC7A15B2CEF6003F9B5F /* gem@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DFA9FC7815B2CECF003F9B5F /* gem@2x.png */; };
+		DFA9FC7D15B52D5D003F9B5F /* controllers_FeatureYourEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA9FC7C15B52D56003F9B5F /* controllers_FeatureYourEvent.m */; };
+		DFA9FC7F15B5E589003F9B5F /* views_FeatureYourEvent.xib in Resources */ = {isa = PBXBuildFile; fileRef = DFA9FC7E15B5E587003F9B5F /* views_FeatureYourEvent.xib */; };
 		DFAF309A15AFA7EA00B1B9C5 /* controllers_TakeTheTour.m in Sources */ = {isa = PBXBuildFile; fileRef = DFAF309915AFA7EA00B1B9C5 /* controllers_TakeTheTour.m */; };
 		DFAF309C15AFA8E100B1B9C5 /* views_TakeTheTour.xib in Resources */ = {isa = PBXBuildFile; fileRef = DFAF309B15AFA8E100B1B9C5 /* views_TakeTheTour.xib */; };
 		DFAF30A315AFAA2F00B1B9C5 /* step0.png in Resources */ = {isa = PBXBuildFile; fileRef = DFAF309E15AFAA2F00B1B9C5 /* step0.png */; };
@@ -836,6 +838,9 @@
 		DFA9FC7015B2C670003F9B5F /* commentPicBG.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = commentPicBG.png; sourceTree = "<group>"; };
 		DFA9FC7715B2CEC6003F9B5F /* gem.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = gem.png; path = ../../gem.png; sourceTree = "<group>"; };
 		DFA9FC7815B2CECF003F9B5F /* gem@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "gem@2x.png"; path = "../../gem@2x.png"; sourceTree = "<group>"; };
+		DFA9FC7B15B52D52003F9B5F /* controllers_FeatureYourEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = controllers_FeatureYourEvent.h; sourceTree = "<group>"; };
+		DFA9FC7C15B52D56003F9B5F /* controllers_FeatureYourEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = controllers_FeatureYourEvent.m; sourceTree = "<group>"; };
+		DFA9FC7E15B5E587003F9B5F /* views_FeatureYourEvent.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = views_FeatureYourEvent.xib; sourceTree = "<group>"; };
 		DFAF309815AFA7EA00B1B9C5 /* controllers_TakeTheTour.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = controllers_TakeTheTour.h; sourceTree = "<group>"; };
 		DFAF309915AFA7EA00B1B9C5 /* controllers_TakeTheTour.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = controllers_TakeTheTour.m; sourceTree = "<group>"; };
 		DFAF309B15AFA8E100B1B9C5 /* views_TakeTheTour.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = views_TakeTheTour.xib; sourceTree = "<group>"; };
@@ -1647,6 +1652,7 @@
 				DF9CED4615841BCC002B1024 /* views_Empty_EventP2P.xib */,
 				DF9CED4815841BE5002B1024 /* views_Empty_Generic.xib */,
 				DFAF309B15AFA8E100B1B9C5 /* views_TakeTheTour.xib */,
+				DFA9FC7E15B5E587003F9B5F /* views_FeatureYourEvent.xib */,
 			);
 			name = views;
 			path = ravent/views;
@@ -1675,6 +1681,8 @@
 				DF629E69153F8A3100BCA804 /* controllers_Login.m */,
 				DFAF309815AFA7EA00B1B9C5 /* controllers_TakeTheTour.h */,
 				DFAF309915AFA7EA00B1B9C5 /* controllers_TakeTheTour.m */,
+				DFA9FC7B15B52D52003F9B5F /* controllers_FeatureYourEvent.h */,
+				DFA9FC7C15B52D56003F9B5F /* controllers_FeatureYourEvent.m */,
 			);
 			name = controllers;
 			path = ravent/controllers;
@@ -2301,6 +2309,7 @@
 				DFA9FC7115B2C670003F9B5F /* commentPicBG.png in Resources */,
 				DFA9FC7915B2CEF6003F9B5F /* gem.png in Resources */,
 				DFA9FC7A15B2CEF6003F9B5F /* gem@2x.png in Resources */,
+				DFA9FC7F15B5E589003F9B5F /* views_FeatureYourEvent.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2431,6 +2440,7 @@
 				DFA20F7A15AB6DAE007BBEE7 /* NSString+Distance.m in Sources */,
 				DFAF309A15AFA7EA00B1B9C5 /* controllers_TakeTheTour.m in Sources */,
 				DFA9FC5E15B23E26003F9B5F /* models_FormatedAddress.m in Sources */,
+				DFA9FC7D15B52D5D003F9B5F /* controllers_FeatureYourEvent.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2530,7 +2540,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: florian haftman (247VK6949Z)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: florian haftman";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/RestKit/Specs/Runner/OCHamcrest\"",
@@ -2547,7 +2557,7 @@
 				);
 				"OTHER_CFLAGS[arch=*]" = "-mthumb";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "67C20EBB-AA59-4A4B-B4BF-60479C59B59C";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9ABD0D28-AECA-45F4-8DE6-4A8A032A18A1";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = NO;
 				USER_HEADER_SEARCH_PATHS = "";
@@ -2560,7 +2570,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: florian haftman (247VK6949Z)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: florian haftman";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/RestKit/Specs/Runner/OCHamcrest\"",
@@ -2577,7 +2587,7 @@
 				);
 				"OTHER_CFLAGS[arch=*]" = "-mthumb";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "67C20EBB-AA59-4A4B-B4BF-60479C59B59C";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9ABD0D28-AECA-45F4-8DE6-4A8A032A18A1";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = NO;
 				USER_HEADER_SEARCH_PATHS = "";

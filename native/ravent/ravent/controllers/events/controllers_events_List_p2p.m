@@ -9,7 +9,7 @@
 #import "controllers_events_List_p2p.h"
 #import "controllers_events_Map_p2p.h"
 #import "ActionDispatcher.h"
-#import "MBProgressHUD.h"
+
 
 @implementation controllers_events_List_p2p
 
@@ -49,6 +49,8 @@ static controllers_events_List_p2p *_ctrl;
 
 - (void)loadDataWithUserLocation
 {
+    [_spinner startAnimating];
+    
     [super loadDataWithUserLocation];
     
     [[controllers_events_Map_p2p instance] loading];
@@ -339,6 +341,8 @@ static controllers_events_List_p2p *_ctrl;
 
 - (void)loadData
 {    
+    [_spinner startAnimating];
+    
     NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
     
     [params setValue:[models_User crtUser].accessToken forKey:@"access_token"];

@@ -20,8 +20,6 @@
         
         [self trackPageView:@"friends_details" forEvent:nil];
         
-        [MBProgressHUD hideHUDForView:self.view animated:NO];
-        _hud = nil;
     }
     
     return self;

@@ -7,7 +7,23 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ECSlidingViewController.h"
+#import "controllers_SlidingMenu.h"
+#import "customNavigationController.h"
 
-@interface controllers_FeatureYourEvent : UIViewController
+@interface controllers_FeatureYourEvent : UIViewController<UIWebViewDelegate> {
+    
+    IBOutlet UIWebView *_webview;
+    
+    NSString *_url;
+    
+    IBOutlet UIActivityIndicatorView *_spinner;
+    IBOutlet UILabel *_errorLabel;
+}
+
+- (void)cancelAllRequests;
++ (customNavigationController *)instance;
++ (void)deleteInstance;
+
 
 @end

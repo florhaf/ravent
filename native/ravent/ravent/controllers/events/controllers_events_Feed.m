@@ -30,7 +30,6 @@
         _event = event;
         _comment = [[models_Comment alloc] initWithDelegate:self andSelector:@selector(onLoadFeed:)];
         
-        [self loadData];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadDataWithSpinner) name:@"reloadComments" object:nil];
         
@@ -230,7 +229,7 @@
 {
     [super viewDidLoad];
     
-    _hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [self loadDataWithSpinner];
 }
 
 - (void)dealloc

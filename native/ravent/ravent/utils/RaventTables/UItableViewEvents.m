@@ -30,7 +30,7 @@
         
         [self loadDataWithUserLocation];
         
-        _hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+//        _hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     }
     
     return self;

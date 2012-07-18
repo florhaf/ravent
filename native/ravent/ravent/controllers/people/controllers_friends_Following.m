@@ -7,7 +7,7 @@
 //
 
 #import "controllers_friends_Following.h"
-#import "MBProgressHUD.h"
+
 #import "controllers_friends_Details.h"
 #import "ActionDispatcher.h"
 
@@ -30,8 +30,7 @@
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadDataWithSpinner) name:@"reloadFollowing" object:nil];
 
-        _hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        [self loadData];
+        [self loadDataWithSpinner];
     }
     
     return self;

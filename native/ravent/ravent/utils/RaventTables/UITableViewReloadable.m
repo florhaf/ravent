@@ -176,11 +176,19 @@ typedef enum {
 
 - (void)loadDataWithSpinner
 {
-    if (_hud == nil) {
-        
-        _hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];   
-    }
+//    if (_hud == nil) {
+//        
+//        _hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];   
+//    }
 
+    _data = nil;
+    _groupedData = nil;
+    _sortedKeys = nil;
+    
+    [self.tableView reloadData];
+    
+    [_spinner startAnimating];
+    
     [self loadData];
 }
 
@@ -198,8 +206,8 @@ typedef enum {
     }
     
     [_spinner stopAnimating];
-    [MBProgressHUD hideHUDForView:self.view animated:YES];
-    _hud = nil;
+//    [MBProgressHUD hideHUDForView:self.view animated:YES];
+//    _hud = nil;
     
     if (objects != nil && [objects count] > 0) {
         
