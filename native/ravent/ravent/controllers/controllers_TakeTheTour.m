@@ -245,6 +245,25 @@ static customNavigationController *_ctrl;
 
 - (void)dragViewDidSwapToEndFrame:(TKDragView *)dragView atIndex:(NSInteger)index{
     
+    [UIView animateWithDuration:0.4
+                          delay:0.1
+                        options:UIViewAnimationOptionCurveEaseOut
+                     animations:^{
+                         dragView.transform = CGAffineTransformMakeRotation(M_PI);
+                     } 
+                     completion:^(BOOL finished) {
+                         
+                         [UIView animateWithDuration:0.4
+                                               delay:0.1
+                                             options:UIViewAnimationOptionCurveEaseIn
+                                          animations:^{
+                                              dragView.transform = CGAffineTransformMakeRotation(2 * M_PI);
+                                          } 
+                                          completion:^(BOOL finished) {
+                                              
+                                              [dragView setFrame:CGRectMake(0, 0, 0, 0)];
+                                          }];
+                     }];
     
     [_next setEnabled:YES];
 }

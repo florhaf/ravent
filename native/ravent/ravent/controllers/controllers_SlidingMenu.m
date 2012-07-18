@@ -131,15 +131,27 @@ static controllers_SlidingMenu *_ctrl;
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-//    if (indexPath.row == 4) {
-//        
-//        cell.textLabel.textColor = [UIColor grayColor];
-//        cell.textLabel.backgroundColor = [UIColor clearColor];
-//        cell.textLabel.opaque = YES;
-//        cell.textLabel.shadowColor = [UIColor blackColor];
-//        cell.textLabel.shadowOffset = CGSizeMake(0, 1);
-//        [cell.textLabel setFont:[UIFont boldSystemFontOfSize:17]];
-//    }
+    
+    [cell.imageView setFrame:CGRectMake(0, 0, 21, 21)];
+    switch (indexPath.row) {
+        case 0:
+            [cell.imageView setImage:[UIImage imageNamed:@"search"]];
+            break;
+        case 1:
+            [cell.imageView setImage:[UIImage imageNamed:@"friendsEvents"]];
+            break;
+        case 2:
+            [cell.imageView setImage:[UIImage imageNamed:@"watchMenu"]];
+            break;
+        case 3:
+            [cell.imageView setImage:[UIImage imageNamed:@"gift"]];
+            break;
+        case 4:
+            [cell.imageView setImage:[UIImage imageNamed:@"feedback"]];
+            break;
+        default:
+            break;
+    }
     
     return cell;
 }

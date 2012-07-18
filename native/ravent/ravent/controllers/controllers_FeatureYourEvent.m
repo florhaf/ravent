@@ -44,7 +44,10 @@ static customNavigationController *_ctrl;
         // Custom initialization
         
         self.title = @"Gemster";
-        _url = @"http://promoter.gemsterapp.com/index.html";
+        _url = [NSString stringWithFormat:@"http://promoter.gemsterapp.com/?uid=%@", [models_User crtUser].uid];
+        
+        // force view loading
+        self.view.frame = self.view.frame;
         
         [self trackPageView:@"events_featureYourEvent"];
     }
@@ -65,15 +68,18 @@ static customNavigationController *_ctrl;
     _errorLabel.text = @"URL mal formed...";
 }
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (void)refresh
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-        
-        self.title = @"Gemster";
-    }
-    return self;
+    [_spinner startAnimating];
+    [_spinner setHidden:NO];
+    
+    //Create a URL object.
+    NSURL *url = [NSURL URLWithString:_url];
+    
+    //URL Requst Object
+    NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
+    
+    [_webview loadRequest:requestObj];
 }
 
 - (void)viewDidLoad
@@ -83,6 +89,7 @@ static customNavigationController *_ctrl;
     // TOLBAR BUTTONS
     UIImage *menubg = [UIImage imageNamed:@"navBarBG"];
     UIImage *menui = [UIImage imageNamed:@"navBarMenu"];
+    UIImage *refreshi = [UIImage imageNamed:@"refresh"];
     
     UIButton *menub = [UIButton buttonWithType:UIButtonTypeCustom];
     [menub addTarget:self action:@selector(revealMenu:) forControlEvents:UIControlEventTouchUpInside];
@@ -92,16 +99,15 @@ static customNavigationController *_ctrl;
     
     UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithCustomView:menub];
     self.navigationItem.leftBarButtonItem = menuButton;
-	
     
-    //Create a URL object.
-    NSURL *url = [NSURL URLWithString:_url];
+    UIButton *refreshb = [UIButton buttonWithType:UIButtonTypeCustom];
+    [refreshb addTarget:self action:@selector(refresh) forControlEvents:UIControlEventTouchUpInside];
+    [refreshb setImage:refreshi forState:UIControlStateNormal];
+    [refreshb setBackgroundImage:menubg forState:UIControlStateNormal];
+    [refreshb setFrame:CGRectMake(0, 0, 40, 30)];
     
-    //URL Requst Object
-    NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
-    
-    //Load the request in the UIWebView.
-    [_webview loadRequest:requestObj];
+    UIBarButtonItem *refreshButton = [[UIBarButtonItem alloc] initWithCustomView:refreshb];
+    self.navigationItem.rightBarButtonItem = refreshButton;
     
     // shadows
     UIImageView *ivleft = [[UIImageView alloc] initWithFrame:CGRectMake(-40, 0, 40, 460)];
@@ -111,6 +117,8 @@ static customNavigationController *_ctrl;
     UIImageView *ivtop = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 20)];
     [ivtop setImage:[UIImage imageNamed:@"shadowTop"]];
     [self.view addSubview:ivtop];
+    
+    [self refresh];
 }
 
 - (void)viewWillAppear:(BOOL)animated

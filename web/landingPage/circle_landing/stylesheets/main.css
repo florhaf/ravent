@@ -1,0 +1,84 @@
+html                                            { font-size: 62.5%; height: 100%;
+                                                  -webkit-tap-highlight-color: rgba(0,0,0,0);
+                                                  -webkit-font-smoothing: antialiased;
+                                                  -webkit-text-size-adjust: 100%; 
+                                                  -ms-text-size-adjust: 100%; }
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, nav, menu, section, 
+dialog                                          { display: block }
+audio, canvas, video                            { display: inline-block; }
+audio:not([controls])                           { display: none; }
+[hidden]                                        { display: none;  }
+
+body                                            { margin: 0; min-height: 100%; }
+body, select, input, button, textarea           { font: 15px/21px "Helvetica Neue", Helvetica, Arial, sans-serif;
+                                                  color: #282828; }
+::-moz-selection                                { background: rgb(0,0,0); color: #fff; text-shadow: none; }
+::selection                                     { background: rgb(0,0,0); color: #fff; text-shadow: none; }
+
+
+ul, ol                                          { padding: 0; margin: 0; }
+img                                             { border: 0; vertical-align: middle; }
+figure                                          { margin: 0; }
+small                                           { font-size: 11px; }
+h1, h2, h3, h4, h5, h6                          { font-weight: normal; line-height: normal; margin: 0; }
+h1                                              { font-size: 2.8em; }
+h2                                              { font-size: 2em; }
+h3                                              { font-size: 1.6em; }
+h4                                              { font-size: 1.4em; }
+h5                                              { font-size: 1.2em; }
+h6                                              { font-size: 1em; }
+
+p                                               { margin: 0; }
+
+a                                               { color: #2891cd; text-decoration: none;  }
+a:hover                                         { color: #015d89; }
+a:hover, a:active                               { outline: none; }
+
+body { background: #F6F6F6; }
+a.b  { display: block; }
+
+.grid:before, .grid:after   { content: ""; display: table; }
+.grid:after                 { clear: both; }
+.grid                       { zoom: 1; }
+
+.row                        { width: 1010px;  margin: 0 auto; }
+
+.w435, .w585, .left, 
+.w575, .right               { float: left; min-height: 1px; }
+
+.right                      { float: right; }
+.r100                       { padding-right: 60px; }
+.w435                       { width: 435px; }
+.w585                       { width: 585px; }
+.w575                       { width: 575px; }
+
+@font-face {
+    font-family: 'AllerLightRegular';
+    src: url('fonts/aller_lt-webfont.eot');
+    src: url('fonts/aller_lt-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/aller_lt-webfont.woff') format('woff'),
+         url('fonts/aller_lt-webfont.ttf') format('truetype'),
+         url('fonts/aller_lt-webfont.svg#AllerLightRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'AllerRegular';
+    src: url('fonts/aller_rg-webfont.eot');
+    src: url('fonts/aller_rg-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/aller_rg-webfont.woff') format('woff'),
+         url('fonts/aller_rg-webfont.ttf') format('truetype'),
+         url('fonts/aller_rg-webfont.svg#AllerRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Century';
+    src: url('fonts/century.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}

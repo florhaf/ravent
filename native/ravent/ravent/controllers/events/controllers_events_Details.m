@@ -87,7 +87,7 @@ static int _retryCounter;
     _photos = [[NSMutableArray alloc] init];
 }
 
-- (void) viewWillAppear:(BOOL)animated
+- (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     

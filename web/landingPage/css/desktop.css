@@ -1,0 +1,46 @@
+* { border:0; margin:0; padding:0; font-family:Aller, Arial, Helvetica, sans-serif; font-size:24px; line-height:36px; }
+html { height:100%; }
+body { background:#ebebeb url(img/desktop/bg.png) scroll repeat-x center center; height:100%; text-align:center; }
+
+#main { width:760px; height:580px; position:absolute; top:50%; left:50%; margin:-290px 0 0 -380px; background:url(img/desktop/main_line.png) scroll no-repeat center 138px; overflow:hidden; }
+
+#main h1 { font-weight:normal; color:#b9b9b9; height:108px; }
+a.circle { display:block; width:355px; height:84px; float:left; line-height:40px; color:#393939; font-size:36px; text-shadow:0 2px 0px #fff; text-decoration:none; padding-top:366px; }
+a.circle strong { font-size:48px; font-weight:strong; }
+
+a#ios { margin-right:50px; background:url(img/desktop/a_ios.png) scroll no-repeat 0 0; }
+a#android { color:#9c9c9c; background:url(img/desktop/a_android.png) scroll no-repeat 0 0; }
+
+a#ios:hover { color:#000; background-position:0 -452px; }
+a#android:hover { color:#777; background-position:0 -452px; }
+
+a#ios:active { padding-top:367px; opacity:0.9; filter:alpha(opacity=90); }
+a#android:active { padding-top:367px; opacity:0.9; filter:alpha(opacity=90); }
+
+/* ANDROID SUBPAGE */
+#mainand { width:500px; height:660px; position:absolute; top:50%; left:50%; margin:-330px 0 0 -250px; overflow:hidden; }
+#mainand h1 { line-height:50px; font-size:36px; font-weight:normal; text-shadow:0 2px 0px #fff; color:#393939; height:486px; background:url(img/desktop/a_android.png) scroll no-repeat 73px 142px; padding-top:12px; }
+#mainand h1 strong { font-weight:bold; font-size:36px; }
+h3 { font-weight:normal; font-size:32px; color:#444; text-shadow:0 2px 0px #fff; padding-top:10px; }
+h3 strong { font-weight:bold; font-size:32px; }
+h4 { font-size:22px; font-weight:normal; line-height:34px; color:#8a8a8a; padding-top:40px; text-shadow:0 -2px 0px #fff;  }
+
+input#email { width:500px; height:91px; background:url(img/desktop/email_input.png) scroll no-repeat left top; font-size:32px; color:#b7b7b7; text-align:center; line-height:88px; }
+
+input#email:focus { background-position:left bottom; color:#111; outline: none; }
+
+
+
+
+@font-face {
+    font-family: 'Aller';
+    src: url('fonts/aller_lt-webfont.eot');
+    src: url('fonts/aller_lt-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/aller_lt-webfont.woff') format('woff'),
+         url('fonts/aller_lt-webfont.ttf') format('truetype'),
+         url('fonts/aller_lt-webfont.svg#Aller') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+

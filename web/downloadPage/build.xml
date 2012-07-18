@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="Ravent" default="package" basedir="./">
+
+    <property environment="env" />
+
+    <target name="package" depends="jsb, build">
+    </target>
+
+    <target name="jsb">
+
+        <delete dir="./">
+            <include name="app.jsb3"/>
+        </delete>
+        <exec executable="/Applications/SenchaSDKTools-2/sencha" dir="./">
+            <arg line="create jsb -a index-debug.html -p app.jsb3 -v" />
+        </exec>
+    </target>
+
+    <target name="clean">
+        <delete dir="./">
+            <include name="app-all.js"/>
+            <include name="all-classes.js"/>
+        </delete>
+    </target>
+
+    <target name="build">
+        <exec executable="/Applications/SenchaSDKTools-2/sencha" dir="./">
+            <arg line="build -p app.jsb3 -d ./ -v" />
+        </exec>
+    </target>
+
+    <target name="copy">
+        <copy todir="../phonegap/www/">
+            <fileset dir="./">
+                <include name="index.html" />
+                <include name="app-all.js" />
+                <include name="config.js" />
+                <include name="images.js" />
+            </fileset>
+        </copy>
+
+        <copy todir="../phonegap/www/resources/css/">
+            <fileset dir="resources/css/">
+                <include name="*" />
+            </fileset>
+        </copy>
+
+        <copy todir="../phonegap/www/resources/images/">
+            <fileset dir="resources/images/">
+                <include name="*" />
+            </fileset>
+        </copy>
+
+         <copy todir="/Volumes/florianhaftman/Desktop/www/">
+            <fileset dir="../phonegap/www/">
+                <include name="*/**" />
+            </fileset>
+        </copy>
+    </target>
+
+</project>

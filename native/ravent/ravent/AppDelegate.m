@@ -13,6 +13,7 @@
 #import "models_User.h"
 #import "GPSManager.h"
 #import "GANTracker.h"
+#import "controllers_FeatureYourEvent.h"
 
 @implementation AppDelegate
 
@@ -46,6 +47,9 @@
     
     // Initialize Facebook
     _facebook = [[Facebook alloc] initWithAppId:@"299292173427947" andDelegate:[controllers_Login instance]];
+    
+    // pre load web page
+    [controllers_FeatureYourEvent instance];
     
     // Check and retrieve authorization information
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];

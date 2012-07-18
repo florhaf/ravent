@@ -31,23 +31,23 @@ public class FeatureYourEvent  extends ServerResource {
 			Properties props = new Properties();
 	        Session session = Session.getDefaultInstance(props, null);
 
-	        String msgBody = "uid: " + uid + "\n" +
-	        "email: " + email + "\n" +
-	        "phone: " + phone + "\n" +
-	        "purpose: " + purpose;
+	        String msgBody = "uid:\t" + uid + "\n" +
+	        "email:\t" + email + "\n" +
+	        "phone:\t" + phone + "\n" +
+	        "purpose:\t" + purpose;
 
 	        try {
 	        	
         		Message msg = new MimeMessage(session);
-	            msg.setFrom(new InternetAddress("promoter@raventsvc.appspotmail.com", ""));
+	            msg.setFrom(new InternetAddress("promoter@raventsvc.appspotmail.com", "promoter"));
 	            msg.addRecipient(Message.RecipientType.TO,
-	                             new InternetAddress("dimitri.rouil@gmail@gmail.com", ""));
+	                             new InternetAddress("dimitri.rouil@gmail.com", "admin"));
+	            msg.addRecipient(Message.RecipientType.TO,
+                        new InternetAddress("florian.haftman@gmail.com", "admin"));
 	            msg.setSubject("[GEMSTER] - Feature your event");
 	            msg.setText(msgBody);
 	            Transport.send(msg);
 	        	
-	            
-
 	        } catch (AddressException e) {
 	            // ...
 	        	System.out.println(e.toString());
