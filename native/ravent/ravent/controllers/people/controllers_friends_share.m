@@ -225,7 +225,7 @@
     self.navigationItem.rightBarButtonItem = doneButton;
     
 
-    _hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
     
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLineEtched;
     

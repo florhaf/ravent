@@ -127,7 +127,7 @@ static controllers_events_List_p2p *_ctrl;
 
 - (void)reloadTableViewDataSourceWithIndex:(int)index
 {   
-    BOOL bFade = (_data != nil);
+    //BOOL bFade = (_data != nil);
     
     // load data to display
     _data = nil;
