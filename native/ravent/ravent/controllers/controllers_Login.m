@@ -3,6 +3,7 @@
 #import "FBConnect.h"
 #import "ActionDispatcher.h"
 #import "GANTracker.h"
+#import "controllers_FeatureYourEvent.h"
 
 @implementation controllers_Login
 
@@ -396,6 +397,9 @@ static controllers_Login *_ctrl;
     [_loginButton setAlpha:1];
     [_spinner setAlpha:0];
     [_spinner stopAnimating];
+    
+    // pre load web page
+    [controllers_FeatureYourEvent instance];
 }
 
 - (void)moveNameUp

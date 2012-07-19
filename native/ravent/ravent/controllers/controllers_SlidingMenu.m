@@ -57,7 +57,7 @@ static controllers_SlidingMenu *_ctrl;
     UILabel *signOutLabel = [[UILabel alloc] init];
     signOutLabel.text = @"Sign out";
     signOutLabel.textColor = [UIColor grayColor];
-    signOutLabel.frame = CGRectMake(10, 0, 280, 44);
+    signOutLabel.frame = CGRectMake(10, 0, 120, 44);
     signOutLabel.backgroundColor = [UIColor clearColor];
     signOutLabel.opaque = YES;
     signOutLabel.shadowColor = [UIColor blackColor];

@@ -127,7 +127,7 @@ static controllers_events_List_p2p *_ctrl;
 
 - (void)reloadTableViewDataSourceWithIndex:(int)index
 {   
-    BOOL bFade = (_data != nil);
+    //BOOL bFade = (_data != nil);
     
     // load data to display
     _data = nil;
@@ -188,25 +188,29 @@ static controllers_events_List_p2p *_ctrl;
             break;
     }
     
-    if (bFade) {
-     
-        // transition animation
-        [UIView animateWithDuration:0.15 animations:^{
-            
-            [self.tableView setAlpha:0];
-        } completion:^(BOOL finished) {
-            
-            
-            [self.tableView reloadData];
-            
-            [self.tableView setContentOffset:CGPointZero animated:NO];
-            [UIView animateWithDuration:0.15 animations:^(){
-                
-                [self.tableView setAlpha:1];    
-            }];
-        }];
-    } else {
-        
+    // flo: 7/17/12
+    // now we remove data while loading, no need to fade out first
+//    if (bFade) {
+//     
+//        // transition animation
+//        [UIView animateWithDuration:0.15 animations:^{
+//            
+//            [self.tableView setAlpha:0];
+//        } completion:^(BOOL finished) {
+//            
+//            
+//            [self.tableView reloadData];
+//            
+//            [self.tableView setContentOffset:CGPointZero animated:NO];
+//            [UIView animateWithDuration:0.15 animations:^(){
+//                
+//                [self.tableView setAlpha:1];    
+//            }];
+//        }];
+//    } else {
+//        
+    
+    // let s just fade in
         [self.tableView setAlpha:0];
         [self.tableView reloadData];
         
@@ -215,7 +219,7 @@ static controllers_events_List_p2p *_ctrl;
             
             [self.tableView setAlpha:1];    
         }];
-    }
+//    }
 }
 
 - (NSArray *)bubbleUpFeatured:(NSArray *)original

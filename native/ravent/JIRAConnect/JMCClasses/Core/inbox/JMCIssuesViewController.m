@@ -259,7 +259,7 @@ static NSString *cellId = @"CommentCell";
     self.issueStore = nil;
     [_dateFormatter release];
     _dateFormatter = nil;
-    [super dealloc];
+    [super dealloc]; //make the app crash at logout...
 }
 
 @end

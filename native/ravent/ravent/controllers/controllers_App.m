@@ -77,6 +77,7 @@ static controllers_App *_ctrl;
         login = nil;
 		[self.view addSubview:slide];
         
+        
         if ([models_User crtUser].isTourTaken == NO) {
             
             [self addChildViewController:[controllers_TakeTheTour instance]];
@@ -85,6 +86,7 @@ static controllers_App *_ctrl;
     }
     
 	[UIView commitAnimations];
+    
 }
 
 - (void)resetApp
