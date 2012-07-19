@@ -409,14 +409,13 @@ public class Event extends Model implements Serializable {
 		long timeStampEnd = Long.parseLong(this.end_time) * 1000;
 		
 		// facebook events timestamp are in PST // or have a timezone...
-		DateTimeZone T;
+		DateTimeZone PST = DateTimeZone.forID("America/Los_Angeles");
 		
 		if (this.timezone == null) {
-			T = DateTimeZone.forID("America/Los_Angeles");
-			this.dtStart = new DateTime(timeStampStart, T);
-			this.dtEnd = new DateTime(timeStampEnd, T);
+			this.dtStart = new DateTime(timeStampStart, PST);
+			this.dtEnd = new DateTime(timeStampEnd, PST);
 		} else {
-			T = DateTimeZone.forID(this.timezone);
+			DateTimeZone T = DateTimeZone.forID(this.timezone);
 			this.dtStart = new DateTime(timeStampStart, T); //TODO: Investigate why those 3 hours diff!!!!
 			this.dtEnd = new DateTime(timeStampEnd, T);
 			timeStampStart = this.dtStart.getMillis();
@@ -426,15 +425,15 @@ public class Event extends Model implements Serializable {
 		// so need to add time zone offset to DateTime
 
 		
-		this.time_start = dtStart.toString("KK:mm a");
-		this.time_end = dtEnd.toString("KK:mm a");
+		this.time_start = dtStart.toDateTime(PST).toString("KK:mm a");
+		this.time_end = dtEnd.toDateTime(PST).toString("KK:mm a");
 		
-		this.date_start = dtStart.toString("MMM d, Y");
-		this.date_end = dtEnd.toString("MMM d, Y");
+		this.date_start = dtStart.toDateTime(PST).toString("MMM d, Y");
+		this.date_end = dtEnd.toDateTime(PST).toString("MMM d, Y");
 		
 		if (this.filter != null && (this.filter.equals("Other") || this.filter.equals("Entertain"))) {
 			
-			if (dtEnd.getHourOfDay() >= 3 &&  dtEnd.getHourOfDay() <= 7) {
+			if (dtEnd.toDateTime(PST).getHourOfDay() >= 3 &&  dtEnd.toDateTime(PST).getHourOfDay() <= 7) {
 				this.filter = "Party";
 			}
 		}
@@ -480,9 +479,8 @@ public class Event extends Model implements Serializable {
 		tickets.add("http://www.ticketmaster.com/event/12004788E26339A4?artistid=837473&majorcatid=10002&minorcatid=207");
 		this.ticket_link = tickets.get(r.nextInt(14));
 		
-		
-		//DateTimeZone TZ = DateTimeZone.forOffsetMillis(timeZoneInMinutes*60*1000);
-		//DateTime now = DateTime.now(TZ);	
+		DateTimeZone TZ = DateTimeZone.forOffsetMillis(timeZoneInMinutes*60*1000);
+
 		long timeStampNow = now.getMillis();
 		long timeStampToday = timeStampNow - (timeZoneInMinutes * 60000) + (86400000 - now.getMillisOfDay());
 		
@@ -500,7 +498,7 @@ public class Event extends Model implements Serializable {
 			
 			if (end_minus_start >= 6) { // to filter bogus "Fridays", "Tuesdays" events
 				
-				res = this.Filter_bogus_events(now, searchTimeFrame);
+				res = this.Filter_bogus_events(now, TZ, searchTimeFrame);
 			} else {
 				
 				this.group = "a";
@@ -514,13 +512,13 @@ public class Event extends Model implements Serializable {
 				this.groupTitle = "Tomorrow";
 			} else {
 				
-				if (dtStart.getWeekOfWeekyear() == now.getWeekOfWeekyear()) {
+				if (dtStart.toDateTime(PST).getWeekOfWeekyear() == now.toDateTime(TZ).getWeekOfWeekyear()) {
 					
 					this.group = "c";
 					this.groupTitle = "This week";
 				} else {
 					
-					if (dtStart.getMonthOfYear() == now.getMonthOfYear()) {
+					if (dtStart.toDateTime(PST).getMonthOfYear() == now.toDateTime(TZ).getMonthOfYear()) {
 						
 						this.group = "d";
 						this.groupTitle = "This month";
@@ -537,17 +535,17 @@ public class Event extends Model implements Serializable {
 			
 			this.group = "0";
 			this.groupTitle = "Featured";
-		} else if (this.group.equals("a") && this.isNow(now, this.dtStart, this.dtEnd) < 0) {
+		} else if (this.group.equals("a") && this.isNow(now, TZ, this.dtStart.toDateTime(PST), this.dtEnd.toDateTime(PST), PST) < 0) {
 			return false;
 		}
 		
 		return res;
 	}
 	
-	public int isNow(DateTime now, DateTime start, DateTime end) {
+	public int isNow(DateTime now, DateTimeZone TZ, DateTime start, DateTime end, DateTimeZone PST) {
 		
 		if (start.getMinuteOfDay() < end.getMinuteOfDay()) {
-			if (now.getMinuteOfDay() >= start.getMinuteOfDay() && now.getMinuteOfDay() <= end.getMinuteOfDay()) {
+			if (now.toDateTime(TZ).getMinuteOfDay() >= start.toDateTime(PST).getMinuteOfDay() && now.toDateTime(TZ).getMinuteOfDay() <= end.toDateTime(PST).getMinuteOfDay()) {
 				this.group = "1";
 				this.groupTitle = "Now";
 				return 1;
@@ -558,7 +556,7 @@ public class Event extends Model implements Serializable {
 				return -1; // past -> remove event from list
 			}
 		} else {
-			if (now.getMinuteOfDay() >= start.getMinuteOfDay() || now.getMinuteOfDay() <= end.getMinuteOfDay()) {
+			if ((now.getMillis() > start.getMillis()) && (now.toDateTime(TZ).getMinuteOfDay() >= start.toDateTime(PST).getMinuteOfDay() || now.toDateTime(TZ).getMinuteOfDay() <= end.toDateTime(PST).getMinuteOfDay())) {
 				this.group = "1";
 				this.groupTitle = "Now";
 				return 1;
@@ -595,7 +593,7 @@ public class Event extends Model implements Serializable {
 		// also some adjustment on the category done in format()
 	}
 	
-	public boolean Filter_bogus_events(DateTime now_userTZ, int searchTimeFrame) {
+	public boolean Filter_bogus_events(DateTime now_userTZ, DateTimeZone TZ, int searchTimeFrame) {
 		
 		String name = this.name.toLowerCase();	
 		int dayindex = name.indexOf("day");
@@ -620,7 +618,7 @@ public class Event extends Model implements Serializable {
 									if (day.equals("tur")) {dayoffweek_name = 6;} else
 										if (day.equals("sun")) {dayoffweek_name = 7;} 
 				
-				int day_offset = dayoffweek_name - now_userTZ.getDayOfWeek();
+				int day_offset = dayoffweek_name - now_userTZ.toDateTime(TZ).getDayOfWeek();
 				
 				if(day_offset == 1 || day_offset == -6) {
 					
