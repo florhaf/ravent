@@ -36,6 +36,7 @@ Ext.define('Gemster.view.ContactForm', {
                 xtype : 'textfield',
                 id : 'phone',
                 label : 'Phone',
+                placeHolder : '(with country code)',
                 listeners : {
                     painted : function(textfield) {
 

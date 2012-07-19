@@ -25,7 +25,7 @@
       <file leaf-file-name="ContactForm.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/view/ContactForm.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="57" column="48" selection-start="1784" selection-end="1784" vertical-scroll-proportion="0.82618773">
+            <state line="38" column="52" selection-start="1180" selection-end="1180" vertical-scroll-proportion="0.49594438">
               <folding />
             </state>
           </provider>
@@ -91,8 +91,8 @@
         <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/index-debug.html" />
         <option value="$PROJECT_DIR$/app/controller/ContactForm.js" />
-        <option value="$PROJECT_DIR$/app/view/ContactForm.js" />
         <option value="$PROJECT_DIR$/app/model/Contact.js" />
+        <option value="$PROJECT_DIR$/app/view/ContactForm.js" />
       </list>
     </option>
   </component>
@@ -438,7 +438,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/view/ContactForm.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="57" column="48" selection-start="1784" selection-end="1784" vertical-scroll-proportion="0.82618773">
+        <state line="38" column="52" selection-start="1180" selection-end="1180" vertical-scroll-proportion="0.49594438">
           <folding />
         </state>
       </provider>
