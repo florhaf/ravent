@@ -36,8 +36,6 @@ public class FeatureYourEvent  extends ServerResource {
 	        "phone:\t" + phone + "\n" +
 	        "purpose:\t" + purpose;
 
-	        try {
-	        	
         		Message msg = new MimeMessage(session);
 	            msg.setFrom(new InternetAddress("promoter@raventsvc.appspotmail.com", "promoter"));
 	            msg.addRecipient(Message.RecipientType.TO,
@@ -47,15 +45,7 @@ public class FeatureYourEvent  extends ServerResource {
 	            msg.setSubject("[GEMSTER] - Feature your event");
 	            msg.setText(msgBody);
 	            Transport.send(msg);
-	        	
-	        } catch (AddressException e) {
-	            // ...
-	        	System.out.println(e.toString());
-	        } catch (MessagingException e) {
-	            
-	        	System.out.println(e.toString());
-	        }
-			
+	        
 			result.setSuccess(true);
 			result.setRecords(null);
 			
