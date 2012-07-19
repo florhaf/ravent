@@ -145,7 +145,7 @@
 			int currentSegmentWidth; 
 			
 			if(indexOfObject < numberOfSegments - 1)
-				currentSegmentWidth = round(lastX + segmentWidth) - round(lastX) + 1;
+				currentSegmentWidth = round(lastX + segmentWidth) - round(lastX);// + 1;
 			else
 				currentSegmentWidth = round(lastX + segmentWidth) - round(lastX);
 			
@@ -170,6 +170,7 @@
 					[button setBackgroundImage:[selectedImageRight stretchableImageWithLeftCapWidth:1 topCapHeight:0] forState:UIControlStateNormal];
 				else
 					[button setBackgroundImage:[normalImageRight stretchableImageWithLeftCapWidth:1 topCapHeight:0] forState:UIControlStateNormal];
+                
 			}
 			else
 			{
@@ -177,6 +178,8 @@
 					[button setBackgroundImage:[selectedImageMiddle stretchableImageWithLeftCapWidth:1 topCapHeight:0] forState:UIControlStateNormal];
 				else
 					[button setBackgroundImage:[normalImageMiddle stretchableImageWithLeftCapWidth:1 topCapHeight:0] forState:UIControlStateNormal];
+                
+
 			}
 			
 			button.frame = segmentFrame;
