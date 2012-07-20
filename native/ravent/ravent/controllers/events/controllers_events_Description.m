@@ -72,21 +72,6 @@
             _event.description = ((models_Event *)[objects objectAtIndex:0]).description;
             
             _textView.text = _event.description;
-            
-//            CGFloat originalHeight = _descriptionLabel.frame.size.height;
-//            CGFloat newHeight;
-//            
-//            _descriptionLabel.text = _event.description;
-//            [_descriptionLabel sizeToFit];
-//            
-//            newHeight = _descriptionLabel.frame.size.height;
-//            
-//            CGFloat delta = newHeight - originalHeight;
-//            
-//            if (delta > 0) {
-//                
-//                _scrollview.contentSize = CGSizeMake(_scrollview.contentSize.width, _scrollview.contentSize.height + delta + _descriptionLabel.frame.origin.y);
-//            } 
         }
     } else {
         
@@ -98,14 +83,6 @@
     }
     
     [MBProgressHUD hideHUDForView:self.view animated:YES];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
 }
 
 #pragma mark - View lifecycle

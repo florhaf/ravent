@@ -31627,7 +31627,7 @@ Ext.define('Gemster.controller.ContactForm', {
 
         var config	= {
             method	: 'POST',
-            url 	: 'http://raventsvc.appspot.com/featureYourEvent',
+            url 	: 'http://api.gemsterapp.com/featureYourEvent',
             withCredentials: true,
             useDefaultXhrHeader: false,
             params	: model.data,

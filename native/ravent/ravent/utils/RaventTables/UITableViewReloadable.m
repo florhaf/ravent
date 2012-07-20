@@ -73,11 +73,11 @@ typedef enum {
 
 - (void)didReceiveMemoryWarning
 {
-    _imagesCache = nil;
-    
-    _imagesCache = [[NSMutableDictionary alloc] init];
-    
-    [super didReceiveMemoryWarning];
+    if (self) {
+        
+        _imagesCache = nil;
+        [super didReceiveMemoryWarning];   
+    }
 }
 
 - (void)updateLoadingMessageWith:(NSString *)text
@@ -176,11 +176,6 @@ typedef enum {
 
 - (void)loadDataWithSpinner
 {
-//    if (_hud == nil) {
-//        
-//        _hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];   
-//    }
-
     _data = nil;
     _groupedData = nil;
     _sortedKeys = nil;
@@ -206,8 +201,6 @@ typedef enum {
     }
     
     [_spinner stopAnimating];
-//    [MBProgressHUD hideHUDForView:self.view animated:YES];
-//    _hud = nil;
     
     if (objects != nil && [objects count] > 0) {
         

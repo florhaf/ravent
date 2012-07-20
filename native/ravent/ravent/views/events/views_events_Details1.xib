@@ -692,7 +692,6 @@ AAAAAAAAdGV4dAAAAABDb3B5cmlnaHQgQXBwbGUsIEluYy4sIDIwMDgAA</bytes>
 						<string key="NSFrame">{{276, 300}, {20, 20}}</string>
 						<reference key="NSSuperview" ref="408714013"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -767,7 +766,7 @@ AAAAAAAAdGV4dAAAAABDb3B5cmlnaHQgQXBwbGUsIEluYy4sIDIwMDgAA</bytes>
 					<object class="IBUILabel" id="630268620">
 						<reference key="NSNextResponder" ref="408714013"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{98, 458}, {124, 30}}</string>
+						<string key="NSFrame">{{96, 458}, {124, 30}}</string>
 						<reference key="NSSuperview" ref="408714013"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="717215661"/>

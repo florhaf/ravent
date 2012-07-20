@@ -22,10 +22,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="ContactForm.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="ContactForm.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/view/ContactForm.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="64" column="29" selection-start="1963" selection-end="1963" vertical-scroll-proportion="0.9478563">
+            <state line="64" column="29" selection-start="1963" selection-end="1963" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -43,7 +43,7 @@
       <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="19" column="0" selection-start="548" selection-end="548" vertical-scroll-proportion="-11.875">
+            <state line="19" column="0" selection-start="548" selection-end="548" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -58,10 +58,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ContactForm.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="ContactForm.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/controller/ContactForm.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="21" column="62" selection-start="447" selection-end="447" vertical-scroll-proportion="0.0">
+            <state line="33" column="48" selection-start="860" selection-end="860" vertical-scroll-proportion="0.49657536">
               <folding />
             </state>
           </provider>
@@ -90,9 +90,9 @@
         <option value="$PROJECT_DIR$/app.js" />
         <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/index-debug.html" />
-        <option value="$PROJECT_DIR$/app/controller/ContactForm.js" />
         <option value="$PROJECT_DIR$/app/model/Contact.js" />
         <option value="$PROJECT_DIR$/app/view/ContactForm.js" />
+        <option value="$PROJECT_DIR$/app/controller/ContactForm.js" />
       </list>
     </option>
   </component>
@@ -403,16 +403,16 @@
         <state line="61" column="4" selection-start="1576" selection-end="2381" vertical-scroll-proportion="0.26369864" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index-debug.html">
+    <entry file="file://$PROJECT_DIR$/app/model/Contact.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="0" selection-start="324" selection-end="324" vertical-scroll-proportion="0.0">
+        <state line="19" column="81" selection-start="549" selection-end="549" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="0" selection-start="548" selection-end="548" vertical-scroll-proportion="-11.875">
+        <state line="19" column="0" selection-start="548" selection-end="548" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -422,23 +422,23 @@
         <state line="19" column="16" selection-start="339" selection-end="339" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/model/Contact.js">
+    <entry file="file://$PROJECT_DIR$/index-debug.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="81" selection-start="549" selection-end="549" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/controller/ContactForm.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="62" selection-start="447" selection-end="447" vertical-scroll-proportion="0.0">
+        <state line="9" column="0" selection-start="324" selection-end="324" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/view/ContactForm.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="64" column="29" selection-start="1963" selection-end="1963" vertical-scroll-proportion="0.9478563">
+        <state line="64" column="29" selection-start="1963" selection-end="1963" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controller/ContactForm.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="33" column="48" selection-start="860" selection-end="860" vertical-scroll-proportion="0.49657536">
           <folding />
         </state>
       </provider>
