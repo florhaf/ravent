@@ -4,7 +4,7 @@
 
     <property environment="env" />
 
-    <target name="package" depends="jsb, build">
+    <target name="package" depends="jsb, build, copy">
     </target>
 
     <target name="jsb">
@@ -31,32 +31,25 @@
     </target>
 
     <target name="copy">
-        <copy todir="../phonegap/www/">
+        <copy todir="../../service/war/promoter/">
             <fileset dir="./">
                 <include name="index.html" />
                 <include name="app-all.js" />
-                <include name="config.js" />
-                <include name="images.js" />
             </fileset>
         </copy>
 
-        <copy todir="../phonegap/www/resources/css/">
+        <copy todir="../../service/war/promoter/resources/css/">
             <fileset dir="resources/css/">
                 <include name="*" />
             </fileset>
         </copy>
 
-        <copy todir="../phonegap/www/resources/images/">
+        <copy todir="../../service/war/promoter/resources/images/">
             <fileset dir="resources/images/">
                 <include name="*" />
             </fileset>
         </copy>
 
-         <copy todir="/Volumes/florianhaftman/Desktop/www/">
-            <fileset dir="../phonegap/www/">
-                <include name="*/**" />
-            </fileset>
-        </copy>
     </target>
 
 </project>

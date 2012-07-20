@@ -1,0 +1,311 @@
+.x-tablet .x-list, .x-desktop .x-list {
+  border-right: 0px solid #000;
+}
+
+.msToolbar {
+
+    border-top: 1px solid #13416b;
+    border-bottom: 1px solid #95a5b5;
+
+    background-image: -webkit-gradient(linear, 50% 0% 100%, color-stop(0%, #e7eff9), colosr-stop(50%, #d2e0ef), colosr-stop(100%, #c0d3e7)) !important;
+    background-image: -webkit-linear-gradient(#e7eff9, #d2e0ef 50%, #c0d3e7) !important;
+    background-image: linear-gradient(#e7eff9, #d2e0ef 50%, #c0d3e7) !important;
+
+    -webkit-box-shadow: 0 2px 5px #888;
+    box-shadow: 0 2px 5px #888;
+}
+
+.x-tab-active {
+
+    -webkit-box-shadow: black 0 0 0 !important;
+    box-shadow: black 0 0 0 !important;
+    border-radius: 6px !important;
+    border-color: #fff !important;
+
+    color: #1d5f9e !important;
+
+
+    background-color: #1D5F9E !important;
+
+    /*background-image: -webkit-gradient(linear, 50% 0% 100%, color-stop(0%, #1D5F9E), colosr-stop(50%, #1D5F9E), colosr-stop(100%, #1D5F9E)) !important;*/
+    /*background-image: -webkit-linear-gradient(#1D5F9E, #1D5F9E 50%, #1D5F9E) !important;*/
+    /*background-image: linear-gradient(#1D5F9E, #1D5F9E 50%, #1D5F9E) !important;*/
+
+    background-image: -webkit-gradient(linear, 50% 0% 100%, color-stop(0%, #e6eef9), colosr-stop(50%, #cfdeef), colosr-stop(100%, #e6eef9)) !important;
+    background-image: -webkit-linear-gradient(#e6eef9, #cfdeef 50%, #e6eef9) !important;
+    background-image: linear-gradient(#e6eef9, #cfdeef 50%, #e6eef9) !important;
+
+    /*-webkit-mask-image: -webkit-gradient(linear, 50% 0% 100%, color-stop(0%, rgba(255, 255, 255, 0.6)), colosr-stop(50%, rgba(255, 255, 255, 0.2)), colosr-stop(100%, rgba(255, 255, 255, 0.6))) !important;*/
+    /*-webkit-mask-image: -webkit-linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.6)) !important;*/
+    /*-webkit-mask-image: linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.6)) !important;*/
+}
+
+.x-list {
+    /*background-image: -webkit-gradient(linear, 50% 0% 100%, color-stop(0%, #318fdd), colosr-stop(50%, #2c7ec8), colosr-stop(100%, #1d63a2)) !important;*/
+    /*background-image: -webkit-linear-gradient(#318fdd, #2c7ec8 50%, #1d63a2) !important;*/
+    /*background-image: linear-gradient(#318fdd, #2c7ec8 50%, #1d63a2) !important;*/
+
+    background-color: #cbd9e6;
+}
+
+.x-body {
+    background-color: #cbd9e6;
+}
+
+.x-form-label {
+    background-color: #cbd9e6;
+}
+
+.callbackDropdown {
+    margin: 5px auto;
+    width: 95%;
+    font-size: 16px;
+    border-radius: 4px;
+}
+
+.x-form-fieldset-title {
+
+    color: #1d5f9e;
+    text-shadow: #fff 0 1px;
+}
+
+.x-list .x-list-item {
+
+
+
+
+    /*background-image: -webkit-gradient(linear, 50% 0% 100%, color-stop(0%, #318fdd), colosr-stop(50%, #2c7ec8), colosr-stop(100%, #1d63a2)) !important;*/
+    /*background-image: -webkit-linear-gradient(#318fdd, #2c7ec8 50%, #1d63a2) !important;*/
+    /*background-image: linear-gradient(#318fdd, #2c7ec8 50%, #1d63a2) !important;*/
+
+
+    background-image: -webkit-radial-gradient(50% 75%, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.00));
+
+    border-top: 1px solid #fff;
+    border-bottom: 1px solid #000;
+
+    /*-webkit-border-top-image: -webkit-radial-gradient(50% 50%, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.00));*/
+    /*-webkit-border-bottom-image: -webkit-radial-gradient(50% 50%, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.00));*/
+
+
+    -webkit-border-bottom-image: -webkit-linear-gradient(right, black, rgba(0, 0, 0, 0)) 1px 100%;
+
+
+    color: #1d5f9e;
+    text-shadow: #fff 0 1px;
+
+    /*position: relative;*/
+    /*color: black;*/
+}
+
+.x-toolbar-dark {
+
+    border-top: 1px solid #5aa5e4;
+    border-bottom: 1px solid #4c8ac2;
+
+    background-image: -webkit-gradient(linear, 50% 0% 100%, color-stop(0%, #318fdd), colosr-stop(50%, #2c7ec8), colosr-stop(100%, #1d63a2)) !important;
+    background-image: -webkit-linear-gradient(#318fdd, #2c7ec8 50%, #1d63a2) !important;
+    background-image: linear-gradient(#318fdd, #2c7ec8 50%, #1d63a2) !important;
+}
+
+.x-tabbar-dark {
+
+    border-top: 1px solid #fff;
+
+    background-image: -webkit-gradient(linear, 50% 0% 100%, color-stop(0%, #e7eff9), colosr-stop(50%, #bed3e7), colosr-stop(100%, #dae4ed)) !important;
+    background-image: -webkit-linear-gradient(#e7eff9, #bed3e7 50%, #dae4ed) !important;
+    background-image: linear-gradient(#e7eff9, #bed3e7 50%, #dae4ed) !important;
+}
+
+.x-msgbox-dark {
+    width: 95% !important;
+    height: 200px !important;
+    background-color: #cbd9e6;
+}
+
+.x-ms-button {
+
+    background-image: -webkit-linear-gradient(#4199ed, #317284);
+    border-radius: 4px;
+    border: 1px solid #1471b7;
+    border-top: 1px solid #7ab6f0;
+
+    color: #FFF;
+    font-family: Arial;
+    font-weight: bold;
+    font-size: 18px;
+    text-shadow: 0 -1px #5c5c5c;
+
+    margin: 10px auto;
+}
+
+.buttonAddNew {
+
+    margin: 10px 0px 0px 10px;
+    font-size: 16px;
+}
+
+.ecsTitle {
+    margin: 30px 0px 5px 10px;
+    color: #1d5f9e;
+    text-shadow: #fff 0 1px;
+    font-weight: bold;
+}
+
+.ecsText {
+
+    margin: 0px 0px 10px 10px;
+    font-size: 16px;
+    color: #949ea9;
+}
+
+
+.vertical {
+    background-color: #cbd2d8;
+    background-image: -webkit-gradient(linear, 0 0, 100% 0, color-stop(.5, rgba(255, 255, 255, .2)), color-stop(.5, transparent), to(transparent));
+}
+
+.transparent {
+    background-color: transparent;
+}
+
+.stripes {
+height: 250px;
+width: 375px;
+float: left;
+
+margin: 0;
+
+-webkit-background-size: 5px 15px;
+}
+
+.x-panel {
+    -webkit-backface-visibility: hidden;
+}
+
+.msPhoneFavorites {
+  -webkit-mask-box-image: url('../images/favorites.png');
+}
+
+.msPhoneOptions {
+  -webkit-mask-box-image: url('../images/settings.png');
+}
+
+.msPhoneRecents {
+  -webkit-mask-box-image: url('../images/recents.png');
+
+
+    background-image: -webkit-gradient(linear, 50% 0% 100%, color-stop(0%, #5c5c5c), colosr-stop(50%, #5c5c5c), colosr-stop(100%, #5c5c5c)) !important;
+    background-image: -webkit-linear-gradient(#5c5c5c, #5c5c5c 50%, #5c5c5c) !important;
+    background-image: linear-gradient(#5c5c5c, #5c5c5c 50%, #5c5c5c) !important;
+}
+
+.msPhoneContacts {
+  -webkit-mask-box-image: url('../images/contacts.png');
+}
+
+.msPhoneIconf {
+  -webkit-mask-box-image: url('../images/iconf.png');
+}
+
+.msPhoneKeypad {
+  -webkit-mask-box-image: url('../images/keypad.png');
+}
+
+.msPhoneVoicemail {
+  -webkit-mask-box-image: url('../images/voicemail.png');
+}
+
+.search-background {
+	background-color: #0000FF !important;
+}
+
+.x-disclosure {
+	height: 24px;
+	width: 24px;
+	-webkit-mask-box-image:  url('../images/disclosure.png');
+}
+
+.recents {
+	width: 500px;
+}
+
+.keypadPanel {
+  border:0px !important;
+}
+
+.keypadNumberPanel {
+  /*background-image: url('../images/keypad/number.png');*/
+  text-align:center;
+  font-size:200%;
+  color:white;
+  -webkit-background-size: 100%;
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(0%, #5b7496), color-stop(60%, #112f59), color-stop(100%, #092955));
+}
+
+.keypadButtonNumber {
+  -webkit-border-radius: 0em;
+  -webkit-background-size: 100%;
+  font-size:150%;
+  font-weight: bold;
+  color:white;
+  text-align: center;
+  border-top: 1px solid #313740 !important;
+  border-bottom: 0px !important;
+  border-right: 1px solid #313740 !important;
+  border-left: 0px !important;
+  text-shadow: 0px 0px 0px #787c82 !important;
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(0%, #313740), color-stop(2%, #121a25), color-stop(100%, #0e1621));
+}
+
+.keypadModal {
+  vertical-align: middle;
+  text-align:center;
+  -webkit-border-radius: 0em;
+  font-size:150%;
+  -webkit-background-size: 100%;
+  border:0px !important;
+  text-shadow: 0px 0px 0px #787c82 !important;
+}
+
+.keypadButtonAction {
+  -webkit-border-radius: 0em;
+  font-size:150%;
+  color:white;
+  -webkit-background-size: 100%;
+ border-top: 1px solid #313740 !important;
+  border-bottom: 0px !important;
+  border-right: 1px solid #313740 !important;
+  border-left: 0px !important;
+  text-shadow: 0px 0px 0px #787c82 !important;
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(0%, #1d2e45), color-stop(2%, #081a32), color-stop(100%, #081a32));
+}
+
+.keypadCall {
+  -webkit-border-radius: 0em;
+  font-size:140%;
+  color:white;
+  -webkit-background-size: 100%;
+ border-top: 1px solid #313740 !important;
+  border-bottom: 0px !important;
+  border-right: 1px solid #313740 !important;
+  border-left: 0px !important;
+  text-shadow: -1px -1px 0px #787c82 !important;
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(0%, #73dc70), color-stop(50%, #1ebe19), color-stop(100%, #25b523));
+}
+
+.infoText {
+    font-size: 12px;
+    color: black;
+    margin: 10px;
+}
+
+.infoText2 {
+    font-size: 12px;
+    color: black;
+    font-weight: bold;
+    margin: 10px;
+    margin-top: 20px;
+    display: block;
+    clear: both;
+}
