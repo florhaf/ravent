@@ -1,171 +1,115 @@
 <!doctype html>
-<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US"
-      xmlns:fb="https://www.facebook.com/2008/fbml">
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!-- Consider adding a manifest.appcache: h5bp.com/d/Offline -->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
 
-<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# discover_circle: http://ogp.me/ns/fb/discover_circle#">
-  <meta charset="UTF-8" />
-  <meta property="fb:app_id" content="320142681344288" />
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="Circle - Who's Around You" />
-  <meta property="og:description" content="Circle, an iPhone App Featured by Apple in 50+ Countries, tells you when your friends and people in your networks (college, work, groups) are nearby." />
-  <meta property="og:image" content="http://discovercircle.com/circle_landing/images/fb_share_light.png" />
-  <meta property="og:url" content="http://discovercircle.com/" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-  <title>Who's Around You</title>
-  
-  <link rel="icon" type="image/png" href="circle_landing/images/favicon.ico" />
-  <link rel="stylesheet" href="circle_landing/stylesheets/main.css" type="text/css" />
-  <link rel="stylesheet" href="circle_landing/stylesheets/app.css" type="text/css" />
-  <script src="circle_landing/javascripts/libs/modernizr.js"></script>
-  <script src="circle_landing/javascripts/libs/viewporter.js" async></script>
-  <script src="http://code.jquery.com/jquery-1.7.min.js"></script>
-  <script type="text/javascript">
-  var track_url = null;
-</script>
+  <!-- Use the .htaccess and remove these lines to avoid edge case issues.
+       More info: h5bp.com/i/378 -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
+  <title>Gemster</title>
+  <meta name="description" content="Gemster mobile app for iOS, help you find the best events happening right now around you">
+
+  <!-- Mobile viewport optimized: h5bp.com/viewport -->
+  <meta name="viewport" content="width=device-width">
+
+  <!-- Place favicon.ico and apple-touch-icon.png in the root directory: mathiasbynens.be/notes/touch-icons -->
+
+  <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        .block {
+            position: absolute;
+            background-color:#abc;
+            width:100%;
+            height:600px;
+            margin-top:5px;
+        }
+    </style>
+
+  <!-- More ideas for your <head> here: h5bp.com/d/head-Tips -->
+
+  <!-- All JavaScript at the bottom, except this Modernizr build.
+       Modernizr enables HTML5 elements & feature detects for optimal performance.
+       Create your own custom Modernizr build: www.modernizr.com/download/ -->
+  <script src="js/libs/modernizr-2.5.3.min.js"></script>
+
+    <!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/libs/jquery-1.7.1.min.js"><\/script>')</script>
 
 </head>
 <body>
-  <div class="header_bg grid">
-    <div class="row grid header">
-      <div class="w575 header_content">
-        <div id="slide_text" class="header_texts slide">
-          <ul>
-            <li>
-              <hgroup class="r100">
-                <h1>Circle</h1>
-                <h2>Always know when Friends<br> and Networks are nearby</h2>
-              </hgroup>
-            </li>
-            <li style="display:none">
-              <hgroup class="r100">
-                <h1>Friends</h1>
-                <h2>Circle tells you anytime<br>your friends are nearby</h2>
-              </hgroup>
-            </li>
-            <li style="display:none">
-              <hgroup class="r100">
-                <h1>Networks</h1>
-                <h2>Connect with nearby networks <br> you really care about</h2>
-              </hgroup>
-            </li>
-            <li style="display:none">
-              <hgroup class="r100">
-                <h1>Privacy</h1>
-                <h2>You have full control over who<br>can see or message you</h2>
-              </hgroup>
-            </li>
-          </ul>
-        </div>
+  <!-- Prompt IE 6 users to install Chrome Frame. Remove this if you support IE 6.
+       chromium.org/developers/how-tos/chrome-frame-getting-started -->
+  <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
+  <header>
 
+  </header>
+  <div role="main" style="width: 100%; height: 100%;">
+
+      <button id="left">&laquo;</button> <button id="right">&raquo;</button>
+
+      <div id="screen1" class="block">
+          Screen 1
       </div>
-      <div class="w435 header_iphone_hold">
-        <div class="header_iphone">
-          
-          <div class="iphone_screen">
-            <div class="screen_overlay"></div>
-            <div id='slider' class="screens slide">
-              <ul>
-                <li style='background: url(circle_landing/images/1.jpg);'>                </li>
-                <li style='display:none; background: url(circle_landing/images/2.jpg);'>                </li>
-                <li style='display:none; background: url(circle_landing/images/3.jpg);'>                </li>
-                <li style='display:none; background: url(circle_landing/images/4.jpg);'>                </li>
-              </ul>
-            </div>
-          </div>
-          <a href="javascript:" class="home_button" id="easter_egg">
-            <input id="speech_input" class="home_button" style="display:none" type="text" x-webkit-speech />
-          </a>        </div>
+
+      <div id="screen2" class="block">
+          Screen 2
       </div>
-    </div>
 
-    <div class="header_divider">
-      <div class="row grid">
+      <script>
 
-		<!-- STATE 1 -->
-        <div class="w575 grid dl_wrapper" id="state_welcome">
-          <a class="b dl_button grid sms" href="index.html#" onClick="recordOutboundLink(this, 'Clicks on SMS', 'Before report');return false;">
-            <div class="left iphone_icon"></div>
-			<h2>Get the App</h2>
-          </a>
-          <div class="left dl_text links">
-            <h4>Available for 
-                <a href="download/iphone" class="dl_button" onClick="recordOutboundLink(this, 'Clicks on AppStore', 'Before report');return true;">iPhone</a>
-                &amp; 
-                <a href="download/android" class="dl_button" onClick="recordOutboundLink(this, 'Clicks on GooglePlay', 'Before report');return true;">Android</a>
-            </h4>
-          </div>
-        </div>
+          $("document").ready(function() {
 
-		<!-- STATE 2 -->
-        <div class="w575 grid dl_wrapper sms" id="state_sms" style="display:none;">
-        	<label>Text (US) / Email me the link:</label>
-            <input type="text" id="cellnumber" class="placeholder" c_placeholder="Phone No. / Email">
-          	<a class="b dl_button grid sms" href="index.html#" onClick="recordOutboundLink(this, 'Send SMS', 'Before report');return false;">
-            	<div class="left iphone_icon"></div>
-          	</a>
-          	<a class="b dl_button grid close" href="index.html#" onClick="recordOutboundLink(this, 'Close SMS', 'Before report');return false;">
-            	<div class="left iphone_icon close"></div>
-       	  </a>
-        </div>
+              var s1pos = $("screen1").position;
+              var s1width = $("screen1").outerWidth;
 
-      </div>
-    </div>
-    
-    <a href="javascript:" style="display:none" class="arrow arrow_left"></a>
-    <a href="javascript:" style="display:none" class="arrow arrow_right"></a>
+              $("#screen2").css({
+
+                  top: 25 + "px",
+                  left: 1280 + "px"
+              });
+          });
+
+          $("#right").click(function(){
+              $(".block").animate({"margin-left": "-=" + window.innerWidth + "px"}, "medium");
+          });
+
+          $("#left").click(function(){
+              $(".block").animate({"margin-left": "+=" + window.innerWidth + "px"}, "medium");
+          });
+
+      </script>
+
+
   </div>
-  
-  <div class="section_bg">
-    <section class="row grid">
-    <a href="http://itunes.apple.com/us/app/circle-whos-around-you/id488720081?mt=8" id="appstore"><span>Available in AppStore</span></a>  
-      <div class="w585 r100 adjust_top">
-        <div class="slide_nav slide">
-          <ul id="slide_nav" class="grid"></ul>
-        </div>
-      </div>
-      <div class="w435">
-      	<p id="footer">Copyright &copy; Hawthorne Labs, Inc. &nbsp;&bull;&nbsp; <a href="mailto:evan@discovercircle.com?Subject=Partnership">Partnership</a> &nbsp;&bull;&nbsp; <a href="home/privacy/index.html">Privacy</a> </p>
-      </div>
-    </section>
-  </div>
-  
+  <footer>
 
-<script>window.jQuery || document.write('<script src="circle_landing/javascripts/libs/jquery.js"><\/script>')</script>
-<script src="circle_landing/javascripts/compiled/app.js"></script>
+  </footer>
 
-<script type="text/html" id="text_tmpl">
-  <li style="display:none">
-    <hgroup class="r100">
-      <h1>{{= h1 }}</h1>
-      <h2>{{= h2 }}</h2>
-    </hgroup>
-  </li>
-</script>
 
-<script type="text/html" id="screen_tmpl">
-  <li style='display:none; background: url({{= img }});'></li>
-</script>
+  <!-- JavaScript at the bottom for fast page loading -->
 
-<script>
-    if (top === self) {
-      // running on main discovercircle site
-    } else  {
-      top.location = "http://www.discovercircle.com/";
-    }
-</script>
 
-<script>
-(function(){var b={};this.tmpl=function e(a,c){var d=!/\W/.test(a)?b[a]=b[a]||e(document.getElementById(a).innerHTML):new Function("obj","var p=[],print=function(){p.push.apply(p,arguments);};with(obj){p.push('"+a.replace(/[\r\t\n]/g," ").split("{{").join("\t").replace(/((^|}})[^\t]*)'/g,"$1\r").replace(/\t=(.*?)}}/g,"',$1,'").split("\t").join("');").split("}}").join("p.push('").split("\r").join("\\'")+"');}return p.join('');");return c?d(c):d}})();
-</script>
 
-<script>
-    var _gaq=[['_setAccount','UA-19370110-4'],['_setDomainName', 'none'],['_trackPageview']];
+  <!-- scripts concatenated and minified via build script -->
+  <script src="js/plugins.js"></script>
+  <script src="js/script.js"></script>
+  <!-- end scripts -->
+
+  <!-- Asynchronous Google Analytics snippet. Change UA-XXXXX-X to be your site's ID.
+       mathiasbynens.be/notes/async-analytics-snippet -->
+  <script>
+    var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
     (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
     g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
     s.parentNode.insertBefore(g,s)}(document,'script'));
-</script>
-
+  </script>
 </body>
 </html>
