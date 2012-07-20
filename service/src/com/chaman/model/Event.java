@@ -16,6 +16,7 @@ import com.chaman.util.Geo;
 import com.chaman.util.JSON;
 
 import com.google.appengine.api.memcache.MemcacheService;
+import com.google.appengine.api.memcache.MemcacheServiceException;
 import com.google.appengine.api.memcache.MemcacheServiceFactory;
 import com.googlecode.objectify.Query;
 import com.restfb.DefaultFacebookClient;
@@ -89,7 +90,7 @@ public class Event extends Model implements Serializable {
 	 * - store in our DB events w/ latitude and longitude
 	 * - exclude past events
 	 */
-	public static ArrayList<Model> Get(String accessToken, String userID, String userLatitude, String userLongitude, String timeZone) throws FacebookException {
+	public static ArrayList<Model> Get(String accessToken, String userID, String userLatitude, String userLongitude, String timeZone) throws FacebookException , MemcacheServiceException {
 		
 		ArrayList<Model> result = new ArrayList<Model>();
 		
@@ -171,7 +172,7 @@ public class Event extends Model implements Serializable {
 	 /* - Get list of event for any user in search area
 	 * - exclude past event
 	 */
-	public static ArrayList<Model> Get(String accessToken, String userLatitude, String userLongitude, String timeZone, int searchTimeFrame, float searchRadius, int searchLimit) throws FacebookException {
+	public static ArrayList<Model> Get(String accessToken, String userLatitude, String userLongitude, String timeZone, int searchTimeFrame, float searchRadius, int searchLimit) throws FacebookException , MemcacheServiceException {
 		
 		ArrayList<Model> result = new ArrayList<Model>();
 		
@@ -213,7 +214,7 @@ public class Event extends Model implements Serializable {
                     			event.venue_id = JSON.GetValueFor("id", event.venue);
                 				Venue v_graph =  Venue.getVenue(client, event.venue_id);
                 				event.venue_category = v_graph.category;
-                				if (event.venue_category == null || (event.venue_category != null && !event.venue_category.equals("city"))) {
+                				if (event.venue_category == null || !event.venue_category.equals("city")) {
                 					event.Score(v_graph);
                 					event.Filter_category();
                 				}
@@ -228,7 +229,7 @@ public class Event extends Model implements Serializable {
 
                 	}
               			
-                	if (event != null && (event.venue_category == null || (event.venue_category != null && !event.venue_category.equals("city")))) {
+                	if (event != null && (event.venue_category == null || !event.venue_category.equals("city"))) {
                 		
                 		if (!previous_venue_time.equals(event.venue_id + event.start_time)) {  // to remove duplicate events
                 		
@@ -259,7 +260,7 @@ public class Event extends Model implements Serializable {
 	}
 
 	
-	public static void GetCron() throws FacebookException {
+	public static void GetCron() throws FacebookException, MemcacheServiceException {
 		
 		Dao dao = new Dao();
 		
@@ -273,10 +274,8 @@ public class Event extends Model implements Serializable {
 				
 				//Prepare a timestamp to filter the facebook DB on the upcoming events
 				DateTimeZone PST = DateTimeZone.forID("America/Los_Angeles"); 	
-				DateTime now = new DateTime(PST);
-				DateTime now_plus_month = now.plusDays(32);
-				String snow = String.valueOf(now.getMillis() / 1000);
-				String snow_plus_month = String.valueOf(now_plus_month.getMillis() / 1000);
+				DateTime now_plus_3months =  new DateTime(PST).plusDays(93);
+				String snow_plus_3months = String.valueOf(now_plus_3months.getMillis() / 1000);
 				
 				//Get friend list 
 				List<Friend> uidList = Friend.GetCron(u.getAccess_token(), Long.toString(u.getUid()), syncCache);
@@ -288,7 +287,7 @@ public class Event extends Model implements Serializable {
 						
 						FacebookClient client 	= new DefaultFacebookClient(u.getAccess_token());
 						String properties 		= "eid, name, pic_big, start_time, end_time, venue, location, privacy, update_time, timezone";
-						String query 			= "SELECT " + properties + " FROM event WHERE eid IN (SELECT eid FROM event_member WHERE uid = " + l.getUid() + " AND start_time < " + snow_plus_month + ") AND privacy = 'OPEN' AND end_time > " + snow;
+						String query 			= "SELECT " + properties + " FROM event WHERE eid IN (SELECT eid FROM event_member WHERE uid = " + l.getUid() + ") AND end_time < " + snow_plus_3months + " AND privacy = 'OPEN'";
 						List<Event> fbevents 	= client.executeQuery(query, Event.class);
 										
 						Event e_cache; 
@@ -302,7 +301,7 @@ public class Event extends Model implements Serializable {
 				    	    	Venue v_graph =  Venue.getVenue(client, e.venue_id);
 				    	    	e.venue_category = v_graph.category;
 							
-				    	    	if (e.venue_category == null || (e.venue_category != null && !e.venue_category.equals("city"))) {
+				    	    	if (e.venue_category == null || !e.venue_category.equals("city")) {
 				    	    	
 					    	    	e.Score(v_graph);
 					    	    	
@@ -311,7 +310,7 @@ public class Event extends Model implements Serializable {
 					    	    	e.latitude 	= JSON.GetValueFor("latitude", e.venue);
 					    	    	e.longitude = JSON.GetValueFor("longitude", e.venue);
 								
-					    	    	if ((e.latitude == null || e.longitude == null || e.latitude == ""  || e.longitude == "") && v_graph != null) {
+					    	    	if (v_graph != null && (e.latitude == null || e.longitude == null || e.latitude == ""  || e.longitude == "")) {
 									
 					    	    		// take value from venue if event location is null
 					    	    		e.latitude = JSON.GetValueFor("latitude", v_graph.location);
@@ -327,10 +326,10 @@ public class Event extends Model implements Serializable {
 					    	    		} else if (elc.getTimeStampStart() != Long.parseLong(e.start_time) || elc.getTimeStampEnd() != Long.parseLong(e.end_time)){
 					    	    			dao.ofy().put(elc);
 					    	    		}
-					    	    	}   	
+					    	    	}
+					    	    	syncCache.put(e.eid, e, null); // Add Event to cache
 					    	    }
 				    	    }
-				    	    if (e.venue_category == null || (e.venue_category != null && !e.venue_category.equals("city"))) {syncCache.put(e.eid, e, null);} // Add Event to cache
 						}
 					} catch (Exception ex ) {}
 				}		
