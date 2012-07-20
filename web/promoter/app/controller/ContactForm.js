@@ -32,6 +32,8 @@ Ext.define('Gemster.controller.ContactForm', {
         var config	= {
             method	: 'POST',
             url 	: 'http://raventsvc.appspot.com/featureYourEvent',
+            withCredentials: true,
+            useDefaultXhrHeader: false,
             params	: model.data,
             scope	: this,
             success	: this._onSubmitSuccess,

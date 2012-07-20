@@ -72,6 +72,7 @@ static customNavigationController *_ctrl;
 {
     [_spinner startAnimating];
     [_spinner setHidden:NO];
+    [_errorLabel setHidden:YES];
     
     //Create a URL object.
     NSURL *url = [NSURL URLWithString:_url];

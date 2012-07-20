@@ -36,6 +36,7 @@ Ext.define('Gemster.view.ContactForm', {
                 xtype : 'textfield',
                 id : 'phone',
                 label : 'Phone',
+                placeHolder : '(with country code)',
                 listeners : {
                     painted : function(textfield) {
 
@@ -43,7 +44,20 @@ Ext.define('Gemster.view.ContactForm', {
                         input.set({
                             pattern : '[0-9]*'
                         });
+                    },
+                    focus : function(textfield) {
 
+                        if (textfield.getValue() == "") {
+
+                            textfield.setValue("+");
+                        }
+                    },
+                    blur : function(textfield) {
+
+                        if (textfield.getValue() == "+") {
+
+                            textfield.setValue("");
+                        }
                     }
                 }
             }]

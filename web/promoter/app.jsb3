@@ -905,11 +905,6 @@
                     "path": "lib/touch2/src/data/"
                 },
                 {
-                    "clsName": "Gemster.model.Contact",
-                    "name": "Contact.js",
-                    "path": "app/model/"
-                },
-                {
                     "clsName": "Ext.data.proxy.Client",
                     "name": "Client.js",
                     "path": "lib/touch2/src/data/proxy/"
@@ -943,6 +938,16 @@
                     "clsName": "Gemster.view.ContactForm",
                     "name": "ContactForm.js",
                     "path": "app/view/"
+                },
+                {
+                    "clsName": "Ext.data.Validations",
+                    "name": "Validations.js",
+                    "path": "lib/touch2/src/data/"
+                },
+                {
+                    "clsName": "Gemster.model.Contact",
+                    "name": "Contact.js",
+                    "path": "app/model/"
                 },
                 {
                     "clsName": "Ext.data.ArrayStore",

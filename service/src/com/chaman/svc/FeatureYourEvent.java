@@ -24,7 +24,7 @@ public class FeatureYourEvent  extends ServerResource {
 			String uid = webForm.getFirstValue("uid");
 			String email = webForm.getFirstValue("email");
 			String phone = webForm.getFirstValue("phone");
-			String purpose = webForm.getFirstValue("puropse");
+			String purpose = webForm.getFirstValue("purpose");
 
 			Properties props = new Properties();
 	        Session session = Session.getDefaultInstance(props, null);
