@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+    <style type="text/css">
+        div { background: green; width: 450px; height: 250px; border: 1px solid black; position: absolute; }
+    </style>
+
+    <script>
+        $(document).ready(function() {
+
+            $("#div2").hide();
+
+            $("#left").click(function() {
+
+                $("#div2").hide('slide', { direction: 'right' }, 500);
+                $("#div1").show('slide', { direction: 'left' }, 500);
+
+            });
+
+            $("#right").click(function() {
+
+                $("#div1").hide('slide', { direction: 'left' }, 500);
+                $("#div2").show('slide', { direction: 'right' }, 500);
+
+            });
+        });
+    </script>
+</head>
+<body>
+
+    <button id="left">&laquo;</button>
+    <button id="right">&raquo;</button>
+
+    <div id="div1">
+        test div 1 with text inside
+    </div>
+
+    <div id="div2">
+        test div 2 with even more text inside to make it look like it s real
+    </div>
+
+</body>
+</html>

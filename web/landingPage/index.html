@@ -23,31 +23,195 @@
   <link rel="stylesheet" href="css/style.css">
 
     <style>
+        .header {
+            width: 100%;
+            height: 50px;
+            min-width: 1000px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            vertical-align: middle;
+            border: 1px solid black;
+        }
+
+        .footer {
+            width: 100%;
+            height: 100px;
+            min-width: 1000px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            vertical-align: middle;
+            border: 1px solid black;
+        }
+
+        .footer-copyrigth {
+            width: 100%;
+            min-width: 1000px;
+            text-align: center;
+            font-size: 16px;
+            text-align: center;
+            color: gray;
+        }
+
+        .footer-link {
+            width: 20%;
+            text-align: center;
+            color: gray;
+            font-size: 16px;
+        }
+
+        .column {
+            border: 1px solid red;
+            vertical-align: middle;
+            text-align: center;
+        }
+
         .clouds {
-            margin-top:50px;
-            margin-left:50px;
-            height:250px;
-            border: 1px solid blue;
+            height:350px;
+            width: 550px;
+            margin: auto auto;
         }
 
         .cloud {
             background-color:#abc;
-            width:450px;
-            height:250px;
+            width:550px;
+            height:350px;
             position: absolute;
+        }
+
+        .under-clouds {
+            width: 450px;
+            margin: auto auto;
+        }
+
+        .download-button {
+            height:100px;
+            margin: auto auto;
+            vertical-align: middle;
+        }
+
+        .button-get-the-app {
+            -webkit-font-smoothing: antialiased;
+            background-attachment: scroll;
+            background-clip: border-box;
+            background-color: transparent;
+            background-image: url(img/buttonGetTheApp.png);
+            border-bottom-width: 0px;
+            border-left-width: 0px;
+            border-right-width: 0px;
+            border-top-width: 0px;
+            color: white;
+            display: block;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 21px;
+            font-style: normal;
+            font-weight: bold;
+            height: 21px;
+            line-height: 21px;
+            margin-bottom: 0px;
+            margin-left: 0px;
+            margin-right: 0px;
+            margin-top: 35px;
+            overflow-y: visible;
+            padding-bottom: 14px;
+            padding-left: 15px;
+            padding-right: 15px;
+            padding-top: 13px;
+            text-decoration: none;
+            text-shadow: rgba(0, 0, 0, 0.65625) 0px -1px 0px;
+            width: 187px;
+        }
+
+        .button-get-the-app:link {
+            color: white;
+        }
+
+        .button-get-the-app:visited {
+            color: white;
+        }
+
+        .form-get-the-app {
+            background-image: url(img/backgroundTextMeLink.png);
+            background-repeat: no-repeat;
+            width: 237px;
+            height: 170px;
+            color: #d3d3d3;
+            position: absolute;
+            font-size: 15px;
+            padding: 15px 0px 0px 28px;
+            text-align: left;
+            margin-top: -205px;
+            margin-left: 230px;
+        }
+
+        .button-send-text {
+            width: 26px;
+            height: 26px;
+            background-image: url(img/buttonSendText.png);
+            background-repeat: no-repeat;
+            background-color: transparent;
+            margin-left: -30px;
+            border: 0;
+        }
+
+        .social-plug-in {
+            height:100px;
+            margin: auto auto;
+        }
+
+
+
+        .iphone {
+            /*background-image: url(img/iphone.png);*/
+            /*background-repeat: no-repeat;*/
+            /*background-size: 384px 726px;*/
+            /*width: 384px;*/
+            /*height: 726px;*/
+            /*margin: auto auto;*/
+        }
+
+        .phones {
+            height:480px;
+            width: 320px;
+            border: 1px solid black;
+            margin: auto auto;
+        }
+
+        .phone {
+            background-color:#abc;
+            width:320px;
+            height:480px;
+            position: absolute;
+        }
+
+
+        input.twitterStyleTextbox {
+            border: 1px solid #c4c4c4;
+            width: 180px;
+            height: 18px;
+            font-size: 13px;
+            padding: 4px 4px 4px 4px;
+            border-radius: 4px;
+            -moz-border-radius: 4px;
+            -webkit-border-radius: 4px;
+            box-shadow: 0px 0px 8px #d9d9d9;
+            -moz-box-shadow: 0px 0px 8px #d9d9d9;
+            -webkit-box-shadow: 0px 0px 8px #d9d9d9;
+        }
+
+        input.twitterStyleTextbox:focus {
+            outline: none;
+            border: 1px solid #7bc1f7;
+            box-shadow: 0px 0px 8px #7bc1f7;
+            -moz-box-shadow: 0px 0px 8px #7bc1f7;
+            -webkit-box-shadow: 0px 0px 8px #7bc1f7;
         }
     </style>
 
-  <!-- More ideas for your <head> here: h5bp.com/d/head-Tips -->
-
-  <!-- All JavaScript at the bottom, except this Modernizr build.
-       Modernizr enables HTML5 elements & feature detects for optimal performance.
-       Create your own custom Modernizr build: www.modernizr.com/download/ -->
-  <script src="js/libs/modernizr-2.5.3.min.js"></script>
-
-    <!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline -->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="js/libs/jquery-1.7.1.min.js"><\/script>')</script>
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
 
 </head>
 <body>
@@ -55,95 +219,238 @@
        chromium.org/developers/how-tos/chrome-frame-getting-started -->
   <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
   <header>
-      <div class="header">header</div>
-  </header>
-  <div role="main" style="width: 100%; height: 100%; margin: auto auto; border: 1px solid black;">
-
-      <button id="left">&laquo;</button> <button id="right">&raquo;</button>
-
-      <div id="clouds" class="clouds">
-
-          <div id="cloud1" class="cloud">
-              cloud 1
-          </div>
-
-          <div id="cloud2" class="cloud">
-              cloud 2
-          </div>
-
-          <div id="cloud3" class="cloud">
-              cloud 3
-          </div>
-
-          <div id="cloud4" class="cloud">
-              cloud 4
-          </div>
-
-          <div id="cloud5" class="cloud">
-              cloud 5
-          </div>
+      <div class="header">
+          Gemster
       </div>
+  </header>
 
-      <script>
+  <div role="main" style="width: 100%; min-width: 1000px; height: 100%; margin: auto auto; border: 1px solid black;">
 
-          var currentCloud = 0;
-          var clouds = [$("#cloud1"), $("#cloud2"), $("#cloud3"), $("#cloud4"), $("#cloud5")]
+      <table style="width: 100%;">
+          <tr>
+              <td class="column" style="width: 5%;">
+                  <button id="left">&laquo;</button>
+              </td>
+              <td class="column" style="width: 50%;">
+                  <div id="clouds" class="clouds">
+                      <div id="cloud1" class="cloud">
+                          <img src="img/Cloud1.png" />
+                      </div>
+                      <div id="cloud2" class="cloud">
+                          Title 2
+                      </div>
+                      <div id="cloud3" class="cloud">
+                          Title 3
+                      </div>
+                      <div id="cloud4" class="cloud">
+                          Title 4
+                      </div>
+                      <div id="cloud5" class="cloud">
+                          Title 5
+                      </div>
+                  </div>
 
-          $("document").ready(function() {
+                  <table class="under-clouds">
+                      <tr>
+                          <td style="width: 50%;">
+                              <div class="download-button">
+                                  <a id="button-get-the-app" href="#" class="button-get-the-app">Get the app</a>
+                              </div>
 
-              for (var i = currentCloud + 1; i < clouds.length; i++) {
+                              <div id="form-get-the-app" class="form-get-the-app">
+                                  <div id="form-get-the-app-send-text">
+                                      Open mobile safari and go to<br />gemsterapp.com/download or<br /><span style="font-size: 17px; color: white;"><b>text it to your phone...</b></span><br /><br />
+                                      <span style="font-size: 12px">Phone Number</span>
+                                      <input class="twitterStyleTextbox" placeholder="##########" />
+                                      <button id="button-send-text" class="button-send-text"></button>
+                                  </div>
+                                  <div id="form-get-the-app-sent" style="text-align: center; margin-top: 10px; margin-left: -50px;">
+                                    A download link has been sent<br />to your mobile phone.
+                                  </div>
+                              </div>
 
-
-                  clouds[i].css({
-                     left : "450px"
-                  });
-                  clouds[i].hide();
-              }
-          });
-
-          $("#right").click(function(){
-
-              currentCloud = currentCloud + 1;
-              clouds[currentCloud].show();
-
-              clouds[currentCloud].animate({"left": "-=" + 450 + "px"}, "medium", function() {
-
-                  clouds[currentCloud - 1].hide();
-
-              });
-
-          });
-
-          $("#left").click(function(){
-
-              currentCloud = currentCloud - 1;
-              clouds[currentCloud].show();
-
-              clouds[currentCloud].animate({"left": "+=" + 450 + "px"}, "medium", function() {
-
-                  clouds[currentCloud + 1].hide();
-              });
-          });
-
-      </script>
-
-
+                          </td>
+                          <td style="width: 50%;">
+                              <div class="social-plug-in">
+                                  <table style="margin: auto auto;">
+                                      <tr>
+                                          <td>
+                                              <iframe src="http://www.facebook.com/plugins/facepile.php?
+                                                app_id=299292173427947" scrolling="no" frameborder="0" style="border:none;
+                                                overflow:hidden; width:200px; height: 100px;" allowTransparency="true"></iframe>
+                                          </td>
+                                      </tr>
+                                      <tr>
+                                          <td>
+                                              <!--<iframe src="//www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2Fpages%2FGemster%2F395304430527422&amp;send=false&amp;layout=standard&amp;width=200&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=35&amp;appId=134120316726672"-->
+                                                      <!--scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:200px; height:42px;" allowTransparency="true"></iframe>-->
+                                          </td>
+                                      </tr>
+                                  </table>
+                              </div>
+                          </td>
+                      </tr>
+                  </table>
+                  <div style="margin-top: 75px;">
+                      <img id="step1" src="img/currentStep.png" style="width: 42px;" />
+                      <img id="step2" src="img/currentStep.png" style="width: 42px;" />
+                      <img id="step3" src="img/currentStep.png" style="width: 42px;" />
+                      <img id="step4" src="img/currentStep.png" style="width: 42px;" />
+                      <img id="step5" src="img/currentStep.png" style="width: 42px;" />
+                  </div>
+              </td>
+              <td class="column" style="width: 40%; height: 700px;">
+                  <div id="iphone" class="iphone">
+                      <div id="phones" class="phones">
+                          <div id="phone1" class="phone">
+                              <img src="img/list.PNG" width="320" />
+                          </div>
+                          <div id="phone2" class="phone">
+                              <img src="img/details.PNG" width="320" />
+                          </div>
+                          <div id="phone3" class="phone">
+                              screenshot 3
+                          </div>
+                          <div id="phone4" class="phone">
+                              screenshot 4
+                          </div>
+                          <div id="phone5" class="phone">
+                              screenshot 5
+                          </div>
+                      </div>
+                  </div>
+              </td>
+              <td class="column" style="width: 5%">
+                  <button id="right">&raquo;</button>
+              </td>
+          </tr>
+      </table>
   </div>
+
   <footer>
-
-      <div class="footer">footer</div>
-
+      <table class="footer">
+          <tr>
+              <td class="footer-link">
+                  <a href="about/">About</a>
+              </td>
+              <td class="footer-link">
+                  <a href="http://gemsterblog.com">Blog</a>
+              </td>
+              <td class="footer-link">
+                  <a href="promoter/">Promoter</a>
+              </td>
+              <td class="footer-link">
+                  <a href="contactus/">Contact Us</a>
+              </td>
+              <td class="footer-link">
+                  <a href="privacypolicy/">Terms of Service</a>
+              </td>
+          </tr>
+      </table>
+      <div class="footer-copyrigth">
+          © 2012 Gemster Group, Inc. All rights reserved.
+      </div>
   </footer>
 
 
-  <!-- JavaScript at the bottom for fast page loading -->
+  <script>
 
+      var step = 0;
 
+      var steps = [$("#step1"), $("#step2"), $("#step3"), $("#step4"), $("#step5")];
+      var clouds = [$("#cloud1"), $("#cloud2"), $("#cloud3"), $("#cloud4"), $("#cloud5")];
+      var phones = [$("#phone1"), $("#phone2"), $("#phone3"), $("#phone4"), $("#phone5")];
 
-  <!-- scripts concatenated and minified via build script -->
-  <script src="js/plugins.js"></script>
-  <script src="js/script.js"></script>
-  <!-- end scripts -->
+      $("document").ready(function() {
+
+          $("#left").hide();
+          $("#form-get-the-app").hide();
+
+          for (var i = step + 1; i < steps.length; i++) {
+
+              clouds[i].hide();
+              phones[i].hide();
+              steps[i].css({
+                  opacity: 0.25
+              });
+          }
+      });
+
+      $("#button-get-the-app").click(function() {
+
+          if ($("#form-get-the-app").is(":visible")) {
+
+              $("#form-get-the-app").fadeOut();
+          } else {
+
+              $("#form-get-the-app-send-text").show();
+              $("#form-get-the-app-sent").hide();
+
+              $("#form-get-the-app").fadeIn();
+          }
+      });
+
+      $("#button-send-text").click(function() {
+
+          $("#form-get-the-app-send-text").fadeOut()
+          $("#form-get-the-app-sent").fadeIn();
+      });
+
+      $("#left").click(function() {
+
+          clouds[step].hide('slide', { direction: 'right' }, 500);
+          phones[step].hide('slide', { direction: 'right' }, 500);
+
+          steps[step].animate({
+             opacity : 0.25
+          });
+
+          step -= 1;
+
+          steps[step].animate({
+              opacity : 1
+          });
+
+          clouds[step].show('slide', { direction: 'left' }, 500);
+          phones[step].show('slide', { direction: 'left' }, 500);
+
+          if (step == 0) {
+
+              $("#left").hide();
+          } else {
+
+              $("#right").show();
+          }
+      });
+
+      $("#right").click(function() {
+
+          clouds[step].hide('slide', { direction: 'left' }, 500);
+          phones[step].hide('slide', { direction: 'left' }, 500);
+
+          steps[step].animate({
+              opacity : 0.25
+          });
+
+          step += 1;
+
+          steps[step].animate({
+              opacity : 1
+          });
+
+          clouds[step].show('slide', { direction: 'right' }, 500);
+          phones[step].show('slide', { direction: 'right' }, 500);
+
+          if (step == clouds.length - 1) {
+
+              $("#right").hide();
+          } else {
+
+              $("#left").show();
+          }
+      });
+
+  </script>
 
   <!-- Asynchronous Google Analytics snippet. Change UA-XXXXX-X to be your site's ID.
        mathiasbynens.be/notes/async-analytics-snippet -->
