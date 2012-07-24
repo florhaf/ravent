@@ -1,0 +1,97 @@
+<!doctype html>
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!-- Consider adding a manifest.appcache: h5bp.com/d/Offline -->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+
+    <!-- Use the .htaccess and remove these lines to avoid edge case issues.
+ More info: h5bp.com/i/378 -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>Gemster</title>
+    <meta name="description" content="Gemster mobile app for iOS, help you find the best events happening right now around you">
+
+    <!-- Mobile viewport optimized: h5bp.com/viewport -->
+    <meta name="viewport" content="width=device-width">
+
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory: mathiasbynens.be/notes/touch-icons -->
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/common.css">
+
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+
+</head>
+<body style="background-color: #3b79ac;">
+<!-- Prompt IE 6 users to install Chrome Frame. Remove this if you support IE 6.
+chromium.org/developers/how-tos/chrome-frame-getting-started -->
+<!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
+<header>
+    <div id="header" class="header">
+        <div class="header-text">Gemster</div>
+    </div>
+</header>
+
+<div role="main" style="width: 100%; min-width: 1000px; height: 100%; margin: auto auto; background-color: white; text-align: left;">
+    <div style="width: 600px; margin: auto auto;">
+        <h1>Terms of Service</h1>
+    </div>
+</div>
+
+<footer class="footer">
+    <table style="margin: 5px auto;">
+        <tr>
+            <td class="footer-column">
+                <a class="footer-link" href="../about/">About</a>
+            </td>
+            <td class="footer-column">
+                <a class="footer-link" href="../promoter/">Promoters</a>
+            </td>
+            <td class="footer-column">
+                <a class="footer-link" href="../contactus/">Contact Us</a>
+            </td>
+            <td class="footer-column">
+                <a class="footer-link" href="http://gemsterblog.com" target="_blank">Blog</a>
+            </td>
+            <td class="footer-column">
+                <a class="footer-link" href="../privacypolicy/">Terms of Service</a>
+            </td>
+        </tr>
+    </table>
+    <div class="footer-copyrigth">
+        © 2012 Gemster Group, Inc. All rights reserved.
+    </div>
+</footer>
+
+
+<script>
+
+    $("document").ready(function() {
+
+
+    });
+
+    $("#header").click(function() {
+
+        window.location = "../";
+    });
+
+
+</script>
+
+<!-- Asynchronous Google Analytics snippet. Change UA-XXXXX-X to be your site's ID.
+mathiasbynens.be/notes/async-analytics-snippet -->
+<script>
+    var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+    (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+        g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+        s.parentNode.insertBefore(g,s)}(document,'script'));
+</script>
+</body>
+</html>

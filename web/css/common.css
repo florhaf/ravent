@@ -1,0 +1,113 @@
+body {
+    background-color: #d3d3d3;
+    color:#555555;
+    font-size:13px;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+.header {
+    width: 100%;
+    height: 108px;
+    min-width: 1000px;
+    text-align: center;
+    vertical-align: middle;
+    background-image: url(../img/backgroundTop.png);
+    background-repeat: repeat-x;
+    cursor: pointer;
+}
+
+.header-text {
+    font-size: 72px;
+    font-weight: bold;
+    color: white;
+    text-shadow: 0px -2px gray;
+}
+
+.footer {
+    width: 100%;
+    height: 108px;
+    min-width: 1000px;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    vertical-align: middle;
+    background-image: url(../img/backgroundTop.png);
+    background-repeat: repeat-x;
+}
+
+.footer-copyrigth {
+    width: 100%;
+    min-width: 1000px;
+    text-align: center;
+    font-size: 14px;
+    text-align: center;
+    color: white;
+    margin-top: 60px;
+
+}
+
+.footer-column {
+    width: 20%;
+    text-align: center;
+    color: gray;
+    font-size: 16px;
+}
+
+.footer-link:link {
+    color: white;
+    margin-top: 5px;
+}
+
+.footer-link:visited {
+    color: white;
+    margin-top: 5px;
+}
+
+.column {
+    vertical-align: middle;
+    text-align: center;
+}
+
+input.twitterStyleTextbox {
+    border: 1px solid #c4c4c4;
+    width: 180px;
+    height: 18px;
+    font-size: 13px;
+    padding: 4px 4px 4px 4px;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    box-shadow: 0px 0px 8px #d9d9d9;
+    -moz-box-shadow: 0px 0px 8px #d9d9d9;
+    -webkit-box-shadow: 0px 0px 8px #d9d9d9;
+}
+
+input.twitterStyleTextbox:focus {
+    outline: none;
+    border: 1px solid #7bc1f7;
+    box-shadow: 0px 0px 8px #7bc1f7;
+    -moz-box-shadow: 0px 0px 8px #7bc1f7;
+    -webkit-box-shadow: 0px 0px 8px #7bc1f7;
+}
+
+h1{
+    color:#777777;
+    font-size:22px;
+    font-weight:normal;
+    text-transform:uppercase;
+    margin-bottom:5px;
+}
+
+h2{
+    font-weight:normal;
+    font-size:10px;
+
+    text-transform:uppercase;
+
+    color:#aaaaaa;
+    margin-bottom:15px;
+
+    border-bottom:1px solid #eeeeee;
+    margin-bottom:15px;
+    padding-bottom:10px;
+}

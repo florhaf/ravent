@@ -1,0 +1,176 @@
+.header-text {
+    margin-left: -200px;
+}
+
+.clouds {
+    height:500px;
+    width: 550px;
+    margin: auto auto;
+    background-color:#fff;
+    border-bottom: 1px solid #c5c5c5;
+}
+
+.cloud {
+    background-color:#fff;
+    width:550px;
+    /*height:400px;*/
+    position: absolute;
+    text-align: left;
+}
+
+.under-clouds {
+    width: 450px;
+    margin: auto auto;
+}
+
+.download-button {
+    height:100px;
+    margin: auto auto;
+    vertical-align: middle;
+}
+
+.button-get-the-app {
+    -webkit-font-smoothing: antialiased;
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: transparent;
+    background-image: url(../img/buttonGetTheApp.png);
+    border-bottom-width: 0px;
+    border-left-width: 0px;
+    border-right-width: 0px;
+    border-top-width: 0px;
+    color: white;
+    display: block;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 21px;
+    font-style: normal;
+    font-weight: bold;
+    height: 21px;
+    line-height: 21px;
+    margin-bottom: 0px;
+    margin-left: 70px;
+    margin-right: 0px;
+    margin-top: 35px;
+    overflow-y: visible;
+    padding-bottom: 14px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 13px;
+    text-decoration: none;
+    text-shadow: rgba(0, 0, 0, 0.65625) 0px -1px 0px;
+    width: 187px;
+}
+
+.button-get-the-app:link {
+    color: white;
+}
+
+.button-get-the-app:visited {
+    color: white;
+}
+
+.form-get-the-app {
+    background-image: url(../img/backgroundTextMeLink.png);
+    background-repeat: no-repeat;
+    width: 237px;
+    height: 170px;
+    color: #d3d3d3;
+    position: absolute;
+    font-size: 15px;
+    padding: 15px 0px 0px 28px;
+    text-align: left;
+    margin-top: -205px;
+    margin-left: 300px;
+    z-index: 42;
+}
+
+.button-send-text {
+    width: 26px;
+    height: 26px;
+    background-image: url(../img/buttonSendText.png);
+    background-repeat: no-repeat;
+    background-color: transparent;
+    margin-left: -30px;
+    border: 0;
+}
+
+.social-plug-in {
+    height:100px;
+    /*margin: auto auto;*/
+    margin-left: -10px;
+    margin-top: 20px;
+}
+
+.iphone {
+    background-image: url(../img/iphone.png);
+    background-repeat: no-repeat;
+    background-size: 383px 768px;
+    width: 383px;
+    height: 768px;
+    margin: -65px 50px;
+}
+
+.phones {
+    height:480px;
+    width: 320px;
+    margin: -640px 83px;
+}
+
+.phone {
+    background-color:#abc;
+    width:320px;
+    height:480px;
+    position: absolute;
+}
+
+.arrow-right {
+    -webkit-font-smoothing: antialiased;
+    background-color: #CCC;
+    background-image: url(../img/arrows.png);
+    background-position: -55px 50%;
+    background-repeat: no-repeat;
+    border-bottom-left-radius: 50px;
+    border-bottom-right-radius: 50px;
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
+    color: #2891CD;
+    cursor: auto;
+    display: block;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 15px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: normal;
+    height: 100px;
+    line-height: 21px;
+    text-decoration: none;
+    width: 100px;
+    z-index: 1000;
+    margin-right: 5px;
+}
+
+.arrow-left {
+    -webkit-font-smoothing: antialiased;
+    background-color: #CCC;
+    background-image: url(../img/arrows.png);
+    background-position: 25px 50%;
+    background-repeat: no-repeat;
+    border-bottom-left-radius: 50px;
+    border-bottom-right-radius: 50px;
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
+    color: #2891CD;
+    cursor: auto;
+    display: block;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 15px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: normal;
+    height: 100px;
+    line-height: 21px;
+    text-decoration: none;
+    width: 100px;
+    z-index: 1000;
+    margin-left: 5px;
+}
