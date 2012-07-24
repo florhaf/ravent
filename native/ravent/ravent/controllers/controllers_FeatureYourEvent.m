@@ -44,7 +44,7 @@ static customNavigationController *_ctrl;
         // Custom initialization
         
         self.title = @"Gemster";
-        _url = [NSString stringWithFormat:@"http://api.gemsterapp.com/promoter/?uid=%@", [models_User crtUser].uid];
+        _url = [NSString stringWithFormat:@"http://m.gemsterapp.com/promoter/?uid=%@", [models_User crtUser].uid];
         
         // force view loading
         self.view.frame = self.view.frame;

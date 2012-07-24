@@ -31,7 +31,7 @@ Ext.define('Gemster.controller.ContactForm', {
 
         var config	= {
             method	: 'POST',
-            url 	: 'http://api.gemsterapp.com/featureYourEvent',
+            url 	: '../../php/submit.php?to=promoter@gemsterapp.com&ajax=1',
             withCredentials: true,
             useDefaultXhrHeader: false,
             params	: model.data,
