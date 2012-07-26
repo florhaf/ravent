@@ -466,40 +466,6 @@
 						<reference key="IBUIFontDescription" ref="355044825"/>
 						<reference key="IBUIFont" ref="551735511"/>
 					</object>
-					<object class="IBUILabel" id="84128450">
-						<reference key="NSNextResponder" ref="220015750"/>
-						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{160, 307}, {146, 24}}</string>
-						<reference key="NSSuperview" ref="220015750"/>
-						<reference key="NSWindow"/>
-						<string key="NSReuseIdentifierKey">_NS:9</string>
-						<object class="NSColor" key="IBUIBackgroundColor">
-							<int key="NSColorSpace">2</int>
-							<bytes key="NSRGB">MC45NzI1NDkwODA4IDAuOTUyOTQxMjM4OSAwLjkyNTQ5MDI2MDEAA</bytes>
-						</object>
-						<bool key="IBUIOpaque">NO</bool>
-						<bool key="IBUIClipsSubviews">YES</bool>
-						<int key="IBUIContentMode">7</int>
-						<bool key="IBUIUserInteractionEnabled">NO</bool>
-						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						<string key="IBUIText">     F.            M.       Going</string>
-						<object class="NSColor" key="IBUITextColor">
-							<int key="NSColorSpace">2</int>
-							<bytes key="NSRGB">MC40Nzg0MzE0MDM2IDAuNDc0NTA5ODM1MiAwLjQ3NDUwOTgzNTIAA</bytes>
-						</object>
-						<nil key="IBUIHighlightedColor"/>
-						<int key="IBUIBaselineAdjustment">0</int>
-						<float key="IBUIMinimumFontSize">10</float>
-						<object class="IBUIFontDescription" key="IBUIFontDescription" id="341687124">
-							<int key="type">1</int>
-							<double key="pointSize">17</double>
-						</object>
-						<object class="NSFont" key="IBUIFont" id="943939377">
-							<string key="NSName">Helvetica</string>
-							<double key="NSSize">17</double>
-							<int key="NSfFlags">16</int>
-						</object>
-					</object>
 					<object class="IBUILabel" id="254544163">
 						<reference key="NSNextResponder" ref="220015750"/>
 						<int key="NSvFlags">-2147483356</int>
@@ -718,8 +684,15 @@ AAAAAAAAdGV4dAAAAABDb3B5cmlnaHQgQXBwbGUsIEluYy4sIDIwMDgAA</bytes>
 						<nil key="IBUIHighlightedColor"/>
 						<int key="IBUIBaselineAdjustment">0</int>
 						<float key="IBUIMinimumFontSize">10</float>
-						<reference key="IBUIFontDescription" ref="341687124"/>
-						<reference key="IBUIFont" ref="943939377"/>
+						<object class="IBUIFontDescription" key="IBUIFontDescription" id="341687124">
+							<int key="type">1</int>
+							<double key="pointSize">17</double>
+						</object>
+						<object class="NSFont" key="IBUIFont" id="361071120">
+							<string key="NSName">Helvetica</string>
+							<double key="NSSize">17</double>
+							<int key="NSfFlags">16</int>
+						</object>
 					</object>
 					<object class="IBUIImageView" id="202590594">
 						<reference key="NSNextResponder" ref="220015750"/>
@@ -758,7 +731,7 @@ AAAAAAAAdGV4dAAAAABDb3B5cmlnaHQgQXBwbGUsIEluYy4sIDIwMDgAA</bytes>
 						<int key="IBUIBaselineAdjustment">0</int>
 						<float key="IBUIMinimumFontSize">10</float>
 						<reference key="IBUIFontDescription" ref="341687124"/>
-						<reference key="IBUIFont" ref="943939377"/>
+						<reference key="IBUIFont" ref="361071120"/>
 					</object>
 					<object class="IBUIButton" id="409626631">
 						<reference key="NSNextResponder" ref="220015750"/>
@@ -1174,7 +1147,6 @@ AAAAAAAAdGV4dAAAAABDb3B5cmlnaHQgQXBwbGUsIEluYy4sIDIwMDgAA</bytes>
 							<reference ref="955098921"/>
 							<reference ref="979858731"/>
 							<reference ref="749252476"/>
-							<reference ref="84128450"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -1358,11 +1330,6 @@ AAAAAAAAdGV4dAAAAABDb3B5cmlnaHQgQXBwbGUsIEluYy4sIDIwMDgAA</bytes>
 						<reference key="object" ref="749252476"/>
 						<reference key="parent" ref="220015750"/>
 					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">72</int>
-						<reference key="object" ref="84128450"/>
-						<reference key="parent" ref="220015750"/>
-					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -1407,7 +1374,6 @@ AAAAAAAAdGV4dAAAAABDb3B5cmlnaHQgQXBwbGUsIEluYy4sIDIwMDgAA</bytes>
 				<string key="67.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="69.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="7.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<string key="72.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="8.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="9.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 			</dictionary>

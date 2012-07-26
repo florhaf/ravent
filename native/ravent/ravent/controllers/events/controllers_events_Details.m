@@ -741,6 +741,11 @@ static int _retryCounter;
     [_event loadStatsWithParams:params andTarget:self andSelector:@selector(onEventStatsLoad:)];
     [_eventLoader loadRsvpWithParams:params andTarget:self andSelector:@selector(onRsvpLoad:)];
     
+    
+    [self performSelector:@selector(onEventStatsLoad:) withObject:nil afterDelay:15];
+    
+    
+    
     self.tableView.tableHeaderView = _header;
     self.tableView.scrollsToTop = YES;
     
@@ -838,6 +843,8 @@ static int _retryCounter;
 
 - (void)onEventStatsLoad:(NSArray *)objects
 {
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(onEventStatsLoad:) object:nil];
+    
     [_actRatio1 stopAnimating];
     [_actRatio2 stopAnimating];
     [_actRatio3 stopAnimating];
@@ -862,7 +869,7 @@ static int _retryCounter;
             NSError *error = (NSError *)[objects objectAtIndex:0];
             
             [YRDropdownView showDropdownInView:[controllers_App instance].view 
-                                         title:@"Error loading stats\n" 
+                                         title:@"Error loading gender ratio\n" 
                                         detail:error.localizedDescription
                                          image:[UIImage imageNamed:@"dropdown-alert"]
                                       animated:YES];
@@ -879,6 +886,16 @@ static int _retryCounter;
             _labelMaleRatio.text = [NSString stringWithFormat:@"%.0f%%", (100 - (d + 1) >= 0) ? 100 - (d + 1) : 0];
             _labelTotalAttendings.text = e.nb_attending;
         }
+    } else {
+        
+        [YRDropdownView showDropdownInView:[controllers_App instance].view 
+                                     title:@"Error loading gender ratio\n" 
+                                    detail:@"No stats returned by server"
+                                     image:[UIImage imageNamed:@"dropdown-alert"]
+                                  animated:YES];
+        _labelFemaleRatio.text = @"?";
+        _labelMaleRatio.text = @"?";
+        _labelTotalAttendings.text = @"?";
     }
 }
 

@@ -1,9 +1,13 @@
 <!doctype html>
-<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
-<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
-<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if lt IE 7]>
+<html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>
+<html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>
+<html class="no-js lt-ie9" lang="en"> <![endif]-->
 <!-- Consider adding a manifest.appcache: h5bp.com/d/Offline -->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="en"> <!--<![endif]-->
 <head>
 
     <script type="text/javascript">
@@ -21,266 +25,376 @@
             }
         }
 
-        if (navigator.userAgent.indexOf('Mobile') !=-1 && getParameterByName("fullversion") == "") {
+        if (navigator.userAgent.indexOf('Mobile') != -1 && getParameterByName("fullversion") == "") {
 
             window.location = "http://m.gemsterapp.com/";
         }
     </script>
 
-  <meta charset="utf-8">
+    <meta charset="utf-8">
 
-  <!-- Use the .htaccess and remove these lines to avoid edge case issues.
-       More info: h5bp.com/i/378 -->
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <!-- Use the .htaccess and remove these lines to avoid edge case issues.
+ More info: h5bp.com/i/378 -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-  <title>Gemster</title>
-  <meta name="description" content="Gemster mobile app for iOS, help you find the best events happening right now around you">
+    <title>Gemster</title>
+    <meta name="description"
+          content="Gemster | the entertainment provider, helps you find the best local events happening right now around you">
+    <meta name="keywords"
+          content="events, friends, promoter, party, chill, find, app, social, theatre, club, bar, entertainment, drop a gem, specials, places, nightlife, mobile">
+    <meta name="robots" content="index, follow"/>
 
-  <!-- Mobile viewport optimized: h5bp.com/viewport -->
-  <meta name="viewport" content="width=device-width">
+    <!-- Mobile viewport optimized: h5bp.com/viewport -->
+    <meta name="viewport" content="width=device-width">
 
-  <!-- Place favicon.ico and apple-touch-icon.png in the root directory: mathiasbynens.be/notes/touch-icons -->
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory: mathiasbynens.be/notes/touch-icons -->
 
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/common.css">
-  <link rel="stylesheet" href="css/mainpage.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/mainpage.css">
 
-    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet"
+          type="text/css"/>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
 
 </head>
 <body style="background-color: #3b79ac;">
-  <!-- Prompt IE 6 users to install Chrome Frame. Remove this if you support IE 6.
-       chromium.org/developers/how-tos/chrome-frame-getting-started -->
-  <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
-  <header>
-      <div class="header">
-          <div class="header-text">Gemster</div>
-      </div>
-  </header>
+<!-- Prompt IE 6 users to install Chrome Frame. Remove this if you support IE 6.
+chromium.org/developers/how-tos/chrome-frame-getting-started -->
+<!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a
+    different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a>
+    to experience this site.</p><![endif]-->
+<header>
+    <div class="header">
+        <img src="img/logo.png" width="400px" alt="Gemster Logo" style="margin-left: 240px;"/>
+        <!--<div class="header-text">Gemster</div>-->
+    </div>
+</header>
 
-  <div role="main" style="width: 100%; min-width: 1000px; height: 100%; margin: auto auto; background-color: white;">
+<div role="main" style="width: 100%; min-width: 1000px; height: 800px; margin: auto auto; background-color: white;">
 
-      <table style="width: 100%;">
-          <tr>
-              <td class="column" style="width: 8%;">
-                  <a id="left" class="arrow-left"></a>
-              </td>
-              <td class="column" style="width: 50%;">
-                  <div id="clouds" class="clouds">
-                      <div id="cloud1" class="cloud">
-                          <h1 style="color: #376c98;">Find Events That Suits You</h1>
-                          <img src="img/Cloud1.png" />
-                      </div>
-                      <div id="cloud2" class="cloud">
-                          <h1 style="color: #376c98;">Engage with Events Around You</h1>
-                          <img src="img/Cloud2.png" />
-                      </div>
-                      <div id="cloud3" class="cloud">
-                          <h1 style="color: #376c98;">Share Events With Your Friends</h1>
-                          <img src="img/Cloud3.png" />
-                      </div>
-                      <div id="cloud4" class="cloud">
-                          <h1 style="color: #376c98;">Drop Gems</h1>
-                          <img src="img/Cloud4.png" />
-                      </div>
-                      <!--<div id="cloud5" class="cloud">-->
-                          <!--<img src="img/Cloud5.png" />-->
-                      <!--</div>-->
-                  </div>
-
-                  <table class="under-clouds">
-                      <tr>
-                          <td style="width: 50%;">
-                              <div class="social-plug-in">
-                                  <table>
-                                      <tr>
-                                          <td>
-                                              <iframe src="http://www.facebook.com/plugins/facepile.php?
-                                                app_id=299292173427947" scrolling="no" frameborder="0" style="border:none;
-                                                overflow:hidden; width:250px; height: 100px;" allowTransparency="true"></iframe>
-                                          </td>
-                                      </tr>
-                                      <tr>
-                                          <td>
-                                              <!--<iframe src="//www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2Fpages%2FGemster%2F395304430527422&amp;send=false&amp;layout=standard&amp;width=200&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=35&amp;appId=134120316726672"-->
-                                              <!--scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:200px; height:42px;" allowTransparency="true"></iframe>-->
-                                          </td>
-                                      </tr>
-                                  </table>
-                              </div>
-                          </td>
-                          <td style="width: 50%;">
-                              <div class="download-button">
-                                  <a id="button-get-the-app" href="#" class="button-get-the-app">Get the app</a>
-                              </div>
-                              <div id="form-get-the-app" class="form-get-the-app">
-                                  <div id="form-get-the-app-send-text">
-                                      Open mobile safari and go to<br />gemsterapp.com/download or<br /><span style="font-size: 17px; color: white;"><b>text it to your phone...</b></span><br /><br />
-                                      <span style="font-size: 12px">Phone Number</span>
-                                      <input class="twitterStyleTextbox" placeholder="##########" />
-                                      <button id="button-send-text" class="button-send-text"></button>
-                                  </div>
-                                  <div id="form-get-the-app-sent" style="text-align: center; margin-top: 10px; margin-left: -50px;">
-                                      A download link has been sent<br />to your mobile phone.
-                                  </div>
-                              </div>
-                          </td>
-                      </tr>
-                  </table>
-                  <div style="margin-top: 20px; margin-bottom: 40px;">
-                      <img id="step1" src="img/currentStep.png" style="width: 42px;" />
-                      <img id="step2" src="img/currentStep.png" style="width: 42px;" />
-                      <img id="step3" src="img/currentStep.png" style="width: 42px;" />
-                      <img id="step4" src="img/currentStep.png" style="width: 42px;" />
-                      <!--<img id="step5" src="img/currentStep.png" style="width: 42px;" />-->
-                  </div>
-              </td>
-              <td class="column" style="width: 40%; height: 700px; vertical-align: top;">
-                  <div id="iphone" class="iphone">
-                  </div>
-                      <div id="phones" class="phones">
-                          <div id="phone1" class="phone">
-                              <img src="img/list.PNG" width="320" />
-                          </div>
-                          <div id="phone2" class="phone">
-                              <img src="img/details.PNG" width="320" />
-                          </div>
-                          <div id="phone3" class="phone">
-                              <img src="img/friendDetails.PNG" width="320" />
-                          </div>
-                          <div id="phone4" class="phone">
-                              <img src="img/dropGem.PNG" width="320" />
-                          </div>
-                          <!--<div id="phone5" class="phone">-->
-                              <!--screenshot 5-->
-                          <!--</div>-->
-                      </div>
-
-              </td>
-              <td class="column" style="width: 8%">
-                  <a id="right" class="arrow-right"></a>
-              </td>
-          </tr>
-      </table>
-  </div>
-
-  <footer class="footer">
-      <table style="margin: 5px auto;">
-          <tr>
-              <td class="footer-column">
-                  <a class="footer-link" href="about/">About</a>
-              </td>
-              <td class="footer-column">
-                  <a class="footer-link" href="promoter/">Promoters</a>
-              </td>
-              <td class="footer-column">
-                  <a class="footer-link" href="contactus/">Contact Us</a>
-              </td>
-              <td class="footer-column">
-                  <a class="footer-link" href="http://gemsterblog.com" target="_blank">Blog</a>
-              </td>
-              <td class="footer-column">
-                  <a class="footer-link" href="privacypolicy/">Terms of Service</a>
-              </td>
-          </tr>
-      </table>
-      <div class="footer-copyrigth">
-          © 2012 Gemster Group, Inc. All rights reserved.
-      </div>
-  </footer>
+    <div style="float: left;">
+        <a id="left" class="arrow-left"></a>
+    </div>
+    <div style="float: left;">
+        <div id="clouds" class="clouds">
+            <div id="cloud1" class="cloud">
+                <h1 style="color: #376c98;">Find Events That Suits You</h1>
+                <img src="img/Cloud1.png" alt="events, friends, promoter, parties, chill, search, rate, socialize"/>
+            </div>
+            <div id="cloud2" class="cloud">
+                <h1 style="color: #376c98;">Engage with Local Events Around You</h1>
+                <img src="img/Cloud2.png" alt="theatre, club, bar, entertainment"/>
+            </div>
+            <div id="cloud3" class="cloud">
+                <h1 style="color: #376c98;">Share Events With Your Friends</h1>
+                <img src="img/Cloud3.png" alt="drop a gem, saturday night, places, nightlife, guest"/>
+            </div>
+            <div id="cloud4" class="cloud">
+                <h1 style="color: #376c98;">Drop Gems</h1>
+                <img src="img/Cloud4.png" alt="events, friends, promoter, parties, chill, search, rate, socialize"/>
+            </div>
+        </div>
+        <div id="under-clouds">
+            <div class="social-plug-in" style="float: left;">
+                <iframe src="http://www.facebook.com/plugins/facepile.php?
+                    app_id=299292173427947" scrolling="no" frameborder="0" style="border:none;
+                    overflow:hidden; width:250px; height: 100px;" allowTransparency="true"></iframe>
+                <!--<iframe src="//www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2Fpages%2FGemster%2F395304430527422&amp;send=false&amp;layout=standard&amp;width=200&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=35&amp;appId=134120316726672"-->
+                <!--scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:200px; height:42px;" allowTransparency="true"></iframe>-->
+            </div>
+            <div class="download-button" style="float: left;">
+                <a id="button-get-the-app" href="#" class="button-get-the-app">Get the app</a>
+            </div>
+            <div id="form-get-the-app" class="form-get-the-app" style="float: left;">
+                <div id="form-get-the-app-send-text">
+                    Open mobile safari and go to<br/>gemsterapp.com or<br/><span
+                        style="font-size: 17px; color: white;"><b>text it to your phone...</b></span><br/><br/>
+                    <span style="font-size: 12px">Phone Number</span>
+                    <input class="twitterStyleTextbox" placeholder="##########"/>
+                    <button id="button-send-text" class="button-send-text"></button>
+                </div>
+                <div id="form-get-the-app-sent" style="text-align: center; margin-top: 10px; margin-left: -50px;">
+                    A download link has been sent<br/>to your mobile phone.
+                </div>
+            </div>
+        </div>
+        <div id="steps">
+            <img id="step1" src="img/currentStep.png" style="width: 42px;"/>
+            <img id="step2" src="img/currentStep.png" style="width: 42px;"/>
+            <img id="step3" src="img/currentStep.png" style="width: 42px;"/>
+            <img id="step4" src="img/currentStep.png" style="width: 42px;"/>
+        </div>
+    </div>
+    <div style="float: left;">
+        <div id="iphone" class="iphone">
+        </div>
+        <div id="phones" class="phones">
+            <div id="phone1" class="phone">
+                <img src="img/list.PNG" width="320" alt="iphone gemster local events"/>
+            </div>
+            <div id="phone2" class="phone">
+                <img src="img/details.PNG" width="320" alt="iphone gemster engage with events"/>
+            </div>
+            <div id="phone3" class="phone">
+                <img src="img/friendDetails.PNG" width="320"
+                     alt="events, friends, promoter, parties, chill, search, rate, socialize"/>
+            </div>
+            <div id="phone4" class="phone">
+                <img src="img/dropGem.PNG" width="320" alt="drop a gem, saturday night, places, nightlife, guest"/>
+            </div>
+        </div>
+    </div>
+    <div style="float: left;">
+        <a id="right" class="arrow-right"></a>
+    </div>
 
 
-  <script>
+    <!--<table style="width: 100%;">-->
+    <!--<tr>-->
+    <!--<td class="column" style="width: 8%;">-->
+    <!--<a id="left" class="arrow-left"></a>-->
+    <!--</td>-->
+    <!--<td class="column" style="width: 50%;">-->
+    <!--<div id="clouds" class="clouds">-->
+    <!--<div id="cloud1" class="cloud">-->
+    <!--<h1 style="color: #376c98;">Find Events That Suits You</h1>-->
+    <!--<img src="img/Cloud1.png" alt="events, friends, promoter, parties, chill, search, rate, socialize" />-->
+    <!--</div>-->
+    <!--<div id="cloud2" class="cloud">-->
+    <!--<h1 style="color: #376c98;">Engage with Local Events Around You</h1>-->
+    <!--<img src="img/Cloud2.png" alt="theatre, club, bar, entertainment" />-->
+    <!--</div>-->
+    <!--<div id="cloud3" class="cloud">-->
+    <!--<h1 style="color: #376c98;">Share Events With Your Friends</h1>-->
+    <!--<img src="img/Cloud3.png" alt="drop a gem, saturday night, places, nightlife, guest" />-->
+    <!--</div>-->
+    <!--<div id="cloud4" class="cloud">-->
+    <!--<h1 style="color: #376c98;">Drop Gems</h1>-->
+    <!--<img src="img/Cloud4.png" alt="events, friends, promoter, parties, chill, search, rate, socialize" />-->
+    <!--</div>-->
+    <!--&lt;!&ndash;<div id="cloud5" class="cloud">&ndash;&gt;-->
+    <!--&lt;!&ndash;<img src="img/Cloud5.png" />&ndash;&gt;-->
+    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+    <!--</div>-->
 
-      var step = 0;
+    <!--<table class="under-clouds">-->
+    <!--<tr>-->
+    <!--<td style="width: 50%;">-->
+    <!--<div class="social-plug-in">-->
+    <!--<table>-->
+    <!--<tr>-->
+    <!--<td>-->
+    <!--<iframe src="http://www.facebook.com/plugins/facepile.php?-->
+    <!--app_id=299292173427947" scrolling="no" frameborder="0" style="border:none;-->
+    <!--overflow:hidden; width:250px; height: 100px;" allowTransparency="true"></iframe>-->
+    <!--</td>-->
+    <!--</tr>-->
+    <!--<tr>-->
+    <!--<td>-->
+    <!--&lt;!&ndash;<iframe src="//www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2Fpages%2FGemster%2F395304430527422
+    &amp;send=false&amp;layout=standard&amp;width=200&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;
+    font&amp;height=35&amp;appId=134120316726672"&ndash;&gt;-->
+    <!--&lt;!&ndash;scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:200px; height:42px;" allowTransparency="true"></iframe>&ndash;&gt;
+    -->
+    <!--</td>-->
+    <!--</tr>-->
+    <!--</table>-->
+    <!--</div>-->
+    <!--</td>-->
+    <!--<td style="width: 50%;">-->
+    <!--<div class="download-button">-->
+    <!--<a id="button-get-the-app" href="#" class="button-get-the-app">Get the app</a>-->
+    <!--</div>-->
+    <!--<div id="form-get-the-app" class="form-get-the-app">-->
+    <!--<div id="form-get-the-app-send-text">-->
+    <!--Open mobile safari and go to<br />gemsterapp.com/download or<br /><span style="font-size: 17px; color: white;"><b>text it to your phone...</b></span><br /><br />-->
+    <!--<span style="font-size: 12px">Phone Number</span>-->
+    <!--<input class="twitterStyleTextbox" placeholder="##########" />-->
+    <!--<button id="button-send-text" class="button-send-text"></button>-->
+    <!--</div>-->
+    <!--<div id="form-get-the-app-sent" style="text-align: center; margin-top: 10px; margin-left: -50px;">-->
+    <!--A download link has been sent<br />to your mobile phone.-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</td>-->
+    <!--</tr>-->
+    <!--</table>-->
+    <!--<div style="margin-top: 20px; margin-bottom: 40px;">-->
+    <!--<img id="step1" src="img/currentStep.png" style="width: 42px;" />-->
+    <!--<img id="step2" src="img/currentStep.png" style="width: 42px;" />-->
+    <!--<img id="step3" src="img/currentStep.png" style="width: 42px;" />-->
+    <!--<img id="step4" src="img/currentStep.png" style="width: 42px;" />-->
+    <!--&lt;!&ndash;<img id="step5" src="img/currentStep.png" style="width: 42px;" />&ndash;&gt;-->
+    <!--</div>-->
+    <!--</td>-->
+    <!--<td class="column" style="width: 40%; height: 700px; vertical-align: top;">-->
+    <!--<div id="iphone" class="iphone">-->
+    <!--</div>-->
+    <!--<div id="phones" class="phones">-->
+    <!--<div id="phone1" class="phone">-->
+    <!--<img src="img/list.PNG" width="320" alt="iphone gemster local events" />-->
+    <!--</div>-->
+    <!--<div id="phone2" class="phone">-->
+    <!--<img src="img/details.PNG" width="320"  alt="iphone gemster engage with events"/>-->
+    <!--</div>-->
+    <!--<div id="phone3" class="phone">-->
+    <!--<img src="img/friendDetails.PNG" width="320" alt="events, friends, promoter, parties, chill, search, rate, socialize" />-->
+    <!--</div>-->
+    <!--<div id="phone4" class="phone">-->
+    <!--<img src="img/dropGem.PNG" width="320"  alt="drop a gem, saturday night, places, nightlife, guest" />-->
+    <!--</div>-->
+    <!--&lt;!&ndash;<div id="phone5" class="phone">&ndash;&gt;-->
+    <!--&lt;!&ndash;screenshot 5&ndash;&gt;-->
+    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+    <!--</div>-->
 
-      var steps = [$("#step1"), $("#step2"), $("#step3"), $("#step4")/*, $("#step5")*/];
-      var clouds = [$("#cloud1"), $("#cloud2"), $("#cloud3"), $("#cloud4"), $("#cloud5")];
-      var phones = [$("#phone1"), $("#phone2"), $("#phone3"), $("#phone4"), $("#phone5")];
+    <!--</td>-->
+    <!--<td class="column" style="width: 8%">-->
+    <!--<a id="right" class="arrow-right"></a>-->
+    <!--</td>-->
+    <!--</tr>-->
+    <!--</table>-->
+</div>
 
-      $("document").ready(function() {
+<footer class="footer">
+    <table style="margin: 5px auto;">
+        <tr>
+            <td class="footer-column">
+                <a class="footer-link" href="about/">About</a>
+            </td>
+            <td class="footer-column">
+                <a class="footer-link" href="promoter/">Promoters</a>
+            </td>
+            <td class="footer-column">
+                <a class="footer-link" href="contactus/">Contact Us</a>
+            </td>
+            <td class="footer-column">
+                <a class="footer-link" href="http://gemsterblog.com" target="_blank">Blog</a>
+            </td>
+            <td class="footer-column">
+                <a class="footer-link" href="privacypolicy/">Terms of Service</a>
+            </td>
+        </tr>
+    </table>
 
-          $("#form-get-the-app").hide();
+    <div class="footer-copyrigth">
+        © 2012 Gemster Group, Inc. All rights reserved.
+    </div>
+    <div style="font-size: 8px; color: #3b79ac;">
+        Gemster is the best mobile app to help you find local events hapening right now around you, you can go to events
+        to party like a saturday night, or just in a bar to chill out on a friday night,
+        there is always a good reason to go out, enjoy the night life of your city and iscover new places, and obviously
+        meet new people while you enjoy the city bar clubs, lounges and best parties
+        events are what people do, what people wait for all week long until it s saturday and time ot party again, your
+        city offers the best events, for clubs and bars to chill at night
+        there are also places for the daylife, you can enjoy theatres movies, socialize with new people and improve your
+        test in your city culture, why not just go and enjoy a good play at the theatre?
+        eveyr user of the app can serach and rate all the events provided by gemster so only the best events can be seen
+        and dicovered by other app users
+        you can rate events by dropping gems, or drop a gem, on any of the event gemster shows you,
+        you can follow your friends events and discover new events and new places you would have never seen otherwise
+        the power of gemster is to use your social networks to find you the best local events
+        so what are you waiting for? uncover all the events gemster has to offer you and enjoy our special offers
+    </div>
+</footer>
 
-          for (var i = step + 1; i < steps.length; i++) {
 
-              clouds[i].hide();
-              phones[i].hide();
-              steps[i].css({
-                  opacity: 0.25
-              });
-          }
-      });
+<script>
 
-      $("#button-get-the-app").click(function() {
+    var step = 0;
 
-          if ($("#form-get-the-app").is(":visible")) {
+    var steps = [$("#step1"), $("#step2"), $("#step3"), $("#step4")/*, $("#step5")*/];
+    var clouds = [$("#cloud1"), $("#cloud2"), $("#cloud3"), $("#cloud4"), $("#cloud5")];
+    var phones = [$("#phone1"), $("#phone2"), $("#phone3"), $("#phone4"), $("#phone5")];
 
-              $("#form-get-the-app").fadeOut();
-          } else {
+    $("document").ready(function () {
 
-              $("#form-get-the-app-send-text").show();
-              $("#form-get-the-app-sent").hide();
+        $("#form-get-the-app").hide();
 
-              $("#form-get-the-app").fadeIn();
-          }
-      });
+        for (var i = step + 1; i < steps.length; i++) {
 
-      $("#button-send-text").click(function() {
+            clouds[i].hide();
+            phones[i].hide();
+            steps[i].css({
+                opacity:0.25
+            });
+        }
+    });
 
-          $("#form-get-the-app-send-text").fadeOut()
-          $("#form-get-the-app-sent").fadeIn();
-      });
+    $("#button-get-the-app").click(function () {
 
-      $("#left").click(function() {
+        if ($("#form-get-the-app").is(":visible")) {
 
-          clouds[step].hide('slide', { direction: 'right' }, 500);
-          phones[step].hide('slide', { direction: 'right' }, 500);
+            $("#form-get-the-app").fadeOut();
+        } else {
 
-          steps[step].animate({
-             opacity : 0.25
-          });
+            $("#form-get-the-app-send-text").show();
+            $("#form-get-the-app-sent").hide();
 
-          step = (step == 0) ? steps.length - 1 : step - 1;
+            $("#form-get-the-app").fadeIn();
+        }
+    });
 
-          steps[step].animate({
-              opacity : 1
-          });
+    $("#button-send-text").click(function () {
 
-          clouds[step].show('slide', { direction: 'left' }, 500);
-          phones[step].show('slide', { direction: 'left' }, 500);
-      });
+        $("#form-get-the-app-send-text").fadeOut()
+        $("#form-get-the-app-sent").fadeIn();
+    });
 
-      $("#right").click(function() {
+    $("#left").click(function () {
 
-          clouds[step].hide('slide', { direction: 'left' }, 500);
-          phones[step].hide('slide', { direction: 'left' }, 500);
+        clouds[step].hide('slide', { direction:'right' }, 500);
+        phones[step].hide('slide', { direction:'right' }, 500);
 
-          steps[step].animate({
-              opacity : 0.25
-          });
+        steps[step].animate({
+            opacity:0.25
+        });
 
-          step = (step == steps.length - 1) ? 0 : step + 1;
+        step = (step == 0) ? steps.length - 1 : step - 1;
 
-          steps[step].animate({
-              opacity : 1
-          });
+        steps[step].animate({
+            opacity:1
+        });
 
-          clouds[step].show('slide', { direction: 'right' }, 500);
-          phones[step].show('slide', { direction: 'right' }, 500);
-      });
+        clouds[step].show('slide', { direction:'left' }, 500);
+        phones[step].show('slide', { direction:'left' }, 500);
+    });
 
-  </script>
+    $("#right").click(function () {
 
-  <!-- Asynchronous Google Analytics snippet. Change UA-XXXXX-X to be your site's ID.
-       mathiasbynens.be/notes/async-analytics-snippet -->
-  <script>
-    var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
-    (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-    g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
-    s.parentNode.insertBefore(g,s)}(document,'script'));
-  </script>
+        clouds[step].hide('slide', { direction:'left' }, 500);
+        phones[step].hide('slide', { direction:'left' }, 500);
+
+        steps[step].animate({
+            opacity:0.25
+        });
+
+        step = (step == steps.length - 1) ? 0 : step + 1;
+
+        steps[step].animate({
+            opacity:1
+        });
+
+        clouds[step].show('slide', { direction:'right' }, 500);
+        phones[step].show('slide', { direction:'right' }, 500);
+    });
+
+</script>
+
+<!-- Asynchronous Google Analytics snippet. Change UA-XXXXX-X to be your site's ID.
+mathiasbynens.be/notes/async-analytics-snippet -->
+<script>
+    var _gaq = [
+        ['_setAccount', 'UA-XXXXX-X'],
+        ['_trackPageview']
+    ];
+    (function (d, t) {
+        var g = d.createElement(t), s = d.getElementsByTagName(t)[0];
+        g.src = ('https:' == location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js';
+        s.parentNode.insertBefore(g, s)
+    }(document, 'script'));
+</script>
 </body>
 </html>

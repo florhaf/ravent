@@ -107,13 +107,14 @@
     background-size: 383px 768px;
     width: 383px;
     height: 768px;
-    margin: -65px 50px;
+    position: absolute;
+    /*margin: -65px 50px;*/
 }
 
 .phones {
     height:480px;
     width: 320px;
-    margin: -640px 83px;
+    /*margin: -640px 83px;*/
 }
 
 .phone {

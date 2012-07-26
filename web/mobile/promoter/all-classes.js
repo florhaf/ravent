@@ -31627,7 +31627,7 @@ Ext.define('Gemster.controller.ContactForm', {
 
         var config	= {
             method	: 'POST',
-            url 	: 'http://api.gemsterapp.com/featureYourEvent',
+            url 	: '../../php/submit.php?to=promoter@gemsterapp.com&ajax=1',
             withCredentials: true,
             useDefaultXhrHeader: false,
             params	: model.data,
@@ -49471,7 +49471,7 @@ Ext.define('Gemster.view.ContactForm', {
                 }
             }
         },{
-            html : '<br /><br />'
+            html : '<div style="color: #a9a9a9; font-size: 14px; margin-top: 10px;"><b>&nbsp;</b></div>'
         },{
             html : '<div style="float: left; margin-right: 8px;"><img src="resources/images/featured.png" width="32px" alt="featured" /></div><div style="font-size: 16px; color: #a9a9a9;"><p><b>Promote my event</b></p>Always be on top! your event will appear on top of the list for as long as 1 week before the actual start date, and thus will be the one viewed by all our users.<br /></div><br />'
          },{

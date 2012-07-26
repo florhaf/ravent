@@ -48,7 +48,7 @@ Ext.application({
                 listeners : {
                     tap : function() {
 
-                        window.location = 'itms-services://?action=download-manifest&url=http://beta.gemsterapp.com/Gemster.plist';
+                        window.location = 'itms-services://?action=download-manifest&url=http://gemsterapp.com/Gemster.plist';
                     }
                 }
 //                html : (Ext.os.is.ios) ?
@@ -70,7 +70,7 @@ Ext.application({
             },{
                 html : '<br />'
             },{
-                html : '<a href="http://gemsterapp.com/?fullversion=true">Full Version</a>'
+//                html : '<a href="http://gemsterapp.com/?fullversion=true">Full Version</a>'
             }]
 
         });
