@@ -374,7 +374,7 @@ static int _retryCounter;
                                  image:[UIImage imageNamed:@"dropdown-alert"]
                               animated:YES];
     
-    [self loadDropAGem];
+    //[self loadDropAGem];
     
     [self trackEvent:@"drop_a_gem"];
 }
@@ -529,16 +529,17 @@ static int _retryCounter;
 
 - (void)loadDropAGem
 {
-    int framesY = (_detailsVersion == twogoodies) ? 435 : 450;
+    int framesY = (_detailsVersion == twogoodies) ? 436 : 451;
     
     if (_event.isGemDropped) {
         
         _dropagemLabel.text = @"Gem dropped";
         [_dropagemLabel setHidden:NO];
+        [_lightBurst setHidden:NO];
         
         UIImageView *gem = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"diamond"]];
         
-        [gem setFrame:CGRectMake(226, framesY, 60, 50)];
+        [gem setFrame:CGRectMake(225, framesY, 60, 50)];
         
         [self.view addSubview:gem];
         
@@ -596,7 +597,7 @@ static int _retryCounter;
         
         for (int i = 0; i< device; i++) {
             
-            CGRect startFrame = CGRectMake(30, framesY, 60, 50);
+            CGRect startFrame = CGRectMake(31, framesY, 60, 50);
             
             
             _dragView = [[TKDragView alloc] initWithImage:image
@@ -1065,7 +1066,7 @@ static int _retryCounter;
     _goodiesIcon = nil;
     _featuredIcon = nil;
     
-    
+    _lightBurst = nil;
     
     _segment = nil;
     
@@ -1083,52 +1084,29 @@ static int _retryCounter;
 
 - (void)dragViewDidStartDragging:(TKDragView *)dragView{
     
-    [UIView animateWithDuration:0.2 animations:^{
-        dragView.transform = CGAffineTransformMakeScale(1.5, 1.5);
-    }];
+    
 }
 
 - (void)dragViewDidEndDragging:(TKDragView *)dragView{
-    
-    [UIView animateWithDuration:0.2 animations:^{
-        dragView.transform = CGAffineTransformMakeScale(1.0, 1.0);
-    }];
+
 }
 
 
 - (void)dragViewDidEnterStartFrame:(TKDragView *)dragView{
-    
-    [UIView animateWithDuration:0.2 animations:^{
-        dragView.alpha = 0.5;
-    }];
+
 }
 
 - (void)dragViewDidLeaveStartFrame:(TKDragView *)dragView{
-    
-    [UIView animateWithDuration:0.2 animations:^{
-        dragView.alpha = 1.0;
-    }];
+
 }
 
 
 - (void)dragViewDidEnterGoodFrame:(TKDragView *)dragView atIndex:(NSInteger)index{
-    
-    [UIView animateWithDuration:0.2 animations:^{
-        dragView.alpha = 0.5;
-    }];
+[_lightBurst setHidden:NO];
 }
 
 - (void)dragViewDidLeaveGoodFrame:(TKDragView *)dragView atIndex:(NSInteger)index{    
-
-}
-
-
-- (void)dragViewDidEnterBadFrame:(TKDragView *)dragView atIndex:(NSInteger)index{
-
-}
-
-- (void)dragViewDidLeaveBadFrame:(TKDragView *)dragView atIndex:(NSInteger)index{
-    
+[_lightBurst setHidden:YES];
 }
 
 
@@ -1138,28 +1116,46 @@ static int _retryCounter;
     
 }
 
-- (void)dragViewDidSwapToEndFrame:(TKDragView *)dragView atIndex:(NSInteger)index{
+- (void)animateLightBurst {
     
-    
-    [UIView animateWithDuration:0.4
-                          delay:0.1
+    [UIView animateWithDuration:1.5
+                          delay:0
                         options:UIViewAnimationOptionCurveEaseOut
                      animations:^{
-                         dragView.transform = CGAffineTransformMakeRotation(M_PI);
+                         _lightBurst.alpha = (_currentNbOfBurst % 2 == 0) ? 0.7 : 0.5;
+                         _lightBurst.transform = CGAffineTransformMakeScale((_currentNbOfBurst % 2 == 0) ? 1 : 0.8, (_currentNbOfBurst % 2 == 0) ? 1 : 0.8);
                      } 
                      completion:^(BOOL finished) {
                          
-                         [UIView animateWithDuration:0.4
-                                               delay:0.1
-                                             options:UIViewAnimationOptionCurveEaseIn
-                                          animations:^{
-                                              dragView.transform = CGAffineTransformMakeRotation(2 * M_PI);
-                                          } 
-                                          completion:^(BOOL finished) {
-                                              
-                                              [dragView setFrame:CGRectMake(0, 0, 0, 0)];
-                                          }];
-                     }];
+                         if (_currentNbOfBurst < _maxNbOfBurst) {
+                             
+                             _currentNbOfBurst++;
+                             
+                             [self animateLightBurst];
+                         }
+                     }
+     ];
+}
+
+- (void)dragViewDidSwapToEndFrame:(TKDragView *)dragView atIndex:(NSInteger)index{
+    
+
+    _currentNbOfBurst = 0;
+    _maxNbOfBurst = 4;
+    
+    [self animateLightBurst];
+    
+    
+    [UIView animateWithDuration:1.5
+                          delay:0
+                        options:UIViewAnimationOptionCurveEaseOut
+                     animations:^{
+                         _dragView.transform = CGAffineTransformMakeScale(0.6, 0.6);
+                     } 
+                     completion:^(BOOL finished) {
+                         
+                     }
+     ];
     
     // send vote
     NSMutableDictionary *params = [[NSMutableDictionary alloc] init];

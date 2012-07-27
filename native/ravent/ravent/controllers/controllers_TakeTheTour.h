@@ -13,6 +13,13 @@
     
     IBOutlet UIView *_container;
     IBOutlet UIButton *_next;
+    
+    IBOutlet UIImageView *_lightBurst;
+    
+    int _currentNbOfBurst;
+    int _maxNbOfBurst;
+    
+    TKDragView *_dragView;
 }
 
 @property (nonatomic, strong) NSMutableArray *dragViews;

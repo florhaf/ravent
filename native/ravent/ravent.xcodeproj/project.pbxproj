@@ -205,6 +205,7 @@
 		DF75ACD11541F69C00150465 /* disclosure@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF75ACCF1541F69C00150465 /* disclosure@2x.png */; };
 		DF765B6D1552CB800035F7E2 /* views_friends_People.xib in Resources */ = {isa = PBXBuildFile; fileRef = DF765B6C1552CB800035F7E2 /* views_friends_People.xib */; };
 		DF78B9FE150FB870003849D2 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF78B9FD150FB870003849D2 /* CFNetwork.framework */; };
+		DF7DFD2515C2176F0014F228 /* lightBurst.png in Resources */ = {isa = PBXBuildFile; fileRef = DF7DFD2415C2176F0014F228 /* lightBurst.png */; };
 		DF8030E71533ED08008E71D6 /* views_friends_header_Following.xib in Resources */ = {isa = PBXBuildFile; fileRef = DF8030E61533ED08008E71D6 /* views_friends_header_Following.xib */; };
 		DF8030ED1534C62E008E71D6 /* UITableViewFriends.m in Sources */ = {isa = PBXBuildFile; fileRef = DF8030EC1534C62D008E71D6 /* UITableViewFriends.m */; };
 		DF8030F315353D50008E71D6 /* controllers_events_Map_p2p.m in Sources */ = {isa = PBXBuildFile; fileRef = DF8030F215353D4F008E71D6 /* controllers_events_Map_p2p.m */; };
@@ -712,6 +713,7 @@
 		DF75ACCF1541F69C00150465 /* disclosure@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "disclosure@2x.png"; sourceTree = "<group>"; };
 		DF765B6C1552CB800035F7E2 /* views_friends_People.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = views_friends_People.xib; sourceTree = "<group>"; };
 		DF78B9FD150FB870003849D2 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		DF7DFD2415C2176F0014F228 /* lightBurst.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lightBurst.png; sourceTree = "<group>"; };
 		DF8030E61533ED08008E71D6 /* views_friends_header_Following.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = views_friends_header_Following.xib; sourceTree = "<group>"; };
 		DF8030EB1534C62D008E71D6 /* UITableViewFriends.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITableViewFriends.h; sourceTree = "<group>"; };
 		DF8030EC1534C62D008E71D6 /* UITableViewFriends.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UITableViewFriends.m; sourceTree = "<group>"; };
@@ -1484,6 +1486,7 @@
 		DF75ACC91541E7D400150465 /* background */ = {
 			isa = PBXGroup;
 			children = (
+				DF7DFD2415C2176F0014F228 /* lightBurst.png */,
 				DFA9FC7015B2C670003F9B5F /* commentPicBG.png */,
 				DFA9FC5F15B24D85003F9B5F /* plainRow.png */,
 				DFA20F7615AA56F2007BBEE7 /* dropagem.png */,
@@ -2334,6 +2337,7 @@
 				DFA9FC8915B68F27003F9B5F /* gift.png in Resources */,
 				DFA9FC8A15B68F27003F9B5F /* search.png in Resources */,
 				DFA9FC8B15B68F27003F9B5F /* watchMenu.png in Resources */,
+				DF7DFD2515C2176F0014F228 /* lightBurst.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2564,7 +2568,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: florian haftman";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: florian haftman (247VK6949Z)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/RestKit/Specs/Runner/OCHamcrest\"",
@@ -2581,7 +2585,7 @@
 				);
 				"OTHER_CFLAGS[arch=*]" = "-mthumb";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "29F0FEDE-6840-4B1E-9F8F-8B324858DEFC";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "67C20EBB-AA59-4A4B-B4BF-60479C59B59C";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = NO;
 				USER_HEADER_SEARCH_PATHS = "";
@@ -2594,7 +2598,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: florian haftman";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: florian haftman (247VK6949Z)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/RestKit/Specs/Runner/OCHamcrest\"",
@@ -2611,7 +2615,7 @@
 				);
 				"OTHER_CFLAGS[arch=*]" = "-mthumb";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "29F0FEDE-6840-4B1E-9F8F-8B324858DEFC";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "67C20EBB-AA59-4A4B-B4BF-60479C59B59C";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = NO;
 				USER_HEADER_SEARCH_PATHS = "";

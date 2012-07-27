@@ -221,7 +221,7 @@
 					<object class="IBUILabel" id="422194388">
 						<reference key="NSNextResponder" ref="408714013"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{207, 346}, {89, 21}}</string>
+						<string key="NSFrame">{{212, 346}, {89, 21}}</string>
 						<reference key="NSSuperview" ref="408714013"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="301329576"/>
@@ -254,7 +254,7 @@
 					<object class="IBUILabel" id="171455677">
 						<reference key="NSNextResponder" ref="408714013"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{25, 346}, {220, 21}}</string>
+						<string key="NSFrame">{{18, 346}, {220, 21}}</string>
 						<reference key="NSSuperview" ref="408714013"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="422194388"/>
@@ -658,6 +658,7 @@ AAAAAAAAdGV4dAAAAABDb3B5cmlnaHQgQXBwbGUsIEluYy4sIDIwMDgAA</bytes>
 						<string key="NSFrame">{{276, 300}, {20, 20}}</string>
 						<reference key="NSSuperview" ref="408714013"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="171455677"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -774,7 +775,7 @@ AAAAAAAAdGV4dAAAAABDb3B5cmlnaHQgQXBwbGUsIEluYy4sIDIwMDgAA</bytes>
 						<string key="NSFrame">{{150, 463}, {20, 20}}</string>
 						<reference key="NSSuperview" ref="408714013"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="480807202"/>
+						<reference key="NSNextKeyView" ref="147283126"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -800,6 +801,23 @@ AAAAAAAAdGV4dAAAAABDb3B5cmlnaHQgQXBwbGUsIEluYy4sIDIwMDgAA</bytes>
 						<reference key="IBUINormalTitleShadowColor" ref="806747904"/>
 						<reference key="IBUIFontDescription" ref="978752306"/>
 						<reference key="IBUIFont" ref="996883041"/>
+					</object>
+					<object class="IBUIImageView" id="147283126">
+						<reference key="NSNextResponder" ref="408714013"/>
+						<int key="NSvFlags">-2147483356</int>
+						<string key="NSFrame">{{155, 384}, {178, 178}}</string>
+						<reference key="NSSuperview" ref="408714013"/>
+						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="480807202"/>
+						<string key="NSReuseIdentifierKey">_NS:9</string>
+						<float key="IBUIAlpha">0.69999998807907104</float>
+						<int key="IBUIContentMode">1</int>
+						<bool key="IBUIUserInteractionEnabled">NO</bool>
+						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+						<object class="NSCustomResource" key="IBUIImage">
+							<string key="NSClassName">NSImage</string>
+							<string key="NSResourceName">lightBurst.png</string>
+						</object>
 					</object>
 				</array>
 				<string key="NSFrameSize">{320, 729}</string>
@@ -993,6 +1011,14 @@ AAAAAAAAdGV4dAAAAABDb3B5cmlnaHQgQXBwbGUsIEluYy4sIDIwMDgAA</bytes>
 					<int key="connectionID">73</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">_lightBurst</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="147283126"/>
+					</object>
+					<int key="connectionID">77</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">picButton_Tap:</string>
 						<reference key="source" ref="729919304"/>
@@ -1112,6 +1138,7 @@ AAAAAAAAdGV4dAAAAABDb3B5cmlnaHQgQXBwbGUsIEluYy4sIDIwMDgAA</bytes>
 							<reference ref="752051002"/>
 							<reference ref="717215661"/>
 							<reference ref="630268620"/>
+							<reference ref="147283126"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -1290,6 +1317,11 @@ AAAAAAAAdGV4dAAAAABDb3B5cmlnaHQgQXBwbGUsIEluYy4sIDIwMDgAA</bytes>
 						<reference key="object" ref="630268620"/>
 						<reference key="parent" ref="408714013"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">76</int>
+						<reference key="object" ref="147283126"/>
+						<reference key="parent" ref="408714013"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -1333,6 +1365,7 @@ AAAAAAAAdGV4dAAAAABDb3B5cmlnaHQgQXBwbGUsIEluYy4sIDIwMDgAA</bytes>
 				<string key="7.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="70.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="72.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="76.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="8.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="9.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 			</dictionary>
@@ -1340,7 +1373,7 @@ AAAAAAAAdGV4dAAAAABDb3B5cmlnaHQgQXBwbGUsIEluYy4sIDIwMDgAA</bytes>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">75</int>
+			<int key="maxID">77</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1513,6 +1546,7 @@ AAAAAAAAdGV4dAAAAABDb3B5cmlnaHQgQXBwbGUsIEluYy4sIDIwMDgAA</bytes>
 						<string key="_labelFemaleRatio">UILabel</string>
 						<string key="_labelMaleRatio">UILabel</string>
 						<string key="_labelTotalAttendings">UILabel</string>
+						<string key="_lightBurst">UIImageView</string>
 						<string key="_map">MKMapView</string>
 						<string key="_mapImage">UIView</string>
 						<string key="_rsvp">UISegmentedControl</string>
@@ -1619,6 +1653,10 @@ AAAAAAAAdGV4dAAAAABDb3B5cmlnaHQgQXBwbGUsIEluYy4sIDIwMDgAA</bytes>
 							<string key="name">_labelTotalAttendings</string>
 							<string key="candidateClassName">UILabel</string>
 						</object>
+						<object class="IBToOneOutletInfo" key="_lightBurst">
+							<string key="name">_lightBurst</string>
+							<string key="candidateClassName">UIImageView</string>
+						</object>
 						<object class="IBToOneOutletInfo" key="_map">
 							<string key="name">_map</string>
 							<string key="candidateClassName">MKMapView</string>
@@ -1676,6 +1714,7 @@ AAAAAAAAdGV4dAAAAABDb3B5cmlnaHQgQXBwbGUsIEluYy4sIDIwMDgAA</bytes>
 			<string key="graySnapSelected.png">{295, 80}</string>
 			<string key="grayWatch.png">{295, 80}</string>
 			<string key="grayWatchSelected.png">{295, 80}</string>
+			<string key="lightBurst.png">{300, 343}</string>
 		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">1181</string>
 	</data>

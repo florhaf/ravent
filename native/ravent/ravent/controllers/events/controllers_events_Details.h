@@ -65,6 +65,7 @@ typedef enum {
     IBOutlet UIImageView *_goodiesIcon;
     IBOutlet UIImageView *_featuredIcon;
     IBOutlet UILabel *_dropagemLabel;
+    IBOutlet UIImageView *_lightBurst;
     
     detailsVersion _detailsVersion;
     
@@ -82,6 +83,8 @@ typedef enum {
     BOOL _isMapImageSet;
     int _mapImageHeight;
 
+    int _currentNbOfBurst;
+    int _maxNbOfBurst;
     
     id __weak _delegateBack;
     SEL _selectorBack;

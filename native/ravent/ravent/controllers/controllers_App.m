@@ -78,11 +78,11 @@ static controllers_App *_ctrl;
 		[self.view addSubview:slide];
         
         
-        if ([models_User crtUser].isTourTaken == NO) {
+        //if ([models_User crtUser].isTourTaken == NO) {
             
             [self addChildViewController:[controllers_TakeTheTour instance]];
             [self.view addSubview:[controllers_TakeTheTour instance].view];
-        }
+        //}
     }
     
 	[UIView commitAnimations];

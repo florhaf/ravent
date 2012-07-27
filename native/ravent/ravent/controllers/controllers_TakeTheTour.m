@@ -122,25 +122,25 @@ static customNavigationController *_ctrl;
             CGRect startFrame = CGRectMake(670, 225, 60, 50);
             
             
-            TKDragView *dragView = [[TKDragView alloc] initWithImage:image
+            _dragView = [[TKDragView alloc] initWithImage:image
                                                startFrame:startFrame
                                                goodFrames:goodFrames
                                                 badFrames:badFrames
                                               andDelegate:self];
             
             
-            dragView.canDragMultipleDragViewsAtOnce = NO;
-            dragView.canUseSameEndFrameManyTimes = YES;
+            _dragView.canDragMultipleDragViewsAtOnce = NO;
+            _dragView.canUseSameEndFrameManyTimes = YES;
             
-            dragView.canDragFromEndPosition = NO;
+            _dragView.canDragFromEndPosition = NO;
             
-            [self.dragViews addObject:dragView];
+            [self.dragViews addObject:_dragView];
             
-            [[self.view.subviews objectAtIndex:0] addSubview:dragView];
+            [[self.view.subviews objectAtIndex:0] addSubview:_dragView];
             
             UITapGestureRecognizer *g = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(taped:)];
             [g setNumberOfTapsRequired:2];
-            [dragView addGestureRecognizer:g];
+            [_dragView addGestureRecognizer:g];
         }
 //    }
 }
@@ -173,6 +173,8 @@ static customNavigationController *_ctrl;
     _container = nil;
     _next = nil;
     _ctrl = nil;
+    _lightBurst = nil;
+    _dragView = nil;
 }
 
 + (customNavigationController *)instance
@@ -202,38 +204,29 @@ static customNavigationController *_ctrl;
 
 - (void)dragViewDidStartDragging:(TKDragView *)dragView{
     
-    [UIView animateWithDuration:0.2 animations:^{
-        dragView.transform = CGAffineTransformMakeScale(1.5, 1.5);
-    }];
+    
 }
 
 - (void)dragViewDidEndDragging:(TKDragView *)dragView{
     
-    [UIView animateWithDuration:0.2 animations:^{
-        dragView.transform = CGAffineTransformMakeScale(1.0, 1.0);
-    }];
 }
 
 
 - (void)dragViewDidEnterStartFrame:(TKDragView *)dragView{
     
-    [UIView animateWithDuration:0.2 animations:^{
-        dragView.alpha = 0.5;
-    }];
 }
 
 - (void)dragViewDidLeaveStartFrame:(TKDragView *)dragView{
     
-    [UIView animateWithDuration:0.2 animations:^{
-        dragView.alpha = 1.0;
-    }];
 }
 
-- (void)dragViewDidEnterGoodFrame:(TKDragView *)dragView atIndex:(NSInteger)index
-{
-    [UIView animateWithDuration:0.2 animations:^{
-        dragView.alpha = 0.5;
-    }];
+
+- (void)dragViewDidEnterGoodFrame:(TKDragView *)dragView atIndex:(NSInteger)index{
+    [_lightBurst setHidden:NO];
+}
+
+- (void)dragViewDidLeaveGoodFrame:(TKDragView *)dragView atIndex:(NSInteger)index{    
+    [_lightBurst setHidden:YES];
 }
 
 
@@ -243,27 +236,46 @@ static customNavigationController *_ctrl;
     
 }
 
-- (void)dragViewDidSwapToEndFrame:(TKDragView *)dragView atIndex:(NSInteger)index{
+- (void)animateLightBurst {
     
-    [UIView animateWithDuration:0.4
-                          delay:0.1
+    [UIView animateWithDuration:1.5
+                          delay:0
                         options:UIViewAnimationOptionCurveEaseOut
                      animations:^{
-                         dragView.transform = CGAffineTransformMakeRotation(M_PI);
+                         _lightBurst.alpha = (_currentNbOfBurst % 2 == 0) ? 0.7 : 0.5;
+                         _lightBurst.transform = CGAffineTransformMakeScale((_currentNbOfBurst % 2 == 0) ? 1 : 0.8, (_currentNbOfBurst % 2 == 0) ? 1 : 0.8);
                      } 
                      completion:^(BOOL finished) {
                          
-                         [UIView animateWithDuration:0.4
-                                               delay:0.1
-                                             options:UIViewAnimationOptionCurveEaseIn
-                                          animations:^{
-                                              dragView.transform = CGAffineTransformMakeRotation(2 * M_PI);
-                                          } 
-                                          completion:^(BOOL finished) {
-                                              
-                                              [dragView setFrame:CGRectMake(0, 0, 0, 0)];
-                                          }];
-                     }];
+                         if (_currentNbOfBurst < _maxNbOfBurst) {
+                             
+                             _currentNbOfBurst++;
+                             
+                             [self animateLightBurst];
+                         }
+                     }
+     ];
+}
+
+- (void)dragViewDidSwapToEndFrame:(TKDragView *)dragView atIndex:(NSInteger)index{
+    
+    
+    _currentNbOfBurst = 0;
+    _maxNbOfBurst = 4;
+    
+    [self animateLightBurst];
+    
+    
+    [UIView animateWithDuration:1.5
+                          delay:0
+                        options:UIViewAnimationOptionCurveEaseOut
+                     animations:^{
+                         _dragView.transform = CGAffineTransformMakeScale(0.6, 0.6);
+                     } 
+                     completion:^(BOOL finished) {
+                         
+                     }
+     ];
     
     [_next setEnabled:YES];
 }
