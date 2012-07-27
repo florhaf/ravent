@@ -138,7 +138,7 @@ public class Attending extends Model {
 
 		MultiqueryResults multiqueryResult = client.executeMultiquery(queries, MultiqueryResults.class);
 		
-		if (multiqueryResult.invited_info.isEmpty()) {
+		if (multiqueryResult == null || multiqueryResult.invited_info.isEmpty()) {
 			return null;
 		}
 		

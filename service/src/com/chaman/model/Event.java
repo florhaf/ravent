@@ -543,7 +543,7 @@ public class Event extends Model implements Serializable {
 	
 	public int isNow(DateTime now, DateTimeZone TZ, DateTime start, DateTime end, DateTimeZone PST) {
 		
-		if (start.getMinuteOfDay() < end.getMinuteOfDay()) {
+		if (start.toDateTime(PST).getMinuteOfDay() < end.toDateTime(PST).getMinuteOfDay()) {
 			if (now.toDateTime(TZ).getMinuteOfDay() >= start.toDateTime(PST).getMinuteOfDay() && now.toDateTime(TZ).getMinuteOfDay() <= end.toDateTime(PST).getMinuteOfDay()) {
 				this.group = "1";
 				this.groupTitle = "Now";
@@ -555,7 +555,7 @@ public class Event extends Model implements Serializable {
 				return -1; // past -> remove event from list
 			}
 		} else {
-			if ((now.getMillis() > start.getMillis()) && (now.toDateTime(TZ).getMinuteOfDay() >= start.toDateTime(PST).getMinuteOfDay() || now.toDateTime(TZ).getMinuteOfDay() <= end.toDateTime(PST).getMinuteOfDay())) {
+			if ((now.getMillis() > PST.getMillisKeepLocal(TZ, start.getMillis()) ) && (now.toDateTime(TZ).getMinuteOfDay() >= start.toDateTime(PST).getMinuteOfDay() || now.toDateTime(TZ).getMinuteOfDay() <= end.toDateTime(PST).getMinuteOfDay())) {
 				this.group = "1";
 				this.groupTitle = "Now";
 				return 1;
