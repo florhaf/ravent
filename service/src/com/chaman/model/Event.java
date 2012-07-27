@@ -483,6 +483,10 @@ public class Event extends Model implements Serializable {
 		long timeStampNow = now.getMillis();
 		long timeStampToday = timeStampNow - (timeZoneInMinutes * 60000) + (86400000 - now.getMillisOfDay());
 		
+		if (now.getMillis() > PST.getMillisKeepLocal(TZ, dtEnd.getMillis())) {
+			return false;
+		}
+		
 		if (timeStampEnd < timeStampNow) {
 			return false;
 		}
