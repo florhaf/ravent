@@ -26,7 +26,7 @@ public class RaVentSvcApplication extends Application {
 		router.attach("/calendar",		Calendar.class);
 		router.attach("/eventbackends",	EventBackends.class);
 		router.attach("/eventstats", 	EventStats.class);
-		router.attach("/featureYourEvent", 	FeatureYourEvent.class);
+		router.attach("/sendEmail", 	SendEmail.class);
 		
 		return router;
 	}
