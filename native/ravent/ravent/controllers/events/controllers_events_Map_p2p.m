@@ -292,11 +292,11 @@ static int _retryCounter;
         annotationView.canShowCallout = YES;
  
         
-        annotationView.image = [UIImage imageNamed:@"diamond"];
-        [annotationView setFrame:CGRectMake(0, 0, 24, 18)];
+        annotationView.image = [UIImage imageNamed:@"diamondSmall"];
+        [annotationView setFrame:CGRectMake(0, 0, 24, 20)];
         
         annotationView.annotation = annotation;
-        [annotationView setCenterOffset:CGPointMake(0, - annotationView.image.size.height / 2)];
+        [annotationView setCenterOffset:CGPointMake(annotationView.image.size.width / 2, annotationView.image.size.height / 2)];
         
         UIButton *infoButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
         annotationView.rightCalloutAccessoryView = infoButton;

@@ -380,6 +380,7 @@
 		DFF134031593EDA8004190AC /* controllers_watchlist_Container.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF134021593EDA8004190AC /* controllers_watchlist_Container.m */; };
 		DFF1775A159C352600F1FBA9 /* grayNavbar.png in Resources */ = {isa = PBXBuildFile; fileRef = DFF17759159C352600F1FBA9 /* grayNavbar.png */; };
 		DFF1775C159C360D00F1FBA9 /* grayToolbar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DFF1775B159C360D00F1FBA9 /* grayToolbar@2x.png */; };
+		DFF8D31715C3E24E00C028CB /* diamondSmall.png in Resources */ = {isa = PBXBuildFile; fileRef = DFF8D31615C3E24E00C028CB /* diamondSmall.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -939,6 +940,7 @@
 		DFF134021593EDA8004190AC /* controllers_watchlist_Container.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = controllers_watchlist_Container.m; sourceTree = "<group>"; };
 		DFF17759159C352600F1FBA9 /* grayNavbar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grayNavbar.png; sourceTree = "<group>"; };
 		DFF1775B159C360D00F1FBA9 /* grayToolbar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grayToolbar@2x.png"; sourceTree = "<group>"; };
+		DFF8D31615C3E24E00C028CB /* diamondSmall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = diamondSmall.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1350,6 +1352,7 @@
 		DF629E6D153F8A5900BCA804 /* buttons */ = {
 			isa = PBXGroup;
 			children = (
+				DFF8D31615C3E24E00C028CB /* diamondSmall.png */,
 				DF04017915A76C2E0064C1D2 /* LoginWithFacebookNormal.png */,
 				DF04017A15A76C2E0064C1D2 /* LoginWithFacebookNormal@2x.png */,
 				DF04017B15A76C2E0064C1D2 /* LoginWithFacebookPressed.png */,
@@ -2338,6 +2341,7 @@
 				DFA9FC8A15B68F27003F9B5F /* search.png in Resources */,
 				DFA9FC8B15B68F27003F9B5F /* watchMenu.png in Resources */,
 				DF7DFD2515C2176F0014F228 /* lightBurst.png in Resources */,
+				DFF8D31715C3E24E00C028CB /* diamondSmall.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
