@@ -381,6 +381,8 @@
 		DFF1775A159C352600F1FBA9 /* grayNavbar.png in Resources */ = {isa = PBXBuildFile; fileRef = DFF17759159C352600F1FBA9 /* grayNavbar.png */; };
 		DFF1775C159C360D00F1FBA9 /* grayToolbar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DFF1775B159C360D00F1FBA9 /* grayToolbar@2x.png */; };
 		DFF8D31715C3E24E00C028CB /* diamondSmall.png in Resources */ = {isa = PBXBuildFile; fileRef = DFF8D31615C3E24E00C028CB /* diamondSmall.png */; };
+		DFF8D31915C3E74700C028CB /* name+logo.png in Resources */ = {isa = PBXBuildFile; fileRef = DFF8D31815C3E74600C028CB /* name+logo.png */; };
+		DFF8D31B15C3E9E900C028CB /* facebookButton.png in Resources */ = {isa = PBXBuildFile; fileRef = DFF8D31A15C3E9E900C028CB /* facebookButton.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -941,6 +943,8 @@
 		DFF17759159C352600F1FBA9 /* grayNavbar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grayNavbar.png; sourceTree = "<group>"; };
 		DFF1775B159C360D00F1FBA9 /* grayToolbar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grayToolbar@2x.png"; sourceTree = "<group>"; };
 		DFF8D31615C3E24E00C028CB /* diamondSmall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = diamondSmall.png; sourceTree = "<group>"; };
+		DFF8D31815C3E74600C028CB /* name+logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "name+logo.png"; sourceTree = "<group>"; };
+		DFF8D31A15C3E9E900C028CB /* facebookButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = facebookButton.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1352,6 +1356,7 @@
 		DF629E6D153F8A5900BCA804 /* buttons */ = {
 			isa = PBXGroup;
 			children = (
+				DFF8D31A15C3E9E900C028CB /* facebookButton.png */,
 				DFF8D31615C3E24E00C028CB /* diamondSmall.png */,
 				DF04017915A76C2E0064C1D2 /* LoginWithFacebookNormal.png */,
 				DF04017A15A76C2E0064C1D2 /* LoginWithFacebookNormal@2x.png */,
@@ -1396,6 +1401,7 @@
 		DF629E6F153F8A5900BCA804 /* splash */ = {
 			isa = PBXGroup;
 			children = (
+				DFF8D31815C3E74600C028CB /* name+logo.png */,
 				DF629E70153F8A5900BCA804 /* background.png */,
 				DF629E71153F8A5900BCA804 /* background@2x.png */,
 				DF629E72153F8A5900BCA804 /* splash.png */,
@@ -2342,6 +2348,8 @@
 				DFA9FC8B15B68F27003F9B5F /* watchMenu.png in Resources */,
 				DF7DFD2515C2176F0014F228 /* lightBurst.png in Resources */,
 				DFF8D31715C3E24E00C028CB /* diamondSmall.png in Resources */,
+				DFF8D31915C3E74700C028CB /* name+logo.png in Resources */,
+				DFF8D31B15C3E9E900C028CB /* facebookButton.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
