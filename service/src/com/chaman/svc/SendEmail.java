@@ -27,7 +27,7 @@ public class SendEmail  extends ServerResource {
 			Properties props = new Properties();
 	        Session session = Session.getDefaultInstance(props, null);
 
-	        String msgBody = "Click on http://www.gemsterapp.com to download GEMSTER";
+	        String msgBody = "Welcome to GEMSTER! \n\nYou are one click away to change the way you look for events arround you: http://m.gemsterapp.com \n\nEnjoy,\nGemster's Team";
 
         		Message msg = new MimeMessage(session);
 	            msg.setFrom(new InternetAddress("it@gemsterapp.com", "Contact"));
