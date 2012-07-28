@@ -30,18 +30,23 @@ Ext.application({
             },
 
 
-            items : [{
-                html : '<div class="header"><div class="header-text">Gemster</div></div>',
-                width: '100%',
-                docked: 'top'
-            },{
-                html : '<div style="margin-top: -20px; margin-bottom: 20px; color: #a9a9a9;"><b>The Entertainment Provider</b></div>'
-            },{
-                html : '<br />'
-            },{
+            items : [
+//                {
+//                html : '<div class="header"><div class="header-text">Gemster</div></div>',
+//                width: '100%',
+//                docked: 'top'
+//            },{
+//                html : '<div style="margin-top: -20px; margin-bottom: 20px; color: #a9a9a9;"><b>The Entertainment Provider</b></div>'
+//            },{
+//                html : '<br />'
+//            },
+                {
+                    html : '<img src="resources/images/cover.png" width="320">'
+                },
+                {
 
                 xtype : 'button',
-                ui : 'action',
+                ui : 'confirm',
                 text : (Ext.os.is.ios) ? 'Get the app' : 'Gemster is only available for iOS, for now...',
                 disabled : !(Ext.os.is.ios),
                 width : '90%',
@@ -59,7 +64,7 @@ Ext.application({
             },{
 
                 xtype : 'button',
-                ui : 'confirm',
+                ui : 'action',
                 text: 'Promoters',
                 width : '90%',
                 listeners : {

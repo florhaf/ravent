@@ -70,8 +70,8 @@ unset($_SESSION['sent']);
 chromium.org/developers/how-tos/chrome-frame-getting-started -->
 <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
 <header>
-    <div id="header" class="header">
-        <div class="header-text">Gemster</div>
+    <div id="header" class="header" style="width: 100%; height: 115px; margin: auto auto; text-align: center;">
+        <img src="../img/logo.png" width="420px" alt="Gemster Logo" style="margin:auto auto; z-index: 42;"/>
     </div>
 </header>
 
@@ -141,6 +141,9 @@ chromium.org/developers/how-tos/chrome-frame-getting-started -->
             <td class="footer-column">
                 <a class="footer-link" href="../about/">About</a>
             </td>
+            <td class="footer-column">
+                            <a class="footer-link" href="../faq/">FAQ</a>
+                        </td>
             <td class="footer-column">
                 <a class="footer-link" href="../promoter/">Promoters</a>
             </td>

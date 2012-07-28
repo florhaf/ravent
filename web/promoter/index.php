@@ -70,13 +70,13 @@ unset($_SESSION['sent']);
 chromium.org/developers/how-tos/chrome-frame-getting-started -->
 <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
 <header>
-    <div id="header" class="header">
-        <div class="header-text">Gemster</div>
+    <div id="header" class="header" style="width: 100%; height: 115px; margin: auto auto; text-align: center;">
+        <img src="../img/logo.png" width="420px" alt="Gemster Logo" style="margin:auto auto; z-index: 42;"/>
     </div>
 </header>
 
 <div role="main" style="width: 100%; min-width: 1000px; height: 100%; margin: auto auto; background-color: white; text-align: left;background-color: #d3d3d3;"">
-    <div style="width: 600px; margin: auto auto; padding: 10px;">
+    <div style="width: 700px; margin: auto auto; padding: 10px;">
 
         <div id="main-container" style="margin-top: 10px;">
 
@@ -128,6 +128,7 @@ chromium.org/developers/how-tos/chrome-frame-getting-started -->
 
                                 <?=$str?>          <img id="loading" src="img/ajax-load.gif" width="16" height="16" alt="loading" /></td>
                         </tr>
+
                     </table>
                 </form>
                 <?=$success?>
@@ -145,6 +146,9 @@ chromium.org/developers/how-tos/chrome-frame-getting-started -->
             <td class="footer-column">
                 <a class="footer-link" href="../about/">About</a>
             </td>
+            <td class="footer-column">
+                            <a class="footer-link" href="../faq/">FAQ</a>
+                        </td>
             <td class="footer-column">
                 <a class="footer-link" href="../promoter/">Promoters</a>
             </td>

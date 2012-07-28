@@ -3,9 +3,9 @@
 }
 
 .clouds {
-    height:500px;
+    height:450px;
     width: 550px;
-    margin: auto auto;
+    margin: 10px auto;
     background-color:#fff;
     border-bottom: 1px solid #c5c5c5;
 }
@@ -20,12 +20,11 @@
 
 .under-clouds {
     width: 450px;
-    margin: auto auto;
+    margin: 0px auto;
 }
 
 .download-button {
     height:100px;
-    margin: auto auto;
     vertical-align: middle;
 }
 
@@ -48,9 +47,9 @@
     height: 21px;
     line-height: 21px;
     margin-bottom: 0px;
-    margin-left: 70px;
+    margin-left: 20px;
     margin-right: 0px;
-    margin-top: 35px;
+    margin-top: 0px;
     overflow-y: visible;
     padding-bottom: 14px;
     padding-left: 15px;
@@ -80,7 +79,7 @@
     padding: 15px 0px 0px 28px;
     text-align: left;
     margin-top: -205px;
-    margin-left: 300px;
+    margin-left: 250px;
     z-index: 42;
 }
 
@@ -97,8 +96,8 @@
 .social-plug-in {
     height:100px;
     /*margin: auto auto;*/
-    margin-left: -10px;
-    margin-top: 20px;
+    margin-left: 0px;
+    margin-top: 0px;
 }
 
 .iphone {
@@ -108,13 +107,13 @@
     width: 383px;
     height: 768px;
     position: absolute;
-    /*margin: -65px 50px;*/
+    margin: -65px 50px;
 }
 
 .phones {
     height:480px;
     width: 320px;
-    /*margin: -640px 83px;*/
+    margin: 64px 83px;
 }
 
 .phone {

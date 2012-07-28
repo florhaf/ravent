@@ -47,8 +47,6 @@
     <!-- Mobile viewport optimized: h5bp.com/viewport -->
     <meta name="viewport" content="width=device-width">
 
-    <!-- Place favicon.ico and apple-touch-icon.png in the root directory: mathiasbynens.be/notes/touch-icons -->
-
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/common.css">
     <link rel="stylesheet" href="css/mainpage.css">
@@ -57,6 +55,10 @@
           type="text/css"/>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+
+    <script type="text/javascript">var switchTo5x=true;</script>
+    <script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
+    <script type="text/javascript">stLight.options({publisher: "d14cad4a-5dee-4b3f-bfc8-66d7a313d7ca"}); </script>
 
 </head>
 <body style="background-color: #3b79ac;">
@@ -67,202 +69,149 @@ chromium.org/developers/how-tos/chrome-frame-getting-started -->
     to experience this site.</p><![endif]-->
 <header>
     <div class="header">
-        <img src="img/logo.png" width="400px" alt="Gemster Logo" style="margin-left: 240px;"/>
-        <!--<div class="header-text">Gemster</div>-->
+        <img src="img/logo.png" width="450px" alt="Gemster Logo" style="margin-left: 240px; z-index: 42;"/>
     </div>
 </header>
 
-<div role="main" style="width: 100%; min-width: 1000px; height: 800px; margin: auto auto; background-color: white;">
+<div role="main" style="width: 100%; min-width: 1000px; height: 750px; margin: 25px auto; background-color: white;">
 
-    <div style="float: left;">
-        <a id="left" class="arrow-left"></a>
-    </div>
-    <div style="float: left;">
-        <div id="clouds" class="clouds">
-            <div id="cloud1" class="cloud">
-                <h1 style="color: #376c98;">Find Events That Suits You</h1>
-                <img src="img/Cloud1.png" alt="events, friends, promoter, parties, chill, search, rate, socialize"/>
-            </div>
-            <div id="cloud2" class="cloud">
-                <h1 style="color: #376c98;">Engage with Local Events Around You</h1>
-                <img src="img/Cloud2.png" alt="theatre, club, bar, entertainment"/>
-            </div>
-            <div id="cloud3" class="cloud">
-                <h1 style="color: #376c98;">Share Events With Your Friends</h1>
-                <img src="img/Cloud3.png" alt="drop a gem, saturday night, places, nightlife, guest"/>
-            </div>
-            <div id="cloud4" class="cloud">
-                <h1 style="color: #376c98;">Drop Gems</h1>
-                <img src="img/Cloud4.png" alt="events, friends, promoter, parties, chill, search, rate, socialize"/>
-            </div>
-        </div>
-        <div id="under-clouds">
-            <div class="social-plug-in" style="float: left;">
-                <iframe src="http://www.facebook.com/plugins/facepile.php?
-                    app_id=299292173427947" scrolling="no" frameborder="0" style="border:none;
-                    overflow:hidden; width:250px; height: 100px;" allowTransparency="true"></iframe>
-                <!--<iframe src="//www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2Fpages%2FGemster%2F395304430527422&amp;send=false&amp;layout=standard&amp;width=200&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=35&amp;appId=134120316726672"-->
-                <!--scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:200px; height:42px;" allowTransparency="true"></iframe>-->
-            </div>
-            <div class="download-button" style="float: left;">
-                <a id="button-get-the-app" href="#" class="button-get-the-app">Get the app</a>
-            </div>
-            <div id="form-get-the-app" class="form-get-the-app" style="float: left;">
-                <div id="form-get-the-app-send-text">
-                    Open mobile safari and go to<br/>gemsterapp.com or<br/><span
-                        style="font-size: 17px; color: white;"><b>text it to your phone...</b></span><br/><br/>
-                    <span style="font-size: 12px">Phone Number</span>
-                    <input class="twitterStyleTextbox" placeholder="##########"/>
-                    <button id="button-send-text" class="button-send-text"></button>
+    <table style="width: 100%;">
+        <tr>
+            <td class="column" style="width: 8%;">
+                <a id="left" class="arrow-left"></a>
+            </td>
+            <td class="column" style="width: 50%;">
+
+
+                <div id="clouds" class="clouds">
+                    <div id="cloud1" class="cloud">
+                        <h1 style="color: #376c98; margin-bottom: 30px;">Engage with Your Local Events</h1>
+                        <img src="img/Cloud1.png"
+                             alt="events, friends, promoter, parties, chill, search, rate, socialize"/>
+                    </div>
+                    <div id="cloud2" class="cloud">
+                        <h1 style="color: #376c98;">Entertainment Provider</h1>
+                        <img src="img/Cloud2.png" alt="theatre, club, bar, entertainment"/>
+                    </div>
+                    <div id="cloud3" class="cloud">
+                        <h1 style="color: #376c98;">Share Events With Your Friends</h1>
+                        <img src="img/Cloud3.png" alt="drop a gem, saturday night, places, nightlife, guest"/>
+                    </div>
+                    <div id="cloud4" class="cloud">
+                        <h1 style="color: #376c98;">Drop Gems</h1>
+                        <img src="img/Cloud4.png"
+                             alt="events, friends, promoter, parties, chill, search, rate, socialize"/>
+                    </div>
                 </div>
-                <div id="form-get-the-app-sent" style="text-align: center; margin-top: 10px; margin-left: -50px;">
-                    A download link has been sent<br/>to your mobile phone.
+
+                <div style="margin-top: 0px; margin-bottom: 0px;">
+                    <img id="step1" src="img/currentStep.png" style="width: 24px;"/>
+                    <img id="step2" src="img/currentStep.png" style="width: 24px;"/>
+                    <img id="step3" src="img/currentStep.png" style="width: 24px;"/>
+                    <img id="step4" src="img/currentStep.png" style="width: 24px;"/>
                 </div>
-            </div>
-        </div>
-        <div id="steps">
-            <img id="step1" src="img/currentStep.png" style="width: 42px;"/>
-            <img id="step2" src="img/currentStep.png" style="width: 42px;"/>
-            <img id="step3" src="img/currentStep.png" style="width: 42px;"/>
-            <img id="step4" src="img/currentStep.png" style="width: 42px;"/>
-        </div>
-    </div>
-    <div style="float: left;">
-        <div id="iphone" class="iphone">
-        </div>
-        <div id="phones" class="phones">
-            <div id="phone1" class="phone">
-                <img src="img/list.PNG" width="320" alt="iphone gemster local events"/>
-            </div>
-            <div id="phone2" class="phone">
-                <img src="img/details.PNG" width="320" alt="iphone gemster engage with events"/>
-            </div>
-            <div id="phone3" class="phone">
-                <img src="img/friendDetails.PNG" width="320"
-                     alt="events, friends, promoter, parties, chill, search, rate, socialize"/>
-            </div>
-            <div id="phone4" class="phone">
-                <img src="img/dropGem.PNG" width="320" alt="drop a gem, saturday night, places, nightlife, guest"/>
-            </div>
-        </div>
-    </div>
-    <div style="float: left;">
-        <a id="right" class="arrow-right"></a>
-    </div>
+                <table class="under-clouds" style="width: 560px;">
+                    <tr>
+                        <td>
+                            <img src="img/appstore.png" alt="appstore ios mobile apps iphone" style="width: 150px; margin-top: 30px;" />
+                        </td>
+                        <td style="width: 50%; text-align: center;">
+                            <div class="download-button" style="margin-top: 30px;">
+                                <a id="button-get-the-app" href="#" class="button-get-the-app">Get the app</a>
+                            </div>
+                            <div id="form-get-the-app" class="form-get-the-app">
+                                <div id="form-get-the-app-send-text">
+                                    Open mobile safari and go to<br/>m.gemsterapp.com or<br/><span
+                                        style="font-size: 17px; color: white;"><b>email it to your
+                                    phone...</b></span><br/><br/>
+                                    <span style="font-size: 12px">Email Address</span>
+                                    <input id="email" class="twitterStyleTextbox" placeholder="##########"/>
+                                    <button id="button-send-text" class="button-send-text"></button>
+                                </div>
+                                <div id="form-get-the-app-sent"
+                                     style="text-align: center; margin-top: 10px; margin-left: -50px;">
+                                    A download link has been sent<br/>to your mobile phone.
+                                </div>
+                            </div>
+                        </td>
 
-
-    <!--<table style="width: 100%;">-->
-    <!--<tr>-->
-    <!--<td class="column" style="width: 8%;">-->
-    <!--<a id="left" class="arrow-left"></a>-->
-    <!--</td>-->
-    <!--<td class="column" style="width: 50%;">-->
-    <!--<div id="clouds" class="clouds">-->
-    <!--<div id="cloud1" class="cloud">-->
-    <!--<h1 style="color: #376c98;">Find Events That Suits You</h1>-->
-    <!--<img src="img/Cloud1.png" alt="events, friends, promoter, parties, chill, search, rate, socialize" />-->
-    <!--</div>-->
-    <!--<div id="cloud2" class="cloud">-->
-    <!--<h1 style="color: #376c98;">Engage with Local Events Around You</h1>-->
-    <!--<img src="img/Cloud2.png" alt="theatre, club, bar, entertainment" />-->
-    <!--</div>-->
-    <!--<div id="cloud3" class="cloud">-->
-    <!--<h1 style="color: #376c98;">Share Events With Your Friends</h1>-->
-    <!--<img src="img/Cloud3.png" alt="drop a gem, saturday night, places, nightlife, guest" />-->
-    <!--</div>-->
-    <!--<div id="cloud4" class="cloud">-->
-    <!--<h1 style="color: #376c98;">Drop Gems</h1>-->
-    <!--<img src="img/Cloud4.png" alt="events, friends, promoter, parties, chill, search, rate, socialize" />-->
-    <!--</div>-->
-    <!--&lt;!&ndash;<div id="cloud5" class="cloud">&ndash;&gt;-->
-    <!--&lt;!&ndash;<img src="img/Cloud5.png" />&ndash;&gt;-->
-    <!--&lt;!&ndash;</div>&ndash;&gt;-->
-    <!--</div>-->
-
-    <!--<table class="under-clouds">-->
-    <!--<tr>-->
-    <!--<td style="width: 50%;">-->
-    <!--<div class="social-plug-in">-->
-    <!--<table>-->
-    <!--<tr>-->
-    <!--<td>-->
-    <!--<iframe src="http://www.facebook.com/plugins/facepile.php?-->
-    <!--app_id=299292173427947" scrolling="no" frameborder="0" style="border:none;-->
-    <!--overflow:hidden; width:250px; height: 100px;" allowTransparency="true"></iframe>-->
-    <!--</td>-->
-    <!--</tr>-->
-    <!--<tr>-->
-    <!--<td>-->
-    <!--&lt;!&ndash;<iframe src="//www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2Fpages%2FGemster%2F395304430527422
+                    </tr>
+                    <tr style="border-top: 1px solid lightGray; width: 100%;">
+                        <td style="width: 50%;">
+                            <div class="social-plug-in">
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <iframe src="http://www.facebook.com/plugins/facepile.php?
+    app_id=299292173427947" scrolling="no" frameborder="0" style="border:none;
+    overflow:hidden; width:250px; height: 100px;" allowTransparency="true"></iframe>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                        <td style="text-align: right;">
+                            <div style="margin-top: 5px; margin-left: -5px;">
+                                <span class='st_facebook_large' displayText='Facebook'></span>
+                                <span class='st_twitter_large' displayText='Tweet'></span>
+                                <span class='st_sharethis_large' displayText='ShareThis'></span>
+                                <span class='st_linkedin_large' displayText='LinkedIn'></span>
+                                <span class='st_pinterest_large' displayText='Pinterest'></span>
+                                <span class='st_email_large' displayText='Email'></span>
+                            </div>
+                            <iframe src="//www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2Fpages%2FGemster%2F395304430527422
     &amp;send=false&amp;layout=standard&amp;width=200&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;
-    font&amp;height=35&amp;appId=134120316726672"&ndash;&gt;-->
-    <!--&lt;!&ndash;scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:200px; height:42px;" allowTransparency="true"></iframe>&ndash;&gt;
-    -->
-    <!--</td>-->
-    <!--</tr>-->
-    <!--</table>-->
-    <!--</div>-->
-    <!--</td>-->
-    <!--<td style="width: 50%;">-->
-    <!--<div class="download-button">-->
-    <!--<a id="button-get-the-app" href="#" class="button-get-the-app">Get the app</a>-->
-    <!--</div>-->
-    <!--<div id="form-get-the-app" class="form-get-the-app">-->
-    <!--<div id="form-get-the-app-send-text">-->
-    <!--Open mobile safari and go to<br />gemsterapp.com/download or<br /><span style="font-size: 17px; color: white;"><b>text it to your phone...</b></span><br /><br />-->
-    <!--<span style="font-size: 12px">Phone Number</span>-->
-    <!--<input class="twitterStyleTextbox" placeholder="##########" />-->
-    <!--<button id="button-send-text" class="button-send-text"></button>-->
-    <!--</div>-->
-    <!--<div id="form-get-the-app-sent" style="text-align: center; margin-top: 10px; margin-left: -50px;">-->
-    <!--A download link has been sent<br />to your mobile phone.-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--</td>-->
-    <!--</tr>-->
-    <!--</table>-->
-    <!--<div style="margin-top: 20px; margin-bottom: 40px;">-->
-    <!--<img id="step1" src="img/currentStep.png" style="width: 42px;" />-->
-    <!--<img id="step2" src="img/currentStep.png" style="width: 42px;" />-->
-    <!--<img id="step3" src="img/currentStep.png" style="width: 42px;" />-->
-    <!--<img id="step4" src="img/currentStep.png" style="width: 42px;" />-->
-    <!--&lt;!&ndash;<img id="step5" src="img/currentStep.png" style="width: 42px;" />&ndash;&gt;-->
-    <!--</div>-->
-    <!--</td>-->
-    <!--<td class="column" style="width: 40%; height: 700px; vertical-align: top;">-->
-    <!--<div id="iphone" class="iphone">-->
-    <!--</div>-->
-    <!--<div id="phones" class="phones">-->
-    <!--<div id="phone1" class="phone">-->
-    <!--<img src="img/list.PNG" width="320" alt="iphone gemster local events" />-->
-    <!--</div>-->
-    <!--<div id="phone2" class="phone">-->
-    <!--<img src="img/details.PNG" width="320"  alt="iphone gemster engage with events"/>-->
-    <!--</div>-->
-    <!--<div id="phone3" class="phone">-->
-    <!--<img src="img/friendDetails.PNG" width="320" alt="events, friends, promoter, parties, chill, search, rate, socialize" />-->
-    <!--</div>-->
-    <!--<div id="phone4" class="phone">-->
-    <!--<img src="img/dropGem.PNG" width="320"  alt="drop a gem, saturday night, places, nightlife, guest" />-->
-    <!--</div>-->
-    <!--&lt;!&ndash;<div id="phone5" class="phone">&ndash;&gt;-->
-    <!--&lt;!&ndash;screenshot 5&ndash;&gt;-->
-    <!--&lt;!&ndash;</div>&ndash;&gt;-->
-    <!--</div>-->
+    font&amp;height=35&amp;appId=134120316726672"scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:200px; height:42px;" allowTransparency="true"></iframe>
 
-    <!--</td>-->
-    <!--<td class="column" style="width: 8%">-->
-    <!--<a id="right" class="arrow-right"></a>-->
-    <!--</td>-->
-    <!--</tr>-->
-    <!--</table>-->
+                        </td>
+                    </tr>
+                </table>
+
+
+
+
+
+            </td>
+            <td class="column" style="width: 40%; height: 700px; vertical-align: top;">
+                <div id="iphone" class="iphone">
+                </div>
+                <div id="phones" class="phones">
+                    <div id="phone1" class="phone">
+                        <img src="img/phone1.png" width="320" alt="iphone gemster local events"/>
+                    </div>
+                    <div id="phone2" class="phone">
+                        <img src="img/phone2.png" width="320" alt="iphone gemster engage with events"/>
+                    </div>
+                    <div id="phone3" class="phone">
+                        <img src="img/phone3.png" width="320"
+                             alt="events, friends, promoter, parties, chill, search, rate, socialize"/>
+                    </div>
+                    <div id="phone4" class="phone">
+                        <img src="img/phone4.png" width="320"
+                             alt="drop a gem, saturday night, places, nightlife, guest"/>
+                    </div>
+                </div>
+
+            </td>
+            <td class="column" style="width: 8%">
+                <a id="right" class="arrow-right"></a>
+            </td>
+        </tr>
+    </table>
 </div>
 
 <footer class="footer">
-    <table style="margin: 5px auto;">
+    <table style="margin: -25px auto;">
         <tr>
             <td class="footer-column">
                 <a class="footer-link" href="about/">About</a>
+            </td>
+            <td class="footer-column">
+                <a class="footer-link" href="../faq/">FAQ</a>
             </td>
             <td class="footer-column">
                 <a class="footer-link" href="promoter/">Promoters</a>
@@ -305,9 +254,9 @@ chromium.org/developers/how-tos/chrome-frame-getting-started -->
 
     var step = 0;
 
-    var steps = [$("#step1"), $("#step2"), $("#step3"), $("#step4")/*, $("#step5")*/];
-    var clouds = [$("#cloud1"), $("#cloud2"), $("#cloud3"), $("#cloud4"), $("#cloud5")];
-    var phones = [$("#phone1"), $("#phone2"), $("#phone3"), $("#phone4"), $("#phone5")];
+    var steps = [$("#step1"), $("#step2"), $("#step3"), $("#step4")];
+    var clouds = [$("#cloud1"), $("#cloud2"), $("#cloud3"), $("#cloud4")];
+    var phones = [$("#phone1"), $("#phone2"), $("#phone3"), $("#phone4")];
 
     $("document").ready(function () {
 
@@ -338,6 +287,8 @@ chromium.org/developers/how-tos/chrome-frame-getting-started -->
     });
 
     $("#button-send-text").click(function () {
+
+        jQuery.ajax('http://gemsterapp.com/php/sendMailFromGemsterApp.php?email=' + $("#email").val());
 
         $("#form-get-the-app-send-text").fadeOut()
         $("#form-get-the-app-sent").fadeIn();
@@ -381,11 +332,7 @@ chromium.org/developers/how-tos/chrome-frame-getting-started -->
         phones[step].show('slide', { direction:'right' }, 500);
     });
 
-</script>
 
-<!-- Asynchronous Google Analytics snippet. Change UA-XXXXX-X to be your site's ID.
-mathiasbynens.be/notes/async-analytics-snippet -->
-<script>
     var _gaq = [
         ['_setAccount', 'UA-XXXXX-X'],
         ['_trackPageview']
