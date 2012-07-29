@@ -1,3 +1,6 @@
+::-moz-selection { background: transparent; text-shadow: none; }
+::selection { background: transparent; text-shadow: none; }
+
 .header-text {
     margin-left: -200px;
 }

@@ -1,3 +1,7 @@
+.background-dark {
+    background: -webkit-linear-gradient(top, #0c203d 1%, #00203b 3%, #002e54 11%);
+}
+
 .x-toolbar {
     background-image: url(../images/grayNavbar@2x.png);
     background-repeat: no-repeat;

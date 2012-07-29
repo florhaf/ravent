@@ -22,67 +22,28 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
+      <file leaf-file-name="app.css" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/mobile/resources/css/app.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="2" column="1" selection-start="103" selection-end="103" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="app.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mobile/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="66" column="28" selection-start="2077" selection-end="2077" vertical-scroll-proportion="0.0">
+            <state line="46" column="124" selection-start="1191" selection-end="1191" vertical-scroll-proportion="0.0">
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mobile/index.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="17" column="0" selection-start="617" selection-end="617" vertical-scroll-proportion="-10.625">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ContactForm.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mobile/promoter/app/controller/ContactForm.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="26" column="47" selection-start="695" selection-end="695" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="submit.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mobile/promoter/php/submit.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="13" column="0" selection-start="168" selection-end="168" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/index.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="318" column="62" selection-start="14677" selection-end="14677" vertical-scroll-proportion="-13.708333">
-              <folding>
-                <marker date="1343464159000" expanded="true" signature="2792:3025" placeholder="..." />
-                <marker date="1343464159000" expanded="true" signature="2860:2898" placeholder="..." />
-              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="index.html" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/faq/index.html">
+        <entry file="file://$PROJECT_DIR$/mobile/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="55" column="86" selection-start="3789" selection-end="3789" vertical-scroll-proportion="0.37187126">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="class.phpmailer.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mobile/promoter/php/phpmailer/class.phpmailer.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="30" column="40" selection-start="2028" selection-end="2028" vertical-scroll-proportion="0.0">
+            <state line="22" column="51" selection-start="773" selection-end="773" vertical-scroll-proportion="0.38732395">
               <folding />
             </state>
           </provider>
@@ -98,9 +59,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/test.html" />
-        <option value="$PROJECT_DIR$/css/style.css" />
-        <option value="$PROJECT_DIR$/css/mainpage.css" />
         <option value="$PROJECT_DIR$/mobile/promoter/app/view/ContactForm.js" />
         <option value="$PROJECT_DIR$/about/index.html" />
         <option value="$PROJECT_DIR$/contactus/index.php" />
@@ -108,12 +66,15 @@
         <option value="$PROJECT_DIR$/promoter/index.php" />
         <option value="$PROJECT_DIR$/css/common.css" />
         <option value="$PROJECT_DIR$/php/sendMailFromGemsterApp.php" />
-        <option value="$PROJECT_DIR$/mobile/app.js" />
-        <option value="$PROJECT_DIR$/mobile/index.html" />
         <option value="$PROJECT_DIR$/mobile/promoter/app/controller/ContactForm.js" />
         <option value="$PROJECT_DIR$/mobile/promoter/php/submit.php" />
-        <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/faq/index.html" />
+        <option value="$PROJECT_DIR$/index.html" />
+        <option value="$PROJECT_DIR$/css/style.css" />
+        <option value="$PROJECT_DIR$/css/mainpage.css" />
+        <option value="$PROJECT_DIR$/mobile/resources/css/app.css" />
+        <option value="$PROJECT_DIR$/mobile/app.js" />
+        <option value="$PROJECT_DIR$/mobile/index.html" />
       </list>
     </option>
   </component>
@@ -186,7 +147,75 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="mobile" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mobile" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mobile" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="css" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="faq" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="css" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -305,115 +334,101 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/favicon.ico">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/about/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="79" column="12" selection-start="5379" selection-end="5485" vertical-scroll-proportion="0.5351609">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/contactus/index.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="145" column="29" selection-start="6889" selection-end="6889" vertical-scroll-proportion="0.4345307">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/privacypolicy/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="54" column="17" selection-start="2757" selection-end="2757" vertical-scroll-proportion="0.76877236">
-          <folding />
-        </state>
+        <state line="54" column="17" selection-start="2757" selection-end="2757" vertical-scroll-proportion="0.76877236" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/promoter/index.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="150" column="29" selection-start="7224" selection-end="7224" vertical-scroll-proportion="0.66975665">
-          <folding />
-        </state>
+        <state line="150" column="29" selection-start="7224" selection-end="7224" vertical-scroll-proportion="0.66975665" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/css/common.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="49" column="13" selection-start="920" selection-end="920" vertical-scroll-proportion="0.80479455">
-          <folding />
-        </state>
+        <state line="49" column="13" selection-start="920" selection-end="920" vertical-scroll-proportion="0.80479455" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/mobile/promoter/app/view/ContactForm.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="19" selection-start="790" selection-end="790" vertical-scroll-proportion="0.45191193">
-          <folding />
-        </state>
+        <state line="26" column="19" selection-start="790" selection-end="790" vertical-scroll-proportion="0.45191193" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/php/submit.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-1.0719178">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-1.0719178" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/php/sendMailFromGemsterApp.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="5" selection-start="95" selection-end="95" vertical-scroll-proportion="0.06849315">
+        <state line="4" column="5" selection-start="95" selection-end="95" vertical-scroll-proportion="0.06849315" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mobile/promoter/app/controller/ContactForm.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="26" column="47" selection-start="695" selection-end="695" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mobile/promoter/php/submit.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="0" selection-start="168" selection-end="168" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="40" column="30" selection-start="1420" selection-end="1420" vertical-scroll-proportion="0.0">
+          <folding>
+            <marker date="1343508972000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1343508972000" expanded="true" signature="-1:-1" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/css/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="44" column="0" selection-start="1595" selection-end="1595" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mobile/app.js">
+    <entry file="file://$PROJECT_DIR$/faq/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="66" column="28" selection-start="2077" selection-end="2077" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mobile/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="0" selection-start="617" selection-end="617" vertical-scroll-proportion="-10.625">
+        <state line="61" column="77" selection-start="4091" selection-end="4091" vertical-scroll-proportion="0.017878426">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/mobile/promoter/php/phpmailer/class.phpmailer.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="30" column="40" selection-start="2028" selection-end="2028" vertical-scroll-proportion="0.0">
+        <state line="30" column="40" selection-start="2028" selection-end="2028" vertical-scroll-proportion="0.017381229">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mobile/promoter/app/controller/ContactForm.js">
+    <entry file="file://$PROJECT_DIR$/css/mainpage.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="47" selection-start="695" selection-end="695" vertical-scroll-proportion="0.0">
+        <state line="26" column="1" selection-start="487" selection-end="487" vertical-scroll-proportion="0.44520548">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mobile/promoter/php/submit.php">
+    <entry file="file://$PROJECT_DIR$/mobile/resources/css/app.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="0" selection-start="168" selection-end="168" vertical-scroll-proportion="0.0">
+        <state line="2" column="1" selection-start="103" selection-end="103" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
+    <entry file="file://$PROJECT_DIR$/mobile/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="318" column="62" selection-start="14677" selection-end="14677" vertical-scroll-proportion="-13.708333">
-          <folding>
-            <marker date="1343464159000" expanded="true" signature="2792:3025" placeholder="..." />
-            <marker date="1343464159000" expanded="true" signature="2860:2898" placeholder="..." />
-          </folding>
+        <state line="46" column="124" selection-start="1191" selection-end="1191" vertical-scroll-proportion="0.0">
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/faq/index.html">
+    <entry file="file://$PROJECT_DIR$/mobile/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="55" column="86" selection-start="3789" selection-end="3789" vertical-scroll-proportion="0.37187126">
+        <state line="22" column="51" selection-start="773" selection-end="773" vertical-scroll-proportion="0.38732395">
           <folding />
         </state>
       </provider>

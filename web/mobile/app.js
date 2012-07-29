@@ -16,6 +16,7 @@ Ext.application({
 
         Ext.Viewport.add({
             scrollable: true,
+            cls : 'background-dark',
             items : [{
                 xtype : 'toolbar',
                 docked : 'top',
@@ -31,6 +32,7 @@ Ext.application({
 
 
             items : [
+
 //                {
 //                html : '<div class="header"><div class="header-text">Gemster</div></div>',
 //                width: '100%',
@@ -41,15 +43,17 @@ Ext.application({
 //                html : '<br />'
 //            },
                 {
-                    html : '<img src="resources/images/cover.png" width="320">'
+
+                    html : '<img src="resources/images/logo+G.png" style="min-width: 320px; width: 320px; margin-top: -20px;">'
                 },
                 {
 
                 xtype : 'button',
+                    margin: '-50px auto 0 auto',
                 ui : 'confirm',
-                text : (Ext.os.is.ios) ? 'Get the app' : 'Gemster is only available for iOS, for now...',
+                text : (Ext.os.is.ios) ? 'Get the app' : 'Gemster is for iOS only',
                 disabled : !(Ext.os.is.ios),
-                width : '90%',
+                width : '300px',
                 listeners : {
                     tap : function() {
 
@@ -60,13 +64,13 @@ Ext.application({
 //                    '<a href="itms-services://?action=download-manifest&url=http://beta.gemsterapp.com/Gemster.plist">Get the app</a>' :
 //                    '<div style="color: #a9a9a9; text-align: center; width: 100%;">Gemster is only available on iOS, for now...</div>'
             },{
-                html : '<br />'
-            },{
+                    html: '<br />'
+                },{
 
                 xtype : 'button',
                 ui : 'action',
                 text: 'Promoters',
-                width : '90%',
+                width : '300px',
                 listeners : {
                     tap : function() {
                         window.location = "promoter/";
