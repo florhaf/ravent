@@ -28,7 +28,7 @@ public class Events extends ServerResource {
 			String searchRadius		= getQuery().getValues("radius");
 			String searchLimit 		= getQuery().getValues("limit");
 			
-			searchLimit = "100";
+			searchLimit = "200";
 			
 			ArrayList<Model> events;
 			

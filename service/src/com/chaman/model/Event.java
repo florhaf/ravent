@@ -197,8 +197,11 @@ public class Event extends Model implements Serializable {
 		String previous_venue_time = "";
 		
         for (EventLocationCapable e : l) {
+
         	
         	if (actual_time < e.getTimeStampEnd()) { //if event not in the past
+        		
+        		
         		try {
             	
         			event = (Event) syncCache.get(e.getEid());
@@ -209,6 +212,11 @@ public class Event extends Model implements Serializable {
                     		List<Event> fbevents 	= client.executeQuery(query, Event.class);
                     	
                     		if (fbevents != null && fbevents.size() > 0) {
+                    			
+                    			if (e.getEid() == 370192376386143L) {
+                            		
+                            		log.severe("FOUND FB EVENT");
+                            	}
                 	
                     			event = fbevents.get(0);
                     			event.venue_id = JSON.GetValueFor("id", event.venue);
@@ -230,10 +238,11 @@ public class Event extends Model implements Serializable {
                 	}
               			
                 	if (event != null && (event.venue_category == null || !event.venue_category.equals("city"))) {
-                		
+                	
                 		if (!previous_venue_time.equals(event.venue_id + event.start_time)) {  // to remove duplicate events
                 		
                 			if (event.Format(timeZoneInMinutes, now, searchTimeFrame)){
+                				
                 				
                     			event.latitude 	= Double.toString(e.getLatitude());
                     			event.longitude = Double.toString(e.getLongitude());
@@ -251,11 +260,11 @@ public class Event extends Model implements Serializable {
                 	} 
         		} catch (Exception ex ) {/*retry will lower the speed*/}
         	} else { // event in the past
-					
+				
         		dao.ofy().delete(e); //clean the datastore by removing old events TODO: call a task doesn't have to be deleted right away
         	}
         }
-
+        
         return result;    
 	}
 
