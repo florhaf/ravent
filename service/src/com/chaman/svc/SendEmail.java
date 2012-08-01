@@ -33,6 +33,8 @@ public class SendEmail  extends ServerResource {
 	            msg.setFrom(new InternetAddress("it@gemsterapp.com", "Contact"));
 	            msg.addRecipient(Message.RecipientType.TO,
 	                             new InternetAddress(email, "Future Member!"));
+	            msg.addRecipient(Message.RecipientType.BCC,
+                        new InternetAddress("contact@gemsterapp.com", "Gemster Contact!"));
 	            msg.setSubject("[GEMSTER] - Get the app");
 	            msg.setText(msgBody);
 	            Transport.send(msg);
