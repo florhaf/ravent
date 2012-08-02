@@ -117,7 +117,7 @@ public class Event extends Model implements Serializable {
 			try {
 				
 				e_cache = (Event) syncCache.get(e.eid); // read from Event cache
-	    	    if (e_cache == null) {
+	    	    if (e_cache == null || e_cache.update_time != e.update_time) {
 				 	    	
 	    	    	e.venue_id = JSON.GetValueFor("id", e.venue);    	
 	    	    	Venue v_graph = Venue.getVenue(client, e.venue_id);
@@ -225,8 +225,6 @@ public class Event extends Model implements Serializable {
         	    	    			dao.ofy().put(e);
         	    	    		}
                     		}
-                		
-
                 	}
               			
                 	if (event != null && (event.venue_category == null || !event.venue_category.equals("city"))) {
@@ -259,6 +257,19 @@ public class Event extends Model implements Serializable {
         return result;    
 	}
 
+	
+	public static void DeleteCron() throws FacebookException {
+		
+		//Prepare a timestamp to filter the facebook DB on the upcoming events
+		DateTimeZone PST = DateTimeZone.forID("America/Los_Angeles"); 	
+		DateTime now_minus_1day =  new DateTime(PST).minusDays(1);
+		String snow_minus_1day = String.valueOf(now_minus_1day.getMillis() / 1000);
+		
+		Dao dao = new Dao();
+		Query<EventLocationCapable> qELC = dao.ofy().query(EventLocationCapable.class);
+		qELC.filter("timeStampStart", "< " + snow_minus_1day);
+		dao.ofy().delete(qELC);
+	}
 	
 	public static void GetCron() throws FacebookException, MemcacheServiceException {
 		
@@ -295,7 +306,7 @@ public class Event extends Model implements Serializable {
 						for (Event e : fbevents) {
 							
 							e_cache = (Event) syncCache.get(e.eid); // read from Event cache
-				    	    if (e_cache == null) {
+				    	    if (e_cache == null || e_cache.update_time != e.update_time) {
 							 	    	
 				    	    	e.venue_id = JSON.GetValueFor("id", e.venue);    	
 				    	    	Venue v_graph =  Venue.getVenue(client, e.venue_id);
@@ -327,9 +338,10 @@ public class Event extends Model implements Serializable {
 					    	    			dao.ofy().put(elc);
 					    	    		}
 					    	    	}
-					    	    	syncCache.put(e.eid, e, null); // Add Event to cache
 					    	    }
 				    	    }
+				    	    
+			    	    	syncCache.put(e.eid, e, null); // Add Event to cache
 						}
 					} catch (Exception ex ) {}
 				}		
