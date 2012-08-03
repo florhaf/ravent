@@ -496,13 +496,6 @@ public class Event extends Model implements Serializable {
 			}
 		}
 		
-		if (this.featured != null && this.featured.length() > 0) {
-			
-			this.group = "0";
-			this.groupTitle = "Featured";
-		} else if (this.group.equals("a") && this.isNow(now, TZ, this.dtStart.toDateTime(PST), this.dtEnd.toDateTime(PST), PST) < 0) {
-			return false;
-		}
 		
 		if (this.filter != null && (this.filter.equals("Other") || this.filter.equals("Entertain"))) {
 			
@@ -551,7 +544,15 @@ public class Event extends Model implements Serializable {
 		tickets.add("http://www.ticketmaster.com/event/12004788E26339A4?artistid=837473&majorcatid=10002&minorcatid=207");
 		tickets.add("http://www.ticketmaster.com/event/12004788E26339A4?artistid=837473&majorcatid=10002&minorcatid=207");
 		this.ticket_link = tickets.get(r.nextInt(14));
+	
+		if (this.featured != null && this.featured.length() > 0) {
 			
+			this.group = "0";
+			this.groupTitle = "Featured";
+		} else if (this.group.equals("a") && this.isNow(now, TZ, this.dtStart.toDateTime(PST), this.dtEnd.toDateTime(PST), PST) < 0) {
+			return false;
+		}
+		
 		return res;
 	}
 	
