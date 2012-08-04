@@ -366,10 +366,10 @@ static controllers_events_List_p2p *_ctrl;
 
 - (void)onLoadEvents:(NSArray *)objects
 {
-    if ([objects count] == 0) {
-     
-        [[NSBundle mainBundle] loadNibNamed:@"views_Empty_EventP2P" owner:self options:nil];
-    }
+//    if ([objects count] == 0) {
+//     
+//        [[NSBundle mainBundle] loadNibNamed:@"views_Empty_EventP2P" owner:self options:nil];
+//    }
     
     [self onLoadData:objects withSuccess:^ {
 

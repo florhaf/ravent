@@ -1,6 +1,7 @@
 package com.chaman.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import javax.persistence.Id;
 
@@ -53,6 +54,13 @@ public class Vote extends Model implements Serializable  {
 		
 		MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
 		Vote v_cache; 
+		
+		String[] c = new String[] {"", ""};
+		
+		ArrayList<String> l = new ArrayList<String>();
+		l.addAll(c);
+		
+		
 		
 		v_cache = (Vote) syncCache.get(eventid); // read from vote cache
 	    if (v_cache == null) {

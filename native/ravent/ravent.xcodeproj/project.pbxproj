@@ -139,6 +139,7 @@
 		DF16F70B153BCABD002819C2 /* controllers_friends_Following.m in Sources */ = {isa = PBXBuildFile; fileRef = DF16F704153BCABD002819C2 /* controllers_friends_Following.m */; };
 		DF16F70C153BCABD002819C2 /* controllers_friends_People.m in Sources */ = {isa = PBXBuildFile; fileRef = DF16F706153BCABD002819C2 /* controllers_friends_People.m */; };
 		DF16F70D153BCABD002819C2 /* controllers_friends_share.m in Sources */ = {isa = PBXBuildFile; fileRef = DF16F708153BCABD002819C2 /* controllers_friends_share.m */; };
+		DF19116515CD165F004F413F /* views_Footer.xib in Resources */ = {isa = PBXBuildFile; fileRef = DF19116415CD165F004F413F /* views_Footer.xib */; };
 		DF1EE840151D23640037BE6C /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF1EE83F151D23640037BE6C /* MapKit.framework */; };
 		DF1EE843151D24CF0037BE6C /* controllers_events_Events.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1EE842151D24CF0037BE6C /* controllers_events_Events.m */; };
 		DF223E33153DCECE008CD88A /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF223E32153DCECD008CD88A /* CoreLocation.framework */; };
@@ -613,6 +614,7 @@
 		DF16F706153BCABD002819C2 /* controllers_friends_People.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = controllers_friends_People.m; sourceTree = "<group>"; };
 		DF16F707153BCABD002819C2 /* controllers_friends_share.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = controllers_friends_share.h; sourceTree = "<group>"; };
 		DF16F708153BCABD002819C2 /* controllers_friends_share.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = controllers_friends_share.m; sourceTree = "<group>"; };
+		DF19116415CD165F004F413F /* views_Footer.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = views_Footer.xib; sourceTree = "<group>"; };
 		DF1EE83F151D23640037BE6C /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		DF1EE841151D24CF0037BE6C /* controllers_events_Events.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = controllers_events_Events.h; sourceTree = "<group>"; };
 		DF1EE842151D24CF0037BE6C /* controllers_events_Events.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = controllers_events_Events.m; sourceTree = "<group>"; };
@@ -1680,6 +1682,7 @@
 				DF9CED4815841BE5002B1024 /* views_Empty_Generic.xib */,
 				DFAF309B15AFA8E100B1B9C5 /* views_TakeTheTour.xib */,
 				DFA9FC7E15B5E587003F9B5F /* views_FeatureYourEvent.xib */,
+				DF19116415CD165F004F413F /* views_Footer.xib */,
 			);
 			name = views;
 			path = ravent/views;
@@ -2346,6 +2349,7 @@
 				DFF8D31715C3E24E00C028CB /* diamondSmall.png in Resources */,
 				DFF8D31915C3E74700C028CB /* name+logo.png in Resources */,
 				DFF8D31B15C3E9E900C028CB /* facebookButton.png in Resources */,
+				DF19116515CD165F004F413F /* views_Footer.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2576,7 +2580,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: florian haftman";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: florian haftman (247VK6949Z)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/RestKit/Specs/Runner/OCHamcrest\"",
@@ -2593,7 +2597,7 @@
 				);
 				"OTHER_CFLAGS[arch=*]" = "-mthumb";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "29F0FEDE-6840-4B1E-9F8F-8B324858DEFC";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "67C20EBB-AA59-4A4B-B4BF-60479C59B59C";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = NO;
 				USER_HEADER_SEARCH_PATHS = "";
@@ -2606,7 +2610,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: florian haftman";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: florian haftman (247VK6949Z)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/RestKit/Specs/Runner/OCHamcrest\"",
@@ -2623,7 +2627,7 @@
 				);
 				"OTHER_CFLAGS[arch=*]" = "-mthumb";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "29F0FEDE-6840-4B1E-9F8F-8B324858DEFC";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "67C20EBB-AA59-4A4B-B4BF-60479C59B59C";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = NO;
 				USER_HEADER_SEARCH_PATHS = "";

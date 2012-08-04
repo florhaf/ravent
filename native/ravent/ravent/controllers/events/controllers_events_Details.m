@@ -551,10 +551,6 @@ static int _retryCounter;
         
         UIImage *image = [UIImage imageWithContentsOfFile:path];
         
-        
-        
-        
-        
         int device = 1;
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
             device = 1;
@@ -592,8 +588,6 @@ static int _retryCounter;
         
         self.canUseTheSameFrameManyTimes = YES;
         self.canDragMultipleViewsAtOnce = NO;
-        
-        
         
         for (int i = 0; i< device; i++) {
             
@@ -866,14 +860,18 @@ static int _retryCounter;
     if (objects != nil && [objects count] > 0) {
         
         if ([[objects objectAtIndex:0] isKindOfClass:[NSError class]]) {
-            
-            NSError *error = (NSError *)[objects objectAtIndex:0];
-            
-            [YRDropdownView showDropdownInView:[controllers_App instance].view 
-                                         title:@"Error loading gender ratio\n" 
-                                        detail:error.localizedDescription
-                                         image:[UIImage imageNamed:@"dropdown-alert"]
-                                      animated:YES];
+
+            // no need to show an error
+//            NSError *error = (NSError *)[objects objectAtIndex:0];
+//            
+//            [YRDropdownView showDropdownInView:[controllers_App instance].view 
+//                                         title:@"Error loading gender ratio\n" 
+//                                        detail:error.localizedDescription
+//                                         image:[UIImage imageNamed:@"dropdown-alert"]
+//                                      animated:YES];
+            _labelFemaleRatio.text = @"?";
+            _labelMaleRatio.text = @"?";
+            _labelTotalAttendings.text = @"?";
             
         } else {
         
@@ -888,12 +886,13 @@ static int _retryCounter;
             _labelTotalAttendings.text = e.nb_attending;
         }
     } else {
-        
-        [YRDropdownView showDropdownInView:[controllers_App instance].view 
-                                     title:@"Error loading gender ratio\n" 
-                                    detail:@"No stats returned by server"
-                                     image:[UIImage imageNamed:@"dropdown-alert"]
-                                  animated:YES];
+
+        // no need to show an error
+//        [YRDropdownView showDropdownInView:[controllers_App instance].view 
+//                                     title:@"Error loading gender ratio\n" 
+//                                    detail:@"No stats returned by server"
+//                                     image:[UIImage imageNamed:@"dropdown-alert"]
+//                                  animated:YES];
         _labelFemaleRatio.text = @"?";
         _labelMaleRatio.text = @"?";
         _labelTotalAttendings.text = @"?";
@@ -1141,7 +1140,7 @@ static int _retryCounter;
     
 
     _currentNbOfBurst = 0;
-    _maxNbOfBurst = 4;
+    _maxNbOfBurst = 10;
     
     [self animateLightBurst];
     

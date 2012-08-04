@@ -63,30 +63,13 @@
 }
 
 - (void)onLoadFollowings:(NSArray *)objects
-{   
-    if (objects == nil || [objects count] == 0) {
-        
-        if (_isFollowing) {
-            
-            [[NSBundle mainBundle]loadNibNamed:@"views_Empty_Following" owner:self options:nil];
-            
-        } else {
-         
-            [[NSBundle mainBundle]loadNibNamed:@"views_Empty_Generic" owner:self options:nil];
-            ((UILabel *)[_emptyMessageView.subviews objectAtIndex:0]).text = @"no follower yet";
-        }
-    }
-    
-    
+{
     [self onLoadData:objects withSuccess:^ {
         
         if (objects != nil) {
             
             if ([objects count] == 0) {
             
-                _showEmptyMessage = YES;
-                _emptyView.frame = CGRectMake(0, 0, 320, 312);
-                _emptyImageView.frame = CGRectMake(_emptyImageView.frame.origin.x, _emptyImageView.frame.origin.y + 40, _emptyImageView.frame.size.width, _emptyImageView.frame.size.height);
             } else {
                 
                 _data = objects;
@@ -97,6 +80,17 @@
             [[NSNotificationCenter defaultCenter] postNotificationName:@"followingLoaded" object:nil userInfo:_groupedData];
         }
     }];
+    
+    if (objects == nil || [objects count] == 0) {
+        
+        if (_isFollowing) {
+            
+            _footerLabel.text = @"follow your friends, discover new events";
+        } else {
+         
+            _footerLabel.text = @"no follower yet";
+        }
+    }
     
 }
 
