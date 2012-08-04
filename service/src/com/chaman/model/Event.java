@@ -267,7 +267,7 @@ public class Event extends Model implements Serializable {
 		
 		Dao dao = new Dao();
 		Query<EventLocationCapable> qELC = dao.ofy().query(EventLocationCapable.class);
-		qELC.filter("timeStampStart", "< " + snow_minus_1day);
+		qELC.filter("timeStampEnd <", snow_minus_1day);
 		dao.ofy().delete(qELC);
 	}
 	

@@ -32,7 +32,7 @@ public class OfyEntityLocationCapableRepositorySearchImpl implements
 	@Override
 	public List<EventLocationCapable> search(List<String> geocells) {
 		
-		return ofy.query(EventLocationCapable.class).filter("geocells in", geocells).filter("timeStampStart <=", timeStampLimit).list();
+		return ofy.query(EventLocationCapable.class).filter("geocells in", geocells).filter("timeStampStart <", timeStampLimit).list();
 	}
 
 }
