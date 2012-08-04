@@ -38,7 +38,7 @@ public class Events extends ServerResource {
 			
 				events = Event.Get(accessToken, userID, latitude, longitude, timeZone);
 			} else {
-				if (searchLat.isEmpty()) {
+				if (searchLat == null) {
 					events = Event.Get(accessToken, latitude, longitude, latitude, longitude, timeZone, Integer.parseInt(searchTimeFrame), Float.parseFloat(searchRadius), Integer.parseInt(searchLimit));
 				} else {
 					events = Event.Get(accessToken, latitude, longitude, searchLat, searchLon, timeZone, Integer.parseInt(searchTimeFrame), Float.parseFloat(searchRadius), Integer.parseInt(searchLimit));
