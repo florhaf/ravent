@@ -172,7 +172,7 @@ public class Event extends Model implements Serializable {
 	 /* - Get list of event for any user in search area
 	 * - exclude past event
 	 */
-	public static ArrayList<Model> Get(String accessToken, String userLatitude, String userLongitude, String timeZone, int searchTimeFrame, float searchRadius, int searchLimit) throws FacebookException , MemcacheServiceException {
+	public static ArrayList<Model> Get(String accessToken, String userLatitude, String userLongitude, String searchLat, String searchLon, String timeZone, int searchTimeFrame, float searchRadius, int searchLimit) throws FacebookException , MemcacheServiceException {
 		
 		ArrayList<Model> result = new ArrayList<Model>();
 		
@@ -185,7 +185,7 @@ public class Event extends Model implements Serializable {
 		long actual_time = now.getMillis() / 1000L;
 		
 		LocationCapableRepositorySearch<EventLocationCapable> ofySearch = new OfyEntityLocationCapableRepositorySearchImpl(dao.ofy(), timeZone, searchTimeFrame);
-		List<EventLocationCapable> l = GeocellManager.proximityFetch(new Point(Double.parseDouble(userLatitude), Double.parseDouble(userLongitude)), searchLimit, searchRadius * 1000 * 1.61, ofySearch, 6);
+		List<EventLocationCapable> l = GeocellManager.proximityFetch(new Point(Double.parseDouble(searchLat), Double.parseDouble(searchLon)), searchLimit, searchRadius * 1000 * 1.61, ofySearch, 6);
 		
 		FacebookClient client 	= new DefaultFacebookClient(accessToken);
 		String properties 		= "eid, name, pic_big, start_time, end_time, venue, location, privacy, update_time, timezone";
@@ -267,7 +267,7 @@ public class Event extends Model implements Serializable {
 		
 		Dao dao = new Dao();
 		Query<EventLocationCapable> qELC = dao.ofy().query(EventLocationCapable.class);
-		qELC.filter("timeStampStart", "< " + snow_minus_1day);
+		qELC.filter("timeStampEnd <", snow_minus_1day);
 		dao.ofy().delete(qELC);
 	}
 	
@@ -337,11 +337,13 @@ public class Event extends Model implements Serializable {
 					    	    		} else if (elc.getTimeStampStart() != Long.parseLong(e.start_time) || elc.getTimeStampEnd() != Long.parseLong(e.end_time)){
 					    	    			dao.ofy().put(elc);
 					    	    		}
+					    	    		syncCache.put(e.eid, e, null); // Add Event to cache
 					    	    	}
 					    	    }
+				    	    } else {
+				    	    	
+				    	    	syncCache.put(e_cache.eid, e_cache, null); // Add cache Event to cache -> more recent date
 				    	    }
-				    	    
-			    	    	syncCache.put(e.eid, e, null); // Add Event to cache
 						}
 					} catch (Exception ex ) {}
 				}		
