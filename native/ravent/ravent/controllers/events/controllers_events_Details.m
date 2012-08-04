@@ -712,7 +712,12 @@ static int _retryCounter;
         
     } else {
         
-        //_mapImage.image = [UIImage imageNamed:@"noMap"];
+        UIImageView *img = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"nomap"]];
+        [img setFrame:_mapImage.frame];
+        [_mapImage addSubview:img];
+        _isMapImageSet = YES;
+        [_map removeFromSuperview];
+        _map = nil;
     }
     
     UIImageView *ivtop = [[UIImageView alloc] initWithFrame:CGRectMake(0, _headerDateLabel.frame.origin.y - 10, 320, 20)];
@@ -861,14 +866,6 @@ static int _retryCounter;
         
         if ([[objects objectAtIndex:0] isKindOfClass:[NSError class]]) {
 
-            // no need to show an error
-//            NSError *error = (NSError *)[objects objectAtIndex:0];
-//            
-//            [YRDropdownView showDropdownInView:[controllers_App instance].view 
-//                                         title:@"Error loading gender ratio\n" 
-//                                        detail:error.localizedDescription
-//                                         image:[UIImage imageNamed:@"dropdown-alert"]
-//                                      animated:YES];
             _labelFemaleRatio.text = @"?";
             _labelMaleRatio.text = @"?";
             _labelTotalAttendings.text = @"?";
@@ -887,12 +884,6 @@ static int _retryCounter;
         }
     } else {
 
-        // no need to show an error
-//        [YRDropdownView showDropdownInView:[controllers_App instance].view 
-//                                     title:@"Error loading gender ratio\n" 
-//                                    detail:@"No stats returned by server"
-//                                     image:[UIImage imageNamed:@"dropdown-alert"]
-//                                  animated:YES];
         _labelFemaleRatio.text = @"?";
         _labelMaleRatio.text = @"?";
         _labelTotalAttendings.text = @"?";

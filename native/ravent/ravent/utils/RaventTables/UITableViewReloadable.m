@@ -207,11 +207,11 @@ typedef enum {
         
         if ([object isKindOfClass:[NSError class]]) {
             
-            NSError *error = (NSError *)object;
+            //NSError *error = (NSError *)object;
             
             [YRDropdownView showDropdownInView:[controllers_App instance].view 
-                                         title:@"Error" 
-                                        detail:[error localizedDescription]
+                                         title:@"Woops" 
+                                        detail:@"Server error... Pull to refresh"//[error localizedDescription]
                                          image:[UIImage imageNamed:@"dropdown-alert"]
                                       animated:YES];
             
@@ -219,20 +219,7 @@ typedef enum {
             
             [self.tableView reloadData];
             
-        } else if ([object isKindOfClass:[RKErrorMessage class]]) {
-            
-            RKErrorMessage *error = (RKErrorMessage *)object;
-            
-            [YRDropdownView showDropdownInView:[controllers_App instance].view 
-                                         title:@"Error" 
-                                        detail:[error errorMessage]
-                                         image:[UIImage imageNamed:@"dropdown-alert"]
-                                      animated:YES];
-            
-            _footerLabel.text = @"pull to refresh";
-            
-            [self.tableView reloadData];
-            
+        
         } else {
             
             success();
