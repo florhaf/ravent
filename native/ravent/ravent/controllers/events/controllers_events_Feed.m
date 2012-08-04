@@ -63,12 +63,6 @@
 
 - (void)onLoadFeed:(NSArray *)objects
 {
-    if (objects == nil || [objects count] == 0) {
-        
-        [[NSBundle mainBundle] loadNibNamed:@"views_Empty_Generic" owner:self options:nil];
-        ((UILabel *)[_emptyMessageView.subviews objectAtIndex:0]).text = @"be the first to post";
-    }
-    
     [super onLoadData:objects withSuccess:^ {
         
         _data = [[NSMutableArray alloc] initWithArray:objects]; 
@@ -83,8 +77,12 @@
             
             c.picUser_small = [c.pictureUser stringByReplacingOccurrencesOfString:@"_n.jpg" withString:@"_s.jpg"];
         }
-        
     }];
+    
+    if (objects == nil || [objects count] == 0) {
+        
+        _footerLabel.text = @"be the first to post";
+    }
 }
 
 #pragma mark - Table view data source

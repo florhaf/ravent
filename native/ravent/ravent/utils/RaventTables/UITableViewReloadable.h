@@ -26,9 +26,12 @@ typedef void (^success)();
     
     EGORefreshTableHeaderView *_refreshHeaderView;
     
-    IBOutlet UIView *_emptyView;
-    IBOutlet UIView *_emptyMessageViewPlaceHolder;
-    IBOutlet UIView *_emptyImageView;
+    IBOutlet UIView *_footerView;
+    IBOutlet UIActivityIndicatorView *_footerSpinner;
+    IBOutlet UILabel *_footerLabel;
+//    IBOutlet UIView *_emptyView;
+//    IBOutlet UIView *_emptyMessageViewPlaceHolder;
+//    IBOutlet UIView *_emptyImageView;
     IBOutlet UIView *_item;
     IBOutlet UILabel *_itemTitle;
     IBOutlet UILabel *_itemSubTitle;
@@ -41,9 +44,9 @@ typedef void (^success)();
     
     BOOL _reloading;
     BOOL _isDirty;
-    BOOL _showEmptyMessage;
+//    BOOL _showEmptyMessage;
     BOOL _isNotReloadable;
-    IBOutlet UIView *_emptyMessageView;
+//    IBOutlet UIView *_emptyMessageView;
     
     NSArray *_data;
     NSArray *_sortedKeys;

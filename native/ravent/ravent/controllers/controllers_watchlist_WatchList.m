@@ -84,7 +84,8 @@ static controllers_watchlist_WatchList *_ctrl;
     
     if ([objects count] == 0) {
         
-        [[NSBundle mainBundle] loadNibNamed:@"views_Empty_WL" owner:self options:nil];
+        
+        //[[NSBundle mainBundle] loadNibNamed:@"views_Empty_WL" owner:self options:nil];
     }
     
     [self onLoadData:objects withSuccess:^ {

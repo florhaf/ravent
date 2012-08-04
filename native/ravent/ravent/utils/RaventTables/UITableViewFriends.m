@@ -72,12 +72,7 @@
         }
     }
     
-    if (objects == nil || [objects count] == 0) {
-        
-        [[NSBundle mainBundle]loadNibNamed:@"views_Empty_Generic" owner:self options:nil];
-        _noFriendLabel = (UILabel *)[_emptyMessageView.subviews objectAtIndex:0];
-        _noFriendLabel.text = @"no friend invited";
-    }
+    
     
     [super onLoadData:objects withSuccess:^ {
         
@@ -86,6 +81,11 @@
             _data = [[NSMutableArray alloc] initWithArray:objects]; 
         }
     }];
+    
+    if (objects == nil || [objects count] == 0) {
+        
+        _footerLabel.text = @"no friend invited";
+    }
 }
 
 - (models_User *)getUserForRow:(NSInteger)row

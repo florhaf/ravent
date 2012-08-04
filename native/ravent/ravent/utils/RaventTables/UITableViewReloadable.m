@@ -36,7 +36,7 @@ typedef enum {
     if (self) {
         
         self.title = @"Gemster";
-        _showEmptyMessage = NO;
+//        _showEmptyMessage = NO;
         
 
     }
@@ -83,13 +83,7 @@ typedef enum {
 
 - (void)updateLoadingMessageWith:(NSString *)text
 {
-    
-    if (_hud != nil) {
-        
-        [MBProgressHUD hideHUDForView:self.view animated:NO];
-        [MBProgressHUD showHUDAddedTo:self.view animated:NO withText:text];
-    }
-    
+    _footerLabel.text = text;
     _refreshHeaderView.statusLabel.text = text;
 }
 
@@ -128,8 +122,11 @@ typedef enum {
     
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"grayBG"]]];
     
-    [[NSBundle mainBundle] loadNibNamed:@"views_Empty" owner:self options:nil];
-    self.tableView.tableFooterView = _emptyView;
+    [[NSBundle mainBundle] loadNibNamed:@"views_Footer" owner:self options:nil];
+    self.tableView.tableFooterView = _footerView;
+    
+    _footerLabel.text = @"Loading...";
+    [_footerSpinner startAnimating];
 }
 
 - (void)viewDidUnload
@@ -173,6 +170,7 @@ typedef enum {
 - (void)loadData
 {
     // must be overriden in subclass
+    [_footerSpinner startAnimating];
 }
 
 - (void)loadDataWithSpinner
@@ -183,7 +181,8 @@ typedef enum {
     
     [self.tableView reloadData];
     
-    [_spinner startAnimating];
+    _footerLabel.text = @"Loading...";
+    [_footerSpinner startAnimating];
     
     [self loadData];
 }
@@ -194,14 +193,13 @@ typedef enum {
     _groupedData = nil;
     _sortedKeys = nil;
 
-    
-    
     if (_url != nil) {
     
         [[ActionDispatcher instance] del:_url];
     }
     
-    [_spinner stopAnimating];
+    [_footerSpinner stopAnimating];
+    _footerLabel.text = @"";
     
     if (objects != nil && [objects count] > 0) {
         
@@ -209,36 +207,19 @@ typedef enum {
         
         if ([object isKindOfClass:[NSError class]]) {
             
-            NSError *error = (NSError *)object;
+            //NSError *error = (NSError *)object;
             
             [YRDropdownView showDropdownInView:[controllers_App instance].view 
-                                         title:@"Error" 
-                                        detail:[error localizedDescription]
+                                         title:@"Woops" 
+                                        detail:@"Server error... Pull to refresh"//[error localizedDescription]
                                          image:[UIImage imageNamed:@"dropdown-alert"]
                                       animated:YES];
             
-            [[NSBundle mainBundle] loadNibNamed:@"views_Empty_Generic" owner:self options:nil];
-            ((UILabel *)[_emptyMessageView.subviews objectAtIndex:0]).text = @"pull to refresh";
-            [_emptyMessageViewPlaceHolder addSubview:_emptyMessageView];
+            _footerLabel.text = @"pull to refresh";
             
             [self.tableView reloadData];
             
-        } else if ([object isKindOfClass:[RKErrorMessage class]]) {
-            
-            RKErrorMessage *error = (RKErrorMessage *)object;
-            
-            [YRDropdownView showDropdownInView:[controllers_App instance].view 
-                                         title:@"Error" 
-                                        detail:[error errorMessage]
-                                         image:[UIImage imageNamed:@"dropdown-alert"]
-                                      animated:YES];
-            
-            [[NSBundle mainBundle] loadNibNamed:@"views_Empty_Generic" owner:self options:nil];
-            ((UILabel *)[_emptyMessageView.subviews objectAtIndex:0]).text = @"pull to refresh";
-            [_emptyMessageViewPlaceHolder addSubview:_emptyMessageView];
-            
-            [self.tableView reloadData];
-            
+        
         } else {
             
             success();
@@ -247,10 +228,7 @@ typedef enum {
         }
     } else {
         
-        if (_emptyMessageView != nil) {
-            
-            [_emptyMessageViewPlaceHolder addSubview:_emptyMessageView];
-        }
+        _footerLabel.text = @"no result";
         
         [self.tableView reloadData];
     }
@@ -556,16 +534,19 @@ typedef enum {
     
     _refreshHeaderView = nil;
     
-    _emptyView = nil;
-    _emptyMessageViewPlaceHolder = nil;
-    _emptyImageView = nil;
+_footerView = nil;
+_footerSpinner = nil;
+_footerLabel = nil;
+//    _emptyView = nil;
+//    _emptyMessageViewPlaceHolder = nil;
+//    _emptyImageView = nil;
     _item = nil;
     _itemTitle = nil;
     _itemSubTitle = nil;
     _itemImage = nil;
     
     _spinner = nil;
-    _emptyMessageView = nil;
+//    _emptyMessageView = nil;
     
     _data = nil;
     _sortedKeys = nil;

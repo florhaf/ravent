@@ -44,10 +44,11 @@ static customNavigationController *_ctrl;
 - (void)loadEventDetailsFromMap:(NSArray *)objects
 {
     models_Event *e = [objects objectAtIndex:0];
-
+    [[controllers_events_List_p2p instance] performSelector:@selector(loadEventDetails:) withObject:e afterDelay:0];
+    
     [self.slidingViewController resetTopView];
     
-    [[controllers_events_List_p2p instance] performSelector:@selector(loadEventDetails:) withObject:e afterDelay:0.1];
+    
 }
 
 #pragma mark - View lifecycle
