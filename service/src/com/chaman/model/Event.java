@@ -337,11 +337,13 @@ public class Event extends Model implements Serializable {
 					    	    		} else if (elc.getTimeStampStart() != Long.parseLong(e.start_time) || elc.getTimeStampEnd() != Long.parseLong(e.end_time)){
 					    	    			dao.ofy().put(elc);
 					    	    		}
+					    	    		syncCache.put(e.eid, e, null); // Add Event to cache
 					    	    	}
 					    	    }
+				    	    } else {
+				    	    	
+				    	    	syncCache.put(e_cache.eid, e_cache, null); // Add cache Event to cache -> more recent date
 				    	    }
-				    	    
-			    	    	syncCache.put(e.eid, e, null); // Add Event to cache
 						}
 					} catch (Exception ex ) {}
 				}		
