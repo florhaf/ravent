@@ -117,7 +117,7 @@ public class Event extends Model implements Serializable {
 			try {
 				
 				e_cache = (Event) syncCache.get(e.eid); // read from Event cache
-	    	    if (e_cache == null) {
+	    	    if (e_cache == null || !e_cache.update_time.equals(e.update_time)) {
 				 	    	
 	    	    	e.venue_id = JSON.GetValueFor("id", e.venue);    	
 	    	    	Venue v_graph = Venue.getVenue(client, e.venue_id);
@@ -185,10 +185,10 @@ public class Event extends Model implements Serializable {
 		long actual_time = now.getMillis() / 1000L;
 		
 		LocationCapableRepositorySearch<EventLocationCapable> ofySearch = new OfyEntityLocationCapableRepositorySearchImpl(dao.ofy(), timeZone, searchTimeFrame);
-		List<EventLocationCapable> l = GeocellManager.proximityFetch(new Point(Double.parseDouble(userLatitude), Double.parseDouble(userLongitude)), searchLimit, searchRadius * 1000 * 1.61, ofySearch);
+		List<EventLocationCapable> l = GeocellManager.proximityFetch(new Point(Double.parseDouble(userLatitude), Double.parseDouble(userLongitude)), searchLimit, searchRadius * 1000 * 1.61, ofySearch, 6);
 		
 		FacebookClient client 	= new DefaultFacebookClient(accessToken);
-		String properties 		= "eid, name, pic_big, start_time, end_time, venue, location, privacy, timezone";
+		String properties 		= "eid, name, pic_big, start_time, end_time, venue, location, privacy, update_time, timezone";
 		
 		MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
 		
@@ -197,11 +197,8 @@ public class Event extends Model implements Serializable {
 		String previous_venue_time = "";
 		
         for (EventLocationCapable e : l) {
-
         	
         	if (actual_time < e.getTimeStampEnd()) { //if event not in the past
-        		
-        		
         		try {
             	
         			event = (Event) syncCache.get(e.getEid());
@@ -212,11 +209,6 @@ public class Event extends Model implements Serializable {
                     		List<Event> fbevents 	= client.executeQuery(query, Event.class);
                     	
                     		if (fbevents != null && fbevents.size() > 0) {
-                    			
-                    			if (e.getEid() == 370192376386143L) {
-                            		
-                            		log.severe("FOUND FB EVENT");
-                            	}
                 	
                     			event = fbevents.get(0);
                     			event.venue_id = JSON.GetValueFor("id", event.venue);
@@ -233,16 +225,13 @@ public class Event extends Model implements Serializable {
         	    	    			dao.ofy().put(e);
         	    	    		}
                     		}
-                		
-
                 	}
               			
                 	if (event != null && (event.venue_category == null || !event.venue_category.equals("city"))) {
-                	
+                		
                 		if (!previous_venue_time.equals(event.venue_id + event.start_time)) {  // to remove duplicate events
                 		
                 			if (event.Format(timeZoneInMinutes, now, searchTimeFrame)){
-                				
                 				
                     			event.latitude 	= Double.toString(e.getLatitude());
                     			event.longitude = Double.toString(e.getLongitude());
@@ -260,14 +249,27 @@ public class Event extends Model implements Serializable {
                 	} 
         		} catch (Exception ex ) {/*retry will lower the speed*/}
         	} else { // event in the past
-				
+					
         		dao.ofy().delete(e); //clean the datastore by removing old events TODO: call a task doesn't have to be deleted right away
         	}
         }
-        
+
         return result;    
 	}
 
+	
+	public static void DeleteCron() throws FacebookException {
+		
+		//Prepare a timestamp to filter the facebook DB on the upcoming events
+		DateTimeZone PST = DateTimeZone.forID("America/Los_Angeles"); 	
+		DateTime now_minus_1day =  new DateTime(PST).minusDays(1);
+		String snow_minus_1day = String.valueOf(now_minus_1day.getMillis() / 1000);
+		
+		Dao dao = new Dao();
+		Query<EventLocationCapable> qELC = dao.ofy().query(EventLocationCapable.class);
+		qELC.filter("timeStampStart", "< " + snow_minus_1day);
+		dao.ofy().delete(qELC);
+	}
 	
 	public static void GetCron() throws FacebookException, MemcacheServiceException {
 		
@@ -304,7 +306,7 @@ public class Event extends Model implements Serializable {
 						for (Event e : fbevents) {
 							
 							e_cache = (Event) syncCache.get(e.eid); // read from Event cache
-				    	    if (e_cache == null) {
+				    	    if (e_cache == null || !e_cache.update_time.equals(e.update_time)) {
 							 	    	
 				    	    	e.venue_id = JSON.GetValueFor("id", e.venue);    	
 				    	    	Venue v_graph =  Venue.getVenue(client, e.venue_id);
@@ -336,9 +338,10 @@ public class Event extends Model implements Serializable {
 					    	    			dao.ofy().put(elc);
 					    	    		}
 					    	    	}
-					    	    	syncCache.put(e.eid, e, null); // Add Event to cache
 					    	    }
 				    	    }
+				    	    
+			    	    	syncCache.put(e.eid, e, null); // Add Event to cache
 						}
 					} catch (Exception ex ) {}
 				}		
@@ -424,13 +427,11 @@ public class Event extends Model implements Serializable {
 			this.dtEnd = new DateTime(timeStampEnd, PST);
 		} else {
 			DateTimeZone T = DateTimeZone.forID(this.timezone);
-			this.dtStart = new DateTime(timeStampStart, T); //TODO: Investigate why those 3 hours diff!!!!
+			this.dtStart = new DateTime(timeStampStart, T);
 			this.dtEnd = new DateTime(timeStampEnd, T);
 			timeStampStart = this.dtStart.getMillis();
 			timeStampEnd = this.dtEnd.getMillis();
 		}
-				
-		// so need to add time zone offset to DateTime
 
 		
 		this.time_start = dtStart.toDateTime(PST).toString("KK:mm a");
@@ -439,62 +440,14 @@ public class Event extends Model implements Serializable {
 		this.date_start = dtStart.toDateTime(PST).toString("MMM d, Y");
 		this.date_end = dtEnd.toDateTime(PST).toString("MMM d, Y");
 		
-		if (this.filter != null && (this.filter.equals("Other") || this.filter.equals("Entertain"))) {
-			
-			if (dtEnd.toDateTime(PST).getHourOfDay() >= 3 &&  dtEnd.toDateTime(PST).getHourOfDay() <= 7) {
-				this.filter = "Party";
-			}
-		}
-		
-		
-		// TODO: to delete
-		List<String> offer_t = new ArrayList<String>();
-		offer_t.add("");
-		offer_t.add("");
-		offer_t.add("");
-		offer_t.add("");
-		offer_t.add("");
-		offer_t.add("");
-		offer_t.add("");
-		offer_t.add("");
-		offer_t.add("");
-		offer_t.add("");
-		offer_t.add("");
-		offer_t.add("Buy 1 Drink get 1 FREE");
-		offer_t.add("Free for the lady's until 12PM");
-		offer_t.add("Bottles for $100");
-		Random r = new Random();
-		this.offer_title = offer_t.get(r.nextInt(14));
-		if (!this.offer_title.equals("")) {
-			this.offer_description = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.";
-		}	
-		this.featured = offer_t.get(r.nextInt(14));
-		
-		List<String> tickets = new ArrayList<String>();
-		tickets.add("");
-		tickets.add("");
-		tickets.add("");
-		tickets.add("");
-		tickets.add("");
-		tickets.add("");
-		tickets.add("");
-		tickets.add("");
-		tickets.add("");
-		tickets.add("");
-		tickets.add("");
-		tickets.add("http://www.ticketmaster.com/event/12004788E26339A4?artistid=837473&majorcatid=10002&minorcatid=207");
-		tickets.add("http://www.ticketmaster.com/event/12004788E26339A4?artistid=837473&majorcatid=10002&minorcatid=207");
-		tickets.add("http://www.ticketmaster.com/event/12004788E26339A4?artistid=837473&majorcatid=10002&minorcatid=207");
-		this.ticket_link = tickets.get(r.nextInt(14));
-		
 		DateTimeZone TZ = DateTimeZone.forOffsetMillis(timeZoneInMinutes*60*1000);
 
 		long timeStampNow = now.getMillis();
 		long timeStampToday = timeStampNow - (timeZoneInMinutes * 60000) + (86400000 - now.getMillisOfDay());
 		
-		if (now.getMillis() > PST.getMillisKeepLocal(TZ, dtEnd.getMillis())) {
+		/*if (timeStampNow > PST.getMillisKeepLocal(TZ, timeStampEnd)) {
 			return false;
-		}
+		}*/
 		
 		if (timeStampEnd < timeStampNow) {
 			return false;
@@ -543,6 +496,55 @@ public class Event extends Model implements Serializable {
 			}
 		}
 		
+		
+		if (this.filter != null && (this.filter.equals("Other") || this.filter.equals("Entertain"))) {
+			
+			if (dtEnd.toDateTime(PST).getHourOfDay() >= 3 &&  dtEnd.toDateTime(PST).getHourOfDay() <= 7) {
+				this.filter = "Party";
+			}
+		}
+		
+		
+		// TODO: to delete
+		List<String> offer_t = new ArrayList<String>();
+		offer_t.add("");
+		offer_t.add("");
+		offer_t.add("");
+		offer_t.add("");
+		offer_t.add("");
+		offer_t.add("");
+		offer_t.add("");
+		offer_t.add("");
+		offer_t.add("");
+		offer_t.add("");
+		offer_t.add("");
+		offer_t.add("Buy 1 Drink get 1 FREE");
+		offer_t.add("Free for the lady's until 12PM");
+		offer_t.add("Bottles for $100");
+		Random r = new Random();
+		this.offer_title = offer_t.get(r.nextInt(14));
+		if (!this.offer_title.equals("")) {
+			this.offer_description = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.";
+		}	
+		this.featured = offer_t.get(r.nextInt(14));
+		
+		List<String> tickets = new ArrayList<String>();
+		tickets.add("");
+		tickets.add("");
+		tickets.add("");
+		tickets.add("");
+		tickets.add("");
+		tickets.add("");
+		tickets.add("");
+		tickets.add("");
+		tickets.add("");
+		tickets.add("");
+		tickets.add("");
+		tickets.add("http://www.ticketmaster.com/event/12004788E26339A4?artistid=837473&majorcatid=10002&minorcatid=207");
+		tickets.add("http://www.ticketmaster.com/event/12004788E26339A4?artistid=837473&majorcatid=10002&minorcatid=207");
+		tickets.add("http://www.ticketmaster.com/event/12004788E26339A4?artistid=837473&majorcatid=10002&minorcatid=207");
+		this.ticket_link = tickets.get(r.nextInt(14));
+	
 		if (this.featured != null && this.featured.length() > 0) {
 			
 			this.group = "0";
