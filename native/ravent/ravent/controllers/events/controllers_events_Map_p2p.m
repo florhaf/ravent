@@ -196,14 +196,17 @@ static int _retryCounter;
         if (_isDirty) {
             
             _isDirty = NO;
-            [self performSelector:@selector(resetTopViewAfterDelayCallback) withObject:nil afterDelay:0.5];
             
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"locationChanged" object:self];
-        } else if (!((controllers_events_Events *)[[controllers_events_Events instance].childViewControllers objectAtIndex:0 ]).isUp) {
-            
-            [self performSelector:@selector(resetTopViewAfterDelayCallback) withObject:nil afterDelay:0.5];
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"locationChangedReloadDelayed" object:self];
-        }
+            if (!((controllers_events_Events *)[[controllers_events_Events instance].childViewControllers objectAtIndex:0 ]).isUp) {
+                
+                [self performSelector:@selector(resetTopViewAfterDelayCallback) withObject:nil afterDelay:0.5];
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"locationChangedReloadDelayed" object:self];
+            } else {
+             
+                [self performSelector:@selector(resetTopViewAfterDelayCallback) withObject:nil afterDelay:0.5];
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"locationChanged" object:self];
+            }
+        } 
     } else {
         
         [_buttonChangeLocation setTitle:@"Done" forState:UIControlStateNormal];
@@ -242,6 +245,8 @@ static int _retryCounter;
         return;
     }
     
+    
+    
     _isMapSet = YES;
     
     MKCoordinateRegion region;
@@ -271,6 +276,7 @@ static int _retryCounter;
         if (_executeButtonTapWithDelay) {
             
             _executeButtonTapWithDelay = NO;
+            [mapView setRegion:region animated:NO];
             [self performSelector:@selector(buttonTap:) withObject:nil afterDelay:0];
         } else {
             

@@ -212,7 +212,7 @@ typedef enum {
             
             [YRDropdownView showDropdownInView:[controllers_App instance].view 
                                          title:@"Woops" 
-                                        detail:@"Server error... Pull to refresh"//[error localizedDescription]
+                                        detail:@"Server error... Try again..."//[error localizedDescription]
                                          image:[UIImage imageNamed:@"dropdown-alert"]
                                       animated:YES];
             
