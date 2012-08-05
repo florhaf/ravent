@@ -97,9 +97,13 @@ public class Attending extends Model {
 
 		//initiate multiquery for FB (one call for multiple queries = optimization)
 		Map<String, String> queries = new HashMap<String, String>();
-		queries.put("invited_rsvp", "SELECT uid FROM event_member WHERE eid = " + eid + " AND rsvp_status = 'attending'");
-		queries.put("invited_info", "SELECT uid, first_name, last_name, pic, sex FROM user WHERE uid in (select uid from #invited_rsvp)");
-
+		try {
+			queries.put("invited_rsvp", "SELECT uid FROM event_member WHERE eid = " + eid + " AND rsvp_status = 'attending' LIMIT 156");
+			queries.put("invited_info", "SELECT uid, pic FROM user WHERE uid in (select uid from #invited_rsvp)");
+		} catch (Exception ex) {
+			queries.put("invited_rsvp", "SELECT uid FROM event_member WHERE eid = " + eid + " AND rsvp_status = 'attending' LIMIT 156");
+			queries.put("invited_info", "SELECT uid, pic FROM user WHERE uid in (select uid from #invited_rsvp)");
+		}
 		MultiqueryResults multiqueryResult = client.executeMultiquery(queries, MultiqueryResults.class);
 		
 		for (int i=0; i<multiqueryResult.invited_info.size(); i++) {
