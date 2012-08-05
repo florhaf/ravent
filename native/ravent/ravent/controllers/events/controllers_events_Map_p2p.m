@@ -25,6 +25,7 @@ static int _retryCounter;
 
 @synthesize coordinate;
 @synthesize peekLeftAmount;
+@synthesize boundingMapRect;
 
 - (void)trackPageView:(NSString *)named forEvent:(NSString *)eid
 {
@@ -57,35 +58,19 @@ static int _retryCounter;
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         
-//        _imageLoading = [[NSMutableDictionary alloc] init];
         _user = user;
-        
         
     }
     return self;
 }
 
-- (void)updateLoadingMessageWith:(NSString *)text
-{
-    
-    if (_hud != nil) {
-        
-        [MBProgressHUD hideHUDForView:self.view animated:NO];
-        [MBProgressHUD showHUDAddedTo:self.view animated:NO];
-        
-    }
-}
-
 - (void)loading
 {
-    _hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     _isMapSet = NO;
 }
 
 - (void)loadData:(NSArray *)objects
 {
-    [MBProgressHUD hideHUDForView:self.view animated:YES];
-    _hud = nil;
     
     for (id<MKAnnotation> annotation in _map.annotations) {
         
@@ -121,43 +106,6 @@ static int _retryCounter;
     }   
 }
 
-- (IBAction)onOptionsTap:(id)sender
-{
-    [_map raceTo:CGPointMake(0, -_tableOptions.frame.size.height) withSnapBack:YES];
-    [_tableOptions raceTo:CGPointMake(0, 460 -_tableOptions.frame.size.height) withSnapBack:YES];
-    
-    UIBarButtonItem *btn = (UIBarButtonItem *)sender;
-    
-    [btn setStyle:UIBarButtonItemStyleDone];
-    [btn setAction:@selector(onDoneTap:)];
-    
-    _isOptionsShowing = YES;
-    
-    _prevRadiusValue = [models_User crtUser].searchRadius;
-    _prevWindowValue = [models_User crtUser].searchWindow;
-}
-
-- (IBAction)onDoneTap:(id)sender
-{
-    [_map raceTo:CGPointMake(0, 0) withSnapBack:YES];
-    [_tableOptions raceTo:CGPointMake(0, 460) withSnapBack:YES];
-    
-    UIBarButtonItem *btn = (UIBarButtonItem *)sender;
-    
-    [btn setStyle:UIBarButtonSystemItemSearch];
-    [btn setAction:@selector(onOptionsTap:)];
-    
-    _isOptionsShowing = NO;
-    
-    if (_prevRadiusValue != [models_User crtUser].searchRadius ||
-        _prevWindowValue != [models_User crtUser].searchWindow) {
-        
-        [self performSelector:@selector(resetTopViewAfterDelayCallback) withObject:nil afterDelay:0.9 inModes:[[NSArray alloc] initWithObjects:NSRunLoopCommonModes, nil]];
-        
-        [[controllers_events_List_p2p instance] loadDataWithSpinner];
-    }
-}
-
 - (void)resetTopViewAfterDelayCallback
 {
     [self.slidingViewController resetTopView];
@@ -169,6 +117,36 @@ static int _retryCounter;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(startGps) name:ECSlidingViewUnderRightWillAppear object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(stopGps) name:ECSlidingViewTopDidReset object:nil];
+    
+    UIPanGestureRecognizer* panRec = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didDragMap:)];
+    [panRec setDelegate:self];
+    [_map addGestureRecognizer:panRec];
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+    
+    return YES;
+}
+
+- (void)didDragMap:(UIGestureRecognizer*)gestureRecognizer {
+    
+    if (_isSettingLocation) {
+        
+        if (gestureRecognizer.state == UIGestureRecognizerStateEnded){
+            
+            _overlayCircle = [MKCircle circleWithCenterCoordinate:_map.region.center radius:1000 * 1.61 * 6];
+            [_map addOverlay:_overlayCircle];
+            _overlay.hidden = YES;
+            _isDirty = YES;
+        }
+        
+        if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
+            
+            [_map removeOverlay:_overlayCircle];
+            _overlayCircle = nil;
+            _overlay.hidden = NO;
+        }
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -186,18 +164,63 @@ static int _retryCounter;
 {
     _map.showsUserLocation = NO;
     _isMapSet = NO;
+    
+    [_map removeOverlay:_overlayCircle];
+    _isSettingLocation = NO;
+    [_buttonChangeLocation setTitle:@"Change Location" forState:UIControlStateNormal];
 }
 
 - (void)startGps
 {
     _map.showsUserLocation = YES;
-    
-    [MBProgressHUD hideHUDForView:self.view animated:NO];
 }
 
 - (IBAction)buttonTap:(id)sender
 {
-    //_map.showsUserLocation = !_map.showsUserLocation;
+    MKCoordinateSpan span;
+    
+    if (_isSettingLocation) {
+        
+        [_buttonChangeLocation setTitle:@"Change Location" forState:UIControlStateNormal];
+        _isSettingLocation = NO;
+        
+        span.latitudeDelta = 0.08;
+        span.longitudeDelta = 0.08;
+        
+        _overlayView.fillColor = [[UIColor grayColor] colorWithAlphaComponent:0];
+        _map.zoomEnabled = YES;
+        
+        [controllers_events_List_p2p instance].searchCenter = _map.region.center;
+        
+        if (_isDirty) {
+            
+            _isDirty = NO;
+            [self performSelector:@selector(resetTopViewAfterDelayCallback) withObject:nil afterDelay:0.5];
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"locationChanged" object:self];
+        }
+    } else {
+        
+        [_buttonChangeLocation setTitle:@"Done" forState:UIControlStateNormal];
+        _isSettingLocation = YES;
+        
+        span.latitudeDelta = 0.2;
+        span.longitudeDelta = 0.2;
+        
+        _overlayView.fillColor = [[UIColor grayColor] colorWithAlphaComponent:0.5];
+        
+        _map.zoomEnabled = NO;
+    }
+    
+    CLLocationCoordinate2D coord;
+    coord.latitude = _map.region.center.latitude;
+    coord.longitude = _map.region.center.longitude;
+    
+    MKCoordinateRegion region;
+    region.span = span;
+    region.center = coord;
+    
+    [_map setRegion:region animated:YES];
 }
 
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
@@ -217,11 +240,19 @@ static int _retryCounter;
     
     CLLocationCoordinate2D location;
     
-    location.latitude = userLocation.coordinate.latitude;
-    location.longitude = userLocation.coordinate.longitude;
-    
+    if ([controllers_events_List_p2p instance].searchCenter.latitude == 0) {
+        
+        location.latitude = userLocation.coordinate.latitude;
+        location.longitude = userLocation.coordinate.longitude;
+    } else {
+        
+        location = [controllers_events_List_p2p instance].searchCenter;
+    }
     region.span = span;
     region.center = location;
+    
+    _overlayCircle = [MKCircle circleWithCenterCoordinate:location radius:1000 * 1.61 * 6];
+    [_map addOverlay:_overlayCircle];
     
     
     @try {
@@ -255,8 +286,6 @@ static int _retryCounter;
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-//    _isMapSet = NO;
-//    [self setMapLocation:YES];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -315,138 +344,12 @@ static int _retryCounter;
     [[ActionDispatcher instance] execute:@"controller_events_List_p2p_loadDetails" with:array];
 }
 
--(void)imageView:(JBAsyncImageView *)sender loadedImage:(UIImage *)imageLoaded fromURL:(NSURL *)url
+- (MKOverlayView *)mapView:(MKMapView *)mapView viewForOverlay:(id<MKOverlay>)overlay
 {
-    
-    if (url != nil) {
-     
-        MKAnnotationView *annotation = [((NSMutableArray *)[_imageLoading objectForKey:url]) objectAtIndex:0];
-        
-        UIGraphicsBeginImageContext(annotation.image.size);
-        [annotation.image drawInRect:CGRectMake(0, 0, annotation.image.size.width, annotation.image.size.height)];
-        [imageLoaded drawInRect:CGRectMake(8, 8, 56, 56)];
-        annotation.image = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
-        
-        [_imageLoading removeObjectForKey:url];
-    }
-}
-
-
-#pragma mark - Table view data source
-
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-{
-    return @"Search";
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return 44;
-}
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 1;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return 2;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    static NSString *CellIdentifier = @"Cell";
-    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    
-    if (cell == nil) {
-        
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    } else {
-        
-        for (int i = 0; i < [cell.contentView.subviews count]; i++) {
-            
-            [[cell.contentView.subviews objectAtIndex:i] removeFromSuperview];
-        }
-    }
-    
-    if (indexPath.row == 0) {
-        
-        UIView *v = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 44)];
-        [v setBackgroundColor:[UIColor clearColor]];
-        
-        UILabel *l1 = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 100, 44)];
-        [l1 setText:@"Radius"];
-        [l1 setBackgroundColor:[UIColor clearColor]];
-        [l1 setTextColor:[UIColor darkGrayColor]];
-        
-        _labelRadiusValue = [[UILabel alloc] initWithFrame:CGRectMake(90, 0, 90, 44)];
-        [_labelRadiusValue setTextColor:[UIColor darkGrayColor]];
-        [_labelRadiusValue setText:[NSString stringWithFormat:@"%d mi.", [models_User crtUser].searchRadius]];
-        [_labelRadiusValue setBackgroundColor:[UIColor clearColor]];
-        
-        UIStepper *s = [[UIStepper alloc] initWithFrame:CGRectMake(160, 10, 50, 44)];
-        s.value = [models_User crtUser].searchRadius;
-        s.minimumValue = 5;
-        s.maximumValue = 50;
-        s.stepValue = 5;
-        s.continuous = NO;
-        
-        [s addTarget:self action:@selector(stepperRadiusPressed:) forControlEvents:UIControlEventValueChanged];
-        
-        [v addSubview:l1];
-        [v addSubview:_labelRadiusValue];
-        [v addSubview:s];
-        
-        [cell.contentView addSubview:v];
-        
-    } else {
-        
-        UIView *v = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 44)];
-        [v setBackgroundColor:[UIColor clearColor]];
-        
-        UILabel *l1 = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 100, 44)];
-        [l1 setText:@"Window"];
-        [l1 setBackgroundColor:[UIColor clearColor]];
-        [l1 setTextColor:[UIColor darkGrayColor]];
-        
-        _labelWindowValue = [[UILabel alloc] initWithFrame:CGRectMake(90, 0, 90, 44)];
-        [_labelWindowValue setTextColor:[UIColor darkGrayColor]];
-        [_labelWindowValue setText:[NSString stringWithFormat:@"%d h.", [models_User crtUser].searchWindow]];
-        [_labelWindowValue setBackgroundColor:[UIColor clearColor]];
-        
-        UIStepper *s = [[UIStepper alloc] initWithFrame:CGRectMake(160, 10, 50, 44)];
-        s.value = [models_User crtUser].searchWindow;
-        s.minimumValue = 12;
-        s.maximumValue = 72;
-        s.stepValue = 12;
-        s.continuous = NO;
-        
-        [s addTarget:self action:@selector(stepperWindowPressed:) forControlEvents:UIControlEventValueChanged];
-        
-        [v addSubview:l1];
-        [v addSubview:_labelWindowValue];
-        [v addSubview:s];
-        
-        [cell.contentView addSubview:v];
-    }
-    
-    return cell;
-}
-
-- (void)stepperRadiusPressed:(UIStepper *)sender
-{
-    [models_User crtUser].searchRadius = (int)sender.value;
-    _labelRadiusValue.text = [NSString stringWithFormat:@"%d mi.",  (int)sender.value];
-}
-
-- (void)stepperWindowPressed:(UIStepper *)sender
-{
-    [models_User crtUser].searchWindow = (int)sender.value;
-    _labelWindowValue.text = [NSString stringWithFormat:@"%d h.", (int)sender.value];    
+    _overlayView = [[MKCircleView alloc] initWithOverlay:overlay];
+    _overlayView.strokeColor = [UIColor darkGrayColor];
+    _overlayView.fillColor = [[UIColor grayColor] colorWithAlphaComponent:(_isSettingLocation) ? 0.5 : 0];
+    return _overlayView;
 }
 
 + (controllers_events_Map_p2p *)instance
@@ -464,6 +367,19 @@ static int _retryCounter;
 + (void)deleteInstance
 {
     _ctrl = nil;
+}
+
+- (void)dealloc {
+    _map = nil;
+    _toolbarTop = nil;
+    _toolbarBottom = nil;
+    _tableOptions = nil;
+    _buttonChangeLocation = nil;
+    _overlayView = nil;
+    _overlayCircle = nil;
+    _overlay = nil;
+    
+    _user = nil;
 }
 
 @end

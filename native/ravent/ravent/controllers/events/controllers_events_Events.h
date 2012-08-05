@@ -61,6 +61,8 @@
     int _currentCategory;
 }
 
+@property (nonatomic, assign) BOOL isUp;
+
 - (IBAction)onSO_Tap:(id)sender;
 - (IBAction)stepperWindowPressed:(UIStepper *)sender;
 - (IBAction)stepperRadiusPressed:(UIStepper *)sender;

@@ -362,6 +362,7 @@
 		DFB28CCE15981B2300D0F999 /* selected_right@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DFB28CC115981B2200D0F999 /* selected_right@2x.png */; };
 		DFD2804E151DBA36007A0873 /* AWIconAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = DFD2804D151DBA36007A0873 /* AWIconAnnotation.m */; };
 		DFD2895B151DD2EF007A0873 /* views_calendar_Calendar.xib in Resources */ = {isa = PBXBuildFile; fileRef = DFD2895A151DD2EF007A0873 /* views_calendar_Calendar.xib */; };
+		DFDD4DAE15CE162C00EC9006 /* overlay.png in Resources */ = {isa = PBXBuildFile; fileRef = DFDD4DAD15CE162C00EC9006 /* overlay.png */; };
 		DFE3EF8215A1520C000B8537 /* grayNavbar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DFE3EF8115A1520C000B8537 /* grayNavbar@2x.png */; };
 		DFE3EF8415A223C8000B8537 /* directions.png in Resources */ = {isa = PBXBuildFile; fileRef = DFE3EF8315A223C8000B8537 /* directions.png */; };
 		DFE3EF8615A22A7C000B8537 /* navBarBG.png in Resources */ = {isa = PBXBuildFile; fileRef = DFE3EF8515A22A7C000B8537 /* navBarBG.png */; };
@@ -916,6 +917,7 @@
 		DFD2804C151DBA36007A0873 /* AWIconAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = AWIconAnnotation.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		DFD2804D151DBA36007A0873 /* AWIconAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWIconAnnotation.m; sourceTree = "<group>"; };
 		DFD2895A151DD2EF007A0873 /* views_calendar_Calendar.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = views_calendar_Calendar.xib; path = ravent/views/calendar/views_calendar_Calendar.xib; sourceTree = SOURCE_ROOT; };
+		DFDD4DAD15CE162C00EC9006 /* overlay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = overlay.png; path = Map/overlay.png; sourceTree = "<group>"; };
 		DFE3EF8115A1520C000B8537 /* grayNavbar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grayNavbar@2x.png"; sourceTree = "<group>"; };
 		DFE3EF8315A223C8000B8537 /* directions.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = directions.png; sourceTree = "<group>"; };
 		DFE3EF8515A22A7C000B8537 /* navBarBG.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = navBarBG.png; sourceTree = "<group>"; };
@@ -1624,6 +1626,7 @@
 		DF8F14F8150BD4DE00008ABC /* resources */ = {
 			isa = PBXGroup;
 			children = (
+				DFDD4DAD15CE162C00EC9006 /* overlay.png */,
 				DFA9FC7715B2CEC6003F9B5F /* gem.png */,
 				DFA9FC7815B2CECF003F9B5F /* gem@2x.png */,
 				DFC55CDF158F9E9800310433 /* Miami.gpx */,
@@ -2336,6 +2339,7 @@
 				DFF8D31B15C3E9E900C028CB /* facebookButton.png in Resources */,
 				DF19116515CD165F004F413F /* views_Footer.xib in Resources */,
 				DF9D094D15CD29540029F53B /* nomap.png in Resources */,
+				DFDD4DAE15CE162C00EC9006 /* overlay.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

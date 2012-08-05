@@ -182,6 +182,7 @@ typedef enum {
     [self.tableView reloadData];
     
     _footerLabel.text = @"Loading...";
+    _refreshHeaderView.statusLabel.text = @"Loading...";
     [_footerSpinner startAnimating];
     
     [self loadData];

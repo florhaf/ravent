@@ -67,21 +67,6 @@ static customNavigationController *_ctrl;
     UIImageView *ivtop = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 20)];
     [ivtop setImage:[UIImage imageNamed:@"shadowTop"]];
     [self.view addSubview:ivtop];
-    
-    
-//    UIImageView *toolbar = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"grayToolbar"]];
-//    [toolbar setFrame:CGRectMake(0, 372, 320, 44)];
-//    
-//    UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(30, 376, 260, 35)];
-//    [btn setBackgroundImage:[UIImage imageNamed:@"askButton"] forState:UIControlStateNormal];
-//    [btn setTitle:@"Sync with Calendar" forState:UIControlStateNormal];
-//    [btn.titleLabel setFont:[UIFont boldSystemFontOfSize:16]];
-//    [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-//    [btn.titleLabel setShadowOffset:CGSizeMake(0, -1)];
-//    [btn addTarget:self action:@selector(syncWithCal) forControlEvents:UIControlEventTouchUpInside];
-//    
-//    [self.view addSubview:toolbar];
-//    [self.view addSubview:btn];
 }
 
 - (void)saveCalID:(NSString *)calID

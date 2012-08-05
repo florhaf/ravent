@@ -9,7 +9,7 @@
 #import "controllers_events_List_p2p.h"
 #import "controllers_events_Map_p2p.h"
 #import "ActionDispatcher.h"
-
+#import "controllers_events_Events.h"
 
 @implementation controllers_events_List_p2p
 
@@ -18,6 +18,7 @@
 @synthesize art = _art;
 @synthesize other = _other;
 @synthesize sort = _sort;
+@synthesize searchCenter = _searchCenter;
 
 static controllers_events_List_p2p *_ctrl;
 
@@ -27,10 +28,18 @@ static controllers_events_List_p2p *_ctrl;
     
     if (self != nil) {
         
-        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(locationChanged) name:@"locationChanged" object:nil];
     }
     
     return self;
+}
+
+- (void)locationChanged
+{
+    if (((controllers_events_Events *)self.parentViewController).isUp) {
+        
+        [self loadDataWithSpinner];
+    }
 }
 
 - (void)viewDidLoad
@@ -56,80 +65,8 @@ static controllers_events_List_p2p *_ctrl;
     [[controllers_events_Map_p2p instance] loading];
 }
 
-- (void)updateLoadingMessageWith:(NSString *)text
-{
-    [super updateLoadingMessageWith:text];
-    
-    [[controllers_events_Map_p2p instance] updateLoadingMessageWith:text];
-}
-
-- (void)reloadTableViewDataSourceWithNoFadeWithIndex:(int)index
-{    
-    _data = nil;
-    _groupedData = nil;
-    _sortedKeys = nil;
-    
-    switch (index) {
-            
-        case 0:
-            if (_party != nil && [_party count] > 0) {
-                
-                _data = _party;
-                _groupedData = _groupedParty;
-                _sortedKeys = _sortedKeysParty;
-            }
-            break;
-        case 1:
-            if (_chill != nil && [_chill count] > 0) {
-                
-                _data = _chill;
-                _groupedData = _groupedChill;
-                _sortedKeys = _sortedKeysChill;
-            }
-            break;
-        case 2:
-            if (_art != nil && [_art count] > 0) {
-                
-                _data = _art;
-                _groupedData = _groupedArt;
-                _sortedKeys = _sortedKeysArt;
-            }
-            break;
-        case 3:
-            if (_other != nil && [_other count] > 0) {
-                
-                _data = _other;
-                _groupedData = _groupedOther;
-                _sortedKeys = _sortedKeysOther;
-            }
-            break;
-        default:
-            break;
-    }
-    
-    switch (_sort) {
-            
-        case byScore:
-            [self sortByScore];
-            break;
-        case byDistance:
-            [self sortByDistance];
-            break;
-        case byTime:
-            [self sortByTime];
-            break;
-        default:
-            break;
-    }
-    
-    [self.tableView reloadData];
-}
-
 - (void)reloadTableViewDataSourceWithIndex:(int)index
 {   
-    //BOOL bFade = (_data != nil);
-    
-    // load data to display
     _data = nil;
     _groupedData = nil;
     _sortedKeys = nil;
@@ -187,30 +124,6 @@ static controllers_events_List_p2p *_ctrl;
         default:
             break;
     }
-    
-    // flo: 7/17/12
-    // now we remove data while loading, no need to fade out first
-//    if (bFade) {
-//     
-//        // transition animation
-//        [UIView animateWithDuration:0.15 animations:^{
-//            
-//            [self.tableView setAlpha:0];
-//        } completion:^(BOOL finished) {
-//            
-//            
-//            [self.tableView reloadData];
-//            
-//            [self.tableView setContentOffset:CGPointZero animated:NO];
-//            [UIView animateWithDuration:0.15 animations:^(){
-//                
-//                [self.tableView setAlpha:1];    
-//            }];
-//        }];
-//    } else {
-//        
-    
-    // let s just fade in
         [self.tableView setAlpha:0];
         [self.tableView reloadData];
         
@@ -219,7 +132,6 @@ static controllers_events_List_p2p *_ctrl;
             
             [self.tableView setAlpha:1];    
         }];
-//    }
 }
 
 - (NSArray *)bubbleUpFeatured:(NSArray *)original
@@ -345,7 +257,7 @@ static controllers_events_List_p2p *_ctrl;
 
 - (void)loadData
 {    
-    [_spinner startAnimating];
+    [_footerSpinner startAnimating];
     
     NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
     
@@ -355,6 +267,12 @@ static controllers_events_List_p2p *_ctrl;
     [params setValue:[models_User crtUser].timeZone forKey:@"timezone_offset"];                
     [params setValue:[NSNumber numberWithInt:[models_User crtUser].searchRadius] forKey:@"radius"];
     [params setValue:[NSNumber numberWithInt:[models_User crtUser].searchWindow] forKey:@"timeframe"];
+    
+    if (_searchCenter.latitude != 0) {
+        
+        [params setValue:[NSNumber numberWithFloat:_searchCenter.latitude] forKey:@"searchLat"];
+        [params setValue:[NSNumber numberWithFloat:_searchCenter.longitude] forKey:@"searchLon"];
+    }
     
     _url = [@"events" appendQueryParams:params];
 
@@ -366,11 +284,6 @@ static controllers_events_List_p2p *_ctrl;
 
 - (void)onLoadEvents:(NSArray *)objects
 {
-//    if ([objects count] == 0) {
-//     
-//        [[NSBundle mainBundle] loadNibNamed:@"views_Empty_EventP2P" owner:self options:nil];
-//    }
-    
     [self onLoadData:objects withSuccess:^ {
 
         _party = [[NSMutableArray alloc] init];

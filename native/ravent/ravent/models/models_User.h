@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <RestKit/RestKit.h>
-//#import <CoreLocation/CoreLocation.h>
+#import <CoreLocation/CoreLocation.h>
 
 @interface models_User : NSObject<RKObjectLoaderDelegate, RKRequestDelegate/*, CLLocationManagerDelegate*/> {
     

@@ -16,29 +16,22 @@
 
 #define METERS_PER_MILE 1609.344
 
-@interface controllers_events_Map_p2p : UIViewController<MKMapViewDelegate, MKAnnotation, JBAsyncImageViewDelegate, UITableViewDelegate, UITableViewDataSource> {
+@interface controllers_events_Map_p2p : UIViewController<MKMapViewDelegate, MKAnnotation, MKOverlay, UIGestureRecognizerDelegate> {
     
     IBOutlet MKMapView *_map;
     IBOutlet UIToolbar *_toolbarTop;
     IBOutlet UIToolbar *_toolbarBottom;
     IBOutlet UITableView *_tableOptions;
-    
-    UILabel *_labelRadiusValue;
-    UILabel *_labelWindowValue;
-    
-    NSMutableDictionary *_imageLoading;
-    JBAsyncImageView *_image;
+    IBOutlet UIButton *_buttonChangeLocation;
+    IBOutlet UIImageView *_overlay;
     
     models_User *_user;
-    
-    MBProgressHUD *_hud;
+    MKCircleView *_overlayView;
+    MKCircle *_overlayCircle;
     
     BOOL _isMapSet;
-    BOOL _isOptionsShowing;
-    
-    
-    int _prevRadiusValue;
-    int _prevWindowValue;
+    BOOL _isSettingLocation;
+    BOOL _isDirty;
 }
 
 @property (nonatomic, assign) CGFloat peekLeftAmount;
@@ -48,13 +41,8 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil user:(models_User *)user;
 - (void)loading;
 - (void)loadData:(NSArray *)objects;
-//- (void)setMapLocation:(BOOL)force;
-- (void)updateLoadingMessageWith:(NSString *)text;
 - (void) stopGps;
 - (void) startGps;
-
-- (IBAction)onOptionsTap:(id)sender;
-- (IBAction)onDoneTap:(id)sender;
 
 + (controllers_events_Map_p2p *)instance;
 + (void)deleteInstance;

@@ -22,6 +22,8 @@
 
 static customNavigationController *_ctrl;
 
+@synthesize isUp = _isUp;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil forUser:(models_User *)user
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];

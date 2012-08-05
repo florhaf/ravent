@@ -32,6 +32,8 @@ typedef enum {
     NSMutableDictionary *_groupedOther;
     
     sort _sort;
+    
+    CLLocationCoordinate2D _searchCenter;
 }
 
 @property (nonatomic, retain) NSMutableArray *party;
@@ -39,9 +41,9 @@ typedef enum {
 @property (nonatomic, retain) NSMutableArray *art;
 @property (nonatomic, retain) NSMutableArray *other;
 @property (nonatomic, assign) sort sort;
+@property (nonatomic, assign) CLLocationCoordinate2D searchCenter;
 
 - (void)reloadTableViewDataSourceWithIndex:(int)index;
-- (void)reloadTableViewDataSourceWithNoFadeWithIndex:(int)index;
 - (void)sortByScore;
 - (void)sortByDistance;
 - (void)sortByTime;
