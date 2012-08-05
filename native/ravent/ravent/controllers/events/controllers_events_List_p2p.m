@@ -284,6 +284,23 @@ static controllers_events_List_p2p *_ctrl;
 
 - (void)onLoadEvents:(NSArray *)objects
 {
+    _party = nil;
+    _chill = nil;
+    _art = nil;
+    _other = nil;
+    
+    _sortedKeysParty = nil;
+    _sortedKeysChill = nil;
+    _sortedKeysArt = nil;
+    _sortedKeysOther = nil;
+    
+    _groupedParty = nil;
+    _groupedChill = nil;
+    _groupedArt = nil;
+    _groupedOther = nil;
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"onLoadEventsP2P" object:self];
+    
     [self onLoadData:objects withSuccess:^ {
 
         _party = [[NSMutableArray alloc] init];

@@ -32,11 +32,14 @@
     BOOL _isMapSet;
     BOOL _isSettingLocation;
     BOOL _isDirty;
+    
+    BOOL _executeButtonTapWithDelay;
 }
 
 @property (nonatomic, assign) CGFloat peekLeftAmount;
 
 - (IBAction)buttonTap:(id)sender;
+- (void)buttonTapWithDelay:(id)sender;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil user:(models_User *)user;
 - (void)loading;

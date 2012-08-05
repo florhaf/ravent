@@ -39,8 +39,15 @@ static customNavigationController *_ctrl;
         
         [self addChildViewController:[controllers_events_List_p2p instance]];
         
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(locationChanged) name:@"locationChangedReloadDelayed" object:nil];
+        
     }
     return self;
+}
+
+- (void)locationChanged
+{
+    _isDirty = YES;
 }
 
 - (void)loadEventDetailsFromMap:(NSArray *)objects
@@ -49,8 +56,6 @@ static customNavigationController *_ctrl;
     [[controllers_events_List_p2p instance] performSelector:@selector(loadEventDetails:) withObject:e afterDelay:0];
     
     [self.slidingViewController resetTopView];
-    
-    
 }
 
 #pragma mark - View lifecycle
@@ -281,6 +286,13 @@ static customNavigationController *_ctrl;
         }];
 
     }
+}
+
+- (IBAction)onChangeLocation_Tap:(id)sender
+{
+    [self revealMap:sender];
+    
+    [[controllers_events_Map_p2p instance] buttonTapWithDelay:sender];
 }
 
 - (IBAction)onSortChanged:(id)sender

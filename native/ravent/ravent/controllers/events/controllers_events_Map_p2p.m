@@ -15,6 +15,7 @@
 #import "UIView+Animation.h"
 #import "controllers_events_List_p2p.h"
 #import "controllers_App.h"
+#import "controllers_events_Events.h"
 #import <RestKit/RKErrorMessage.h>
 
 @implementation controllers_events_Map_p2p
@@ -198,6 +199,10 @@ static int _retryCounter;
             [self performSelector:@selector(resetTopViewAfterDelayCallback) withObject:nil afterDelay:0.5];
             
             [[NSNotificationCenter defaultCenter] postNotificationName:@"locationChanged" object:self];
+        } else if (!((controllers_events_Events *)[[controllers_events_Events instance].childViewControllers objectAtIndex:0 ]).isUp) {
+            
+            [self performSelector:@selector(resetTopViewAfterDelayCallback) withObject:nil afterDelay:0.5];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"locationChangedReloadDelayed" object:self];
         }
     } else {
         
@@ -221,6 +226,13 @@ static int _retryCounter;
     region.center = coord;
     
     [_map setRegion:region animated:YES];
+}
+
+- (void)buttonTapWithDelay:(id)sender
+{
+    _executeButtonTapWithDelay = YES;
+    
+    
 }
 
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
@@ -254,10 +266,16 @@ static int _retryCounter;
     _overlayCircle = [MKCircle circleWithCenterCoordinate:location radius:1000 * 1.61 * 6];
     [_map addOverlay:_overlayCircle];
     
-    
     @try {
         
-        [mapView setRegion:region animated:YES];
+        if (_executeButtonTapWithDelay) {
+            
+            _executeButtonTapWithDelay = NO;
+            [self performSelector:@selector(buttonTap:) withObject:nil afterDelay:0];
+        } else {
+            
+            [mapView setRegion:region animated:YES];   
+        }
     }
     @catch (NSException *exception) {
         

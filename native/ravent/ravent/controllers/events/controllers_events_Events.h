@@ -71,6 +71,7 @@
 - (IBAction)onArtButton_Tap:(id)sender;
 - (IBAction)onMiscButton_Tap:(id)sender;
 - (IBAction)onSortChanged:(id)sender;
+- (IBAction)onChangeLocation_Tap:(id)sender;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil forUser:(models_User *)user;
 
