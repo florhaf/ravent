@@ -2,7 +2,7 @@
 <backends>
 	<backend name="eventbackend">
 		<class>B1</class>
-   		<instances>20</instances>
+   		<instances>1</instances>
  		<options>
   			<dynamic>true</dynamic>
    		</options>
