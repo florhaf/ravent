@@ -285,8 +285,8 @@ public class Event extends Model implements Serializable {
 				
 				//Prepare a timestamp to filter the facebook DB on the upcoming events
 				DateTimeZone PST = DateTimeZone.forID("America/Los_Angeles"); 	
-				DateTime now_plus_3months =  new DateTime(PST).plusDays(93);
-				String snow_plus_3months = String.valueOf(now_plus_3months.getMillis() / 1000);
+				DateTime now_plus_1month =  new DateTime(PST).plusDays(45);
+				String snow_plus_1month = String.valueOf(now_plus_1month.getMillis() / 1000);
 				
 				//Get friend list 
 				List<Friend> uidList = Friend.GetCron(u.getAccess_token(), Long.toString(u.getUid()), syncCache);
@@ -298,7 +298,7 @@ public class Event extends Model implements Serializable {
 						
 						FacebookClient client 	= new DefaultFacebookClient(u.getAccess_token());
 						String properties 		= "eid, name, pic_big, start_time, end_time, venue, location, privacy, update_time, timezone";
-						String query 			= "SELECT " + properties + " FROM event WHERE eid IN (SELECT eid FROM event_member WHERE uid = " + l.getUid() + ") AND end_time < " + snow_plus_3months + " AND privacy = 'OPEN'";
+						String query 			= "SELECT " + properties + " FROM event WHERE eid IN (SELECT eid FROM event_member WHERE uid = " + l.getUid() + ") AND start_time < " + snow_plus_1month + " AND privacy = 'OPEN'";
 						List<Event> fbevents 	= client.executeQuery(query, Event.class);
 										
 						Event e_cache; 
@@ -394,8 +394,6 @@ public class Event extends Model implements Serializable {
 		e.latitude 	= JSON.GetValueFor("latitude", e.venue);
 		e.longitude = JSON.GetValueFor("longitude", e.venue);
 		
-		e.Filter_category();
-		
 		if ((e.latitude == null || e.latitude == "" || e.longitude == null || e.longitude == "") && v_graph != null) {
 	    		
 			e.latitude = JSON.GetValueFor("latitude", v_graph.location);
@@ -459,7 +457,7 @@ public class Event extends Model implements Serializable {
 			
 			long end_minus_start = (timeStampEnd - timeStampStart) / 86400000; // in days
 			
-			if (end_minus_start > 90) {
+			if (end_minus_start > 62) {
 				return false;
 			}
 			
@@ -621,7 +619,9 @@ public class Event extends Model implements Serializable {
 			day = name.substring(dayindex - 3, dayindex);
 			
 			if (day.contains(" ")){
-				
+				if (!this.filter.equals("Entertain")) {
+					return false;
+				}
 				this.group = "a";
 				this.groupTitle = "Today";
 			} else {
@@ -670,7 +670,9 @@ public class Event extends Model implements Serializable {
 				}
 			}
 		} else {
-			
+			if (!this.filter.equals("Entertain")) {
+				return false;
+			}
 			this.group = "a";
 			this.groupTitle = "Today";
 		}
