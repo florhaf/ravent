@@ -53,7 +53,7 @@ public class Event extends Model implements Serializable {
 	@Facebook
 	String privacy;
 	@Facebook
-	String update_time; //not used?
+	String update_time;
 	@Facebook
 	String timezone;
 	
@@ -334,7 +334,7 @@ public class Event extends Model implements Serializable {
 					    	    		if (elc == null) {
 					    	    			dao.ofy().put(new EventLocationCapable(e));
 					    	    		} else if (elc.getTimeStampStart() != Long.parseLong(e.start_time) || elc.getTimeStampEnd() != Long.parseLong(e.end_time)){
-					    	    			dao.ofy().put(elc);
+					    	    			dao.ofy().put(new EventLocationCapable(e));
 					    	    		}
 					    	    		syncCache.put(e.eid, e, null); // Add Event to cache
 					    	    	}
@@ -895,5 +895,9 @@ public class Event extends Model implements Serializable {
 
 	public void setTimezone(String timezone) {
 		this.timezone = timezone;
+	}
+	
+	public void setUpdate_time(String update_time) {
+		this.update_time = update_time;
 	}
 }
