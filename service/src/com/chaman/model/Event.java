@@ -263,7 +263,7 @@ public class Event extends Model implements Serializable {
 		//Prepare a timestamp to filter the facebook DB on the upcoming events
 		DateTimeZone PST = DateTimeZone.forID("America/Los_Angeles"); 	
 		DateTime now_minus_1day =  new DateTime(PST).minusDays(1);
-		String snow_minus_1day = String.valueOf(now_minus_1day.getMillis() / 1000);
+		long snow_minus_1day = now_minus_1day.getMillis() / 1000L;
 		
 		Dao dao = new Dao();
 		Query<EventLocationCapable> qELC = dao.ofy().query(EventLocationCapable.class);
