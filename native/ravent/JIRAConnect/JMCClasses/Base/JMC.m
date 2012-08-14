@@ -26,7 +26,7 @@
 @synthesize url=_url, projectKey=_projectKey, apiKey=_apiKey,
             photosEnabled=_photosEnabled, voiceEnabled=_voiceEnabled, locationEnabled=_locationEnabled,
             crashReportingEnabled=_crashReportingEnabled, consoleLogEnabled=_consoleLogEnabled,
-            notificationsEnabled=_notificationsEnabled, notifyViaAlertView=_notifyViaAlertView,
+            notificationsEnabled=_notificationsEnabled, notificationsViaCustomView=_notificationsViaCustomView,
             barStyle=_barStyle, barTintColor=_barTintColor,
             customFields=_customFields, modalPresentationStyle=_modalPresentationStyle;
 
@@ -38,6 +38,7 @@
         _locationEnabled = NO;
         _crashReportingEnabled = YES;
         _notificationsEnabled = YES;
+        _notificationsViaCustomView = NO;
         _consoleLogEnabled = NO;
         _barStyle = UIBarStyleDefault;
         _modalPresentationStyle = ((UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)) ? 
@@ -59,7 +60,7 @@
     options.crashReportingEnabled = [[dict objectForKey:kJMCOptionCrashReportingEnabled] boolValue];
     options.notificationsEnabled = [[dict objectForKey:kJMCOptionNotificationsEnabled] boolValue];
     options.consoleLogEnabled = [[dict objectForKey:kJMCOptionConsoleLogEnabled] boolValue];
-    options.notifyViaAlertView = [[dict objectForKey:kJMCOptionNotifyViaAlertView] boolValue];
+    options.notificationsViaCustomView = [[dict objectForKey:kJMCOptionNotificationsViaCustomView] boolValue];
     options.customFields = [dict objectForKey:kJMCOptionCustomFields];
     options.barStyle = [[dict objectForKey:kJMCOptionUIBarStyle] intValue];
     options.modalPresentationStyle = [[dict objectForKey:kJMCOptionUIModalPresentationStyle] intValue];
@@ -101,7 +102,7 @@
     copy.crashReportingEnabled = self.crashReportingEnabled;
     copy.notificationsEnabled = self.notificationsEnabled;
     copy.consoleLogEnabled = self.consoleLogEnabled;
-    copy.notifyViaAlertView = self.notifyViaAlertView;
+    copy.notificationsViaCustomView = self.notificationsViaCustomView;
     copy.customFields = self.customFields;
     copy.barStyle = self.barStyle;
     copy.modalPresentationStyle = self.modalPresentationStyle;
@@ -180,7 +181,6 @@ static JMCViewController* _jcViewController;
     [_crashSender release];
     [_dataDirPath release];
     [_jcViewController release];
-    [_issuesInstance release];
     [super dealloc];
 }
 
@@ -350,20 +350,11 @@ static JMCViewController* _jcViewController;
 }
 
 - (JMCIssuesViewController *)_issuesController {
-    
-    if (_issuesInstance == nil) {
-     
-        _issuesInstance = [[JMCIssuesViewController alloc] initWithStyle:UITableViewStylePlain];
-        [_issuesInstance loadView];
-        [_issuesInstance setIssueStore:[JMCIssueStore instance]];
-        _issuesInstance.modalPresentationStyle = self.options.modalPresentationStyle;
-        
-    }
-    
-    
-    
-
-    return _issuesInstance;
+    JMCIssuesViewController *viewController = [[[JMCIssuesViewController alloc] initWithStyle:UITableViewStylePlain] autorelease];
+    [viewController loadView];
+    [viewController setIssueStore:[JMCIssueStore instance]];
+    viewController.modalPresentationStyle = self.options.modalPresentationStyle;
+    return viewController;
 }
 
 - (UIViewController *)viewController

@@ -24,6 +24,10 @@
 
 // Use this macro outside JMC to enable code that depends on JMC
 #define JMC_PRESENT
+// the name of the actual notification to be posted when a message is received from a developer
+#define JMCNotificationMessageReceived @"JMCNotificationMessageReceived" 
+// the key for the message in the user info dict
+#define JMCNotificationMessageReceivedMessage @"JMCNotificationMessageReceivedMessage" 
 
 // Constants
 #define kJIRAConnectUUID @"kJIRAConnectUUID"
@@ -40,7 +44,7 @@
 #define kJMCOptionLocationEnabled @"kJMCOptionLocationEnabled"
 #define kJMCOptionCrashReportingEnabled @"kJMCOptionCrashReportingEnabled"
 #define kJMCOptionNotificationsEnabled @"kJMCOptionNotificationsEnabled"
-#define kJMCOptionNotifyViaAlertView @"kJMCOptionNotifyViaAlertView"
+#define kJMCOptionNotificationsViaCustomView @"kJMCOptionNotificationsViaCustomView"
 #define kJMCOptionCustomFields @"kJMCOptionCustomFields"
 #define kJMCOptionUIBarStyle @"kJMCOptionUIBarStyle"
 #define kJMCOptionUIModalPresentationStyle @"kJMCOptionUIModalPresentationStyle"
@@ -55,7 +59,7 @@
     BOOL _locationEnabled;
     BOOL _crashReportingEnabled;
     BOOL _notificationsEnabled;
-    BOOL _notifyViaAlertView;
+    BOOL _notificationsViaCustomView;
     BOOL _consoleLogEnabled;
     NSDictionary* _customFields;
     UIBarStyle _barStyle;
@@ -121,10 +125,10 @@
 @property (assign) BOOL notificationsEnabled;
 
 /**
- * If YES, use a UIAlertView to alert the user to new notifications 3 seconds after the app did finish launching.
- * If NO, a Heads Up Display is used. Default is NO.
+ * If YES, when a notification from a developer is received, a JMCNotificationMessageReceived notification will be posted.
+ * The user dict will contain the message, keyed by JMCNotificationMessageReceivedMessage.
  */
-@property (assign) BOOL notifyViaAlertView;
+@property (assign) BOOL notificationsViaCustomView;
 
 
 /**
@@ -168,9 +172,6 @@
     JMCCrashSender *_crashSender;
     id <JMCCustomDataSource> _customDataSource;
     JMCOptions* _options;
-    
-    
-    JMCIssuesViewController *_issuesInstance;
 }
 
 enum JMCViewControllerMode {

@@ -18,7 +18,7 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import "ECSlidingViewController.h"
-
+#import "customNavigationController.h"
 #import "JMCIssueStore.h"
 
 @interface JMCIssuesViewController : UITableViewController {
@@ -26,10 +26,11 @@
     JMCIssueStore * _issueStore;
     @private
     NSDateFormatter *_dateFormatter;
-    
-    BOOL _isComingFromDetails;
 }
 
 @property (retain, nonatomic) JMCIssueStore * issueStore;
+
++ (customNavigationController *)instance;
++ (void)release;
 
 @end

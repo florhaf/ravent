@@ -16,6 +16,7 @@
 #import "customNavigationController.h"
 #import "controllers_Login.h"
 #import "JMC.h"
+#import "JMCIssuesViewController.h"
 
 @implementation controllers_SlidingMenu
 
@@ -182,10 +183,7 @@ static controllers_SlidingMenu *_ctrl;
                     newTopViewController = [controllers_FeatureYourEvent instance];
                 } else {
                     
-                    // prevent slide right
-                    self.slidingViewController.underRightViewController = nil;
-                    
-                    newTopViewController = [[JMC sharedInstance] issuesViewController];
+                    newTopViewController = [JMCIssuesViewController instance];
                 }
             }
         }

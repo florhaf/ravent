@@ -32,7 +32,7 @@ static NSOperationQueue *sharedOperationQueue = nil;
 
 - (NSMutableDictionary *)getQueueList;
 
-- (void) doFlushQueue;
+- (void) doFlushQueue:(NSTimer*) timer;
 
 @end
 
@@ -59,32 +59,43 @@ int _maxNumRequestFailures;
         _flushLock = [[NSRecursiveLock alloc] init];
         _maxNumRequestFailures = 50;
         JMCDLog(@"queue at  %@", [instance getQueueIndexPath]);
+        [instance resetAllInProgress];
 
     }
     return instance;
 }
 
--(BOOL) reachable {
-    Reachability *r = [Reachability reachabilityWithHostName:[JMC sharedInstance].url.host];
-    NetworkStatus internetStatus = [r currentReachabilityStatus];
-    return internetStatus == NotReachable ?  NO : YES;
-}
-
--(void) flushQueueIfReachable:(NSTimer*) timer
-{
-    if ([self reachable]) {
-        [self doFlushQueue];
-        return;
-    }
-    JMCDLog(@"Not reachable. Not flushing!");
-}
-
 -(void) flushQueue
 {
-    [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(flushQueueIfReachable:) userInfo:nil repeats:NO];
+    [NSTimer scheduledTimerWithTimeInterval:0 target:self selector:@selector(doFlushQueue:) userInfo:nil repeats:NO];
 }
 
--(void)doFlushQueue
+- (void)resetAllInProgress
+{
+    @synchronized (_flushLock) {
+        NSMutableDictionary *items = [self getQueueList];
+
+        for (NSString *itemId in [items allKeys]) {
+            JMCQueueItem *item = [self getItem:itemId];
+
+            // Get metadata and check if empty
+            NSDictionary *metadata = [self metaDataFor:itemId];
+            if (!metadata) {
+                continue;
+            }
+            JMCSentStatus sentStatus = [[metadata valueForKey:KEY_SENT_STATUS] intValue];
+            if (sentStatus == JMCSentStatusInProgress)
+            {
+                JMCDLog(@"Resetting request to retry from in-progress %@",itemId)
+                [self updateItem:itemId sentStatus:JMCSentStatusRetry bumpNumAttemptsBy:0];
+            }
+        }
+    }
+
+}
+
+
+-(void)doFlushQueue:(NSTimer*) timer
 {
     // Ensure a single thread at a time tries to flush the queue.
     @synchronized (_flushLock) { 
@@ -102,12 +113,13 @@ int _maxNumRequestFailures;
             // Check permanent error
             JMCSentStatus sentStatus = [[metadata valueForKey:KEY_SENT_STATUS] intValue];
             if (sentStatus == JMCSentStatusPermError) {
-                JMCALog(@"Ignored queued item as sent status shows permanent error: %@.", itemId);
+                JMCALog(@"Deleting queued item as sent status shows permanent error: %@.", itemId);
+                [self deleteItem:itemId];
                 continue;
             }
             
-            // Check if in progress (timeout after 30minutes)
-            if ((sentStatus == JMCSentStatusInProgress) && ([[metadata objectForKey:KEY_UPDATED_AT] timeIntervalSinceNow] > -30 * 60)) {
+            // Check if in progress (timeout after 2 minutes)
+            if ((sentStatus == JMCSentStatusInProgress) && ([[metadata objectForKey:KEY_UPDATED_AT] timeIntervalSinceNow] > -2 * 60)) {
                 JMCALog(@"Ignored queued item as send process is in progress: %@.", itemId);
                 continue;
             }

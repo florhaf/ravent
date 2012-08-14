@@ -22,33 +22,20 @@
 #import "JMCRequestQueue.h"
 #import "controllers_SlidingMenu.h"
 
+
 static NSString *cellId = @"CommentCell";
 
 @implementation JMCIssuesViewController
 
 @synthesize issueStore = _issueStore;
 
+static customNavigationController *_ctrl;
+
 - (id)initWithStyle:(UITableViewStyle)style {
 
     self = [super initWithStyle:style];
     if (self) {
         
-        
-        UIImage *posti = [UIImage imageNamed:@"postButton"];
-        UIButton *postb = [UIButton buttonWithType:UIButtonTypeCustom];
-        [postb addTarget:self action:@selector(compose:) forControlEvents:UIControlEventTouchUpInside];
-        [postb setImage:posti forState:UIControlStateNormal];
-        [postb setFrame:CGRectMake(0, 0, posti.size.width, posti.size.height)];
-        UIBarButtonItem *postButton = [[UIBarButtonItem alloc] initWithCustomView:postb];       
-        self.navigationItem.rightBarButtonItem = postButton;
-        
-        [postb release];
-        [posti release];
-        
-//        self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose
-//                                                                                                target:self
-//                                                                                                action:@selector(compose:)] autorelease];
-
         self.title = JMCLocalizedString(@"Your Feedback", @"Title of list of previous messages");
         _dateFormatter = [[NSDateFormatter alloc] init];
         [_dateFormatter setDateStyle:NSDateFormatterShortStyle];
@@ -60,12 +47,8 @@ static NSString *cellId = @"CommentCell";
 
 - (void)compose:(UIBarItem *)arg
 {
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        [self.navigationController pushViewController:[[JMC sharedInstance] feedbackViewControllerWithMode:JMCViewControllerModeCustom] animated:YES];
-    }
-    else {
+
         [self presentModalViewController:[[JMC sharedInstance] feedbackViewControllerWithMode:JMCViewControllerModeDefault] animated:YES];
-    }
 }
 
 - (void)cancel:(UIBarItem *)arg
@@ -109,9 +92,25 @@ static NSString *cellId = @"CommentCell";
     
     [super viewDidLoad];
     
-    UIImageView *ivleft = [[UIImageView alloc] initWithFrame:CGRectMake(-40, 0, 40, 460)];
-    [ivleft setImage:[UIImage imageNamed:@"shadowLeft"]];
-    [self.slidingViewController.topViewController.view addSubview:ivleft];
+    UIImage *menubg = [[UIImage imageNamed:@"navBarBG"] autorelease];
+    UIImage *menui = [[UIImage imageNamed:@"navBarMenu"] autorelease];
+    
+    UIButton *menub = [[UIButton buttonWithType:UIButtonTypeCustom] autorelease];
+    [menub addTarget:self action:@selector(revealMenu:) forControlEvents:UIControlEventTouchUpInside];
+    [menub setImage:menui forState:UIControlStateNormal];
+    [menub setBackgroundImage:menubg forState:UIControlStateNormal];
+    [menub setFrame:CGRectMake(0, 0, 40, 29)];
+    
+    UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithCustomView:menub];
+    self.navigationItem.leftBarButtonItem = menuButton;
+    
+    UIImage *posti = [[UIImage imageNamed:@"postButton"] autorelease];
+    UIButton *postb = [[UIButton buttonWithType:UIButtonTypeCustom] autorelease];
+    [postb addTarget:self action:@selector(compose:) forControlEvents:UIControlEventTouchUpInside];
+    [postb setImage:posti forState:UIControlStateNormal];
+    [postb setFrame:CGRectMake(0, 0, posti.size.width, posti.size.height)];
+    UIBarButtonItem *postButton = [[[UIBarButtonItem alloc] initWithCustomView:postb] autorelease];
+    self.navigationItem.rightBarButtonItem = postButton;
 }
 
 - (void)viewDidUnload {
@@ -122,41 +121,16 @@ static NSString *cellId = @"CommentCell";
 {
     [[JMCRequestQueue sharedInstance] flushQueue];
     [super viewWillAppear:animated];
-    
-    if (!_isComingFromDetails) {
-     
-        
-        
-        // Added by Flo
-        UIImage *menubg = [UIImage imageNamed:@"navBarBG"];
-        UIImage *menui = [UIImage imageNamed:@"navBarMenu"];
-        
-        UIButton *menub = [UIButton buttonWithType:UIButtonTypeCustom];
-        [menub addTarget:self action:@selector(revealMenu:) forControlEvents:UIControlEventTouchUpInside];
-        [menub setImage:menui forState:UIControlStateNormal];
-        [menub setBackgroundImage:menubg forState:UIControlStateNormal];
-        [menub setFrame:CGRectMake(0, 0, 40, 29)];
-        
-        UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithCustomView:menub];
-        self.navigationItem.leftBarButtonItem = menuButton;
-        
-        [menub release];
-        [menui release];
-        [menubg release];
-        
-//        self.parentViewController.view.layer.shadowOpacity = 0.75f;
-//        self.parentViewController.view.layer.shadowRadius = 10.0f;
-//        self.parentViewController.view.layer.shadowColor = [UIColor blackColor].CGColor;
-        
-        
-        if (![self.slidingViewController.underLeftViewController isKindOfClass:[controllers_SlidingMenu class]]) {
-            self.slidingViewController.underLeftViewController  = [controllers_SlidingMenu instance];
-        }
-        
-        [self.view addGestureRecognizer:self.slidingViewController.panGesture];
+  
+    if (![self.slidingViewController.underLeftViewController isKindOfClass:[controllers_SlidingMenu class]]) {
+        self.slidingViewController.underLeftViewController  = [controllers_SlidingMenu instance];
     }
     
-    _isComingFromDetails = NO;
+    if (self.slidingViewController.underRightViewController != nil) {
+        self.slidingViewController.underRightViewController = nil;
+    }
+    
+    [self.view addGestureRecognizer:self.slidingViewController.panGesture];
 }
 
 - (void)revealMenu:(id)sender
@@ -205,6 +179,9 @@ static NSString *cellId = @"CommentCell";
     cell.sentStatusLabel.hidden = sentStatus != JMCSentStatusPermError; // TODO: after n-attempts are reached, set status to PermError.
 
     [issue release];
+    
+    NSLog(@"%d", indexPath.row);
+    
     return cell;
 }
 
@@ -217,8 +194,6 @@ static NSString *cellId = @"CommentCell";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
-    _isComingFromDetails = YES;
-    
     JMCIssue *issue = [self.issueStore newIssueAtIndex:indexPath.row];
     JMCSentStatus sentStatus = [[JMCRequestQueue sharedInstance] requestStatusFor:issue.requestId];
 
@@ -257,14 +232,31 @@ static NSString *cellId = @"CommentCell";
 }
 #pragma mark end
 
-//- (void)dealloc {
-//    //if (self) {
-//        self.issueStore = nil;
-//        [_dateFormatter release];
-//        _dateFormatter = nil;
-//    //make the app crash at logout...
-//        [super dealloc];
-//    //}
-//}
+- (void)dealloc {
+    //if (self) {
+        self.issueStore = nil;
+        [_dateFormatter release];
+        _dateFormatter = nil;
+    //make the app crash at logout...
+        [super dealloc];
+    //}
+}
+
++ (customNavigationController *)instance
+{
+    if (_ctrl == nil) {
+        
+        JMCIssuesViewController *issues = [[JMCIssuesViewController alloc] initWithStyle:UITableViewStylePlain];
+        [issues setIssueStore:[JMCIssueStore instance]];
+        _ctrl = [[customNavigationController alloc] initWithRootViewController:issues];
+    }
+    
+    return _ctrl;
+}
+
++ (void)release
+{
+    _ctrl = nil;
+}
 
 @end

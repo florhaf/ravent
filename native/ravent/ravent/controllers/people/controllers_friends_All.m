@@ -99,6 +99,9 @@ static controllers_friends_All *_ctrl;
     [[ActionDispatcher instance] add:upadteLoadingMessageAction named:_url];
     
     [_user loadAllWithParams:params force:force];
+    
+    [_spinner startAnimating];
+    _footerLabel.text = @"Loading...";
 }
 
 - (void)reloadTableViewDataSource
@@ -114,7 +117,10 @@ static controllers_friends_All *_ctrl;
 }
 
 - (void)onLoadAll:(NSArray *)objects
-{    
+{
+    [_spinner stopAnimating];
+    _footerLabel.text =@"";
+    
     [self onLoadData:objects withSuccess:^ {
         
         _data = objects;

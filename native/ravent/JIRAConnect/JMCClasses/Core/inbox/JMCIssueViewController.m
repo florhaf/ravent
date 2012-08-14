@@ -38,42 +38,15 @@ static float detailLabelHeight = 21.0f;
     if (self) {
         font = [UIFont systemFontOfSize:14.0];
         titleFont = [UIFont boldSystemFontOfSize:14.0];
-//        UIBarButtonItem *replyButton =
-//        [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemReply
-//                                                      target:self
-//                                                      action:@selector(didTouchReply:)];
-        
-        UIImage *posti = [UIImage imageNamed:@"postButton"];
-        UIButton *postb = [UIButton buttonWithType:UIButtonTypeCustom];
-        [postb addTarget:self action:@selector(didTouchReply:) forControlEvents:UIControlEventTouchUpInside];
-        [postb setImage:posti forState:UIControlStateNormal];
-        [postb setFrame:CGRectMake(0, 0, posti.size.width, posti.size.height)];
-        UIBarButtonItem *replyButton = [[UIBarButtonItem alloc] initWithCustomView:postb];       
+        UIBarButtonItem *replyButton =
+        [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemReply
+                                                      target:self
+                                                      action:@selector(didTouchReply:)];
         self.navigationItem.rightBarButtonItem = replyButton;
-        
-        UIImage *backi = [UIImage imageNamed:@"backButton"];
-        
-        UIButton *backb = [UIButton buttonWithType:UIButtonTypeCustom];
-        [backb addTarget:self action:@selector(onBackTap) forControlEvents:UIControlEventTouchUpInside];
-        [backb setImage:backi forState:UIControlStateNormal];
-        [backb setFrame:CGRectMake(0, 0, backi.size.width, backi.size.height)];
-        
-        UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:backb];
-        
-        [self.navigationItem setLeftBarButtonItem:backButton];
-        
-        [backb release];
-        [backi release];
-        
         [replyButton release];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTable) name:kJMCNewCommentCreated object:nil];
     }
     return self;
-}
-
-- (void)onBackTap
-{
-    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)dealloc
@@ -102,9 +75,6 @@ static float detailLabelHeight = 21.0f;
     self.tableView.backgroundColor = [UIColor groupTableViewBackgroundColor];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.separatorColor = [UIColor clearColor];
-    
-    self.tableView.tableFooterView = [[UIView alloc] init];
-    
     [self scrollToLastComment];
 }
 

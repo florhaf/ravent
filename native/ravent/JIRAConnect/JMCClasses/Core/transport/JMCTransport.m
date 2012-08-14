@@ -122,10 +122,10 @@
             }
         }
     }
-    
+
     for (NSString *key in unique) {
         JMCAttachmentItem *item = [unique valueForKey:key];
-        NSString *filename = [NSString stringWithFormat:item.filenameFormat, index];
+        NSString *filename = [NSString stringWithFormat:item.filenameFormat, attachmentIndex];
         
         [self addPart:item filename:filename key:item.name boundary:boundary toStream:stream];
         
@@ -282,7 +282,7 @@
 }
 
 - (NSString *)hashForConnection:(NSURLConnection *)connection {
-    return [NSString stringWithFormat:@"%ld", (long)connection];
+    return [NSString stringWithFormat:@"%ld", connection];
 }
 
 - (JMCTransportOperation *) requestFromItem:(JMCQueueItem *)item
@@ -303,7 +303,7 @@
     [request setHTTPMethod:@"POST"];
     [request setValue:[NSString stringWithFormat:@"multipart/form-data; boundary=%@", boundary] forHTTPHeaderField:@"Content-Type"];
     [request setValue:item.uuid forHTTPHeaderField:kJMCHeaderNameRequestId];
-    request.timeoutInterval = 60;
+    request.timeoutInterval = 30;
 
     [JMCTransport addAllAttachments:item.attachments toRequest:request boundary:boundary uuid:item.uuid];
 

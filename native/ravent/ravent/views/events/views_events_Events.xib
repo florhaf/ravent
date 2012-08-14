@@ -453,7 +453,7 @@
 										</object>
 										<object class="NSCustomResource" key="IBUINormalImage">
 											<string key="NSClassName">NSImage</string>
-											<string key="NSResourceName">navBarMap.png</string>
+											<string key="NSResourceName">search_options_map.png</string>
 										</object>
 										<object class="NSCustomResource" key="IBUINormalBackgroundImage">
 											<string key="NSClassName">NSImage</string>
@@ -984,8 +984,8 @@
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
 			<string key="askButton.png">{580, 70}</string>
-			<string key="navBarMap.png">{80, 58}</string>
 			<string key="optionsBG.png">{320, 190}</string>
+			<string key="search_options_map.png">{188, 58}</string>
 		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">1498</string>
 	</data>

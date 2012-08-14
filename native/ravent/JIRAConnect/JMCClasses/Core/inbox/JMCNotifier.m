@@ -53,13 +53,6 @@ static CGRect endFrame;
     return self;
 }
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex == 1) {
-        [self displayNotifications:alertView];
-    }
-}
-
 - (void)notify:(NSTimer *)timer {
     // check notifications
     if (!_view) {
@@ -71,16 +64,13 @@ static CGRect endFrame;
         NSString *notificationFmt = count != 1 ? JMCLocalizedString(@"JMCInAppNotification-Plural", @"%d new notification%@ from developer") : 
         JMCLocalizedString(@"JMCInAppNotification-Singular", @"");
         
-        //if ([JMC sharedInstance].options.notifyViaAlertView) { 
-        if (true) {
-            UIAlertView* alert = 
-                            [[UIAlertView alloc] initWithTitle:@"Feedback"  
-                                                      message:[NSString stringWithFormat:notificationFmt, count] 
-                                                     delegate:self 
-                                            cancelButtonTitle:@"OK" 
-                                            otherButtonTitles:nil];
-            [alert show];
-            [alert release];
+        if ([JMC sharedInstance].options.notificationsViaCustomView) {
+            
+            NSDictionary* userInfo = [NSDictionary dictionaryWithObject:[NSString stringWithFormat:notificationFmt, count] 
+                                                                 forKey:JMCNotificationMessageReceivedMessage];
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:JMCNotificationMessageReceived object:self userInfo:userInfo];
+            
             return;
         }
         
@@ -133,29 +123,35 @@ static CGRect endFrame;
 
 - (void)displayNotifications:(id)sender {
     
-    CGRect statusBarFrame = [UIApplication sharedApplication].statusBarFrame;
-    CGSize frameSize = [[UIScreen mainScreen] applicationFrame].size;
-    CGRect currStartFrame = CGRectMake(startFrame.origin.x, startFrame.origin.y, frameSize.width, frameSize.height);
-    CGRect currEndFrame = CGRectMake(0, 0 + statusBarFrame.size.height, frameSize.width, frameSize.height);
+//    CGRect statusBarFrame = [UIApplication sharedApplication].statusBarFrame;
+//    CGSize frameSize = [[UIScreen mainScreen] applicationFrame].size;
+//    CGRect currStartFrame = CGRectMake(startFrame.origin.x, startFrame.origin.y, frameSize.width, frameSize.height);
+//    CGRect currEndFrame = CGRectMake(0, 0 + statusBarFrame.size.height, frameSize.width, frameSize.height);
+//
+//    if (!_viewController) {
+//        _viewController = [[[JMC sharedInstance] issuesViewControllerWithMode:JMCViewControllerModeDefault] retain];
+//    }
+//    
+//    UIWindow *window = [self findVisibleWindow];
+//    if ((window) && ([window respondsToSelector:@selector(rootViewController)]) && ([window rootViewController])) {
+//        [window.rootViewController presentModalViewController:_viewController animated:YES];
+//    }
+//    else {
+//        [_viewController.view setFrame:currStartFrame];
+//        [self.view addSubview:_viewController.view];
+//
+//        [UIView beginAnimations:@"animateView" context:nil];
+//        [UIView setAnimationDuration:0.4];
+//        [_viewController.view setFrame:currEndFrame]; //notice this is ON screen!
+//        [UIView commitAnimations];
+//    }
 
-    if (!_viewController) {
-        _viewController = [[[JMC sharedInstance] issuesViewControllerWithMode:JMCViewControllerModeDefault] retain];
-    }
+    [UIView beginAnimations:@"animateToolbar" context:nil];
+    [UIView setAnimationDuration:0.4];
+    [_toolbar setFrame:startFrame];
+    [UIView commitAnimations];
     
-    UIWindow *window = [self findVisibleWindow];
-    if ((window) && ([window respondsToSelector:@selector(rootViewController)]) && ([window rootViewController])) {
-        [window.rootViewController presentModalViewController:_viewController animated:YES];
-    }
-    else {
-        [_viewController.view setFrame:currStartFrame];
-        [self.view addSubview:_viewController.view];
-
-        [UIView beginAnimations:@"animateView" context:nil];
-        [UIView setAnimationDuration:0.4];
-        [_viewController.view setFrame:currEndFrame]; //notice this is ON screen!
-        [UIView commitAnimations];
-    }
-
+    
     [_button removeFromSuperview];
     [_toolbar removeFromSuperview];
 }

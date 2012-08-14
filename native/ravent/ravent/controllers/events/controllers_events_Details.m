@@ -728,6 +728,7 @@ static int _retryCounter;
         _isMapImageSet = YES;
         [_map removeFromSuperview];
         _map = nil;
+        
     }
     
     UIImageView *ivtop = [[UIImageView alloc] initWithFrame:CGRectMake(0, _headerDateLabel.frame.origin.y - 10, 320, 20)];

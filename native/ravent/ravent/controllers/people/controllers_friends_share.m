@@ -97,7 +97,10 @@
 }
 
 - (void)onLoadAll:(NSArray *)objects
-{    
+{
+    [_spinner stopAnimating];
+    _footerLabel.text =@"";
+    
     [self onLoadData:objects withSuccess:^ {
         
         _data = objects;

@@ -31,6 +31,8 @@ typedef int JMCSentStatus;
 
 -(void) flushQueue;
 
+-(void) resetAllInProgress;
+
 -(void) addItem:(JMCQueueItem *)item;
 -(void)updateItem:(NSString *)uuid sentStatus:(JMCSentStatus)sentStatus bumpNumAttemptsBy:(int)inc;
 -(NSDictionary *) metaDataFor:(NSString *)uuid;

@@ -10,14 +10,15 @@
 #import "UITableViewReloadable.h"
 #import "controllers_events_DetailsContainer.h"
 #import "controllers_friends_Details.h"
+#import "JMCIssuesViewController.h"
 
 @implementation UINavigationBar (CustomBackground)
 
-- (void)drawRect:(CGRect)rect
-{
-    UIImage *navBackgroundImage = [[UIImage imageNamed:@"navBar"] stretchableImageWithLeftCapWidth:0.0 topCapHeight:0.0];
-    [navBackgroundImage drawInRect:rect];
-}
+//- (void)drawRect:(CGRect)rect
+//{
+//    UIImage *navBackgroundImage = [[UIImage imageNamed:@"navBar"] stretchableImageWithLeftCapWidth:0.0 topCapHeight:0.0];
+//    [navBackgroundImage drawInRect:rect];
+//}
 
 @end
 
@@ -89,11 +90,14 @@
 - (UIViewController *)popViewControllerAnimated:(BOOL)animated
 {
     UIViewController *viewController = [super popViewControllerAnimated:YES];
-    UITableViewReloadable *table = (UITableViewReloadable *)viewController;
-    [table cancelAllRequests];
-
     UIViewController *topvc = self.topViewController;
     
+    if (![topvc isKindOfClass:[JMCIssuesViewController class]]) {
+     
+        UITableViewReloadable *table = (UITableViewReloadable *)viewController;
+        [table cancelAllRequests];
+    }
+
     if (![topvc isKindOfClass:[controllers_events_DetailsContainer class]]) {
         
         self.navigationBar.barStyle = UIBarStyleDefault;

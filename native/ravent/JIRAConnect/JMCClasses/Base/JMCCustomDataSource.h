@@ -69,4 +69,11 @@ typedef enum {
 * */
 -(CGRect)notifierEndFrame;
 
+
+/**
+* The text to pre-populate the description field when the feedback view is first displayed to a user.
+* If not defined, no text will be displayed.
+*/
+-(NSString*)initialFeedbackText;
+
 @end

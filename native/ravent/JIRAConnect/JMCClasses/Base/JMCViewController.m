@@ -99,26 +99,14 @@ static NSInteger kJMCTag = 10133;
         self.navigationItem.title = JMCLocalizedString(@"Feedback", "Title of the feedback controller");
     }
 
-    
-    
-    UIImage *posti = [UIImage imageNamed:@"postButton"];
-    UIButton *postb = [UIButton buttonWithType:UIButtonTypeCustom];
-    [postb addTarget:self action:@selector(sendFeedback) forControlEvents:UIControlEventTouchUpInside];
-    [postb setImage:posti forState:UIControlStateNormal];
-    [postb setFrame:CGRectMake(0, 0, posti.size.width, posti.size.height)];
-    UIBarButtonItem *postButton = [[UIBarButtonItem alloc] initWithCustomView:postb];       
-    self.navigationItem.leftBarButtonItem = postButton;
-    
 
-//    self.navigationItem.rightBarButtonItem =
-//            [[[UIBarButtonItem alloc] initWithTitle:JMCLocalizedString(@"Send", @"Send feedback")
-//                                              style:UIBarButtonItemStyleDone
-//                                             target:self
-//                                             action:@selector(sendFeedback)] autorelease];
+    self.navigationItem.rightBarButtonItem =
+            [[[UIBarButtonItem alloc] initWithTitle:JMCLocalizedString(@"Send", @"Send feedback")
+                                              style:UIBarButtonItemStyleDone
+                                             target:self
+                                             action:@selector(sendFeedback)] autorelease];
 
     [self addButtonsToView];
-    [postb release];
-    [posti release];
     if (!self.attachments) {
         self.attachments = [NSMutableArray arrayWithCapacity:1];
     }
@@ -145,22 +133,21 @@ static NSInteger kJMCTag = 10133;
     
     // Show cancel button only if this is the first controller on the stack
     if ([self.navigationController.viewControllers objectAtIndex:0] == self) {
-//        self.navigationItem.leftBarButtonItem =
-//        [[[UIBarButtonItem alloc] initWithTitle:JMCLocalizedString(@"Cancel", @"Cancel feedback")
-//                                          style:UIBarButtonItemStyleBordered
-//                                         target:self
-//                                         action:@selector(dismiss)] autorelease];
-        
-        UIImage *donei = [UIImage imageNamed:@"doneButton"];
-        UIButton *doneb = [UIButton buttonWithType:UIButtonTypeCustom];
-        [doneb addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
-        [doneb setImage:donei forState:UIControlStateNormal];
-        [doneb setFrame:CGRectMake(0, 0, donei.size.width, donei.size.height)];
-        UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithCustomView:doneb];       
-        self.navigationItem.rightBarButtonItem = doneButton;
-        
-        [doneb release];
-        [donei release];
+        self.navigationItem.leftBarButtonItem =
+        [[[UIBarButtonItem alloc] initWithTitle:JMCLocalizedString(@"Cancel", @"Cancel feedback")
+                                          style:UIBarButtonItemStyleBordered
+                                         target:self
+                                         action:@selector(dismiss)] autorelease];
+    }
+    
+    if ([self.descriptionField.text length] == 0 && !self.replyToIssue &&
+        [[JMC sharedInstance].customDataSource respondsToSelector:@selector(initialFeedbackText)]) 
+    {
+        NSString *myText = [[JMC sharedInstance].customDataSource initialFeedbackText];
+        if ([myText length])
+        { 
+            [self.descriptionField setText:myText]; 
+        }
     }
     
     [self.descriptionField becomeFirstResponder];
@@ -403,7 +390,14 @@ static NSInteger kJMCTag = 10133;
     if ([[JMC sharedInstance].customDataSource respondsToSelector:@selector(customAttachment)]) {
         JMCAttachmentItem *payloadData = [[JMC sharedInstance].customDataSource customAttachment];
         if (payloadData) {
-            [allAttachments addObject:payloadData];
+            if (payloadData.path)
+            {
+                [allAttachments addObject:payloadData];
+            }
+            else
+            {
+                JMCALog(@"Not adding attachment: %@ with no path.", payloadData);
+            }
         }
     }
     
@@ -709,10 +703,7 @@ static NSInteger kJMCTag = 10133;
         if (attachment.thumbnail) {
             UIImageView *iconView = [[UIImageView alloc] initWithImage:attachment.thumbnail];
             iconView.tag = kJMCTag;
-            if (iconView != nil) {
-             
-                [subviews insertObject:iconView atIndex:0];
-            }
+            [subviews insertObject:iconView atIndex:0];
             [iconView release];
         }
     }

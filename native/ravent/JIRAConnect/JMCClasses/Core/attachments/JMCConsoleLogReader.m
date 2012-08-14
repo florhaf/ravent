@@ -22,7 +22,6 @@
     return;
     #endif
     
-    NSLog(@"App ID: %@", appId);
     aslmsg q, m;
     int i;
     const char *key, *val;
@@ -36,7 +35,7 @@
     asl_set_query(q, ASL_KEY_MSG_ID, lastLoggedMsgId, ASL_QUERY_OP_GREATER);
     aslresponse r = asl_search(NULL, q);
     
-    const char* maxMsgId;
+    const char* maxMsgId = "0";
     
     NSOutputStream* outStream = [[NSOutputStream alloc] initToFileAtPath:path append:YES];
     [outStream open];

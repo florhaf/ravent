@@ -47,6 +47,7 @@
         label = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
         label.tag = 2;
         label.backgroundColor = [UIColor clearColor];
+        // TODO: get this working correctly such that it does not truncate messages.
         label.dataDetectorTypes = UIDataDetectorTypeAll;
         label.editable = NO;
         label.scrollEnabled = NO;
@@ -117,7 +118,7 @@
     float balloonY = 2.0f + detailLabelHeight;
     float labelY = 8.0f + detailLabelHeight;
     if (leftAligned) {
-        float width = size.width + 30.0f;
+        float width = size.width + 16.0f; // these 16points are to counteract the -8 edge insets that are set on the UITextView (label).
         float x = self.contentView.frame.size.width - width;
         CGRect frame = CGRectMake(x, balloonY, width, size.height + 12.0f);
         self.bubble.frame = frame;
@@ -126,10 +127,10 @@
         self.label.frame = CGRectMake(frame.origin.x + 12.0f, labelY - 2.0f, size.width + 5.0f, size.height);
 
     } else {
-        self.bubble.frame = CGRectMake(0.0f, balloonY, size.width + 28.0f, size.height + 12.0f);
+        self.bubble.frame = CGRectMake(0.0f, balloonY, size.width + 28.0f  + 16.0f, size.height + 12.0f);
         self.bubble.autoresizingMask = UIViewAutoresizingFlexibleRightMargin;
-        balloon = [[UIImage imageNamed:@"Balloon_2"] stretchableImageWithLeftCapWidth:25.0f topCapHeight:15.0f];
-        self.label.frame = CGRectMake(20.0f, labelY - 2.0f, size.width + 5, size.height);
+        balloon = [[UIImage imageNamed:@"Balloon_2"] stretchableImageWithLeftCapWidth:20.0f topCapHeight:15.0f];
+        self.label.frame = CGRectMake(20.0f, labelY - 2.0f, size.width + 5  + 16.0f, size.height);
     } 
     self.bubble.image = balloon;
     self.label.text = string;

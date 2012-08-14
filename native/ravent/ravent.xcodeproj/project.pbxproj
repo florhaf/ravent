@@ -365,6 +365,7 @@
 		DFB28CCE15981B2300D0F999 /* selected_right@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DFB28CC115981B2200D0F999 /* selected_right@2x.png */; };
 		DFD2804E151DBA36007A0873 /* AWIconAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = DFD2804D151DBA36007A0873 /* AWIconAnnotation.m */; };
 		DFD2895B151DD2EF007A0873 /* views_calendar_Calendar.xib in Resources */ = {isa = PBXBuildFile; fileRef = DFD2895A151DD2EF007A0873 /* views_calendar_Calendar.xib */; };
+		DFD3016415DB110300987795 /* search_options_map.png in Resources */ = {isa = PBXBuildFile; fileRef = DFD3016315DB110300987795 /* search_options_map.png */; };
 		DFDD4DAE15CE162C00EC9006 /* overlay.png in Resources */ = {isa = PBXBuildFile; fileRef = DFDD4DAD15CE162C00EC9006 /* overlay.png */; };
 		DFE3EF8215A1520C000B8537 /* grayNavbar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DFE3EF8115A1520C000B8537 /* grayNavbar@2x.png */; };
 		DFE3EF8415A223C8000B8537 /* directions.png in Resources */ = {isa = PBXBuildFile; fileRef = DFE3EF8315A223C8000B8537 /* directions.png */; };
@@ -924,6 +925,7 @@
 		DFD2804C151DBA36007A0873 /* AWIconAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = AWIconAnnotation.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		DFD2804D151DBA36007A0873 /* AWIconAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWIconAnnotation.m; sourceTree = "<group>"; };
 		DFD2895A151DD2EF007A0873 /* views_calendar_Calendar.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = views_calendar_Calendar.xib; path = ravent/views/calendar/views_calendar_Calendar.xib; sourceTree = SOURCE_ROOT; };
+		DFD3016315DB110300987795 /* search_options_map.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = search_options_map.png; sourceTree = "<group>"; };
 		DFDD4DAD15CE162C00EC9006 /* overlay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = overlay.png; path = Map/overlay.png; sourceTree = "<group>"; };
 		DFE3EF8115A1520C000B8537 /* grayNavbar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grayNavbar@2x.png"; sourceTree = "<group>"; };
 		DFE3EF8315A223C8000B8537 /* directions.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = directions.png; sourceTree = "<group>"; };
@@ -1535,6 +1537,7 @@
 		DF86A1AD1582D7FA009B3257 /* icon */ = {
 			isa = PBXGroup;
 			children = (
+				DFD3016315DB110300987795 /* search_options_map.png */,
 				DFA9FC8215B68F27003F9B5F /* feedback.png */,
 				DFA9FC8315B68F27003F9B5F /* friendsEvents.png */,
 				DFA9FC8415B68F27003F9B5F /* gift.png */,
@@ -2353,6 +2356,7 @@
 				DFDD4DAE15CE162C00EC9006 /* overlay.png in Resources */,
 				DF01821A15D9D32000B5EBAB /* grayCrowd.png in Resources */,
 				DF01822415D9F17200B5EBAB /* views_events_item_Crowd.xib in Resources */,
+				DFD3016415DB110300987795 /* search_options_map.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2584,7 +2588,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: florian haftman (247VK6949Z)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: florian haftman";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/RestKit/Specs/Runner/OCHamcrest\"",
@@ -2601,7 +2605,7 @@
 				);
 				"OTHER_CFLAGS[arch=*]" = "-mthumb";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "67C20EBB-AA59-4A4B-B4BF-60479C59B59C";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "677DD045-C144-4030-B58D-71BBBE58B568";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = NO;
 				USER_HEADER_SEARCH_PATHS = "";
@@ -2614,7 +2618,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: florian haftman (247VK6949Z)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: florian haftman";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/RestKit/Specs/Runner/OCHamcrest\"",
@@ -2631,7 +2635,7 @@
 				);
 				"OTHER_CFLAGS[arch=*]" = "-mthumb";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "67C20EBB-AA59-4A4B-B4BF-60479C59B59C";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "677DD045-C144-4030-B58D-71BBBE58B568";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = NO;
 				USER_HEADER_SEARCH_PATHS = "";
