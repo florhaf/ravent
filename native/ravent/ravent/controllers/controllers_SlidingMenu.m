@@ -79,7 +79,7 @@ static controllers_SlidingMenu *_ctrl;
     [self.slidingViewController setAnchorRightRevealAmount:280.0f];
     self.slidingViewController.underLeftWidthLayout = ECFullWidth;
     
-    _jiraConnect = [[JMC sharedInstance] issuesViewController];
+    //_jiraConnect = [[JMC sharedInstance] issuesViewController];
 }
 
 - (void)logout
@@ -185,12 +185,6 @@ static controllers_SlidingMenu *_ctrl;
                     // prevent slide right
                     self.slidingViewController.underRightViewController = nil;
                     
-                    if (_jiraConnect == nil) {
-                        
-                        _jiraConnect = [[JMC sharedInstance] issuesViewController];
-                    }
-                    
-                    // instance already created to prevent crash
                     newTopViewController = [[JMC sharedInstance] issuesViewController];
                 }
             }
@@ -198,8 +192,6 @@ static controllers_SlidingMenu *_ctrl;
     }
     
     [self.slidingViewController anchorTopViewOffScreenTo:ECRight animations:nil onComplete:^{
-        
-        NSLog(@"%@", newTopViewController);
         
         CGRect frame = self.slidingViewController.topViewController.view.frame;
         self.slidingViewController.topViewController = newTopViewController;

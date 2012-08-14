@@ -168,6 +168,9 @@
     JMCCrashSender *_crashSender;
     id <JMCCustomDataSource> _customDataSource;
     JMCOptions* _options;
+    
+    
+    JMCIssuesViewController *_issuesInstance;
 }
 
 enum JMCViewControllerMode {

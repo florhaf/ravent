@@ -180,6 +180,7 @@ static JMCViewController* _jcViewController;
     [_crashSender release];
     [_dataDirPath release];
     [_jcViewController release];
+    [_issuesInstance release];
     [super dealloc];
 }
 
@@ -349,11 +350,20 @@ static JMCViewController* _jcViewController;
 }
 
 - (JMCIssuesViewController *)_issuesController {
-    JMCIssuesViewController *viewController = [[[JMCIssuesViewController alloc] initWithStyle:UITableViewStylePlain] autorelease];
-    [viewController loadView];
-    [viewController setIssueStore:[JMCIssueStore instance]];
-    viewController.modalPresentationStyle = self.options.modalPresentationStyle;
-    return viewController;
+    
+    if (_issuesInstance == nil) {
+     
+        _issuesInstance = [[JMCIssuesViewController alloc] initWithStyle:UITableViewStylePlain];
+        [_issuesInstance loadView];
+        [_issuesInstance setIssueStore:[JMCIssueStore instance]];
+        _issuesInstance.modalPresentationStyle = self.options.modalPresentationStyle;
+        
+    }
+    
+    
+    
+
+    return _issuesInstance;
 }
 
 - (UIViewController *)viewController

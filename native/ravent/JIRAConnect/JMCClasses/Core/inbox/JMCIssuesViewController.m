@@ -108,6 +108,10 @@ static NSString *cellId = @"CommentCell";
 - (void)viewDidLoad {
     
     [super viewDidLoad];
+    
+    UIImageView *ivleft = [[UIImageView alloc] initWithFrame:CGRectMake(-40, 0, 40, 460)];
+    [ivleft setImage:[UIImage imageNamed:@"shadowLeft"]];
+    [self.slidingViewController.topViewController.view addSubview:ivleft];
 }
 
 - (void)viewDidUnload {
@@ -116,10 +120,12 @@ static NSString *cellId = @"CommentCell";
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    [[JMCRequestQueue sharedInstance] flushQueue];
+    [super viewWillAppear:animated];
+    
     if (!_isComingFromDetails) {
      
-        [[JMCRequestQueue sharedInstance] flushQueue];
-        [super viewWillAppear:animated];
+        
         
         // Added by Flo
         UIImage *menubg = [UIImage imageNamed:@"navBarBG"];
@@ -138,9 +144,9 @@ static NSString *cellId = @"CommentCell";
         [menui release];
         [menubg release];
         
-        self.parentViewController.view.layer.shadowOpacity = 0.75f;
-        self.parentViewController.view.layer.shadowRadius = 10.0f;
-        self.parentViewController.view.layer.shadowColor = [UIColor blackColor].CGColor;
+//        self.parentViewController.view.layer.shadowOpacity = 0.75f;
+//        self.parentViewController.view.layer.shadowRadius = 10.0f;
+//        self.parentViewController.view.layer.shadowColor = [UIColor blackColor].CGColor;
         
         
         if (![self.slidingViewController.underLeftViewController isKindOfClass:[controllers_SlidingMenu class]]) {
