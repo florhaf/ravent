@@ -55,7 +55,7 @@
 					<object class="IBUILabel" id="742681378">
 						<reference key="NSNextResponder" ref="1069105875"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{20, 33}, {280, 21}}</string>
+						<string key="NSFrame">{{20, 61}, {280, 21}}</string>
 						<reference key="NSSuperview" ref="1069105875"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="950300680"/>
@@ -87,7 +87,7 @@
 					<object class="IBUIImageView" id="950300680">
 						<reference key="NSNextResponder" ref="1069105875"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{115, 70}, {91, 72}}</string>
+						<string key="NSFrame">{{115, 98}, {91, 72}}</string>
 						<reference key="NSSuperview" ref="1069105875"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="754505717"/>
@@ -103,10 +103,9 @@
 					<object class="IBUIActivityIndicatorView" id="754505717">
 						<reference key="NSNextResponder" ref="1069105875"/>
 						<int key="NSvFlags">-2147483356</int>
-						<string key="NSFrame">{{142, 80}, {37, 37}}</string>
+						<string key="NSFrame">{{142, 108}, {37, 37}}</string>
 						<reference key="NSSuperview" ref="1069105875"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -243,7 +242,6 @@
 					<string key="className">UITableViewReloadable</string>
 					<string key="superclassName">UITableViewController</string>
 					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="_emptyMessageView">UIView</string>
 						<string key="_footerLabel">UILabel</string>
 						<string key="_footerSpinner">UIActivityIndicatorView</string>
 						<string key="_footerView">UIView</string>
@@ -254,10 +252,6 @@
 						<string key="_spinner">UIActivityIndicatorView</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<object class="IBToOneOutletInfo" key="_emptyMessageView">
-							<string key="name">_emptyMessageView</string>
-							<string key="candidateClassName">UIView</string>
-						</object>
 						<object class="IBToOneOutletInfo" key="_footerLabel">
 							<string key="name">_footerLabel</string>
 							<string key="candidateClassName">UILabel</string>

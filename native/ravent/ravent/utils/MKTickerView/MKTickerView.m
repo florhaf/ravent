@@ -149,43 +149,61 @@ static UIFont *valueFont = nil;
 
 -(void) reloadData
 {
-  int itemCount = [dataSource numberOfItemsForTickerView:self];
-    self.backgroundColor = [UIColor clearColor];//[dataSource backgroundColorForTickerView:self];
-  
-  int xPos = 0;
-  for(int i = 0 ; i < itemCount; i ++)
-  {
-    MKTickerItemView *tickerItemView = [[[MKTickerItemView alloc] init] autorelease];
-    [tickerItemView setTitle:[dataSource tickerView:self titleForItemAtIndex:i]
-                       value:[dataSource tickerView:self valueForItemAtIndex:i]
-                       image:[dataSource tickerView:self imageForItemAtIndex:i]];
-    
-    tickerItemView.frame = CGRectMake(xPos, 0, [tickerItemView width], self.frame.size.height);
-    xPos += ([tickerItemView width] + kItemPadding);
-    [self addSubview:tickerItemView];
-  }
-  
-  self.contentSize = CGSizeMake(xPos + self.frame.size.width + kSpacer, self.frame.size.height);
-  self.contentOffset = CGPointMake(- self.frame.size.width/2, 0);
-
-  xPos += kSpacer;
-
-  CGFloat breakWidth = 0;
-  for(int counter = 0 ; breakWidth < self.frame.size.width; counter ++)
-  {
-      int i =counter % itemCount;
-    MKTickerItemView *tickerItemView = [[[MKTickerItemView alloc] init] autorelease];
-    [tickerItemView setTitle:[dataSource tickerView:self titleForItemAtIndex:i]
-                       value:[dataSource tickerView:self valueForItemAtIndex:i]
-                       image:[dataSource tickerView:self imageForItemAtIndex:i]];
-    
-    tickerItemView.frame = CGRectMake(xPos, 0, [tickerItemView width], self.frame.size.height);
-    xPos += ([tickerItemView width] + kItemPadding);
-    breakWidth += ([tickerItemView width] + kItemPadding);
-    [self addSubview:tickerItemView];
-  }
-
-  [self startAnimation];
+    @try {
+        int itemCount = [dataSource numberOfItemsForTickerView:self];
+        self.backgroundColor = [UIColor clearColor];//[dataSource backgroundColorForTickerView:self];
+        
+        int xPos = 0;
+        for(int i = 0 ; i < itemCount; i ++)
+        {
+            @try {
+                MKTickerItemView *tickerItemView = [[[MKTickerItemView alloc] init] autorelease];
+                [tickerItemView setTitle:[dataSource tickerView:self titleForItemAtIndex:i]
+                                   value:[dataSource tickerView:self valueForItemAtIndex:i]
+                                   image:[dataSource tickerView:self imageForItemAtIndex:i]];
+                
+                tickerItemView.frame = CGRectMake(xPos, 0, [tickerItemView width], self.frame.size.height);
+                xPos += ([tickerItemView width] + kItemPadding);
+                [self addSubview:tickerItemView];
+            }
+            @catch (NSException *ex) {
+                
+                NSLog(@"%@", ex);
+            }
+            
+        }
+        
+        self.contentSize = CGSizeMake(xPos + self.frame.size.width + kSpacer, self.frame.size.height);
+        self.contentOffset = CGPointMake(- self.frame.size.width/2, 0);
+        
+        xPos += kSpacer;
+        
+        CGFloat breakWidth = 0;
+        for(int counter = 0 ; breakWidth < self.frame.size.width; counter ++)
+        {
+            @try {
+                int i =counter % itemCount;
+                MKTickerItemView *tickerItemView = [[[MKTickerItemView alloc] init] autorelease];
+                [tickerItemView setTitle:[dataSource tickerView:self titleForItemAtIndex:i]
+                                   value:[dataSource tickerView:self valueForItemAtIndex:i]
+                                   image:[dataSource tickerView:self imageForItemAtIndex:i]];
+                
+                tickerItemView.frame = CGRectMake(xPos, 0, [tickerItemView width], self.frame.size.height);
+                xPos += ([tickerItemView width] + kItemPadding);
+                breakWidth += ([tickerItemView width] + kItemPadding);
+                [self addSubview:tickerItemView];
+            }
+            @catch (NSException *ex) {
+                
+                NSLog(@"%@", ex);
+            }
+        }
+        
+        [self startAnimation];
+    }
+    @catch (NSException *exception) {
+        NSLog(@"%@", exception);
+    }
 }
 
 -(void) startAnimation

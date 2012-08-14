@@ -146,17 +146,6 @@ static NSString *cellId = @"CommentCell";
     }
     
     [self.view addGestureRecognizer:self.slidingViewController.panGesture];
-    
-//    // If we are not the root of the stack, we don't show the close button
-//    if ([self.navigationController.viewControllers count] > 1) {
-//        self.navigationItem.leftBarButtonItem = nil;
-//    }
-//    else {
-//        self.navigationItem.leftBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:JMCLocalizedString(@"Close", @"Close navigation item")
-//                                                                                  style:UIBarButtonItemStyleBordered
-//                                                                                 target:self
-//                                                                                 action:@selector(cancel:)] autorelease];
-//    }
 }
 
 - (void)revealMenu:(id)sender
@@ -255,11 +244,14 @@ static NSString *cellId = @"CommentCell";
 }
 #pragma mark end
 
-- (void)dealloc {
-    self.issueStore = nil;
-    [_dateFormatter release];
-    _dateFormatter = nil;
-    [super dealloc]; //make the app crash at logout...
-}
+//- (void)dealloc {
+//    //if (self) {
+//        self.issueStore = nil;
+//        [_dateFormatter release];
+//        _dateFormatter = nil;
+//    //make the app crash at logout...
+//        [super dealloc];
+//    //}
+//}
 
 @end

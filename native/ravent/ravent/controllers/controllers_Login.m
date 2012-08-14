@@ -249,10 +249,17 @@ static controllers_Login *_ctrl;
                               otherButtonTitles:nil,
                               nil];
     [alertView show];
+    
+    [_loginButton setEnabled:YES];
+    [_loginButton setAlpha:1];
+    [_spinner setAlpha:0];
+    [_spinner stopAnimating];
 
     [self fbDidLogout];
     
     [self moveNameUp];
+    
+    
 }
 
 #pragma mark - FBRequestDelegate Methods

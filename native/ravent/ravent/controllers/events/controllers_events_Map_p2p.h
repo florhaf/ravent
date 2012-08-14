@@ -37,6 +37,7 @@
 }
 
 @property (nonatomic, assign) CGFloat peekLeftAmount;
+@property (nonatomic, retain) UIButton *buttonChangeLocation;
 
 - (IBAction)buttonTap:(id)sender;
 - (void)buttonTapWithDelay:(id)sender;

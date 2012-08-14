@@ -114,6 +114,7 @@
         
         if ([lastLoadPlus30 compare:now] == NSOrderedAscending) {
             
+            // force gps reload?
             [controllers_events_List_p2p instance].searchCenter = CLLocationCoordinate2DMake(0, 0);
             [[controllers_events_List_p2p instance] loadDataWithSpinner];
         }

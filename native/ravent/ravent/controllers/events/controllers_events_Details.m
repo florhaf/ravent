@@ -21,6 +21,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "controllers_events_Tickets.h"
 #import "controllers_events_Specials.h"
+#import "controllers_events_Crowd.h"
 #import "NSString+Distance.h"
 #import "Store.h"
 
@@ -281,6 +282,16 @@ static int _retryCounter;
                                 detail:msg
                                  image:[UIImage imageNamed:@"dropdown-alert"]
                               animated:YES];
+}
+
+- (IBAction)crowdButton_Tap:(id)sender
+{
+    _isButtonTap = YES;
+    
+    controllers_events_Crowd *crowdController = [[controllers_events_Crowd alloc] initWithEid:_event.eid];
+    UINavigationController *feedModal = [[UINavigationController alloc] initWithRootViewController:crowdController];
+    
+    [self presentModalViewController:feedModal animated:YES];
 }
 
 - (IBAction)snap_Tap:(id)sender
@@ -634,7 +645,6 @@ static int _retryCounter;
     if (_event.latitude != nil && _event.longitude != nil &&
         ![_event.latitude isEqualToString:@""] && ![_event.longitude isEqualToString:@""]) {
         
-     
         [self loadFormattedAddress];
     }
     
@@ -769,6 +779,10 @@ static int _retryCounter;
     }
     
     [self loadDropAGem];
+    
+    
+    
+    
 }
 
 - (IBAction)onTicket_Tap:(id)sender

@@ -92,6 +92,16 @@
     [self presentModalViewController:postModal animated:YES];
 }
 
+- (void)onLoadEvents:(NSArray *)objects
+{
+    [super onLoadEvents:objects];
+    
+    if (_data != nil && _data.count > 0) {
+     
+        _eventsLabel.text = [NSString stringWithFormat:@"%d", _data.count];
+    }
+}
+
 - (void)onUserLoad:(NSArray *)objects
 {
     if (objects == nil || [objects count] == 0) {
@@ -115,6 +125,11 @@
     _eventsLabel.text = u.nbOfEvents;
     _followersLabel.text = u.nbOfFollowers;
     _followingLabel.text = u.nbOfFollowing;
+    
+    if (_data != nil && _data.count > 0) {
+        
+        _eventsLabel.text = [NSString stringWithFormat:@"%d", _data.count];
+    }
 }
 
 - (void)dealloc

@@ -105,6 +105,7 @@ typedef enum {
 
 - (IBAction)addToListButton_Tap:(id)sender;
 - (IBAction)snap_Tap:(id)sender;
+- (IBAction)crowdButton_Tap:(id)sender;
 - (IBAction)mapButton_Tap:(id)sender;
 - (IBAction)picButton_Tap:(id)sender;
 - (IBAction)rsvp:(id)sender;

@@ -259,7 +259,6 @@ static customNavigationController *_ctrl;
 
 - (void)dragViewDidSwapToEndFrame:(TKDragView *)dragView atIndex:(NSInteger)index{
     
-    
     _currentNbOfBurst = 0;
     _maxNbOfBurst = 4;
     

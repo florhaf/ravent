@@ -439,6 +439,7 @@
 										<string key="NSFrame">{{206, 219}, {94, 29}}</string>
 										<reference key="NSSuperview" ref="387358071"/>
 										<reference key="NSWindow"/>
+										<reference key="NSNextKeyView"/>
 										<string key="NSReuseIdentifierKey">_NS:9</string>
 										<bool key="IBUIOpaque">NO</bool>
 										<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -452,7 +453,7 @@
 										</object>
 										<object class="NSCustomResource" key="IBUINormalImage">
 											<string key="NSClassName">NSImage</string>
-											<string key="NSResourceName">mapIcon.png</string>
+											<string key="NSResourceName">navBarMap.png</string>
 										</object>
 										<object class="NSCustomResource" key="IBUINormalBackgroundImage">
 											<string key="NSClassName">NSImage</string>
@@ -983,7 +984,7 @@
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
 			<string key="askButton.png">{580, 70}</string>
-			<string key="mapIcon.png">{41, 30}</string>
+			<string key="navBarMap.png">{80, 58}</string>
 			<string key="optionsBG.png">{320, 190}</string>
 		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">1498</string>
