@@ -172,6 +172,11 @@
     return res;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+
+}
+
 - (void)hideAllModal
 {
 

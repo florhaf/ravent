@@ -116,36 +116,41 @@ static NSString *cellId = @"CommentCell";
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    [[JMCRequestQueue sharedInstance] flushQueue];
-    [super viewWillAppear:animated];
-
-    // Added by Flo
-    UIImage *menubg = [UIImage imageNamed:@"navBarBG"];
-    UIImage *menui = [UIImage imageNamed:@"navBarMenu"];
-    
-    UIButton *menub = [UIButton buttonWithType:UIButtonTypeCustom];
-    [menub addTarget:self action:@selector(revealMenu:) forControlEvents:UIControlEventTouchUpInside];
-    [menub setImage:menui forState:UIControlStateNormal];
-    [menub setBackgroundImage:menubg forState:UIControlStateNormal];
-    [menub setFrame:CGRectMake(0, 0, 40, 29)];
-    
-    UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithCustomView:menub];
-    self.navigationItem.leftBarButtonItem = menuButton; 
-    
-    [menub release];
-    [menui release];
-    [menubg release];
-    
-    self.parentViewController.view.layer.shadowOpacity = 0.75f;
-    self.parentViewController.view.layer.shadowRadius = 10.0f;
-    self.parentViewController.view.layer.shadowColor = [UIColor blackColor].CGColor;
-    
-    
-    if (![self.slidingViewController.underLeftViewController isKindOfClass:[controllers_SlidingMenu class]]) {
-        self.slidingViewController.underLeftViewController  = [controllers_SlidingMenu instance];
+    if (!_isComingFromDetails) {
+     
+        [[JMCRequestQueue sharedInstance] flushQueue];
+        [super viewWillAppear:animated];
+        
+        // Added by Flo
+        UIImage *menubg = [UIImage imageNamed:@"navBarBG"];
+        UIImage *menui = [UIImage imageNamed:@"navBarMenu"];
+        
+        UIButton *menub = [UIButton buttonWithType:UIButtonTypeCustom];
+        [menub addTarget:self action:@selector(revealMenu:) forControlEvents:UIControlEventTouchUpInside];
+        [menub setImage:menui forState:UIControlStateNormal];
+        [menub setBackgroundImage:menubg forState:UIControlStateNormal];
+        [menub setFrame:CGRectMake(0, 0, 40, 29)];
+        
+        UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithCustomView:menub];
+        self.navigationItem.leftBarButtonItem = menuButton;
+        
+        [menub release];
+        [menui release];
+        [menubg release];
+        
+        self.parentViewController.view.layer.shadowOpacity = 0.75f;
+        self.parentViewController.view.layer.shadowRadius = 10.0f;
+        self.parentViewController.view.layer.shadowColor = [UIColor blackColor].CGColor;
+        
+        
+        if (![self.slidingViewController.underLeftViewController isKindOfClass:[controllers_SlidingMenu class]]) {
+            self.slidingViewController.underLeftViewController  = [controllers_SlidingMenu instance];
+        }
+        
+        [self.view addGestureRecognizer:self.slidingViewController.panGesture];
     }
     
-    [self.view addGestureRecognizer:self.slidingViewController.panGesture];
+    _isComingFromDetails = NO;
 }
 
 - (void)revealMenu:(id)sender
@@ -206,6 +211,8 @@ static NSString *cellId = @"CommentCell";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
+    _isComingFromDetails = YES;
+    
     JMCIssue *issue = [self.issueStore newIssueAtIndex:indexPath.row];
     JMCSentStatus sentStatus = [[JMCRequestQueue sharedInstance] requestStatusFor:issue.requestId];
 

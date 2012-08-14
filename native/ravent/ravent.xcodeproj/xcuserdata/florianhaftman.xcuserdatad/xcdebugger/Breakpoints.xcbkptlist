@@ -7,52 +7,13 @@
          shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "ravent/utils/RaventTables/UncaughtExceptionHandler.m"
-         timestampString = "362598745.707052"
+         filePath = "ravent/utils/ECSlidingViewController/ECSlidingViewController.m"
+         timestampString = "366664530.864938"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "67"
-         endingLineNumber = "67"
-         landmarkName = "-handleException:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "ravent/controllers/events/controllers_events_Map_p2p.m"
-         timestampString = "366524859.716491"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "156"
-         endingLineNumber = "156"
-         landmarkName = "-viewWillAppear:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "ravent/controllers/events/controllers_events_Details.m"
-         timestampString = "366605566.594847"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "543"
-         endingLineNumber = "543"
-         landmarkName = "-loadDropAGem"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "ravent/controllers/events/controllers_events_Map_p2p.m"
-         timestampString = "366524859.716491"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "197"
-         endingLineNumber = "197"
-         landmarkName = "-buttonTap:"
+         startingLineNumber = "109"
+         endingLineNumber = "109"
+         landmarkName = "-setTopViewController:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

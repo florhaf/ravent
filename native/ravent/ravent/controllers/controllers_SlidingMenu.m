@@ -185,14 +185,22 @@ static controllers_SlidingMenu *_ctrl;
                     // prevent slide right
                     self.slidingViewController.underRightViewController = nil;
                     
+                    if (_jiraConnect == nil) {
+                        
+                        _jiraConnect = [[JMC sharedInstance] issuesViewController];
+                    }
+                    
                     // instance already created to prevent crash
-                    newTopViewController = _jiraConnect;
+                    newTopViewController = [[JMC sharedInstance] issuesViewController];
                 }
             }
         }
     }
     
     [self.slidingViewController anchorTopViewOffScreenTo:ECRight animations:nil onComplete:^{
+        
+        NSLog(@"%@", newTopViewController);
+        
         CGRect frame = self.slidingViewController.topViewController.view.frame;
         self.slidingViewController.topViewController = newTopViewController;
         self.slidingViewController.topViewController.view.frame = frame;

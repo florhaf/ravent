@@ -26,6 +26,8 @@
     JMCIssueStore * _issueStore;
     @private
     NSDateFormatter *_dateFormatter;
+    
+    BOOL _isComingFromDetails;
 }
 
 @property (retain, nonatomic) JMCIssueStore * issueStore;
