@@ -73,10 +73,11 @@ typedef enum {
 
 - (void)didReceiveMemoryWarning
 {
+    _imagesCache = nil;
+    _imagesCache = [[NSMutableDictionary alloc] init];
+    
     if (self) {
         
-        _imagesCache = nil;
-        _imagesCache = [[NSMutableDictionary alloc] init];
         [super didReceiveMemoryWarning];   
     }
 }

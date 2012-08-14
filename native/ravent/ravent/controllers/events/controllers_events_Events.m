@@ -94,25 +94,13 @@ static customNavigationController *_ctrl;
     // OPTIONS
     [self.view bringSubviewToFront:_optionsView];
     
-    _radiusStepper.value = [models_User crtUser].searchRadius;
-    _radiusStepper.minimumValue = 0;
-    _radiusStepper.maximumValue = 50;
-    _radiusStepper.stepValue = 5;
-    _radiusStepper.continuous = YES;
-    
-    // format label w/ km or mi
-    [self stepperRadiusPressed:_radiusStepper];
-    
     _windowStepper.value = [models_User crtUser].searchWindow / 24;
     _windowStepper.minimumValue = 1;
     _windowStepper.maximumValue = 30;
     _windowStepper.stepValue = 1;
     _windowStepper.continuous = YES;
     
-    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectFirstNonEmptyList) name:@"onLoadEventsP2P" object:[controllers_events_List_p2p instance]];
-    
-    
     
     // shadows
     UIImageView *ivright = [[UIImageView alloc] initWithFrame:CGRectMake(320, 0, 40, 460)];
@@ -126,10 +114,6 @@ static customNavigationController *_ctrl;
     UIImageView *ivtop = [[UIImageView alloc] initWithFrame:CGRectMake(0, _optionsView.frame.size.height, 320, 20)];
     [ivtop setImage:[UIImage imageNamed:@"shadowTop"]];
     [_optionsView addSubview:ivtop];
-    
-    
-    //[self onPartyButton_Tap:nil];
-    
 }
 
 - (void)setNavBarTitle:(NSString *)title
@@ -299,31 +283,6 @@ static customNavigationController *_ctrl;
 {    
     [controllers_events_List_p2p instance].sort = _seg.selectedSegmentIndex;
     [[controllers_events_List_p2p instance] reloadTableViewDataSourceWithIndex:_currentCategory];
-}
-
-- (IBAction)stepperRadiusPressed:(UIStepper *)sender
-{
-    
-    
-    NSString *format = @"%d";
-    int value = ((int)sender.value == 0) ? 1 : (int)sender.value;
-    
-    
-    _isDirty = !(value == [models_User crtUser].searchRadius || value * 1.609344 == [models_User crtUser].searchRadius);
-    
-    BOOL isMetric = [[[NSLocale currentLocale] objectForKey:NSLocaleUsesMetricSystem] boolValue];
-    
-    if (isMetric) {
-        
-        format = @"km.";
-        [models_User crtUser].searchRadius = value * 1.609344;
-    } else {
-        
-        format = @"mi.";
-        [models_User crtUser].searchRadius = value;
-    }
-    
-    _labelRadiusValue.text = [NSString stringWithFormat:@"%d %@",  value, format];
 }
 
 - (IBAction)stepperWindowPressed:(UIStepper *)sender

@@ -65,7 +65,6 @@
 
 - (IBAction)onSO_Tap:(id)sender;
 - (IBAction)stepperWindowPressed:(UIStepper *)sender;
-- (IBAction)stepperRadiusPressed:(UIStepper *)sender;
 - (IBAction)onPartyButton_Tap:(id)sender;
 - (IBAction)onChillButton_Tap:(id)sender;
 - (IBAction)onArtButton_Tap:(id)sender;
