@@ -185,27 +185,6 @@
     [super viewDidLoad];
     
     [_spinner startAnimating];
-    
-//    UILabel *label = [[UILabel alloc] init];
-//    label.backgroundColor = [UIColor clearColor];
-//    label.text = @"Loading";
-//    label.frame = CGRectMake(0, 0, 320, 50);
-//    label.textAlignment= UITextAlignmentCenter;
-//    label.textColor = [UIColor grayColor];
-//    
-//    UIActivityIndicatorView *myIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-//    myIndicator.center = CGPointMake(110, 27);
-//    
-//    [myIndicator startAnimating];
-//    
-//    _footer = [[UIView alloc] init];
-//    [_footer addSubview:label];
-//    [_footer addSubview:myIndicator];
-//    _footer.backgroundColor = [UIColor clearColor];
-//    
-//    _footer.frame = CGRectMake(0, 0, 320, 160);
-//    
-//    [self.tableView.tableFooterView addSubview:_footer];;
 }
 
 - (void)viewDidUnload

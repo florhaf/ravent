@@ -348,7 +348,7 @@
 {
     if (_isRequesting) {
      
-        [[ActionDispatcher instance] execute:resourcePath withString:@"Waiting for server..."];
+        [[ActionDispatcher instance] execute:resourcePath withString:@"Analyzing data..."];
     }
 }
 
@@ -356,7 +356,7 @@
 {
     _isRequesting = NO;
     
-    [[ActionDispatcher instance] execute:request.resourcePath withString:@"Analyzing data..."];
+    [[ActionDispatcher instance] execute:request.resourcePath withString:@"Loading..."];
     
     [self performSelector:@selector(updateLoadingMessage:) withObject:request.resourcePath afterDelay:2];
     

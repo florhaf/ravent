@@ -208,11 +208,11 @@ typedef enum {
         
         if ([object isKindOfClass:[NSError class]]) {
             
-            //NSError *error = (NSError *)object;
+            NSError *error = (NSError *)object;
             
             [YRDropdownView showDropdownInView:[controllers_App instance].view 
-                                         title:@"Woops" 
-                                        detail:@"Server error... Try again..."//[error localizedDescription]
+                                         title:@"Error" 
+                                        detail:[error localizedDescription]
                                          image:[UIImage imageNamed:@"dropdown-alert"]
                                       animated:YES];
             
@@ -271,7 +271,8 @@ typedef enum {
         [_event cancelAllRequests];
     }
     
-    [MBProgressHUD hideHUDForView:self.view animated:YES];
+    [_footerSpinner stopAnimating];
+    _footerLabel.text = @"";
 	[self reloadTableViewDataSource];	
 }
 

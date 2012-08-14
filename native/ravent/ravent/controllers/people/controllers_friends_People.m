@@ -222,13 +222,6 @@ static customNavigationController *_ctrl;
 {
     [super viewWillAppear:animated];
     
-    // shadowPath, shadowOffset, and rotation is handled by ECSlidingViewController.
-    // You just need to set the opacity, radius, and color.
-//    self.parentViewController.view.layer.shadowOpacity = 0.75f;
-//    self.parentViewController.view.layer.shadowRadius = 10.0f;
-//    self.parentViewController.view.layer.shadowColor = [UIColor blackColor].CGColor;
-    
-    
     if (![self.slidingViewController.underLeftViewController isKindOfClass:[controllers_SlidingMenu class]]) {
         self.slidingViewController.underLeftViewController  = [controllers_SlidingMenu instance];
     }

@@ -27,6 +27,7 @@ static int _retryCounter;
 @synthesize coordinate;
 @synthesize peekLeftAmount;
 @synthesize boundingMapRect;
+@synthesize buttonChangeLocation;
 
 - (void)trackPageView:(NSString *)named forEvent:(NSString *)eid
 {
@@ -206,7 +207,14 @@ static int _retryCounter;
                 [self performSelector:@selector(resetTopViewAfterDelayCallback) withObject:nil afterDelay:0.5];
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"locationChanged" object:self];
             }
-        } 
+        } else {
+            
+            if (!((controllers_events_Events *)[[controllers_events_Events instance].childViewControllers objectAtIndex:0 ]).isUp) {
+                
+                [self performSelector:@selector(resetTopViewAfterDelayCallback) withObject:nil afterDelay:0.5];
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"locationChangedReloadDelayed" object:self];
+            }
+        }
     } else {
         
         [_buttonChangeLocation setTitle:@"Done" forState:UIControlStateNormal];
@@ -215,7 +223,8 @@ static int _retryCounter;
         span.latitudeDelta = 0.2;
         span.longitudeDelta = 0.2;
         
-        _overlayView.fillColor = [[UIColor grayColor] colorWithAlphaComponent:0.5];
+        _overlayView.strokeColor = [[UIColor lightGrayColor] colorWithAlphaComponent:1];
+        _overlayView.fillColor = [[UIColor blueColor] colorWithAlphaComponent:0.3];
         
         _map.zoomEnabled = NO;
     }
@@ -235,7 +244,7 @@ static int _retryCounter;
 {
     _executeButtonTapWithDelay = YES;
     
-    
+    [_buttonChangeLocation setEnabled:NO];
 }
 
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
@@ -244,8 +253,6 @@ static int _retryCounter;
         
         return;
     }
-    
-    
     
     _isMapSet = YES;
     
@@ -276,6 +283,7 @@ static int _retryCounter;
         if (_executeButtonTapWithDelay) {
             
             _executeButtonTapWithDelay = NO;
+            [_buttonChangeLocation setEnabled:YES];
             [mapView setRegion:region animated:NO];
             [self performSelector:@selector(buttonTap:) withObject:nil afterDelay:0];
         } else {
@@ -305,17 +313,6 @@ static int _retryCounter;
     @finally {
         // nothing
     }
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-}
-
-- (void)viewDidDisappear:(BOOL)animated
-{
-    [super viewDidDisappear:animated];
-    
 }
 
 - (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views {
@@ -371,8 +368,8 @@ static int _retryCounter;
 - (MKOverlayView *)mapView:(MKMapView *)mapView viewForOverlay:(id<MKOverlay>)overlay
 {
     _overlayView = [[MKCircleView alloc] initWithOverlay:overlay];
-    _overlayView.strokeColor = [UIColor darkGrayColor];
-    _overlayView.fillColor = [[UIColor grayColor] colorWithAlphaComponent:(_isSettingLocation) ? 0.5 : 0];
+    _overlayView.strokeColor = [[UIColor lightGrayColor] colorWithAlphaComponent:(_isSettingLocation) ? 1 : 0];
+    _overlayView.fillColor = [[UIColor blueColor] colorWithAlphaComponent:(_isSettingLocation) ? 0.3 : 0];
     return _overlayView;
 }
 
