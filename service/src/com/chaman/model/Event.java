@@ -506,7 +506,7 @@ public class Event extends Model implements Serializable {
 		
 		
 		// TODO: to delete
-		List<String> offer_t = new ArrayList<String>();
+/*		List<String> offer_t = new ArrayList<String>();
 		offer_t.add("");
 		offer_t.add("");
 		offer_t.add("");
@@ -544,6 +544,7 @@ public class Event extends Model implements Serializable {
 		tickets.add("http://www.ticketmaster.com/event/12004788E26339A4?artistid=837473&majorcatid=10002&minorcatid=207");
 		tickets.add("http://www.ticketmaster.com/event/12004788E26339A4?artistid=837473&majorcatid=10002&minorcatid=207");
 		this.ticket_link = tickets.get(r.nextInt(14));
+		*/
 	
 		if (this.featured != null && this.featured.length() > 0) {
 			
