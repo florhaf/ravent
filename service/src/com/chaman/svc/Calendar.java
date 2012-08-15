@@ -25,10 +25,11 @@ public class Calendar extends ServerResource {
 			String timeZone		= getQuery().getValues("timezone_offset");
 			String latitude		= getQuery().getValues("latitude");
 			String longitude 	= getQuery().getValues("longitude");
+			String locale 		= getQuery().getValues("locale");
 			
 			ArrayList<Model> events;
 			
-			events = Event.getMultiple(accessToken, eids, timeZone, latitude, longitude);
+			events = Event.getMultiple(accessToken, eids, timeZone, latitude, longitude, locale);
 			
 			result.setSuccess(true);
 			result.setRecords(events);

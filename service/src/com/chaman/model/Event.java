@@ -3,6 +3,7 @@ package com.chaman.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -23,7 +24,7 @@ import com.restfb.DefaultFacebookClient;
 import com.restfb.Facebook;
 import com.restfb.FacebookClient;
 import com.restfb.exception.FacebookException;
-import java.util.Random;
+//import java.util.Random;
 
 /*
  * Event object from FB + formatting for our app
@@ -90,7 +91,7 @@ public class Event extends Model implements Serializable {
 	 * - store in our DB events w/ latitude and longitude
 	 * - exclude past events
 	 */
-	public static ArrayList<Model> Get(String accessToken, String userID, String userLatitude, String userLongitude, String timeZone) throws FacebookException , MemcacheServiceException {
+	public static ArrayList<Model> Get(String accessToken, String userID, String userLatitude, String userLongitude, String timeZone, String locale) throws FacebookException , MemcacheServiceException {
 		
 		ArrayList<Model> result = new ArrayList<Model>();
 		
@@ -150,7 +151,7 @@ public class Event extends Model implements Serializable {
 	    	    	e = e_cache;
 	    	    }
 		
-		    	e.Format(timeZoneInMinutes, now, 0);
+		    	e.Format(timeZoneInMinutes, now, 0, locale);
 	    	    
 		    	if (e.latitude != null && e.latitude != "" && e.longitude != null && e.longitude != "") {
 
@@ -172,7 +173,7 @@ public class Event extends Model implements Serializable {
 	 /* - Get list of event for any user in search area
 	 * - exclude past event
 	 */
-	public static ArrayList<Model> Get(String accessToken, String userLatitude, String userLongitude, String searchLat, String searchLon, String timeZone, int searchTimeFrame, float searchRadius, int searchLimit) throws FacebookException , MemcacheServiceException {
+	public static ArrayList<Model> Get(String accessToken, String userLatitude, String userLongitude, String searchLat, String searchLon, String timeZone, int searchTimeFrame, float searchRadius, int searchLimit, String locale) throws FacebookException , MemcacheServiceException {
 		
 		ArrayList<Model> result = new ArrayList<Model>();
 		
@@ -231,7 +232,7 @@ public class Event extends Model implements Serializable {
                 		
                 		if (!previous_venue_time.equals(event.venue_id + event.start_time)) {  // to remove duplicate events
                 		
-                			if (event.Format(timeZoneInMinutes, now, searchTimeFrame)){
+                			if (event.Format(timeZoneInMinutes, now, searchTimeFrame, locale)){
                 				
                     			event.latitude 	= Double.toString(e.getLatitude());
                     			event.longitude = Double.toString(e.getLongitude());
@@ -352,16 +353,16 @@ public class Event extends Model implements Serializable {
 	}
 	
 	
-	public static ArrayList<Model> getMultiple(String accessToken, String[] eids, String timeZone, String userLatitude, String userLongitude) throws FacebookException {
+	public static ArrayList<Model> getMultiple(String accessToken, String[] eids, String timeZone, String userLatitude, String userLongitude, String locale) throws FacebookException {
 		
 		ArrayList<Model> result	= new ArrayList<Model>();
 		
 		for (String eid : eids) {
 	    	
 			try {
-				result.add(getSingle(accessToken, eid, timeZone, userLatitude, userLongitude));
+				result.add(getSingle(accessToken, eid, timeZone, userLatitude, userLongitude, locale));
 			} catch (Exception ex ) {
-				result.add(getSingle(accessToken, eid, timeZone, userLatitude, userLongitude));
+				result.add(getSingle(accessToken, eid, timeZone, userLatitude, userLongitude, locale));
 			}
 			
 		}
@@ -369,7 +370,7 @@ public class Event extends Model implements Serializable {
 		return result;
 	}
 	
-	public static Event getSingle(String accessToken, String eid, String timeZone, String userLatitude, String userLongitude) throws FacebookException{
+	public static Event getSingle(String accessToken, String eid, String timeZone, String userLatitude, String userLongitude, String locale) throws FacebookException{
 		
 		FacebookClient client	= new DefaultFacebookClient(accessToken);
 		int timeZoneInMinutes	= Integer.parseInt(timeZone);
@@ -386,7 +387,7 @@ public class Event extends Model implements Serializable {
 		
 		e.Filter_category();
 		
-		e.Format(timeZoneInMinutes, now, 0);
+		e.Format(timeZoneInMinutes, now, 0, locale);
 		
 		e.venue_id = JSON.GetValueFor("id", e.venue);
 		Venue v_graph = Venue.getVenue(client, e.venue_id);
@@ -413,11 +414,13 @@ public class Event extends Model implements Serializable {
 		return e;
 	}
 	
-	private boolean Format(int timeZoneInMinutes, DateTime now, int searchTimeFrame) {
+	private boolean Format(int timeZoneInMinutes, DateTime now, int searchTimeFrame, String locale) {
 			
 		boolean res = true;
 		long timeStampStart = Long.parseLong(this.start_time) * 1000;
 		long timeStampEnd = Long.parseLong(this.end_time) * 1000;
+		
+		Locale loc = (locale != null && locale.length() > 0) ? new Locale(locale.split("_")[0],locale.split("_")[1]) : Locale.ENGLISH;
 		
 		// facebook events timestamp are in PST // or have a timezone...
 		DateTimeZone PST = DateTimeZone.forID("America/Los_Angeles");
@@ -434,11 +437,11 @@ public class Event extends Model implements Serializable {
 		}
 
 		
-		this.time_start = dtStart.toDateTime(PST).toString("KK:mm a");
-		this.time_end = dtEnd.toDateTime(PST).toString("KK:mm a");
+		this.time_start = dtStart.toDateTime(PST).toString("KK:mm a", loc);
+		this.time_end = dtEnd.toDateTime(PST).toString("KK:mm a", loc);
 		
-		this.date_start = dtStart.toDateTime(PST).toString("MMM d, Y");
-		this.date_end = dtEnd.toDateTime(PST).toString("MMM d, Y");
+		this.date_start = dtStart.toDateTime(PST).toString("MMM d, Y", loc);
+		this.date_end = dtEnd.toDateTime(PST).toString("MMM d, Y", loc);
 		
 		DateTimeZone TZ = DateTimeZone.forOffsetMillis(timeZoneInMinutes*60*1000);
 
