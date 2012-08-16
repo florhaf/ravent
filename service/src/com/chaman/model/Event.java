@@ -590,15 +590,15 @@ public class Event extends Model implements Serializable {
 		
 		if (this.venue_category != null) {
 			
-			if (this.venue_category.contains("art") || this.venue_category.contains("theat") || this.venue_category.contains("museum")) {
+			if (this.venue_category.contains("bar") || this.venue_category.contains("lounge")) {
 				
-				this.filter = "Entertain";
-			} else if (this.venue_category.contains("bar") || this.venue_category.contains("lounge")) {
-			
 				this.filter = "Chill";
 			} else if (this.venue_category.contains("cafe") || this.venue_category.contains("restaurant")) {
+				
+				this.filter = "Chill";			
+			} else if  (this.venue_category.contains("art") || this.venue_category.contains("theat") || this.venue_category.contains("museum")) {
 			
-				this.filter = "Chill";
+				this.filter = "Entertain";
 			} else if (this.venue_category.contains("club") || this.venue_category.contains("nightlife")) {
 			
 				this.filter = "Party";
