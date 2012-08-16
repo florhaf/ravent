@@ -267,6 +267,7 @@ static controllers_events_List_p2p *_ctrl;
     [params setValue:[models_User crtUser].timeZone forKey:@"timezone_offset"];                
     [params setValue:[NSNumber numberWithInt:[models_User crtUser].searchRadius] forKey:@"radius"];
     [params setValue:[NSNumber numberWithInt:[models_User crtUser].searchWindow] forKey:@"timeframe"];
+    [params setValue:[[NSLocale currentLocale] localeIdentifier] forKey:@"locale"];
     
     if (_searchCenter.latitude != 0) {
         

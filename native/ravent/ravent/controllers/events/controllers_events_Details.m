@@ -55,8 +55,6 @@ static int _retryCounter;
         
         self.title = @"Gemster";
         
-        
-        
         Action *shareAction = [[Action alloc] initWithDelegate:self andSelector:@selector(share:)];
         [[ActionDispatcher instance] add:shareAction named:@"share"];
         
@@ -66,7 +64,13 @@ static int _retryCounter;
         
         [self loadPictures];
         
-        _event.isGemDropped = [[Store instance] isGemDropped:_event.eid];
+        models_Event *persistedEvent = [[Store instance] lookup:_event.eid];
+        
+        if (persistedEvent != nil) {
+            
+            _event.isInWatchList = persistedEvent.isInWatchList;
+            _event.isGemDropped = persistedEvent.isGemDropped;
+        }
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadPictures) name:@"reloadPictures" object:nil];
 
@@ -74,6 +78,7 @@ static int _retryCounter;
     
     return self;
 }
+
 
 - (void)loadPictures
 {
@@ -268,20 +273,28 @@ static int _retryCounter;
 
 - (IBAction)addToListButton_Tap:(id)sender
 {
-    _event.isInWatchList = YES;
-    
-    NSString *msg = [[Store instance]saveEvent:_event];
-    
-    if ([msg rangeOfString:@"added"].location != NSNotFound) {
+    if (!_event.isInWatchList) {
+     
+        _event.isInWatchList = YES;
         
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"addedToWatchList" object:nil];   
+        [[Store instance]save:_event];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"addedToWatchList" object:nil];
+
+        
+        [YRDropdownView showDropdownInView:[controllers_App instance].view
+                                     title:@"Watchlist\n"
+                                    detail:@"Event added to your Watchlist."
+                                     image:[UIImage imageNamed:@"dropdown-alert"]
+                                  animated:YES];
+    } else {
+        
+        [YRDropdownView showDropdownInView:[controllers_App instance].view
+                                     title:@"Watchlist\n"
+                                    detail:@"Event already in your Watchlist."
+                                     image:[UIImage imageNamed:@"dropdown-alert"]
+                                  animated:YES];
     }
-    
-    [YRDropdownView showDropdownInView:[controllers_App instance].view 
-                                 title:@"Watchlist\n" 
-                                detail:msg
-                                 image:[UIImage imageNamed:@"dropdown-alert"]
-                              animated:YES];
 }
 
 - (IBAction)crowdButton_Tap:(id)sender
@@ -362,17 +375,17 @@ static int _retryCounter;
     [_actVote stopAnimating];
     // store eid in voted events
     _event.isGemDropped = YES;
-    [[Store instance] saveEvent:_event];
+    _event.isInWatchList = YES;
+    [[Store instance] save:_event];
     
     NSString *msg = @"You just dropped a Gem!";
     
-    NSString *saveMsg = [[Store instance] saveEvent:_event];
     
-    if ([saveMsg rangeOfString:@"added"].location != NSNotFound) {
+    //if ([saveMsg rangeOfString:@"added"].location != NSNotFound) {
         
-        msg = [msg stringByAppendingString:[@"\n\n" stringByAppendingString:saveMsg]];
+        msg = [msg stringByAppendingString:[@"\n\n" stringByAppendingString:@"Event added to your Watchlist"]];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"addedToWatchList" object:nil]; 
-    }
+    //}
     
     if (_event.offerTitle != nil && ![_event.offerTitle isEqualToString:@""]) {
 
@@ -384,8 +397,6 @@ static int _retryCounter;
                                 detail:msg
                                  image:[UIImage imageNamed:@"dropdown-alert"]
                               animated:YES];
-    
-    //[self loadDropAGem];
     
     [self trackEvent:@"drop_a_gem"];
 }
@@ -410,7 +421,6 @@ static int _retryCounter;
     
     if (_segment.selectedSegmentIndex == 0) {  
     
-        [[Store instance]saveEvent:_event];
         
     } else if (_segment.selectedSegmentIndex == 1) {
         
@@ -446,12 +456,6 @@ static int _retryCounter;
         
         txt = @"You are now listed as attending this event";
         
-        NSString *saveMsg = [[Store instance] saveEvent:_event];
-        
-        if ([saveMsg rangeOfString:@"added"].location != NSNotFound) {
-            
-            txt = [txt stringByAppendingString:[@"\n\n" stringByAppendingString:saveMsg]];
-        }
     } else if ([_event.rsvp_status isEqualToString:@"maybe attending"]) {
         
         txt = @"You are now listed as maybe attending this event";

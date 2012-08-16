@@ -346,7 +346,7 @@ static int _retryCounter;
         [annotationView setFrame:CGRectMake(0, 0, 24, 20)];
         
         annotationView.annotation = annotation;
-        [annotationView setCenterOffset:CGPointMake(annotationView.image.size.width / 2, annotationView.image.size.height / 2)];
+        [annotationView setCenterOffset:CGPointMake(0, -annotationView.image.size.height / 2)];
         
         UIButton *infoButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
         annotationView.rightCalloutAccessoryView = infoButton;

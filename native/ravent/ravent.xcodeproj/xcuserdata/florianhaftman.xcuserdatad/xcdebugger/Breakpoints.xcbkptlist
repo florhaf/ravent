@@ -7,52 +7,39 @@
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "ravent/utils/RaventTables/utils.m"
-         timestampString = "366670289.278133"
+         filePath = "ravent/utils/RaventTables/Store.m"
+         timestampString = "366769427.527"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "15"
-         endingLineNumber = "15"
-         landmarkName = "+createSquareBarButtonItemWithTitle:imageNamed:imageSelectedNamed:target:action:"
+         startingLineNumber = "155"
+         endingLineNumber = "155"
+         landmarkName = "-findFutureEvents"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "JIRAConnect/JMCClasses/Core/inbox/JMCMessageBubble.m"
-         timestampString = "366670548.182128"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "121"
-         endingLineNumber = "121"
-         landmarkName = "-setText:leftAligned:withFont:size:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "JIRAConnect/JMCClasses/Core/inbox/JMCIssuesViewController.m"
-         timestampString = "366675286.723333"
+         filePath = "ravent/utils/RaventTables/Store.m"
+         timestampString = "366769444.737674"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "134"
          endingLineNumber = "134"
-         landmarkName = "-viewWillAppear:"
+         landmarkName = "-lookupByDate:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
-         shouldBeEnabled = "Yes"
+         shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "ravent/controllers/events/controllers_events_Map_p2p.m"
-         timestampString = "366680672.558254"
+         filePath = "ravent/utils/RaventTables/Store.m"
+         timestampString = "366769449.948022"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "197"
-         endingLineNumber = "197"
-         landmarkName = "-buttonTap:"
+         startingLineNumber = "96"
+         endingLineNumber = "96"
+         landmarkName = "-managedObjectlookupByDate:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

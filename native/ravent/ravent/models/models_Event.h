@@ -66,6 +66,9 @@
     NSString *_ticket_link;
     
     CLLocationCoordinate2D _coordinate;
+    
+    NSString *_timestampStart;
+    NSString *_timestampEnd;
 }
 
 @property (nonatomic, weak) id delegate;
@@ -105,6 +108,8 @@
 @property (nonatomic, assign) BOOL isGemDropped;
 @property (nonatomic, assign) BOOL isInWatchList;
 @property (nonatomic, assign) BOOL isSyncedWithCal;
+@property (nonatomic, retain) NSString *timestampStart;
+@property (nonatomic, retain) NSString *timestampEnd;
 
 - (id)initWithDelegate:(NSObject *)del andSelector:(SEL)sel;
 - (void)loadEventsWithParams:(NSMutableDictionary *)params;

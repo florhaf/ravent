@@ -11,6 +11,7 @@
 #import "controllers_events_Events.h"
 #import "controllers_TakeTheTour.h"
 
+
 @implementation controllers_App
 
 @synthesize loginController = _loginController;
@@ -23,7 +24,7 @@ static controllers_App *_ctrl;
     self = [super init];
     
     if (self) {
-            
+        
         Action *loginAction = [[Action alloc] initWithDelegate:self andSelector:@selector(flipView)];
         Action *logoutAction = [[Action alloc] initWithDelegate:self andSelector:@selector(flipView)];
         

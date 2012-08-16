@@ -140,7 +140,7 @@ static customNavigationController *_ctrl;
             
             e.isSyncedWithCal = YES;
             
-            [[Store instance] update:e];
+            //[[Store instance] update:e];
         }
     }
     
