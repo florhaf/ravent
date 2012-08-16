@@ -22,15 +22,18 @@ typedef enum {
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
-- (NSFetchedResultsController *)fetchedResultsController;
-- (NSString *)saveEid:(NSString *)eid forDate:(NSString *)startDate;
-- (NSString *)saveEvent:(models_Event *)event;
-- (NSMutableArray *)findEidsForDate:(NSString *)startDate;
-- (NSMutableArray *)findEventsForDate:(NSString *)startDate listType:(listType)type;
+
+- (void)save:(models_Event *)event;
+- (void)del:(models_Event *)event;
+- (NSManagedObject *)managedObjectlookup:(NSString *)eid;
+- (NSArray *)managedObjectlookupByDate:(NSDate *)date;
+- (models_Event *)lookup:(NSString *)eid;
+- (NSMutableArray *)lookupByDate:(NSDate *)date;
 - (NSMutableArray *)findFutureEvents;
-- (NSMutableArray *)findGemDroppedEvents;
-- (BOOL)isGemDropped:(NSString *)eid;
-- (void)update:(models_Event *)e;
+
+
+
+- (NSFetchedResultsController *)fetchedResultsController;
 
 + (Store *)instance;
 

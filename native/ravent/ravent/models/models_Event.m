@@ -49,9 +49,10 @@
 @synthesize isInWatchList = _isInWatchList;
 @synthesize isSyncedWithCal = _isSyncedWithCal;
 @synthesize address = _address;
+@synthesize timestampStart = _timestampStart;
+@synthesize timestampEnd = _timestampEnd;
 
-//#define SERVICE_URL @"http://air.local:8888"
-#define SERVICE_URL @"http://raventsvc.appspot.com"
+#define SERVICE_URL @"http://api.gemsterapp.com"
 
 - (id)initWithDelegate:(NSObject *)del andSelector:(SEL)sel
 {
@@ -96,6 +97,8 @@
     another.isGemDropped = _isGemDropped;
     another.isSyncedWithCal = _isSyncedWithCal;
     another.address = _address;
+    another.timestampStart = _timestampStart;
+    another.timestampEnd = _timestampEnd;
     
     return another;
 }
@@ -126,6 +129,8 @@
     [objectMapping mapKeyPath:@"offer_description" toAttribute:@"offerDescription"];
     [objectMapping mapKeyPath:@"featured" toAttribute:@"featured"];
     [objectMapping mapKeyPath:@"ticket_link" toAttribute:@"ticket_link"];
+    [objectMapping mapKeyPath:@"timestamp_start" toAttribute:@"timestampStart"];
+    [objectMapping mapKeyPath:@"timestamp_End" toAttribute:@"timestampEnd"];
 
     if (_manager == nil) {
         
@@ -141,19 +146,14 @@
 
 - (void)reloadWithParams:(NSMutableDictionary *)params
 {
-    
-    //RKLogConfigureByName("RestKit/*", RKLogLevelTrace);
     NSString *resourcePath = [@"calendar" appendQueryParams:params];
-    
-    Store *store = [Store instance];
-    NSMutableArray *events = [[NSMutableArray alloc] init];
-    
-    [events addObjectsFromArray:[store findFutureEvents]];
-    
-    
+    NSMutableArray *events = [[Store instance] findFutureEvents];
+
     for (int i = 0; i < [events count]; i++) {
         
-        resourcePath = [NSString stringWithFormat:@"%@&eventID=%@", resourcePath, ((models_Event *)[events objectAtIndex:i]).eid];
+        models_Event *e = (models_Event *)[events objectAtIndex:i];
+        
+        resourcePath = [NSString stringWithFormat:@"%@&eventID=%@", resourcePath, e.eid];
     }
     
     RKObjectMapping *objectMapping = [RKObjectMapping mappingForClass:[models_Event class]];
@@ -499,6 +499,9 @@
     _offerDescription = nil;
     _featured = nil;
     _ticket_link = nil;
+    
+    _timestampEnd = nil;
+    _timestampStart = nil;
 }
 
 @end

@@ -34,6 +34,7 @@
     [params setValue:[models_User crtUser].latitude forKey:@"latitude"];
     [params setValue:[models_User crtUser].longitude forKey:@"longitude"];
     [params setValue:[models_User crtUser].timeZone forKey:@"timezone_offset"];
+    [params setValue:[[NSLocale currentLocale] localeIdentifier] forKey:@"locale"];
     
     [_event loadEventsWithParams:params];
 }

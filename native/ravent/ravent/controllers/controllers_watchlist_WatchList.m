@@ -66,7 +66,8 @@ static controllers_watchlist_WatchList *_ctrl;
     [params setValue:[models_User crtUser].accessToken forKey:@"access_token"];
     [params setValue:[models_User crtUser].latitude forKey:@"latitude"];
     [params setValue:[models_User crtUser].longitude forKey:@"longitude"];
-    [params setValue:[models_User crtUser].timeZone forKey:@"timezone_offset"];                
+    [params setValue:[models_User crtUser].timeZone forKey:@"timezone_offset"];
+    [params setValue:[[NSLocale currentLocale] localeIdentifier] forKey:@"locale"];
     
     _url = [@"calendar" appendQueryParams:params];
     
@@ -79,15 +80,6 @@ static controllers_watchlist_WatchList *_ctrl;
 
 - (void)onLoadEvents:(NSArray *)objects
 {
-    [MBProgressHUD hideHUDForView:self.view animated:YES];
-    _hud = nil;
-    
-    if ([objects count] == 0) {
-        
-        
-        //[[NSBundle mainBundle] loadNibNamed:@"views_Empty_WL" owner:self options:nil];
-    }
-    
     [self onLoadData:objects withSuccess:^ {
         
         _data = objects;

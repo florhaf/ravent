@@ -15,72 +15,38 @@
 
 static Store *_store;
 
-- (NSString *)saveEid:(NSString *)eid forDate:(NSString *)startDate
+
+//- (NSString *)getStoreDateStringFrom:(NSString *)eventDate
+//{
+//    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+//    [dateFormatter setDateFormat:@"MMM dd, yyyy"];
+//    
+//    NSDate *date = [dateFormatter dateFromString:eventDate];
+//    NSDateComponents *components = [[NSCalendar currentCalendar] components:NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit fromDate:date];
+//    NSString *dateStr = [NSString stringWithFormat:@"%d-%d-%d", components.year, components.month, components.day];
+//    return dateStr;
+//}
+//
+//- (NSDate *)getDateFromStoreString:(NSString *)storeString
+//{
+//    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+//    [dateFormatter setDateFormat:@"YYYY-MM-DD"];
+//    
+//    return [dateFormatter dateFromString:storeString];
+//}
+
+
+- (void)save:(models_Event *)event
 {
-    NSMutableArray *array = [self findEidsForDate:startDate];
-    
-    if (array != nil) {
-     
-        for (int i = 0; i < [array count]; i++) {
-            
-            NSString *e = [array objectAtIndex:i];
-            
-            if ([e isEqualToString:eid]) {
-                
-                return @"Event already in your Watchlist";
-            }
-        }
-    }
+    [self del:event];
     
     NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
     NSEntityDescription *entity = [[self.fetchedResultsController fetchRequest] entity];
     NSManagedObject *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:context];
     
-    // If appropriate, configure the new managed object.
-    // Normally you should use accessor methods, but using KVC here avoids the need to add a custom class to the template.
-    [newManagedObject setValue:startDate forKey:@"startDate"];
-    [newManagedObject setValue:eid forKey:@"eid"];
-    
-    // Save the context.
-    NSError *error = nil;
-    if (![context save:&error]) {
-
-        return error.localizedDescription;
-    }
-    
-    return @"Event added to your Watchlist";
-}
-
-- (NSString *)saveEvent:(models_Event *)event
-{
-    NSMutableArray *array = [self findEidsForDate:event.dateStart];
-    
-    for (int i = 0; i < [array count]; i++) {
-        
-        NSString *eid = [array objectAtIndex:i];
-        
-        if ([eid isEqualToString:event.eid]) {
-            
-            return @"Event already in your Watchlist";
-        }
-    }
-    
-    NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
-    NSEntityDescription *entity = [[self.fetchedResultsController fetchRequest] entity];
-    NSManagedObject *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:context];
-    
-    // If appropriate, configure the new managed object.
-    // Normally you should use accessor methods, but using KVC here avoids the need to add a custom class to the template.
     [newManagedObject setValue:event.dateStart forKey:@"startDate"];
     [newManagedObject setValue:event.dateEnd forKey:@"endDate"];
-    [newManagedObject setValue:event.timeStart forKey:@"startTime"];
-    [newManagedObject setValue:event.timeEnd forKey:@"endTime"];
     [newManagedObject setValue:event.eid forKey:@"eid"];
-    [newManagedObject setValue:event.name forKey:@"name"];
-    [newManagedObject setValue:event.location forKey:@"location"];
-    [newManagedObject setValue:event.latitude forKey:@"latitude"];
-    [newManagedObject setValue:event.longitude forKey:@"longitude"];
-    [newManagedObject setValue:event.pic_big forKey:@"picture"];
     [newManagedObject setValue:[[NSNumber alloc] initWithBool:event.isInWatchList] forKey:@"isInWatchList"];
     [newManagedObject setValue:[[NSNumber alloc] initWithBool:event.isGemDropped] forKey:@"isGemDropped"];
     [newManagedObject setValue:[[NSNumber alloc] initWithBool:event.isSyncedWithCal] forKey:@"isSyncedWithCal"];
@@ -89,44 +55,133 @@ static Store *_store;
     NSError *error = nil;
     if (![context save:&error]) {
         // Replace this implementation with code to handle the error appropriately.
-        return error.localizedDescription;
+        NSLog(@"%@", error.localizedDescription);
     }
-    
-    event.isInWatchList = YES;
-    
-    return @"Event added to your Watchlist";
 }
 
-- (void)update:(models_Event *)e
+- (void)del:(models_Event *)event
+{
+    NSManagedObject *mo = [self managedObjectlookup:event.eid];
+    
+    if (mo != nil) {
+     
+        NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
+        [context deleteObject:mo];
+    }
+}
+
+- (NSManagedObject *)managedObjectlookup:(NSString *)eid
 {
     NSEntityDescription *entityDesc = [NSEntityDescription entityForName:@"Event" inManagedObjectContext:[self managedObjectContext]];
     
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    NSPredicate *pred = [NSPredicate predicateWithFormat:@"(eid = %@)", e.eid];
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"(eid = %@)", eid];
     
     [request setEntity:entityDesc];
     [request setPredicate:pred];
     
     NSError *error;
     NSArray *objects = [[self managedObjectContext] executeFetchRequest:request error:&error];
-    
-    if (objects != nil) {
+
+    if (objects != nil && [objects count] > 0) {
         
-        for (int i = 0; i < [objects count]; i++) {
-            
-            NSManagedObject *match = [objects objectAtIndex:i];
-            
-            [match setValue:[NSNumber numberWithBool:e.isSyncedWithCal] forKey:@"isSyncedWithCal"];
-        }
+        return [objects objectAtIndex:0];
     }
     
-    
-    if (![[self managedObjectContext] save:&error]) {
-        // Replace this implementation with code to handle the error appropriately.
-        NSLog(@"%@", error.localizedDescription);
-    }
-    
+    return nil;
 }
+
+- (NSArray *)managedObjectlookupByDate:(NSDate *)date
+{
+    NSEntityDescription *entityDesc = [NSEntityDescription entityForName:@"Event" inManagedObjectContext:[self managedObjectContext]];
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"MMM d, yyyy"];
+    NSString *strFromDate = [dateFormatter stringFromDate:date];
+    
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"(endDate = %@)", strFromDate];
+    
+    [request setEntity:entityDesc];
+    [request setPredicate:pred];
+    
+    NSError *error;
+    return [[self managedObjectContext] executeFetchRequest:request error:&error];
+}
+
+- (models_Event *)lookup:(NSString *)eid
+{
+    NSManagedObject *mo = [self managedObjectlookup:eid];
+    
+    if (mo != nil) {
+        
+        models_Event *e = [[models_Event alloc] init];
+     
+        e.eid = [mo valueForKey:@"eid"];
+        e.dateStart = [mo valueForKey:@"startDate"];
+        e.dateEnd = [mo valueForKey:@"endDate"];
+        e.isInWatchList = [((NSNumber *)[mo valueForKey:@"isInWatchList"]) boolValue];
+        e.isGemDropped = [((NSNumber *)[mo valueForKey:@"isGemDropped"]) boolValue];
+        
+        return e;
+    }
+    
+    return nil;
+}
+
+- (NSMutableArray *)lookupByDate:(NSDate *)date
+{
+    NSArray *mos = [self managedObjectlookupByDate:date];
+    NSMutableArray *res = [[NSMutableArray alloc] init];
+    
+    for (NSManagedObject *mo in mos) {
+        
+        models_Event *e = [[models_Event alloc] init];
+
+        e.eid = [mo valueForKey:@"eid"];
+        e.dateStart = [mo valueForKey:@"startDate"];
+        e.dateEnd = [mo valueForKey:@"endDate"];
+        e.isInWatchList = [((NSNumber *)[mo valueForKey:@"isInWatchList"]) boolValue];
+        e.isGemDropped = [((NSNumber *)[mo valueForKey:@"isGemDropped"]) boolValue];
+        
+        [res addObject:e];
+    }
+    
+    return res;
+}
+
+- (NSMutableArray *)findFutureEvents
+{
+    NSDate *start = [NSDate date];
+    NSDate *end = [start dateByAddingTimeInterval:60 * 60 * 24 * 31 * 6];
+    
+    NSMutableArray *results = [[NSMutableArray alloc] init];
+    
+    while ([start compare:end] != NSOrderedDescending) {
+        
+        [results addObjectsFromArray:[self lookupByDate:start]];
+        
+        start = [start dateByAddingTimeInterval:60 * 60 * 24];
+    }
+    
+    return results;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -167,144 +222,6 @@ static Store *_store;
     
     return __fetchedResultsController;
 }  
-
-- (NSMutableArray *)findEidsForDate:(NSString *)startDate
-{
-    NSEntityDescription *entityDesc = [NSEntityDescription entityForName:@"Event" inManagedObjectContext:[self managedObjectContext]];
-    
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    NSPredicate *pred = [NSPredicate predicateWithFormat:@"(startDate = %@)", startDate];
-    
-    [request setEntity:entityDesc];
-    [request setPredicate:pred];
-    
-    NSError *error;
-    NSArray *objects = [[self managedObjectContext] executeFetchRequest:request error:&error];
-        
-    NSMutableArray *result = [[NSMutableArray alloc] init];
-    
-    for (int i = 0; i < [objects count]; i++) {
-            
-        NSManagedObject *matche = [objects objectAtIndex:i];
-            
-        bool isInWacthList = [((NSNumber *)[matche valueForKey:@"isInWatchList"]) boolValue];
-        
-        if (isInWacthList) {
-         
-            [result addObject:[matche valueForKey:@"eid"]];
-        }
-    }
-
-    return result;
-}
-
-- (NSMutableArray *)findFutureEvents
-{
-    NSDate *start = [NSDate date];
-    NSDate *end = [start dateByAddingTimeInterval:60 * 60 * 24 * 31 * 6];
-    
-    NSMutableArray *results = [[NSMutableArray alloc] init];
-    
-    while ([start compare:end] != NSOrderedDescending) {
-        
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setDateFormat:@"MMM d, yyyy"];
-        NSString *strFromDate = [dateFormatter stringFromDate:start];
-        
-        [results addObjectsFromArray:[self findEventsForDate:strFromDate listType:watchlist]];
-        
-        start = [start dateByAddingTimeInterval:60 * 60 * 24];
-    }
-    
-    return results;
-}
-
-- (NSMutableArray *)findGemDroppedEvents
-{
-    NSDate *start = [NSDate date];
-    NSDate *end = [start dateByAddingTimeInterval:60 * 60 * 24 * 31 * 6];
-    
-    NSMutableArray *results = [[NSMutableArray alloc] init];
-    
-    while ([start compare:end] != NSOrderedDescending) {
-        
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setDateFormat:@"MMM d, yyyy"];
-        NSString *strFromDate = [dateFormatter stringFromDate:start];
-        
-        [results addObjectsFromArray:[self findEventsForDate:strFromDate listType:gemdropped]];
-        
-        start = [start dateByAddingTimeInterval:60 * 60 * 24];
-    }
-    
-    return results;
-}
-
-- (BOOL)isGemDropped:(NSString *)eid
-{
-    NSMutableArray *ar = [self findGemDroppedEvents];
-    
-    for (models_Event *e in ar) {
-        
-        if ([e.eid isEqualToString:eid]) {
-            
-            return YES;
-        }
-    }
-    
-    return NO;
-}
-
-- (NSMutableArray *)findEventsForDate:(NSString *)startDate listType:(listType)type
-{
-    NSEntityDescription *entityDesc = [NSEntityDescription entityForName:@"Event" inManagedObjectContext:[self managedObjectContext]];
-    
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    NSPredicate *pred = [NSPredicate predicateWithFormat:@"(endDate = %@)", startDate];
-    
-    [request setEntity:entityDesc];
-    [request setPredicate:pred];
-    
-    NSError *error;
-    NSArray *objects = [[self managedObjectContext] executeFetchRequest:request error:&error];
-    
-    NSMutableArray *result = [[NSMutableArray alloc] init];
-    
-    if (objects != nil) {
-     
-        for (int i = 0; i < [objects count]; i++) {
-            
-            NSManagedObject *match = [objects objectAtIndex:i];
-            
-            models_Event *e = [[models_Event alloc] init];
-            
-            e.isInWatchList = [((NSNumber *)[match valueForKey:@"isInWatchList"]) boolValue];
-            e.isGemDropped = [((NSNumber *)[match valueForKey:@"isGemDropped"]) boolValue];
-            e.isSyncedWithCal = [((NSNumber *)[match valueForKey:@"isSyncedWithCal"]) boolValue];
-            e.eid = [match valueForKey:@"eid"];
-            e.name = [match valueForKey:@"name"];
-            e.location = [match valueForKey:@"location"];
-            e.pic_big = [match valueForKey:@"picture"];
-            e.latitude = [match valueForKey:@"latitude"];
-            e.longitude = [match valueForKey:@"longitude"];
-            e.dateStart = [match valueForKey:@"startDate"];
-            e.dateEnd = [match valueForKey:@"endDate"];
-            e.timeStart = [match valueForKey:@"startTime"];
-            e.timeEnd = [match valueForKey:@"endTime"];
-            
-            if (e.isInWatchList && type == watchlist) {
-                
-                [result addObject:e];
-            } else if (e.isGemDropped && type == gemdropped) {
-                
-                [result addObject:e];
-            }
-            
-        }
-    }
-    
-    return result;
-}
 
 + (Store *)instance
 {
