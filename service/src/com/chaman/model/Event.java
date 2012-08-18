@@ -129,14 +129,14 @@ public class Event extends Model implements Serializable {
 	    	    	e.latitude 	= JSON.GetValueFor("latitude", e.venue);
 	    	    	e.longitude = JSON.GetValueFor("longitude", e.venue);
 				
-	    	    	if ((e.latitude == null || e.latitude == "" || e.longitude == null || e.longitude == "") && v_graph != null) {
+	    	    	if ((e.latitude == null || e.longitude == null) && v_graph != null) {
 					
 	    	    		// take value from venue if event location is null
 	    	    		e.latitude = JSON.GetValueFor("latitude", v_graph.location);
 	    	    		e.longitude = JSON.GetValueFor("longitude", v_graph.location);
 	    	    	}	
 	    	    	
-	    	    	if (e.latitude != null && e.latitude != "" && e.longitude != null && e.longitude != "" && (e.privacy != null && e.privacy.equals("OPEN"))) {
+	    	    	if (e.latitude != null && e.longitude != null && (e.privacy != null && e.privacy.equals("OPEN"))) {
 					
 	    	    		EventLocationCapable elc = dao.ofy().find(EventLocationCapable.class, e.eid);
 	    	    		
@@ -153,7 +153,7 @@ public class Event extends Model implements Serializable {
 		
 		    	e.Format(timeZoneInMinutes, now, 0, locale);
 	    	    
-		    	if (e.latitude != null && e.latitude != "" && e.longitude != null && e.longitude != "") {
+		    	if (e.latitude != null && e.longitude != null) {
 
 	    	    	float distance = Geo.Fence(userLatitude, userLongitude, e.latitude, e.longitude);
 	        	    e.distance = String.format("%.2f", distance);
@@ -322,14 +322,14 @@ public class Event extends Model implements Serializable {
 					    	    	e.latitude 	= JSON.GetValueFor("latitude", e.venue);
 					    	    	e.longitude = JSON.GetValueFor("longitude", e.venue);
 								
-					    	    	if (v_graph != null && (e.latitude == null || e.longitude == null || e.latitude == ""  || e.longitude == "")) {
+					    	    	if (v_graph != null && (e.latitude == null || e.longitude == null)) {
 									
 					    	    		// take value from venue if event location is null
 					    	    		e.latitude = JSON.GetValueFor("latitude", v_graph.location);
 					    	    		e.longitude = JSON.GetValueFor("longitude", v_graph.location);
 					    	    	}	
 								
-					    	    	if (e.latitude != null && e.latitude != "" && e.longitude != null && e.longitude != "") {
+					    	    	if (e.latitude != null && e.longitude != null) {
 									
 					    	    		EventLocationCapable elc = dao.ofy().find(EventLocationCapable.class, e.eid);
 					    	    		
@@ -395,13 +395,13 @@ public class Event extends Model implements Serializable {
 		e.latitude 	= JSON.GetValueFor("latitude", e.venue);
 		e.longitude = JSON.GetValueFor("longitude", e.venue);
 		
-		if ((e.latitude == null || e.latitude == "" || e.longitude == null || e.longitude == "") && v_graph != null) {
+		if ((e.latitude == null || e.longitude == null) && v_graph != null) {
 	    		
 			e.latitude = JSON.GetValueFor("latitude", v_graph.location);
 			e.longitude = JSON.GetValueFor("longitude", v_graph.location);
 		}
 		
-		if (e.latitude != null && e.latitude != "" && e.longitude != null && e.longitude != "") {
+		if (e.latitude != null && e.longitude != null) {
 				
 			float distance = Geo.Fence(userLatitude, userLongitude, e.latitude, e.longitude);
 			e.distance = String.format("%.2f", distance);
