@@ -107,6 +107,8 @@ static controllers_Login *_ctrl;
     [_spinner setAlpha:1];
     [_spinner startAnimating];
     
+    _loginTimer = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(onLoginTimeOut) userInfo:nil repeats:NO];
+    
     _errorLabel.text = @"Connecting to Facebook...";
     
     AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
@@ -115,6 +117,16 @@ static controllers_Login *_ctrl;
     } else {
         [self apiFQLIMe];
     }
+}
+
+- (void)onLoginTimeOut
+{
+    [_loginButton setEnabled:YES];
+    [_loginButton setAlpha:1];
+    [_spinner setAlpha:0];
+    [_spinner stopAnimating];
+    
+    _errorLabel.text = @"Login time out, try again";
 }
 
 /**
@@ -343,6 +355,9 @@ static controllers_Login *_ctrl;
 
 - (void)onUserLoad:(NSArray *)objects
 {
+    [_loginTimer invalidate];
+    _loginTimer = nil;
+    
     _errorLabel.text = [NSString stringWithFormat:@"%@\nLaunching...",_errorLabel.text];
     
     if (objects == nil || [objects count] == 0) {
@@ -392,6 +407,8 @@ static controllers_Login *_ctrl;
     [models_User setCrtUser:user];
     [models_User crtUser].accessToken = [delegate facebook].accessToken;
     [[models_User crtUser] saveToNSUserDefaults];
+    
+    
     
     [self performSelector:@selector(onFacebookLogin) withObject:nil afterDelay:1];
 }

@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Queue;
+import java.util.concurrent.ArrayBlockingQueue;
 import java.util.logging.Logger;
 
 import org.joda.time.DateTime;
@@ -19,6 +21,7 @@ import com.chaman.dao.Dao;
 import com.chaman.svc.Events;
 import com.chaman.util.Geo;
 import com.chaman.util.JSON;
+import com.chaman.util.MyThreadManager;
 
 import com.google.appengine.api.memcache.AsyncMemcacheService;
 import com.google.appengine.api.memcache.MemcacheService;
@@ -34,7 +37,7 @@ import com.restfb.exception.FacebookException;
 /*
  * Event object from FB + formatting for our app
  */
-public class Event extends Model implements Serializable {
+public class Event extends Model implements Serializable, Runnable {
 
 	
 	private static final Logger log = Logger.getLogger(Event.class.getName());
@@ -97,6 +100,8 @@ public class Event extends Model implements Serializable {
 	User user;
 	DateTime dtStart;
 	DateTime dtEnd;
+	
+	private MyThreadManager<Event> tm;
 	
 	public Event() {
 		
@@ -226,6 +231,23 @@ public class Event extends Model implements Serializable {
 		}
 		
 		return result;
+	}
+	
+	public void overRun() {
+		
+		tm = new MyThreadManager<Event>(this);
+		
+		Queue<Long> q = new ArrayBlockingQueue<Long>();
+		
+		List<Event> l = tm.Process(q);
+	}
+	
+	@Override
+	public void run() {
+		
+		Long eid = tm.getIdForThread(Thread.currentThread());
+		
+		tm.threadIsDone();
 	}
 	
 	 /* - Get list of event for any user in search area
