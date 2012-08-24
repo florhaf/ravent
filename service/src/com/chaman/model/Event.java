@@ -4,18 +4,23 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.logging.Logger;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 
 import com.chaman.model.Venue;
 import com.beoui.geocell.GeocellManager;
+import com.beoui.geocell.GeocellUtils;
 import com.beoui.geocell.LocationCapableRepositorySearch;
 import com.beoui.geocell.model.Point;
 import com.chaman.dao.Dao;
+import com.chaman.svc.Events;
 import com.chaman.util.Geo;
 import com.chaman.util.JSON;
 
+import com.google.appengine.api.memcache.AsyncMemcacheService;
 import com.google.appengine.api.memcache.MemcacheService;
 import com.google.appengine.api.memcache.MemcacheServiceException;
 import com.google.appengine.api.memcache.MemcacheServiceFactory;
@@ -31,6 +36,18 @@ import com.restfb.exception.FacebookException;
  */
 public class Event extends Model implements Serializable {
 
+	
+	private static final Logger log = Logger.getLogger(Event.class.getName());
+	
+    private static final int[] NORTHWEST = new int[] {-1,1};
+    private static final int[] NORTH = new int[] {0,1};
+    private static final int[] NORTHEAST = new int[] {1,1};
+    private static final int[] EAST = new int[] {1,0};
+    private static final int[] SOUTHEAST = new int[] {1,-1};
+    private static final int[] SOUTH = new int[] {0,-1};
+    private static final int[] SOUTHWEST = new int[] {-1,-1};
+    private static final int[] WEST = new int[] {-1,0};
+	
 	/**
 	 * 
 	 */
@@ -170,6 +187,47 @@ public class Event extends Model implements Serializable {
 		return result;
 	}
 
+	/* to delete */
+	public static List<EventLocationCapable> proximityFetch2(String searchLat, String searchLon, LocationCapableRepositorySearch<EventLocationCapable> ofySearch, float searchRadius) {
+		
+		List<EventLocationCapable> DS = new ArrayList<EventLocationCapable>();
+		
+		List<EventLocationCapable> result = new ArrayList<EventLocationCapable>();
+		
+		List<String> geocells = new ArrayList<String>();
+		
+		String mygeocell = GeocellUtils.compute(new Point(Double.parseDouble(searchLat), Double.parseDouble(searchLon)), 6);
+		
+		geocells = GeocellUtils.interpolate(GeocellUtils.adjacent(GeocellUtils.adjacent(mygeocell, NORTHEAST), NORTHEAST), GeocellUtils.adjacent(GeocellUtils.adjacent(mygeocell, SOUTHWEST), SOUTHWEST));
+		
+		DS = ofySearch.search(geocells);
+		
+		for (EventLocationCapable e : DS) {
+			
+			float distance = Geo.Fence(searchLat, searchLon, String.valueOf(e.getLatitude()), String.valueOf(e.getLongitude()));
+			if (distance <= searchRadius) {
+				
+				result.add(e);
+			}
+			
+		}
+		
+		return result;
+	}
+	
+	
+	public static List<Long> getEventkeys(List<EventLocationCapable> l){
+		
+		List<Long> result = new ArrayList<Long>();
+		
+		for (EventLocationCapable e : l) {
+			
+			result.add(e.getEid());
+		}
+		
+		return result;
+	}
+	
 	 /* - Get list of event for any user in search area
 	 * - exclude past event
 	 */
@@ -186,64 +244,131 @@ public class Event extends Model implements Serializable {
 		long actual_time = now.getMillis() / 1000L;
 		
 		LocationCapableRepositorySearch<EventLocationCapable> ofySearch = new OfyEntityLocationCapableRepositorySearchImpl(dao.ofy(), timeZone, searchTimeFrame);
-		List<EventLocationCapable> l = GeocellManager.proximityFetch(new Point(Double.parseDouble(searchLat), Double.parseDouble(searchLon)), searchLimit, searchRadius * 1000 * 1.61, ofySearch, 6);
+		
+		log.severe("BEFORE DS");
+		//List<EventLocationCapable> l = GeocellManager.proximityFetch(new Point(Double.parseDouble(searchLat), Double.parseDouble(searchLon)), searchLimit, searchRadius * 1000 * 1.61, ofySearch, 6);
+		List<EventLocationCapable> l = Event.proximityFetch2(searchLat, searchLon, ofySearch, searchRadius);
+		
+		log.severe("AFTER DS");
 		
 		FacebookClient client 	= new DefaultFacebookClient(accessToken);
 		String properties 		= "eid, name, pic_big, start_time, end_time, venue, location, privacy, update_time, timezone";
 		
 		MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
+		AsyncMemcacheService asyncCache = MemcacheServiceFactory.getAsyncMemcacheService();
 		
 		Event event;
 		
 		String previous_venue_time = "";
 		
+		Map<Long, Object> map_cache = syncCache.getAll(Event.getEventkeys(l));
+		
+		log.severe("BEFORE LOOP");
         for (EventLocationCapable e : l) {
+        	
+			if (l.indexOf(e) == 1) {
+				log.severe("EID: " + e.getEid());
+				log.severe("Start: " + e.getTimeStampStart());
+				log.severe("End: " + e.getTimeStampEnd());
+			}	
         	
         	if (actual_time < e.getTimeStampEnd()) { //if event not in the past
         		try {
-            	
-        			event = (Event) syncCache.get(e.getEid());
-                	if (event == null) { // if not in the cache
+
+
+        			if (((e.getTimeStampEnd() - e.getTimeStampStart()) / 86400) > 62) {
+            			if (l.indexOf(e) == 1) {
+            				log.severe("> 2 months");
+            			}	
+        				continue;
+        			}
+        			
+        			if (l.indexOf(e) == 1) {
+        				log.severe("BEFORE READ CACHE");
+        			}	
+        			
+        			//event = (Event) syncCache.get(e.getEid());
+        			event = (Event) map_cache.get(e.getEid());
+        			
+        			if (l.indexOf(e) == 1) {
+        				log.severe("AFTER READ CACHE");
+        			}	
+        			
+        			
+        			if (event == null) { // if not in the cache
                 		
-                			
-                    		String query 			= "SELECT " + properties + " FROM event WHERE eid = " + e.getEid();
-                    		List<Event> fbevents 	= client.executeQuery(query, Event.class);
-                    	
-                    		if (fbevents != null && fbevents.size() > 0) {
+        				if (l.indexOf(e) == 1) {
+        					log.severe("BEFORE FB FETCH");
+        				}	
+                    		
+        				String query 			= "SELECT " + properties + " FROM event WHERE eid = " + e.getEid();
+                		List<Event> fbevents 	= client.executeQuery(query, Event.class); //TODO: Use Batch
                 	
-                    			event = fbevents.get(0);
-                    			event.venue_id = JSON.GetValueFor("id", event.venue);
-                				Venue v_graph =  Venue.getVenue(client, event.venue_id);
-                				event.venue_category = v_graph.category;
-                				if (event.venue_category == null || !event.venue_category.equals("city")) {
-                					event.Score(v_graph);
-                					event.Filter_category();
-                				}
-                				
-        	    	    		if (e.getTimeStampStart() != Long.parseLong(event.start_time) || e.getTimeStampEnd() != Long.parseLong(event.end_time)){
-        	    	    			e.setTimeStampStart(Long.parseLong(event.start_time));
-        	    	    			e.setTimeStampEnd(Long.parseLong(event.end_time));
-        	    	    			dao.ofy().put(e);
-        	    	    		}
-                    		}
+            			if (l.indexOf(e) == 1) {
+            				log.severe("AFTER FB FETCH");
+            			}	
+                		
+                		if (fbevents != null && fbevents.size() > 0) {
+            	
+                			event = fbevents.get(0);
+                			event.venue_id = JSON.GetValueFor("id", event.venue);
+            				Venue v_graph =  Venue.getVenue(client, event.venue_id);
+            				event.venue_category = v_graph.category;
+            				if (event.venue_category == null || !event.venue_category.equals("city")) {
+            					event.Score(v_graph);
+            					event.Filter_category();
+            				}
+            				
+    	    	    		if (e.getTimeStampStart() != Long.parseLong(event.start_time) || e.getTimeStampEnd() != Long.parseLong(event.end_time)){
+    	    	    			e.setTimeStampStart(Long.parseLong(event.start_time));
+    	    	    			e.setTimeStampEnd(Long.parseLong(event.end_time));
+    	    	    			dao.ofy().put(e);
+    	    	    		}
+                		}
                 	}
               			
                 	if (event != null && (event.venue_category == null || !event.venue_category.equals("city"))) {
                 		
                 		if (!previous_venue_time.equals(event.venue_id + event.start_time)) {  // to remove duplicate events
                 		
+                			if (l.indexOf(e) == 1) {
+                				log.severe("BEFORE FORMAT");
+                			}	
+                			
                 			if (event.Format(timeZoneInMinutes, now, searchTimeFrame, locale)){
+                				
+                    			if (l.indexOf(e) == 1) {
+                    				log.severe("AFTER FORMAT");
+                    			}	
                 				
                     			event.latitude 	= Double.toString(e.getLatitude());
                     			event.longitude = Double.toString(e.getLongitude());
                     			
-                    			float distance = Geo.Fence(userLatitude, userLongitude, event.latitude, event.longitude);
-                    			event.distance = String.format("%.2f", distance);
+                      			if (l.indexOf(e) == 1) {
+                    				log.severe("BEFORE FENCE");
+                    			}	
+                    			
+                      			float distance = Geo.Fence(userLatitude, userLongitude, event.latitude, event.longitude);
+                    			
+                      			if (l.indexOf(e) == 1) {
+                    				log.severe("AFTER FENCE");
+                    			}	
+                      			
+                      			event.distance = String.format("%.2f", distance);
 
                     			previous_venue_time = event.venue_id + event.start_time;
                     			
-                    			syncCache.put(event.eid, event, null); //add event to cache
-                        		
+                      			if (l.indexOf(e) == 1) {
+                    				log.severe("BEFORE PUT CACHE");
+                    			}	
+                    			
+                    			//syncCache.put(event.eid, event, null); //add event to cache
+                      			asyncCache.put(event.eid, event, null);
+                      			
+                      			if (l.indexOf(e) == 1) {
+                    				log.severe("AFTER PUT CACHE");
+                    			}	
+                    			
                     			result.add(event);
                 			}
                 		}
@@ -255,6 +380,8 @@ public class Event extends Model implements Serializable {
         	}
         }
 
+        log.severe("AFTER LOOP");
+        
         return result;    
 	}
 
@@ -460,7 +587,7 @@ public class Event extends Model implements Serializable {
 			
 			long end_minus_start = (timeStampEnd - timeStampStart) / 86400000; // in days
 			
-			if (end_minus_start > 62) {
+			if (end_minus_start > 62) { // TODO: added to getEvent, should be deleted
 				return false;
 			}
 			
@@ -717,14 +844,15 @@ public class Event extends Model implements Serializable {
 			Dao dao = new Dao();
 			
 			MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
-
+			AsyncMemcacheService asyncCache = MemcacheServiceFactory.getAsyncMemcacheService();
+			
 			Vote dsvote = (Vote) syncCache.get(eid_string); // read from vote cache
 			
 			if (dsvote == null) {
 		    	
 		    	//get from DS
 		    	dsvote = dao.getVote(eid_string); // returns vote from cache or new Vote(id, 0L, 0D)
-		    	syncCache.put(eid_string, dsvote, null); // Add vote to cache
+		    	asyncCache.put(eid_string, dsvote, null); // Add vote to cache
 			}
 			
 			if (dsvote != null) {

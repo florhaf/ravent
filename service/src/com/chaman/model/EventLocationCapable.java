@@ -1,10 +1,12 @@
 package com.chaman.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Id;
 
 import com.beoui.geocell.GeocellManager;
+import com.beoui.geocell.GeocellUtils;
 import com.beoui.geocell.model.LocationCapable;
 import com.beoui.geocell.model.Point;
 import com.chaman.dao.Dao;
@@ -22,11 +24,11 @@ public class EventLocationCapable extends Model implements LocationCapable {
 	private long timeStampStart;
 	private long timeStampEnd;
 	@Unindexed
-    private double latitude;
+    private double latitude; // TODO: to delete
 	@Unindexed
-    private double longitude;
+    private double longitude; // TODO: to delete
     @Unindexed
-    private double score;
+    private double score; // TODO: to delete
     private List<String> geocells;
     
 	public EventLocationCapable() {
@@ -39,11 +41,12 @@ public class EventLocationCapable extends Model implements LocationCapable {
     	this.eid = event.eid;
     	this.timeStampStart = Long.parseLong(event.start_time);
     	this.timeStampEnd = Long.parseLong(event.end_time);
-    	this.latitude = Double.parseDouble(event.latitude);
-    	this.longitude = Double.parseDouble(event.longitude);
-    	this.score = event.score;
+    	//this.latitude = Double.parseDouble(event.latitude);
+    	//this.longitude = Double.parseDouble(event.longitude);
+    	//this.score = event.score;
     	
-    	geocells = GeocellManager.generateGeoCell(this.getLocation());
+    	geocells = new ArrayList<String>();
+    	geocells.add(GeocellUtils.compute(new Point(this.latitude, this.longitude), 6));
     }
     
     public void Save() {

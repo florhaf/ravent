@@ -1,8 +1,10 @@
 package com.chaman.svc;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Logger;
 
+import org.joda.time.DateTime;
 import org.restlet.resource.Get;
 import org.restlet.resource.ServerResource;
 import com.chaman.model.Event;
@@ -16,6 +18,10 @@ public class Events extends ServerResource {
 	public Response Read() {
 				
 		Response result = new Response();
+		
+		
+		log.severe("START");
+		
 		
 		try {
 			
@@ -34,6 +40,8 @@ public class Events extends ServerResource {
 			String searchRadius = "6";
 			
 			ArrayList<Model> events;
+			
+			
 			
 			if (userID != null) {
 			
@@ -59,6 +67,8 @@ public class Events extends ServerResource {
 			result.setSuccess(false);
 			result.setError(ex.toString());
 		}
+		
+		log.severe("END");
 		
 		return result;
 	}
