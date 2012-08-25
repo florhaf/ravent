@@ -10,6 +10,7 @@ import org.joda.time.DateTimeZone;
 import com.chaman.dao.Dao;
 import com.chaman.util.JSON;
 import com.chaman.util.MyThreadManager;
+import com.google.appengine.api.memcache.AsyncMemcacheService;
 import com.google.appengine.api.memcache.MemcacheService;
 import com.google.appengine.api.memcache.MemcacheServiceException;
 import com.google.appengine.api.memcache.MemcacheServiceFactory;
@@ -42,13 +43,15 @@ public class EventFetchCron extends Model implements Runnable {
 	@Override
 	public void run() {
 
-		User u = this.tm.getIdForThread(Thread.currentThread());
-
 		try {
+			
+			User u = this.tm.getIdForThread(Thread.currentThread());
+			
 			Dao dao = new Dao();
 
 			MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
-
+			AsyncMemcacheService asyncCache = MemcacheServiceFactory.getAsyncMemcacheService();
+			
 			try {
 
 				//Prepare a timestamp to filter the facebook DB on the upcoming events
@@ -105,12 +108,12 @@ public class EventFetchCron extends Model implements Runnable {
 										} else if (elc.getTimeStampStart() != Long.parseLong(e.start_time) || elc.getTimeStampEnd() != Long.parseLong(e.end_time)){
 											dao.ofy().put(new EventLocationCapable(e));
 										}
-										syncCache.put(e.eid, e, null); // Add Event to cache
+										asyncCache.put(e.eid, e, null); // Add Event to cache
 									}
 								}
 							} else {
 
-								syncCache.put(e_cache.eid, e_cache, null); // Add cache Event to cache -> more recent date
+								asyncCache.put(e_cache.eid, e_cache, null); // Add cache Event to cache -> more recent date
 							}
 						}
 					} catch (Exception ex ) {}

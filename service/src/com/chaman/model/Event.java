@@ -105,90 +105,7 @@ public class Event extends Model implements Serializable, Runnable {
 		super();
 	}
 	
-	/*
-	 * - Get list of events from facebook for a userID
-	 * - store in our DB events w/ latitude and longitude
-	 * - exclude past events
-	 */
-	public static ArrayList<Model> Get(String accessToken, String userID, String userLatitude, String userLongitude, String timeZone, String locale) throws FacebookException , MemcacheServiceException {
-		
-		ArrayList<Model> result = new ArrayList<Model>();
-		
-		int timeZoneInMinutes = Integer.parseInt(timeZone);
-		
-		 //Prepare a timestamp to filter the facebook DB on the upcoming events
-		DateTimeZone TZ = DateTimeZone.forOffsetMillis(timeZoneInMinutes*60*1000);
-		DateTime now = DateTime.now(TZ);	
-		long actual_time = now.getMillis() / 1000;
-		String str_actual_time = String.valueOf(actual_time);
-		
-		FacebookClient client 	= new DefaultFacebookClient(accessToken);
-		String properties 		= "eid, name, pic_big, start_time, end_time, venue, location, privacy, update_time, timezone";
-		String query 			= "SELECT " + properties + " FROM event WHERE eid IN (SELECT eid FROM event_member WHERE uid = " + userID + ") AND end_time > " + str_actual_time + " ORDER BY start_time";
-		List<Event> fbevents 	= client.executeQuery(query, Event.class);
-		
-		Dao dao = new Dao();
-		
-		MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
-		Event e_cache; 
-		
-		for (Event e : fbevents) {
-				
-			try {
-				
-				e_cache = (Event) syncCache.get(e.eid); // read from Event cache
-	    	    if (e_cache == null || !e_cache.update_time.equals(e.update_time)) {
-				 	    	
-	    	    	e.venue_id = JSON.GetValueFor("id", e.venue);    	
-	    	    	Venue v_graph = Venue.getVenue(client, e.venue_id);
-	    	    	e.venue_category = v_graph.category;
-				
-	    	    	e.Filter_category();
-	    	    	e.Score(v_graph);
-	    	    	e.latitude 	= JSON.GetValueFor("latitude", e.venue);
-	    	    	e.longitude = JSON.GetValueFor("longitude", e.venue);
-				
-	    	    	if ((e.latitude == null || e.longitude == null) && v_graph != null) {
-					
-	    	    		// take value from venue if event location is null
-	    	    		e.latitude = JSON.GetValueFor("latitude", v_graph.location);
-	    	    		e.longitude = JSON.GetValueFor("longitude", v_graph.location);
-	    	    	}	
-	    	    	
-	    	    	if (e.latitude != null && e.longitude != null && (e.privacy != null && e.privacy.equals("OPEN"))) {
-					
-	    	    		EventLocationCapable elc = dao.ofy().find(EventLocationCapable.class, e.eid);
-	    	    		
-	    	    		if (elc == null) {
-	    	    			dao.ofy().put(new EventLocationCapable(e));
-	    	    		} else if (elc.getTimeStampStart() != Long.parseLong(e.start_time) || elc.getTimeStampEnd() != Long.parseLong(e.end_time)){
-	    	    			dao.ofy().put(elc);
-	    	    		}
-	    	    	}    	    	
-	    	    } else {
-	    	    	
-	    	    	e = e_cache;
-	    	    }
-		
-		    	e.Format(timeZoneInMinutes, now, 0, locale);
-	    	    
-		    	if (e.latitude != null && e.longitude != null) {
-
-	    	    	float distance = Geo.Fence(userLatitude, userLongitude, e.latitude, e.longitude);
-	        	    e.distance = String.format("%.2f", distance);
-	    	    } else {
-					
-		    		e.distance = "N/A";
-		    	}
-		    
-	    	    result.add(e);
-		    	syncCache.put(e.eid, e, null); // Add Event to cache
-			} catch (Exception ex ) {/*retry will lower the speed*/}		
-		}
-		
-		return result;
-	}
-
+	
 	public static List<EventLocationCapable> proximityFetch(String searchLat, String searchLon, LocationCapableRepositorySearch<EventLocationCapable> ofySearch, float searchRadius) {
 		
 		List<EventLocationCapable> DS = new ArrayList<EventLocationCapable>();
@@ -217,7 +134,7 @@ public class Event extends Model implements Serializable, Runnable {
 	}
 	
 	
-	public static List<Long> getEventkeys(List<EventLocationCapable> l){
+	public static List<Long> getELCkeys(List<EventLocationCapable> l){
 		
 		List<Long> result = new ArrayList<Long>();
 
@@ -227,6 +144,59 @@ public class Event extends Model implements Serializable, Runnable {
 		}
 		
 		return result;
+	}
+	
+	public static List<Long> getEventkeys(List<Event> l){
+		
+		List<Long> result = new ArrayList<Long>();
+
+		for (Event e : l) {
+			
+			result.add(e.getEid());
+		}
+		
+		return result;
+	}
+	
+	 /* - Get list of event for any user in search area
+	 * - exclude past event
+	 */
+	public static ArrayList<Model> Get(String accessToken, String userLatitude, String userLongitude, String searchLat, String searchLon, String timeZone, int searchTimeFrame, float searchRadius, int searchLimit, String locale) throws FacebookException , MemcacheServiceException {
+		
+		List<Model> result = new ArrayList<Model>();
+		
+		Dao dao = new Dao();
+		Event e = new Event();
+		e.timeZoneInMinutes = Integer.parseInt(timeZone);
+		
+		e.accessToken = accessToken;
+		
+		e.searchTimeFrame = searchTimeFrame;
+		e.locale = locale;
+		e.userLatitude = userLatitude;
+		e.userLongitude = userLongitude;
+		
+		LocationCapableRepositorySearch<EventLocationCapable> ofySearch = new OfyEntityLocationCapableRepositorySearchImpl(dao.ofy(), timeZone, searchTimeFrame);
+		
+		//List<EventLocationCapable> l = GeocellManager.proximityFetch(new Point(Double.parseDouble(searchLat), Double.parseDouble(searchLon)), searchLimit, searchRadius * 1000 * 1.61, ofySearch, 6);
+		List<EventLocationCapable> l = Event.proximityFetch(searchLat, searchLon, ofySearch, searchRadius);
+
+		if (l != null && !l.isEmpty()) {
+			
+			MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
+			
+			List<Long> eventkeys = Event.getELCkeys(l);
+			
+			e.map_cache = syncCache.getAll(eventkeys);
+			
+			e.tm = new MyThreadManager<EventLocationCapable>(e);
+			
+			Queue<EventLocationCapable> q = new ArrayBlockingQueue<EventLocationCapable>(l.size());
+			q.addAll(l);
+			
+			result = e.tm.Process(q);
+		} 
+       return (ArrayList<Model>)result;    
 	}
 	
 	@Override
@@ -307,8 +277,7 @@ public class Event extends Model implements Serializable, Runnable {
 	                			previous_venue_time = event.venue_id + event.start_time;
 
 	                  			asyncCache.put(event.eid, event, null);
-	          
-	                			
+	            			
 	                			this.tm.AddToResultList(event);
 	            			}
 	            		}
@@ -329,47 +298,7 @@ public class Event extends Model implements Serializable, Runnable {
 			tm.threadIsDone(Thread.currentThread());
 		}
 }
-	
-	 /* - Get list of event for any user in search area
-	 * - exclude past event
-	 */
-	public static ArrayList<Model> Get(String accessToken, String userLatitude, String userLongitude, String searchLat, String searchLon, String timeZone, int searchTimeFrame, float searchRadius, int searchLimit, String locale) throws FacebookException , MemcacheServiceException {
-		
-		List<Model> result = new ArrayList<Model>();
-		
-		Dao dao = new Dao();
-		Event e = new Event();
-		e.timeZoneInMinutes = Integer.parseInt(timeZone);
-		
-		e.accessToken = accessToken;
-		
-		e.searchTimeFrame = searchTimeFrame;
-		e.locale = locale;
-		e.userLatitude = userLatitude;
-		e.userLongitude = userLongitude;
-		
-		LocationCapableRepositorySearch<EventLocationCapable> ofySearch = new OfyEntityLocationCapableRepositorySearchImpl(dao.ofy(), timeZone, searchTimeFrame);
-		
-		//List<EventLocationCapable> l = GeocellManager.proximityFetch(new Point(Double.parseDouble(searchLat), Double.parseDouble(searchLon)), searchLimit, searchRadius * 1000 * 1.61, ofySearch, 6);
-		List<EventLocationCapable> l = Event.proximityFetch(searchLat, searchLon, ofySearch, searchRadius);
 
-		if (l != null && !l.isEmpty()) {
-			
-			MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
-			
-			List<Long> eventkeys = Event.getEventkeys(l);
-			
-			e.map_cache = syncCache.getAll(eventkeys);
-			
-			e.tm = new MyThreadManager<EventLocationCapable>(e);
-			
-			Queue<EventLocationCapable> q = new ArrayBlockingQueue<EventLocationCapable>(l.size());
-			q.addAll(l);
-			
-			result = e.tm.Process(q);
-		} 
-        return (ArrayList<Model>)result;    
-	}
 
 	public static void DeleteCron() throws FacebookException {
 		
@@ -445,7 +374,7 @@ public class Event extends Model implements Serializable, Runnable {
 		return e;
 	}
 	
-	private boolean Format(int timeZoneInMinutes, DateTime now, int searchTimeFrame, String locale) {
+	public boolean Format(int timeZoneInMinutes, DateTime now, int searchTimeFrame, String locale) {
 			
 		boolean res = true;
 		long timeStampStart = Long.parseLong(this.start_time) * 1000;

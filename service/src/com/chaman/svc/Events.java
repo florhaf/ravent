@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 import org.restlet.resource.Get;
 import org.restlet.resource.ServerResource;
 import com.chaman.model.Event;
+import com.chaman.model.EventUser;
 import com.chaman.model.Model;
 
 public class Events extends ServerResource {
@@ -39,7 +40,7 @@ public class Events extends ServerResource {
 			
 			if (userID != null) {
 			
-				events = Event.Get(accessToken, userID, latitude, longitude, timeZone, locale);
+				events = EventUser.Get(accessToken, userID, latitude, longitude, timeZone, locale);
 			} else {
 				if (searchLat == null) {
 					events = Event.Get(accessToken, latitude, longitude, latitude, longitude, timeZone, Integer.parseInt(searchTimeFrame), Float.parseFloat(searchRadius), Integer.parseInt(searchLimit), locale);
