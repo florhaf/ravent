@@ -10,6 +10,7 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 
 import com.chaman.dao.Dao;
+import com.chaman.util.EventTools;
 import com.chaman.util.Geo;
 import com.chaman.util.JSON;
 import com.chaman.util.MyThreadManager;
@@ -70,7 +71,7 @@ public class EventUser extends Model implements Runnable {
 			
 			MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
 			
-			List<Long> eventkeys = Event.getEventkeys(fbevents);
+			List<Long> eventkeys = EventTools.getEventkeys(fbevents);
 			
 			eu.map_cache = syncCache.getAll(eventkeys);
 			
@@ -88,7 +89,7 @@ public class EventUser extends Model implements Runnable {
 	public void run() {
 		
 		try {
-			
+
 			AsyncMemcacheService asyncCache = MemcacheServiceFactory.getAsyncMemcacheService();
 			
 			Dao dao = new Dao();
@@ -99,7 +100,7 @@ public class EventUser extends Model implements Runnable {
 			
 			e_cache = (Event) map_cache.get(e.getEid()); // read from Event cache
     	    if (e_cache == null || !e_cache.update_time.equals(e.update_time)) {
-			 	    	
+
     	    	e.venue_id = JSON.GetValueFor("id", e.venue);    	
     	    	Venue v_graph = Venue.getVenue(client, e.venue_id);
     	    	e.venue_category = v_graph.category;
@@ -115,7 +116,7 @@ public class EventUser extends Model implements Runnable {
     	    		e.latitude = JSON.GetValueFor("latitude", v_graph.location);
     	    		e.longitude = JSON.GetValueFor("longitude", v_graph.location);
     	    	}	
-    	    	
+
     	    	if (e.latitude != null && e.longitude != null && (e.privacy != null && e.privacy.equals("OPEN"))) {
 				
     	    		EventLocationCapable elc = dao.ofy().find(EventLocationCapable.class, e.eid);
@@ -130,9 +131,9 @@ public class EventUser extends Model implements Runnable {
     	    	
     	    	e = e_cache;
     	    }
-	
+
 	    	e.Format(timeZoneInMinutes, now, 0, locale);
-    	    
+
 	    	if (e.latitude != null && e.longitude != null) {
 
     	    	float distance = Geo.Fence(userLatitude, userLongitude, e.latitude, e.longitude);

@@ -12,10 +12,9 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 
 import com.chaman.model.Venue;
-import com.beoui.geocell.GeocellUtils;
 import com.beoui.geocell.LocationCapableRepositorySearch;
-import com.beoui.geocell.model.Point;
 import com.chaman.dao.Dao;
+import com.chaman.util.EventTools;
 import com.chaman.util.Geo;
 import com.chaman.util.JSON;
 import com.chaman.util.MyThreadManager;
@@ -36,10 +35,6 @@ import com.restfb.exception.FacebookException;
  */
 public class Event extends Model implements Serializable, Runnable {
 
-
-    private static final int[] NORTHEAST = new int[] {1,1};
-    private static final int[] SOUTHWEST = new int[] {-1,-1};
-	
 	/**
 	 * 
 	 */
@@ -90,9 +85,9 @@ public class Event extends Model implements Serializable, Runnable {
 	DateTime dtStart;
 	DateTime dtEnd;
 	
+	public Map<Long, Object> map_cache;
 	public int timeZoneInMinutes;
 	public MyThreadManager<EventLocationCapable> tm;
-	public Map<Long, Object> map_cache;
 	public String accessToken;
 	public int searchTimeFrame;
 	public String locale;
@@ -103,59 +98,6 @@ public class Event extends Model implements Serializable, Runnable {
 	public Event() {
 		
 		super();
-	}
-	
-	
-	public static List<EventLocationCapable> proximityFetch(String searchLat, String searchLon, LocationCapableRepositorySearch<EventLocationCapable> ofySearch, float searchRadius) {
-		
-		List<EventLocationCapable> DS = new ArrayList<EventLocationCapable>();
-		
-		List<EventLocationCapable> result = new ArrayList<EventLocationCapable>();
-		
-		List<String> geocells = new ArrayList<String>();
-		
-		String mygeocell = GeocellUtils.compute(new Point(Double.parseDouble(searchLat), Double.parseDouble(searchLon)), 6);
-		
-		geocells = GeocellUtils.interpolate(GeocellUtils.adjacent(GeocellUtils.adjacent(mygeocell, NORTHEAST), NORTHEAST), GeocellUtils.adjacent(GeocellUtils.adjacent(mygeocell, SOUTHWEST), SOUTHWEST));
-		
-		DS = ofySearch.search(geocells);
-		
-		for (EventLocationCapable e : DS) {
-			
-			float distance = Geo.Fence(searchLat, searchLon, String.valueOf(e.getLatitude()), String.valueOf(e.getLongitude()));
-			if (distance <= searchRadius) {
-				
-				result.add(e);
-			}
-			
-		}
-		
-		return result;
-	}
-	
-	
-	public static List<Long> getELCkeys(List<EventLocationCapable> l){
-		
-		List<Long> result = new ArrayList<Long>();
-
-		for (EventLocationCapable e : l) {
-			
-			result.add(e.getEid());
-		}
-		
-		return result;
-	}
-	
-	public static List<Long> getEventkeys(List<Event> l){
-		
-		List<Long> result = new ArrayList<Long>();
-
-		for (Event e : l) {
-			
-			result.add(e.getEid());
-		}
-		
-		return result;
 	}
 	
 	 /* - Get list of event for any user in search area
@@ -179,13 +121,13 @@ public class Event extends Model implements Serializable, Runnable {
 		LocationCapableRepositorySearch<EventLocationCapable> ofySearch = new OfyEntityLocationCapableRepositorySearchImpl(dao.ofy(), timeZone, searchTimeFrame);
 		
 		//List<EventLocationCapable> l = GeocellManager.proximityFetch(new Point(Double.parseDouble(searchLat), Double.parseDouble(searchLon)), searchLimit, searchRadius * 1000 * 1.61, ofySearch, 6);
-		List<EventLocationCapable> l = Event.proximityFetch(searchLat, searchLon, ofySearch, searchRadius);
+		List<EventLocationCapable> l = EventTools.proximityFetch(searchLat, searchLon, ofySearch, searchRadius);
 
 		if (l != null && !l.isEmpty()) {
 			
 			MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
 			
-			List<Long> eventkeys = Event.getELCkeys(l);
+			List<Long> eventkeys = EventTools.getELCkeys(l);
 			
 			e.map_cache = syncCache.getAll(eventkeys);
 			
@@ -205,7 +147,7 @@ public class Event extends Model implements Serializable, Runnable {
 		try {
 			
 			EventLocationCapable e = this.tm.getIdForThread(Thread.currentThread());
-	    	
+	    		
 			Dao dao = new Dao();
 			
 			DateTimeZone TZ = DateTimeZone.forOffsetMillis(timeZoneInMinutes*60*1000);
@@ -222,70 +164,65 @@ public class Event extends Model implements Serializable, Runnable {
 			Event event;
 			
 	    	if (actual_time < e.getTimeStampEnd()) { //if event not in the past
-	    		try {
 
+	 			if (((e.getTimeStampEnd() - e.getTimeStampStart()) / 86400) > 62) {
+    				return;
+    			}
 
-	    			if (((e.getTimeStampEnd() - e.getTimeStampStart()) / 86400) > 62) {
-	    				return;
-	    			}
+    			event = (Event) map_cache.get(e.getEid());
+    							
+    			
+    			if (event == null) { // if not in the cache
+            		
+                		
+    				String query 			= "SELECT " + properties + " FROM event WHERE eid = " + e.getEid();
+            		List<Event> fbevents 	= client.executeQuery(query, Event.class); //TODO: Use Batch
+            	
+            		
+            		if (fbevents != null && fbevents.size() > 0) {
+        	
+            			event = fbevents.get(0);
+            			event.venue_id = JSON.GetValueFor("id", event.venue);
+        				Venue v_graph =  Venue.getVenue(client, event.venue_id);
+        				event.venue_category = v_graph.category;
+        				if (event.venue_category == null || !event.venue_category.equals("city")) {
+        					event.Score(v_graph);
+        					event.Filter_category();
+        				}
+        				
+	    	    		if (e.getTimeStampStart() != Long.parseLong(event.start_time) || e.getTimeStampEnd() != Long.parseLong(event.end_time)){
+	    	    			e.setTimeStampStart(Long.parseLong(event.start_time));
+	    	    			e.setTimeStampEnd(Long.parseLong(event.end_time));
+	    	    			dao.ofy().put(e);
+	    	    		}
+            		}
+            	}
+          			
+            	if (event != null && (event.venue_category == null || !event.venue_category.equals("city"))) {
+            		
+            		if (!previous_venue_time.equals(event.venue_id + event.start_time)) {  // to remove duplicate events
+            		
+            			
+            			if (event.Format(timeZoneInMinutes, now, searchTimeFrame, locale)){
 
-	    			event = (Event) map_cache.get(e.getEid());
-	    							
-	    			
-	    			if (event == null) { // if not in the cache
-	            		
-	                		
-	    				String query 			= "SELECT " + properties + " FROM event WHERE eid = " + e.getEid();
-	            		List<Event> fbevents 	= client.executeQuery(query, Event.class); //TODO: Use Batch
-	            	
-	            		
-	            		if (fbevents != null && fbevents.size() > 0) {
-	        	
-	            			event = fbevents.get(0);
-	            			event.venue_id = JSON.GetValueFor("id", event.venue);
-	        				Venue v_graph =  Venue.getVenue(client, event.venue_id);
-	        				event.venue_category = v_graph.category;
-	        				if (event.venue_category == null || !event.venue_category.equals("city")) {
-	        					event.Score(v_graph);
-	        					event.Filter_category();
-	        				}
-	        				
-		    	    		if (e.getTimeStampStart() != Long.parseLong(event.start_time) || e.getTimeStampEnd() != Long.parseLong(event.end_time)){
-		    	    			e.setTimeStampStart(Long.parseLong(event.start_time));
-		    	    			e.setTimeStampEnd(Long.parseLong(event.end_time));
-		    	    			dao.ofy().put(e);
-		    	    		}
-	            		}
-	            	}
-	          			
-	            	if (event != null && (event.venue_category == null || !event.venue_category.equals("city"))) {
-	            		
-	            		if (!previous_venue_time.equals(event.venue_id + event.start_time)) {  // to remove duplicate events
-	            		
-	            			
-	            			if (event.Format(timeZoneInMinutes, now, searchTimeFrame, locale)){
+            				
+                			event.latitude 	= Double.toString(e.getLatitude());
+                			event.longitude = Double.toString(e.getLongitude());
+                			
+                			
+                  			float distance = Geo.Fence(userLatitude, userLongitude, event.latitude, event.longitude);
+	
+                  			event.distance = String.format("%.2f", distance);
 
-	            				
-	                			event.latitude 	= Double.toString(e.getLatitude());
-	                			event.longitude = Double.toString(e.getLongitude());
-	                			
-	                			
-	                  			float distance = Geo.Fence(userLatitude, userLongitude, event.latitude, event.longitude);
-		
-	                  			event.distance = String.format("%.2f", distance);
+                			previous_venue_time = event.venue_id + event.start_time;
 
-	                			previous_venue_time = event.venue_id + event.start_time;
-
-	                  			asyncCache.put(event.eid, event, null);
-	            			
-	                			this.tm.AddToResultList(event);
-	            			}
-	            		}
-	            	} 
-	    		} catch (Exception ex ) {
-	    			
-	    			System.out.println(ex.toString());	
-	    		}
+                  			asyncCache.put(event.eid, event, null);
+            			
+                			this.tm.AddToResultList(event);
+            			}
+            		}
+            	} 
+	   
 	    	} else { // event in the past
 					
 	    		dao.ofy().delete(e); //clean the datastore by removing old events TODO: call a task doesn't have to be deleted right away
@@ -324,7 +261,6 @@ public class Event extends Model implements Serializable, Runnable {
 			} catch (Exception ex ) {
 				result.add(getSingle(accessToken, eid, timeZone, userLatitude, userLongitude, locale));
 			}
-			
 		}
 		
 		return result;
@@ -420,10 +356,6 @@ public class Event extends Model implements Serializable, Runnable {
 			
 			long end_minus_start = (timeStampEnd - timeStampStart) / 86400000; // in days
 			
-			if (end_minus_start > 62) { // TODO: added to getEvent, should be deleted
-				return false;
-			}
-			
 			if (end_minus_start >= 6) { // to filter bogus "Fridays", "Tuesdays" events
 				
 				res = this.Filter_bogus_events(now, TZ, searchTimeFrame);
@@ -466,49 +398,23 @@ public class Event extends Model implements Serializable, Runnable {
 				this.filter = "Party";
 			}
 		}
-		
-		
+	
 		// TODO: to delete
-/*		List<String> offer_t = new ArrayList<String>();
-		offer_t.add("");
-		offer_t.add("");
-		offer_t.add("");
-		offer_t.add("");
-		offer_t.add("");
-		offer_t.add("");
-		offer_t.add("");
-		offer_t.add("");
-		offer_t.add("");
-		offer_t.add("");
-		offer_t.add("");
+		/*List<String> offer_t = new ArrayList<String>();
 		offer_t.add("Buy 1 Drink get 1 FREE");
-		offer_t.add("Free for the lady's until 12PM");
-		offer_t.add("Bottles for $100");
 		Random r = new Random();
 		this.offer_title = offer_t.get(r.nextInt(14));
 		if (!this.offer_title.equals("")) {
 			this.offer_description = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.";
 		}	
 		this.featured = offer_t.get(r.nextInt(14));
-		
 		List<String> tickets = new ArrayList<String>();
-		tickets.add("");
-		tickets.add("");
-		tickets.add("");
-		tickets.add("");
-		tickets.add("");
-		tickets.add("");
-		tickets.add("");
-		tickets.add("");
-		tickets.add("");
-		tickets.add("");
-		tickets.add("");
-		tickets.add("http://www.ticketmaster.com/event/12004788E26339A4?artistid=837473&majorcatid=10002&minorcatid=207");
-		tickets.add("http://www.ticketmaster.com/event/12004788E26339A4?artistid=837473&majorcatid=10002&minorcatid=207");
 		tickets.add("http://www.ticketmaster.com/event/12004788E26339A4?artistid=837473&majorcatid=10002&minorcatid=207");
 		this.ticket_link = tickets.get(r.nextInt(14));
 		*/
-	
+		
+		if(this.group == null) {log.severe(String.valueOf(this.eid));}
+		
 		if (this.featured != null && this.featured.length() > 0) {
 			
 			this.group = "0";
@@ -516,12 +422,10 @@ public class Event extends Model implements Serializable, Runnable {
 		} else if (this.group.equals("a") && this.isNow(now, TZ, this.dtStart.toDateTime(PST), this.dtEnd.toDateTime(PST), PST) < 0) {
 			return false;
 		}
-		
 		return res;
 	}
 	
 	public int isNow(DateTime now, DateTimeZone TZ, DateTime start, DateTime end, DateTimeZone PST) {
-		
 		if (!this.time_start.equals(this.time_end)) {
 
 			if (start.toDateTime(PST).getMinuteOfDay() < end.toDateTime(PST).getMinuteOfDay()) {
@@ -543,7 +447,6 @@ public class Event extends Model implements Serializable, Runnable {
 				}
 			}
 		}
-
 		return 0;
 	}
 	
@@ -640,11 +543,11 @@ public class Event extends Model implements Serializable, Runnable {
 				}
 			}
 		} else {
+			this.group = "a";
+			this.groupTitle = "Today";
 			if (!this.filter.equals("Entertain")) {
 				return false;
 			}
-			this.group = "a";
-			this.groupTitle = "Today";
 		}
 		
 		return true;

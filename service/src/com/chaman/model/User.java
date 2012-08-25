@@ -113,6 +113,7 @@ public class User extends Model implements Serializable {
 			now.plusMinutes(PST.getOffset(now));
 			String TAS = String.valueOf(now.getMillis() / 1000);
 			
+			//TODO: Remove start_time		
 			List<JsonObject> event_member = client.executeQuery(eventQuery + u.uid + " AND start_time > " + TAS, JsonObject.class);
 			
 			u.nb_of_events = event_member.size();

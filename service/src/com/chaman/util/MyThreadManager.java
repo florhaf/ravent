@@ -17,7 +17,7 @@ public class MyThreadManager<K> {
 	private static final Logger log = Logger.getLogger(MyThreadManager.class.getName());
 	
 	private static int CRT_NUMBER_OF_THREAD_RUNNING = 0;
-	private static final int MAX_NB_OF_RUNNING_THREAD = 10;
+	private static final int MAX_NB_OF_RUNNING_THREAD = 9;
 	
 	private Map<Thread, K> threadPool;
 	private List<Model> result;
