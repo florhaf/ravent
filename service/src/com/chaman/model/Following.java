@@ -37,7 +37,7 @@ public class Following extends Model implements Serializable  {
 	
 	public static ArrayList<Model> Get(String accessToken, String userID, Boolean isFollowing) {
 		
-		ArrayList<Model> users = new ArrayList<Model>();
+		ArrayList<User> users = new ArrayList<User>();
 		
 		Dao dao = new Dao();
 
@@ -74,7 +74,7 @@ public class Following extends Model implements Serializable  {
         	users.add(u);
         }
                
-        return User.GetMultiples(accessToken, users, syncCache);
+        return User.GetMultiples(accessToken, users);
 	}
 	
 	public static void Put(String userID, String friendID) {

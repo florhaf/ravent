@@ -159,8 +159,6 @@ public class Event extends Model implements Serializable, Runnable {
 		
 			AsyncMemcacheService asyncCache = MemcacheServiceFactory.getAsyncMemcacheService();
 			
-			String previous_venue_time = "";
-			
 			Event event;
 			
 	    	if (actual_time < e.getTimeStampEnd()) { //if event not in the past
@@ -200,27 +198,21 @@ public class Event extends Model implements Serializable, Runnable {
           			
             	if (event != null && (event.venue_category == null || !event.venue_category.equals("city"))) {
             		
-            		if (!previous_venue_time.equals(event.venue_id + event.start_time)) {  // to remove duplicate events
-            		
+        			if (event.Format(timeZoneInMinutes, now, searchTimeFrame, locale)){
+
+        				
+            			event.latitude 	= Double.toString(e.getLatitude());
+            			event.longitude = Double.toString(e.getLongitude());
             			
-            			if (event.Format(timeZoneInMinutes, now, searchTimeFrame, locale)){
-
-            				
-                			event.latitude 	= Double.toString(e.getLatitude());
-                			event.longitude = Double.toString(e.getLongitude());
-                			
-                			
-                  			float distance = Geo.Fence(userLatitude, userLongitude, event.latitude, event.longitude);
-	
-                  			event.distance = String.format("%.2f", distance);
-
-                			previous_venue_time = event.venue_id + event.start_time;
-
-                  			asyncCache.put(event.eid, event, null);
             			
-                			this.tm.AddToResultList(event);
-            			}
-            		}
+              			float distance = Geo.Fence(userLatitude, userLongitude, event.latitude, event.longitude);
+
+              			event.distance = String.format("%.2f", distance);
+
+              			asyncCache.put(event.eid, event, null);
+        			
+            			this.tm.AddToResultList(event);
+        			}
             	} 
 	   
 	    	} else { // event in the past
@@ -412,8 +404,6 @@ public class Event extends Model implements Serializable, Runnable {
 		tickets.add("http://www.ticketmaster.com/event/12004788E26339A4?artistid=837473&majorcatid=10002&minorcatid=207");
 		this.ticket_link = tickets.get(r.nextInt(14));
 		*/
-		
-		if(this.group == null) {log.severe(String.valueOf(this.eid));}
 		
 		if (this.featured != null && this.featured.length() > 0) {
 			

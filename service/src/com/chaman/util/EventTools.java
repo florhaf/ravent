@@ -8,6 +8,7 @@ import com.beoui.geocell.LocationCapableRepositorySearch;
 import com.beoui.geocell.model.Point;
 import com.chaman.model.Event;
 import com.chaman.model.EventLocationCapable;
+import com.chaman.model.User;
 
 public class EventTools {
 
@@ -61,6 +62,18 @@ public class EventTools {
 		for (Event e : l) {
 			
 			result.add(e.getEid());
+		}
+		
+		return result;
+	}
+	
+	public static List<Long> getUserkeys(ArrayList<User> l){
+		
+		List<Long> result = new ArrayList<Long>();
+
+		for (User u : l) {
+			
+			result.add(u.getUid());
 		}
 		
 		return result;
