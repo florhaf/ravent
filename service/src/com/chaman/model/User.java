@@ -71,10 +71,10 @@ public class User extends Model implements Serializable, Runnable {
 	int nb_of_followers;
 	int nb_of_following;
 	
-	public MyThreadManager<User> tm;
-	public ArrayList<User> dbUsers;
-	public FacebookClient client = null;
-	public Map<Long, Object> map_cache;
+	MyThreadManager<User> tm;
+	ArrayList<User> dbUsers;
+	FacebookClient client = null;
+	Map<Long, Object> map_cache;
 	
 	public User() {
 		

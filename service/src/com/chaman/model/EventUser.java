@@ -24,15 +24,15 @@ import com.restfb.exception.FacebookException;
 
 public class EventUser extends Model implements Runnable {
 
-	public MyThreadManager<Event> tm;
+	MyThreadManager<Event> tm;
 
-	public int timeZoneInMinutes;
-	public Map<Long, Object> map_cache;
-	public String locale;
-	public String userLatitude;
-	public String userLongitude;
-	public FacebookClient client;
-	public DateTime now;
+	int timeZoneInMinutes;
+	Map<Long, Object> map_cache;
+	String locale;
+	String userLatitude;
+	String userLongitude;
+	FacebookClient client;
+	DateTime now;
 	
 	/*
 	 * - Get list of events from facebook for a userID

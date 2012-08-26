@@ -21,7 +21,7 @@ import com.restfb.exception.FacebookException;
 
 public class EventFetchCron extends Model implements Runnable {
 
-	public MyThreadManager<User> tm;
+	MyThreadManager<User> tm;
 	
 	public static void GetCron() throws FacebookException, MemcacheServiceException {
 		

@@ -85,14 +85,14 @@ public class Event extends Model implements Serializable, Runnable {
 	DateTime dtStart;
 	DateTime dtEnd;
 	
-	public Map<Long, Object> map_cache;
-	public int timeZoneInMinutes;
-	public MyThreadManager<EventLocationCapable> tm;
-	public String accessToken;
-	public int searchTimeFrame;
-	public String locale;
-	public String userLatitude;
-	public String userLongitude;
+	Map<Long, Object> map_cache;
+	int timeZoneInMinutes;
+	MyThreadManager<EventLocationCapable> tm;
+	String accessToken;
+	int searchTimeFrame;
+	String locale;
+	String userLatitude;
+	String userLongitude;
 	
 	
 	public Event() {
