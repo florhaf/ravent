@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.persistence.Id;
 
-import com.beoui.geocell.GeocellManager;
 import com.beoui.geocell.GeocellUtils;
 import com.beoui.geocell.model.LocationCapable;
 import com.beoui.geocell.model.Point;
@@ -27,8 +26,6 @@ public class EventLocationCapable extends Model implements LocationCapable {
     private double latitude; // TODO: to delete
 	@Unindexed
     private double longitude; // TODO: to delete
-    @Unindexed
-    private double score; // TODO: to delete
     private List<String> geocells;
     
 	public EventLocationCapable() {
@@ -41,12 +38,11 @@ public class EventLocationCapable extends Model implements LocationCapable {
     	this.eid = event.eid;
     	this.timeStampStart = Long.parseLong(event.start_time);
     	this.timeStampEnd = Long.parseLong(event.end_time);
-    	//this.latitude = Double.parseDouble(event.latitude);
-    	//this.longitude = Double.parseDouble(event.longitude);
-    	//this.score = event.score;
+    	this.latitude = Double.parseDouble(event.latitude);
+    	this.longitude = Double.parseDouble(event.longitude);
     	
     	geocells = new ArrayList<String>();
-    	geocells.add(GeocellUtils.compute(new Point(this.latitude, this.longitude), 6));
+    	geocells.add(GeocellUtils.compute(new Point(latitude, longitude), 6));
     }
     
     public void Save() {
@@ -118,13 +114,5 @@ public class EventLocationCapable extends Model implements LocationCapable {
 
 	public void setTimeStampEnd(long timeStampEnd) {
 		this.timeStampEnd = timeStampEnd;
-	}
-
-	public double getScore() {
-		return score;
-	}
-
-	public void setScore(int score) {
-		this.score = score;
 	}
 }

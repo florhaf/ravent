@@ -8,9 +8,9 @@ public class JSON {
 		
 		try {
 			
-			if (json.indexOf(key) != -1) {
-				
-				int keyIndex 	= json.indexOf(key + "\":");
+			int keyIndex 	= json.indexOf(key + "\":");
+			
+			if (keyIndex != -1) {
 				
 				int startIndex	= keyIndex + key.length() + 2;
 				int endIndex 	= json.indexOf("\"", startIndex + 1);

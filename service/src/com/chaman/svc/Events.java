@@ -1,13 +1,12 @@
 package com.chaman.svc;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.logging.Logger;
 
-import org.joda.time.DateTime;
 import org.restlet.resource.Get;
 import org.restlet.resource.ServerResource;
 import com.chaman.model.Event;
+import com.chaman.model.EventUser;
 import com.chaman.model.Model;
 
 public class Events extends ServerResource {
@@ -18,10 +17,6 @@ public class Events extends ServerResource {
 	public Response Read() {
 				
 		Response result = new Response();
-		
-		
-		log.severe("START");
-		
 		
 		try {
 			
@@ -45,7 +40,7 @@ public class Events extends ServerResource {
 			
 			if (userID != null) {
 			
-				events = Event.Get(accessToken, userID, latitude, longitude, timeZone, locale);
+				events = EventUser.Get(accessToken, userID, latitude, longitude, timeZone, locale);
 			} else {
 				if (searchLat == null) {
 					events = Event.Get(accessToken, latitude, longitude, latitude, longitude, timeZone, Integer.parseInt(searchTimeFrame), Float.parseFloat(searchRadius), Integer.parseInt(searchLimit), locale);
@@ -68,7 +63,6 @@ public class Events extends ServerResource {
 			result.setError(ex.toString());
 		}
 		
-		log.severe("END");
 		
 		return result;
 	}

@@ -3,6 +3,7 @@ package com.chaman.svc;
 import org.restlet.resource.Get;
 import org.restlet.resource.ServerResource;
 import com.chaman.model.Event;
+import com.chaman.model.EventFetchCron;
 
 public class EventBackends extends ServerResource {
 
@@ -16,7 +17,7 @@ public class EventBackends extends ServerResource {
 			String options	= getQuery().getValues("options");
 
 			if (options.equals("fetch")) {
-				Event.GetCron();
+				EventFetchCron.GetCron();
 			} else {
 				Event.DeleteCron();
 			}

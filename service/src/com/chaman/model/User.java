@@ -3,6 +3,9 @@ package com.chaman.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Queue;
+import java.util.concurrent.ArrayBlockingQueue;
 
 import javax.persistence.Id;
 
@@ -10,6 +13,8 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 
 import com.chaman.dao.Dao;
+import com.chaman.util.EventTools;
+import com.chaman.util.MyThreadManager;
 import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.Query;
 import com.googlecode.objectify.annotation.Entity;
@@ -19,12 +24,13 @@ import com.restfb.DefaultFacebookClient;
 import com.restfb.Facebook;
 import com.restfb.FacebookClient;
 import com.restfb.json.JsonObject;
+import com.google.appengine.api.memcache.AsyncMemcacheService;
 import com.google.appengine.api.memcache.MemcacheService;
 import com.google.appengine.api.memcache.MemcacheServiceFactory;
 
 @Entity
 @Unindexed
-public class User extends Model implements Serializable {
+public class User extends Model implements Serializable, Runnable {
 
 	/**
 	 * 
@@ -64,6 +70,11 @@ public class User extends Model implements Serializable {
 	int nb_of_events;
 	int nb_of_followers;
 	int nb_of_following;
+	
+	MyThreadManager<User> tm;
+	ArrayList<User> dbUsers;
+	FacebookClient client = null;
+	Map<Long, Object> map_cache;
 	
 	public User() {
 		
@@ -113,6 +124,7 @@ public class User extends Model implements Serializable {
 			now.plusMinutes(PST.getOffset(now));
 			String TAS = String.valueOf(now.getMillis() / 1000);
 			
+			//TODO: Remove start_time		
 			List<JsonObject> event_member = client.executeQuery(eventQuery + u.uid + " AND start_time > " + TAS, JsonObject.class);
 			
 			u.nb_of_events = event_member.size();
@@ -165,14 +177,13 @@ public class User extends Model implements Serializable {
 		return result;
 	}
 	
-	public static ArrayList<Model> GetMultiples(String accessToken, ArrayList<Model> dbUsers, MemcacheService syncCache) {
+	public static ArrayList<Model> GetMultiples(String accessToken, ArrayList<User> dbUsers) {
 		
-		ArrayList<Model> result = new ArrayList<Model>();
-		User ucache = null;
+		List<Model> result = new ArrayList<Model>();
 		
 		if (dbUsers.size() == 0) {
 			
-			return result;
+			return (ArrayList<Model>)result;
 		}
 		
 		String strUids = "";
@@ -191,20 +202,50 @@ public class User extends Model implements Serializable {
 		String properties 		= "uid, first_name, last_name, pic";
 		String query 			= "SELECT " + properties + " FROM user WHERE " + strUids + " ORDER BY last_name";
 		List<User> users 		= client.executeQuery(query, User.class);
+
+		User u = new User();
 		
-		//Prepare a timestamp to filter the facebook DB on the upcoming events
-		DateTimeZone PST = DateTimeZone.forID("America/Los_Angeles");
-		DateTime now = new DateTime(PST);
-		now.plusMinutes(PST.getOffset(now));
-		String TAS = String.valueOf(now.getMillis() / 1000);
+		u.tm = new MyThreadManager<User>(u);
 		
-		String eventQuery = "SELECT eid from event_member where uid = ";
+		u.dbUsers = dbUsers;
 		
-		for (User u : users) {
+		u.client = client;
 		
+		List<Long> eventkeys = EventTools.getUserkeys(dbUsers);
+		
+		MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
+		u.map_cache = syncCache.getAll(eventkeys);
+		
+		Queue<User> q = new ArrayBlockingQueue<User>(users.size());
+		q.addAll(users);
+		
+		result = u.tm.Process(q);
+		
+		return (ArrayList<Model>)result;
+	}
+	
+	@Override
+	public void run() {
+		
+		try {
+
+			//Prepare a timestamp to filter the facebook DB on the upcoming events
+			DateTimeZone PST = DateTimeZone.forID("America/Los_Angeles");
+			DateTime now = new DateTime(PST);
+			now.plusMinutes(PST.getOffset(now));
+			String TAS = String.valueOf(now.getMillis() / 1000);
+			
+			AsyncMemcacheService asyncCache = MemcacheServiceFactory.getAsyncMemcacheService();
+			 
+			String eventQuery = "SELECT eid from event_member where uid = ";
+			
+			User u = this.tm.getIdForThread(Thread.currentThread());
+			
 			u.picture = u.pic;
 			
-			ucache = (User) syncCache.get(u.uid);
+			User ucache = null;
+			
+			ucache = (User) map_cache.get(u.getUid());
 			
 			if (ucache == null) {
 				
@@ -218,7 +259,7 @@ public class User extends Model implements Serializable {
 					
 					u.nb_of_followers = dbu.nb_of_followers;
 					u.nb_of_following = dbu.nb_of_following;
-					syncCache.put(u.uid, u, null); // populate User cache
+					asyncCache.put(u.uid, u, null); // populate User cache
 				}
 			} else {
 				
@@ -226,13 +267,18 @@ public class User extends Model implements Serializable {
 				u.nb_of_followers = ucache.nb_of_followers;
 				u.nb_of_following = ucache.nb_of_following;
 			}
-			result.add(u);
+			
+			this.tm.AddToResultList(u);
+		} catch (Exception ex) {
+		
+			log.severe(ex.toString());
+		} finally {
+	
+			tm.threadIsDone(Thread.currentThread());
 		}
- 	
-		return result;
 	}
 	
-	public static User getUserByUID(long uid, ArrayList<Model> users) {
+	public static User getUserByUID(long uid, ArrayList<User> users) {
 		
 		User result = null;
 		

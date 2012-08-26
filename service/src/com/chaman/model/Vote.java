@@ -8,8 +8,13 @@ import com.chaman.dao.Dao;
 import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Unindexed;
+import com.google.appengine.api.memcache.AsyncMemcacheService;
 import com.google.appengine.api.memcache.MemcacheService;
 import com.google.appengine.api.memcache.MemcacheServiceFactory;
+import com.restfb.DefaultFacebookClient;
+import com.restfb.FacebookClient;
+import com.restfb.Parameter;
+import com.restfb.types.FacebookType;
 
 @Entity
 public class Vote extends Model implements Serializable  {
@@ -47,11 +52,12 @@ public class Vote extends Model implements Serializable  {
 	public Vote(String accessToken, String userid, String eventid, String svote) {
 		
 		Dao dao = new Dao();
-		//FacebookClient client 	= new DefaultFacebookClient(accessToken);
 		
 		this.eid = eventid;
 		
+		AsyncMemcacheService asyncCache = MemcacheServiceFactory.getAsyncMemcacheService();
 		MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
+		
 		Vote v_cache; 
 	
 		v_cache = (Vote) syncCache.get(eventid); // read from vote cache
@@ -68,14 +74,12 @@ public class Vote extends Model implements Serializable  {
 	    }
 		
 		dao.ofy().put(this);
-    	syncCache.put(this.eid, this, null); // Add vote to cache
-    	syncCache.delete(Long.parseLong(this.eid)); //Delete event from cache to refresh the event score when somebody has voted
+    	asyncCache.put(this.eid, this, null); // Add vote to cache
+    	asyncCache.delete(Long.parseLong(this.eid)); //Delete event from cache to refresh the event score when somebody has voted
     	
-    	//Open graph
-    	//FacebookClient client 	= new DefaultFacebookClient(accessToken);
-    	//client.publish(userid + "/eventsrating:rate", FacebookType.class, Parameter.with("event", "http://samples.ogp.me/427679573922539"), Parameter.with("vote", 3));
+    	FacebookClient client 	= new DefaultFacebookClient(accessToken);
+    	client.publish(userid + "/gemsterapp:drop_a_gem_on", FacebookType.class, Parameter.with("event", "http://gemsterapp.com/facebook/event_page.php?eid=" + eventid)); // , Parameter.with("name", ), Parameter.with("location", ), Parameter.with("picture", ));
     	
-    	//TODO: Facebook Timeline
 	}
 	
 	public static void NewVote(String userid, String eventid, String svote) {
