@@ -8,6 +8,7 @@ import com.beoui.geocell.LocationCapableRepositorySearch;
 import com.beoui.geocell.model.Point;
 import com.chaman.model.Event;
 import com.chaman.model.EventLocationCapable;
+import com.chaman.model.Model;
 import com.chaman.model.User;
 
 public class EventTools {
@@ -74,6 +75,35 @@ public class EventTools {
 		for (User u : l) {
 			
 			result.add(u.getUid());
+		}
+		
+		return result;
+	}
+
+
+	public static List<Model> removeDuplicates(List<Model> l) {
+		
+		List<Model> result = new ArrayList<Model>();
+		
+		if (l.size() > 0) {
+			result.add((Event) l.get(0));
+		}
+		
+		for (int i = 0; i < l.size() -1; i++) {
+			
+			Event e1 = (Event) l.get(i);
+			Event e2 = (Event) l.get(i + 1);
+		
+			if ((e1.eventvenueID() != null && e2.eventvenueID() != null) && (e1.eventvenueID().equals(e2.eventvenueID()))) {
+				
+				if ((e1.starttime() != null && e2.starttime() != null) && (e1.starttime().equals(e2.starttime()))) {
+				
+					System.out.println(e1.eventvenueID());
+					continue;
+				}
+			}
+			
+			result.add(e2);
 		}
 		
 		return result;

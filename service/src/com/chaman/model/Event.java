@@ -2,6 +2,7 @@ package com.chaman.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -14,6 +15,7 @@ import org.joda.time.DateTimeZone;
 import com.chaman.model.Venue;
 import com.beoui.geocell.LocationCapableRepositorySearch;
 import com.chaman.dao.Dao;
+import com.chaman.util.EventComparator;
 import com.chaman.util.EventTools;
 import com.chaman.util.Geo;
 import com.chaman.util.JSON;
@@ -137,10 +139,19 @@ public class Event extends Model implements Serializable, Runnable {
 			q.addAll(l);
 			
 			result = e.tm.Process(q);
-		} 
-       return (ArrayList<Model>)result;    
+		}
+		
+		Collections.sort(result, new EventComparator());
+		
+		log.severe("" + result.size());
+		
+		result = EventTools.removeDuplicates(result);
+				
+		log.severe("" + result.size());
+
+		return (ArrayList<Model>)result;    
 	}
-	
+
 	@Override
 	public void run() {
 		
@@ -180,8 +191,8 @@ public class Event extends Model implements Serializable, Runnable {
             		if (fbevents != null && fbevents.size() > 0) {
         	
             			event = fbevents.get(0);
-            			event.venue_id = JSON.GetValueFor("id", event.venue);
-        				Venue v_graph =  Venue.getVenue(client, event.venue_id);
+            			event.venue_id = JSON.GetValueFor("id", event.venue);	
+            			Venue v_graph =  Venue.getVenue(client, event.venue_id);
         				event.venue_category = v_graph.category;
         				if (event.venue_category == null || !event.venue_category.equals("city")) {
         					event.Score(v_graph);
@@ -764,5 +775,20 @@ public class Event extends Model implements Serializable, Runnable {
 	
 	public void setUpdate_time(String update_time) {
 		this.update_time = update_time;
+	}
+	
+	public String eventvenueID() {
+		
+		return this.venue_id;
+	}
+	
+	public String starttime() {
+		
+		return this.start_time;
+	}
+	
+	public String endtime() {
+		
+		return this.end_time;
 	}
 }
