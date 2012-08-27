@@ -1,0 +1,69 @@
+.download-button {
+    height:100px;
+    vertical-align: middle;
+}
+
+.button-get-the-app {
+    -webkit-font-smoothing: antialiased;
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: transparent;
+    background-image: url(../img/buttonGetTheApp2.png);
+    border-bottom-width: 0px;
+    border-left-width: 0px;
+    border-right-width: 0px;
+    border-top-width: 0px;
+    color: white;
+    display: block;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 21px;
+    font-style: normal;
+    font-weight: bold;
+    height: 21px;
+    line-height: 21px;
+    margin-bottom: 0px;
+    margin-left: 20px;
+    margin-right: 0px;
+    margin-top: 0px;
+    overflow-y: visible;
+    padding-bottom: 14px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 13px;
+    text-decoration: none;
+    text-shadow: rgba(0, 0, 0, 0.65625) 0px -1px 0px;
+    width: 187px;
+}
+
+.button-get-the-app:link {
+    color: white;
+}
+
+.button-get-the-app:visited {
+    color: white;
+}
+
+.form-get-the-app {
+    background-image: url(../img/backgroundTextMeLink2.png);
+    background-repeat: no-repeat;
+    width: 237px;
+    height: 170px;
+    color: #d3d3d3;
+    position: absolute;
+    font-size: 15px;
+    padding: 15px 0px 0px 18px;
+    text-align: left;
+    margin-top: -205px;
+    margin-left: -200px;
+    z-index: 42;
+}
+
+.button-send-text {
+    width: 26px;
+    height: 26px;
+    background-image: url(../img/buttonSendText.png);
+    background-repeat: no-repeat;
+    background-color: transparent;
+    margin-left: -30px;
+    border: 0;
+}

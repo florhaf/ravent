@@ -1,3 +1,30 @@
+<?php
+
+require '../php/facebook-sdk/src/facebook.php';
+
+    $APPLICATION_ID = "299292173427947";
+    $APPLICATION_SECRET = "d894ccb29b3fbba3591256dad5d0c1c5";
+
+    $token_url =    "https://graph.facebook.com/oauth/access_token?" .
+                    "client_id=" . $APPLICATION_ID .
+                    "&client_secret=" . $APPLICATION_SECRET .
+                    "&grant_type=client_credentials";
+    $app_token = file_get_contents($token_url);
+
+    $facebook = new Facebook(array(
+
+        'appId' => $APPLICATION_ID,
+        'secret' => $APPLICATION_SECRET,
+    ));
+
+    $event = $facebook->api($_GET['eid']);
+
+    $name = $event['name'];
+    $location = $event['location'];
+    $pic_url = 'https://graph.facebook.com/' . $_GET['eid'] . '/picture';
+
+?>
+
 <!doctype html>
 <!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
 <!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
@@ -9,10 +36,10 @@
 
    <meta property="fb:app_id" content="299292173427947" />
    <meta property="og:type" content="gemsterapp:event" />
-   <meta property="og:title" content="<?php echo $_GET['name']; ?>" />
-   <meta property="og:description" content="<?php echo $_GET['location']; ?>" />
-   <meta property="og:image" content="<?php echo $_GET['picture']; ?>" />
-   <meta property="og:url" content="http://gemsterapp.com/facebook/event_page.php?eid=<?php echo $_GET['eid']; ?>&name=<?php echo $_GET['name']; ?>&location=<?php echo $_GET['location']; ?>&picture=<?php echo $_GET['picture']; ?>" />
+   <meta property="og:title" content="<?php echo $name; ?>" />
+   <meta property="og:description"content="<?php echo $location; ?>    |    Gemster makes it easy to find and interact with the best local events, anywhere in the world." />
+   <meta property="og:image" content="<?php echo $pic_url; ?>" />
+   <meta property="og:url" content="http://gemsterapp.com/facebook/event_page.php?eid=<?php echo $_GET['eid']; ?>" />
 
     <meta charset="utf-8">
 
@@ -30,10 +57,27 @@
 
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/event_page.css">
 
     <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+
+    <script src="../js/ticker/jquery.ticker.js"></script>
+
+
+<style type="text/css">
+#scroller{height:100%;margin:0;padding:0;line-height:70px;position:relative;}
+#scroller li{float:left;height:70px;padding:0 0 0 10px;list-style-position:inside;}
+    #scrollerWrapper{
+
+
+        overflow:hidden;
+
+
+        border: width: 100%; height: 70px; font-size: 40px;
+    }
+</style>
 
 </head>
 <body style="background-color: #3b79ac;">
@@ -42,48 +86,119 @@ chromium.org/developers/how-tos/chrome-frame-getting-started -->
 <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
 <header>
     <div id="header" class="header" style="width: 100%; height: 115px; margin: auto auto; text-align: center;">
-        <img src="../img/logo.png" width="420px" alt="Gemster Logo" style="margin:auto auto; z-index: 42;"/>
+        <img src="../img/logo.png" width="420px" alt="Gemster Logo" style="margin-left: -140px; z-index: 42;"/>
     </div>
 </header>
 
 <div role="main" style="width: 100%; min-width: 1000px; height: 100%; margin: auto auto; background-color: white; text-align: left;background-color: #d3d3d3;">
 
-    <div style="width: 640px; height:767px; margin: auto auto;background-image: url(../img/event_details.png); background-repeat: no-repeat; border-left: 1px solid #a9a9a9; border-right: 1px solid #a9a9a9;">
+    <div id="container" style="margin: auto auto; width: 960px;  min-height: 800px; overflow: overflow-x;">
 
-        <div id="name" style="width: 100%; height: 70px; font-size: 50px; padding-left: 20px;">
+        <div style="width: 640px; min-height: 800px; border-left: 1px solid #a9a9a9; border-right: 1px solid #a9a9a9; float: left; margin-left: 0px;">
 
-        </div>
+            <div id="top" style="height: 484px; background-image: url(../img/event_details_top.png); background-repeat: no-repeat;">
 
-        <div id="top" style="border: 0px solid green; width: 100%; height: 280px; margin-top: 35px;">
+                <div id="date" style="height: 40px; color: white; font-size: 15px; font-weight: bold; padding-top: 8px;">
 
-            <div id="picture" style="width: 280px; height: 280px; margin-left: 20px; float: left; overflow: hidden;">
+                </div>
+
+                <div id="scrollerWrapper">
+                    <ul id="scroller"><li><?php echo $name; ?></li><li><?php echo $name; ?></li><li><?php echo $name; ?></li><li><?php echo $name; ?></li><li><?php echo $name; ?></li><li><?php echo $name; ?></li></ul>
+                </div>
+
+                <div id="top" style="width: 100%; height: 280px; margin-top: 35px;">
+
+                    <div id="picture" style="width: 280px; height: 280px; margin-left: 20px; margin-top: -10px; float: left; overflow: hidden; display: table-cell; vertical-align: middle;">
+
+                        <img id="img" src="<?php echo ($pic_url . '?type=large'); ?>" style="min-width: 100%; display: none;" alt="event image" />
+
+                    </div>
+
+                    <div id="location" style="width: 270px; height: 90px; margin-left: 30px; float: left; font-size: 30px; text-align: center;">
+                        <?php echo $location; ?>
+                    </div>
+
+                    <div id="score" style="width: 270px; height: 90px; margin-left: 30px; float: left; display: none;">
+
+                    </div>
+
+                    <div id="ratio" style="width: 270px; height: 90px; margin-left: 30px; float: left; padding-top: 20px; display:none;">
+                        <div id="female" style="width: 33%; float: left; text-align: center; font-size: 30px;">
+
+                        </div>
+                        <div id="male" style="width: 33%; float: left; text-align: center; font-size: 30px;">
+
+                        </div>
+                        <div id="going" style="width: 33%; float: left; text-align: center; font-size: 30px;">
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <div id="other" style="width: 100%; height: 40px; margin-top: 20px; display: none;">
+
+                </div>
 
             </div>
 
-            <div id="location" style="width: 270px; height: 90px; margin-left: 30px; float: left; font-size: 25px; text-align: center;">
+            <div id="middle" style="min-height: 280px; background-image: url(../img/event_details_middle.png); background-repeat: repeat-y;">
+
+                <div id="description" style="width: 90%; min-height: 280px; padding-left: 40px; display: none;">
+
+                </div>
 
             </div>
 
-            <div id="score" style="border: 1px solid green; width: 270px; height: 90px; margin-left: 30px; float: left;">
-
-            </div>
-
-            <div id="ratio" style="border: 1px solid green; width: 270px; height: 90px; margin-left: 30px; float: left;">
+            <div id="bottom" style="height: 38px; background-image: url(../img/event_details_bottom.png);">
 
             </div>
 
         </div>
 
-        <div id="middle" style="border: 1px solid green; width: 100%; height: 40px; margin-top: 10px;">
+        <div id="scrollingDiv" style="border: 0px solid green; width: 300px; height: 900px; margin-top: 35px;  float: right;">
+
+            <div style="width: 300px; height: 311px; background-image: url(../img/frame.png); margin-bottom: 20px;">
+
+                <div id="map" style="margin-left: 10px; margin-top: 10px; width: 280px; height: 280px; display: none;">
+
+
+
+                </div>
+
+            </div>
+
+            <div style="width: 300px; height: 100px; ">
+                <div class="download-button" style="margin-top: 30px; margin-left: 20px;">
+                    <a id="button-get-the-app" href="#" class="button-get-the-app">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Get the app</a>
+                </div>
+                <div id="form-get-the-app" class="form-get-the-app">
+                    <div id="form-get-the-app-send-text">
+                        Open mobile safari and go to<br/>m.gemsterapp.com or<br/><span
+                            style="font-size: 17px; color: white;"><b>email it to your
+                        phone...</b></span><br/><br/>
+                        <span style="font-size: 12px">Email Address</span>
+                        <input id="email" class="twitterStyleTextbox" placeholder="##########"/>
+                        <button id="button-send-text" class="button-send-text"></button>
+                    </div>
+                    <div id="form-get-the-app-sent"
+                         style="text-align: center; margin-top: 10px; margin-left: -50px;">
+                        A download link has been sent<br/>to your mobile phone.
+                    </div>
+                </div>
+
+            </div>
+
+            <div style="width: 300px; height: 311px; background-image: url(../img/frame.png); margin-bottom: 20px;">
+            </div>
 
         </div>
 
-        <div id="bottom" style="border: 1px solid green; width: 100%; height: 280px; margin-top: 10px;">
-
-        </div>
-
+        <div style="clear: both;"></div>
 
     </div>
+
+
 
 </div>
 
@@ -118,33 +233,182 @@ chromium.org/developers/how-tos/chrome-frame-getting-started -->
     </div>
 </footer>
 
-
 <script>
 
-$.urlParam = function(name){
-    var results = new RegExp('[\\?&]' + name + '=([^&#]*)').exec(window.location.href);
-    if (!results)
-    {
-        return 0;
-    }
-    return results[1] || 0;
+function getParameterByName(name)
+{
+  name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+  var regexS = "[\\?&]" + name + "=([^&#]*)";
+  var regex = new RegExp(regexS);
+  var results = regex.exec(window.location.search);
+  if(results == null)
+    return "";
+  else
+    return decodeURIComponent(results[1].replace(/\+/g, " "));
 }
-
     $("document").ready(function() {
 
-        var name = $.urlParam('name');
-        var location = $.urlParam('location');
-        var picture = $.urlParam('picture');
+        var $scrollingDiv = $("#scrollingDiv");
 
-        $('#name').html(decodeURIComponent(name));
-        $('#location').html(decodeURIComponent(location));
-        $('#picture').html('<img src="' + decodeURIComponent(picture) + '" style="width: 100%;" />');
+      /*  $(window).scroll(function(){
+            $scrollingDiv
+                .stop()
+                .animate({"marginTop": ($(window).scrollTop() + 30) + "px"}, "slow" );
+        });*/
 
+        $('#img').fadeIn();
+
+        $("#form-get-the-app").hide();
+
+        var speed = 5;
+        var items, scroller = $('#scroller');
+        var width = 0;
+        scroller.children().each(function(){
+            width += $(this).outerWidth(true);
+        });
+        scroller.css('width', width);
+        scroll();
+        function scroll(){
+            items = scroller.children();
+            var scrollWidth = items.eq(0).outerWidth();
+            scroller.animate({'left' : 0 - scrollWidth}, scrollWidth * 100 / speed, 'linear', changeFirst);
+        }
+        function changeFirst(){
+            scroller.append(items.eq(0).remove()).css('left', 0);
+            scroll();
+        }
+
+        var d = new Date();
+
+        $.ajax({
+            url : '../php/proxy.php?proxy_url=' + encodeURIComponent('http://api.gemsterapp.com/calendar?eventID=' + getParameterByName('eid') + '&<?php echo $app_token; ?>' + '&timezone_offset=' + -d.getTimezoneOffset() + '&locale=' + navigator.language.replace('-', '_'))
+        }).done(function(data) {
+
+            var e = data.records[0];
+
+            if (e.latitude && e.latitude != null) {
+
+                $.ajax({
+                    url : '../php/proxy.php?proxy_url=' + encodeURIComponent('http://maps.google.com/maps/api/geocode/json?sensor=true&latlng=' + e.latitude + ',' + e.longitude),
+                    crossDomain : true,
+                }).done(function(data) {
+
+                    $('#other').html('<div style="width: 40%; float: left;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + e.venue_category + '</div>' + '<div style="width: 60%; float: left; text-align: right;">' + data.results[0].formatted_address + ' &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>');
+                    $('#other').fadeIn();
+                });
+
+                $('#map').html('<img src="http://maps.googleapis.com/maps/api/staticmap?center=' + e.latitude + ',' + e.longitude + '&zoom=13&size=280x280&maptype=roadmap&markers=color:red%7Ccolor:red%7Clabel:%7C' + e.latitude + ',' + e.longitude + '&sensor=false" style="width: 280px; height:280px;margin-top: 9px;" />');
+
+                setTimeout(function() {
+
+                    $('#map').fadeIn();
+                }, 100);
+
+
+            } else {
+
+                $('#map').html('<img src="../img/nomap.png" style="width: 280px; height:280px;margin-top: 9px;" />');
+
+                setTimeout(function() {
+
+                    $('#map').fadeIn();
+                }, 100);
+
+                $('#other').html('<div style="width: 50%; float: left;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + e.venue_category + '</div>' + '<div style="width: 50%; float: left; text-align: right;">unknown address&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>');
+                $('#other').fadeIn();
+            }
+
+            $('#date').html('<div style="width: 50%; float: left;">&nbsp;&nbsp;&nbsp;' + e.date_start + ' to ' + e.date_end + '</div>' + '<div style="width: 50%; float: left; text-align: right;">' + e.time_start + '-' + e.time_end + '&nbsp;&nbsp;&nbsp;</div>');
+
+            var score = '';
+
+            for (var i = 0; i < 5; i++) {
+
+                var img = 'diamondSlot.png';
+
+                if (i < e.score) {
+
+                    img = 'diamond.png';
+                }
+
+                score += '<div style="float: left; background-image: url(../img/' + img + '); background-size: 54px 45px; width: 54px; height: 45px;"></div>';
+            }
+
+            $('#score').html(score);
+
+            $('#score').fadeIn();
+        });
+
+        $.ajax({
+            url : '../php/proxy.php?proxy_url=' + encodeURIComponent('http://api.gemsterapp.com/description?eid=' + getParameterByName('eid') + '&<?php echo $app_token; ?>')
+        }).done(function(data) {
+
+            $desc = data.records[0].description;
+
+            $desc = $desc.replace(/\n/g, '<br />');
+
+            $('#description').html($desc);
+
+            $('#container').css('height', (800 + parseInt($('#description').css('height')) -220) + 'px');
+
+            $('#description').fadeIn();
+        });
+
+        $.ajax({
+            url : '../php/proxy.php?proxy_url=' + encodeURIComponent('http://api.gemsterapp.com/eventstats?eid=' + getParameterByName('eid') + '&<?php echo $app_token; ?>')
+        }).done(function(data) {
+
+
+            if (data.records != null) {
+
+                var e = data.records[0];
+
+                var f = e.female_ratio.toFixed(2);
+                var m = (1 - f).toFixed(2);
+                var g = e.nb_attending;
+
+
+                $('#female').html(Math.round((f * 100)) + '%');
+                $('#male').html(Math.round(m * 100) + '%');
+                $('#going').html(g);
+            } else {
+
+                $('#female').html('?');
+                $('#male').html('?');
+                $('#going').html('?');
+            }
+
+
+
+            $('#ratio').fadeIn();
+        });
     });
 
     $("#header").click(function() {
 
         window.location = "../";
+    });
+
+    $("#button-get-the-app").click(function () {
+
+        if ($("#form-get-the-app").is(":visible")) {
+
+            $("#form-get-the-app").fadeOut();
+        } else {
+
+            $("#form-get-the-app-send-text").show();
+            $("#form-get-the-app-sent").hide();
+
+            $("#form-get-the-app").fadeIn();
+        }
+    });
+
+    $("#button-send-text").click(function () {
+
+        jQuery.ajax('http://gemsterapp.com/php/sendMailFromGemsterApp.php?email=' + $("#email").val());
+
+        $("#form-get-the-app-send-text").fadeOut()
+        $("#form-get-the-app-sent").fadeIn();
     });
 
 

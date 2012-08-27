@@ -25,8 +25,56 @@
       <file leaf-file-name="event_page.php" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/facebook/event_page.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="14" column="130" selection-start="1002" selection-end="1002" vertical-scroll-proportion="0.2433372">
+            <state line="295" column="58" selection-start="12138" selection-end="12138" vertical-scroll-proportion="0.20420793">
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="mainpage.css" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/css/mainpage.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="28" column="0" selection-start="489" selection-end="2075" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="event_page.css" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/css/event_page.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="28" column="25" selection-start="757" selection-end="757" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="jquery.ticker.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/js/ticker/jquery.ticker.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="1496" column="13" selection-start="54275" selection-end="54275" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="proxy.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/php/proxy.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="25" column="39" selection-start="1071" selection-end="1071" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="281" column="4" selection-start="13776" selection-end="14363" vertical-scroll-proportion="-9.958333">
+              <folding>
+                <marker date="1344972138000" expanded="true" signature="3013:3246" placeholder="..." />
+                <marker date="1344972138000" expanded="true" signature="3081:3119" placeholder="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -59,9 +107,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/about/index.html" />
-        <option value="$PROJECT_DIR$/contactus/index.php" />
-        <option value="$PROJECT_DIR$/privacypolicy/index.html" />
         <option value="$PROJECT_DIR$/promoter/index.php" />
         <option value="$PROJECT_DIR$/php/sendMailFromGemsterApp.php" />
         <option value="$PROJECT_DIR$/mobile/promoter/app/controller/ContactForm.js" />
@@ -74,6 +119,9 @@
         <option value="$PROJECT_DIR$/mobile/app.js" />
         <option value="$PROJECT_DIR$/mobile/index.html" />
         <option value="$PROJECT_DIR$/css/common.css" />
+        <option value="$PROJECT_DIR$/php/proxy.php" />
+        <option value="$PROJECT_DIR$/js/ticker/jquery.ticker.js" />
+        <option value="$PROJECT_DIR$/css/event_page.css" />
         <option value="$PROJECT_DIR$/facebook/event_page.php" />
       </list>
     </option>
@@ -134,6 +182,52 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="php" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ticker" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -294,34 +388,9 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/mobile/promoter/app/view/ContactForm.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="19" selection-start="790" selection-end="790" vertical-scroll-proportion="0.45191193" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/php/submit.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-1.0719178" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/php/sendMailFromGemsterApp.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="5" selection-start="95" selection-end="95" vertical-scroll-proportion="0.06849315" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mobile/promoter/app/controller/ContactForm.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="47" selection-start="695" selection-end="695" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/mobile/promoter/php/submit.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="13" column="0" selection-start="168" selection-end="168" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="40" column="30" selection-start="1420" selection-end="1420" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/css/style.css">
@@ -337,11 +406,6 @@
     <entry file="file://$PROJECT_DIR$/mobile/promoter/php/phpmailer/class.phpmailer.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="30" column="40" selection-start="2028" selection-end="2028" vertical-scroll-proportion="0.017381229" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/css/mainpage.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="1" selection-start="487" selection-end="487" vertical-scroll-proportion="0.44520548" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/mobile/resources/css/app.css">
@@ -375,9 +439,52 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/php/proxy.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="25" column="39" selection-start="1071" selection-end="1071" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/img/event_details_bottom.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/ticker/jquery.ticker.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1496" column="13" selection-start="54275" selection-end="54275" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/css/mainpage.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="28" column="0" selection-start="489" selection-end="2075" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="281" column="4" selection-start="13776" selection-end="14363" vertical-scroll-proportion="-9.958333">
+          <folding>
+            <marker date="1344972138000" expanded="true" signature="3013:3246" placeholder="..." />
+            <marker date="1344972138000" expanded="true" signature="3081:3119" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/css/event_page.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="28" column="25" selection-start="757" selection-end="757" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/facebook/event_page.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="130" selection-start="1002" selection-end="1002" vertical-scroll-proportion="0.2433372">
+        <state line="295" column="58" selection-start="12138" selection-end="12138" vertical-scroll-proportion="0.20420793">
           <folding />
         </state>
       </provider>

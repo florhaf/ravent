@@ -601,7 +601,7 @@ public class Event extends Model implements Serializable, Runnable {
 				} else if (dsvote.getNb_vote() >= 10){
 					res_vote =  5;
 				}
-			}
+			} 
 	
 			//venue score
 			if (likes >= 1 && likes < 1000){
