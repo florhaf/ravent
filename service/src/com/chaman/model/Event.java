@@ -63,6 +63,8 @@ public class Event extends Model implements Serializable, Runnable {
 	String update_time;
 	@Facebook
 	String timezone;
+	@Facebook
+	String all_members_count;
 	
 	String venue_id;
 	double score;
@@ -143,11 +145,7 @@ public class Event extends Model implements Serializable, Runnable {
 		
 		Collections.sort(result, new EventComparator());
 		
-		log.severe("" + result.size());
-		
 		result = EventTools.removeDuplicates(result);
-				
-		log.severe("" + result.size());
 
 		return (ArrayList<Model>)result;    
 	}
@@ -158,7 +156,7 @@ public class Event extends Model implements Serializable, Runnable {
 		try {
 			
 			EventLocationCapable e = this.tm.getIdForThread(Thread.currentThread());
-	    		
+
 			Dao dao = new Dao();
 			
 			DateTimeZone TZ = DateTimeZone.forOffsetMillis(timeZoneInMinutes*60*1000);
@@ -166,7 +164,7 @@ public class Event extends Model implements Serializable, Runnable {
 			long actual_time = now.getMillis() / 1000L;
 			
 			FacebookClient client 	= new DefaultFacebookClient(accessToken);
-			String properties 		= "eid, name, pic_big, start_time, end_time, venue, location, privacy, update_time, timezone";
+			String properties 		= "eid, name, pic_big, start_time, end_time, venue, location, privacy, update_time, all_members_count, timezone";
 		
 			AsyncMemcacheService asyncCache = MemcacheServiceFactory.getAsyncMemcacheService();
 			
@@ -301,9 +299,15 @@ public class Event extends Model implements Serializable, Runnable {
 		}
 		
 		if (e.latitude != null && e.longitude != null) {
+			
+			if (userLatitude != null && userLongitude != null) {
 				
-			float distance = Geo.Fence(userLatitude, userLongitude, e.latitude, e.longitude);
-			e.distance = String.format("%.2f", distance);
+				float distance = Geo.Fence(userLatitude, userLongitude, e.latitude, e.longitude);
+				e.distance = String.format("%.2f", distance);
+			} else {
+				
+				e.distance = "N/A";
+			}
 		}  else {
 				
 			e.distance = "N/A";
@@ -778,17 +782,23 @@ public class Event extends Model implements Serializable, Runnable {
 	}
 	
 	public String eventvenueID() {
-		
 		return this.venue_id;
 	}
 	
 	public String starttime() {
-		
 		return this.start_time;
 	}
 	
 	public String endtime() {
-		
 		return this.end_time;
 	}
+	
+	public String allMemberCount() {	
+		return this.all_members_count;
+	}
+	
+	public void setAll_members_count(String all_members_count) {
+		this.all_members_count = all_members_count;
+	}
+
 }

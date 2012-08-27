@@ -78,8 +78,8 @@ public class Vote extends Model implements Serializable  {
     	asyncCache.delete(Long.parseLong(this.eid)); //Delete event from cache to refresh the event score when somebody has voted
     	
     	FacebookClient client 	= new DefaultFacebookClient(accessToken);
-    	client.publish(userid + "/gemsterapp:drop_a_gem_on", FacebookType.class, Parameter.with("event", "http://gemsterapp.com/facebook/event_page.php?eid=" + eventid)); // , Parameter.with("name", ), Parameter.with("location", ), Parameter.with("picture", ));
-    	
+    	client.publish(userid + "/gemsterapp:drop_a_gem_on", FacebookType.class, Parameter.with("event", "http://gemsterapp.com/facebook/event_page.php?eid=" + eventid));
+
 	}
 	
 	public static void NewVote(String userid, String eventid, String svote) {
