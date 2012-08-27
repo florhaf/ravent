@@ -91,12 +91,17 @@ public class EventTools {
 			
 			Event e1 = (Event) l.get(i);
 			Event e2 = (Event) l.get(i + 1);
-		
+			
 			//if same venue
 			if ((e1.eventvenueID() != null && e2.eventvenueID() != null) && (e1.eventvenueID().equals(e2.eventvenueID()))) {
 				
 				//if event overlap (assuming same event)
 				if (!(Long.parseLong(e1.starttime()) > Long.parseLong(e2.endtime()) || Long.parseLong(e2.starttime()) > Long.parseLong(e1.endtime()))) {
+					
+					if (e1.getOffer_title() != null || e1.getFeatured() != null || e1.getTicket_link() != null) {
+						result.add(e1);
+						continue;
+					}
 					
 					//if e1 better than e2
 					if (EventTools.is_better_than(e1, e2)) {
