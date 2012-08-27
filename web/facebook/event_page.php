@@ -92,9 +92,9 @@ chromium.org/developers/how-tos/chrome-frame-getting-started -->
 
 <div role="main" style="width: 100%; min-width: 1000px; height: 100%; margin: auto auto; background-color: white; text-align: left;background-color: #d3d3d3;">
 
-    <div id="container" style="margin: auto auto; width: 960px;  min-height: 800px; overflow: overflow-x;">
+    <div id="container" style="margin: auto auto; width: 960px;  min-height: 840px; overflow: overflow-x;">
 
-        <div style="width: 640px; min-height: 800px; border-left: 1px solid #a9a9a9; border-right: 1px solid #a9a9a9; float: left; margin-left: 0px;">
+        <div style="width: 640px; min-height: 840px; border-left: 1px solid #a9a9a9; border-right: 1px solid #a9a9a9; border-bottom: 1px solid #a9a9a9; float: left; margin-left: 0px;">
 
             <div id="top" style="height: 484px; background-image: url(../img/event_details_top.png); background-repeat: no-repeat;">
 
@@ -142,7 +142,7 @@ chromium.org/developers/how-tos/chrome-frame-getting-started -->
 
             </div>
 
-            <div id="middle" style="min-height: 280px; background-image: url(../img/event_details_middle.png); background-repeat: repeat-y;">
+            <div id="middle" style="min-height: 400px; background-image: url(../img/event_details_middle.png); background-repeat: repeat-y;">
 
                 <div id="description" style="width: 90%; min-height: 280px; padding-left: 40px; display: none;">
 
@@ -156,14 +156,11 @@ chromium.org/developers/how-tos/chrome-frame-getting-started -->
 
         </div>
 
-        <div id="scrollingDiv" style="border: 0px solid green; width: 300px; height: 900px; margin-top: 35px;  float: right;">
+        <div id="scrollingDiv" style="width: 300px; height: 840px; margin-top: 35px;  float: right;">
 
-            <div style="width: 300px; height: 311px; background-image: url(../img/frame.png); margin-bottom: 20px;">
+            <div style="width: 300px; height: 311px; background-image: url(../img/frame.png); margin-bottom: 0px;">
 
                 <div id="map" style="margin-left: 10px; margin-top: 10px; width: 280px; height: 280px; display: none;">
-
-
-
                 </div>
 
             </div>
@@ -190,6 +187,12 @@ chromium.org/developers/how-tos/chrome-frame-getting-started -->
             </div>
 
             <div style="width: 300px; height: 311px; background-image: url(../img/frame.png); margin-bottom: 20px;">
+            </div>
+
+            <div style="text-align: center;">
+                <iframe src="http://www.facebook.com/plugins/facepile.php?
+                    app_id=299292173427947" scrolling="no" frameborder="0" style="border:none;
+                    overflow:hidden; width:250px; height: 100px;" allowTransparency="true"></iframe>
             </div>
 
         </div>
@@ -250,7 +253,7 @@ function getParameterByName(name)
 
         var $scrollingDiv = $("#scrollingDiv");
 
-      /*  $(window).scroll(function(){
+        /*$(window).scroll(function(){
             $scrollingDiv
                 .stop()
                 .animate({"marginTop": ($(window).scrollTop() + 30) + "px"}, "slow" );
@@ -349,7 +352,7 @@ function getParameterByName(name)
 
             $('#description').html($desc);
 
-            $('#container').css('height', (800 + parseInt($('#description').css('height')) -220) + 'px');
+            $('#container').css('height', (830 + parseInt($('#description').css('height')) -220) + 'px');
 
             $('#description').fadeIn();
         });

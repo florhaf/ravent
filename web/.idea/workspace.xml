@@ -25,7 +25,7 @@
       <file leaf-file-name="event_page.php" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/facebook/event_page.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="295" column="58" selection-start="12138" selection-end="12138" vertical-scroll-proportion="0.20420793">
+            <state line="118" column="11" selection-start="5675" selection-end="5675" vertical-scroll-proportion="0.18308227">
               <folding />
             </state>
           </provider>
@@ -43,7 +43,7 @@
       <file leaf-file-name="event_page.css" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/css/event_page.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="28" column="25" selection-start="757" selection-end="757" vertical-scroll-proportion="0.0">
+            <state line="23" column="23" selection-start="639" selection-end="639" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -70,10 +70,10 @@
       <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="281" column="4" selection-start="13776" selection-end="14363" vertical-scroll-proportion="-9.958333">
+            <state line="148" column="44" selection-start="7511" selection-end="7733" vertical-scroll-proportion="-25.0">
               <folding>
-                <marker date="1344972138000" expanded="true" signature="3013:3246" placeholder="..." />
-                <marker date="1344972138000" expanded="true" signature="3081:3119" placeholder="..." />
+                <marker date="1346085899000" expanded="true" signature="3013:3246" placeholder="..." />
+                <marker date="1346085899000" expanded="true" signature="3081:3119" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -91,7 +91,7 @@
       <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/about/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="10" column="25" selection-start="0" selection-end="6916" vertical-scroll-proportion="-6.25">
+            <state line="10" column="25" selection-start="0" selection-end="6916" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -112,7 +112,6 @@
         <option value="$PROJECT_DIR$/mobile/promoter/app/controller/ContactForm.js" />
         <option value="$PROJECT_DIR$/mobile/promoter/php/submit.php" />
         <option value="$PROJECT_DIR$/faq/index.html" />
-        <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/css/style.css" />
         <option value="$PROJECT_DIR$/css/mainpage.css" />
         <option value="$PROJECT_DIR$/mobile/resources/css/app.css" />
@@ -122,11 +121,13 @@
         <option value="$PROJECT_DIR$/php/proxy.php" />
         <option value="$PROJECT_DIR$/js/ticker/jquery.ticker.js" />
         <option value="$PROJECT_DIR$/css/event_page.css" />
+        <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/facebook/event_page.php" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
+    <option name="x" value="-1" />
     <option name="y" value="22" />
     <option name="width" value="1680" />
     <option name="height" value="1024" />
@@ -311,7 +312,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="22" width="1680" height="1024" extended-state="0" />
+    <frame x="-1" y="22" width="1680" height="1024" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -420,30 +421,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/mobile/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="51" selection-start="773" selection-end="773" vertical-scroll-proportion="-13.75">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/about/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="25" selection-start="0" selection-end="6916" vertical-scroll-proportion="-6.25">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/css/common.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="32" selection-start="320" selection-end="329" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/php/proxy.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="39" selection-start="1071" selection-end="1071" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="22" column="51" selection-start="773" selection-end="773" vertical-scroll-proportion="-13.75" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/img/event_details_bottom.png">
@@ -451,40 +429,53 @@
         <state />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/css/mainpage.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="28" column="0" selection-start="489" selection-end="2075" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/js/ticker/jquery.ticker.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1496" column="13" selection-start="54275" selection-end="54275" vertical-scroll-proportion="0.0">
+        <state line="1496" column="13" selection-start="54275" selection-end="54275" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/php/proxy.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="25" column="39" selection-start="1071" selection-end="1071" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/css/common.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="32" selection-start="320" selection-end="329" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/about/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="25" selection-start="0" selection-end="6916" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/css/mainpage.css">
+    <entry file="file://$PROJECT_DIR$/css/event_page.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="0" selection-start="489" selection-end="2075" vertical-scroll-proportion="0.0">
+        <state line="23" column="23" selection-start="639" selection-end="639" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="281" column="4" selection-start="13776" selection-end="14363" vertical-scroll-proportion="-9.958333">
+        <state line="148" column="44" selection-start="7511" selection-end="7733" vertical-scroll-proportion="-25.0">
           <folding>
-            <marker date="1344972138000" expanded="true" signature="3013:3246" placeholder="..." />
-            <marker date="1344972138000" expanded="true" signature="3081:3119" placeholder="..." />
+            <marker date="1346085899000" expanded="true" signature="3013:3246" placeholder="..." />
+            <marker date="1346085899000" expanded="true" signature="3081:3119" placeholder="..." />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/css/event_page.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="25" selection-start="757" selection-end="757" vertical-scroll-proportion="0.0">
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/facebook/event_page.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="295" column="58" selection-start="12138" selection-end="12138" vertical-scroll-proportion="0.20420793">
+        <state line="118" column="11" selection-start="5675" selection-end="5675" vertical-scroll-proportion="0.18308227">
           <folding />
         </state>
       </provider>
