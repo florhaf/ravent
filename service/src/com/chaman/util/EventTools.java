@@ -15,7 +15,7 @@ public class EventTools {
 
     private static final int[] NORTHEAST = new int[] {1,1};
     private static final int[] SOUTHWEST = new int[] {-1,-1};
-	
+    
 	public static List<EventLocationCapable> proximityFetch(String searchLat, String searchLon, LocationCapableRepositorySearch<EventLocationCapable> ofySearch, float searchRadius) {
 		
 		List<EventLocationCapable> DS = new ArrayList<EventLocationCapable>();
@@ -85,30 +85,78 @@ public class EventTools {
 		
 		List<Model> result = new ArrayList<Model>();
 		
-		if (l.size() > 0) {
-			result.add((Event) l.get(0));
-		}
+		Event temp = null;
 		
 		for (int i = 0; i < l.size() -1; i++) {
 			
 			Event e1 = (Event) l.get(i);
 			Event e2 = (Event) l.get(i + 1);
 		
+			//if same venue
 			if ((e1.eventvenueID() != null && e2.eventvenueID() != null) && (e1.eventvenueID().equals(e2.eventvenueID()))) {
 				
-				if ((e1.starttime() != null && e2.starttime() != null) && (e1.starttime().equals(e2.starttime()))) {
-				
-					System.out.println(e1.eventvenueID());
+				//if event overlap (assuming same event)
+				if (!(Long.parseLong(e1.starttime()) > Long.parseLong(e2.endtime()) || Long.parseLong(e2.starttime()) > Long.parseLong(e1.endtime()))) {
+					
+					//if e1 better than e2
+					if (EventTools.is_better_than(e1, e2)) {
+						
+						if (temp != null) {
+							
+							if (EventTools.is_better_than(e1, temp)) {
+								
+								temp = e1;
+							} // else temp stays the best
+						} else {
+							
+							temp = e1;
+						}
+					} else {
+						
+						temp = e2;
+					}
 					continue;
+				}
+			} else {
+				
+				if (temp != null) {
+					
+					result.add(temp);
+					temp = null;
+				} else {
+					
+					result.add(e1);
 				}
 			}
 			
-			result.add(e2);
+		}
+		
+		//last one
+		if (temp == null) {
+			result.add((Event) l.get(l.size() - 1));
+		} else {
+			if (EventTools.is_better_than((Event) l.get(l.size() - 1), temp)) {
+				result.add((Event) l.get(l.size() - 1));
+			} else {
+				result.add(temp);	
+			}
 		}
 		
 		return result;
 	}
-	
+
+
+	private static boolean is_better_than(Event e1, Event e2) {
+		
+		Long c1 = Long.parseLong(e1.allMemberCount());
+		Long c2 = Long.parseLong(e2.allMemberCount());
+		
+		if (c1 > c2) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 }
 
 

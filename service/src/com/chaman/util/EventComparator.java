@@ -16,8 +16,8 @@ public class EventComparator implements Comparator<Model>{
 		Event e2 = (Event) o2;
 		
 		if (e1.eventvenueID() == null || e2.eventvenueID() == null) {return 0;}
-		if (e1.eventvenueID() != null || e2.eventvenueID() == null) {return 1;}
-		if (e1.eventvenueID() == null || e2.eventvenueID() != null) {return -1;}
+		if (e1.eventvenueID() != null && e2.eventvenueID() == null) {return 1;}
+		if (e1.eventvenueID() == null && e2.eventvenueID() != null) {return -1;}
 
 		Long Diff = Long.valueOf(e1.eventvenueID()) - Long.valueOf(e2.eventvenueID());
 	        
@@ -25,7 +25,7 @@ public class EventComparator implements Comparator<Model>{
 		
 		if (res == 0) {
 			
-			Long Difftime_start = Long.valueOf(e1.starttime()) - Long.valueOf(e2.starttime()); //TODO: function to calculate the time overlapping
+			Long Difftime_start = Long.valueOf(e1.starttime()) - Long.valueOf(e2.starttime());
 			res = (Difftime_start > 0 ? 1 : (Diff == 0 ? 0 : -1));
 		}
 		
