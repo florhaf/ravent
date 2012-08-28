@@ -55,11 +55,13 @@ body {
 .footer-link:link {
     color: white;
     margin-top: 5px;
+    text-decoration: none;
 }
 
 .footer-link:visited {
     color: white;
     margin-top: 5px;
+    text-decoration: none;
 }
 
 .column {

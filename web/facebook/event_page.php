@@ -65,6 +65,46 @@ require '../php/facebook-sdk/src/facebook.php';
 
     <script src="../js/ticker/jquery.ticker.js"></script>
 
+    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load("maps", "3",  {callback: initialize, other_params:"sensor=false"});
+
+      function initialize() {
+        // Initialize default values
+        var zoom = 3;
+        var latlng = new google.maps.LatLng(37.4419, -100.1419);
+        var location = "Showing default location for map.";
+
+        // If ClientLocation was filled in by the loader, use that info instead
+        if (google.loader.ClientLocation) {
+          zoom = 13;
+          latlng = new google.maps.LatLng(google.loader.ClientLocation.latitude, google.loader.ClientLocation.longitude);
+          location = "Showing IP-based location: <b>" + getFormattedLocation() + "</b>";
+        }
+
+        var myOptions = {
+          zoom: zoom,
+          center: latlng,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        }
+
+        //var map = new google.maps.Map(document.getElementById("map"), myOptions);
+        //document.getElementById("location").innerHTML = location;
+      }
+
+      function getFormattedLocation() {
+        if (google.loader.ClientLocation.address.country_code == "US" &&
+          google.loader.ClientLocation.address.region) {
+          return google.loader.ClientLocation.address.city + ", "
+              + google.loader.ClientLocation.address.region.toUpperCase();
+        } else {
+          return  google.loader.ClientLocation.address.city + ", "
+              + google.loader.ClientLocation.address.country_code;
+        }
+      }
+
+    </script>
+
 
 <style type="text/css">
 #scroller{height:100%;margin:0;padding:0;line-height:70px;position:relative;}
@@ -160,7 +200,7 @@ chromium.org/developers/how-tos/chrome-frame-getting-started -->
 
             <div style="width: 300px; height: 311px; background-image: url(../img/frame.png); margin-bottom: 0px;margin-top: 0px; padding-top: 0px;">
 
-                <div id="map" style="margin-left: 10px; margin-top: 0px; width: 280px; height: 280px; display: none;">
+                <div id="map" style="margin-left: 10px; margin-top: 0px; width: 280px; height: 280px; display: none; padding-top: 9px; background-color: transparent;">
                 </div>
 
             </div>
@@ -335,9 +375,14 @@ function onLoadData(data) {
         var d = new Date();
 
         var language = window.navigator.userLanguage || window.navigator.language;
+        var latitude = '40.7433586';
+        var longitude = '-73.972406';
 
-        var latitude = '34.094';
-        var longitude = '-118.382';
+        if (google.loader.ClientLocation != null && google.loader.ClientLocation.latitude != null) {
+
+            latitude = google.loader.ClientLocation.latitude;
+            longitude = google.loader.ClientLocation.longitude;
+        }
 
         $.ajax({
             url : '../php/proxy.php?proxy_url=' + encodeURIComponent('http://api.gemsterapp.com/events?<?php echo $app_token; ?>&timezone_offset=' + -d.getTimezoneOffset() + '&locale=' + language.replace('-', '_') + '&timeframe=48&limit=30&latitude=' + latitude + '&longitude=' + longitude)
@@ -368,7 +413,7 @@ function onLoadData(data) {
                     $('#other').fadeIn();
                 });
 
-                $('#map').html('<img src="http://maps.googleapis.com/maps/api/staticmap?center=' + e.latitude + ',' + e.longitude + '&zoom=13&size=280x280&maptype=roadmap&markers=color:red%7Ccolor:red%7Clabel:%7C' + e.latitude + ',' + e.longitude + '&sensor=false" style="width: 280px; height:280px;margin-top: 9px;" />');
+                $('#map').html('<img src="http://maps.googleapis.com/maps/api/staticmap?center=' + e.latitude + ',' + e.longitude + '&zoom=13&size=280x280&maptype=roadmap&markers=color:red%7Ccolor:red%7Clabel:%7C' + e.latitude + ',' + e.longitude + '&sensor=false" style="width: 280px; height:280px;" />');
 
                 setTimeout(function() {
 
