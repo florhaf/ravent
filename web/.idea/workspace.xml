@@ -40,10 +40,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="event_page.php" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="event_page.php" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/facebook/event_page.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="372" column="39" selection-start="16135" selection-end="16135" vertical-scroll-proportion="0.0">
+            <state line="162" column="68" selection-start="7411" selection-end="7411" vertical-scroll-proportion="0.7312723">
               <folding />
             </state>
           </provider>
@@ -76,10 +76,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.html" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="14" column="26" selection-start="496" selection-end="496" vertical-scroll-proportion="0.26548672">
+            <state line="14" column="26" selection-start="496" selection-end="496" vertical-scroll-proportion="-4.2">
               <folding>
                 <marker date="1346187126000" expanded="true" signature="2657:2890" placeholder="..." />
                 <marker date="1346187126000" expanded="true" signature="2725:2763" placeholder="..." />
@@ -137,10 +137,10 @@
         <option value="$PROJECT_DIR$/mobile/index.html" />
         <option value="$PROJECT_DIR$/php/proxy.php" />
         <option value="$PROJECT_DIR$/js/ticker/jquery.ticker.js" />
-        <option value="$PROJECT_DIR$/facebook/event_page.php" />
         <option value="$PROJECT_DIR$/css/event_page.css" />
         <option value="$PROJECT_DIR$/css/common.css" />
         <option value="$PROJECT_DIR$/index.html" />
+        <option value="$PROJECT_DIR$/facebook/event_page.php" />
       </list>
     </option>
   </component>
@@ -436,11 +436,6 @@
         <state line="11" column="0" selection-start="898" selection-end="898" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/facebook/event_page.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="372" column="39" selection-start="16135" selection-end="16135" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/js/ticker/jquery.ticker.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="1496" column="13" selection-start="54275" selection-end="54275" vertical-scroll-proportion="0.0" />
@@ -484,11 +479,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="26" selection-start="496" selection-end="496" vertical-scroll-proportion="0.26548672">
+        <state line="14" column="26" selection-start="496" selection-end="496" vertical-scroll-proportion="-4.2">
           <folding>
             <marker date="1346187126000" expanded="true" signature="2657:2890" placeholder="..." />
             <marker date="1346187126000" expanded="true" signature="2725:2763" placeholder="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/facebook/event_page.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="162" column="68" selection-start="7411" selection-end="7411" vertical-scroll-proportion="0.7312723">
+          <folding />
         </state>
       </provider>
     </entry>

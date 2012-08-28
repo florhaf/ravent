@@ -71,7 +71,7 @@ require '../php/facebook-sdk/src/facebook.php';
 #scroller li{float:left;height:70px;padding:0 0 0 10px;list-style-position:inside;}
     #scrollerWrapper{
 
-
+position:relative;
         overflow:hidden;
 
 
@@ -156,11 +156,11 @@ chromium.org/developers/how-tos/chrome-frame-getting-started -->
 
         </div>
 
-        <div id="scrollingDiv" style="width: 300px; height: 840px; margin-top: 35px;  float: right;">
+        <div id="scrollingDiv" style="width: 300px; height: 840px; margin-top: 35px;  float: right;  padding-top: 0px;">
 
-            <div style="width: 300px; height: 311px; background-image: url(../img/frame.png); margin-bottom: 0px;">
+            <div style="width: 300px; height: 311px; background-image: url(../img/frame.png); margin-bottom: 0px;margin-top: 0px; padding-top: 0px;">
 
-                <div id="map" style="margin-left: 10px; margin-top: 10px; width: 280px; height: 280px; display: none;">
+                <div id="map" style="margin-left: 10px; margin-top: 0px; width: 280px; height: 280px; display: none;">
                 </div>
 
             </div>
@@ -310,8 +310,6 @@ function onLoadData(data) {
 
     $("document").ready(function() {
 
-
-
         $('#img').fadeIn();
 
         $("#form-get-the-app").hide();
@@ -336,17 +334,19 @@ function onLoadData(data) {
 
         var d = new Date();
 
+        var language = window.navigator.userLanguage || window.navigator.language;
+
         var latitude = '34.094';
         var longitude = '-118.382';
 
         $.ajax({
-            url : '../php/proxy.php?proxy_url=' + encodeURIComponent('http://api.gemsterapp.com/events?<?php echo $app_token; ?>&timezone_offset=' + -d.getTimezoneOffset() + '&locale=' + navigator.language.replace('-', '_') + '&timeframe=48&limit=30&latitude=' + latitude + '&longitude=' + longitude),
+            url : '../php/proxy.php?proxy_url=' + encodeURIComponent('http://api.gemsterapp.com/events?<?php echo $app_token; ?>&timezone_offset=' + -d.getTimezoneOffset() + '&locale=' + language.replace('-', '_') + '&timeframe=48&limit=30&latitude=' + latitude + '&longitude=' + longitude)
         }).done(function(data) {
             $('#events').html(onLoadData(data));
         });
 
         $.ajax({
-            url : '../php/proxy.php?proxy_url=' + encodeURIComponent('http://api.gemsterapp.com/calendar?eventID=' + getParameterByName('eid') + '&<?php echo $app_token; ?>' + '&timezone_offset=' + -d.getTimezoneOffset() + '&locale=' + navigator.language.replace('-', '_'))
+            url : '../php/proxy.php?proxy_url=' + encodeURIComponent('http://api.gemsterapp.com/calendar?eventID=' + getParameterByName('eid') + '&<?php echo $app_token; ?>' + '&timezone_offset=' + -d.getTimezoneOffset() + '&locale=' + language.replace('-', '_'))
         }).done(function(data) {
 
             var e = data.records[0];
@@ -361,7 +361,7 @@ function onLoadData(data) {
 
                 $.ajax({
                     url : '../php/proxy.php?proxy_url=' + encodeURIComponent('http://maps.google.com/maps/api/geocode/json?sensor=true&latlng=' + e.latitude + ',' + e.longitude),
-                    crossDomain : true,
+                    crossDomain : true
                 }).done(function(data) {
 
                     $('#other').html('<div style="width: 40%; float: left;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + vc + '</div>' + '<div style="width: 60%; float: left; text-align: right;">' + data.results[0].formatted_address + ' &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>');
@@ -378,7 +378,7 @@ function onLoadData(data) {
 
             } else {
 
-                $('#map').html('<img src="../img/nomap.png" style="width: 280px; height:280px;margin-top: 9px;" />');
+                $('#map').html('<img src="../img/nomap.png" style="width: 280px; height:280px;margin-top: 9px; padding-top: 0px;" />');
 
                 setTimeout(function() {
 
@@ -404,7 +404,7 @@ function onLoadData(data) {
                     img = 'diamond.png';
                 }
 
-                score += '<div style="float: left; background-image: url(../img/' + img + '); background-size: 54px 45px; width: 54px; height: 45px;"></div>';
+                score += '<div style="float: left; padding-top: 50px;"><img style="width: 54px; height: 45px;" src="../img/' + img + '" alt="score" /></div>';
             }
 
             $('#score').html(score);
