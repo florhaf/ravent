@@ -397,10 +397,19 @@ function onLoadData(data) {
             var e = data.records[0];
 
             var vc = e.venue_category;
-            if (vc.length > 35) {
 
-                vc = vc.substr(0, 32) + '...';
+
+            if (vc != null && vc != undefined) {
+
+                if (vc.length > 35) {
+
+                    vc = vc.substr(0, 32) + '...';
+                }
+            } else {
+
+                vc = 'unknown category';
             }
+
 
             if (e.latitude && e.latitude != null) {
 
@@ -423,7 +432,7 @@ function onLoadData(data) {
 
             } else {
 
-                $('#map').html('<img src="../img/nomap.png" style="width: 280px; height:280px;margin-top: 9px; padding-top: 0px;" />');
+                $('#map').html('<img src="../img/nomap.png" style="width: 280px; height:280px;margin-top: 0px; padding-top: 0px;" />');
 
                 setTimeout(function() {
 

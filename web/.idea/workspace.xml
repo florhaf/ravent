@@ -40,10 +40,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="event_page.php" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="event_page.php" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/facebook/event_page.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="370" column="65" selection-start="15698" selection-end="15698" vertical-scroll-proportion="0.0">
+            <state line="434" column="107" selection-start="18459" selection-end="18459" vertical-scroll-proportion="0.71343637">
               <folding />
             </state>
           </provider>
@@ -88,10 +88,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="common.css" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="common.css" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/css/common.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="63" column="26" selection-start="1144" selection-end="1144" vertical-scroll-proportion="0.82552695">
+            <state line="63" column="26" selection-start="1144" selection-end="1144" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -139,8 +139,8 @@
         <option value="$PROJECT_DIR$/js/ticker/jquery.ticker.js" />
         <option value="$PROJECT_DIR$/css/event_page.css" />
         <option value="$PROJECT_DIR$/index.html" />
-        <option value="$PROJECT_DIR$/facebook/event_page.php" />
         <option value="$PROJECT_DIR$/css/common.css" />
+        <option value="$PROJECT_DIR$/facebook/event_page.php" />
       </list>
     </option>
   </component>
@@ -480,16 +480,16 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/facebook/event_page.php">
+    <entry file="file://$PROJECT_DIR$/css/common.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="370" column="65" selection-start="15698" selection-end="15698" vertical-scroll-proportion="0.0">
+        <state line="63" column="26" selection-start="1144" selection-end="1144" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/css/common.css">
+    <entry file="file://$PROJECT_DIR$/facebook/event_page.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="63" column="26" selection-start="1144" selection-end="1144" vertical-scroll-proportion="0.82552695">
+        <state line="434" column="107" selection-start="18459" selection-end="18459" vertical-scroll-proportion="0.71343637">
           <folding />
         </state>
       </provider>
