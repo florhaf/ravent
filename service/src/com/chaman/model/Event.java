@@ -275,8 +275,8 @@ public class Event extends Model implements Serializable, Runnable {
 		DateTimeZone TZ = DateTimeZone.forOffsetMillis(timeZoneInMinutes*60*1000);
 		DateTime now = DateTime.now(TZ);	
 		
-    	String query 			= "SELECT eid, name, pic_big, start_time, end_time, venue, location, privacy, timezone FROM event WHERE eid = " + eid;
-    	List<Event> fbevents 	= client.executeQuery(query, Event.class);
+		String query 			= "SELECT eid, name, pic_big, start_time, end_time, venue, location, privacy, timezone FROM event WHERE eid = " + eid;
+		List<Event> fbevents 	= client.executeQuery(query, Event.class);
 		
 		e = fbevents.get(0);
 		
