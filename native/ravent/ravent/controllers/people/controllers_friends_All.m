@@ -286,6 +286,7 @@ static controllers_friends_All *_ctrl;
     }
     
     [params setValue:friend.uid forKey:@"friendID"];
+    [params setValue:[models_User crtUser].accessToken forKey:@"access_token"];
     
     UISwitch *s = (UISwitch *)sender;
     

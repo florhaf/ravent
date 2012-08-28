@@ -92,7 +92,7 @@ chromium.org/developers/how-tos/chrome-frame-getting-started -->
 
 <div role="main" style="width: 100%; min-width: 1000px; height: 100%; margin: auto auto; background-color: white; text-align: left;background-color: #d3d3d3;">
 
-    <div id="container" style="margin: auto auto; width: 960px;  min-height: 960px; overflow: overflow-x;">
+    <div id="container" style="margin: auto auto; width: 960px;  min-height: 840px; overflow: overflow-x;">
 
         <div style="width: 640px; min-height: 840px; border-left: 1px solid #a9a9a9; border-right: 1px solid #a9a9a9; border-bottom: 1px solid #a9a9a9; float: left; margin-left: 0px;">
 
@@ -186,7 +186,8 @@ chromium.org/developers/how-tos/chrome-frame-getting-started -->
 
             </div>
 
-            <div id="events" style="width: 300px; height: 311px; background-image: url(../img/frame.png); margin-bottom: 10px; padding: 8px; background-repeat: no-repeat;">
+            <div style="width: 300px; height: 311px; background-image: url(../img/frame.png); margin-bottom: 10px; padding: 8px; background-repeat: no-repeat;">
+                <div id="events" style="display: none;"></div>
             </div>
 
             <div style="text-align: center;">
@@ -252,39 +253,25 @@ function getParameterByName(name)
 
 function onLoadData(data) {
 
-    var results = data.records;
+    var results = data.results;
     var size = results.length;
 
     var div = '';
 
-    for (var i = 0; i < 3; i++) {
+    for (var i = 0; i < size; i++) {
 
-        var randomnumber=Math.floor(Math.random()*results.length);
+        var e = results[i];
 
-        var e = results[randomnumber];
-
-        div += '<a href="/facebook/event_page.php?eid=' + e.eid + '"><div style="width: 282px; height: 93px; border-bottom: 1px solid lightGray; ">';
-
+        div += '<a href="/facebook/event_page.php?eid=' + e.eid + '"><div style="width: 282px; height: 93px; border-bottom: 1px solid lightGray;">';
             div += '<div style="width: 100%; height: 68px; border: 0px solid green;">';
                 div += '<div id="img" style="width: 64px; height: 64px; overflow: hidden; border: 1px solid gray; margin: 5px 5px 0px 5px; box-shadow: 0px 2px 2px #888; float: left;">';
-                    div += '<img src="' + e.pic_big + '" alt="other event picture" style="min-width: 100%;" />';
+                    div += '<img src="' + e.picture + '" alt="other event picture" style="min-width: 100%;" />';
                 div += '</div>';
 
-                var name = e.name;
-                var location = e.location;
-
-                if (name.length > 22) {
-                    name = name.substr(0, 22) + '...';
-                }
-
-                if (location.length > 22) {
-                    location = location.substr(0, 22) + '...';
-                }
-
-                div += '<div id="info" style="float: left; padding-left: 10px; padding-top: 10px;">';
-                    div += '<span style="">' + name + '</span><br />';
-                    div += '<span style="">' + location + '</span><br />';
-                    div += '<div id="score" style="margin-top: 8px;">';
+                div += '<div id="info" style="float: left; padding: 10px;">';
+                    div += '<span style="">' + e.name + '</span><br />';
+                    div += '<span style="">' + e.location + '</span><br />';
+                    div += '<div id="score">';
                     for (var j = 0; j < 5; j++) {
                         var imgStr = '<img src="../img/diamondSlot.png" alt="diamond slot" style="width: 24px; height: 18px;" />';
                         if (j < e.score) {
@@ -310,40 +297,65 @@ function onLoadData(data) {
 
     $("document").ready(function() {
 
-
+        $('#events').html(onLoadData({results: [{
+            eid: 123,
+            picture: 'https://graph.facebook.com/333210893440059/picture?type=small',
+            name: 'name 1',
+            location: 'location 1',
+            score: 4,
+            distance: '0.42',
+            date_start: 'Aug, 27, 2012',
+            time_start: '10:00pm',
+            date_end: 'Aug, 28, 2012',
+            time_end: '4:00am'
+        }, {
+            eid: 456,
+            picture: 'https://graph.facebook.com/333210893440059/picture?type=small',
+            name: 'name 2',
+            location: 'location 1',
+            score: 4,
+            distance: '0.42',
+            date_start: 'Aug, 27, 2012',
+            time_start: '10:00pm',
+            date_end: 'Aug, 28, 2012',
+            time_end: '4:00am'
+        }, {
+            eid: 789,
+            picture: 'https://graph.facebook.com/333210893440059/picture?type=small',
+            name: 'name 2',
+            location: 'location 1',
+            score: 4,
+            distance: '0.42',
+            date_start: 'Aug, 27, 2012',
+            time_start: '10:00pm',
+            date_end: 'Aug, 28, 2012',
+            time_end: '4:00am'
+        }]}));
+        $('#events').fadeIn();
 
         $('#img').fadeIn();
 
         $("#form-get-the-app").hide();
 
         var speed = 5;
-        var items, scroller = $('#scroller');
-        var width = 0;
-        scroller.children().each(function(){
-            width += $(this).outerWidth(true);
-        });
-        scroller.css('width', width);
-        scroll();
-        function scroll(){
-            items = scroller.children();
-            var scrollWidth = items.eq(0).outerWidth();
-            scroller.animate({'left' : 0 - scrollWidth}, scrollWidth * 100 / speed, 'linear', changeFirst);
-        }
-        function changeFirst(){
-            scroller.append(items.eq(0).remove()).css('left', 0);
-            scroll();
-        }
+                var items, scroller = $('#scroller');
+                var width = 0;
+                scroller.children().each(function(){
+                    width += $(this).outerWidth(true);
+                });
+                scroller.css('width', width);
+                scroll();
+                function scroll(){
+                    items = scroller.children();
+                    var scrollWidth = items.eq(0).outerWidth();
+                    scroller.animate({'left' : 0 - scrollWidth}, scrollWidth * 100 / speed, 'linear', changeFirst);
+                }
+                function changeFirst(){
+                    scroller.append(items.eq(0).remove()).css('left', 0);
+                    scroll();
+                }
 
         var d = new Date();
-
-        var latitude = '34.094';
-        var longitude = '-118.382';
-
-        $.ajax({
-            url : '../php/proxy.php?proxy_url=' + encodeURIComponent('http://api.gemsterapp.com/events?<?php echo $app_token; ?>&timezone_offset=' + -d.getTimezoneOffset() + '&locale=' + navigator.language.replace('-', '_') + '&timeframe=48&limit=30&latitude=' + latitude + '&longitude=' + longitude),
-        }).done(function(data) {
-            $('#events').html(onLoadData(data));
-        });
 
         $.ajax({
             url : '../php/proxy.php?proxy_url=' + encodeURIComponent('http://api.gemsterapp.com/calendar?eventID=' + getParameterByName('eid') + '&<?php echo $app_token; ?>' + '&timezone_offset=' + -d.getTimezoneOffset() + '&locale=' + navigator.language.replace('-', '_'))

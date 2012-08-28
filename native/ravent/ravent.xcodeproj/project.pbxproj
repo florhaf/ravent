@@ -363,6 +363,8 @@
 		DFB28CCC15981B2300D0F999 /* selected_middle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DFB28CBF15981B2200D0F999 /* selected_middle@2x.png */; };
 		DFB28CCD15981B2300D0F999 /* selected_right.png in Resources */ = {isa = PBXBuildFile; fileRef = DFB28CC015981B2200D0F999 /* selected_right.png */; };
 		DFB28CCE15981B2300D0F999 /* selected_right@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DFB28CC115981B2200D0F999 /* selected_right@2x.png */; };
+		DFD11C6E15EC477E0000FE86 /* google.png in Resources */ = {isa = PBXBuildFile; fileRef = DFD11C6C15EC477E0000FE86 /* google.png */; };
+		DFD11C6F15EC477E0000FE86 /* google@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DFD11C6D15EC477E0000FE86 /* google@2x.png */; };
 		DFD2804E151DBA36007A0873 /* AWIconAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = DFD2804D151DBA36007A0873 /* AWIconAnnotation.m */; };
 		DFD2895B151DD2EF007A0873 /* views_calendar_Calendar.xib in Resources */ = {isa = PBXBuildFile; fileRef = DFD2895A151DD2EF007A0873 /* views_calendar_Calendar.xib */; };
 		DFD3016415DB110300987795 /* search_options_map.png in Resources */ = {isa = PBXBuildFile; fileRef = DFD3016315DB110300987795 /* search_options_map.png */; };
@@ -922,6 +924,8 @@
 		DFC55CDD158D6A9400310433 /* Paris.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = Paris.gpx; path = ../../Paris.gpx; sourceTree = "<group>"; };
 		DFC55CDE158D6AD500310433 /* LA.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = LA.gpx; path = ../../LA.gpx; sourceTree = "<group>"; };
 		DFC55CDF158F9E9800310433 /* Miami.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = Miami.gpx; path = ../../Miami.gpx; sourceTree = "<group>"; };
+		DFD11C6C15EC477E0000FE86 /* google.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = google.png; sourceTree = "<group>"; };
+		DFD11C6D15EC477E0000FE86 /* google@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "google@2x.png"; sourceTree = "<group>"; };
 		DFD2804C151DBA36007A0873 /* AWIconAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = AWIconAnnotation.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		DFD2804D151DBA36007A0873 /* AWIconAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWIconAnnotation.m; sourceTree = "<group>"; };
 		DFD2895A151DD2EF007A0873 /* views_calendar_Calendar.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = views_calendar_Calendar.xib; path = ravent/views/calendar/views_calendar_Calendar.xib; sourceTree = SOURCE_ROOT; };
@@ -1537,6 +1541,8 @@
 		DF86A1AD1582D7FA009B3257 /* icon */ = {
 			isa = PBXGroup;
 			children = (
+				DFD11C6C15EC477E0000FE86 /* google.png */,
+				DFD11C6D15EC477E0000FE86 /* google@2x.png */,
 				DFD3016315DB110300987795 /* search_options_map.png */,
 				DFA9FC8215B68F27003F9B5F /* feedback.png */,
 				DFA9FC8315B68F27003F9B5F /* friendsEvents.png */,
@@ -2357,6 +2363,8 @@
 				DF01821A15D9D32000B5EBAB /* grayCrowd.png in Resources */,
 				DF01822415D9F17200B5EBAB /* views_events_item_Crowd.xib in Resources */,
 				DFD3016415DB110300987795 /* search_options_map.png in Resources */,
+				DFD11C6E15EC477E0000FE86 /* google.png in Resources */,
+				DFD11C6F15EC477E0000FE86 /* google@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2588,7 +2596,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: florian haftman";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Gemster Group Inc";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/RestKit/Specs/Runner/OCHamcrest\"",
@@ -2605,7 +2613,7 @@
 				);
 				"OTHER_CFLAGS[arch=*]" = "-mthumb";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C136FD6F-C541-495F-AC1B-DDCDC54E8955";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9DD536D0-FCF8-41DE-8891-BC062A21B55D";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = NO;
 				USER_HEADER_SEARCH_PATHS = "";
@@ -2618,7 +2626,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: florian haftman";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Gemster Group Inc";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/RestKit/Specs/Runner/OCHamcrest\"",
@@ -2635,7 +2643,7 @@
 				);
 				"OTHER_CFLAGS[arch=*]" = "-mthumb";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C136FD6F-C541-495F-AC1B-DDCDC54E8955";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9DD536D0-FCF8-41DE-8891-BC062A21B55D";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = NO;
 				USER_HEADER_SEARCH_PATHS = "";
