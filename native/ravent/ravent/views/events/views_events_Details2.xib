@@ -844,6 +844,20 @@ AAAAAAAAdGV4dAAAAABDb3B5cmlnaHQgQXBwbGUsIEluYy4sIDIwMDgAA</bytes>
 							<string key="NSResourceName">lightBurst.png</string>
 						</object>
 					</object>
+					<object class="IBUIImageView" id="626598120">
+						<reference key="NSNextResponder" ref="220015750"/>
+						<int key="NSvFlags">292</int>
+						<string key="NSFrame">{{10, 93}, {69, 24}}</string>
+						<reference key="NSSuperview" ref="220015750"/>
+						<reference key="NSWindow"/>
+						<string key="NSReuseIdentifierKey">_NS:9</string>
+						<bool key="IBUIUserInteractionEnabled">NO</bool>
+						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+						<object class="NSCustomResource" key="IBUIImage">
+							<string key="NSClassName">NSImage</string>
+							<string key="NSResourceName">google.png</string>
+						</object>
+					</object>
 				</array>
 				<string key="NSFrameSize">{320, 754}</string>
 				<reference key="NSSuperview"/>
@@ -1166,6 +1180,7 @@ AAAAAAAAdGV4dAAAAABDb3B5cmlnaHQgQXBwbGUsIEluYy4sIDIwMDgAA</bytes>
 							<reference ref="979858731"/>
 							<reference ref="749252476"/>
 							<reference ref="120339565"/>
+							<reference ref="626598120"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -1354,6 +1369,11 @@ AAAAAAAAdGV4dAAAAABDb3B5cmlnaHQgQXBwbGUsIEluYy4sIDIwMDgAA</bytes>
 						<reference key="object" ref="120339565"/>
 						<reference key="parent" ref="220015750"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">77</int>
+						<reference key="object" ref="626598120"/>
+						<reference key="parent" ref="220015750"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -1399,6 +1419,7 @@ AAAAAAAAdGV4dAAAAABDb3B5cmlnaHQgQXBwbGUsIEluYy4sIDIwMDgAA</bytes>
 				<string key="69.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="7.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="73.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="77.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="8.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="9.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 			</dictionary>
@@ -1406,7 +1427,7 @@ AAAAAAAAdGV4dAAAAABDb3B5cmlnaHQgQXBwbGUsIEluYy4sIDIwMDgAA</bytes>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">75</int>
+			<int key="maxID">77</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1742,6 +1763,7 @@ AAAAAAAAdGV4dAAAAABDb3B5cmlnaHQgQXBwbGUsIEluYy4sIDIwMDgAA</bytes>
 			<string key="diamondSlot.png">{120, 99}</string>
 			<string key="dropagem.png">{582, 170}</string>
 			<string key="featured.png">{107, 107}</string>
+			<string key="google.png">{69, 24}</string>
 			<string key="grayCrowd.png">{295, 80}</string>
 			<string key="grayDetails2.png">{640, 1550}</string>
 			<string key="graySnap.png">{295, 80}</string>
