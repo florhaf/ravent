@@ -351,6 +351,12 @@ function onLoadData(data) {
 
             var e = data.records[0];
 
+            var vc = e.venue_category;
+            if (vc.length > 35) {
+
+                vc = vc.substr(0, 32) + '...';
+            }
+
             if (e.latitude && e.latitude != null) {
 
                 $.ajax({
@@ -358,7 +364,7 @@ function onLoadData(data) {
                     crossDomain : true,
                 }).done(function(data) {
 
-                    $('#other').html('<div style="width: 40%; float: left;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + e.venue_category + '</div>' + '<div style="width: 60%; float: left; text-align: right;">' + data.results[0].formatted_address + ' &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>');
+                    $('#other').html('<div style="width: 40%; float: left;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + vc + '</div>' + '<div style="width: 60%; float: left; text-align: right;">' + data.results[0].formatted_address + ' &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>');
                     $('#other').fadeIn();
                 });
 
@@ -379,7 +385,9 @@ function onLoadData(data) {
                     $('#map').fadeIn();
                 }, 100);
 
-                $('#other').html('<div style="width: 50%; float: left;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + e.venue_category + '</div>' + '<div style="width: 50%; float: left; text-align: right;">unknown address&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>');
+
+
+                $('#other').html('<div style="width: 50%; float: left;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + vc + '</div>' + '<div style="width: 50%; float: left; text-align: right;">unknown address&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>');
                 $('#other').fadeIn();
             }
 

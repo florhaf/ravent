@@ -56,6 +56,7 @@
     margin-top: -205px;
     margin-left: -200px;
     z-index: 42;
+    display: none;
 }
 
 .button-send-text {
