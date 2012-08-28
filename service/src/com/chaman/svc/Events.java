@@ -54,7 +54,6 @@ public class Events extends ServerResource {
 			
 		} catch (Exception ex) {
 			
-			
 			log.severe(ex.toString());
 			
 			result.setSuccess(false);

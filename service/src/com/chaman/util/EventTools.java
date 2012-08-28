@@ -2,6 +2,7 @@ package com.chaman.util;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import com.beoui.geocell.GeocellUtils;
 import com.beoui.geocell.LocationCapableRepositorySearch;
@@ -13,6 +14,8 @@ import com.chaman.model.User;
 
 public class EventTools {
 
+	protected static final Logger log = Logger.getLogger(EventTools.class.getName());
+	
     private static final int[] NORTHEAST = new int[] {1,1};
     private static final int[] SOUTHWEST = new int[] {-1,-1};
     
@@ -93,68 +96,70 @@ public class EventTools {
 		
 		List<Model> result = new ArrayList<Model>();
 		
-		Event temp = null;
-		
-		for (int i = 0; i < l.size() -1; i++) {
+		if (l != null && l.size() > 0) {
 			
-			Event e1 = (Event) l.get(i);
-			Event e2 = (Event) l.get(i + 1);
+			Event temp = null;
 			
-			//if same venue
-			if ((e1.eventvenueID() != null && e2.eventvenueID() != null) && (e1.eventvenueID().equals(e2.eventvenueID()))) {
+			for (int i = 0; i < l.size() -1; i++) {
 				
-				//if event overlap (assuming same event)
-				if (!(Long.parseLong(e1.starttime()) > Long.parseLong(e2.endtime()) || Long.parseLong(e2.starttime()) > Long.parseLong(e1.endtime()))) {
+				Event e1 = (Event) l.get(i);
+				Event e2 = (Event) l.get(i + 1);
+				
+				//if same venue
+				if ((e1.eventvenueID() != null && e2.eventvenueID() != null) && (e1.eventvenueID().equals(e2.eventvenueID()))) {
 					
-					if (e1.getOffer_title() != null || e1.getFeatured() != null || e1.getTicket_link() != null) {
-						result.add(e1);
-						continue;
-					}
-					
-					//if e1 better than e2
-					if (EventTools.is_better_than(e1, e2)) {
+					//if event overlap (assuming same event)
+					if (!(Long.parseLong(e1.starttime()) > Long.parseLong(e2.endtime()) || Long.parseLong(e2.starttime()) > Long.parseLong(e1.endtime()))) {
 						
-						if (temp != null) {
+						if (e1.getOffer_title() != null || e1.getFeatured() != null || e1.getTicket_link() != null) {
+							result.add(e1);
+							continue;
+						}
+						
+						//if e1 better than e2
+						if (EventTools.is_better_than(e1, e2)) {
 							
-							if (EventTools.is_better_than(e1, temp)) {
+							if (temp != null) {
+								
+								if (EventTools.is_better_than(e1, temp)) {
+									
+									temp = e1;
+								} // else temp stays the best
+							} else {
 								
 								temp = e1;
-							} // else temp stays the best
+							}
 						} else {
 							
-							temp = e1;
+							temp = e2;
 						}
-					} else {
-						
-						temp = e2;
+						continue;
 					}
-					continue;
-				}
-			} else {
-				
-				if (temp != null) {
-					
-					result.add(temp);
-					temp = null;
 				} else {
 					
-					result.add(e1);
+					if (temp != null) {
+						
+						result.add(temp);
+						temp = null;
+					} else {
+						
+						result.add(e1);
+					}
 				}
+				
 			}
 			
-		}
-		
-		//last one
-		if (temp == null) {
-			result.add((Event) l.get(l.size() - 1));
-		} else {
-			if (EventTools.is_better_than((Event) l.get(l.size() - 1), temp)) {
+			//last one
+			if (temp == null) {
 				result.add((Event) l.get(l.size() - 1));
 			} else {
-				result.add(temp);	
+				if (EventTools.is_better_than((Event) l.get(l.size() - 1), temp)) {
+					result.add((Event) l.get(l.size() - 1));
+				} else {
+					result.add(temp);	
+				}
 			}
 		}
-		
 		return result;
 	}
 

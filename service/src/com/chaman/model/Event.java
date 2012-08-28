@@ -141,11 +141,14 @@ public class Event extends Model implements Serializable, Runnable {
 			q.addAll(l);
 			
 			result = e.tm.Process(q);
-			
-			if (result.size() > 1) {
-				Collections.sort(result, new EventComparator());
+
+			Collections.sort(result, new EventComparator());
+			try {	
 				result = EventTools.removeDuplicates(result);
+			} catch (Exception ex) {
+				log.severe("ERROR IN remove duplicates");
 			}
+	
 		}
 		
 		return (ArrayList<Model>)result;    
