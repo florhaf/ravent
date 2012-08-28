@@ -12,6 +12,7 @@ import com.googlecode.objectify.annotation.Entity;
 import com.google.appengine.api.memcache.MemcacheService;
 import com.google.appengine.api.memcache.MemcacheServiceFactory;
 
+
 @Entity
 public class Following extends Model implements Serializable  {
 
@@ -100,6 +101,20 @@ public class Following extends Model implements Serializable  {
 	      syncCache.put(f.id, f, null); // populate cache
 	      syncCache.delete(Long.parseLong(userID)); // to refresh the data at the next call of following()
 	      syncCache.delete(Long.parseLong(friendID)); // to refresh the data at the next call of following()
+	      
+	      User user = (User) syncCache.get(userID); // read from cache
+	      if (user == null) {
+	    	  user = dao.ofy().find(User.class, userID);
+	      }
+	      
+	      if (user != null) {
+	      	//FacebookClient client 	= new DefaultFacebookClient(user.access_token);
+	    	
+	      	//client.publish(friendID + "/feed", FacebookType.class, Parameter.with("message", "I'm following your events on Gemster"), Parameter.with("link", "http://www.gemsterapp.com"));
+	      	
+	      	// FB Action
+	      	//client.publish(userID + "/og.follows", FacebookType.class, Parameter.with("profile", "http://gemsterapp.com/facebook/"));
+	      }
 	    }
 	}
 	

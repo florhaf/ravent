@@ -38,14 +38,12 @@ public class Post  extends Model {
 	public static void WallPost(String accessToken, String userID, String message) {
 		
 		FacebookClient client	= new DefaultFacebookClient(accessToken);
-		//TODO: add reference to ravent
 		client.publish(userID + "/feed", FacebookType.class, Parameter.with("message", message));
 	}
 	
 	public static void FriendWallPost(String accessToken, String friendID, String message) {
 		
 		FacebookClient client	= new DefaultFacebookClient(accessToken);
-		//TODO: add reference to ravent
 		client.publish(friendID + "/feed", FacebookType.class, Parameter.with("message", message));
 	}
 
@@ -58,7 +56,6 @@ public class Post  extends Model {
 	public static void EventPost(String accessToken, String userID, String eventID, String message) {
 		
 		FacebookClient client	= new DefaultFacebookClient(accessToken);
-		//TODO: add reference to ravent
 		client.publish(eventID + "/feed", FacebookType.class, Parameter.with("message", message));
 	}
 	
@@ -82,7 +79,7 @@ public class Post  extends Model {
 		}
 		catch (Exception ex ) {
 			
-			client.publish(friendID + "/feed", FacebookType.class, Parameter.with("message", "I'm inviting you to an event"), Parameter.with("link", "http://facebook.com/" + eventID)); //add link;
+			client.publish(friendID + "/feed", FacebookType.class, Parameter.with("message", "I'm inviting you to an event"), Parameter.with("link", "http://gemsterapp.com/facebook/event_page.php?eid=" + eventID)); //add link;
 			return "Your friend cannot be invited directly to this event. A message has been posted on your friend's Timeline."; //TODO: do we want the user to choose if he wants to write on his friend time line?
 		}
 		

@@ -125,7 +125,7 @@ public class Event extends Model implements Serializable, Runnable {
 		LocationCapableRepositorySearch<EventLocationCapable> ofySearch = new OfyEntityLocationCapableRepositorySearchImpl(dao.ofy(), timeZone, searchTimeFrame);
 		
 		//List<EventLocationCapable> l = GeocellManager.proximityFetch(new Point(Double.parseDouble(searchLat), Double.parseDouble(searchLon)), searchLimit, searchRadius * 1000 * 1.61, ofySearch, 6);
-		List<EventLocationCapable> l = EventTools.proximityFetch(searchLat, searchLon, ofySearch, searchRadius);
+		List<EventLocationCapable> l = EventTools.proximityFetch(searchLat, searchLon, ofySearch, searchRadius, searchLimit);
 
 		if (l != null && !l.isEmpty()) {
 			
@@ -141,12 +141,13 @@ public class Event extends Model implements Serializable, Runnable {
 			q.addAll(l);
 			
 			result = e.tm.Process(q);
+			
+			if (result.size() > 1) {
+				Collections.sort(result, new EventComparator());
+				result = EventTools.removeDuplicates(result);
+			}
 		}
 		
-		Collections.sort(result, new EventComparator());
-		
-		result = EventTools.removeDuplicates(result);
-
 		return (ArrayList<Model>)result;    
 	}
 
@@ -224,9 +225,6 @@ public class Event extends Model implements Serializable, Runnable {
         			}
             	} 
 	   
-	    	} else { // event in the past
-					
-	    		dao.ofy().delete(e); //clean the datastore by removing old events TODO: call a task doesn't have to be deleted right away
 	    	}
 		} catch (Exception ex) {
 			
@@ -282,13 +280,14 @@ public class Event extends Model implements Serializable, Runnable {
 		
 		e = fbevents.get(0);
 		
+		e.venue_id = JSON.GetValueFor("id", e.venue);
+		Venue v_graph = Venue.getVenue(client, e.venue_id);
+		e.venue_category = v_graph.category;
+		
 		e.Filter_category();
 		
 		e.Format(timeZoneInMinutes, now, 0, locale);
 		
-		e.venue_id = JSON.GetValueFor("id", e.venue);
-		Venue v_graph = Venue.getVenue(client, e.venue_id);
-		e.venue_category = v_graph.category;
 		e.latitude 	= JSON.GetValueFor("latitude", e.venue);
 		e.longitude = JSON.GetValueFor("longitude", e.venue);
 		

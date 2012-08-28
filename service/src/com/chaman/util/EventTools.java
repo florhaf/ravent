@@ -16,7 +16,7 @@ public class EventTools {
     private static final int[] NORTHEAST = new int[] {1,1};
     private static final int[] SOUTHWEST = new int[] {-1,-1};
     
-	public static List<EventLocationCapable> proximityFetch(String searchLat, String searchLon, LocationCapableRepositorySearch<EventLocationCapable> ofySearch, float searchRadius) {
+	public static List<EventLocationCapable> proximityFetch(String searchLat, String searchLon, LocationCapableRepositorySearch<EventLocationCapable> ofySearch, float searchRadius, int limit) {
 		
 		List<EventLocationCapable> DS = new ArrayList<EventLocationCapable>();
 		
@@ -30,12 +30,20 @@ public class EventTools {
 		
 		DS = ofySearch.search(geocells);
 		
+		int i = 0;
+		
 		for (EventLocationCapable e : DS) {
 			
 			float distance = Geo.Fence(searchLat, searchLon, String.valueOf(e.getLatitude()), String.valueOf(e.getLongitude()));
 			if (distance <= searchRadius) {
 				
 				result.add(e);
+				if (limit != 0) {
+					i++;
+					if (i >= limit) {
+						break;
+					}
+				}
 			}
 			
 		}

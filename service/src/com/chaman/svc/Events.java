@@ -31,26 +31,24 @@ public class Events extends ServerResource {
 			String searchLimit 		= getQuery().getValues("limit");
 			String locale	 		= getQuery().getValues("locale");
 			
-			searchLimit = "200";
 			String searchRadius = "6";
+			
+			if (searchLimit == null) {
+				searchLimit = "0";
+			}
 			
 			ArrayList<Model> events;
 			
 			
 			
 			if (userID != null) {
-			
 				events = EventUser.Get(accessToken, userID, latitude, longitude, timeZone, locale);
+			} else if (searchLat == null) {
+				events = Event.Get(accessToken, latitude, longitude, latitude, longitude, timeZone, Integer.parseInt(searchTimeFrame), Float.parseFloat(searchRadius), Integer.parseInt(searchLimit), locale);
 			} else {
-				if (searchLat == null) {
-					events = Event.Get(accessToken, latitude, longitude, latitude, longitude, timeZone, Integer.parseInt(searchTimeFrame), Float.parseFloat(searchRadius), Integer.parseInt(searchLimit), locale);
-				} else {
-					events = Event.Get(accessToken, latitude, longitude, searchLat, searchLon, timeZone, Integer.parseInt(searchTimeFrame), Float.parseFloat(searchRadius), Integer.parseInt(searchLimit), locale);
-				}
-				
-				
+				events = Event.Get(accessToken, latitude, longitude, searchLat, searchLon, timeZone, Integer.parseInt(searchTimeFrame), Float.parseFloat(searchRadius), Integer.parseInt(searchLimit), locale);
 			}
-			
+				
 			result.setSuccess(true);
 			result.setRecords(events);
 			
