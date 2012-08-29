@@ -262,9 +262,19 @@ public class Event extends Model implements Serializable, Runnable {
 		for (String eid : eids) {
 	    	
 			try {
-				result.add(getSingle(accessToken, eid, timeZone, userLatitude, userLongitude, locale));
+				
+				Event e = getSingle(accessToken, eid, timeZone, userLatitude, userLongitude, locale);
+				if (e == null) {
+					continue;
+				}
+				result.add(e);
 			} catch (Exception ex ) {
-				result.add(getSingle(accessToken, eid, timeZone, userLatitude, userLongitude, locale));
+				
+				Event e = getSingle(accessToken, eid, timeZone, userLatitude, userLongitude, locale);
+				if (e == null) {
+					continue;
+				}
+				result.add(e);
 			}
 		}
 		
@@ -284,6 +294,10 @@ public class Event extends Model implements Serializable, Runnable {
 		String query 			= "SELECT eid, name, pic_big, start_time, end_time, venue, location, privacy, timezone FROM event WHERE eid = " + eid;
 		List<Event> fbevents 	= client.executeQuery(query, Event.class);
 		
+		
+		if (fbevents.isEmpty()) {
+			return null;
+		}
 		e = fbevents.get(0);
 		
 		e.venue_id = JSON.GetValueFor("id", e.venue);
