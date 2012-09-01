@@ -125,6 +125,7 @@ public class Event extends Model implements Serializable, Runnable {
 		LocationCapableRepositorySearch<EventLocationCapable> ofySearch = new OfyEntityLocationCapableRepositorySearchImpl(dao.ofy(), timeZone, searchTimeFrame);
 		
 		//List<EventLocationCapable> l = GeocellManager.proximityFetch(new Point(Double.parseDouble(searchLat), Double.parseDouble(searchLon)), searchLimit, searchRadius * 1000 * 1.61, ofySearch, 6);
+		
 		List<EventLocationCapable> l = EventTools.proximityFetch(searchLat, searchLon, ofySearch, searchRadius, searchLimit);
 
 		if (l != null && !l.isEmpty()) {
@@ -141,9 +142,9 @@ public class Event extends Model implements Serializable, Runnable {
 			q.addAll(l);
 			
 			result = e.tm.Process(q);
-
+			
 			Collections.sort(result, new EventComparator());
-			try {	
+			try {
 				result = EventTools.removeDuplicates(result);
 			} catch (Exception ex) {
 				log.severe("ERROR IN remove duplicates");
