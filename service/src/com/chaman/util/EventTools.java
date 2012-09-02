@@ -105,6 +105,7 @@ public class EventTools {
 				Event e1 = (Event) l.get(i);
 				Event e2 = (Event) l.get(i + 1);
 				
+
 				//if same venue
 				if ((e1.eventvenueID() != null && e2.eventvenueID() != null) && (e1.eventvenueID().equals(e2.eventvenueID()))) {
 					
@@ -147,8 +148,7 @@ public class EventTools {
 					}
 				}
 				
-			}
-			
+			}		
 			//last one
 			if (temp == null) {
 				result.add((Event) l.get(l.size() - 1));
@@ -160,20 +160,36 @@ public class EventTools {
 				}
 			}
 		}
-		return result;
+		
+		return result;	
 	}
 
 
 	private static boolean is_better_than(Event e1, Event e2) {
 		
-		Long c1 = Long.parseLong(e1.allMemberCount());
-		Long c2 = Long.parseLong(e2.allMemberCount());
+		if (e1.allMemberCount() != null && e2.allMemberCount() != null) {
+			
+			Long c1 = Long.parseLong(e1.allMemberCount());
+			Long c2 = Long.parseLong(e2.allMemberCount());
+			
+			if (c1 != null && c2 != null) {
+			
+				if (c1 > c2) {
+					return true;
+				} else {
+					return false;
+				}
+			}
+		}
 		
-		if (c1 > c2) {
-			return true;
-		} else {
+		if (e1.allMemberCount() == null) {
 			return false;
 		}
+		if (e2.allMemberCount() == null) {
+			return true;
+		}
+		
+		return true;
 	}
 }
 
