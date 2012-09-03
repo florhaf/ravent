@@ -99,15 +99,24 @@ public class Event extends Model implements Serializable, Runnable {
 	String userLongitude;
 	
 	
+	
 	public Event() {
 		
 		super();
 	}
 	
+	
 	 /* - Get list of event for any user in search area
 	 * - exclude past event
 	 */
 	public static ArrayList<Model> Get(String accessToken, String userLatitude, String userLongitude, String searchLat, String searchLon, String timeZone, int searchTimeFrame, float searchRadius, int searchLimit, String locale) throws FacebookException , MemcacheServiceException {
+		
+		Boolean isRetrying = false;
+		
+		return Event.Get(accessToken, userLatitude, userLongitude, searchLat, searchLon, timeZone, searchTimeFrame, searchRadius, searchLimit, locale, isRetrying);
+	}
+	
+	private static ArrayList<Model> Get(String accessToken, String userLatitude, String userLongitude, String searchLat, String searchLon, String timeZone, int searchTimeFrame, float searchRadius, int searchLimit, String locale, Boolean isRetrying) throws FacebookException , MemcacheServiceException {
 		
 		List<Model> result = new ArrayList<Model>();
 		
@@ -150,10 +159,22 @@ public class Event extends Model implements Serializable, Runnable {
 				log.severe("ERROR IN remove duplicates");
 			}
 	
+			// not enough result for current timeframe
+			// retry with bigger timeframe: 5 days
+			if (result.size() < 10 && !isRetrying) {
+				
+				int newTimeFrame = searchTimeFrame + (5 * 24);
+				
+				Boolean retry = true;
+				
+				return Event.Get(accessToken, userLatitude, userLongitude, searchLat, searchLon, timeZone, newTimeFrame, searchRadius, searchLimit, locale, retry);
+			}
 		}
 		
 		return (ArrayList<Model>)result;    
 	}
+
+	
 
 	@Override
 	public void run() {

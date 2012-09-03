@@ -36,7 +36,7 @@
     background-attachment: scroll;
     background-clip: border-box;
     background-color: transparent;
-    background-image: url(../img/buttonGetTheApp.png);
+    background-image: url(../img/buttonGetTheApp3.png);
     border-bottom-width: 0px;
     border-left-width: 0px;
     border-right-width: 0px;
@@ -63,6 +63,8 @@
     width: 187px;
 }
 
+
+
 .button-get-the-app:link {
     color: white;
 }
@@ -72,18 +74,45 @@
 }
 
 .form-get-the-app {
-    background-image: url(../img/backgroundTextMeLink.png);
+    background-image: url(../img/backgroundTextMeLink3.png);
     background-repeat: no-repeat;
     width: 237px;
     height: 170px;
     color: #d3d3d3;
     position: absolute;
     font-size: 15px;
-    padding: 15px 0px 0px 28px;
+    padding: 15px 0px 0px 18px;
     text-align: left;
-    margin-top: -205px;
-    margin-left: 250px;
+    margin-top: -285px;
+    margin-left: 20px;
     z-index: 42;
+}
+
+.form-try-the-app {
+    background-image: url(../img/frame2.png);
+    background-repeat: no-repeat;
+    width: 340px;
+    height: 330px;
+    color: #d3d3d3;
+    position: absolute;
+    left : 210px;
+    font-size: 15px;
+    padding: 5px 0px 0px 10px;
+    text-align: left;
+    margin-top: -420px;
+    margin-left: 0px;
+    z-index: 42;
+}
+
+a, a:visited {
+    color: #555555;
+    text-decoration:none;
+    outline:none;
+}
+
+a:hover{
+    text-decoration:none;
+    color:#555555;
 }
 
 .button-send-text {
@@ -92,7 +121,7 @@
     background-image: url(../img/buttonSendText.png);
     background-repeat: no-repeat;
     background-color: transparent;
-    margin-left: -30px;
+    margin-left: -100px;
     border: 0;
 }
 
