@@ -159,7 +159,7 @@ public class Event extends Model implements Serializable, Runnable {
 				log.severe("ERROR IN remove duplicates");
 			}
 	
-			// not enough result for current timeframe
+			// not enough results for current timeframe
 			// retry with bigger timeframe: 5 days
 			if (result.size() < 10 && !isRetrying) {
 				
