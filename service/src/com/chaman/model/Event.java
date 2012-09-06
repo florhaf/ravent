@@ -158,17 +158,16 @@ public class Event extends Model implements Serializable, Runnable {
 			} catch (Exception ex) {
 				log.severe("ERROR IN remove duplicates");
 			}
-	
-			// not enough results for current timeframe
-			// retry with bigger timeframe: 5 days
-			if (result.size() < 10 && !isRetrying) {
-				
-				int newTimeFrame = searchTimeFrame + (5 * 24);
-				
-				Boolean retry = true;
-				
-				return Event.Get(accessToken, userLatitude, userLongitude, searchLat, searchLon, timeZone, newTimeFrame, searchRadius, searchLimit, locale, retry);
-			}
+		}
+		// not enough results for current timeframe
+		// retry with bigger timeframe: 5 days
+		if (result.size() < 10 && !isRetrying) {
+			
+			int newTimeFrame = searchTimeFrame + (5 * 24);
+			
+			Boolean retry = true;
+		
+			return Event.Get(accessToken, userLatitude, userLongitude, searchLat, searchLon, timeZone, newTimeFrame, searchRadius, searchLimit, locale, retry);
 		}
 		
 		return (ArrayList<Model>)result;    
