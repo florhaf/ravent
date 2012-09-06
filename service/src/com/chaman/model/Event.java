@@ -229,7 +229,7 @@ public class Event extends Model implements Serializable, Runnable {
 	    	    		}
             		}
             	}
-          			
+    			
             	if (event != null && (event.venue_category == null || !event.venue_category.equals("city"))) {
             		
         			if (event.Format(timeZoneInMinutes, now, searchTimeFrame, locale)){
@@ -248,7 +248,7 @@ public class Event extends Model implements Serializable, Runnable {
             			this.tm.AddToResultList(event);
         			}
             	} 
-	   
+            	
 	    	} else {
 	    		
 	    		dao.ofy().delete(e); //clean the datastore by removing old events TODO: call a task doesn't have to be deleted right away
@@ -537,11 +537,13 @@ public class Event extends Model implements Serializable, Runnable {
 			day = name.substring(dayindex - 3, dayindex);
 			
 			if (day.contains(" ")){
+				
+				this.group = "a";
+				this.groupTitle = "Today";
+				
 				if (!this.filter.equals("Entertain")) {
 					return false;
 				}
-				this.group = "a";
-				this.groupTitle = "Today";
 			} else {
 				
 				if (day.equals("mon")) {dayoffweek_name = 1;} else
