@@ -12,15 +12,13 @@ require '../php/facebook-sdk/src/facebook.php';
     $app_token = file_get_contents($token_url);
     $app_token = "access_token=AAADRmCDizJoBACf5T4Me2cbwyyppRA4sq45I5QY1Grb7iIzZB9VfZCgANHxKgNuDfxJW6euMwqydwpBSsGfwxKRzqfSiMcVGXWNiRNSAZDZD";
 
-
-$event_url = "http://api.gemsterapp.com/calendar?" . $app_token . "&timezone_offset=-420&eventID=351551451567685";
-$json = file_get_contents($event_url);
-$obj = json_decode($json);
+    $event_url = "http://api.gemsterapp.com/calendar?" . $app_token . "&timezone_offset=-420&eventID=" . $_GET['eid'];
+    $json = file_get_contents($event_url);
+    $obj = json_decode($json);
 
     $name = $obj->records[0]->name;
     $location = $obj->records[0]->location;
     $pic_url = $obj->records[0]->pic_big;
-
 ?>
 
 <!doctype html>
