@@ -16,6 +16,7 @@ Ext.application({
 
         Ext.Viewport.add({
             scrollable: true,
+            cls : 'background-dark',
             items : [{
                 xtype : 'toolbar',
                 docked : 'top',
@@ -30,21 +31,27 @@ Ext.application({
             },
 
 
-            items : [{
-                html : '<div class="header"><div class="header-text">Gemster</div></div>',
-                width: '100%',
-                docked: 'top'
-            },{
-                html : '<div style="margin-top: -20px; margin-bottom: 20px; color: #a9a9a9;"><b>The Entertainment Provider</b></div>'
-            },{
-                html : '<br />'
-            },{
+            items : [
+//                {
+//                html : '<div class="header"><div class="header-text">Gemster</div></div>',
+//                width: '100%',
+//                docked: 'top'
+//            },{
+//                html : '<div style="margin-top: -20px; margin-bottom: 20px; color: #a9a9a9;"><b>The Entertainment Provider</b></div>'
+//            },{
+//                html : '<br />'
+//            },
+                {
+                    html : '<img src="resources/images/logo+G.png" style="min-widt: 320px; min-height: 320px; margin-top: -20px;" />'
+                },
+                {
 
                 xtype : 'button',
-                ui : 'action',
-                text : (Ext.os.is.ios) ? 'Get the app' : 'Gemster is only available for iOS, for now...',
+                    margin: '-50px auto 0 auto',
+                ui : 'confirm',
+                text : (Ext.os.is.ios) ? 'Get the app' : 'Gemster is only available for iOS only',
                 disabled : !(Ext.os.is.ios),
-                width : '90%',
+                width : '300px',
                 listeners : {
                     tap : function() {
 
@@ -59,9 +66,9 @@ Ext.application({
             },{
 
                 xtype : 'button',
-                ui : 'confirm',
+                ui : 'action',
                 text: 'Promoters',
-                width : '90%',
+                width : '300px',
                 listeners : {
                     tap : function() {
                         window.location = "promoter/";
