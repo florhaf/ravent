@@ -285,6 +285,9 @@ chromium.org/developers/how-tos/chrome-frame-getting-started -->
         var d = new Date();
 
         var language = window.navigator.userLanguage || window.navigator.language;
+
+        language = (language.length < 4) ? language + "_US" : language;
+
         var latitude = '40.7433586';
         var longitude = '-73.972406';
 

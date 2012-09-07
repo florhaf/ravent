@@ -93,7 +93,7 @@ chromium.org/developers/how-tos/chrome-frame-getting-started -->
                         </tr>
                         <tr>
                             <td width="15%"><label for="name">Phone</label></td>
-                            <td width="70%"><input type="text" class="validate[required,custom[onlyNumber]]" name="name" id="name" value="<?=$_SESSION['post']['phone']?>" /></td>
+                            <td width="70%"><input type="text" class="validate[required,custom[onlyNumber]]" name="phone" id="phone" value="<?=$_SESSION['post']['phone']?>" /></td>
                             <td width="15%" id="errOffset">&nbsp;</td>
                         </tr>
                         <tr>
