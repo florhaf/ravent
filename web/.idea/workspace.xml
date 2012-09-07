@@ -22,13 +22,13 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="index.html" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="30" column="0" selection-start="1047" selection-end="1047" vertical-scroll-proportion="-18.75">
+            <state line="115" column="103" selection-start="5423" selection-end="5423" vertical-scroll-proportion="0.16090584">
               <folding>
-                <marker date="1346992191000" expanded="true" signature="2785:3018" placeholder="..." />
-                <marker date="1346992191000" expanded="true" signature="2853:2891" placeholder="..." />
+                <marker date="1346994650000" expanded="true" signature="2785:3018" placeholder="..." />
+                <marker date="1346994650000" expanded="true" signature="2853:2891" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -61,10 +61,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="event_page.php" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="event_page.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/facebook/event_page.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="315" column="24" selection-start="14151" selection-end="14151" vertical-scroll-proportion="0.4050179">
+            <state line="308" column="63" selection-start="13493" selection-end="13493" vertical-scroll-proportion="-9.0">
               <folding />
             </state>
           </provider>
@@ -138,11 +138,11 @@
         <option value="$PROJECT_DIR$/css/mainpage.css" />
         <option value="$PROJECT_DIR$/js/gemster.event.js" />
         <option value="$PROJECT_DIR$/mobile/app.js" />
-        <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/privacypolicy/index.html" />
         <option value="$PROJECT_DIR$/termsofuse/index.html" />
         <option value="$PROJECT_DIR$/facebook/event_page.html" />
         <option value="$PROJECT_DIR$/facebook/event_page.php" />
+        <option value="$PROJECT_DIR$/index.html" />
       </list>
     </option>
   </component>
@@ -519,26 +519,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="30" column="0" selection-start="1047" selection-end="1047" vertical-scroll-proportion="-18.75">
-          <folding>
-            <marker date="1346992191000" expanded="true" signature="2785:3018" placeholder="..." />
-            <marker date="1346992191000" expanded="true" signature="2853:2891" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/about/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state line="40" column="131" selection-start="2334" selection-end="2360" vertical-scroll-proportion="-18.75">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/privacypolicy/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="40" column="115" selection-start="2318" selection-end="2318" vertical-scroll-proportion="-23.125">
           <folding />
         </state>
       </provider>
@@ -552,8 +535,25 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/facebook/event_page.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="315" column="24" selection-start="14151" selection-end="14151" vertical-scroll-proportion="0.4050179">
+        <state line="308" column="63" selection-start="13493" selection-end="13493" vertical-scroll-proportion="-9.0">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/privacypolicy/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="40" column="115" selection-start="2318" selection-end="2318" vertical-scroll-proportion="-23.125">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="115" column="103" selection-start="5423" selection-end="5423" vertical-scroll-proportion="0.16090584">
+          <folding>
+            <marker date="1346994650000" expanded="true" signature="2785:3018" placeholder="..." />
+            <marker date="1346994650000" expanded="true" signature="2853:2891" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>
