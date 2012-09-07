@@ -10,18 +10,16 @@ require '../php/facebook-sdk/src/facebook.php';
                     "&client_secret=" . $APPLICATION_SECRET .
                     "&grant_type=client_credentials";
     $app_token = file_get_contents($token_url);
+    $app_token = "access_token=AAADRmCDizJoBACf5T4Me2cbwyyppRA4sq45I5QY1Grb7iIzZB9VfZCgANHxKgNuDfxJW6euMwqydwpBSsGfwxKRzqfSiMcVGXWNiRNSAZDZD";
 
-    $facebook = new Facebook(array(
 
-        'appId' => $APPLICATION_ID,
-        'secret' => $APPLICATION_SECRET,
-    ));
+$event_url = "http://api.gemsterapp.com/calendar?" . $app_token . "&timezone_offset=-420&eventID=351551451567685";
+$json = file_get_contents($event_url);
+$obj = json_decode($json);
 
-    $event = $facebook->api($_GET['eid']);
-
-    $name = $event['name'];
-    $location = $event['location'];
-    $pic_url = 'https://graph.facebook.com/' . $_GET['eid'] . '/picture';
+    $name = $obj->records[0]->name;
+    $location = $obj->records[0]->location;
+    $pic_url = $obj->records[0]->pic_big;
 
 ?>
 
@@ -107,7 +105,7 @@ chromium.org/developers/how-tos/chrome-frame-getting-started -->
 
                 <div id="top" style="width: 100%; height: 280px; margin-top: 35px;">
 
-                    <div id="picture" style="width: 280px; height: 280px; margin-left: 20px; margin-top: -10px; float: left; overflow: hidden; display: table-cell; vertical-align: middle;">
+                    <div id="picture" style="width: 280px; height: 280px; margin-left: 20px; margin-top: -10px; float: left; overflow: hidden; background-color: #c5c5c5;">
 
                         <img id="img" src="<?php echo ($pic_url . '?type=large'); ?>" style="min-width: 100%; display: none;" alt="event image" />
 
@@ -310,12 +308,12 @@ chromium.org/developers/how-tos/chrome-frame-getting-started -->
                     crossDomain : true
                 }).done(function(data) {
 
-                    if (data && data.results && data.results.length > 0 && data.results[0].formatted_address) {
+                    //if (data && data.results && data.results.length > 0 && data.results[0].formatted_address) {
 
                         $('#other').html('<div style="width: 40%; float: left;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + vc + '</div>' + '<div style="width: 60%; float: left; text-align: right;">' + data.results[0].formatted_address + ' &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>');
                         $('#other').fadeIn();
 
-                    }
+                    //}
                 });
 
                 $('#map').html('<img src="http://maps.googleapis.com/maps/api/staticmap?center=' + e.latitude + ',' + e.longitude + '&zoom=13&size=280x280&maptype=roadmap&markers=color:red%7Ccolor:red%7Clabel:%7C' + e.latitude + ',' + e.longitude + '&sensor=false" style="width: 280px; height:280px;" />');
