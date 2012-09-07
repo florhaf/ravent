@@ -72,12 +72,9 @@ require '../php/facebook-sdk/src/facebook.php';
 #scroller{height:100%;margin:0;padding:0;line-height:70px;position:relative;}
 #scroller li{float:left;height:70px;padding:0 0 0 10px;list-style-position:inside;}
     #scrollerWrapper{
-
-position:relative;
+        position:relative;
         overflow:hidden;
-
-
-        border: width: 100%; height: 70px; font-size: 40px;
+        width: 100%; height: 70px; font-size: 40px;
     }
 </style>
 
@@ -313,8 +310,12 @@ chromium.org/developers/how-tos/chrome-frame-getting-started -->
                     crossDomain : true
                 }).done(function(data) {
 
-                    $('#other').html('<div style="width: 40%; float: left;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + vc + '</div>' + '<div style="width: 60%; float: left; text-align: right;">' + data.results[0].formatted_address + ' &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>');
-                    $('#other').fadeIn();
+                    if (data && data.results && data.results.length > 0 && data.results[0].formatted_address) {
+
+                        $('#other').html('<div style="width: 40%; float: left;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + vc + '</div>' + '<div style="width: 60%; float: left; text-align: right;">' + data.results[0].formatted_address + ' &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>');
+                        $('#other').fadeIn();
+
+                    }
                 });
 
                 $('#map').html('<img src="http://maps.googleapis.com/maps/api/staticmap?center=' + e.latitude + ',' + e.longitude + '&zoom=13&size=280x280&maptype=roadmap&markers=color:red%7Ccolor:red%7Clabel:%7C' + e.latitude + ',' + e.longitude + '&sensor=false" style="width: 280px; height:280px;" />');
@@ -371,7 +372,6 @@ chromium.org/developers/how-tos/chrome-frame-getting-started -->
 
             $('#description').html($desc);
 
-            $('#container').css('height', (830 + parseInt($('#description').css('height')) -220) + 'px');
 
             $('#description').fadeIn();
         });
