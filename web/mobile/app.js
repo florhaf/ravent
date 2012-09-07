@@ -16,7 +16,6 @@ Ext.application({
 
         Ext.Viewport.add({
             scrollable: true,
-            cls : 'background-dark',
             items : [{
                 xtype : 'toolbar',
                 docked : 'top',
@@ -31,55 +30,43 @@ Ext.application({
             },
 
 
-            items : [
-
-//                {
-//                html : '<div class="header"><div class="header-text">Gemster</div></div>',
-//                width: '100%',
-//                docked: 'top'
-//            },{
-//                html : '<div style="margin-top: -20px; margin-bottom: 20px; color: #a9a9a9;"><b>The Entertainment Provider</b></div>'
-//            },{
-//                html : '<br />'
-//            },
-                {
-
-                    html : '<img src="resources/images/logo+G.png" style="min-width: 320px; width: 320px; margin-top: -20px;">'
-                },
-                {
+            items : [{
+                html : '<div class="header"><div class="header-text">Gemster</div></div>',
+                width: '100%',
+                docked: 'top'
+            },{
+                html : '<div style="margin-top: -20px; margin-bottom: 20px; color: #a9a9a9;"><b>The Entertainment Provider</b></div>'
+            },{
+                html : '<br />'
+            },{
 
                 xtype : 'button',
-                    margin: '-50px auto 0 auto',
-                ui : 'confirm',
-                text : (Ext.os.is.ios) ? 'Get the app' : 'Gemster is for iOS only',
+                ui : 'action',
+                text : (Ext.os.is.ios) ? 'Get the app' : 'Gemster is only available for iOS, for now...',
                 disabled : !(Ext.os.is.ios),
-                width : '300px',
+                width : '90%',
                 listeners : {
                     tap : function() {
 
-                        window.location = 'itms-services://?action=download-manifest&url=http://gemsterapp.com/Gemster.plist';
+                        window.location = 'http://itunes.apple.com/us/app/gemster/id553371725?ls=1&mt=8';
                     }
                 }
 //                html : (Ext.os.is.ios) ?
 //                    '<a href="itms-services://?action=download-manifest&url=http://beta.gemsterapp.com/Gemster.plist">Get the app</a>' :
 //                    '<div style="color: #a9a9a9; text-align: center; width: 100%;">Gemster is only available on iOS, for now...</div>'
             },{
-                    html: '<br />'
-                },{
+                html : '<br />'
+            },{
 
                 xtype : 'button',
-                ui : 'action',
+                ui : 'confirm',
                 text: 'Promoters',
-                width : '300px',
+                width : '90%',
                 listeners : {
                     tap : function() {
                         window.location = "promoter/";
                     }
                 }
-            },{
-                html : '<br />'
-            },{
-//                html : '<a href="http://gemsterapp.com/?fullversion=true">Full Version</a>'
             }]
 
         });
