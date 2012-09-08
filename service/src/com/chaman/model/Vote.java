@@ -80,6 +80,10 @@ public class Vote extends Model implements Serializable  {
     	FacebookClient client 	= new DefaultFacebookClient(accessToken);
     	client.publish(userid + "/gemsterapp:drop_a_gem_on", FacebookType.class, Parameter.with("event", "http://gemsterapp.com/facebook/event_page.php?eid=" + eventid));
 
+    	try {
+    		client.publish(eventid + "/feed", FacebookType.class, Parameter.with("message", "Dropped a gem on this event with Gemster"), Parameter.with("link", "http://gemsterapp.com/facebook/event_page.php?eid=" + eventid),
+    				Parameter.with("name", "Check the stats"), Parameter.with("picture", "http://gemsterapp.com/img/app_icon.png"));
+    	} catch (Exception ex) {}
 	}
 	
 	public static void NewVote(String userid, String eventid, String svote) {

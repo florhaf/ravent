@@ -363,7 +363,15 @@ public class Event extends Model implements Serializable, Runnable {
 		long timeStampStart = Long.parseLong(this.start_time) * 1000;
 		long timeStampEnd = Long.parseLong(this.end_time) * 1000;
 		
-		Locale loc = (locale != null && locale.length() > 0) ? new Locale(locale.split("_")[0],locale.split("_")[1]) : Locale.ENGLISH;
+		Locale loc = Locale.ENGLISH;
+		
+		if (locale != null && locale.length() > 0) {
+			if (locale.length() < 5) {
+				loc = new Locale(locale,"US");
+			} else {
+				loc = new Locale(locale.split("_")[0],locale.split("_")[1]);
+			}
+		}
 		
 		// facebook events timestamp are in PST // or have a timezone...
 		DateTimeZone PST = DateTimeZone.forID("America/Los_Angeles");

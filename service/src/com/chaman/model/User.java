@@ -71,14 +71,27 @@ public class User extends Model implements Serializable, Runnable {
 	int nb_of_followers;
 	int nb_of_following;
 	
+	@NotSaved
 	MyThreadManager<User> tm;
+	@NotSaved
 	ArrayList<User> dbUsers;
+	@NotSaved
 	FacebookClient client = null;
+	@NotSaved
 	Map<Long, Object> map_cache;
 	
 	public User() {
 		
 		super();
+	}
+	
+	
+	public User(String accessToken, String userID) {
+		
+		this.access_token = accessToken;
+		this.uid = Long.valueOf(userID);
+		this.nb_of_followers = -1;
+		this.nb_of_following = -1;
 	}
 	
 	static {
@@ -130,7 +143,7 @@ public class User extends Model implements Serializable, Runnable {
 			u.nb_of_events = event_member.size();
 			
     	    ucache = (User) syncCache.get(u.uid); // read from User cache
-    	    if (ucache == null) {
+    	    if (ucache == null || ucache.nb_of_following == -1) {
 
     	    	Query<Following> qfollowings = dao.ofy().query(Following.class);
     	    	qfollowings.filter("userID", u.uid);
@@ -186,22 +199,7 @@ public class User extends Model implements Serializable, Runnable {
 			return (ArrayList<Model>)result;
 		}
 		
-		String strUids = "";
-		
-		for (int i = 0; i < dbUsers.size(); i++) {
-			
-			strUids += "uid = " + ((User)dbUsers.get(i)).uid;
-			
-			if (i < dbUsers.size() - 1) {
-				
-				strUids += " OR ";
-			}
-		}
-		
 		FacebookClient client 	= new DefaultFacebookClient(accessToken);
-		String properties 		= "uid, first_name, last_name, pic";
-		String query 			= "SELECT " + properties + " FROM user WHERE " + strUids + " ORDER BY last_name";
-		List<User> users 		= client.executeQuery(query, User.class);
 
 		User u = new User();
 		
@@ -216,8 +214,8 @@ public class User extends Model implements Serializable, Runnable {
 		MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
 		u.map_cache = syncCache.getAll(eventkeys);
 		
-		Queue<User> q = new ArrayBlockingQueue<User>(users.size());
-		q.addAll(users);
+		Queue<User> q = new ArrayBlockingQueue<User>(dbUsers.size());
+		q.addAll(dbUsers);
 		
 		result = u.tm.Process(q);
 		
@@ -239,36 +237,46 @@ public class User extends Model implements Serializable, Runnable {
 			 
 			String eventQuery = "SELECT eid from event_member where uid = ";
 			
-			User u = this.tm.getIdForThread(Thread.currentThread());
+			User u_followed = this.tm.getIdForThread(Thread.currentThread());
 			
-			u.picture = u.pic;
+			String properties 		= "uid, first_name, last_name, pic";
+			String query 			= "SELECT " + properties + " FROM user WHERE uid = " + u_followed.uid;
+			List<User> users 		= client.executeQuery(query, User.class);
 			
-			User ucache = null;
-			
-			ucache = (User) map_cache.get(u.getUid());
-			
-			if (ucache == null) {
+			if (!users.isEmpty()) {
 				
-				List<JsonObject> event_member = client.executeQuery(eventQuery + u.uid + " AND start_time > " + TAS, JsonObject.class);
-
-				u.nb_of_events = event_member.size();
-						
-				User dbu = User.getUserByUID(u.uid, dbUsers);
+				User u = users.get(0);
 				
-				if (dbu != null) {
+				u.picture = u.pic;
+				
+				User ucache = null;
+				
+				ucache = (User) map_cache.get(u.getUid());
+				
+				if (ucache == null) {
 					
-					u.nb_of_followers = dbu.nb_of_followers;
-					u.nb_of_following = dbu.nb_of_following;
-					asyncCache.put(u.uid, u, null); // populate User cache
+					List<JsonObject> event_member = client.executeQuery(eventQuery + u.uid + " AND start_time > " + TAS, JsonObject.class);
+
+					u.nb_of_events = event_member.size();
+							
+					User dbu = User.getUserByUID(u.uid, dbUsers);
+					
+					if (dbu != null) {
+						
+						u.nb_of_followers = dbu.nb_of_followers;
+						u.nb_of_following = dbu.nb_of_following;
+						asyncCache.put(u.uid, u, null); // populate User cache
+					}
+				} else {
+					
+					u.nb_of_events = ucache.nb_of_events;
+					u.nb_of_followers = ucache.nb_of_followers;
+					u.nb_of_following = ucache.nb_of_following;
 				}
-			} else {
 				
-				u.nb_of_events = ucache.nb_of_events;
-				u.nb_of_followers = ucache.nb_of_followers;
-				u.nb_of_following = ucache.nb_of_following;
+				this.tm.AddToResultList(u);
 			}
 			
-			this.tm.AddToResultList(u);
 		} catch (Exception ex) {
 		
 			log.severe(ex.toString());
