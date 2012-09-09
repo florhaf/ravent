@@ -34,25 +34,12 @@ function getFormattedLocation() {
     }
 }
 
-
-function getParameterByName(name)
-{
-    name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
-    var regexS = "[\\?&]" + name + "=([^&#]*)";
-    var regex = new RegExp(regexS);
-    var results = regex.exec(window.location.search);
-    if(results == null)
-        return "";
-    else
-        return decodeURIComponent(results[1].replace(/\+/g, " "));
-}
-
 function onLoadData(data) {
 
     var results = data.records;
     var size = results.length;
 
-    var div = '';
+    var div = '<div style="margin-top: 18px;">';
 
     for (var i = 0; i < 3; i++) {
 
@@ -60,47 +47,57 @@ function onLoadData(data) {
 
         var e = results[randomnumber];
 
-        div += '<a href="/facebook/event_page.php?eid=' + e.eid + '"><div style="width: 282px; height: 93px; border-bottom: 1px solid lightGray; ">';
-
-        div += '<div style="width: 100%; height: 68px; border: 0px solid green;">';
-        div += '<div id="img" style="width: 64px; height: 64px; overflow: hidden; border: 1px solid gray; margin: 5px 5px 0px 5px; box-shadow: 0px 2px 2px #888; float: left;">';
-        div += '<img src="' + e.pic_big + '" alt="other event picture" style="min-width: 100%;" />';
-        div += '</div>';
-
         var name = e.name;
         var location = e.location;
 
-        if (name.length > 22) {
-            name = name.substr(0, 19) + '...';
+        if (name.length > 36) {
+            name = name.substr(0, 33) + '...';
         }
 
         if (location.length > 22) {
             location = location.substr(0, 19) + '...';
         }
 
-        div += '<div id="info" style="float: left; padding-left: 10px; padding-top: 10px;">';
-        div += '<span style="">' + name + '</span><br />';
-        div += '<span style="">' + location + '</span><br />';
-        div += '<div id="score" style="margin-top: 8px;">';
-        for (var j = 0; j < 5; j++) {
-            var imgStr = '<img src="../img/diamondSlot.png" alt="diamond slot" style="width: 24px; height: 18px;" />';
-            if (j < e.score) {
-                imgStr = '<img src="../img/diamond.png" alt="diamond slot" style="width: 24px; height: 18px;" />';
-            }
-            div += imgStr;
-        }
-        div += '</div>';
+        div += '<a href="/facebook/event_page.php?eid=' + e.eid + '" target="_parent"><div style="width: 300px; height: 136px; background-image: url(../img/cellItemEvent.png); background-repeat: no-repeat; border: 0px solid red; margin-top: -7px;">';
 
-        div += '</div>';
-        div += '</div>'
+            div += '<div style="">';
+                div += '<span style="margin-left: 10px; font-size: 14px; font-weight: bold; color: #8399a9; white-space: nowrap;overflow: hidden; width: 280px;">' + name + '</span><br />';
+            div += '</div>';
 
-        div += '<div style="width: 100%; height: 30px; font-size: 10px; color: gray; border: 0px solid blue; margin-top: 8px; margin-left: 5px;">';
-        div += '<div style="width: 49%; text-align: left; float: left; border: 0px solid red;">' + e.date_start + '@' + e.time_start + '</div>';
-        div += '<div style="width: 49%; text-align: right; float: left; border: 0px solid red;">' + e.distance + ' mi.</div>';
-        div += '</div>';
+            div += '<div id="img" style="width: 86px; height: 86px; overflow: hidden; border: 0px solid gray; float: left; margin: 8px;">';
+                div += '<img src="' + e.pic_big + '" alt="other event picture" style="min-width: 100%;" />';
+            div += '</div>';
+
+
+
+            div += '<div id="info" style="border: 0px solid orange; width: 198px; margin-top: 6px; float: right; ">';
+
+                div += '<span style="font-weight: bold; margin-left: 22px;">' + location + '</span><br />';
+                div += '<span style="margin-left: 22px; font-size: 11px;">' + e.date_start + '</div>';
+                div += '<span style="margin-left: 22px; font-size: 11px;">' + e.time_start; + '</div>';
+
+
+                div += '<div id="score" style="margin-top: 10px;  border: 0px solid yellow;">';
+                    for (var j = 0; j < 5; j++) {
+                        var imgStr = '<img src="../img/diamondSlot.png" alt="diamond slot" style="width: 24px; height: 18px;" />';
+                        if (j < e.score) {
+                            imgStr = '<img src="../img/diamond.png" alt="diamond slot" style="width: 24px; height: 18px;" />';
+                        }
+                        div += imgStr;
+                    }
+                div += '</div>';
+
+                div += '<div style="width: 50%; text-align: right; float: right; border: 0px solid red; font-size: 10px; padding-right: 12px; margin-top: 8px;">' + e.distance + ' mi.</div>';
+
+            div += '</div>';
+
+
+
 
         div += '</div></a>'
     }
+
+    div += '</div>';
 
     return div;
 }

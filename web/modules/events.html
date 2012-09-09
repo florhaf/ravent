@@ -1,0 +1,46 @@
+<html>
+    <head>
+
+        <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+        <script src="../js/gemster.event.js"></script>
+
+        <link rel="stylesheet" href="../css/style.css">
+        <link rel="stylesheet" href="../css/event_module.css">
+
+    </head>
+    <body>
+
+        <div id="events" style="background-image: url(../img/frameLong.png); background-repeat: no-repeat; padding-top: 1px; height: 408px;">
+
+        </div>
+
+    </body>
+
+    <script>
+
+        $('document').ready(function() {
+
+            var d = new Date();
+
+            var language = window.navigator.userLanguage || window.navigator.language;
+            var latitude = '40.7433586';
+            var longitude = '-73.972406';
+
+            if (google.loader.ClientLocation != null && google.loader.ClientLocation.latitude != null) {
+
+                latitude = google.loader.ClientLocation.latitude;
+                longitude = google.loader.ClientLocation.longitude;
+            }
+
+            $.ajax({
+                url : '../php/proxy.php?proxy_url=' + encodeURIComponent('http://api.gemsterapp.com/events?access_token=AAADRmCDizJoBACf5T4Me2cbwyyppRA4sq45I5QY1Grb7iIzZB9VfZCgANHxKgNuDfxJW6euMwqydwpBSsGfwxKRzqfSiMcVGXWNiRNSAZDZD&timezone_offset=' + -d.getTimezoneOffset() + '&locale=' + language.replace('-', '_') + '&timeframe=48&limit=30&latitude=' + latitude + '&longitude=' + longitude)
+            }).done(function(data) {
+                $('#events').html(onLoadData(data));
+            });
+        });
+
+    </script>
+</html>

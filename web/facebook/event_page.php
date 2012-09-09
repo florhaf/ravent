@@ -59,10 +59,14 @@ require '../php/facebook-sdk/src/facebook.php';
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
 
+        <script type="text/javascript">var switchTo5x=true;</script>
+        <script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
+        <script type="text/javascript">stLight.options({publisher: "d14cad4a-5dee-4b3f-bfc8-66d7a313d7ca"}); </script>
+
     <script src="../js/ticker/jquery.ticker.js"></script>
 
     <script type="text/javascript" src="http://www.google.com/jsapi"></script>
-    <script src="../js/gemster.event.js"></script>
+
 
 <style type="text/css">
 #scroller{height:100%;margin:0;padding:0;line-height:70px;position:relative;}
@@ -87,7 +91,7 @@ chromium.org/developers/how-tos/chrome-frame-getting-started -->
 
 <div role="main" style="width: 100%; min-width: 1000px; height: 100%; margin: auto auto; background-color: white; text-align: left;background-color: #d3d3d3;">
 
-    <div id="container" style="margin: auto auto; width: 960px;  min-height: 960px; overflow: overflow-x;">
+    <div id="container" style="margin: auto auto; width: 960px;  min-height: 1050px; overflow: overflow-x;">
 
         <div style="width: 640px; min-height: 840px; border-left: 1px solid #a9a9a9; border-right: 1px solid #a9a9a9; border-bottom: 1px solid #a9a9a9; float: left; margin-left: 0px;">
 
@@ -151,7 +155,14 @@ chromium.org/developers/how-tos/chrome-frame-getting-started -->
 
         </div>
 
-        <div id="scrollingDiv" style="width: 300px; height: 840px; margin-top: 35px;  float: right;  padding-top: 0px;">
+        <div id="scrollingDiv" style="width: 300px; height: 840px; margin-top: 5px;  float: right;  padding-top: 0px;">
+
+            <div style="margin-top: 10px; margin-left: 65px; margin-bottom: 10px;">
+                <span class='st_facebook_large' displayText='Facebook'></span>
+                <span class='st_twitter_large' displayText='Tweet'></span>
+                <span class='st_linkedin_large' displayText='LinkedIn'></span>
+                <span class='st_email_large' displayText='Email'></span>
+            </div>
 
             <div style="width: 300px; height: 311px; background-image: url(../img/frame.png); margin-bottom: 0px;margin-top: 0px; padding-top: 0px;">
 
@@ -160,37 +171,32 @@ chromium.org/developers/how-tos/chrome-frame-getting-started -->
 
             </div>
 
-            <div style="width: 300px; height: 100px; ">
-                <div class="download-button" style="margin-top: 30px; margin-left: 20px;">
-                    <a id="button-get-the-app" href="#" class="button-get-the-app">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Get the app</a>
+            <div style="width: 300px; height: 100px; text-align: center;">
+                <div class="download-button" style="margin-top: 20px;">
+                    <a id="button-get-the-app" href="http://itunes.apple.com/us/app/gemster/id553371725" target="_blank" class="button-get-the-app">Get the app (free)</a>
                 </div>
-                <div id="form-get-the-app" class="form-get-the-app">
-                    <div id="form-get-the-app-send-text">
-                        Open mobile safari and go to<br/>m.gemsterapp.com or<br/><span
-                            style="font-size: 17px; color: white;"><b>email it to your
-                        phone...</b></span><br/><br/>
-                        <span style="font-size: 12px">Email Address</span>
-                        <input id="email" class="twitterStyleTextbox" placeholder="##########"/>
-                        <button id="button-send-text" class="button-send-text"></button>
-                    </div>
-                    <div id="form-get-the-app-sent"
-                         style="text-align: center; margin-top: 10px; margin-left: -50px;">
-                        A download link has been sent<br/>to your mobile phone.
-                    </div>
-                </div>
+                <a href="http://itunes.apple.com/us/app/gemster/id553371725" target="_blank">
+                    <img src="../img/appstore.png" alt="appstore ios mobile apps iphone" style="width: 100px; margin-top: -70px;" />
+                </a>
 
             </div>
 
-            <div id="events" style="width: 300px; height: 311px; background-image: url(../img/frame.png); margin-bottom: 10px; padding: 8px; background-repeat: no-repeat;">
+            <div id="events" style="margin-top: 10px;">
+
+                <iframe src="/modules/events.html" scrolling="no" frameborder="0"  style="border:none; overflow:hidden;width: 300px; height: 448px; background-image: url(img/frameLong.png); background-repeat: no-repeat;" allowTransparency="true"></iframe>
+
             </div>
 
-            <div style="text-align: center;">
+            <div style="text-align: center; margin-top: -40px;">
                 <iframe src="http://www.facebook.com/plugins/facepile.php?
                     app_id=299292173427947" scrolling="no" frameborder="0" style="border:none;
-                    overflow:hidden; width:250px; height: 100px;" allowTransparency="true"></iframe>
-                    <iframe src="//www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2Fpages%2FGemster%2F395304430527422
+                    overflow:hidden; width:300px; height: 100px;" allowTransparency="true"></iframe>
+
+                 <iframe src="//www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2Fpages%2FGemster%2F395304430527422
                         &amp;send=false&amp;layout=standard&amp;width=200&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;
-                        font&amp;height=35&amp;appId=134120316726672"scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:200px; height:42px;" allowTransparency="true"></iframe>
+                        font&amp;height=35&amp;appId=134120316726672"scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:300px; height:42px; margin-top: -20px;" allowTransparency="true"></iframe>
+
+
             </div>
 
         </div>
@@ -236,11 +242,23 @@ chromium.org/developers/how-tos/chrome-frame-getting-started -->
 
 <script>
 
+    function getParameterByName(name)
+    {
+        name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+        var regexS = "[\\?&]" + name + "=([^&#]*)";
+        var regex = new RegExp(regexS);
+        var results = regex.exec(window.location.search);
+        if(results == null)
+            return "";
+        else
+            return decodeURIComponent(results[1].replace(/\+/g, " "));
+    }
+
     $("document").ready(function() {
 
         $('#img').fadeIn();
 
-        $("#form-get-the-app").hide();
+        //$("#form-get-the-app").hide();
 
         var speed = 5;
         var items, scroller = $('#scroller');
@@ -272,11 +290,7 @@ chromium.org/developers/how-tos/chrome-frame-getting-started -->
             longitude = google.loader.ClientLocation.longitude;
         }
 
-        $.ajax({
-            url : '../php/proxy.php?proxy_url=' + encodeURIComponent('http://api.gemsterapp.com/events?<?php echo $app_token; ?>&timezone_offset=' + -d.getTimezoneOffset() + '&locale=' + language.replace('-', '_') + '&timeframe=48&limit=30&latitude=' + latitude + '&longitude=' + longitude)
-        }).done(function(data) {
-            $('#events').html(onLoadData(data));
-        });
+
 
         $.ajax({
             url : '../php/proxy.php?proxy_url=' + encodeURIComponent('http://api.gemsterapp.com/calendar?eventID=' + getParameterByName('eid') + '&<?php echo $app_token; ?>' + '&timezone_offset=' + -d.getTimezoneOffset() + '&locale=' + language.replace('-', '_'))

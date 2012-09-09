@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta property="og:image" content="http://gemsterapp.com/img/facebookprofile.png" />
     <meta property="og:title" content="Gemster" />
-    <meta property="og:site_name" content="Engage with your local events" />
+    <meta property="og:site_name" content="Social Events Finder" />
 
     <script type="text/javascript">
 
@@ -36,7 +36,7 @@
 
 
     <meta name="description"
-          content="Gemster | Engage with your local events, helps you find the best local events happening right now around you">
+          content="Gemster | Social Events Finder, helps you find the best local events happening right now around you">
     <meta name="keywords"
           content="events, friends, promoter, party, chill, find, app, social, theatre, club, bar, entertainment, drop a gem, specials, places, nightlife, mobile">
     <meta name="robots" content="index, follow"/>
@@ -126,22 +126,22 @@ chromium.org/developers/how-tos/chrome-frame-getting-started -->
                         </td>
                         <td style="width: 50%; text-align: center;">
                             <div class="download-button" style="margin-top: 30px;">
-                                <a id="button-get-the-app" href="#" class="button-get-the-app">Get the app</a>
+                                <a id="button-get-the-app" href="http://itunes.apple.com/us/app/gemster/id553371725" target="_blank" class="button-get-the-app">Get the app (free)</a>
                             </div>
-                            <div id="form-get-the-app" class="form-get-the-app">
-                                <div id="form-get-the-app-send-text">
-                                    Open mobile safari and go to<br/>m.gemsterapp.com or<br/><span
-                                        style="font-size: 17px; color: white;"><b>email it to your
-                                    phone...</b></span><br/><br/>
-                                    <span style="font-size: 12px">Email Address</span>
-                                    <input id="email" class="twitterStyleTextbox" placeholder="##########"/>
-                                    <button id="button-send-text" class="button-send-text"></button>
-                                </div>
-                                <div id="form-get-the-app-sent"
-                                     style="text-align: center; margin-top: 10px; margin-left: -50px;">
-                                    A download link has been sent<br/>to your mobile phone.
-                                </div>
-                            </div>
+                            <!--<div id="form-get-the-app" class="form-get-the-app">-->
+                                <!--<div id="form-get-the-app-send-text">-->
+                                    <!--Open mobile safari and go to<br/>m.gemsterapp.com or<br/><span-->
+                                        <!--style="font-size: 17px; color: white;"><b>email it to your-->
+                                    <!--phone...</b></span><br/><br/>-->
+                                    <!--<span style="font-size: 12px">Email Address</span>-->
+                                    <!--<input id="email" class="twitterStyleTextbox" placeholder="##########"/>-->
+                                    <!--<button id="button-send-text" class="button-send-text"></button>-->
+                                <!--</div>-->
+                                <!--<div id="form-get-the-app-sent"-->
+                                     <!--style="text-align: center; margin-top: 10px; margin-left: -50px;">-->
+                                    <!--A download link has been sent<br/>to your mobile phone.-->
+                                <!--</div>-->
+                            <!--</div>-->
                         </td>
 
                     </tr>
@@ -163,7 +163,7 @@ chromium.org/developers/how-tos/chrome-frame-getting-started -->
                                 </table>
                             </div>
                         </td>
-                        <td style="text-align: right;">
+                        <td style="text-align: center;">
                             <div style="margin-top: 5px; margin-left: -5px;">
                                 <span class='st_facebook_large' displayText='Facebook'></span>
                                 <span class='st_twitter_large' displayText='Tweet'></span>
@@ -172,7 +172,7 @@ chromium.org/developers/how-tos/chrome-frame-getting-started -->
                             </div>
                             <iframe src="//www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2Fpages%2FGemster%2F395304430527422
     &amp;send=false&amp;layout=standard&amp;width=200&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;
-    font&amp;height=35&amp;appId=134120316726672"scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:200px; height:42px;" allowTransparency="true"></iframe>
+    font&amp;height=35&amp;appId=134120316726672"scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:250px; height:42px; margin-top: 10px;" allowTransparency="true"></iframe>
 
                         </td>
                     </tr>
@@ -270,8 +270,8 @@ chromium.org/developers/how-tos/chrome-frame-getting-started -->
 
     $("document").ready(function () {
 
-        $("#form-get-the-app").hide();
-        $("#form-try-the-app").hide();
+        //$("#form-get-the-app").hide();
+        //$("#form-try-the-app").hide();
 
         for (var i = step + 1; i < steps.length; i++) {
 
@@ -286,7 +286,7 @@ chromium.org/developers/how-tos/chrome-frame-getting-started -->
 
         var language = window.navigator.userLanguage || window.navigator.language;
 
-        language = (language.length < 4) ? language + "_US" : language;
+        language = (language.length < 5) ? language + "_US" : language;
 
         var latitude = '40.7433586';
         var longitude = '-73.972406';
@@ -300,36 +300,36 @@ chromium.org/developers/how-tos/chrome-frame-getting-started -->
         $.ajax({
             url : 'php/proxy.php?proxy_url=' + encodeURIComponent('http://api.gemsterapp.com/events?access_token=299292173427947%7CAAUGHP5vn-Uv6yMcmHej0hWfwvE&timezone_offset=' + -d.getTimezoneOffset() + '&locale=' + language.replace('-', '_') + '&timeframe=48&limit=30&latitude=' + latitude + '&longitude=' + longitude)
         }).done(function(data) {
-                    $('#events').html(onLoadData(data));
-                });
+            $('#events').html(onLoadData(data));
+        });
     });
 
-    $("#button-get-the-app").click(function () {
-
-        if ($("#form-get-the-app").is(":visible")) {
-
-            $("#form-get-the-app").fadeOut();
-        } else {
-
-            $("#form-get-the-app-send-text").show();
-            $("#form-get-the-app-sent").hide();
-
-            $("#form-get-the-app").fadeIn();
-        }
-    });
-
-    $("#button-try-the-app").click(function () {
-
-        if ($("#form-try-the-app").is(":visible")) {
-
-            $("#form-try-the-app").fadeOut();
-        } else {
-
-            $("#form-try-the-app-send-text").show();
-
-            $("#form-try-the-app").fadeIn();
-        }
-    });
+//    $("#button-get-the-app").click(function () {
+//
+//        if ($("#form-get-the-app").is(":visible")) {
+//
+//            $("#form-get-the-app").fadeOut();
+//        } else {
+//
+//            $("#form-get-the-app-send-text").show();
+//            $("#form-get-the-app-sent").hide();
+//
+//            $("#form-get-the-app").fadeIn();
+//        }
+//    });
+//
+//    $("#button-try-the-app").click(function () {
+//
+//        if ($("#form-try-the-app").is(":visible")) {
+//
+//            $("#form-try-the-app").fadeOut();
+//        } else {
+//
+//            $("#form-try-the-app-send-text").show();
+//
+//            $("#form-try-the-app").fadeIn();
+//        }
+//    });
 
     $("#button-send-text").click(function () {
 
