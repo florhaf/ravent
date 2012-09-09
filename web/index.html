@@ -58,7 +58,7 @@
     <script type="text/javascript">stLight.options({publisher: "d14cad4a-5dee-4b3f-bfc8-66d7a313d7ca"}); </script>
 
     <script type="text/javascript" src="http://www.google.com/jsapi"></script>
-    <script src="js/gemster.event.js"></script>
+
 
 </head>
 <body style="background-color: #3b79ac;">
@@ -113,16 +113,15 @@ chromium.org/developers/how-tos/chrome-frame-getting-started -->
                 <table class="under-clouds" style="width: 560px;">
                     <tr>
                         <td>
-                            <a href="http://itunes.apple.com/us/app/gemster/id553371725" target="_blank">
-                                <img src="img/appstore.png" alt="appstore ios mobile apps iphone" style="width: 150px; margin-top: 30px;" />
-                            </a>
-                            <!--<div class="download-button" style="margin-top: 30px;">-->
-                                <!--<a id="button-try-the-app" href="#" class="button-get-the-app">Try it now</a>-->
-                            <!--</div>-->
-                            <!--<div id="form-try-the-app" class="form-try-the-app">-->
-                                <!--<div id="events" style="width: 100%; height: 311px; margin-bottom: 10px; padding: 8px; background-repeat: no-repeat;">-->
-                                <!--</div>-->
-                            <!--</div>-->
+                            <!--<a href="http://itunes.apple.com/us/app/gemster/id553371725" target="_blank">-->
+                                <!--<img src="img/appstore.png" alt="appstore ios mobile apps iphone" style="width: 150px; margin-top: 30px;" />-->
+                            <!--</a>-->
+                            <div class="download-button" style="margin-top: 30px;">
+                                <a id="button-try-the-app" href="#" class="button-get-the-app">Events nearby</a>
+                            </div>
+                            <div id="form-try-the-app" class="form-try-the-app">
+                                <iframe src="/modules/events.html" scrolling="no" frameborder="0"  style="border:none; overflow:hidden;width: 300px; height: 448px; margin-top: 4px; background-image: url(img/frameLong.png); background-repeat: no-repeat;" allowTransparency="true"></iframe>
+                            </div>
                         </td>
                         <td style="width: 50%; text-align: center;">
                             <div class="download-button" style="margin-top: 30px;">
@@ -271,7 +270,7 @@ chromium.org/developers/how-tos/chrome-frame-getting-started -->
     $("document").ready(function () {
 
         //$("#form-get-the-app").hide();
-        //$("#form-try-the-app").hide();
+        $("#form-try-the-app").hide();
 
         for (var i = step + 1; i < steps.length; i++) {
 
@@ -296,12 +295,6 @@ chromium.org/developers/how-tos/chrome-frame-getting-started -->
             latitude = google.loader.ClientLocation.latitude;
             longitude = google.loader.ClientLocation.longitude;
         }
-
-        $.ajax({
-            url : 'php/proxy.php?proxy_url=' + encodeURIComponent('http://api.gemsterapp.com/events?access_token=299292173427947%7CAAUGHP5vn-Uv6yMcmHej0hWfwvE&timezone_offset=' + -d.getTimezoneOffset() + '&locale=' + language.replace('-', '_') + '&timeframe=48&limit=30&latitude=' + latitude + '&longitude=' + longitude)
-        }).done(function(data) {
-            $('#events').html(onLoadData(data));
-        });
     });
 
 //    $("#button-get-the-app").click(function () {
@@ -318,18 +311,18 @@ chromium.org/developers/how-tos/chrome-frame-getting-started -->
 //        }
 //    });
 //
-//    $("#button-try-the-app").click(function () {
-//
-//        if ($("#form-try-the-app").is(":visible")) {
-//
-//            $("#form-try-the-app").fadeOut();
-//        } else {
-//
-//            $("#form-try-the-app-send-text").show();
-//
-//            $("#form-try-the-app").fadeIn();
-//        }
-//    });
+    $("#button-try-the-app").click(function () {
+
+        if ($("#form-try-the-app").is(":visible")) {
+
+            $("#form-try-the-app").fadeOut();
+        } else {
+
+            $("#form-try-the-app-send-text").show();
+
+            $("#form-try-the-app").fadeIn();
+        }
+    });
 
     $("#button-send-text").click(function () {
 

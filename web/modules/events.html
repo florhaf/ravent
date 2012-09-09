@@ -13,7 +13,9 @@
     </head>
     <body>
 
-        <div id="events" style="background-image: url(../img/frameLong.png); background-repeat: no-repeat; padding-top: 1px; height: 408px;">
+        <div id="events" style="background-image: url(http://gemsterapp.com/img/frameLong.png); background-repeat: no-repeat; padding-top: 1px; height: 408px;">
+
+                <img id="spinner" src="http://gemsterapp.com/img/ajax-loader.gif" alt="spinner" style="margin: 200px 140px;" />
 
         </div>
 
@@ -38,6 +40,8 @@
             $.ajax({
                 url : '../php/proxy.php?proxy_url=' + encodeURIComponent('http://api.gemsterapp.com/events?access_token=AAADRmCDizJoBACf5T4Me2cbwyyppRA4sq45I5QY1Grb7iIzZB9VfZCgANHxKgNuDfxJW6euMwqydwpBSsGfwxKRzqfSiMcVGXWNiRNSAZDZD&timezone_offset=' + -d.getTimezoneOffset() + '&locale=' + language.replace('-', '_') + '&timeframe=48&limit=30&latitude=' + latitude + '&longitude=' + longitude)
             }).done(function(data) {
+
+                $('#spinner').hide();
                 $('#events').html(onLoadData(data));
             });
         });

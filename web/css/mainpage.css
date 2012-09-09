@@ -89,18 +89,18 @@
 }
 
 .form-try-the-app {
-    background-image: url(../img/frame2.png);
+    background-image: url(../img/frameLongBlack.png);
     background-repeat: no-repeat;
     width: 340px;
-    height: 330px;
+    height: 440px;
     color: #d3d3d3;
-    position: absolute;
+    position: relative;
     left : 210px;
     font-size: 15px;
     padding: 5px 0px 0px 10px;
     text-align: left;
-    margin-top: -420px;
-    margin-left: 0px;
+    margin-top: -542px;
+    margin-left: -240px;
     z-index: 42;
 }
 

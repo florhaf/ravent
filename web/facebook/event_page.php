@@ -181,9 +181,9 @@ chromium.org/developers/how-tos/chrome-frame-getting-started -->
 
             </div>
 
-            <div id="events" style="margin-top: 10px;">
+            <div id="events" style="margin-top: 22px;">
 
-                <iframe src="/modules/events.html" scrolling="no" frameborder="0"  style="border:none; overflow:hidden;width: 300px; height: 448px; background-image: url(img/frameLong.png); background-repeat: no-repeat;" allowTransparency="true"></iframe>
+                <iframe src="/modules/events.html" scrolling="no" frameborder="0"  style="border:none; overflow:hidden;width: 300px; height: 448px;" allowTransparency="true"></iframe>
 
             </div>
 

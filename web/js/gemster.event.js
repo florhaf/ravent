@@ -34,6 +34,35 @@ function getFormattedLocation() {
     }
 }
 
+function isIn(value, array) {
+
+    if (array) {
+
+        for (v in array) {
+
+            if (v == value) {
+
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+
+function getRandom(array, max) {
+
+    var randomnumber=Math.floor(Math.random()*max);
+
+    if (isIn(randomnumber, array)) {
+
+        return getRandom(array, max);
+    } else {
+
+        return randomnumber;
+    }
+}
+
 function onLoadData(data) {
 
     var results = data.records;
@@ -41,9 +70,15 @@ function onLoadData(data) {
 
     var div = '<div style="margin-top: 18px;">';
 
+    var indexMarked = [-1, -1, -1];
+
     for (var i = 0; i < 3; i++) {
 
-        var randomnumber=Math.floor(Math.random()*results.length);
+
+        var randomnumber = getRandom(indexMarked, results.length);
+        indexMarked[i] = randomnumber;
+
+console.log(randomnumber);
 
         var e = results[randomnumber];
 
@@ -61,7 +96,7 @@ function onLoadData(data) {
         div += '<a href="/facebook/event_page.php?eid=' + e.eid + '" target="_parent"><div style="width: 300px; height: 136px; background-image: url(../img/cellItemEvent.png); background-repeat: no-repeat; border: 0px solid red; margin-top: -7px;">';
 
             div += '<div style="">';
-                div += '<span style="margin-left: 10px; font-size: 14px; font-weight: bold; color: #8399a9; white-space: nowrap;overflow: hidden; width: 280px;">' + name + '</span><br />';
+                div += '<span style="margin-left: 10px; font-size: 14px; font-weight: bold; color: #8399a9; white-space: nowrap;overflow: hidden; width: 270px;">' + name + '</span><br />';
             div += '</div>';
 
             div += '<div id="img" style="width: 86px; height: 86px; overflow: hidden; border: 0px solid gray; float: left; margin: 8px;">';
