@@ -10,9 +10,7 @@ import com.googlecode.objectify.Query;
 import com.restfb.DefaultFacebookClient;
 import com.restfb.Facebook;
 import com.restfb.FacebookClient;
-import com.restfb.Parameter;
 import com.restfb.exception.FacebookException;
-import com.restfb.types.FacebookType;
 
 public class Friend extends Model{
 	
@@ -46,24 +44,10 @@ public class Friend extends Model{
 		
 		ArrayList<Model> result = new ArrayList<Model>();
 		
-		Dao dao = new Dao();
-		
 		FacebookClient client 	= new DefaultFacebookClient(accessToken);
 		
 	    MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
 		
-	    User user = (User) syncCache.get(Long.parseLong(userID)); // read from cache
-	    if (user == null) {
-	    	  user = dao.ofy().find(User.class, Long.parseLong(userID));
-	      }
-	    
-	    // first time the User uses the app // TODO will need togo to a specific call in the future
-	    if (user == null ) {
-	    	dao.ofy().put(new User(accessToken, userID));
-	    	client.publish(userID + "/feed", FacebookType.class, Parameter.with("message", "Started using Gemster"), Parameter.with("link", "http://www.gemsterapp.com/"),
-	    			Parameter.with("name", "Check it out"), Parameter.with("picture", "http://gemsterapp.com/img/app_icon.png"));
-	    }
-	    
 		String properties 		= "uid, first_name, last_name, pic";
 		String query 			= "SELECT " + properties + " FROM user WHERE uid IN (SELECT uid2 FROM friend WHERE uid1 = " + userID + ") ORDER BY last_name";
 		List<Friend> friends 	= client.executeQuery(query, Friend.class);

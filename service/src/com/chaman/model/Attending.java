@@ -5,9 +5,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.chaman.dao.Dao;
+import com.google.appengine.api.memcache.MemcacheService;
+import com.google.appengine.api.memcache.MemcacheServiceFactory;
 import com.restfb.DefaultFacebookClient;
 import com.restfb.Facebook;
 import com.restfb.FacebookClient;
+import com.restfb.Parameter;
 import com.restfb.exception.FacebookException;
 import com.restfb.types.FacebookType;
 
@@ -208,6 +212,24 @@ public class Attending extends Model {
 			
 			result.add(a);
 		}
+
+		// TODO to add to first call... once done -> add user to DS and post on FB page when using the app for the first time
+		try {
+			
+			Dao dao = new Dao();
+		    MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();	
+		    User user = (User) syncCache.get(Long.parseLong(userid)); // read from cache
+		    if (user == null) {
+		    	  user = dao.ofy().find(User.class, Long.parseLong(userid));
+		      }
+		    
+		    // first time the User uses the app // TODO will need togo to a specific call in the future
+		    if (user == null ) {
+		    	dao.ofy().put(new User(accessToken, userid));
+		    	client.publish(userid + "/feed", FacebookType.class, Parameter.with("message", "Started using Gemster"), Parameter.with("link", "http://www.gemsterapp.com/"),
+		    			Parameter.with("name", "Check it out"), Parameter.with("picture", "http://gemsterapp.com/img/app_icon.png"));
+		    }
+		} catch (Exception ex) {}
 
 		return result;
 	}

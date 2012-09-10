@@ -27,6 +27,7 @@ public class RaVentSvcApplication extends Application {
 		router.attach("/eventbackends",	EventBackends.class);
 		router.attach("/eventstats", 	EventStats.class);
 		router.attach("/sendEmail", 	SendEmail.class);
+		router.attach("/visibility", 	GemsterVisibility.class);
 		
 		return router;
 	}

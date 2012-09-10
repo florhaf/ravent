@@ -251,7 +251,7 @@ public class Event extends Model implements Serializable, Runnable {
             	
 	    	} else {
 	    		
-	    		dao.ofy().delete(e); //clean the datastore by removing old events TODO: call a task doesn't have to be deleted right away
+	    		//dao.ofy().delete(e); //clean the datastore by removing old events TODO: call a task doesn't have to be deleted right away
 	    	}
 		} catch (Exception ex) {
 			

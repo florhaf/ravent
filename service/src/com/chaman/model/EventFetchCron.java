@@ -27,6 +27,8 @@ public class EventFetchCron extends Model implements Runnable {
 		
 		Dao dao = new Dao();
 		
+		int users_count;
+		
 		EventFetchCron efc = new EventFetchCron();
 	
 		//get users and Access tokens from DS		
@@ -34,10 +36,15 @@ public class EventFetchCron extends Model implements Runnable {
 		
 		efc.tm = new MyThreadManager<User>(efc);
 		
-		Queue<User> q = new ArrayBlockingQueue<User>(quser.count());
+		users_count = quser.count();
+		
+		Queue<User> q = new ArrayBlockingQueue<User>(users_count);
 		q.addAll(quser.list());
-
+		
 		efc.tm.Process(q);
+		
+		log.info("fetched : " + users_count + " users");
+		
 	}	
 
 	@Override
