@@ -38,8 +38,10 @@ public class Visibility {
 							break; // enough posting done in that location
 						} else {
 							
-							new Vote(accessToken, uid, String.valueOf(event.eid), "1", true);
-							this.NbVote++;
+							Vote v = new Vote(accessToken, uid, String.valueOf(event.eid), "1", true);
+							if (v.nb_vote == 1) {
+								this.NbVote++;
+							}
 						}
 					}
 				} catch (Exception ex) {continue;}
