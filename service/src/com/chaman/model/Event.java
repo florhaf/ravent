@@ -374,7 +374,7 @@ public class Event extends Model implements Serializable, Runnable {
 		}
 		
 		// facebook events timestamp are in PST // or have a timezone...
-		DateTimeZone PST = DateTimeZone.forID("America/Los_Angeles");
+		DateTimeZone PST = DateTimeZone.forID("America/Los_Angeles"); //named pst but should be called default...
 		
 		if (this.timezone == null) {
 			this.dtStart = new DateTime(timeStampStart, PST);
