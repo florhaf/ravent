@@ -14,7 +14,7 @@ public class Visibility {
 	
 	public Visibility (String uid, String accessToken, String latitude, String longitude, int max_post, int min_score) {
 		
-		ArrayList<Model> list = Event.Get(accessToken, latitude, longitude, latitude, longitude, "-420", 48, 6, 0, "en_US");
+		ArrayList<Model> list = Event.Get(accessToken, latitude, longitude, latitude, longitude, "-420", 168, 6, 0, "en_US");
 		
 		this.NbVote  = 0;		
 		this.event_list_size = 0;
