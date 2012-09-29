@@ -91,7 +91,7 @@ chromium.org/developers/how-tos/chrome-frame-getting-started -->
 
 <div role="main" style="width: 100%; min-width: 1000px; height: 100%; margin: auto auto; background-color: white; text-align: left;background-color: #d3d3d3;">
 
-    <div id="container" style="margin: auto auto; width: 960px;  min-height: 1050px; overflow: overflow-x;">
+    <div id="container" style="margin: auto auto; width: 960px;  min-height: 1300px; overflow: overflow-x;">
 
         <div style="width: 640px; min-height: 840px; border-left: 1px solid #a9a9a9; border-right: 1px solid #a9a9a9; border-bottom: 1px solid #a9a9a9; float: left; margin-left: 0px;">
 
@@ -157,6 +157,12 @@ chromium.org/developers/how-tos/chrome-frame-getting-started -->
 
         <div id="scrollingDiv" style="width: 300px; height: 840px; margin-top: 5px;  float: right;  padding-top: 0px;">
 
+            <a href="../winiphone5/">
+            <div style="margin-top: 10px;">
+                <img src="../img/pubwiniphone5-3.png" />
+            </div>
+            </a>
+
             <div style="margin-top: 10px; margin-left: 65px; margin-bottom: 10px;">
                 <span class='st_facebook_large' displayText='Facebook'></span>
                 <span class='st_twitter_large' displayText='Tweet'></span>
@@ -171,13 +177,11 @@ chromium.org/developers/how-tos/chrome-frame-getting-started -->
 
             </div>
 
-            <div style="width: 300px; height: 100px; text-align: center;">
+            <div style="width: 300px; height: 40px; text-align: center;">
                 <div class="download-button" style="margin-top: 20px;">
                     <a id="button-get-the-app" href="http://itunes.apple.com/us/app/gemster/id553371725" target="_blank" class="button-get-the-app">Get the app (free)</a>
                 </div>
-                <a href="http://itunes.apple.com/us/app/gemster/id553371725" target="_blank">
-                    <img src="../img/appstore.png" alt="appstore ios mobile apps iphone" style="width: 100px; margin-top: -70px;" />
-                </a>
+
 
             </div>
 
@@ -225,7 +229,7 @@ chromium.org/developers/how-tos/chrome-frame-getting-started -->
                 <a class="footer-link" href="../contactus/">Contact Us</a>
             </td>
             <td class="footer-column">
-                <a class="footer-link" href="http://gemsterblog.com" target="_blank">Blog</a>
+                <a class="footer-link" href="../press/release.pdf">Press</a>
             </td>
 			<td class="footer-column">
                 <a class="footer-link" href="../termsofuse/">Terms Of Use</a>
@@ -280,6 +284,10 @@ chromium.org/developers/how-tos/chrome-frame-getting-started -->
 
         var d = new Date();
 
+        console.debug(d);
+        console.debug(-d.getTimezoneOffset());
+        debugger;
+
         var language = window.navigator.userLanguage || window.navigator.language;
         var latitude = '40.7433586';
         var longitude = '-73.972406';
@@ -293,6 +301,7 @@ chromium.org/developers/how-tos/chrome-frame-getting-started -->
 
 
         $.ajax({
+
             url : '../php/proxy.php?proxy_url=' + encodeURIComponent('http://api.gemsterapp.com/calendar?eventID=' + getParameterByName('eid') + '&<?php echo $app_token; ?>' + '&timezone_offset=' + -d.getTimezoneOffset() + '&locale=' + language.replace('-', '_'))
         }).done(function(data) {
 
@@ -442,6 +451,16 @@ chromium.org/developers/how-tos/chrome-frame-getting-started -->
         $("#form-get-the-app-send-text").fadeOut()
         $("#form-get-the-app-sent").fadeIn();
     });
+
+    var _gaq = [
+            ['_setAccount', 'UA-33038234-1'],
+            ['_trackPageview']
+        ];
+        (function (d, t) {
+            var g = d.createElement(t), s = d.getElementsByTagName(t)[0];
+            g.src = ('https:' == location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js';
+            s.parentNode.insertBefore(g, s)
+        }(document, 'script'));
 
 
 </script>

@@ -104,6 +104,21 @@
     z-index: 42;
 }
 
+.winiphone5 {
+    border: 1px solid black;
+    width: 400px;
+    height: 30px;
+    color: #d3d3d3;
+    position: relative;
+    left : 210px;
+    font-size: 15px;
+    padding: 10px;
+    text-align: left;
+    margin-top: -50px;
+    margin-left: -160px;
+    z-index: 42;
+}
+
 a, a:visited {
     color: #555555;
     text-decoration:none;
