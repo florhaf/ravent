@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 import com.chaman.model.Model;
 import com.google.appengine.api.ThreadManager;
 //import com.google.apphosting.api.ApiProxy;
+import com.google.apphosting.api.ApiProxy;
 
 public class MyThreadManager<K> {
 	
@@ -72,7 +73,8 @@ public class MyThreadManager<K> {
 			}
 			
 		} while ((queue.size() > 1 || 											// stuff to process
-				CRT_NUMBER_OF_THREAD_RUNNING > 0));	// time remaining before time out
+				CRT_NUMBER_OF_THREAD_RUNNING > 0) &&
+				ApiProxy.getCurrentEnvironment().getRemainingMillis() > 30);	// time remaining before time out
 		
 		//this.killAllThread();
 		
