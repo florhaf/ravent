@@ -2,6 +2,11 @@ package com.chaman.model;
 
 import java.util.ArrayList;
 
+import twitter4j.Twitter;
+import twitter4j.TwitterException;
+import twitter4j.TwitterFactory;
+import twitter4j.conf.ConfigurationBuilder;
+
 public class Visibility {
 
 	int event_list_size;
@@ -12,9 +17,9 @@ public class Visibility {
 		super();
 	}
 	
-	public Visibility (String uid, String accessToken, String latitude, String longitude, int max_post, int min_score) {
+	public Visibility (String uid, String accessToken, String latitude, String longitude, int max_post, int min_score, int searchTimeFrame, boolean retry, String city) {
 		
-		ArrayList<Model> list = Event.Get(accessToken, latitude, longitude, latitude, longitude, "-420", 168, 6, 0, "en_US");
+		ArrayList<Model> list = Event.Get(accessToken, latitude, longitude, latitude, longitude, "-420", searchTimeFrame, 6, 0, "en_US");
 		
 		this.NbVote  = 0;		
 		this.event_list_size = 0;
@@ -40,6 +45,21 @@ public class Visibility {
 							
 							Vote v = new Vote(accessToken, uid, String.valueOf(event.eid), "1", true);
 							if (v.nb_vote == 1) {
+								try {
+	
+									ConfigurationBuilder cb = new ConfigurationBuilder();
+									cb.setDebugEnabled(true)
+									 .setOAuthConsumerKey("QsJQApEU7TUPZN9dQkgLw")
+									 .setOAuthConsumerSecret("31PhHAhpx54DHJiaDOCM0ARqLoEDJJXbxCyOVCQySUk")
+									 .setOAuthAccessToken("722756468-JMJp6Q2XLUjpNm8azl24Rw8Ep4J0v4CWTYALuOST")
+									 .setOAuthAccessTokenSecret("sN07PzN2KlxGIDgAvdN1jPcXArv7rNSf2VoqJ43AU");
+									TwitterFactory tf = new TwitterFactory(cb.build());
+									Twitter twitter = tf.getInstance();	
+									twitter.updateStatus(event.name + " " + "@ #" + event.location.replaceAll("[^0-9A-Za-z]", "") + " #Gemster #Event" + (city != null ? " #" + city.replaceAll("[^0-9A-Za-z]", "") : "") 
+											+ " http://gemsterapp.com/facebook/event_page.php?eid=" + event.eid);
+								} catch (TwitterException e) {
+								}
+								
 								this.NbVote++;
 							}
 						}
@@ -47,6 +67,12 @@ public class Visibility {
 				} catch (Exception ex) {continue;}
 			}
 		}
+		
+		if (this.NbVote == 0 && retry) {
+			
+			new Visibility(uid, accessToken, latitude,longitude, max_post, min_score, 120, false, city);
+		}
+		
 	}
 
 	public int getEvent_list_size() {
