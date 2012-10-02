@@ -30,6 +30,7 @@ public class Events extends ServerResource {
 			String searchLon 		= getQuery().getValues("searchLon");
 			String searchLimit 		= getQuery().getValues("limit");
 			String locale	 		= getQuery().getValues("locale");
+			String promoter	 		= getQuery().getValues("promoter");
 			
 			String searchRadius = "6";
 			
@@ -39,10 +40,12 @@ public class Events extends ServerResource {
 			
 			ArrayList<Model> events;
 			
-			
-			
 			if (userID != null) {
-				events = EventUser.Get(accessToken, userID, latitude, longitude, timeZone, locale);
+				if (promoter == null) {
+					events = EventUser.Get(accessToken, userID, latitude, longitude, timeZone, locale);
+				} else {
+					events = EventUser.Get(accessToken, userID, latitude, longitude, timeZone, locale, true);
+				}
 			} else if (searchLat == null) {
 				events = Event.Get(accessToken, latitude, longitude, latitude, longitude, timeZone, Integer.parseInt(searchTimeFrame), Float.parseFloat(searchRadius), Integer.parseInt(searchLimit), locale);
 			} else {

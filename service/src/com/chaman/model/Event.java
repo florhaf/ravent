@@ -65,6 +65,8 @@ public class Event extends Model implements Serializable, Runnable {
 	String timezone;
 	@Facebook
 	String all_members_count;
+	@Facebook
+	String creator;
 	
 	String venue_id;
 	double score;
@@ -189,7 +191,7 @@ public class Event extends Model implements Serializable, Runnable {
 			long actual_time = now.getMillis() / 1000L;
 			
 			FacebookClient client 	= new DefaultFacebookClient(accessToken);
-			String properties 		= "eid, name, pic_big, start_time, end_time, venue, location, privacy, update_time, all_members_count, timezone";
+			String properties 		= "eid, name, pic_big, start_time, end_time, venue, location, privacy, update_time, all_members_count, timezone, creator";
 		
 			AsyncMemcacheService asyncCache = MemcacheServiceFactory.getAsyncMemcacheService();
 			
@@ -312,7 +314,7 @@ public class Event extends Model implements Serializable, Runnable {
 		DateTimeZone TZ = DateTimeZone.forOffsetMillis(timeZoneInMinutes*60*1000);
 		DateTime now = DateTime.now(TZ);	
 		
-		String query 			= "SELECT eid, name, pic_big, start_time, end_time, venue, location, privacy, timezone FROM event WHERE eid = " + eid;
+		String query 			= "SELECT eid, name, pic_big, start_time, end_time, venue, location, privacy, timezone, creator FROM event WHERE eid = " + eid;
 		List<Event> fbevents 	= client.executeQuery(query, Event.class);
 		
 		
@@ -849,6 +851,10 @@ public class Event extends Model implements Serializable, Runnable {
 	
 	public void setAll_members_count(String all_members_count) {
 		this.all_members_count = all_members_count;
+	}
+
+	public void setCreator(String creator) {
+		this.creator = creator;
 	}
 
 }

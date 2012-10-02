@@ -9,6 +9,10 @@ import com.restfb.FacebookClient;
 public class Profile extends Model {
 
 	@Facebook
+	String page_id; //used for page admin
+	@Facebook
+	String uid; //used for page admin
+	@Facebook
 	String name;
 	@Facebook
 	String pic;
@@ -51,5 +55,13 @@ public class Profile extends Model {
 
 	public void setPic(String pic) {
 		this.pic = pic;
+	}
+
+	public void setPage_id(String page_id) {
+		this.page_id = page_id;
+	}
+
+	public void setUid(String uid) {
+		this.uid = uid;
 	}
 }

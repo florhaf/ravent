@@ -75,7 +75,7 @@ public class EventFetchCron extends Model implements Runnable {
 					try {
 
 						FacebookClient client 	= new DefaultFacebookClient(u.getAccess_token());
-						String properties 		= "eid, name, pic_big, start_time, end_time, venue, location, privacy, update_time, timezone";
+						String properties 		= "eid, name, pic_big, start_time, end_time, venue, location, privacy, update_time, all_members_count, timezone, creator";
 						String query 			= "SELECT " + properties + " FROM event WHERE eid IN (SELECT eid FROM event_member WHERE uid = " + l.getUid() + ") AND start_time < " + snow_plus_1month + " AND privacy = 'OPEN'";
 						List<Event> fbevents 	= client.executeQuery(query, Event.class);
 
