@@ -26,10 +26,11 @@ public class Calendar extends ServerResource {
 			String latitude		= getQuery().getValues("latitude");
 			String longitude 	= getQuery().getValues("longitude");
 			String locale 		= getQuery().getValues("locale");
+			String is_chaman	 = getQuery().getValues("is_chaman");
 			
 			ArrayList<Model> events;
 			
-			events = Event.getMultiple(accessToken, eids, timeZone, latitude, longitude, locale);
+			events = Event.getMultiple(accessToken, eids, timeZone, latitude, longitude, locale, is_chaman);
 			
 			result.setSuccess(true);
 			result.setRecords(events);

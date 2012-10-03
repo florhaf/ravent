@@ -95,6 +95,7 @@ public class Event extends Model implements Serializable, Runnable {
 	int timeZoneInMinutes;
 	MyThreadManager<EventLocationCapable> tm;
 	String accessToken;
+	String is_chaman;
 	int searchTimeFrame;
 	String locale;
 	String userLatitude;
@@ -111,14 +112,14 @@ public class Event extends Model implements Serializable, Runnable {
 	 /* - Get list of event for any user in search area
 	 * - exclude past event
 	 */
-	public static ArrayList<Model> Get(String accessToken, String userLatitude, String userLongitude, String searchLat, String searchLon, String timeZone, int searchTimeFrame, float searchRadius, int searchLimit, String locale) throws FacebookException , MemcacheServiceException {
+	public static ArrayList<Model> Get(String accessToken, String userLatitude, String userLongitude, String searchLat, String searchLon, String timeZone, int searchTimeFrame, float searchRadius, int searchLimit, String locale, String is_chaman) throws FacebookException , MemcacheServiceException {
 		
 		Boolean isRetrying = false;
 		
-		return Event.Get(accessToken, userLatitude, userLongitude, searchLat, searchLon, timeZone, searchTimeFrame, searchRadius, searchLimit, locale, isRetrying);
+		return Event.Get(accessToken, userLatitude, userLongitude, searchLat, searchLon, timeZone, searchTimeFrame, searchRadius, searchLimit, locale, isRetrying, is_chaman);
 	}
 	
-	private static ArrayList<Model> Get(String accessToken, String userLatitude, String userLongitude, String searchLat, String searchLon, String timeZone, int searchTimeFrame, float searchRadius, int searchLimit, String locale, Boolean isRetrying) throws FacebookException , MemcacheServiceException {
+	private static ArrayList<Model> Get(String accessToken, String userLatitude, String userLongitude, String searchLat, String searchLon, String timeZone, int searchTimeFrame, float searchRadius, int searchLimit, String locale, Boolean isRetrying, String is_chaman) throws FacebookException , MemcacheServiceException {
 		
 		List<Model> result = new ArrayList<Model>();
 		
@@ -132,6 +133,7 @@ public class Event extends Model implements Serializable, Runnable {
 		e.locale = locale;
 		e.userLatitude = userLatitude;
 		e.userLongitude = userLongitude;
+		e.is_chaman = is_chaman;
 		
 		LocationCapableRepositorySearch<EventLocationCapable> ofySearch = new OfyEntityLocationCapableRepositorySearchImpl(dao.ofy(), timeZone, searchTimeFrame);
 		
@@ -169,7 +171,7 @@ public class Event extends Model implements Serializable, Runnable {
 			
 			Boolean retry = true;
 		
-			return Event.Get(accessToken, userLatitude, userLongitude, searchLat, searchLon, timeZone, newTimeFrame, searchRadius, searchLimit, locale, retry);
+			return Event.Get(accessToken, userLatitude, userLongitude, searchLat, searchLon, timeZone, newTimeFrame, searchRadius, searchLimit, locale, retry, is_chaman);
 		}
 		
 		return (ArrayList<Model>)result;    
@@ -234,7 +236,7 @@ public class Event extends Model implements Serializable, Runnable {
     			
             	if (event != null && (event.venue_category == null || !event.venue_category.equals("city"))) {
             		
-        			if (event.Format(timeZoneInMinutes, now, searchTimeFrame, locale)){
+        			if (event.Format(timeZoneInMinutes, now, searchTimeFrame, locale, is_chaman)){
 
         				
             			event.latitude 	= Double.toString(e.getLatitude());
@@ -278,7 +280,7 @@ public class Event extends Model implements Serializable, Runnable {
 		dao.ofy().delete(qELC.fetchKeys());
 	}
 	
-	public static ArrayList<Model> getMultiple(String accessToken, String[] eids, String timeZone, String userLatitude, String userLongitude, String locale) throws FacebookException {
+	public static ArrayList<Model> getMultiple(String accessToken, String[] eids, String timeZone, String userLatitude, String userLongitude, String locale, String is_chaman) throws FacebookException {
 		
 		ArrayList<Model> result	= new ArrayList<Model>();
 		
@@ -286,14 +288,14 @@ public class Event extends Model implements Serializable, Runnable {
 	    	
 			try {
 				
-				Event e = getSingle(accessToken, eid, timeZone, userLatitude, userLongitude, locale);
+				Event e = getSingle(accessToken, eid, timeZone, userLatitude, userLongitude, locale, is_chaman);
 				if (e == null) {
 					continue;
 				}
 				result.add(e);
 			} catch (Exception ex ) {
 				
-				Event e = getSingle(accessToken, eid, timeZone, userLatitude, userLongitude, locale);
+				Event e = getSingle(accessToken, eid, timeZone, userLatitude, userLongitude, locale, is_chaman);
 				if (e == null) {
 					continue;
 				}
@@ -304,7 +306,7 @@ public class Event extends Model implements Serializable, Runnable {
 		return result;
 	}
 	
-	public static Event getSingle(String accessToken, String eid, String timeZone, String userLatitude, String userLongitude, String locale) throws FacebookException{
+	public static Event getSingle(String accessToken, String eid, String timeZone, String userLatitude, String userLongitude, String locale, String is_chaman) throws FacebookException{
 		
 		FacebookClient client	= new DefaultFacebookClient(accessToken);
 		int timeZoneInMinutes	= Integer.parseInt(timeZone);
@@ -329,7 +331,7 @@ public class Event extends Model implements Serializable, Runnable {
 		
 		e.Filter_category();
 		
-		e.Format(timeZoneInMinutes, now, 0, locale);
+		e.Format(timeZoneInMinutes, now, 0, locale, is_chaman);
 		
 		e.latitude 	= JSON.GetValueFor("latitude", e.venue);
 		e.longitude = JSON.GetValueFor("longitude", e.venue);
@@ -359,7 +361,7 @@ public class Event extends Model implements Serializable, Runnable {
 		return e;
 	}
 	
-	public boolean Format(int timeZoneInMinutes, DateTime now, int searchTimeFrame, String locale) {
+	public boolean Format(int timeZoneInMinutes, DateTime now, int searchTimeFrame, String locale, String is_chaman) {
 			
 		boolean res = true;
 		long timeStampStart = Long.parseLong(this.start_time) * 1000;
@@ -383,10 +385,20 @@ public class Event extends Model implements Serializable, Runnable {
 			this.dtEnd = new DateTime(timeStampEnd, PST);
 		} else {
 			DateTimeZone T = DateTimeZone.forID(this.timezone);
-			this.dtStart = new DateTime(timeStampStart, T);
-			this.dtEnd = new DateTime(timeStampEnd, T);
-			timeStampStart = this.dtStart.getMillis();
-			timeStampEnd = this.dtEnd.getMillis();
+			
+			if (is_chaman != null) {
+				
+				this.dtStart = new DateTime(timeStampStart + (T.getOffset(timeStampStart) + 25200000), T);
+				this.dtEnd = new DateTime(timeStampEnd + (T.getOffset(timeStampEnd) + 25200000), T);
+				timeStampStart = this.dtStart.getMillis();
+				timeStampEnd = this.dtEnd.getMillis();
+			} else {
+				
+				this.dtStart = new DateTime(timeStampStart, T);
+				this.dtEnd = new DateTime(timeStampEnd, T);
+				timeStampStart = this.dtStart.getMillis();
+				timeStampEnd = this.dtEnd.getMillis();
+			}
 		}
 
 		

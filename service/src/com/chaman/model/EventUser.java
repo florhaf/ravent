@@ -132,7 +132,7 @@ public class EventUser extends Model implements Runnable {
     	    	e = e_cache;
     	    }
 
-	    	e.Format(timeZoneInMinutes, now, 0, locale);
+	    	e.Format(timeZoneInMinutes, now, 0, locale, null);
 
 	    	if (e.latitude != null && e.longitude != null) {
 

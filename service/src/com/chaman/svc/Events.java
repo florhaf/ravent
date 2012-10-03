@@ -31,6 +31,7 @@ public class Events extends ServerResource {
 			String searchLimit 		= getQuery().getValues("limit");
 			String locale	 		= getQuery().getValues("locale");
 			String promoter	 		= getQuery().getValues("promoter");
+			String is_chaman	 	= getQuery().getValues("is_chaman");
 			
 			String searchRadius = "6";
 			
@@ -47,9 +48,9 @@ public class Events extends ServerResource {
 					events = EventUser.Get(accessToken, userID, latitude, longitude, timeZone, locale, true);
 				}
 			} else if (searchLat == null) {
-				events = Event.Get(accessToken, latitude, longitude, latitude, longitude, timeZone, Integer.parseInt(searchTimeFrame), Float.parseFloat(searchRadius), Integer.parseInt(searchLimit), locale);
+				events = Event.Get(accessToken, latitude, longitude, latitude, longitude, timeZone, Integer.parseInt(searchTimeFrame), Float.parseFloat(searchRadius), Integer.parseInt(searchLimit), locale, is_chaman);
 			} else {
-				events = Event.Get(accessToken, latitude, longitude, searchLat, searchLon, timeZone, Integer.parseInt(searchTimeFrame), Float.parseFloat(searchRadius), Integer.parseInt(searchLimit), locale);
+				events = Event.Get(accessToken, latitude, longitude, searchLat, searchLon, timeZone, Integer.parseInt(searchTimeFrame), Float.parseFloat(searchRadius), Integer.parseInt(searchLimit), locale, is_chaman);
 			}
 				
 			result.setSuccess(true);
