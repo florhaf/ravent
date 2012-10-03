@@ -229,7 +229,9 @@ public class Event extends Model implements Serializable, Runnable {
 	    	    		if (e.getTimeStampStart() != Long.parseLong(event.start_time) || e.getTimeStampEnd() != Long.parseLong(event.end_time)){
 	    	    			e.setTimeStampStart(Long.parseLong(event.start_time));
 	    	    			e.setTimeStampEnd(Long.parseLong(event.end_time));
-	    	    			dao.ofy().put(e);
+	    	    			if (is_chaman == null) { //no write if web or visibility
+	    	    				dao.ofy().put(e);
+	    	    			}
 	    	    		}
             		}
             	}
@@ -246,10 +248,12 @@ public class Event extends Model implements Serializable, Runnable {
               			float distance = Geo.Fence(userLatitude, userLongitude, event.latitude, event.longitude);
 
               			event.distance = String.format("%.2f", distance);
-
-              			asyncCache.put(event.eid, event, null);
+              			
+              			if (is_chaman == null) { //no cache if web or visibility
+              				asyncCache.put(event.eid, event, null);
+              			}
         			
-            			this.tm.AddToResultList(event);
+              			this.tm.AddToResultList(event);
         			}
             	} 
             	
