@@ -149,6 +149,8 @@ public class Event extends Model implements Serializable, Runnable {
 			
 			e.map_cache = syncCache.getAll(eventkeys);
 			
+			//TODO get all marketing programs here
+			
 			e.tm = new MyThreadManager<EventLocationCapable>(e);
 			
 			Queue<EventLocationCapable> q = new ArrayBlockingQueue<EventLocationCapable>(l.size());
@@ -464,7 +466,6 @@ public class Event extends Model implements Serializable, Runnable {
 			}
 		}
 		
-		
 		if (this.filter != null && (this.filter.equals("Other") || this.filter.equals("Entertain"))) {
 			
 			if (dtEnd.toDateTime(PST).getHourOfDay() >= 3 &&  dtEnd.toDateTime(PST).getHourOfDay() <= 7) {
@@ -472,19 +473,19 @@ public class Event extends Model implements Serializable, Runnable {
 			}
 		}
 	
-		// TODO: to delete
-		/*List<String> offer_t = new ArrayList<String>();
-		offer_t.add("Buy 1 Drink get 1 FREE");
-		Random r = new Random();
-		this.offer_title = offer_t.get(r.nextInt(14));
-		if (!this.offer_title.equals("")) {
-			this.offer_description = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.";
-		}	
-		this.featured = offer_t.get(r.nextInt(14));
-		List<String> tickets = new ArrayList<String>();
-		tickets.add("http://www.ticketmaster.com/event/12004788E26339A4?artistid=837473&majorcatid=10002&minorcatid=207");
-		this.ticket_link = tickets.get(r.nextInt(14));
+		/* Get information from DS concerning Marketing Programs
 		*/
+		Dao dao = new Dao();
+		EventMarketingProgram emp = dao.ofy().find(EventMarketingProgram.class, eid);
+		
+		if (emp != null) {
+			
+			this.featured = emp.features;
+			this.offer_title = emp.title;
+			this.offer_description = emp.terms;
+			this.ticket_link = emp.ticket_link;
+		}
+		
 		
 		if (this.featured != null && this.featured.length() > 0) {
 			

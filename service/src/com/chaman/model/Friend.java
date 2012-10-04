@@ -67,11 +67,18 @@ public class Friend extends Model{
 		
 		FacebookClient client 	= new DefaultFacebookClient(accessToken);
 		
-		//make sure to query the events of the user then the friends
-		String query 			= "SELECT uid FROM user WHERE uid IN (SELECT uid2 FROM friend WHERE uid1 = " + userID + ") OR uid = " + userID;
-		List<Friend> friends 	= client.executeQuery(query, Friend.class);
-		
-		return friends;
+		try {
+			
+			//make sure to query the events of the user then the friends
+			String query 			= "SELECT uid FROM user WHERE uid IN (SELECT uid2 FROM friend WHERE uid1 = " + userID + ") OR uid = " + userID;
+			List<Friend> friends 	= client.executeQuery(query, Friend.class);
+			return friends;
+		} catch (Exception ex ) {
+			
+			String query 			= "SELECT uid FROM user WHERE uid IN (SELECT uid2 FROM friend WHERE uid1 = " + userID + " LIMIT 1000) OR uid = " + userID;
+			List<Friend> friends 	= client.executeQuery(query, Friend.class);
+			return friends;
+		}
 	}
 	
 	private void setIsFollowed(String userID, MemcacheService syncCache) {
