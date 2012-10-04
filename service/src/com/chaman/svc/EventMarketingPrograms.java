@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.logging.Logger;
 
 import org.restlet.resource.Get;
-import org.restlet.resource.Post;
 import org.restlet.resource.ServerResource;
 
 import com.chaman.model.EventMarketingProgram;
@@ -15,31 +14,6 @@ public class EventMarketingPrograms extends ServerResource {
 	private static final Logger log = Logger.getLogger(Events.class.getName());
 	
 	@Get("json")
-	public Response Read() {
-		
-		Response result = new Response();
-		
-		try {
-			
-			String eid = getQuery().getValues("eid");
-			
-			ArrayList<Model> emp_res = EventMarketingProgram.GetEventMarketingProgram(Long.valueOf(eid));
-			
-			result.setSuccess(true);
-			result.setRecords(emp_res);
-			
-		} catch (Exception ex) {
-			
-			log.severe(ex.toString());
-			
-			result.setSuccess(false);
-			result.setError(ex.toString());
-		}
-		
-		return result;
-	}	
-	
-	@Post("json")
 	public Response Create(){
 		
 		Response result = new Response();
