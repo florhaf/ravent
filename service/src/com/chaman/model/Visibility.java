@@ -49,17 +49,19 @@ public class Visibility {
 									
 									this.NbVote++;
 									
-									ConfigurationBuilder cb = new ConfigurationBuilder();
-									cb.setDebugEnabled(true)
-									 .setOAuthConsumerKey("QsJQApEU7TUPZN9dQkgLw")
-									 .setOAuthConsumerSecret("31PhHAhpx54DHJiaDOCM0ARqLoEDJJXbxCyOVCQySUk")
-									 .setOAuthAccessToken("722756468-JMJp6Q2XLUjpNm8azl24Rw8Ep4J0v4CWTYALuOST")
-									 .setOAuthAccessTokenSecret("sN07PzN2KlxGIDgAvdN1jPcXArv7rNSf2VoqJ43AU");
-									TwitterFactory tf = new TwitterFactory(cb.build());
-									Twitter twitter = tf.getInstance();
+									if (this.NbVote == 1) { //post on twiter only once to avoid spam flag
+										ConfigurationBuilder cb = new ConfigurationBuilder();
+										cb.setDebugEnabled(true)
+										.setOAuthConsumerKey("QsJQApEU7TUPZN9dQkgLw")
+										.setOAuthConsumerSecret("31PhHAhpx54DHJiaDOCM0ARqLoEDJJXbxCyOVCQySUk")
+										.setOAuthAccessToken("722756468-JMJp6Q2XLUjpNm8azl24Rw8Ep4J0v4CWTYALuOST")
+										.setOAuthAccessTokenSecret("sN07PzN2KlxGIDgAvdN1jPcXArv7rNSf2VoqJ43AU");
+										TwitterFactory tf = new TwitterFactory(cb.build());
+										Twitter twitter = tf.getInstance();
 									
-									twitter.updateStatus("#Gemster #Event: " +event.name + " " + "at #" + event.location.replaceAll("[^0-9A-Za-z]", "") + (city != null ? " #" + city.replaceAll("[^0-9A-Za-z]", "") : "") 
-											+ " http://gemsterapp.com/facebook/event_page.php?eid=" + event.eid);					
+										twitter.updateStatus("@Gemster_app #" + event.filter + ": " +event.name + " " + "@" + event.location.replaceAll("[^0-9A-Za-z]", "") + (city != null ? " #" + city.replaceAll("[^0-9A-Za-z]", "") : "") 
+												+ " http://gemsterapp.com/facebook/event_page.php?eid=" + event.eid);					
+									}
 								}
 							}
 						}
