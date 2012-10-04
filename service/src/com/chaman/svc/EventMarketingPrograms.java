@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.logging.Logger;
 
 import org.restlet.resource.Get;
-import org.restlet.resource.Put;
+import org.restlet.resource.Post;
 import org.restlet.resource.ServerResource;
 
 import com.chaman.model.EventMarketingProgram;
@@ -39,7 +39,7 @@ public class EventMarketingPrograms extends ServerResource {
 		return result;
 	}	
 	
-	@Put("json")
+	@Post("json")
 	public Response Create(){
 		
 		Response result = new Response();
