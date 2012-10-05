@@ -45,7 +45,7 @@ public class EventMarketingProgram extends Model {
 	
     public static ArrayList<Model> PutEventMarketingProgram(String userID, String accessToken, long eid, String features, String title, String terms, String ticket_link) {
     
-    	String message = "This event is now Gemed | " + (title != null ? "Drop Gems to unlock the goodies /*and raffle */: " + title : "") + (ticket_link != null ? " | Buy tickets" : "");
+    	String message = "This event is now Gemed | " + (title != null ? "Drop Gems to unlock the goodies /*and raffle */: " + title : "") + (ticket_link != null ? " | Tickets available on Gemster" : "");
     	
     	EventMarketingProgram emp = new EventMarketingProgram(eid, features, title,terms, ticket_link);
     	
