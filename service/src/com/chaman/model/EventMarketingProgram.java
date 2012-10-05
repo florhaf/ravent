@@ -43,13 +43,16 @@ public class EventMarketingProgram extends Model {
 		this.ticket_link = ticket_link;
 	}
 	
-    public static ArrayList<Model> PutEventMarketingProgram(long eid, String features, String title, String terms, String ticket_link) {
+    public static ArrayList<Model> PutEventMarketingProgram(String userID, String accessToken, long eid, String features, String title, String terms, String ticket_link) {
     
+    	String message = "This event is now Gemed | " + (title != null ? "Drop Gems to unlock the goodies /*and raffle */: " + title : "") + (ticket_link != null ? " | Buy tickets" : "");
+    	
     	EventMarketingProgram emp = new EventMarketingProgram(eid, features, title,terms, ticket_link);
     	
-    	Dao dao = new Dao();
-    	 	  	
+    	Dao dao = new Dao(); 	  	
     	dao.ofy().put(emp);
+    	
+    	new Vote(accessToken, userID, String.valueOf(eid), "1", false, message);
     	
     	return null;
     }

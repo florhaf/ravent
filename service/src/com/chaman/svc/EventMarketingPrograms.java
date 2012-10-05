@@ -21,12 +21,14 @@ public class EventMarketingPrograms extends ServerResource {
 		try {
 			
 			String eid = getQuery().getValues("eid");
+			String userID = getQuery().getValues("userID");
+			String accessToken = getQuery().getValues("access_token");
 			String features = getQuery().getValues("features");
 			String title = getQuery().getValues("title");
 			String terms = getQuery().getValues("terms");
 			String ticket_link = getQuery().getValues("ticket_link");
 			
-			ArrayList<Model> emp_res = EventMarketingProgram.PutEventMarketingProgram(Long.valueOf(eid), features, title, terms, ticket_link);
+			ArrayList<Model> emp_res = EventMarketingProgram.PutEventMarketingProgram(userID, accessToken, Long.valueOf(eid), features, title, terms, ticket_link);
 			
 			result.setSuccess(true);
 			result.setRecords(emp_res);

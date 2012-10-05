@@ -49,7 +49,7 @@ public class Vote extends Model implements Serializable  {
 		this.nb_vote = nb_vote;
 	}
 	
-	public Vote(String accessToken, String userid, String eventid, String svote, boolean visibility) {
+	public Vote(String accessToken, String userid, String eventid, String svote, boolean visibility, String message) {
 		
 		Dao dao = new Dao();
 		
