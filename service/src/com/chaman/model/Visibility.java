@@ -59,7 +59,8 @@ public class Visibility {
 										TwitterFactory tf = new TwitterFactory(cb.build());
 										Twitter twitter = tf.getInstance();
 									
-										twitter.updateStatus("@Gemster_app #" + event.filter + ": " +event.name + " " + "@" + event.location.replaceAll("[^0-9A-Za-z]", "") + (city != null ? " #" + city.replaceAll("[^0-9A-Za-z]", "") : "") 
+										twitter.updateStatus( (event.filter.equals("Other") ? "New #Event" : "#" + event.filter) + (city != null ? " in #" + city.replaceAll("[^0-9A-Za-z]", "") : "") + ": " 
+												+ event.name + " @" + event.location.replaceAll("[^0-9A-Za-z]", "") + " @Gemster_app"
 												+ " http://gemsterapp.com/facebook/event_page.php?eid=" + event.eid);					
 									}
 								}
