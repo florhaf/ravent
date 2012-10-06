@@ -122,11 +122,11 @@ public class EventFetchCron extends Model implements Runnable {
 
 									asyncCache.put(e_cache.eid, e_cache, null); // Add cache Event to cache -> more recent date
 								}
-							} catch (Exception ex ) {}
+							} catch (Exception ex ) {log.severe(ex.toString());}
 						}
-					} catch (Exception ex ) {}
+					} catch (Exception ex ) {log.severe(ex.toString());}
 				}		
-			} catch (Exception ex) {}
+			} catch (Exception ex) {log.severe(ex.toString());}
 
 		} catch (Exception ex){
 
