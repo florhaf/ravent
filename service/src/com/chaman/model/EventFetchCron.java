@@ -43,8 +43,6 @@ public class EventFetchCron extends Model implements Runnable {
 		
 		efc.tm.Process(q);
 		
-		log.info("fetched : " + users_count + " users");
-		
 	}	
 
 	@Override
@@ -75,7 +73,7 @@ public class EventFetchCron extends Model implements Runnable {
 					try {
 
 						FacebookClient client 	= new DefaultFacebookClient(u.getAccess_token());
-						String properties 		= "eid, name, pic_big, start_time, end_time, venue, location, privacy, update_time, timezone";
+						String properties 		= "eid, name, pic_big, start_time, end_time, venue, location, privacy, update_time, all_members_count, timezone, creator";
 						String query 			= "SELECT " + properties + " FROM event WHERE eid IN (SELECT eid FROM event_member WHERE uid = " + l.getUid() + ") AND start_time < " + snow_plus_1month + " AND privacy = 'OPEN'";
 						List<Event> fbevents 	= client.executeQuery(query, Event.class);
 
@@ -83,53 +81,56 @@ public class EventFetchCron extends Model implements Runnable {
 
 						for (Event e : fbevents) {
 
-							e_cache = (Event) syncCache.get(e.eid); // read from Event cache
-							if (e_cache == null || !e_cache.update_time.equals(e.update_time)) {
+							try {
+								
+								e_cache = (Event) syncCache.get(e.eid); // read from Event cache
+								if (e_cache == null || !e_cache.update_time.equals(e.update_time)) {
 
-								e.venue_id = JSON.GetValueFor("id", e.venue);    	
-								Venue v_graph =  Venue.getVenue(client, e.venue_id);
-								e.venue_category = v_graph.category;
+									e.venue_id = JSON.GetValueFor("id", e.venue);    	
+									Venue v_graph =  Venue.getVenue(client, e.venue_id);
+									e.venue_category = v_graph.category;
 
-								if (e.venue_category == null || !e.venue_category.equals("city")) {
+									if (e.venue_category == null || !e.venue_category.equals("city")) {
 
-									e.Score(v_graph);
+										e.Score(v_graph);
 
-									e.Filter_category();
+										e.Filter_category();
 
-									e.latitude 	= JSON.GetValueFor("latitude", e.venue);
-									e.longitude = JSON.GetValueFor("longitude", e.venue);
+										e.latitude 	= JSON.GetValueFor("latitude", e.venue);
+										e.longitude = JSON.GetValueFor("longitude", e.venue);
 
-									if (v_graph != null && (e.latitude == null || e.longitude == null)) {
+										if (v_graph != null && (e.latitude == null || e.longitude == null)) {
 
-										// take value from venue if event location is null
-										e.latitude = JSON.GetValueFor("latitude", v_graph.location);
-										e.longitude = JSON.GetValueFor("longitude", v_graph.location);
-									}	
+											// take value from venue if event location is null
+											e.latitude = JSON.GetValueFor("latitude", v_graph.location);
+											e.longitude = JSON.GetValueFor("longitude", v_graph.location);
+										}	
 
-									if (e.latitude != null && e.longitude != null) {
+										if (e.latitude != null && e.longitude != null) {
 
-										EventLocationCapable elc = dao.ofy().find(EventLocationCapable.class, e.eid);
+											EventLocationCapable elc = dao.ofy().find(EventLocationCapable.class, e.eid);
 
-										if (elc == null) {
-											dao.ofy().put(new EventLocationCapable(e));
-										} else if (elc.getTimeStampStart() != Long.parseLong(e.start_time) || elc.getTimeStampEnd() != Long.parseLong(e.end_time)){
-											dao.ofy().put(new EventLocationCapable(e));
+											if (elc == null) {
+												dao.ofy().put(new EventLocationCapable(e));
+											} else if (elc.getTimeStampStart() != Long.parseLong(e.start_time) || elc.getTimeStampEnd() != Long.parseLong(e.end_time)){
+												dao.ofy().put(new EventLocationCapable(e));
+											}
+											asyncCache.put(e.eid, e, null); // Add Event to cache
 										}
-										asyncCache.put(e.eid, e, null); // Add Event to cache
 									}
-								}
-							} else {
+								} else {
 
-								asyncCache.put(e_cache.eid, e_cache, null); // Add cache Event to cache -> more recent date
-							}
+									asyncCache.put(e_cache.eid, e_cache, null); // Add cache Event to cache -> more recent date
+								}
+							} catch (Exception ex ) {log.severe("Event loop" + ex.toString());}
 						}
-					} catch (Exception ex ) {}
+					} catch (Exception ex ) {log.severe("Get Events from FB" + ex.toString());}
 				}		
-			} catch (Exception ex) {}
+			} catch (Exception ex) {log.severe("Get friends list" + ex.toString());}
 
 		} catch (Exception ex){
 
-			log.severe(ex.toString());
+			log.severe("run" + ex.toString());
 		}finally {
 
 			tm.threadIsDone(Thread.currentThread());

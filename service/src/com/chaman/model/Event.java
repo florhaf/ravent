@@ -65,6 +65,8 @@ public class Event extends Model implements Serializable, Runnable {
 	String timezone;
 	@Facebook
 	String all_members_count;
+	@Facebook
+	String creator;
 	
 	String venue_id;
 	double score;
@@ -93,6 +95,7 @@ public class Event extends Model implements Serializable, Runnable {
 	int timeZoneInMinutes;
 	MyThreadManager<EventLocationCapable> tm;
 	String accessToken;
+	String is_chaman;
 	int searchTimeFrame;
 	String locale;
 	String userLatitude;
@@ -109,14 +112,14 @@ public class Event extends Model implements Serializable, Runnable {
 	 /* - Get list of event for any user in search area
 	 * - exclude past event
 	 */
-	public static ArrayList<Model> Get(String accessToken, String userLatitude, String userLongitude, String searchLat, String searchLon, String timeZone, int searchTimeFrame, float searchRadius, int searchLimit, String locale) throws FacebookException , MemcacheServiceException {
+	public static ArrayList<Model> Get(String accessToken, String userLatitude, String userLongitude, String searchLat, String searchLon, String timeZone, int searchTimeFrame, float searchRadius, int searchLimit, String locale, String is_chaman) throws FacebookException , MemcacheServiceException {
 		
 		Boolean isRetrying = false;
 		
-		return Event.Get(accessToken, userLatitude, userLongitude, searchLat, searchLon, timeZone, searchTimeFrame, searchRadius, searchLimit, locale, isRetrying);
+		return Event.Get(accessToken, userLatitude, userLongitude, searchLat, searchLon, timeZone, searchTimeFrame, searchRadius, searchLimit, locale, isRetrying, is_chaman);
 	}
 	
-	private static ArrayList<Model> Get(String accessToken, String userLatitude, String userLongitude, String searchLat, String searchLon, String timeZone, int searchTimeFrame, float searchRadius, int searchLimit, String locale, Boolean isRetrying) throws FacebookException , MemcacheServiceException {
+	private static ArrayList<Model> Get(String accessToken, String userLatitude, String userLongitude, String searchLat, String searchLon, String timeZone, int searchTimeFrame, float searchRadius, int searchLimit, String locale, Boolean isRetrying, String is_chaman) throws FacebookException , MemcacheServiceException {
 		
 		List<Model> result = new ArrayList<Model>();
 		
@@ -130,6 +133,7 @@ public class Event extends Model implements Serializable, Runnable {
 		e.locale = locale;
 		e.userLatitude = userLatitude;
 		e.userLongitude = userLongitude;
+		e.is_chaman = is_chaman;
 		
 		LocationCapableRepositorySearch<EventLocationCapable> ofySearch = new OfyEntityLocationCapableRepositorySearchImpl(dao.ofy(), timeZone, searchTimeFrame);
 		
@@ -144,6 +148,8 @@ public class Event extends Model implements Serializable, Runnable {
 			List<Long> eventkeys = EventTools.getELCkeys(l);
 			
 			e.map_cache = syncCache.getAll(eventkeys);
+			
+			//TODO get all marketing programs here
 			
 			e.tm = new MyThreadManager<EventLocationCapable>(e);
 			
@@ -167,7 +173,7 @@ public class Event extends Model implements Serializable, Runnable {
 			
 			Boolean retry = true;
 		
-			return Event.Get(accessToken, userLatitude, userLongitude, searchLat, searchLon, timeZone, newTimeFrame, searchRadius, searchLimit, locale, retry);
+			return Event.Get(accessToken, userLatitude, userLongitude, searchLat, searchLon, timeZone, newTimeFrame, searchRadius, searchLimit, locale, retry, is_chaman);
 		}
 		
 		return (ArrayList<Model>)result;    
@@ -189,7 +195,7 @@ public class Event extends Model implements Serializable, Runnable {
 			long actual_time = now.getMillis() / 1000L;
 			
 			FacebookClient client 	= new DefaultFacebookClient(accessToken);
-			String properties 		= "eid, name, pic_big, start_time, end_time, venue, location, privacy, update_time, all_members_count, timezone";
+			String properties 		= "eid, name, pic_big, start_time, end_time, venue, location, privacy, update_time, all_members_count, timezone, creator";
 		
 			AsyncMemcacheService asyncCache = MemcacheServiceFactory.getAsyncMemcacheService();
 			
@@ -225,14 +231,16 @@ public class Event extends Model implements Serializable, Runnable {
 	    	    		if (e.getTimeStampStart() != Long.parseLong(event.start_time) || e.getTimeStampEnd() != Long.parseLong(event.end_time)){
 	    	    			e.setTimeStampStart(Long.parseLong(event.start_time));
 	    	    			e.setTimeStampEnd(Long.parseLong(event.end_time));
-	    	    			dao.ofy().put(e);
+	    	    			if (is_chaman == null) { //no write if web or visibility
+	    	    				dao.ofy().put(e);
+	    	    			}
 	    	    		}
             		}
             	}
     			
             	if (event != null && (event.venue_category == null || !event.venue_category.equals("city"))) {
             		
-        			if (event.Format(timeZoneInMinutes, now, searchTimeFrame, locale)){
+        			if (event.Format(timeZoneInMinutes, now, searchTimeFrame, locale, is_chaman)){
 
         				
             			event.latitude 	= Double.toString(e.getLatitude());
@@ -242,10 +250,12 @@ public class Event extends Model implements Serializable, Runnable {
               			float distance = Geo.Fence(userLatitude, userLongitude, event.latitude, event.longitude);
 
               			event.distance = String.format("%.2f", distance);
-
-              			asyncCache.put(event.eid, event, null);
+              			
+              			if (is_chaman == null) { //no cache if web or visibility
+              				asyncCache.put(event.eid, event, null);
+              			}
         			
-            			this.tm.AddToResultList(event);
+              			this.tm.AddToResultList(event);
         			}
             	} 
             	
@@ -276,7 +286,7 @@ public class Event extends Model implements Serializable, Runnable {
 		dao.ofy().delete(qELC.fetchKeys());
 	}
 	
-	public static ArrayList<Model> getMultiple(String accessToken, String[] eids, String timeZone, String userLatitude, String userLongitude, String locale) throws FacebookException {
+	public static ArrayList<Model> getMultiple(String accessToken, String[] eids, String timeZone, String userLatitude, String userLongitude, String locale, String is_chaman) throws FacebookException {
 		
 		ArrayList<Model> result	= new ArrayList<Model>();
 		
@@ -284,14 +294,14 @@ public class Event extends Model implements Serializable, Runnable {
 	    	
 			try {
 				
-				Event e = getSingle(accessToken, eid, timeZone, userLatitude, userLongitude, locale);
+				Event e = getSingle(accessToken, eid, timeZone, userLatitude, userLongitude, locale, is_chaman);
 				if (e == null) {
 					continue;
 				}
 				result.add(e);
 			} catch (Exception ex ) {
 				
-				Event e = getSingle(accessToken, eid, timeZone, userLatitude, userLongitude, locale);
+				Event e = getSingle(accessToken, eid, timeZone, userLatitude, userLongitude, locale, is_chaman);
 				if (e == null) {
 					continue;
 				}
@@ -302,7 +312,7 @@ public class Event extends Model implements Serializable, Runnable {
 		return result;
 	}
 	
-	public static Event getSingle(String accessToken, String eid, String timeZone, String userLatitude, String userLongitude, String locale) throws FacebookException{
+	public static Event getSingle(String accessToken, String eid, String timeZone, String userLatitude, String userLongitude, String locale, String is_chaman) throws FacebookException{
 		
 		FacebookClient client	= new DefaultFacebookClient(accessToken);
 		int timeZoneInMinutes	= Integer.parseInt(timeZone);
@@ -312,7 +322,7 @@ public class Event extends Model implements Serializable, Runnable {
 		DateTimeZone TZ = DateTimeZone.forOffsetMillis(timeZoneInMinutes*60*1000);
 		DateTime now = DateTime.now(TZ);	
 		
-		String query 			= "SELECT eid, name, pic_big, start_time, end_time, venue, location, privacy, timezone FROM event WHERE eid = " + eid;
+		String query 			= "SELECT eid, name, pic_big, start_time, end_time, venue, location, privacy, timezone, creator FROM event WHERE eid = " + eid;
 		List<Event> fbevents 	= client.executeQuery(query, Event.class);
 		
 		
@@ -327,7 +337,7 @@ public class Event extends Model implements Serializable, Runnable {
 		
 		e.Filter_category();
 		
-		e.Format(timeZoneInMinutes, now, 0, locale);
+		e.Format(timeZoneInMinutes, now, 0, locale, is_chaman);
 		
 		e.latitude 	= JSON.GetValueFor("latitude", e.venue);
 		e.longitude = JSON.GetValueFor("longitude", e.venue);
@@ -357,7 +367,7 @@ public class Event extends Model implements Serializable, Runnable {
 		return e;
 	}
 	
-	public boolean Format(int timeZoneInMinutes, DateTime now, int searchTimeFrame, String locale) {
+	public boolean Format(int timeZoneInMinutes, DateTime now, int searchTimeFrame, String locale, String is_chaman) {
 			
 		boolean res = true;
 		long timeStampStart = Long.parseLong(this.start_time) * 1000;
@@ -365,13 +375,15 @@ public class Event extends Model implements Serializable, Runnable {
 		
 		Locale loc = Locale.ENGLISH;
 		
-		if (locale != null && locale.length() > 0) {
-			if (locale.length() < 5) {
-				loc = new Locale(locale,"US");
-			} else {
-				loc = new Locale(locale.split("_")[0],locale.split("_")[1]);
+		try {
+			if (locale != null && locale.length() > 0) {
+				if (locale.length() < 5) {
+					loc = new Locale(locale,"US");
+				} else {
+					loc = new Locale(locale.split("_")[0],locale.split("_")[1]);
+				}
 			}
-		}
+		} catch (Exception ex) {}
 		
 		// facebook events timestamp are in PST // or have a timezone...
 		DateTimeZone PST = DateTimeZone.forID("America/Los_Angeles"); //named pst but should be called default...
@@ -381,10 +393,20 @@ public class Event extends Model implements Serializable, Runnable {
 			this.dtEnd = new DateTime(timeStampEnd, PST);
 		} else {
 			DateTimeZone T = DateTimeZone.forID(this.timezone);
-			this.dtStart = new DateTime(timeStampStart, T);
-			this.dtEnd = new DateTime(timeStampEnd, T);
-			timeStampStart = this.dtStart.getMillis();
-			timeStampEnd = this.dtEnd.getMillis();
+			
+			if (is_chaman != null) {
+				
+				this.dtStart = new DateTime(timeStampStart + (T.getOffset(timeStampStart) + 25200000), T);
+				this.dtEnd = new DateTime(timeStampEnd + (T.getOffset(timeStampEnd) + 25200000), T);
+				timeStampStart = this.dtStart.getMillis();
+				timeStampEnd = this.dtEnd.getMillis();
+			} else {
+				
+				this.dtStart = new DateTime(timeStampStart, T);
+				this.dtEnd = new DateTime(timeStampEnd, T);
+				timeStampStart = this.dtStart.getMillis();
+				timeStampEnd = this.dtEnd.getMillis();
+			}
 		}
 
 		
@@ -446,7 +468,6 @@ public class Event extends Model implements Serializable, Runnable {
 			}
 		}
 		
-		
 		if (this.filter != null && (this.filter.equals("Other") || this.filter.equals("Entertain"))) {
 			
 			if (dtEnd.toDateTime(PST).getHourOfDay() >= 3 &&  dtEnd.toDateTime(PST).getHourOfDay() <= 7) {
@@ -454,19 +475,19 @@ public class Event extends Model implements Serializable, Runnable {
 			}
 		}
 	
-		// TODO: to delete
-		/*List<String> offer_t = new ArrayList<String>();
-		offer_t.add("Buy 1 Drink get 1 FREE");
-		Random r = new Random();
-		this.offer_title = offer_t.get(r.nextInt(14));
-		if (!this.offer_title.equals("")) {
-			this.offer_description = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.";
-		}	
-		this.featured = offer_t.get(r.nextInt(14));
-		List<String> tickets = new ArrayList<String>();
-		tickets.add("http://www.ticketmaster.com/event/12004788E26339A4?artistid=837473&majorcatid=10002&minorcatid=207");
-		this.ticket_link = tickets.get(r.nextInt(14));
+		/* Get information from DS concerning Marketing Programs
 		*/
+		Dao dao = new Dao();
+		EventMarketingProgram emp = dao.ofy().find(EventMarketingProgram.class, eid);
+		
+		if (emp != null) {
+			
+			this.featured = emp.features;
+			this.offer_title = emp.title;
+			this.offer_description = emp.terms;
+			this.ticket_link = emp.ticket_link;
+		}
+		
 		
 		if (this.featured != null && this.featured.length() > 0) {
 			
@@ -849,6 +870,10 @@ public class Event extends Model implements Serializable, Runnable {
 	
 	public void setAll_members_count(String all_members_count) {
 		this.all_members_count = all_members_count;
+	}
+
+	public void setCreator(String creator) {
+		this.creator = creator;
 	}
 
 }

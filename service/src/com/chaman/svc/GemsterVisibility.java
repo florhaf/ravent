@@ -24,10 +24,9 @@ public class GemsterVisibility extends ServerResource {
 			String longitude 	= getQuery().getValues("longitude");
 			String max_post 	= getQuery().getValues("maxPost");
 			String min_score 	= getQuery().getValues("minScore");
+			String city			= getQuery().getValues("city");
 			
-			Visibility hack = new Visibility(userID, accessToken, latitude, longitude, Integer.parseInt(max_post), Integer.parseInt (min_score));
-						
-			log.info(hack.getNbVote() + "/" + hack.getEvent_list_size());
+			new Visibility(userID, accessToken, latitude, longitude, Integer.parseInt(max_post), Integer.parseInt (min_score), 48, true, city);
 			
 			result.setSuccess(true);
 			result.setRecords(null);

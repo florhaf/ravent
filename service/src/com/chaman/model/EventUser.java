@@ -54,7 +54,7 @@ public class EventUser extends Model implements Runnable {
 		String str_actual_time = String.valueOf(actual_time);
 		
 		FacebookClient client 	= new DefaultFacebookClient(accessToken);
-		String properties 		= "eid, name, pic_big, start_time, end_time, venue, location, privacy, update_time, timezone";
+		String properties 		= "eid, name, pic_big, start_time, end_time, venue, location, privacy, update_time, all_members_count, timezone, creator";
 
 		eu.locale = locale;
 		eu.userLatitude = userLatitude;
@@ -89,7 +89,7 @@ public class EventUser extends Model implements Runnable {
 	public void run() {
 		
 		try {
-
+			
 			AsyncMemcacheService asyncCache = MemcacheServiceFactory.getAsyncMemcacheService();
 			
 			Dao dao = new Dao();
@@ -97,19 +97,21 @@ public class EventUser extends Model implements Runnable {
 			Event e_cache; 
 			
 			Event e = this.tm.getIdForThread(Thread.currentThread());
-			
+
 			e_cache = (Event) map_cache.get(e.getEid()); // read from Event cache
     	    if (e_cache == null || !e_cache.update_time.equals(e.update_time)) {
-
-    	    	e.venue_id = JSON.GetValueFor("id", e.venue);    	
+    	    	
+    	    	e.venue_id = JSON.GetValueFor("id", e.venue);
     	    	Venue v_graph = Venue.getVenue(client, e.venue_id);
     	    	e.venue_category = v_graph.category;
-			
+    	    	
     	    	e.Filter_category();
+    	    	
     	    	e.Score(v_graph);
+    	    	
     	    	e.latitude 	= JSON.GetValueFor("latitude", e.venue);
     	    	e.longitude = JSON.GetValueFor("longitude", e.venue);
-			
+    	    	
     	    	if ((e.latitude == null || e.longitude == null) && v_graph != null) {
 				
     	    		// take value from venue if event location is null
@@ -131,9 +133,9 @@ public class EventUser extends Model implements Runnable {
     	    	
     	    	e = e_cache;
     	    }
-
-	    	e.Format(timeZoneInMinutes, now, 0, locale);
-
+  	    
+	    	e.Format(timeZoneInMinutes, now, 0, locale, null);
+	    	
 	    	if (e.latitude != null && e.longitude != null) {
 
     	    	float distance = Geo.Fence(userLatitude, userLongitude, e.latitude, e.longitude);
@@ -153,5 +155,65 @@ public class EventUser extends Model implements Runnable {
 			tm.threadIsDone(Thread.currentThread());
 		}
 		
-	}	
+	}
+	
+	public static  ArrayList<Model> Get(String accessToken, String userID, String userLatitude, String userLongitude, String timeZone, String locale, boolean promoter) {
+			
+		ArrayList<Model> res = new ArrayList<Model>();
+		ArrayList<Model> result = new ArrayList<Model>();
+		
+		//get user ID events
+		res = Get(accessToken, userID, userLatitude, userLongitude, timeZone, locale);
+		
+		
+		//get the pages id administered by user
+		FacebookClient client 	= new DefaultFacebookClient(accessToken);
+		String query 			= "SELECT page_id from page_admin WHERE uid =" + userID;
+		List<Profile> pages 	= client.executeQuery(query, Profile.class);
+
+		if (pages != null && pages.size() > 0) {
+			
+			for (Profile p : pages) {
+				
+				res.addAll(Get(accessToken, p.page_id, userLatitude, userLongitude, timeZone, locale));
+			}
+		}
+		
+		if (res != null && res.size() > 0) {
+			
+			for (Model e : res) {
+				
+				Event event = (Event) e;
+				
+				if (event.creator != null && iscreator(userID, pages, event.creator)) {
+					
+					result.add(event);
+				}
+				
+			}
+		}
+		
+		return result;
+	}
+
+
+	private static boolean iscreator(String userID, List<Profile> pages, String creator) {
+		
+		if (creator.equals(userID)) {
+			
+			return true;
+		}
+		
+		if (pages != null && pages.size() > 0) {
+			
+			for (Profile p : pages) {
+				
+				if (creator.equals(p.page_id)) {
+					return true;
+				}
+			}
+		}
+		
+		return false;
+	}
 }

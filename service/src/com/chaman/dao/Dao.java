@@ -1,9 +1,12 @@
 package com.chaman.dao;
 
 import com.chaman.model.EventLocationCapable;
+import com.chaman.model.EventMarketingProgram;
 import com.chaman.model.Following;
+import com.chaman.model.Promoter;
 import com.chaman.model.User;
 import com.chaman.model.Vote;
+import com.chaman.model.VoteDetails;
 import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.util.DAOBase;
 
@@ -16,6 +19,9 @@ public class Dao extends DAOBase {
 			ObjectifyService.register(EventLocationCapable.class);
 			ObjectifyService.register(User.class);
 			ObjectifyService.register(Vote.class);
+			ObjectifyService.register(EventMarketingProgram.class);
+			ObjectifyService.register(VoteDetails.class);
+			ObjectifyService.register(Promoter.class);
 		} catch (Exception ex) {
 			
 			//System.out.println(ex.toString());
@@ -32,6 +38,9 @@ public class Dao extends DAOBase {
 			ObjectifyService.register(EventLocationCapable.class);
 			ObjectifyService.register(User.class);
 			ObjectifyService.register(Vote.class);
+			ObjectifyService.register(EventMarketingProgram.class);
+			ObjectifyService.register(VoteDetails.class);
+			ObjectifyService.register(Promoter.class);
 		} catch (Exception ex) {
 				
 			//System.out.println(ex.toString());
