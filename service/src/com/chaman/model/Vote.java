@@ -72,21 +72,23 @@ public class Vote extends Model implements Serializable  {
 	    }
 
 		dao.ofy().put(this);
+		Promoter.AddVote(eventid, accessToken);
     	asyncCache.put(this.eid, this, null); // Add vote to cache
     	asyncCache.delete(Long.parseLong(this.eid)); //Delete event from cache to refresh the event score when somebody has voted
     	
     	if (!visibility || (visibility && this.nb_vote == 1)) {
-    		
+
     		FacebookClient client 	= new DefaultFacebookClient(accessToken);
     		
-    		if (!visibility) {
-    			client.publish(userid + "/gemsterapp:drop_a_gem_on", FacebookType.class, Parameter.with("event", "http://gemsterapp.com/facebook/event_page.php?eid=" + eventid));
-    		}
-        	
     		try {
-        		client.publish(eventid + "/feed", FacebookType.class, Parameter.with("message", "Dropped a gem on this event with Gemster"), Parameter.with("link", "http://gemsterapp.com/facebook/event_page.php?eid=" + eventid),
+        		client.publish(eventid + "/feed", FacebookType.class, Parameter.with("message", message), Parameter.with("link", "http://gemsterapp.com/facebook/event_page.php?eid=" + eventid),
         				Parameter.with("name", "See more"), Parameter.with("picture", "http://gemsterapp.com/img/app_icon.png"));
         	} catch (Exception ex) {}
+    		
+    		if (!visibility) {
+    			new VoteDetails(eventid, userid);
+    			client.publish(userid + "/gemsterapp:drop_a_gem_on", FacebookType.class, Parameter.with("event", "http://gemsterapp.com/facebook/event_page.php?eid=" + eventid));
+    		}
     	}
 	}
 	public static void NewVote(String userid, String eventid, String svote) {

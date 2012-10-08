@@ -6,6 +6,8 @@ import java.util.List;
 import javax.persistence.Id;
 
 import com.chaman.dao.Dao;
+import com.google.appengine.api.memcache.MemcacheService;
+import com.google.appengine.api.memcache.MemcacheServiceFactory;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Unindexed;
 
@@ -43,16 +45,34 @@ public class EventMarketingProgram extends Model {
 		this.ticket_link = ticket_link;
 	}
 	
-    public static ArrayList<Model> PutEventMarketingProgram(String userID, String accessToken, long eid, String features, String title, String terms, String ticket_link) {
+    public static ArrayList<Model> PutEventMarketingProgram(String userID, String accessToken, long eid, String features, String title, String terms, String ticket_link, String timeZone) {
     
-    	String message = "This event is now Gemed | " + (title != null ? "Drop Gems to unlock the goodies /*and raffle */: " + title : "") + (ticket_link != null ? " | Tickets available on Gemster" : "");
+    	String message = "This event is now Gemed | " + (title != null ? "Drop Gems to unlock the goodies" + (features != null && features.contains("RAF") ? " and raffles: " : ": ") + title : "") + (ticket_link != null ? " | Tickets available on Gemster" : "");
     	
-    	EventMarketingProgram emp = new EventMarketingProgram(eid, features, title,terms, ticket_link);
+    	EventMarketingProgram emp = new EventMarketingProgram(eid, features, title, terms, ticket_link);
+    	
+    	//delete event from cache (if any)
+    	MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
+    	syncCache.delete(eid);
     	
     	Dao dao = new Dao(); 	  	
     	dao.ofy().put(emp);
     	
-    	new Vote(accessToken, userID, String.valueOf(eid), "1", false, message);
+    	//get event
+    	Event e = Event.getSingle(accessToken, String.valueOf(eid), timeZone, null, null, null, null);
+    	
+    	//add event to cache and DS
+    	if (e != null) {
+    	
+        	dao.ofy().put(new EventLocationCapable(e));
+        	syncCache.put(e.eid, e, null);
+    	}
+    	
+    	Promoter.Put(userID, e != null ? e.creator : null, features, title, ticket_link);
+    	
+    	try {
+    		new Vote(accessToken, e.creator, String.valueOf(eid), "1", false, message);
+    	} catch (Exception ex) {}
     	
     	return null;
     }

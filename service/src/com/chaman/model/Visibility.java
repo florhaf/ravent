@@ -48,21 +48,19 @@ public class Visibility {
 								if (v.nb_vote == 1) {
 									
 									this.NbVote++;
-									
-									if (this.NbVote == 1) { //post on twiter only once to avoid spam flag
-										ConfigurationBuilder cb = new ConfigurationBuilder();
-										cb.setDebugEnabled(true)
-										.setOAuthConsumerKey("QsJQApEU7TUPZN9dQkgLw")
-										.setOAuthConsumerSecret("31PhHAhpx54DHJiaDOCM0ARqLoEDJJXbxCyOVCQySUk")
-										.setOAuthAccessToken("722756468-JMJp6Q2XLUjpNm8azl24Rw8Ep4J0v4CWTYALuOST")
-										.setOAuthAccessTokenSecret("sN07PzN2KlxGIDgAvdN1jPcXArv7rNSf2VoqJ43AU");
-										TwitterFactory tf = new TwitterFactory(cb.build());
-										Twitter twitter = tf.getInstance();
-									
-										twitter.updateStatus( (event.filter.equals("Other") ? "New #Event" : "#" + event.filter) + (city != null ? " in #" + city.replaceAll("[^0-9A-Za-z]", "") : "") + " | " 
-												+ event.name + " @" + event.location.replaceAll("[^0-9A-Za-z]", "") + " @Gemster_app"
-												+ " | see more: http://gemsterapp.com/facebook/event_page.php?eid=" + event.eid);					
-									}
+									/*
+									ConfigurationBuilder cb = new ConfigurationBuilder();
+									cb.setDebugEnabled(true)
+									.setOAuthConsumerKey("QsJQApEU7TUPZN9dQkgLw")
+									.setOAuthConsumerSecret("31PhHAhpx54DHJiaDOCM0ARqLoEDJJXbxCyOVCQySUk")
+									.setOAuthAccessToken("722756468-JMJp6Q2XLUjpNm8azl24Rw8Ep4J0v4CWTYALuOST")
+									.setOAuthAccessTokenSecret("sN07PzN2KlxGIDgAvdN1jPcXArv7rNSf2VoqJ43AU");
+									TwitterFactory tf = new TwitterFactory(cb.build());
+									Twitter twitter = tf.getInstance();
+								
+									twitter.updateStatus( (event.filter.equals("Other") ? "New #Event" : "#" + event.filter) + (city != null ? " in #" + city.replaceAll("[^0-9A-Za-z]", "") : "") + " | " 
+											+ event.name + " @" + event.location.replaceAll("[^0-9A-Za-z]", "") + " @Gemster_app"
+											+ " | see more: http://gemsterapp.com/facebook/event_page.php?eid=" + event.eid);				*/	
 								}
 							}
 						}

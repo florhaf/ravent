@@ -27,8 +27,9 @@ public class EventMarketingPrograms extends ServerResource {
 			String title = getQuery().getValues("title");
 			String terms = getQuery().getValues("terms");
 			String ticket_link = getQuery().getValues("ticket_link");
+			String timeZone = getQuery().getValues("timezone_offset");
 			
-			ArrayList<Model> emp_res = EventMarketingProgram.PutEventMarketingProgram(userID, accessToken, Long.valueOf(eid), features, title, terms, ticket_link);
+			ArrayList<Model> emp_res = EventMarketingProgram.PutEventMarketingProgram(userID, accessToken, Long.valueOf(eid), features, title, terms, ticket_link, timeZone);
 			
 			result.setSuccess(true);
 			result.setRecords(emp_res);
