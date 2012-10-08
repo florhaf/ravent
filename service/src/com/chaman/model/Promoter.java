@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.Id;
 
 import com.chaman.dao.Dao;
+import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.Query;
 import com.googlecode.objectify.annotation.NotSaved;
 import com.googlecode.objectify.annotation.Unindexed;
@@ -37,6 +38,15 @@ public class Promoter extends Model{
 	@NotSaved
 	String other_id_pic;
 	
+	static {
+		try {
+
+			ObjectifyService.register(Promoter.class);
+		} catch (Exception ex) {
+			
+			//System.out.println(ex.toString());
+		}
+	}
 	
 	public Promoter() {
 		super();

@@ -44,7 +44,7 @@ public class Visibility {
 								break; // enough posting done in that location
 							} else {
 								
-								Vote v = new Vote(accessToken, uid, String.valueOf(event.eid), "1", true, "");
+								Vote v = new Vote(accessToken, uid, String.valueOf(event.eid), "1", true, "Dropped a gem to up-vote this event");
 								if (v.nb_vote == 1) {
 									
 									this.NbVote++;

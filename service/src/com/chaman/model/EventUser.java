@@ -89,7 +89,7 @@ public class EventUser extends Model implements Runnable {
 	public void run() {
 		
 		try {
-
+			
 			AsyncMemcacheService asyncCache = MemcacheServiceFactory.getAsyncMemcacheService();
 			
 			Dao dao = new Dao();
@@ -97,19 +97,21 @@ public class EventUser extends Model implements Runnable {
 			Event e_cache; 
 			
 			Event e = this.tm.getIdForThread(Thread.currentThread());
-			
+
 			e_cache = (Event) map_cache.get(e.getEid()); // read from Event cache
     	    if (e_cache == null || !e_cache.update_time.equals(e.update_time)) {
-
-    	    	e.venue_id = JSON.GetValueFor("id", e.venue);    	
+    	    	
+    	    	e.venue_id = JSON.GetValueFor("id", e.venue);
     	    	Venue v_graph = Venue.getVenue(client, e.venue_id);
     	    	e.venue_category = v_graph.category;
-			
+    	    	
     	    	e.Filter_category();
+    	    	
     	    	e.Score(v_graph);
+    	    	
     	    	e.latitude 	= JSON.GetValueFor("latitude", e.venue);
     	    	e.longitude = JSON.GetValueFor("longitude", e.venue);
-			
+    	    	
     	    	if ((e.latitude == null || e.longitude == null) && v_graph != null) {
 				
     	    		// take value from venue if event location is null
@@ -131,9 +133,9 @@ public class EventUser extends Model implements Runnable {
     	    	
     	    	e = e_cache;
     	    }
-
+  	    
 	    	e.Format(timeZoneInMinutes, now, 0, locale, null);
-
+	    	
 	    	if (e.latitude != null && e.longitude != null) {
 
     	    	float distance = Geo.Fence(userLatitude, userLongitude, e.latitude, e.longitude);

@@ -19,7 +19,7 @@ public class Votes extends ServerResource {
 			String eid 		= getQuery().getValues("eventID");
 			String vote		= getQuery().getValues("vote");
 			
-			new Vote(accessToken, userid, eid, vote, false, "Dropped a gem on this event with Gemster");
+			new Vote(accessToken, userid, eid, vote, false, "Dropped a gem to up-vote this event");
 			
 			result.setSuccess(true);
 			result.setRecords(null);

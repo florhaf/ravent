@@ -47,9 +47,9 @@ public class EventMarketingProgram extends Model {
 	
     public static ArrayList<Model> PutEventMarketingProgram(String userID, String accessToken, long eid, String features, String title, String terms, String ticket_link, String timeZone) {
     
-    	String message = "This event is now Gemed | " + (title != null ? "Drop Gems to unlock the goodies" + (features != null && features.contains("RAF") ? " and raffles: " : ": ") + title : "") + (ticket_link != null ? " | Tickets available on Gemster" : "");
+    	String message = (title != null ? "Drop Gems to unlock the goodies" + (features != null && features.contains("RAF") ? " and raffles: " : ": ") + title : "") + (ticket_link != null ? " | Tickets available on Gemster" : "");
     	
-    	EventMarketingProgram emp = new EventMarketingProgram(eid, features, title, terms, ticket_link);
+    	EventMarketingProgram emp = new EventMarketingProgram(eid, features, title, terms, ((ticket_link != null && !ticket_link.isEmpty()) && !ticket_link.contains("http") ? "http://" + ticket_link : ticket_link));
     	
     	//delete event from cache (if any)
     	MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
