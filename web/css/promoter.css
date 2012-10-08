@@ -1,0 +1,91 @@
+body {
+    background: #eeeeee url(../img/bg.jpeg) top left repeat;
+}
+
+.button-link {
+    padding: 10px 15px;
+    background: #4479BA;
+    color: #FFFFFF;
+
+    font-size: 14px;
+
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    border: solid 1px #20538D;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.4);
+    -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);
+
+    -webkit-transition-duration: 0.2s;
+    -moz-transition-duration: 0.2s;
+    transition-duration: 0.2s;
+
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
+}
+
+.button-link:hover, .button-link:focus {
+    background: #356094;
+    border: solid 1px #2A4E77;
+    text-decoration: none;
+}
+
+.button-link:active {
+    -webkit-box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
+    -moz-box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
+    box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
+    background: #2E5481;
+    border: solid 1px #203E5F;
+}
+
+
+
+.fbLoginButton {
+
+    padding: 10px 99px;
+    background: #eeeeee url(../img/facebookButton.png);
+
+    -webkit-transition-duration: 0.2s;
+    -moz-transition-duration: 0.2s;
+    transition-duration: 0.2s;
+}
+
+.fbLoginButton:hover, .fbLoginButton:focus {
+    background: #eeeeee url(../img/facebookButtonHover.png);
+}
+
+.fbLoginButton:active {
+    background: #eeeeee url(../img/facebookButtonSelect.png);
+}
+
+.placeholder
+{
+    color: #aaa;
+}
+
+.gradientBoxesWithOuterShadows {
+    height: 200px;
+    width: 400px;
+    padding: 20px;
+    background-color: white;
+
+    /* outer shadows  (note the rgba is red, green, blue, alpha) */
+    -webkit-box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.4);
+    -moz-box-shadow: 0px 1px 6px rgba(23, 69, 88, .5);
+
+    /* rounded corners */
+    -webkit-border-radius: 12px;
+    -moz-border-radius: 7px;
+    border-radius: 7px;
+
+    /* gradients */
+    /*background: -webkit-gradient(linear, left top, left bottom,*/
+    /*color-stop(0%, white), color-stop(15%, white), color-stop(100%, #D7E9F5));*/
+    /*background: -moz-linear-gradient(top, white 0%, white 55%, #D5E4F3 130%);*/
+
+    background: #eeeeee url(../img/bg.jpeg) top left repeat;
+}

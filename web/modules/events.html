@@ -38,7 +38,7 @@
             }
 
             $.ajax({
-                url : '../php/proxy.php?proxy_url=' + encodeURIComponent('http://api.gemsterapp.com/events?access_token=AAADRmCDizJoBACf5T4Me2cbwyyppRA4sq45I5QY1Grb7iIzZB9VfZCgANHxKgNuDfxJW6euMwqydwpBSsGfwxKRzqfSiMcVGXWNiRNSAZDZD&timezone_offset=' + -d.getTimezoneOffset() + '&locale=' + language.replace('-', '_') + '&timeframe=48&limit=30&latitude=' + latitude + '&longitude=' + longitude)
+                url : '../php/proxy.php?proxy_url=' + encodeURIComponent('http://api.gemsterapp.com/events?is_chaman=true&access_token=BAAEQNGOuZAOsBACXY34ZCeKSaYMzneAXD46mkV577t5Dvog7mAUZC66ceUs7y83d5THQKTJkUwh5cZCplSFxgizKkB5lx8i3ZAQeoQlTttjc5RUDH7mkUwyOq9mUpJrcZD&timezone_offset=' + -d.getTimezoneOffset() + '&locale=' + language.replace('-', '_') + '&timeframe=48&limit=30&latitude=' + latitude + '&longitude=' + longitude)
             }).done(function(data) {
 
                 $('#spinner').hide();

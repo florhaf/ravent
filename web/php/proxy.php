@@ -28,6 +28,8 @@ if (!$proxy_url) {
     exit();
 }
 
+$method = $_SERVER['REQUEST_METHOD'];
+
 // Instantiate the http object used to make the web requests.
 // More info about this object at www.troywolf.com/articles
 if (!$h = new http()) {
