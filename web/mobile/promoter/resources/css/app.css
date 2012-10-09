@@ -3,3 +3,18 @@
     background-repeat: no-repeat;
     background-size: 100%;
 }
+
+body {
+    background-color: #d3d3d3;
+    color:#555555;
+    font-size:13px;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+h1{
+    color:#777777;
+    font-size:22px;
+    font-weight:normal;
+    text-transform:uppercase;
+    margin-bottom:5px;
+}

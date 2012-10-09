@@ -1,0 +1,938 @@
+<!doctype html>
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
+<!--[if lt IE 7]>
+<html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>
+<html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>
+<html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!-- Consider adding a manifest.appcache: h5bp.com/d/Offline -->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="en" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html"> <!--<![endif]-->
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta charset="utf-8">
+    <meta property="og:image" content="http://gemsterapp.com/img/facebookprofile.png"/>
+    <meta property="og:title" content="Gemster"/>
+    <meta property="og:site_name" content="Social Events Finder"/>
+    <!-- Use the .htaccess and remove these lines to avoid edge case issues.
+ More info: h5bp.com/i/378 -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>Gemster</title>
+    <meta name="description"
+          content="Gemster mobile app for iOS, help you find the best events happening right now around you">
+
+    <!-- Mobile viewport optimized: h5bp.com/viewport -->
+    <meta name="viewport" content="width=device-width">
+
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory: mathiasbynens.be/notes/touch-icons -->
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/event_page.css">
+    <link rel="stylesheet" href="../css/promoter.css">
+    <link rel="stylesheet" href="../css/basic.css">
+    <link rel="stylesheet" href="../css/basic_ie.css">
+
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet"
+          type="text/css"/>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+
+</head>
+<body style="background-color: #FFFFFF;">
+
+
+<div id="fb-root"></div>
+<script>
+
+    var userId = '';
+    var access_token = '';
+
+    window.fbAsyncInit = function () {
+        FB.init({
+            appId:'466532370053627', // App ID
+            channelUrl:'http://www.gemsterapp.com/channel.php', // Channel File
+            status:true, // check login status
+            cookie:true, // enable cookies to allow the server to access the session
+            xfbml:true // parse XFBML
+        });
+
+        $("#login").show();
+        $('#spinner1').hide();
+        $('#spinner2').hide();
+    };
+
+    // Load the SDK Asynchronously
+    (function (d) {
+        var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+        if (d.getElementById(id)) {
+            return;
+        }
+        js = d.createElement('script');
+        js.id = id;
+        js.async = true;
+        js.src = "//connect.facebook.net/en_US/all.js";
+        ref.parentNode.insertBefore(js, ref);
+    }(document));
+</script>
+
+<header style="height: 75px;">
+    <div id="header" class="header" style="width: 100%; height: 75px; margin: auto auto; text-align: center;">
+        <img src="../img/logo.png" width="270px" alt="Gemster Logo" style="margin:auto auto; z-index: 42;"/>
+    </div>
+</header>
+
+<div id="basic-modal-content">
+
+    <div id="container_to_stretch" style="width: 580px; height: 455px; border: 1px solid #d3d3d3; overflow: hidden;">
+
+        <div id="error" style="padding: 90px;">
+            <h1>Warning</h1>
+
+            <p>
+                To promote an event with Gemster, <b>your event must have</b>:
+            <ul>
+                <li>
+                    <b>End date and time</b>
+                </li>
+                <li>
+                    <b>A specific location</b>
+                </li>
+            </ul>
+            </p>
+
+            <p>
+                You must first correct your event on Facebook and then refresh this event:
+            <ul>
+                <li>
+                    <a id="linkToFB" href="#" target="_blank" style="text-decoration: underline;">Update this event on
+                        Facebook</a>
+                </li>
+                <li>
+                    <a id="refreshEvent" href="#" style="text-decoration: underline;">Refresh this event on Gemster</a>
+                    <img id="spinner3" src="http://gemsterapp.com/img/ajax-loader.gif" alt="spinner"
+                         style="margin: 0px 10px;"/>
+                </li>
+            </ul>
+            </p>
+        </div>
+
+        <div id="event">
+            <div style="width: 580px; height: 136px; border: 0px solid orange; background-image: url(../img/cellItemEventPromo.png);">
+
+                <div id="event_name"
+                     style="border: 0px solid red; width: 540px;margin-left: 8px; margin-top: 2px; font-size: 14px; font-weight: bold; color: #8399a9; white-space: nowrap;overflow: hidden;">
+                    NAME
+                </div>
+
+                <div id="event_pic"
+                     style="border: 1px solid #d3d3d3; width: 86px; height: 86px; overflow: hidden; margin-left: 7px; margin-top: 7px; float: left;"></div>
+
+                <img id="featuredIcon" src="../img/featured.png"
+                     style="position: absolute; top: 50px; left: 68px; width: 48px;"/>
+
+                <div style="margin-left: 130px; margin-top: 6px;">
+
+                    <div id="event_location" style="border: 0px solid red; width: 200px; font-weight: bold;"></div>
+
+                    <div id="event_time"
+                         style="border: 0px solid red; width: 200px; font-size: 11px; margin-top: 2px;"></div>
+
+                    <div style="border: 0px solid red; width: 250px; margin-top: 8px;">
+                        <div id="event_score" style="float: left; margin-top: 0px; margin-left: -14px;"></div>
+
+                        <div style=" margin-left: 10px; margin-top: -2px;">
+                            <img id="specialImg" src="../img/goodiesGift.png" width="35"
+                                 style="margin-top: -8px; opacity: 0;"/>
+                            <img id="ticketImg" src="../img/ticket.png" width="26" style="opacity: 0;"/>
+                        </div>
+                    </div>
+
+                    <div id="event_address"
+                         style="border: 0px solid red; width: 400px; font-size: 11px; margin-top: -3px; margin-left: -14px;"></div>
+
+                </div>
+
+            </div>
+
+            <div id="div_featured" style="padding-left: 20px;  color: #a9a9a9;">
+                <input id="check_featured" type="checkbox" checked="true" disabled="true"/>
+                <label for="check_featured"><b>Featured Event</b> (Free for a limited time)</label>
+
+                <p>Your Event will appear as Featured at the top of the events list, meaning it will be the first<br/>seen
+                    by our users.
+                    This feature increase your event visibility in this crowded market place. Your first Gem will be dropped automatically.</p>
+            </div>
+
+            <div style="padding-left: 20px; color: #a9a9a9;">
+                <input id="check_specials" type="checkbox"/>
+                <label for="check_specials"><b>Offer specials</b> (Free)</label><span id="errorOffer"
+                                                                                          style="color: red;"></span>
+
+                <p>Discounts (like buy one get one free) are a great way to increase your customer's engagement.</p>
+
+                <div id="form_specials">
+                    <input id="offerTitle" type="text" style="width: 400px;" placeholder="Offer Title"
+                           class="placeholder"/><br/>
+                    <textarea id="offerTerms" rows="8" cols="73" class="placeholder" placeholder="Offer Terms"
+                              style="margin-top: 5px;"></textarea><br/><br/>
+                </div>
+            </div>
+
+            <div id="div_tickets" style="padding-left: 20px;  color: #a9a9a9; margin-bottom: 10px;">
+                <input id="check_tickets" type="checkbox"/>
+                <label for="check_tickets"><b>Sell tickets</b> (Free)</label><span id="errorTicket"
+                                                                                       style="color: red;"></span>
+
+                <p>Improve your sales! add direct link to your ticket provider for an easy access from your event detail
+                    page on Gemster.</p>
+
+                <div id="form_tickets">
+                    <input id="ticketLink" type="text" style="width: 400px;" placeholder="Ticket provider URL"
+                           class="placeholder"/>
+                </div>
+            </div>
+
+            <span id="submitError" style="color: #a9a9a9;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(select at least 1 option)</span>
+
+            <div id="div_submit" style="float: right; margin-right: 20px; margin-bottom: 20px;">
+                <img id="spinner4" src="http://gemsterapp.com/img/ajax-loader.gif" alt="spinner" style=""/>
+                <a id="submit" href="#" class="button-link" style="color: white;">Submit</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div style='display:none'>
+    <img src='../img/x.png' alt=''/>
+    <img src='../img/facebookButtonHover.png' alt=''/>
+    <img src='../img/facebookButtonSelect.png' alt=''/>
+</div>
+
+<div role="main" style="width: 100%; min-height: 800px; margin: 0 auto; text-align: left;margin-top: 0px;">
+
+    <div style="width: 1000px; background-color:#FFFFFF; padding: 15px; border-left: 1px solid #a9a9a9; border-right: 1px solid #a9a9a9; border-bottom: 1px solid #a9a9a9; margin: 0 auto;">
+
+
+        <div id="text">
+            <div id="top">
+                <h1>How it works</h1>
+
+                <p>
+                    Gemster – Social event finder - is a mobile app that makes it easy to find the best local
+                    events, anywhere in the world.<br/>
+                    From the most popular nightclub to the smallest art gallery or bar down the street, <b>Gemster
+                    helps users find events matching their mood</b>.<br/>
+                    Gemster opens new horizons to events / users interactions. <b>Pushing users engagement and
+                    events promotion a step forward</b>.
+                </p>
+
+                <p>We will be pleased to discuss how Gemster can help you <b>promote your events</b>. <a href="contact.php" style="text-decoration: underline; font-size: 16px;">Contact us</a>.</p>
+
+                <p>
+                    <a onclick="seemore_onClick();" href="#">See More <img id="expandIcon" src="../img/expand.png"
+                                                                           width="16"/></a>
+                </p>
+            </div>
+            <hr>
+            <div id="blabla">
+
+                <div style="padding-left: 15px;">
+
+
+
+                    <h1>Leverage the viral power of Facebook for your events - for <b>free</b></h1>
+
+                    <p>
+                        The world is evolving and all the analyst agree to say that businesses have to <b>“Go mobile
+                        or die”</b>.<br/>
+                        Consumers are systematically using their smartphones to find deals or compare prices.<br/>
+                        Gemster is opening its unique <b>social event platform to any promoter</b> looking for a new
+                        way to leverage more user engagement and viral distribution.<br/>
+                        And the best of all, you <b>don&quot;t even have to change your marketing habits</b>, it&quot;s
+                        all happening on Facebook.
+                    </p>
+                </div>
+                <div id="fig-grid" style="margin-top: 40px; width: 100%; margin-bottom: 40px; height: 490px;">
+                    <div style="width: 49%; min-height: 300px; border: 1px solid #d3d3d3; float: left; ">
+                        <div style="padding-left: 15px; border-bottom: 1px solid #d3d3d3;"><h1>Facebook</h1></div>
+                        <div>
+                            <img src="../img/promoteToday.png" width="490" alt="promote your event today"/>
+                        </div>
+                    </div>
+
+                    <div style="width: 49%; min-height: 300px; border: 1px solid #d3d3d3; float: right;">
+                        <div style="padding-left: 15px; border-bottom: 1px solid #d3d3d3;"><h1>Gemster</h1></div>
+                        <div>
+                            <img src="../img/promoteGemster.png" width="490" alt="promote your event today"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="padding-left: 15px;">
+                    <h1>Why do we propose this service for <b>FREE</b></h1>
+
+                    <p>
+                        We are building a social platform for events.<br/>
+                        Based on the Facebook model, we <b>allow businesses to promote their events at no
+                        charge</b>.<br/>
+                        We will propose additional promotion tools in a near future but we guarantee you that
+                        everything described above will remain <b>free for any promoter</b> or venue owner around
+                        the globe.<br/>
+                    </p>
+
+                    <h1>Why do we we need these Facebook permissions</h1>
+
+                    <p>
+                        <b>We DO NOT post on your behalf in any way</b>
+                    <ul>
+                        <li>We need to access events you have created</li>
+                        <li>We need to access events you have created with one of your pages</li>
+                        <li>The rest of the permissions are for the rest of the app, index your friends events, ...</li>
+                        <li><b>We DO NOT post on your behalf in any way</b></li>
+                        <li>It is a lot easier if you do not have to register...</li>
+                    </ul>
+
+                    </p>
+
+                    <h1>How to</h1>
+
+                    <p>
+                        <b>To promote your event on Gemster you must:</b>
+                    <ul>
+                        <li>Create your event on Facebook as you would normally do</li>
+                        <li>Log on this page so we can retreive Facebook events you have created</li>
+                        <li>Click on Gemsterize, a form will pop up</li>
+                        <li>Select how you want to promote and click submit</li>
+                        <li>And you are done!</li>
+                    </ul>
+
+                    </p>
+
+                    <h1>What it looks like</h1>
+
+                    <p>
+                        <table style="width: 100%;">
+                            <tr>
+                                <td style="width: 33%;text-align: center;">
+                                    <img src="../img/scList.png" style="width: 280px; margin-bottom: 30px;" />
+                                    <hr style="width: 280px; margin: auto auto;" />
+                                    <img src="../img/scDetails.png" style="width: 280px; margin-top: 30px;"/>
+                                </td>
+                                <td style="width: 34%;text-align: center;">
+                                    <img src="../img/scDetailsTop.png" style="width: 280px;"/>
+                                </td>
+                                <td style="width: 33%;text-align: center;">
+                                    <img src="../img/scSpecial.png" style="width: 280px;"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: center;">
+                                    Your event appear as 'featured' on top of the other events
+                                    The screen for your event now promote your special and your ticket
+                                </td>
+                                <td style="text-align: center;">
+                                    Your picture shows the red ribbon for featured events
+                                </td>
+                                <td style="text-align: center;">
+                                    Your special offer description
+                                </td>
+                            </tr>
+                        </table>
+                    </p>
+
+                    <p>We will be pleased to discuss how Gemster can help you <b>promote your events</b>. <a href="contact.php" style="text-decoration: underline; font-size: 16px;">Contact us</a>.</p>
+
+
+                    <p style="margin-top: 40px;">
+                        <a onclick="seemore_onClick();" href="#">Collpase <img id="expandIcon2"
+                                                                               src="../img/collapse.png"
+                                                                               width="16"/></a>
+                    </p>
+
+
+                </div>
+
+                <hr>
+
+            </div>
+        </div>
+
+
+        <table id="events-grid" style="margin-top: 40px;">
+            <tr>
+                <td>
+                    <div id="fb-grid" style="width: 490px; min-height: 300px; border: 1px solid #d3d3d3;">
+                        <div style="padding-left: 15px; border-bottom: 1px solid #d3d3d3;"><h1>Facebook Events</h1>
+                        </div>
+                        <div>
+                            <div id="fb-events"></div>
+                            <img id="spinner1" src="http://gemsterapp.com/img/ajax-loader.gif" alt="spinner"
+                                 style="margin: 200px 230px;"/>
+
+                            <div id="createevent"
+                                 style="margin: 190px 0px; width: 100%; text-align: center; text-decoration: underline;">
+                                <a target="_blank" href="https://www.facebook.com/events/list">Create a Facebook
+                                    Event</a><br/><br/><a id="refreshAll" href="#">Refresh the list</a></div>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div id="gm-grid"
+                         style="width: 490px; min-height: 300px; border: 1px solid #d3d3d3; margin-left: 10px;">
+                        <div style="padding-left: 15px; border-bottom: 1px solid #d3d3d3;"><h1>Gemster Events</h1></div>
+                        <div>
+                            <div id="gm-events"></div>
+                            <img id="spinner2" src="http://gemsterapp.com/img/ajax-loader.gif" alt="spinner"
+                                 style="margin: 200px 230px;"/>
+
+                            <div id="noresult" style="margin: 200px 0px; width: 100%; text-align: center;">No result
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+
+        <div id="login" class="gradientBoxesWithOuterShadows" style="position: relative; top: -200px; left: 290px;">
+            <div style="margin: 20px 55px; text-align: center; border: 1px solid #a9a9a9; background-color: #ffffff; padding: 10px 20px; margin-bottom: 10px; width: 250px;">
+                Log in with Facebook to access events you, or one of the page you administer, have created, and
+                gemsterize them.<br/><b>We
+                DO NOT post on your behalf in any way.</b>
+            </div>
+            <br/>
+            <a class="fbLoginButton" href="#" id="login-button" class="login-button"
+               style="width: 200px; margin: 10px 100px;">
+                &nbsp;
+            </a>
+        </div>
+
+    </div>
+
+</div>
+
+<footer>
+    <table style="margin: 5px auto 0; background-image: url(../img/backgroundTop.png);background-repeat: repeat-x; width: 100%; height: 65px;">
+        <tr>
+            <td class="footer-column">
+                <a class="footer-link" href="../about/">About</a>
+            </td>
+            <td class="footer-column">
+                <a class="footer-link" href="../faq/">FAQ</a>
+            </td>
+            <td class="footer-column">
+                <a class="footer-link" href="../promoter/">Promoters</a>
+            </td>
+            <td class="footer-column">
+                <a class="footer-link" href="../contactus/">Contact Us</a>
+            </td>
+            <td class="footer-column">
+                <a class="footer-link" href="../press/release.pdf">Press</a>
+            </td>
+            <td class="footer-column">
+                <a class="footer-link" href="../termsofuse/">Terms Of Use</a>
+            </td>
+            <td class="footer-column">
+                <a class="footer-link" href="../privacypolicy/">Privacy Policy</a>
+            </td>
+        </tr>
+    </table>
+    <div style="background-image: url(../img/backgroundTop.png);background-repeat: repeat-x; width: 100%; min-width: 1000px; text-align: center; font-size: 14px; text-align: center; color: white;">
+        © 2012 Gemster Group, Inc. All rights reserved.
+    </div>
+</footer>
+
+<script type='text/javascript' src='../js/jquery.simplemodal.js'></script>
+<script type='text/javascript' src='../js/basic.js'></script>
+
+<script>
+
+var d = new Date();
+
+var lat = 40.743538;
+var lon = -73.972508;
+var tz = -d.getTimezoneOffset();
+var local = 'en_US';
+
+var isSpecialExpanded = false;
+var isTicketExpanded = false;
+
+var events = [];
+
+var fbEventIndex = 0;
+var gmEventIndex = 0;
+
+
+var currentEventIndex = 0;
+
+function seemore_onClick() {
+
+    $("#blabla").slideToggle();
+    var crtimg = $('#expandIcon').attr('src');
+    var newimg = (crtimg == '../img/expand.png') ? '../img/collapse.png' : '../img/expand.png';
+    $('#expandIcon').attr('src', newimg);
+}
+
+function expandOffer(title, desc) {
+
+    setTimeout(function () {
+
+        $("#form_specials").slideToggle();
+
+        if (isSpecialExpanded) {
+
+            $("#simplemodal-container").animate({height:$("#simplemodal-container").height() - 180});
+            $("#container_to_stretch").animate({height:$("#container_to_stretch").height() - 180});
+            isSpecialExpanded = false;
+            $("#offerTitle").val(null);
+            $("#offerTerms").val(null);
+            $("#errorOffer").html('');
+            $("#specialImg").css({opacity:0});
+        } else {
+
+            $("#simplemodal-container").animate({height:$("#simplemodal-container").height() + 180});
+            $("#container_to_stretch").animate({height:$("#container_to_stretch").height() + 180});
+            isSpecialExpanded = true;
+
+            if (title != undefined) {
+
+                $("#check_specials").attr('checked', 'checked');
+
+                $("#offerTitle").val(title)
+            }
+
+            if (desc != undefined) {
+
+                $("#offerTerms").val(desc)
+            }
+
+            $("#specialImg").css({opacity:1});
+        }
+    }, 150);
+}
+
+function expandTicket(url) {
+
+    setTimeout(function () {
+        $("#form_tickets").slideToggle();
+
+        if (isTicketExpanded) {
+
+            $("#simplemodal-container").animate({height:$("#simplemodal-container").height() - 30});
+            $("#container_to_stretch").animate({height:$("#container_to_stretch").height() - 30});
+            isTicketExpanded = false;
+            $("#errorTicket").html('');
+            $("#ticketLink").val(null);
+            $("#ticketImg").css({opacity:0});
+        } else {
+
+            $("#simplemodal-container").animate({height:$("#simplemodal-container").height() + 30});
+            $("#container_to_stretch").animate({height:$("#container_to_stretch").height() + 30});
+            isTicketExpanded = true;
+
+            if (url != undefined) {
+
+                $("#check_tickets").attr('checked', 'checked');
+
+                $("#ticketLink").val(url);
+            }
+
+            $("#ticketImg").css({opacity:1});
+        }
+    }, 700);
+}
+
+function gemterize_onclick(index) {
+
+
+    var e = events[index];
+
+    $("#submit").attr('coords', e.eid);
+
+    if (e.distance.indexOf('N/A') != -1 || e.date_end == null || e.date_end == undefined) {
+
+        $("#linkToFB").attr('href', 'http://facebook.com/' + e.eid);
+        $("#refreshEvent").attr('coords', e.eid);
+
+        $("#error").show();
+        $("#event").hide();
+    } else {
+
+        $("#error").hide();
+        $("#event").show();
+
+        isSpecialExpanded = false;
+        isTicketExpanded = false;
+
+        $('#event_name').html(e.name);
+        $('#event_pic').html('<img src="' + e.pic_big + '" alt="other event picture" style="min-width: 100%;" />');
+        $('#event_location').html(e.location);
+        $('#event_time').html(e.date_start + ' @ ' + e.time_start + '<br />' + e.date_end + ' @ ' + e.time_end);
+
+        var score = '';
+
+        for (var j = 0; j < 5; j++) {
+            var imgStr = '<img src="../img/diamondSlot.png" alt="diamond slot" style="width: 24px; height: 18px;" />';
+            if (j < e.score) {
+                imgStr = '<img src="../img/diamond.png" alt="diamond slot" style="width: 24px; height: 18px;" />';
+            }
+            score += imgStr;
+        }
+
+        $('#event_score').html(score);
+        $('#event_address').html(e.distance);
+    }
+
+    if (e.featured != null) {
+
+        if (e.offer_title != null && e.offer_title != '') {
+
+            expandOffer(e.offer_title, e.offer_description);
+        }
+
+        if (e.ticket_link != null && e.ticket_link != '') {
+
+            expandTicket(e.ticket_link);
+        }
+    }
+
+    $('#basic-modal-content').modal();
+}
+
+function gotoEventPage(eid) {
+
+    window.location = '../facebook/event_page.php?eid=' + eid;
+}
+
+function loadEvents() {
+
+    $('#fb-events').html('');
+    $('#gm-events').html('');
+
+    $('#spinner1').show();
+    $('#spinner2').show();
+
+    $.ajax({
+        url:'../php/proxy.php?proxy_url=' + encodeURIComponent('http://api.gemsterapp.com/events?userID=' + userId + '&longitude=' + lon + '&latitude=' + lat + '&access_token=' + access_token + '&timezone_offset=' + tz + '&locale=' + local + '&promoter=true')
+    }).done(function (data) {
+
+                $('#spinner1').hide();
+                $('#spinner2').hide();
+
+                var html = '';
+
+                var divFB = '<div style="margin-top: 0px;">';
+                var divGM = '<div style="margin-top: 0px;">';
+
+                var div = '';
+                var crtIndex = 0;
+
+                events = data.records;
+
+                for (var i = 0; i < data.records.length; i++) {
+
+                    var e = data.records[i];
+
+                    if (e.featured != null) {
+
+                        div = divGM;
+                    } else {
+
+                        div = divFB;
+                    }
+
+                    var name = e.name;
+                    var location = e.location;
+
+                    if (name.length > 52) {
+                        name = name.substr(0, 52) + '...';
+                    }
+
+                    location = (location == null) ? 'unknown location' : location;
+
+                    if (location.length > 23) {
+                        location = location.substr(0, 20) + '...';
+                    }
+
+                    div += '<div style="width: 460px; height: 136px; background-image: url(../img/cellItemEventPromo.png); background-repeat: no-repeat;">';
+
+                        div += '<div style="width: 300px;">';
+                            div += '<span onclick="gotoEventPage(' + e.eid + ')" style="cursor: pointer;margin-left: 10px; font-size: 14px; font-weight: bold; color: #8399a9; white-space: nowrap;overflow: hidden; width: 270px;">' + name + '</span><br />';
+
+                            div += '<div onclick="gotoEventPage(' + e.eid + ')" id="img" style="cursor: pointer;width: 86px; height: 86px; overflow: hidden; float: left; margin: 8px;">';
+                                div += '<img src="' + e.pic_big + '" alt="other event picture" style="min-width: 100%;" />';
+                            div += '</div>';
+
+                            div += '<div id="info" style="width: 198px; margin-top: 6px; float: right; ">';
+
+                                div += '<span onclick="gotoEventPage(' + e.eid + ')" style="cursor: pointer;font-weight: bold; margin-left: 22px; border: 0px solid red; width: 240px; overflow: hidden;">' + location + '</span><br />';
+                                div += '<div onclick="gotoEventPage(' + e.eid + ')" style="cursor: pointer;margin-left: 22px; font-size: 11px;">' + e.date_start + '</div>';
+                                div += '<div onclick="gotoEventPage(' + e.eid + ')" style="cursor: pointer;margin-left: 22px; font-size: 11px;">' + e.time_start + '</div>';
+
+                                div += '<a onclick="gemterize_onclick(' + i + ',' + (e.featured != null) + ');" href="#" class="button-link" style="color: white; position: relative; top: 0px; left: 210px; ">' + ((e.featured != null) ? '&nbsp;Update&nbsp;' : 'Gemsterize') + '</a>';
+
+                                div += '<div onclick="gotoEventPage(' + e.eid + ')" id="cursor: pointer;score" style="margin-top: -10px; margin-bottom: 8px;">';
+                                    for (var j = 0; j < 5; j++) {
+                                        var imgStr = '<img src="../img/diamondSlot.png" alt="diamond slot" style="width: 24px; height: 18px;" />';
+                                        if (j < e.score) {
+                                            imgStr = '<img src="../img/diamond.png" alt="diamond slot" style="width: 24px; height: 18px;" />';
+                                        }
+                                        div += imgStr;
+                                    }
+                                div += '</div>';
+                            div += '</div>';
+                        div += '</div>';
+
+                        div += '<div onclick="gotoEventPage(' + e.eid + ')" style="cursor: pointer;width: 430px;margin-left: 15px; font-size: 10px;" id="event_address_' + i + '">Unknown address</div>';
+
+                    div += '</div>';
+
+                    if (e.latitude && e.latitude != null) {
+
+
+                        $.ajax({
+                            url:'../php/proxy.php?proxy_url=' + encodeURIComponent('http://maps.google.com/maps/api/geocode/json?sensor=true&latlng=' + e.latitude + ',' + e.longitude),
+                            crossDomain:true,
+                            index:i
+                        }).done(function (data) {
+
+                                    if (e.featured != null) {
+
+                                        events[this.index].distance = data.results[0].formatted_address;
+                                        $("#event_address_" + this.index).html(events[this.index].distance);
+                                    } else {
+
+                                        events[this.index].distance = data.results[0].formatted_address;
+                                        $("#event_address_" + this.index).html(events[this.index].distance);
+                                    }
+                                });
+                    }
+
+
+                    if (e.featured != null) {
+
+                        divGM = div;
+
+                        gmEventIndex++;
+                    } else {
+
+                        divFB = div;
+                        fbEventIndex++;
+                    }
+                }
+
+                divFB += '</div></div>';
+                divGM += '</div></div>';
+
+                $('#fb-events').html(divFB);
+                $('#gm-events').html(divGM);
+                $('#fb-grid').height((146 * fbEventIndex > 550) ? 146 * fbEventIndex : 550);
+                $('#gm-grid').height((146 * gmEventIndex > 550) ? 146 * gmEventIndex : 550);
+
+
+                if (fbEventIndex == 0) {
+                    $("#createevent").show();
+                } else {
+                    $("#createevent").hide();
+                }
+                if (gmEventIndex == 0) {
+                    $("#noresult").show();
+                } else {
+                    $("#noresult").hide();
+                }
+            });
+}
+
+$("document").ready(function () {
+
+    $("#form_specials").hide();
+    $("#form_tickets").hide();
+    $("#blabla").hide();
+    $("#error").hide();
+    $("#spinner3").hide();
+    $("#spinner4").hide();
+    $("#noresult").hide();
+    $("#createevent").hide();
+});
+
+$("#refreshAll").click(function () {
+
+    loadEvents();
+});
+
+$("#refreshEvent").click(function () {
+
+    $("#spinner3").show();
+
+    $.ajax({
+        url:'../php/proxy.php?proxy_url=' + encodeURIComponent('http://api.gemsterapp.com/calendar?eventID=' + $(this).attr('coords') + '&longitude=' + lon + '&latitude=' + lat + '&access_token=' + access_token + '&timezone_offset=' + tz + '&locale=' + local),
+        crossDomain:true
+    }).done(function (data) {
+
+                $("#spinner3").hide();
+                events[currentEventIndex] = data.records[0];
+                gemterize_onclick(currentEventIndex);
+                loadEvents();
+            });
+});
+
+$("#submit").click(function () {
+
+    var eid = $("#submit").attr('coords');
+    var offerTitle = '';
+    var offerTerms = '';
+    var ticketLink = '';
+
+    var isSpecialChecked = false;
+    var isTicketChecked = false;
+
+    if ($('#check_specials').is(':checked')) {
+
+        isSpecialChecked = true;
+
+        offerTitle = $("#offerTitle").val();
+        offerTerms = $("#offerTerms").val();
+
+        if (offerTitle.length == 0 || offerTitle == 'Offer Title') {
+
+            $("#errorOffer").html(' offer title length must be > 0 char');
+            return;
+        }
+
+        if (offerTitle.length > 30) {
+
+            $("#errorOffer").html(' offer title length must be < 30 char');
+            return;
+        }
+
+        if (offerTerms.length == 0 || offerTerms == 'Offer Terms') {
+
+            $("#errorOffer").html(' offer terms length must be > 0 char');
+            return;
+        }
+
+        if (offerTerms.length > 255) {
+
+            $("#errorOffer").html(' offer terms length must be < 255 char');
+            return;
+        }
+    }
+
+    if ($('#check_tickets').is(':checked')) {
+
+        isTicketChecked = true;
+
+        ticketLink = $("#ticketLink").val();
+
+        if (ticketLink.length == 0 || ticketLink == 'Ticket provider URL') {
+
+            $("#errorTicket").html(' ticket link length must be > 0 char');
+            return;
+        }
+    }
+
+    if (!isSpecialChecked && !isTicketChecked) {
+
+        $('#submitError').css('color', 'red');
+        return;
+    }
+
+    $("#submit").hide();
+    $("#spinner4").show();
+
+    $.ajax({
+        url:'../php/proxy.php?proxy_url=' + encodeURIComponent('http://api.gemsterapp.com/emp?userID=' + userId + '&access_token=' + access_token + '&timezone_offset=' + -d.getTimezoneOffset() + '&eid=' + eid + '&features=PPC&title=' + encodeURIComponent(offerTitle) + '&terms=' + encodeURIComponent(offerTerms) + '&ticket_link=' + encodeURIComponent(ticketLink)),
+        crossDomain:true
+    }).done(function (data) {
+
+                $("#submit").show();
+                $("#spinner4").hide();
+                $.modal.close();
+                loadEvents();
+            });
+});
+
+$("#header").click(function () {
+
+    window.location = "../";
+});
+
+$("#check_specials").click(function () {
+
+    expandOffer();
+});
+
+$("#check_tickets").click(function () {
+
+    expandTicket();
+});
+
+$("#login-button").click(function () {
+
+    $("#login-button").click(function () {
+    });
+
+    FB.login(function (response) {
+
+        if (response.authResponse) {
+
+            access_token = FB.getAuthResponse().accessToken;
+
+            FB.api('/me', function (response) {
+
+                userId = response.id;
+                $("#login").hide();
+
+                $('#spinner1').show();
+                $('#spinner2').show();
+
+                loadEvents();
+            });
+        }
+    }, {scope:'offline_access, friends_events,user_events,manage_pages,user_events,friends_events,status_update,photo_upload,read_stream,publish_stream,rsvp_event'});
+});
+
+
+$('[placeholder]').focus(function () {
+    var input = $(this);
+    if (input.val() == input.attr('placeholder')) {
+        input.val('');
+        input.removeClass('placeholder');
+    }
+}).blur(function () {
+            var input = $(this);
+            if (input.val() == '' || input.val() == input.attr('placeholder')) {
+                input.addClass('placeholder');
+                input.val(input.attr('placeholder'));
+            }
+        }).blur();
+
+$('[placeholder]').parents('form').submit(function () {
+    $(this).find('[placeholder]').each(function () {
+        var input = $(this);
+        if (input.val() == input.attr('placeholder')) {
+            input.val('');
+        }
+    })
+});
+
+</script>
+
+<!-- Asynchronous Google Analytics snippet. Change UA-XXXXX-X to be your site's ID.
+mathiasbynens.be/notes/async-analytics-snippet -->
+<script>
+    var _gaq = [
+        ['_setAccount', 'UA-33038234-1'],
+        ['_trackPageview']
+    ];
+    (function (d, t) {
+        var g = d.createElement(t), s = d.getElementsByTagName(t)[0];
+        g.src = ('https:' == location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js';
+        s.parentNode.insertBefore(g, s)
+    }(document, 'script'));
+</script>
+</body>
+</html>

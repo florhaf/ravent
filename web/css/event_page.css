@@ -35,6 +35,46 @@
     width: 187px;
 }
 
+.button-promote {
+    -webkit-font-smoothing: antialiased;
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: transparent;
+    background-image: url(../img/buttonPromote.png);
+    border-bottom-width: 0px;
+    border-left-width: 0px;
+    border-right-width: 0px;
+    border-top-width: 0px;
+    color: white;
+    display: block;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 21px;
+    font-style: normal;
+    font-weight: bold;
+    height: 21px;
+    line-height: 21px;
+    margin-bottom: 0px;
+    margin-left: 35px;
+    margin-right: 0px;
+    margin-top: -45px;
+    overflow-y: visible;
+    padding-bottom: 14px;
+    padding-left: 22px;
+    padding-right: 15px;
+    padding-top: 15px;
+    text-decoration: none;
+    text-shadow: rgba(0, 0, 0, 0.65625) 0px -1px 0px;
+    width: 187px;
+}
+
+.button-promote:link {
+    color: white;
+}
+
+.button-promote:visited {
+    color: white;
+}
+
 .button-get-the-app:link {
     color: white;
 }

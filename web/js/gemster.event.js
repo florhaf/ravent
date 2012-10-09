@@ -78,8 +78,6 @@ function onLoadData(data) {
         var randomnumber = getRandom(indexMarked, results.length);
         indexMarked[i] = randomnumber;
 
-console.log(randomnumber);
-
         var e = results[randomnumber];
 
         var name = e.name;
@@ -129,7 +127,7 @@ console.log(randomnumber);
 
 
 
-        div += '</div></a>'
+        div += '</div></a>';
     }
 
     div += '</div>';
