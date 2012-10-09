@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import javax.persistence.Id;
+
 import com.chaman.dao.Dao;
 import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.Query;
@@ -22,6 +24,7 @@ public class VoteDetails extends Model {
 		}
 	}
 	
+	@Id
 	String eid;
 	String uid;
 	
@@ -55,6 +58,22 @@ public class VoteDetails extends Model {
 		VoteDetails winner = droppers.get(r.nextInt(droppers.size() - 1));
 		
 		return Profile.GetFacebookProfileInfo(accessToken, winner.uid);
+	}
+
+	public String getEid() {
+		return eid;
+	}
+
+	public void setEid(String eid) {
+		this.eid = eid;
+	}
+
+	public String getUid() {
+		return uid;
+	}
+
+	public void setUid(String uid) {
+		this.uid = uid;
 	}
 
 }

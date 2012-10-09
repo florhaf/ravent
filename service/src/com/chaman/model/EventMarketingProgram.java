@@ -5,11 +5,17 @@ import java.util.List;
 
 import javax.persistence.Id;
 
+import com.beoui.geocell.GeocellUtils;
+import com.beoui.geocell.model.Point;
 import com.chaman.dao.Dao;
 import com.google.appengine.api.memcache.MemcacheService;
 import com.google.appengine.api.memcache.MemcacheServiceFactory;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Unindexed;
+import com.restfb.DefaultFacebookClient;
+import com.restfb.FacebookClient;
+import com.restfb.Parameter;
+import com.restfb.types.FacebookType;
 
 /*
  * event object we store in our DB
@@ -29,13 +35,16 @@ public class EventMarketingProgram extends Model {
 	String terms;
 	@Unindexed
 	String ticket_link;
-    
+	long timeStampStart;
+	long timeStampEnd;
+	List<String> geocells;
+	
 	public EventMarketingProgram() {
 		
 		super();
 	}
 	
-	public EventMarketingProgram(long eid, String features, String title, String terms, String ticket_link) {
+	public EventMarketingProgram(long eid, String features, String title, String terms, String ticket_link, String starttime, String endtime, String lat, String lon) {
 	
 		this.eid = eid;
 		this.features = features;
@@ -43,36 +52,40 @@ public class EventMarketingProgram extends Model {
 		this.title = title;
 		this.terms = terms;
 		this.ticket_link = ticket_link;
+		
+		this.timeStampStart = Long.parseLong(starttime);
+		this.timeStampEnd = Long.parseLong(endtime);
+		
+		this.geocells = new ArrayList<String>();
+    	this.geocells.add(GeocellUtils.compute(new Point(Double.parseDouble(lat), Double.parseDouble(lon)), 6));
 	}
 	
     public static ArrayList<Model> PutEventMarketingProgram(String userID, String accessToken, long eid, String features, String title, String terms, String ticket_link, String timeZone) {
     
     	String message = (title != null && !title.isEmpty() ? "| Drop Gems to unlock the goodies" + ((features != null && !features.isEmpty()) && features.contains("RAF") ? " and raffles: " : ": ") + title : "") + (ticket_link != null && !ticket_link.isEmpty() ? " | Tickets available on Gemster" : "|");
     	
-    	EventMarketingProgram emp = new EventMarketingProgram(eid, features, title, terms, ((ticket_link != null && !ticket_link.isEmpty()) && !ticket_link.contains("http") ? "http://" + ticket_link : ticket_link));
+    	//get event from DS (before)
+    	Event e = Event.getSingle(accessToken, String.valueOf(eid), timeZone, null, null, null, null);
     	
-    	//delete event from cache (if any)
+    	EventMarketingProgram emp = new EventMarketingProgram(eid, features, title, terms, ((ticket_link != null && !ticket_link.isEmpty()) && !ticket_link.contains("http") ? "http://" + ticket_link : ticket_link), e.start_time, e.end_time, e.latitude, e.longitude);	
+    	
+    	//delete event from cache (if any) to force update at next call of events
     	MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
     	syncCache.delete(eid);
     	
     	Dao dao = new Dao(); 	  	
     	dao.ofy().put(emp);
     	
-    	//get event
-    	Event e = Event.getSingle(accessToken, String.valueOf(eid), timeZone, null, null, null, null);
-    	
-    	//add event to cache and DS
-    	if (e != null) {
-    	
-        	dao.ofy().put(new EventLocationCapable(e));
-        	syncCache.put(e.eid, e, null);
-    	}
-    	
     	Promoter.Put(userID, e != null ? e.creator : null, features, title, ticket_link);
-    	
-    	try {
-    		new Vote(accessToken, e.creator, String.valueOf(eid), "1", false, message);
-    	} catch (Exception ex) {}
+    	   	
+		try {
+   
+			FacebookClient client 	= new DefaultFacebookClient(accessToken);
+			client.publish(eid + "/feed", FacebookType.class, Parameter.with("message", message), Parameter.with("link", "http://gemsterapp.com/facebook/event_page.php?eid=" + eid),
+    				Parameter.with("name", "See more"), Parameter.with("picture", "http://gemsterapp.com/img/app_icon.png"));
+		
+			client.publish(e.creator + "/gemsterapp:drop_a_gem_on", FacebookType.class, Parameter.with("event", "http://gemsterapp.com/facebook/event_page.php?eid=" + eid));
+		} catch (Exception ex) {}
     	
     	return null;
     }
@@ -136,5 +149,37 @@ public class EventMarketingProgram extends Model {
 
 	public void setTicket_link(String ticket_link) {
 		this.ticket_link = ticket_link;
+	}
+
+	public String getFeatures() {
+		return features;
+	}
+
+	public void setFeatures(String features) {
+		this.features = features;
+	}
+
+	public long getTimeStampStart() {
+		return timeStampStart;
+	}
+
+	public void setTimeStampStart(long timeStampStart) {
+		this.timeStampStart = timeStampStart;
+	}
+
+	public long getTimeStampEnd() {
+		return timeStampEnd;
+	}
+
+	public void setTimeStampEnd(long timeStampEnd) {
+		this.timeStampEnd = timeStampEnd;
+	}
+
+	public List<String> getGeocells() {
+		return geocells;
+	}
+
+	public void setGeocells(List<String> geocells) {
+		this.geocells = geocells;
 	}
 }

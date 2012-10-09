@@ -11,7 +11,7 @@ import com.chaman.model.Model;
 
 public class EventMarketingPrograms extends ServerResource {
 
-	private static final Logger log = Logger.getLogger(Events.class.getName());
+	private static final Logger log = Logger.getLogger(EventMarketingProgram.class.getName());
 	
 	@Get("json")
 	public Response Create(){
