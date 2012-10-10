@@ -886,6 +886,10 @@ $("#login-button").click(function () {
                 userId = response.id;
                 $("#login").hide();
 
+                $.ajax({
+                    url:'../php/proxy.php?proxy_url=' + encodeURIComponent('http://api.gemsterapp.com/login?userID=' + userId + '&isPromoter=true')
+                });
+
                 $('#spinner1').show();
                 $('#spinner2').show();
 
