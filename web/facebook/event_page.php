@@ -182,7 +182,7 @@ chromium.org/developers/how-tos/chrome-frame-getting-started -->
 					</div>
 
 					<div class="download-button" style="margin-top: 20px; margin-left: 30px;">
-                    	<a id="button-get-the-app" href="http://itunes.apple.com/us/app/gemster/id553371725" target="_blank" class="button-get-the-app">Get the app (free)</a>
+                    	<a id="button-get-the-app" href="http://itunes.apple.com/us/app/gemster/id553371725" target="_blank" class="button-get-the-app">Get the App (Free)</a>
                 	</div>
 				
 				</div>
@@ -193,7 +193,7 @@ chromium.org/developers/how-tos/chrome-frame-getting-started -->
 						<img src="../img/cal.png" style="float:left; margin-left: 10px;" />
 					</div>
 					<div class="download-button" style="margin-top: 20px; margin-left: 25px;">
-                    	<a id="button-promote" href="../promoter/" class="button-promote">Promote my event</a>
+                    	<a id="button-promote" href="../promoter/" class="button-promote">Promote an Event</a>
                 	</div>
 				</div>
 				<div style="margin-top: -30px;">
