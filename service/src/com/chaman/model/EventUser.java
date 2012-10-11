@@ -102,7 +102,7 @@ public class EventUser extends Model implements Runnable {
     	    if (e_cache == null || !e_cache.update_time.equals(e.update_time)) {
     	    	
     	    	e.venue_id = JSON.GetValueFor("id", e.venue);
-    	    	Venue v_graph = Venue.getVenue(client, e.venue_id);
+    	    	Venue v_graph = Venue.getVenue(client, e.venue_id, e);
     	    	e.venue_category = v_graph.category;
     	    	
     	    	e.Filter_category();

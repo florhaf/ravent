@@ -90,6 +90,7 @@ public class Event extends Model implements Serializable, Runnable {
 	User user;
 	DateTime dtStart;
 	DateTime dtEnd;
+	String address;
 	
 	Map<Long, Object> map_cache;
 	int timeZoneInMinutes;
@@ -221,7 +222,7 @@ public class Event extends Model implements Serializable, Runnable {
         	
             			event = fbevents.get(0);
             			event.venue_id = JSON.GetValueFor("id", event.venue);	
-            			Venue v_graph =  Venue.getVenue(client, event.venue_id);
+            			Venue v_graph =  Venue.getVenue(client, event.venue_id, event);
         				event.venue_category = v_graph.category;
         				if (event.venue_category == null || !event.venue_category.equals("city")) {
         					event.Score(v_graph);
@@ -332,7 +333,7 @@ public class Event extends Model implements Serializable, Runnable {
 		e = fbevents.get(0);
 		
 		e.venue_id = JSON.GetValueFor("id", e.venue);
-		Venue v_graph = Venue.getVenue(client, e.venue_id);
+		Venue v_graph = Venue.getVenue(client, e.venue_id, e);
 		e.venue_category = v_graph.category;
 		
 		e.Filter_category();
@@ -874,6 +875,16 @@ public class Event extends Model implements Serializable, Runnable {
 
 	public void setCreator(String creator) {
 		this.creator = creator;
+	}
+
+
+	public String getAddress() {
+		return address;
+	}
+
+
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
 }
