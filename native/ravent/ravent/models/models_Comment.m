@@ -243,7 +243,7 @@
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(updateLoadingMessage3:) object:nil];
 }
 
-- (void)dealloc
+- (void)mydealloc
 {
     [self cancelAllRequests];
 

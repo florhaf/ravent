@@ -190,7 +190,7 @@ static customNavigationController *_ctrl;
 
 + (void)release
 {
-    [controllers_watchlist_WatchList release];
+    [controllers_watchlist_WatchList myrelease];
     _ctrl = nil;
 }
 

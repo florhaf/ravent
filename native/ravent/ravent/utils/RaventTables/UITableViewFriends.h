@@ -21,5 +21,6 @@
 - (id)initWithEvent:(models_Event *)event;
 - (void)onLoadInvited:(NSArray *)objects;
 - (models_User *)getUserForRow:(NSInteger)row;
+- (void)mydealloc;
 
 @end

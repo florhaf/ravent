@@ -99,7 +99,7 @@ static controllers_watchlist_WatchList *_ctrl;
     return _ctrl;
 }
 
-+ (void)release
++ (void)myrelease
 {
     [_ctrl cancelAllRequests];
     _ctrl = nil;

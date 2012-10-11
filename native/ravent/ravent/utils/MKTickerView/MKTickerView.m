@@ -136,6 +136,7 @@ static UIFont *valueFont = nil;
 @implementation MKTickerView
 
 @synthesize dataSource;
+@synthesize stop;
 
 -(void) awakeFromNib
 {
@@ -222,8 +223,11 @@ static UIFont *valueFont = nil;
    
 -(void)animationDidStop:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context
 {
-  self.contentOffset = CGPointMake(0, 0);
-  [self startAnimation];
+    if (!self.stop) {
+     
+        self.contentOffset = CGPointMake(0, 0);
+        [self startAnimation];
+    }
 }
 
 - (void)dealloc

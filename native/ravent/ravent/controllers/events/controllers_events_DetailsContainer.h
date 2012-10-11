@@ -13,27 +13,12 @@
     
     controllers_events_Details *_detailsController;
     models_Event *_event;
-    
-    IBOutlet UIToolbar *_toolbar;
-    IBOutlet UIView *_container;
-    
-    BOOL _isButtonTap;
-    
-    id _delegateBack;
-    SEL _selectorBack;
-    
-    UIBarButtonItem *_backButton;
 }
 
-@property (nonatomic, retain) id delegateBack;
-@property (nonatomic, assign) SEL selectorBack;
-@property (nonatomic, retain) UIBarButtonItem *backButton;
-
-- (id)initWithEvent:(models_Event *)event withBackDelegate:(id)delegate backSelector:(SEL)sel;
-- (void)cancelAllRequests;
+- (id)initWithEvent:(models_Event *)event;
 - (IBAction)shareButton_Tap:(id)sender;
 - (IBAction)descriptionButton_Tap:(id)sender;
 - (IBAction)feedButton_Tap:(id)sender;
-
+- (void)mydealloc;
 
 @end

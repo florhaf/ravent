@@ -217,7 +217,7 @@
 - (void)loadStatsWithParams:(NSMutableDictionary *)params andTarget:(id)target andSelector:(SEL)success
 {
     NSString *resourcePath = [@"eventstats" appendQueryParams:params];
-    
+    NSLog(resourcePath);
     _callbackStatsSuccess = success;
     _senderStats = target;
     
@@ -450,7 +450,7 @@
     return _address;
 }
 
-- (void)dealloc
+- (void)mydealloc
 {
     [self cancelAllRequests];
     

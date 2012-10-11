@@ -11,6 +11,6 @@
 @interface controllers_watchlist_WatchList : UITableViewEvents
 
 + (controllers_watchlist_WatchList *)instance;
-+ (void)release;
++ (void)myrelease;
 
 @end

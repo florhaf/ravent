@@ -38,9 +38,11 @@
 }
 
 @property (nonatomic, assign) IBOutlet id <MKTickerViewDataSource> dataSource;
+@property (nonatomic, assign) Boolean stop;
 
 -(void) reloadData;
 -(void) startAnimation;
+
 
 @end
 

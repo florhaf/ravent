@@ -50,5 +50,6 @@
 - (void)cancelAllRequests;
 - (void)post:(NSMutableDictionary *)params success:(SEL)success failure:(SEL)failure;
 - (void)loadPicturesWithParams:(NSMutableDictionary *)params;
+- (void)mydealloc;
 
 @end

@@ -26,5 +26,6 @@
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil event:(models_Event *)event;
+- (void)mydealloc;
 
 @end

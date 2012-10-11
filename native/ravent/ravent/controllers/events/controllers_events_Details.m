@@ -24,14 +24,12 @@
 #import "controllers_events_Crowd.h"
 #import "NSString+Distance.h"
 #import "Store.h"
-
+#import "MapSingleton.h"
 
 
 @implementation controllers_events_Details
 
 @synthesize photos = _photos;
-@synthesize delegateBack = _delegateBack;
-@synthesize selectorBack = _selectorBack;
 @synthesize coordinate = _coordinate;
 
 @synthesize dragViews = dragViews_;
@@ -42,7 +40,7 @@
 
 static int _retryCounter;
 
-- (id)initWithEvent:(models_Event *)event withBackDelegate:(id)delegate backSelector:(SEL)sel
+- (id)initWithEvent:(models_Event *)event
 {
     self = [super initWithEvent:event];
     
@@ -50,8 +48,6 @@ static int _retryCounter;
         
         _retryCounter = 0;
         _isNotReloadable = YES;
-        _delegateBack = delegate;
-        _selectorBack = sel;
         
         self.title = @"Gemster";
         
@@ -198,13 +194,17 @@ static int _retryCounter;
         _headerSize = CGSizeMake(_header.frame.size.width, _header.frame.size.height);
         _headerTitleSize = CGSizeMake(_headerNameLabel.frame.size.width, _headerNameLabel.frame.size.height);
         _headerSubTitleSize = CGSizeMake(_headerLocationLabel.frame.size.width, _headerLocationLabel.frame.size.height);
+        
+        _user.locationDelegate = self;
+        
+        _user.locationSuccess = @selector(onLocationSuccess);
+        _user.locationFailure = @selector(onLocationFailure:);
+        
+        [_user getLocation];
     }
     
-    _user.locationDelegate = self;
-    _user.locationSuccess = @selector(onLocationSuccess);
-    _user.locationFailure = @selector(onLocationFailure:);
     
-    [_user getLocation];
+    
     
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
@@ -259,16 +259,6 @@ static int _retryCounter;
         
         // nothing anymore
     }
-}
-
-#pragma mark - Button event handler
-
-- (IBAction)backButton_Tap:(id)sender
-{
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-    [_delegateBack performSelector:_selectorBack];
-#pragma clang diagnostic pop
 }
 
 - (IBAction)addToListButton_Tap:(id)sender
@@ -515,30 +505,7 @@ static int _retryCounter;
 {
     if (scrollView.contentOffset.y < 0) {
 
-        //NSLog(@"%f", scrollView.contentOffset.y);
-    //[im setFrame:CGRectMake(0, 10, im.frame.size.width, im.frame.size.height)];
-      
-        //im.text = [NSString stringWithFormat:@"YO"];
-        
-        //[_map setHidden:NO];
-        
         [_mapImage setFrame:CGRectMake(0, -80 + scrollView.contentOffset.y / 2, _mapImage.frame.size.width, _mapImage.frame.size.height)];
-    }
-}
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
-{
-
-}
-
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
-{
-    if (!_isMapImageSet) {
-        
-        _isMapImageSet = YES;
-        _mapImage.layer.contents = (id)[UIImage imageWithUIView:_map].CGImage;
-        [_map removeFromSuperview];
-        _map = nil;
     }
 }
 
@@ -572,10 +539,10 @@ static int _retryCounter;
         }
         
         self.goodFrames = [NSMutableArray arrayWithCapacity:device];
-        self.badFrames = [NSMutableArray arrayWithCapacity:device];
+
         
         NSMutableArray *goodFrames = [NSMutableArray arrayWithCapacity:device];
-        NSMutableArray *badFrames = [NSMutableArray arrayWithCapacity:device];
+
         self.dragViews = [NSMutableArray arrayWithCapacity:device];
         
         for (int i = 0; i< device; i++) {
@@ -583,22 +550,16 @@ static int _retryCounter;
             
             CGRect endFrame =   CGRectMake(206, framesY - 20, 100, 90);
             
-            CGRect badFrame =   CGRectMake(0, 0, 0, 0);
+
             
             [goodFrames addObject:TKCGRectValue(endFrame)];
-            [badFrames addObject:TKCGRectValue(badFrame)];
+
             
             UIView *endView = [[UIView alloc] initWithFrame:endFrame];
             
             [self.view addSubview:endView];
             
             [self.goodFrames addObject:endView];
-            
-            UIView *badView = [[UIView alloc] initWithFrame:badFrame];
-
-            [self.view addSubview:badView];
-            
-            [self.badFrames addObject:badView];
         }
         
         self.canUseTheSameFrameManyTimes = YES;
@@ -612,7 +573,7 @@ static int _retryCounter;
             _dragView = [[TKDragView alloc] initWithImage:image
                                                           startFrame:startFrame
                                                           goodFrames:goodFrames
-                                                           badFrames:badFrames
+                                                           badFrames:nil
                                                          andDelegate:self];
             
             
@@ -646,15 +607,19 @@ static int _retryCounter;
 {
     [super viewDidLoad];
     
+    self.view.frame = CGRectMake(0, 0, 320, 460);
+
+    
     if (_event.latitude != nil && _event.longitude != nil &&
         ![_event.latitude isEqualToString:@""] && ![_event.longitude isEqualToString:@""]) {
         
         [self loadFormattedAddress];
     }
     
-    _map.delegate = self;
+    // remove pull to refresh from view
     _refreshHeaderView.delegate = nil;
     [_refreshHeaderView removeFromSuperview];
+    _refreshHeaderView = nil;
        
     CGFloat segY = 0;
     
@@ -678,8 +643,8 @@ static int _retryCounter;
         [[NSBundle mainBundle] loadNibNamed:@"views_events_Details1" owner:self options:nil];
         segY = 665;
     }
-    
-    // HEADER
+//
+//    // HEADER
     _headerDateLabel.text = [NSString stringWithFormat:@"%@ to %@", _event.dateStart, _event.dateEnd];
     _headerNameLabel.text = _event.name;
     _headerLocationLabel.text = (_event.location != nil && ![_event.location isEqualToString:@""]) ? _event.location : @"N/A";
@@ -698,15 +663,21 @@ static int _retryCounter;
         UIImageView *image = (UIImageView *)[_headerScore.subviews objectAtIndex:i];
         image.image = [UIImage imageNamed:@"diamond"];
     }
-    
-    // RSVP
+//
+//    // RSVP
     NSArray *objects = [NSArray arrayWithObjects:@"Yes", @"Maybe", @"No", nil];
     _segment = [[STSegmentedControl alloc] initWithItems:objects];
 	_segment.frame = CGRectMake(20, segY, 280, 40);
 	_segment.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 	[_header addSubview:_segment];
-    
+
     // MAP
+    _map = [MapSingleton instance].map;
+    [_map setDelegate:self];
+    [_map setFrame:CGRectMake(0, 0, 320, 340)];
+    [_mapImage addSubview:_map];
+    [_mapImage bringSubviewToFront:_map];
+    
     _mapImageHeight = _map.frame.size.height;
     _map.scrollEnabled = NO;
     _map.zoomEnabled = NO;
@@ -734,11 +705,11 @@ static int _retryCounter;
         _map = nil;
         
     }
-    
+
     UIImageView *ivtop = [[UIImageView alloc] initWithFrame:CGRectMake(0, _headerDateLabel.frame.origin.y - 10, 320, 20)];
     [ivtop setImage:[UIImage imageNamed:@"shadowBottom"]];
     [_header insertSubview:ivtop aboveSubview:_mapImage];
-    
+//
     // STATS
     NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
     
@@ -756,14 +727,14 @@ static int _retryCounter;
     [_event loadStatsWithParams:params andTarget:self andSelector:@selector(onEventStatsLoad:)];
     [_eventLoader loadRsvpWithParams:params andTarget:self andSelector:@selector(onRsvpLoad:)];
     
-    
-    [self performSelector:@selector(onEventStatsLoad:) withObject:nil afterDelay:15];
-    
-    
-    
+    // timeout handling
+    [self performSelector:@selector(onEventStatsLoad:) withObject:nil afterDelay:10];
+//
+//    
+//    
     self.tableView.tableHeaderView = _header;
-    self.tableView.scrollsToTop = YES;
-    
+    _header = nil;
+   
     _tickerItems = [[NSArray alloc] initWithObjects:_event.name, nil];
     [_ticker reloadData];
     
@@ -784,10 +755,6 @@ static int _retryCounter;
     }
     
     [self loadDropAGem];
-    
-    
-    
-    
 }
 
 - (IBAction)onTicket_Tap:(id)sender
@@ -978,11 +945,6 @@ static int _retryCounter;
     }
 }
 
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-}
-
 #pragma mark - Ticker delegate
 
 - (UIColor*) backgroundColorForTickerView:(MKTickerView *)vertMenu
@@ -1010,32 +972,65 @@ static int _retryCounter;
     return nil;
 }
 
-#pragma mark - Map delegate
 
-- (void)cancelAllRequests
+- (void)mydealloc
 {
-    if (!_isButtonTap) {
-        
-        [super cancelAllRequests];
-        _isButtonTap = NO;   
-        
-        
-    }
-}
-
-- (void)dealloc 
-{
-    
-    [self cancelAllRequests];
-    
-    _delegateBack = nil;
-    
-    _user = nil;
-    _event = nil;
-    _eventLoader = nil;
-    
+    // map dealloc
+    [_map removeAnnotation:_event];
+    _map.showsUserLocation = NO;
+    _map.delegate = nil;
+    [_map removeFromSuperview];
     _map = nil;
-
+    
+    // ticker dealloc
+    _ticker.stop = YES;
+    _tickerItems = nil;
+    _ticker = nil;
+    
+    // gem dealloc
+    [self.dragViews removeAllObjects];
+    [self.goodFrames removeAllObjects];
+    self.dragViews = nil;
+    self.goodFrames = nil;
+    _dragView = nil;
+    _dropagemLabel = nil;
+    _lightBurst = nil;
+    
+    // models dealloc
+    if (_user) {
+        [_user mydealloc];
+        _user = nil;
+    }
+    if (_event) {
+        [_event mydealloc];
+        _event = nil;
+    }
+    if (_eventLoader) {
+        [_eventLoader mydealloc];
+        _eventLoader = nil;
+    }
+    if (_addressLoader) {
+        [_addressLoader mydealloc];
+        _addressLoader = nil;
+    }
+    if (_picturesLoader) {
+        [_picturesLoader mydealloc];
+        _picturesLoader = nil;
+    }
+    
+    [super mydealloc];
+    
+    // not sure this is useful?
+    self.tableView.tableHeaderView = nil;
+    self.tableView.tableFooterView = nil;
+    self.tableView = nil;
+    
+    if (_photos) {
+     
+        [_photos removeAllObjects];
+        _photos = nil;
+    }
+    
     _header = nil;
     _headerDateLabel = nil;
     _headerGroupLabel = nil;
@@ -1043,33 +1038,25 @@ static int _retryCounter;
     _headerLocationLabel = nil;
     _headerTimeLabel = nil;
     _headerDistanceLabel = nil;
-    _headerVoteLabel = nil;
+
     _headerAddButton = nil;
     _headerScore = nil;
     _rsvp = nil;
     _voteLoading = nil;
-    _borderLeft = nil;
-    _borderRight = nil;
+
     _labelFemaleRatio = nil;
     _labelMaleRatio = nil;
     _labelTotalAttendings = nil;
     _venueCategory = nil;
     _backButton = nil;
-    _ticker = nil;
     
     _headerImage = nil;
-    _map = nil;
     _mapImage = nil;
-    _dragView = nil;
-    _dropagemLabel = nil;
-    
     
     _actVote = nil;
     _actRatio1 = nil;
     _actRatio2 = nil;
     _actRatio3 = nil;
-    
-    im = nil;
     
     _specialLabel = nil;
     _goodiesIcon = nil;
@@ -1080,13 +1067,12 @@ static int _retryCounter;
     _segment = nil;
     
     _toolbar = nil;
-    _eventLoader = nil;
-    _picturesLoader = nil;
     
     _friendsSharedTo = nil;
-    _tickerItems = nil;
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"reloadPictures" object:nil];
+    
+    [[ActionDispatcher instance] del:@"share"];
 }
 
 #pragma mark - TKDragViewDelegate

@@ -92,21 +92,23 @@
     UIViewController *viewController = [super popViewControllerAnimated:YES];
     UIViewController *topvc = self.topViewController;
     
-    if (![topvc isKindOfClass:[JMCIssuesViewController class]]) {
-     
-        UITableViewReloadable *table = (UITableViewReloadable *)viewController;
-        [table cancelAllRequests];
-    }
+//    if (![topvc isKindOfClass:[JMCIssuesViewController class]]) {
+//     
+//        UITableViewReloadable *table = (UITableViewReloadable *)viewController;
+//        [table cancelAllRequests];
+//    }
 
     if (![topvc isKindOfClass:[controllers_events_DetailsContainer class]]) {
         
         self.navigationBar.barStyle = UIBarStyleDefault;
-        self.navigationBar.alpha = 1;   
+        self.navigationBar.alpha = 1;
+        
     } else {
         
         self.navigationBar.barStyle = UIBarStyleBlackTranslucent;
         self.navigationBar.alpha = 0.5;
     }
+    
     return viewController;
 }
 

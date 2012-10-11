@@ -121,6 +121,7 @@
 - (void)vote:(NSMutableDictionary *)params success:(SEL)success failure:(SEL)failure sender:(id)sender;
 - (void)rsvp:(NSMutableDictionary *)params success:(SEL)success failure:(SEL)failure sender:(id)sender;
 - (void)cancelAllRequests;
+- (void)mydealloc;
 
 + (NSMutableDictionary *)getGroupedData:(NSArray *)data;
 

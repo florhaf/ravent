@@ -16,7 +16,7 @@
     SEL _callback;
     
     models_Event *_event;
-        RKObjectManager *_manager;  
+    RKObjectManager *_manager;  
     NSString *_formatted_address;
 }
 
@@ -24,5 +24,6 @@
 
 - (id)initWithEvent:(models_Event *)event delegate:(id)delegate callback:(SEL)callback;
 - (void)loadAddress;
+- (void)mydealloc;
 
 @end

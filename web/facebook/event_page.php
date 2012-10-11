@@ -148,7 +148,7 @@ chromium.org/developers/how-tos/chrome-frame-getting-started -->
             <div id="middle" style="min-height: 400px; background-image: url(../img/event_details_middle.png); background-repeat: repeat-y;">
 
                 <div id="goodies" style="margin-top: 0px;">
-                    <div id="special" style="border: 0px solid red; width: 90%; margin-left: 40px; height: 42px;">
+                    <div id="special" style="border: 0px solid red; width: 90%; margin-left: 40px; height: 52px;">
                         <img src="../img/goodiesGift.png" style="width: 42px; float: left; margin-right: 12px;" />
                         <div id="specialText" style=" padding-top: 8px;"></div>
                     </div>

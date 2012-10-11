@@ -246,7 +246,7 @@ static customNavigationController *_ctrl;
 {
     if (_ctrl == nil) {
         
-        JMCIssuesViewController *issues = [[JMCIssuesViewController alloc] initWithStyle:UITableViewStylePlain];
+        JMCIssuesViewController *issues = [[[JMCIssuesViewController alloc] initWithStyle:UITableViewStylePlain] autorelease];
         [issues setIssueStore:[JMCIssueStore instance]];
         _ctrl = [[customNavigationController alloc] initWithRootViewController:issues];
     }
