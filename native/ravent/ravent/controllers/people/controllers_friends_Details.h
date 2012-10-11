@@ -23,5 +23,6 @@
 
 - (void)onUserLoad:(NSArray *)objects;
 - (IBAction)onCommentTap:(id)sender;
+- (void)mydealloc;
 
 @end

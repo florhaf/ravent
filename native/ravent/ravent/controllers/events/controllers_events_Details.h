@@ -34,13 +34,12 @@ typedef enum {
     IBOutlet UILabel *_headerLocationLabel;
     IBOutlet UILabel *_headerTimeLabel;
     IBOutlet UILabel *_headerDistanceLabel;
-    IBOutlet UILabel *_headerVoteLabel;
+
     IBOutlet UIButton *_headerAddButton;
     IBOutlet UIView *_headerScore;
     IBOutlet UISegmentedControl *_rsvp;
     IBOutlet UIView *_voteLoading;
-    IBOutlet UIImageView *_borderLeft;
-    IBOutlet UIImageView *_borderRight;
+
     IBOutlet UILabel *_labelFemaleRatio;
     IBOutlet UILabel *_labelMaleRatio;
     IBOutlet UILabel *_labelTotalAttendings;
@@ -49,7 +48,7 @@ typedef enum {
     IBOutlet MKTickerView *_ticker;
     
     IBOutlet JBAsyncImageView *_headerImage;
-    IBOutlet MKMapView *_map;
+    MKMapView *_map;
     IBOutlet UIView *_mapImage;
     MKCoordinateRegion _viewRegion;
     CLLocationCoordinate2D _zoomLocation;
@@ -58,8 +57,6 @@ typedef enum {
     IBOutlet UIActivityIndicatorView *_actRatio1;
     IBOutlet UIActivityIndicatorView *_actRatio2;
     IBOutlet UIActivityIndicatorView *_actRatio3;
-    
-    IBOutlet UILabel *im;
     
     IBOutlet UILabel *_specialLabel;
     IBOutlet UIImageView *_goodiesIcon;
@@ -85,14 +82,10 @@ typedef enum {
 
     int _currentNbOfBurst;
     int _maxNbOfBurst;
-    
-    id __weak _delegateBack;
-    SEL _selectorBack;
 }
 
 @property (nonatomic, retain) NSMutableArray *photos;
-@property (nonatomic, weak) id delegateBack;
-@property (nonatomic, assign) SEL selectorBack;
+
 
 @property (nonatomic, strong) NSMutableArray *dragViews;
 @property (nonatomic, strong) NSMutableArray *goodFrames;
@@ -101,7 +94,7 @@ typedef enum {
 @property BOOL canUseTheSameFrameManyTimes;
 
 - (id)initWithReloadEvent:(models_Event *)event;
-- (id)initWithEvent:(models_Event *)event withBackDelegate:(id)delegate backSelector:(SEL)sel;
+- (id)initWithEvent:(models_Event *)event;
 
 - (IBAction)addToListButton_Tap:(id)sender;
 - (IBAction)snap_Tap:(id)sender;
@@ -109,7 +102,7 @@ typedef enum {
 - (IBAction)mapButton_Tap:(id)sender;
 - (IBAction)picButton_Tap:(id)sender;
 - (IBAction)rsvp:(id)sender;
-- (IBAction)backButton_Tap:(id)sender;
+
 - (IBAction)onTicket_Tap:(id)sender;
 - (IBAction)onSpecials_Tap:(id)sender;
 - (IBAction)onGoodies_Tap:(id)sender;
@@ -118,5 +111,7 @@ typedef enum {
 
 - (void)onVoteSuccess:(NSString *)response;
 - (void)onVoteFailure:(NSMutableDictionary *)response;
+
+- (void)mydealloc;
 
 @end

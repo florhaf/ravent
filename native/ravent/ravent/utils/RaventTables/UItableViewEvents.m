@@ -198,11 +198,11 @@
 
 - (void)loadEventDetails:(models_Event *)event
 {
-    _details = [[controllers_events_DetailsContainer alloc] initWithEvent:[event copy] withBackDelegate:self backSelector:@selector(onBackTap)]; 
+    _details = [[controllers_events_DetailsContainer alloc] initWithEvent:[event copy]];
 
     [self.navigationController pushViewController:_details animated:YES];    
     self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
-    
+
     UIImage *backi = [UIImage imageNamed:@"backButton"];
     
     UIButton *backb = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -211,7 +211,7 @@
     [backb setFrame:CGRectMake(0, 0, backi.size.width, backi.size.height)];
     
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:backb];
-    
+
     UIViewController *rootController = self;
     
     while (![rootController.parentViewController isKindOfClass:[UINavigationController class]]) {
@@ -221,14 +221,14 @@
     
     [rootController.navigationItem hidesBackButton];
     [_details.navigationItem setLeftBarButtonItem:backButton];
-    
-    
+//
+//    
     //Watchlist button
     UIImage *wlbg = [UIImage imageNamed:@"navBarBG"];
     UIImage *wli = [UIImage imageNamed:@"watch"];
     
     UIButton *wlb = [UIButton buttonWithType:UIButtonTypeCustom];
-    [wlb addTarget:[_details.childViewControllers objectAtIndex:0] action:@selector(addToListButton_Tap:) forControlEvents:UIControlEventTouchUpInside];
+//    [wlb addTarget:[_details.childViewControllers objectAtIndex:0] action:@selector(addToListButton_Tap:) forControlEvents:UIControlEventTouchUpInside];
     [wlb setImage:wli forState:UIControlStateNormal];
     [wlb setBackgroundImage:wlbg forState:UIControlStateNormal];
     [wlb setFrame:CGRectMake(0, 0, 40, 29)];
@@ -247,8 +247,15 @@
 
 - (void)onBackTap
 {
-    [(controllers_events_Details *)_details cancelAllRequests];
     [self.navigationController popViewControllerAnimated:YES];
+    
+    [self performSelector:@selector(deallocDetailScreen) withObject:nil afterDelay:0.5];
+}
+
+- (void)deallocDetailScreen
+{
+    [(controllers_events_DetailsContainer *)_details mydealloc];
+    _details = nil;
 }
 
 - (void)reloadTableViewDataSource

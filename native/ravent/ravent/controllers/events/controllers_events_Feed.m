@@ -230,18 +230,28 @@
     [self loadDataWithSpinner];
 }
 
-- (void)dealloc
+- (void)mydealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"reloadComments" object:nil];
     
-    _comment = nil;
+    if (_comment) {
+        
+        [_comment mydealloc];
+        _comment = nil;
+    }
     
     _itemTime = nil;
     _commentImg = nil;
     _bg = nil;
     _picButton = nil;
     
-    _photos = nil;
+    if (_photos) {
+        
+        [_photos removeAllObjects];
+        _photos = nil;
+    }
+    
+    [super mydealloc];
 }
 
 @end

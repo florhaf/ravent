@@ -69,7 +69,12 @@ static controllers_friends_All *_ctrl;
                         
                         NSArray *result = [[_groupedData objectForKey:key] filteredArrayUsingPredicate:predicate];
                         
-                        ((models_User *)[result objectAtIndex:0]).isFollowed = @"true";
+                        // added 10/08
+                        // crash report NSARRAYI index beyond bounds for empty array
+                        if (result != nil && result.count > 0) {
+                            
+                            ((models_User *)[result objectAtIndex:0]).isFollowed = @"true";
+                        }
                     }
                 }
             }
@@ -144,7 +149,12 @@ static controllers_friends_All *_ctrl;
                         
                         NSArray *result = [[_groupedData objectForKey:key] filteredArrayUsingPredicate:predicate];
                         
-                        ((models_User *)[result objectAtIndex:0]).isFollowed = @"true";
+                        // added 10/08
+                        // crash report NSARRAYI index beyond bounds for empty array
+                        if (result != nil && result.count > 0) {
+                         
+                            ((models_User *)[result objectAtIndex:0]).isFollowed = @"true";
+                        }
                     }   
                 }
             }

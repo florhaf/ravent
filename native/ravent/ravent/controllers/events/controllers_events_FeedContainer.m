@@ -99,7 +99,7 @@
 {
     [self dismissModalViewControllerAnimated:YES];
     
-    [_feedController cancelAllRequests];
+    [self performSelector:@selector(mydealloc) withObject:nil afterDelay:0.5];
 }
 
 - (void)viewDidUnload
@@ -113,10 +113,22 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (void)dealloc
+- (void)mydealloc
 {
-    _feedController = nil;
-    _event = nil;
+    [_feedController.view removeFromSuperview];
+    [_feedController removeFromParentViewController];
+    
+    if (_feedController) {
+        
+        [_feedController mydealloc];
+        _feedController = nil;
+    }
+    
+    if (_event) {
+        
+        [_event mydealloc];
+        _event = nil;
+    }
     
     _toolbar = nil;
     _button = nil;

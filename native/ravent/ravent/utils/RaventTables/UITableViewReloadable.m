@@ -73,6 +73,11 @@ typedef enum {
 
 - (void)didReceiveMemoryWarning
 {
+    if (_imagesCache) {
+        
+        [_imagesCache removeAllObjects];
+    }
+    
     _imagesCache = nil;
     _imagesCache = [[NSMutableDictionary alloc] init];
     
@@ -530,26 +535,48 @@ typedef enum {
     }
 }
 
-- (void)dealloc
+- (void)mydealloc
 {
-    _user = nil;
-    _event = nil;
+    if (_user) {
+        
+        [_user mydealloc];
+        _user = nil;
+    }
+    
+    if (_event) {
+        
+        [_event mydealloc];
+        _event = nil;
+    }
+    
+    if (_data) {
+        
+        _data = nil;
+    }
+    
+    if (_groupedData) {
+        
+        [_groupedData removeAllObjects];
+        _groupedData = nil;
+    }
+    
+    if (_sortedKeys) {
+        
+        _sortedKeys = nil;
+    }
     
     _refreshHeaderView = nil;
     
-_footerView = nil;
-_footerSpinner = nil;
-_footerLabel = nil;
-//    _emptyView = nil;
-//    _emptyMessageViewPlaceHolder = nil;
-//    _emptyImageView = nil;
+    _footerView = nil;
+    _footerSpinner = nil;
+    _footerLabel = nil;
+
     _item = nil;
     _itemTitle = nil;
     _itemSubTitle = nil;
     _itemImage = nil;
     
     _spinner = nil;
-//    _emptyMessageView = nil;
     
     _data = nil;
     _sortedKeys = nil;
@@ -558,7 +585,17 @@ _footerLabel = nil;
     _url = nil;
     _hud = nil;
     
-    _imagesCache = nil;
+    
+    if (_imagesCache) {
+        
+        [_imagesCache removeAllObjects];
+        _imagesCache = nil;
+    }
+    
+    // not sure this is useful?
+    self.tableView.tableHeaderView = nil;
+    self.tableView.tableFooterView = nil;
+    self.tableView = nil;
 }
 
 @end

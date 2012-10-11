@@ -176,6 +176,7 @@
     if ([_details respondsToSelector:@selector(cancelAllRequests)]) {
      
         [_details cancelAllRequests];
+        _details = nil;
     }
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -187,16 +188,22 @@
     [_spinner startAnimating];
 }
 
-- (void)viewDidUnload
+- (void)mydealloc
 {
-    [super viewDidUnload];
-}
-
-- (void)dealloc
-{
-    _details = nil;
+    [_user mydealloc];
     
+    if (_details) {
+        
+        [_details mydealloc];
+        _details = nil;
+    }
+    
+    _noFriendLabel = nil;
     _footer = nil;
+    
+    self.tableView.tableFooterView = nil;
+    
+    [super mydealloc];
 }
 
 @end

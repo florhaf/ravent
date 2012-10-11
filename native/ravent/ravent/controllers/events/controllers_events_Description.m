@@ -25,7 +25,6 @@
         
         self.title = @"Gemster";
         
-        //self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"backgroundLight"]];
 
         _event = event;
         _event.delegate = self;
@@ -117,6 +116,8 @@
         
         [_event cancelAllRequests];
     }
+    
+    [self performSelector:@selector(mydealloc) withObject:nil afterDelay:0.5];
 }
 
 #pragma mark - Ticker delegate
@@ -146,16 +147,25 @@
     return nil;
 }
 
-- (void)dealloc
+- (void)mydealloc
 {
-    _textView = nil;
-    _tickerItems = nil;
+    [[ActionDispatcher instance] del:_url];
     
+    // ticker dealloc
+    _ticker.stop = YES;
+    _tickerItems = nil;
     _ticker = nil;
+    
+    _textView = nil;
     _labelLocation = nil;
     _labelAddress = nil;
     
-    _event = nil;
+    if (_event) {
+        
+        [_event mydealloc];
+        _event = nil;
+    }
+    
     _hud = nil;
     _url = nil;
 }

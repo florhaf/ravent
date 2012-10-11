@@ -133,8 +133,10 @@
     }
 }
 
-- (void)dealloc
+- (void)mydealloc
 {
+    NSLog(@"friend details dealloc NOT CHECKED");
+    
     _detailsView = nil;
     _nameLabel = nil;
     _followingLabel = nil;

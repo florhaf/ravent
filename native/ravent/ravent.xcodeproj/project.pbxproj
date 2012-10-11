@@ -161,8 +161,6 @@
 		DF36FF4D1555868900C3CB53 /* postController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF36FF4C1555868900C3CB53 /* postController.m */; };
 		DF39E8091525275F0080EDA0 /* ActionDispatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = DF39E8081525275E0080EDA0 /* ActionDispatcher.m */; };
 		DF39E80C152527A50080EDA0 /* Action.m in Sources */ = {isa = PBXBuildFile; fileRef = DF39E80B152527A50080EDA0 /* Action.m */; };
-		DF4F86DC15926B7100AE9742 /* controllers_dropagem_DropAGemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF4F86DB15926B7100AE9742 /* controllers_dropagem_DropAGemViewController.m */; };
-		DF4F86DF15926B9200AE9742 /* controllers_dropagem_List.m in Sources */ = {isa = PBXBuildFile; fileRef = DF4F86DE15926B9200AE9742 /* controllers_dropagem_List.m */; };
 		DF50EDAF1537732700ACBC4A /* customNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF50EDAE1537732700ACBC4A /* customNavigationController.m */; };
 		DF50EDB21537A85400ACBC4A /* controllers_events_Details_Map.m in Sources */ = {isa = PBXBuildFile; fileRef = DF50EDB11537A85300ACBC4A /* controllers_events_Details_Map.m */; };
 		DF50EDB41537A8AE00ACBC4A /* views_events_Map_Big.xib in Resources */ = {isa = PBXBuildFile; fileRef = DF50EDB31537A8AE00ACBC4A /* views_events_Map_Big.xib */; };
@@ -199,6 +197,7 @@
 		DF6E873D15A398DD00FF138C /* optionsBG.png in Resources */ = {isa = PBXBuildFile; fileRef = DF6E873B15A398DD00FF138C /* optionsBG.png */; };
 		DF6E873E15A398DD00FF138C /* optionsBG@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF6E873C15A398DD00FF138C /* optionsBG@2x.png */; };
 		DF6E874015A3B75F00FF138C /* navBarAll.png in Resources */ = {isa = PBXBuildFile; fileRef = DF6E873F15A3B75F00FF138C /* navBarAll.png */; };
+		DF75203816253D730072E17C /* MapSingleton.m in Sources */ = {isa = PBXBuildFile; fileRef = DF75203716253D730072E17C /* MapSingleton.m */; };
 		DF75ACC11541CE4C00150465 /* controllers_SlidingInitial.m in Sources */ = {isa = PBXBuildFile; fileRef = DF75ACC01541CE4C00150465 /* controllers_SlidingInitial.m */; };
 		DF75ACC81541D06200150465 /* controllers_SlidingMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = DF75ACC71541D06200150465 /* controllers_SlidingMenu.m */; };
 		DF75ACCC1541E7D400150465 /* backgroundDark.png in Resources */ = {isa = PBXBuildFile; fileRef = DF75ACCA1541E7D400150465 /* backgroundDark.png */; };
@@ -650,10 +649,6 @@
 		DF39E8081525275E0080EDA0 /* ActionDispatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ActionDispatcher.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		DF39E80A152527A50080EDA0 /* Action.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Action.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		DF39E80B152527A50080EDA0 /* Action.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = Action.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		DF4F86DA15926B7100AE9742 /* controllers_dropagem_DropAGemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = controllers_dropagem_DropAGemViewController.h; path = dropagem/controllers_dropagem_DropAGemViewController.h; sourceTree = "<group>"; };
-		DF4F86DB15926B7100AE9742 /* controllers_dropagem_DropAGemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = controllers_dropagem_DropAGemViewController.m; path = dropagem/controllers_dropagem_DropAGemViewController.m; sourceTree = "<group>"; };
-		DF4F86DD15926B9200AE9742 /* controllers_dropagem_List.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = controllers_dropagem_List.h; path = dropagem/controllers_dropagem_List.h; sourceTree = "<group>"; };
-		DF4F86DE15926B9200AE9742 /* controllers_dropagem_List.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = controllers_dropagem_List.m; path = dropagem/controllers_dropagem_List.m; sourceTree = "<group>"; };
 		DF50EDAD1537732700ACBC4A /* customNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = customNavigationController.h; sourceTree = "<group>"; };
 		DF50EDAE1537732700ACBC4A /* customNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = customNavigationController.m; sourceTree = "<group>"; };
 		DF50EDB01537A85300ACBC4A /* controllers_events_Details_Map.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = controllers_events_Details_Map.h; sourceTree = "<group>"; };
@@ -712,6 +707,8 @@
 		DF6E873B15A398DD00FF138C /* optionsBG.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = optionsBG.png; sourceTree = "<group>"; };
 		DF6E873C15A398DD00FF138C /* optionsBG@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "optionsBG@2x.png"; sourceTree = "<group>"; };
 		DF6E873F15A3B75F00FF138C /* navBarAll.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = navBarAll.png; sourceTree = "<group>"; };
+		DF75203616253D730072E17C /* MapSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapSingleton.h; sourceTree = "<group>"; };
+		DF75203716253D730072E17C /* MapSingleton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapSingleton.m; sourceTree = "<group>"; };
 		DF75ACBF1541CE4C00150465 /* controllers_SlidingInitial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = controllers_SlidingInitial.h; sourceTree = "<group>"; };
 		DF75ACC01541CE4C00150465 /* controllers_SlidingInitial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = controllers_SlidingInitial.m; sourceTree = "<group>"; };
 		DF75ACC61541D06200150465 /* controllers_SlidingMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = controllers_SlidingMenu.h; sourceTree = "<group>"; };
@@ -1350,17 +1347,6 @@
 			path = Anims;
 			sourceTree = "<group>";
 		};
-		DF4F86D915926B2600AE9742 /* DropAGem */ = {
-			isa = PBXGroup;
-			children = (
-				DF4F86DA15926B7100AE9742 /* controllers_dropagem_DropAGemViewController.h */,
-				DF4F86DB15926B7100AE9742 /* controllers_dropagem_DropAGemViewController.m */,
-				DF4F86DD15926B9200AE9742 /* controllers_dropagem_List.h */,
-				DF4F86DE15926B9200AE9742 /* controllers_dropagem_List.m */,
-			);
-			name = DropAGem;
-			sourceTree = "<group>";
-		};
 		DF629E6D153F8A5900BCA804 /* buttons */ = {
 			isa = PBXGroup;
 			children = (
@@ -1476,6 +1462,8 @@
 				DF8D4161159A761900351A6F /* utils.m */,
 				DFA20F7815AB6DA8007BBEE7 /* NSString+Distance.h */,
 				DFA20F7915AB6DAC007BBEE7 /* NSString+Distance.m */,
+				DF75203616253D730072E17C /* MapSingleton.h */,
+				DF75203716253D730072E17C /* MapSingleton.m */,
 			);
 			name = Ravent;
 			path = RaventTables;
@@ -1701,7 +1689,6 @@
 			isa = PBXGroup;
 			children = (
 				DFF133FD1593E86C004190AC /* watchlist */,
-				DF4F86D915926B2600AE9742 /* DropAGem */,
 				DF16F6FE153BCABD002819C2 /* people */,
 				DF8F1532150C06B400008ABC /* events */,
 				DF39E8071525275E0080EDA0 /* ActionDispatcher.h */,
@@ -2469,8 +2456,6 @@
 				DF24593D15807A260095027E /* controllers_events_DetailsContainer.m in Sources */,
 				DF9CED4E15845129002B1024 /* controllers_events_Pic_big.m in Sources */,
 				DF8C0651158C0DC1009D3400 /* GPSManager.m in Sources */,
-				DF4F86DC15926B7100AE9742 /* controllers_dropagem_DropAGemViewController.m in Sources */,
-				DF4F86DF15926B9200AE9742 /* controllers_dropagem_List.m in Sources */,
 				DFF134001593E897004190AC /* controllers_watchlist_WatchList.m in Sources */,
 				DFF134031593EDA8004190AC /* controllers_watchlist_Container.m in Sources */,
 				DFB28C9F1597E3A800D0F999 /* MWCaptionView.m in Sources */,
@@ -2497,6 +2482,7 @@
 				DFA9FC5E15B23E26003F9B5F /* models_FormatedAddress.m in Sources */,
 				DFA9FC7D15B52D5D003F9B5F /* controllers_FeatureYourEvent.m in Sources */,
 				DF01822215D9E44A00B5EBAB /* controllers_events_Crowd.m in Sources */,
+				DF75203816253D730072E17C /* MapSingleton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2596,7 +2582,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: florian haftman (247VK6949Z)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/RestKit/Specs/Runner/OCHamcrest\"",
@@ -2613,7 +2599,7 @@
 				);
 				"OTHER_CFLAGS[arch=*]" = "-mthumb";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "5426DF63-F03D-452B-8844-030CC73BD94D";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = NO;
 				USER_HEADER_SEARCH_PATHS = "";
@@ -2626,7 +2612,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: florian haftman (247VK6949Z)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/RestKit/Specs/Runner/OCHamcrest\"",
@@ -2643,7 +2629,7 @@
 				);
 				"OTHER_CFLAGS[arch=*]" = "-mthumb";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "67C20EBB-AA59-4A4B-B4BF-60479C59B59C";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = NO;
 				USER_HEADER_SEARCH_PATHS = "";

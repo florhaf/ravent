@@ -282,7 +282,7 @@
 }
 
 - (NSString *)hashForConnection:(NSURLConnection *)connection {
-    return [NSString stringWithFormat:@"%ld", connection];
+    return [NSString stringWithFormat:@"%ld", (long)connection];
 }
 
 - (JMCTransportOperation *) requestFromItem:(JMCQueueItem *)item

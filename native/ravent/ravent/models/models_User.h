@@ -97,6 +97,7 @@
 - (void)delFromNSUserDefaults;
 - (void)loadFromNSUserDefaults;
 - (void)refreshToken;
+- (void)mydealloc;
 
 + (NSMutableDictionary *)getGroupedData:(NSArray *)data;
 + (models_User *) crtUser;

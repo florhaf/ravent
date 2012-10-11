@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "controllers_dropagem_List.h"
 #import "models_User.h"
 
 #import <QuartzCore/QuartzCore.h>

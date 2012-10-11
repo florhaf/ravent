@@ -76,9 +76,14 @@
 #pragma clang diagnostic pop
 }
 
-- (void)dealloc
+- (void)mydealloc
 {
-    _event = nil;
+    if (_event) {
+        
+        [_event mydealloc];
+        _event = nil;
+    }
+    
     [_manager.requestQueue cancelAllRequests];
     _manager = nil;
     _delegate = nil;

@@ -552,7 +552,7 @@ static models_User *_crtUser = nil;
     return result;
 }
 
-- (void)dealloc
+- (void)mydealloc
 {
     [self cancelAllRequests];
 
