@@ -87,7 +87,7 @@ public class EventFetchCron extends Model implements Runnable {
 								if (e_cache == null || !e_cache.update_time.equals(e.update_time)) {
 
 									e.venue_id = JSON.GetValueFor("id", e.venue);    	
-									Venue v_graph =  Venue.getVenue(client, e.venue_id);
+									Venue v_graph =  Venue.getVenue(client, e.venue_id, e);
 									e.venue_category = v_graph.category;
 
 									if (e.venue_category == null || !e.venue_category.equals("city")) {
@@ -122,15 +122,15 @@ public class EventFetchCron extends Model implements Runnable {
 
 									asyncCache.put(e_cache.eid, e_cache, null); // Add cache Event to cache -> more recent date
 								}
-							} catch (Exception ex ) {log.severe("Event loop" + ex.toString());}
+							} catch (Exception ex ) {log.severe("Event loop " + ex.toString());}
 						}
-					} catch (Exception ex ) {log.severe("Get Events from FB" + ex.toString());}
+					} catch (Exception ex ) {log.severe("Get Events for friend of " + u.uid + "-" + l.uid + " " + ex.toString());}
 				}		
-			} catch (Exception ex) {log.severe("Get friends list" + ex.toString());}
+			} catch (Exception ex) {log.severe("Get friends list " + ex.toString());}
 
 		} catch (Exception ex){
 
-			log.severe("run" + ex.toString());
+			log.severe("run " + ex.toString());
 		}finally {
 
 			tm.threadIsDone(Thread.currentThread());

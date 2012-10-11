@@ -29,7 +29,7 @@ public class Venue  extends Model {
 		super();
 	}
 	
-	public static Venue getVenue(FacebookClient client, String venueID) throws FacebookException {
+	public static Venue getVenue(FacebookClient client, String venueID, Event e) throws FacebookException {
 		
 		Venue result = new Venue();
 		
@@ -43,6 +43,13 @@ public class Venue  extends Model {
 					
 					result = fbevents.get(0);
 					result.category = JSON.GetCategories("name", fbevents.get(0).categories);
+					
+					e.address = JSON.GetValueFor("street", result.location) + " " +
+							JSON.GetValueFor("city", result.location) + " " +
+							JSON.GetValueFor("state", result.location) + " " +
+							JSON.GetValueFor("zip", result.location) + " " +
+							JSON.GetValueFor("country", result.location);
+					e.address = e.address.replaceAll("  ", " ");
 				}
 			} catch (Exception ex) {
 				

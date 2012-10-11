@@ -182,7 +182,7 @@ chromium.org/developers/how-tos/chrome-frame-getting-started -->
 					</div>
 
 					<div class="download-button" style="margin-top: 20px; margin-left: 30px;">
-                    	<a id="button-get-the-app" href="http://itunes.apple.com/us/app/gemster/id553371725" target="_blank" class="button-get-the-app">Get the app (free)</a>
+                    	<a id="button-get-the-app" href="http://itunes.apple.com/us/app/gemster/id553371725" target="_blank" class="button-get-the-app">Get the App (Free)</a>
                 	</div>
 				
 				</div>
@@ -193,7 +193,7 @@ chromium.org/developers/how-tos/chrome-frame-getting-started -->
 						<img src="../img/cal.png" style="float:left; margin-left: 10px;" />
 					</div>
 					<div class="download-button" style="margin-top: 20px; margin-left: 25px;">
-                    	<a id="button-promote" href="../promoter/" class="button-promote">Promote my event</a>
+                    	<a id="button-promote" href="../promoter/" class="button-promote">Promote an Event</a>
                 	</div>
 				</div>
 				<div style="margin-top: -30px;">
@@ -363,21 +363,32 @@ chromium.org/developers/how-tos/chrome-frame-getting-started -->
 
 
             if (e.latitude && e.latitude != null) {
+				
+				if (e.address == null) {
+					$.ajax({
+						url : '../php/proxy.php?proxy_url=' + encodeURIComponent('http://maps.google.com/maps/api/geocode/json?sensor=true&latlng=' + e.latitude + ',' + e.longitude)
+					}).done(function(data) {
 
-                $.ajax({
-                    url : '../php/proxy.php?proxy_url=' + encodeURIComponent('http://maps.google.com/maps/api/geocode/json?sensor=true&latlng=' + e.latitude + ',' + e.longitude)
-                }).done(function(data) {
+							var add = data.results[0].formatted_address;
 
-                        var add = data.results[0].formatted_address;
+							if (add.length > 44) {
 
-                        if (add.length > 44) {
+								add = add.substring(0, 41) + '...';
+							}
 
-                            add = add.substring(0, 41) + '...';
-                        }
+							$('#other').html('<div style="width: 40%; float: left;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + vc + '</div>' + '<div style="width: 60%; float: left; text-align: right;">' + add  + ' &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>');
+							$('#other').fadeIn();
+					});
+				} else {
+					var add = e.address;
 
-                        $('#other').html('<div style="width: 40%; float: left;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + vc + '</div>' + '<div style="width: 60%; float: left; text-align: right;">' + add  + ' &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>');
-                        $('#other').fadeIn();
-                });
+					if (add.length > 44) {
+
+						add = add.substring(0, 41) + '...';
+					}
+					$('#other').html('<div style="width: 40%; float: left;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + vc + '</div>' + '<div style="width: 60%; float: left; text-align: right;">' + add  + ' &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>');
+					$('#other').fadeIn();
+				}
 
                 $('#map').html('<img src="http://maps.googleapis.com/maps/api/staticmap?center=' + e.latitude + ',' + e.longitude + '&zoom=13&size=640x140&maptype=roadmap&markers=color:red%7Ccolor:red%7Clabel:%7C' + e.latitude + ',' + e.longitude + '&sensor=false" style="width: 640px; height:140px;" />');
 
