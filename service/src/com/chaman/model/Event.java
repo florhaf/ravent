@@ -185,9 +185,9 @@ public class Event extends Model implements Serializable, Runnable {
 	@Override
 	public void run() {
 		
+		EventLocationCapable e = this.tm.getIdForThread(Thread.currentThread());
+		
 		try {
-			
-			EventLocationCapable e = this.tm.getIdForThread(Thread.currentThread());
 
 			Dao dao = new Dao();
 			
@@ -266,7 +266,7 @@ public class Event extends Model implements Serializable, Runnable {
 	    	}
 		} catch (Exception ex) {
 			
-			log.severe(ex.toString());
+			log.severe(e.getEid() + ": " + ex.toString());
 		} finally {
 		
 			tm.threadIsDone(Thread.currentThread());

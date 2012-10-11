@@ -71,13 +71,13 @@ public class Vote extends Model implements Serializable  {
 	    	this.nb_vote = v_cache.nb_vote + 1;
 	    }
 
-		dao.ofy().put(this);
-		Promoter.AddVote(eventid, accessToken);
-    	asyncCache.put(this.eid, this, null); // Add vote to cache
-    	asyncCache.delete(Long.parseLong(this.eid)); //Delete event from cache to refresh the event score when somebody has voted
-    	
-    	if (!visibility || (visibility && this.nb_vote == 1)) {
-
+	    if (!visibility || (visibility && this.nb_vote == 1)) {
+	    
+	    	dao.ofy().put(this);
+	    	Promoter.AddVote(eventid, accessToken);
+	    	asyncCache.put(this.eid, this, null); // Add vote to cache
+	    	asyncCache.delete(Long.parseLong(this.eid)); //Delete event from cache to refresh the event score when somebody has voted
+	    	
     		FacebookClient client 	= new DefaultFacebookClient(accessToken);
     		
     		try {
@@ -90,10 +90,6 @@ public class Vote extends Model implements Serializable  {
     			client.publish(userid + "/gemsterapp:drop_a_gem_on", FacebookType.class, Parameter.with("event", "http://gemsterapp.com/facebook/event_page.php?eid=" + eventid));
     		}
     	}
-	}
-	public static void NewVote(String userid, String eventid, String svote) {
-		
-		//Vote newvote = new Vote(userid, eventid, svote);	
 	}
 	
 	public String getEid() {

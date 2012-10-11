@@ -20,7 +20,7 @@ public class Visibility {
 		
 		try {
 			
-			ArrayList<Model> list = Event.Get(accessToken, latitude, longitude, latitude, longitude, "-420", searchTimeFrame, 6, 0, "en_US", "true");
+			ArrayList<Model> list = Event.Get(accessToken, latitude, longitude, latitude, longitude, "-420", searchTimeFrame, 15, 0, "en_US", "true");
 			
 			this.NbVote  = 0;		
 			this.event_list_size = 0;
