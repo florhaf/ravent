@@ -11,11 +11,6 @@ import com.googlecode.objectify.Query;
 import com.googlecode.objectify.annotation.Entity;
 import com.google.appengine.api.memcache.MemcacheService;
 import com.google.appengine.api.memcache.MemcacheServiceFactory;
-import com.restfb.DefaultFacebookClient;
-import com.restfb.FacebookClient;
-import com.restfb.Parameter;
-import com.restfb.types.FacebookType;
-
 
 @Entity
 public class Following extends Model implements Serializable  {
@@ -106,21 +101,6 @@ public class Following extends Model implements Serializable  {
 	      syncCache.delete(Long.parseLong(userID)); // to refresh the data at the next call of following()
 	      syncCache.delete(Long.parseLong(friendID)); // to refresh the data at the next call of following()
 	      
-	      User user = (User) syncCache.get(Long.parseLong(userID)); // read from cache
-	      if (user == null) {
-	    	  user = dao.ofy().find(User.class, Long.parseLong(userID));
-	      }
-	      
-	      if (user != null) {
-	      	
-	    	  FacebookClient client 	= new DefaultFacebookClient(user.access_token);
-	    	
-	    	  client.publish(friendID + "/feed", FacebookType.class, Parameter.with("message", "Is following your events with Gemster"), Parameter.with("link", "http://www.gemsterapp.com/"),
-	    			Parameter.with("name", "Check it out"), Parameter.with("picture", "http://gemsterapp.com/img/app_icon.png"));
-	      			
-	      	// FB Action
-	      	//client.publish(userID + "/og.follows", FacebookType.class, Parameter.with("profile", "http://gemsterapp.com/facebook/"));
-	      }
 	    }
 	}
 	
