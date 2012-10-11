@@ -21,6 +21,7 @@
 }
 
 - (id)initWithEvent:(models_Event *)event;
+- (void)mydealloc;
 
 - (IBAction)onCommentTap:(id)sender;
 

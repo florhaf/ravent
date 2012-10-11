@@ -1020,11 +1020,6 @@ static int _retryCounter;
     
     [super mydealloc];
     
-    // not sure this is useful?
-    self.tableView.tableHeaderView = nil;
-    self.tableView.tableFooterView = nil;
-    self.tableView = nil;
-    
     if (_photos) {
      
         [_photos removeAllObjects];

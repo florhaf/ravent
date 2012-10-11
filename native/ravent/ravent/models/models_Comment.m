@@ -258,6 +258,7 @@
     
     _manager = nil;
     
+    
     _firstName = nil;
     _lastName = nil;
     _message = nil;

@@ -537,8 +537,6 @@ typedef enum {
 
 - (void)mydealloc
 {
-    [self cancelAllRequests];
-    
     if (_user) {
         
         [_user mydealloc];
@@ -569,9 +567,9 @@ typedef enum {
     
     _refreshHeaderView = nil;
     
-_footerView = nil;
-_footerSpinner = nil;
-_footerLabel = nil;
+    _footerView = nil;
+    _footerSpinner = nil;
+    _footerLabel = nil;
 
     _item = nil;
     _itemTitle = nil;
@@ -591,9 +589,13 @@ _footerLabel = nil;
     if (_imagesCache) {
         
         [_imagesCache removeAllObjects];
+        _imagesCache = nil;
     }
     
-    _imagesCache = nil;
+    // not sure this is useful?
+    self.tableView.tableHeaderView = nil;
+    self.tableView.tableFooterView = nil;
+    self.tableView = nil;
 }
 
 @end
