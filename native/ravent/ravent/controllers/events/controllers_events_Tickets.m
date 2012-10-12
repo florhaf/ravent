@@ -113,8 +113,17 @@
     
 }
 
-- (void)dealloc
+- (void)viewDidDisappear:(BOOL)animated
 {
+    [super viewDidDisappear:animated];
+    
+    
+}
+
+- (void)mydealloc
+{
+    [_webview loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"about:blank"]]];
+    
     _errorLabel = nil;
     _webview = nil;
     _url = nil;

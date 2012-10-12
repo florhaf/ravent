@@ -133,11 +133,25 @@
     return nil;
 }
 
-- (void)dealloc
+- (void)viewDidDisappear:(BOOL)animated
 {
-    _event = nil;
-    _tickerItems = nil;
+    [super viewDidDisappear:animated];
     
+    [self mydealloc];
+}
+
+- (void)mydealloc
+{
+    
+    if (_event) {
+        
+        [_event mydealloc];
+        _event = nil;
+    }
+    
+    // ticker dealloc
+    _ticker.stop = YES;
+    _tickerItems = nil;
     _ticker = nil;
     _labelLocation = nil;
     _labelAddress = nil;

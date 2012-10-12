@@ -45,13 +45,17 @@ static customNavigationController *_ctrl;
         
         self.title = @"Gemster";
         _url = [NSString stringWithFormat:@"http://m.gemsterapp.com/promoter/?uid=%@", [models_User crtUser].uid];
-        
-        // force view loading
-        self.view.frame = self.view.frame;
-        
-        [self trackPageView:@"events_featureYourEvent"];
     }
     return self;
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    [self trackPageView:@"events_featureYourEvent"];
+    
+    [self refresh];
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
@@ -119,7 +123,7 @@ static customNavigationController *_ctrl;
     [ivtop setImage:[UIImage imageNamed:@"shadowTop"]];
     [self.view addSubview:ivtop];
     
-    [self refresh];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -141,6 +145,13 @@ static customNavigationController *_ctrl;
 - (void)viewWillDisappear:(BOOL)animated
 {
     [self.slidingViewController.topViewController.view removeGestureRecognizer:[self.slidingViewController panGesture]];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    
+    [_webview loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"about:blank"]]];
 }
 
 - (void)viewDidUnload
