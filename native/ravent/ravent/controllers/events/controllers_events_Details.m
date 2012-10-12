@@ -38,6 +38,8 @@
 @synthesize canDragMultipleViewsAtOnce =canDragMultipleViewsAtOnce_;
 @synthesize canUseTheSameFrameManyTimes =canUseTheSameFrameManyTimes_;
 
+@synthesize mapImage = _mapImage;
+
 static int _retryCounter;
 
 - (id)initWithEvent:(models_Event *)event
@@ -325,7 +327,7 @@ static int _retryCounter;
 {
     _isButtonTap = YES;
     
-    controllers_events_Details_Map *mapController = [[controllers_events_Details_Map alloc] initWithEvent:[_event copy]];
+    controllers_events_Details_Map *mapController = [[controllers_events_Details_Map alloc] initWithEvent:[_event copy] andParent:self];
     UINavigationController *feedModal = [[UINavigationController alloc] initWithRootViewController:mapController];
     
     [self presentModalViewController:feedModal animated:YES];
@@ -586,9 +588,6 @@ static int _retryCounter;
             
             [self.view addSubview:_dragView];
             
-            UITapGestureRecognizer *g = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(taped:)];
-            [g setNumberOfTapsRequired:2];
-            [_dragView addGestureRecognizer:g];
         }
     }
 }
@@ -672,39 +671,7 @@ static int _retryCounter;
 	[_header addSubview:_segment];
 
     // MAP
-    _map = [MapSingleton instance].map;
-    [_map setDelegate:self];
-    [_map setFrame:CGRectMake(0, 0, 320, 340)];
-    [_mapImage addSubview:_map];
-    [_mapImage bringSubviewToFront:_map];
-    
-    _mapImageHeight = _map.frame.size.height;
-    _map.scrollEnabled = NO;
-    _map.zoomEnabled = NO;
-    if (_event.latitude != nil && ![_event.latitude isEqualToString:@""]) {
-        
-        CLLocationCoordinate2D coord;
-        coord.latitude = [_event.latitude doubleValue];
-        coord.longitude = [_event.longitude doubleValue];
-        _event.coordinate = coord;
-        [_map addAnnotation:_event];
-        
-        _zoomLocation.latitude = [_event.latitude floatValue];
-        _zoomLocation.longitude= [_event.longitude floatValue];
-        _viewRegion = MKCoordinateRegionMakeWithDistance(_zoomLocation, 0.3*METERS_PER_MILE, 0.3*METERS_PER_MILE);
-        MKCoordinateRegion adjustedRegion = [_map regionThatFits:_viewRegion];                
-        [_map setRegion:adjustedRegion animated:YES];
-        
-    } else {
-        
-        UIImageView *img = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"nomap"]];
-        [img setFrame:_mapImage.frame];
-        [_mapImage addSubview:img];
-        _isMapImageSet = YES;
-        [_map removeFromSuperview];
-        _map = nil;
-        
-    }
+    [self setMapOnTop];
 
     UIImageView *ivtop = [[UIImageView alloc] initWithFrame:CGRectMake(0, _headerDateLabel.frame.origin.y - 10, 320, 20)];
     [ivtop setImage:[UIImage imageNamed:@"shadowBottom"]];
@@ -824,6 +791,42 @@ static int _retryCounter;
     } else {
         
         [self onSpecials_Tap:sender];
+    }
+}
+
+- (void)setMapOnTop
+{
+    _map = [MapSingleton instance].map;
+    [_map setDelegate:self];
+    [_map setFrame:CGRectMake(0, 0, 320, 340)];
+    [_mapImage addSubview:_map];
+    [_mapImage bringSubviewToFront:_map];
+    
+    _mapImageHeight = _map.frame.size.height;
+    _map.scrollEnabled = NO;
+    _map.zoomEnabled = NO;
+    if (_event.latitude != nil && ![_event.latitude isEqualToString:@""]) {
+        
+        CLLocationCoordinate2D coord;
+        coord.latitude = [_event.latitude doubleValue];
+        coord.longitude = [_event.longitude doubleValue];
+        _event.coordinate = coord;
+        [_map addAnnotation:_event];
+        
+        _zoomLocation.latitude = [_event.latitude floatValue];
+        _zoomLocation.longitude= [_event.longitude floatValue];
+        _viewRegion = MKCoordinateRegionMakeWithDistance(_zoomLocation, 0.3*METERS_PER_MILE, 0.3*METERS_PER_MILE);
+        MKCoordinateRegion adjustedRegion = [_map regionThatFits:_viewRegion];
+        [_map setRegion:adjustedRegion animated:YES];
+        
+    } else {
+        
+        UIImageView *img = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"nomap"]];
+        [img setFrame:_mapImage.frame];
+        [_mapImage addSubview:img];
+        _isMapImageSet = YES;
+        [_map removeFromSuperview];
+        _map = nil;
     }
 }
 

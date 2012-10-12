@@ -26,7 +26,7 @@
 }
 
 - (id)initWithEvent:(models_Event *)event;
-
+- (void)mydealloc;
 - (void)cancelAllRequests;
 
 @end

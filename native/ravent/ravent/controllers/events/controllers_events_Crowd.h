@@ -21,6 +21,7 @@
 
 
 - (id)initWithEid:(NSString *)eid;
+- (void)mydealloc;
 - (NSMutableArray *)getGroupedUsers:(NSArray *)data;
 
 @end

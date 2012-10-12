@@ -137,10 +137,7 @@ static customNavigationController *_ctrl;
             [self.dragViews addObject:_dragView];
             
             [[self.view.subviews objectAtIndex:0] addSubview:_dragView];
-            
-            UITapGestureRecognizer *g = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(taped:)];
-            [g setNumberOfTapsRequired:2];
-            [_dragView addGestureRecognizer:g];
+
         }
 //    }
 }

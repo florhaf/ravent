@@ -83,11 +83,6 @@
     }];
 }
 
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-}
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
@@ -179,20 +174,28 @@
 
 - (void)hideAllModal
 {
-
-    _groupedUsers = nil;
-    _img1 = nil;
-    _img2 = nil;
-    _img3 = nil;
     [self dismissModalViewControllerAnimated:YES];
+    
+    [self performSelector:@selector(mydealloc) withObject:nil afterDelay:0.5];
 }
 
-- (void)dealloc
+- (void)mydealloc
 {
-    _groupedUsers = nil;
+    if (_groupedUsers) {
+        
+        [_groupedUsers removeAllObjects];
+        _groupedUsers = nil;
+    }
+    
     _img1 = nil;
     _img2 = nil;
     _img3 = nil;
+    
+    _eid = nil;
+    
+    self.navigationItem.rightBarButtonItem = nil;
+    
+    [super mydealloc];
 }
 
 @end

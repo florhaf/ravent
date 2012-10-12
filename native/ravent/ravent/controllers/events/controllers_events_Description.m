@@ -151,6 +151,8 @@
 {
     [[ActionDispatcher instance] del:_url];
     
+    self.navigationItem.rightBarButtonItem = nil;
+    
     // ticker dealloc
     _ticker.stop = YES;
     _tickerItems = nil;
