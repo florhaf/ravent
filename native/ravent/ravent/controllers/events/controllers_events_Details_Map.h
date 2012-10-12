@@ -9,28 +9,23 @@
 #import <UIKit/UIKit.h>
 #import "models_Event.h"
 #import <MapKit/MapKit.h>
+#import "controllers_events_Details.h"
 #import "STSegmentedControl.h"
 
 #define METERS_PER_MILE 1609.344
 
 @interface controllers_events_Details_Map : UIViewController<MKMapViewDelegate, MKAnnotation> {
     
-    IBOutlet MKMapView *_map;
+    MKMapView *_map;
     STSegmentedControl *_segmentedControl;
-	NSString *startPoint;
-	NSString *endPoint;
-	NSArray *wayPoints;
 
     models_Event *_event;
+    
+    controllers_events_Details *_parent;
 }
 
-@property (nonatomic, retain) NSString *startPoint;
-@property (nonatomic, retain) NSString *endPoint;
-@property (nonatomic, retain) NSArray *wayPoints;
-
-
-- (id)initWithEvent:(models_Event *)event;
-
+- (id)initWithEvent:(models_Event *)event andParent:(controllers_events_Details *)p;
+- (void)mydealloc;
 - (IBAction)onDirections_Tap:(id)sender;
 
 @end

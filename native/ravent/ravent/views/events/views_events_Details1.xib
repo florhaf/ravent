@@ -46,7 +46,6 @@
 						<string key="NSFrame">{{0, -80}, {320, 340}}</string>
 						<reference key="NSSuperview" ref="408714013"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<object class="NSColor" key="IBUIBackgroundColor" id="674202306">
 							<int key="NSColorSpace">3</int>
@@ -1491,8 +1490,6 @@ AAAAAAAAdGV4dAAAAABDb3B5cmlnaHQgQXBwbGUsIEluYy4sIDIwMDgAA</bytes>
 						<string key="_actRatio3">UIActivityIndicatorView</string>
 						<string key="_actVote">UIActivityIndicatorView</string>
 						<string key="_backButton">UIButton</string>
-						<string key="_borderLeft">UIImageView</string>
-						<string key="_borderRight">UIImageView</string>
 						<string key="_dropagemLabel">UILabel</string>
 						<string key="_featuredIcon">UIImageView</string>
 						<string key="_goodiesIcon">UIImageView</string>
@@ -1506,19 +1503,16 @@ AAAAAAAAdGV4dAAAAABDb3B5cmlnaHQgQXBwbGUsIEluYy4sIDIwMDgAA</bytes>
 						<string key="_headerNameLabel">UILabel</string>
 						<string key="_headerScore">UIView</string>
 						<string key="_headerTimeLabel">UILabel</string>
-						<string key="_headerVoteLabel">UILabel</string>
 						<string key="_labelFemaleRatio">UILabel</string>
 						<string key="_labelMaleRatio">UILabel</string>
 						<string key="_labelTotalAttendings">UILabel</string>
 						<string key="_lightBurst">UIImageView</string>
-						<string key="_map">MKMapView</string>
 						<string key="_mapImage">UIView</string>
 						<string key="_rsvp">UISegmentedControl</string>
 						<string key="_specialLabel">UILabel</string>
 						<string key="_ticker">MKTickerView</string>
 						<string key="_venueCategory">UILabel</string>
 						<string key="_voteLoading">UIView</string>
-						<string key="im">UILabel</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
 						<object class="IBToOneOutletInfo" key="_actRatio1">
@@ -1540,14 +1534,6 @@ AAAAAAAAdGV4dAAAAABDb3B5cmlnaHQgQXBwbGUsIEluYy4sIDIwMDgAA</bytes>
 						<object class="IBToOneOutletInfo" key="_backButton">
 							<string key="name">_backButton</string>
 							<string key="candidateClassName">UIButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="_borderLeft">
-							<string key="name">_borderLeft</string>
-							<string key="candidateClassName">UIImageView</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="_borderRight">
-							<string key="name">_borderRight</string>
-							<string key="candidateClassName">UIImageView</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="_dropagemLabel">
 							<string key="name">_dropagemLabel</string>
@@ -1601,10 +1587,6 @@ AAAAAAAAdGV4dAAAAABDb3B5cmlnaHQgQXBwbGUsIEluYy4sIDIwMDgAA</bytes>
 							<string key="name">_headerTimeLabel</string>
 							<string key="candidateClassName">UILabel</string>
 						</object>
-						<object class="IBToOneOutletInfo" key="_headerVoteLabel">
-							<string key="name">_headerVoteLabel</string>
-							<string key="candidateClassName">UILabel</string>
-						</object>
 						<object class="IBToOneOutletInfo" key="_labelFemaleRatio">
 							<string key="name">_labelFemaleRatio</string>
 							<string key="candidateClassName">UILabel</string>
@@ -1620,10 +1602,6 @@ AAAAAAAAdGV4dAAAAABDb3B5cmlnaHQgQXBwbGUsIEluYy4sIDIwMDgAA</bytes>
 						<object class="IBToOneOutletInfo" key="_lightBurst">
 							<string key="name">_lightBurst</string>
 							<string key="candidateClassName">UIImageView</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="_map">
-							<string key="name">_map</string>
-							<string key="candidateClassName">MKMapView</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="_mapImage">
 							<string key="name">_mapImage</string>
@@ -1648,10 +1626,6 @@ AAAAAAAAdGV4dAAAAABDb3B5cmlnaHQgQXBwbGUsIEluYy4sIDIwMDgAA</bytes>
 						<object class="IBToOneOutletInfo" key="_voteLoading">
 							<string key="name">_voteLoading</string>
 							<string key="candidateClassName">UIView</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="im">
-							<string key="name">im</string>
-							<string key="candidateClassName">UILabel</string>
 						</object>
 					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">

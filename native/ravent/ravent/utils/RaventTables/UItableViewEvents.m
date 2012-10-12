@@ -228,7 +228,7 @@
     UIImage *wli = [UIImage imageNamed:@"watch"];
     
     UIButton *wlb = [UIButton buttonWithType:UIButtonTypeCustom];
-//    [wlb addTarget:[_details.childViewControllers objectAtIndex:0] action:@selector(addToListButton_Tap:) forControlEvents:UIControlEventTouchUpInside];
+    [wlb addTarget:[_details.childViewControllers objectAtIndex:0] action:@selector(addToListButton_Tap:) forControlEvents:UIControlEventTouchUpInside];
     [wlb setImage:wli forState:UIControlStateNormal];
     [wlb setBackgroundImage:wlbg forState:UIControlStateNormal];
     [wlb setFrame:CGRectMake(0, 0, 40, 29)];

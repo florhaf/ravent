@@ -86,7 +86,7 @@ typedef enum {
 
 @property (nonatomic, retain) NSMutableArray *photos;
 
-
+@property (nonatomic, strong) UIView *mapImage;
 @property (nonatomic, strong) NSMutableArray *dragViews;
 @property (nonatomic, strong) NSMutableArray *goodFrames;
 @property (nonatomic, strong) NSMutableArray *badFrames;
@@ -107,6 +107,7 @@ typedef enum {
 - (IBAction)onSpecials_Tap:(id)sender;
 - (IBAction)onGoodies_Tap:(id)sender;
 
+- (void)setMapOnTop;
 - (void)loadPictures;
 
 - (void)onVoteSuccess:(NSString *)response;
