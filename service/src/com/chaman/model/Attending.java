@@ -141,12 +141,19 @@ public class Attending extends Model {
 		
 		//initiate multiquery for FB (one call for multiple queries = optimization)
 		Map<String, String> queries = new HashMap<String, String>();
-		queries.put("invited_rsvp", "SELECT uid FROM event_member WHERE eid = " + eid + " AND rsvp_status = 'attending'");
-		queries.put("invited_info", "SELECT sex FROM user WHERE uid in (select uid from #invited_rsvp)");
+		MultiqueryResults multiqueryResult;
 
-		MultiqueryResults multiqueryResult = client.executeMultiquery(queries, MultiqueryResults.class);
+		try {
+			queries.put("invited_rsvp", "SELECT uid FROM event_member WHERE eid = " + eid + " AND rsvp_status = 'attending'");
+			queries.put("invited_info", "SELECT sex FROM user WHERE uid in (select uid from #invited_rsvp)");
+			multiqueryResult = client.executeMultiquery(queries, MultiqueryResults.class);
+		} catch (Exception ex){
+			queries.put("invited_rsvp", "SELECT uid FROM event_member WHERE eid = " + eid + " AND rsvp_status = 'attending'");
+			queries.put("invited_info", "SELECT sex FROM user WHERE uid in (select uid from #invited_rsvp)");
+			multiqueryResult = client.executeMultiquery(queries, MultiqueryResults.class);
+		}
 		
-		if (multiqueryResult == null || multiqueryResult.invited_info.isEmpty()) {
+		if (multiqueryResult == null ||multiqueryResult.invited_info == null || multiqueryResult.invited_info.isEmpty()) {
 			return null;
 		}
 		
@@ -156,12 +163,14 @@ public class Attending extends Model {
 			
 			event.eid = eid_long;
 			
-			if (a.sex.equals("male")) {
-				male++;
-			} else if (a.sex.equals("female")) {
-				female++;
+			if (a.sex != null) {
+				if (a.sex.equals("male")) {
+					male++;
+				} else if (a.sex.equals("female")) {
+					female++;
+				}
 			}
-	
+			
 			nb_attending++;
 		}
 		
