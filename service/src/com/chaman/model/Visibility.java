@@ -2,11 +2,7 @@ package com.chaman.model;
 
 import java.util.ArrayList;
 
-import twitter4j.Twitter;
-import twitter4j.TwitterFactory;
-import twitter4j.conf.ConfigurationBuilder;
-
-public class Visibility {
+public class Visibility extends Model  {
 
 	int event_list_size;
 	int NbVote;
@@ -29,10 +25,11 @@ public class Visibility {
 				
 				this.event_list_size = list.size();
 				
-				for (int i = 0; i < list.size(); i++) {
-					try {
+				for (int i = 0; i < this.event_list_size; i++) {
 					
-						Event event = (Event) list.get(i);
+					Event event = (Event) list.get(i);
+					
+					try {
 						
 						if (event.score < min_score) {
 							
@@ -46,7 +43,7 @@ public class Visibility {
 								
 								Vote v = new Vote(accessToken, uid, String.valueOf(event.eid), "1", true, "Dropped a gem to up-vote this event");
 								if (v.nb_vote == 1) {
-									
+				
 									this.NbVote++;
 									/*
 									ConfigurationBuilder cb = new ConfigurationBuilder();
@@ -64,17 +61,17 @@ public class Visibility {
 								}
 							}
 						}
-					} catch (Exception ex) {continue;}
+					} catch (Exception ex) {log.severe( event.eid + ": " + ex.toString()); continue;}
 				}
 			}
 			
-			if (this.NbVote == 0 && retry) {
+			if (this.NbVote < max_post && retry) {
 				
-				new Visibility(uid, accessToken, latitude,longitude, max_post, min_score, 120, false, city);
+				new Visibility(uid, accessToken, latitude,longitude, max_post, min_score, 168, false, city);
 			}
 			
 		} catch (Exception ex) {
-			
+			log.severe("Visibility: " + ex.toString());
 			new Visibility(uid, accessToken, latitude,longitude, max_post, min_score, 96, false, city);
 		}
 	}

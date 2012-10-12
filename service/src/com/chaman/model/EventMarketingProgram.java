@@ -62,7 +62,7 @@ public class EventMarketingProgram extends Model {
 	
     public static ArrayList<Model> PutEventMarketingProgram(String userID, String accessToken, long eid, String features, String title, String terms, String ticket_link, String timeZone) {
     
-    	String message = (title != null && !title.isEmpty() ? "| Drop Gems to unlock the goodies" + ((features != null && !features.isEmpty()) && features.contains("RAF") ? " and raffles: " : ": ") + title : "") + (ticket_link != null && !ticket_link.isEmpty() ? " | Tickets available on Gemster" : "|");
+    	String message = (title != null && !title.isEmpty() ? "| Drop Gems to unlock the goodies" + ((features != null && !features.isEmpty()) && features.contains("RAF") ? " and raffles: " : ": ") + title : "") + (ticket_link != null && !ticket_link.isEmpty() ? " | Tickets available on Gemster |" : "|");
     	
     	//get event from DS (before)
     	Event e = Event.getSingle(accessToken, String.valueOf(eid), timeZone, null, null, null, null);
