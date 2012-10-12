@@ -74,7 +74,7 @@ public class Friend extends Model{
 			List<Friend> friends 	= client.executeQuery(query, Friend.class);
 			return friends;
 		} catch (Exception ex ) {
-			log.severe("Friend Get cron" + ex.toString());
+			//log.severe("Friend Get cron" + ex.toString());
 			String query 			= "SELECT uid FROM user WHERE uid IN (SELECT uid2 FROM friend WHERE uid1 = " + userID + " LIMIT 400) OR uid = " + userID;
 			List<Friend> friends 	= client.executeQuery(query, Friend.class);
 			return friends;

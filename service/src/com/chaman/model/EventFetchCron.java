@@ -122,15 +122,15 @@ public class EventFetchCron extends Model implements Runnable {
 
 									asyncCache.put(e_cache.eid, e_cache, null); // Add cache Event to cache -> more recent date
 								}
-							} catch (Exception ex ) {log.severe("Event loop " + ex.toString());}
+							} catch (Exception ex ) {/*log.severe("Event loop " + ex.toString());*/}
 						}
-					} catch (Exception ex ) {log.severe("Get Events for friend of " + u.uid + "-" + l.uid + " " + ex.toString());}
+					} catch (Exception ex ) {/*log.severe("Get Events for friend of " + u.uid + "-" + l.uid + " " + ex.toString());*/}
 				}		
-			} catch (Exception ex) {log.severe("Get friends list " + ex.toString());}
+			} catch (Exception ex) {/*log.severe("Get friends list " + ex.toString());*/}
 
 		} catch (Exception ex){
 
-			log.severe("run " + ex.toString());
+			//log.severe("run " + ex.toString());
 		}finally {
 
 			tm.threadIsDone(Thread.currentThread());
