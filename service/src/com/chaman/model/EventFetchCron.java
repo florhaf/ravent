@@ -124,7 +124,7 @@ public class EventFetchCron extends Model implements Runnable {
 								}
 							} catch (Exception ex ) {/*log.severe("Event loop " + ex.toString());*/}
 						}
-					} catch (Exception ex ) {/*log.severe("Get Events for friend of " + u.uid + "-" + l.uid + " " + ex.toString());*/}
+					} catch (Exception ex ) {log.severe("Get Events for friend of " + u.uid + "-" + l.uid + " " + ex.toString()); wait(600001); }
 				}		
 			} catch (Exception ex) {/*log.severe("Get friends list " + ex.toString());*/}
 

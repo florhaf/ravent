@@ -3,7 +3,7 @@
   <cron>
     <url>/eventbackends?options=fetch</url>
     <description>Fetch and cache events</description>
-    <schedule>every day 11:22</schedule>
+    <schedule>every day 16:45</schedule>
     <timezone>America/New_York</timezone>
     <target>eventbackend</target>
   </cron>
