@@ -588,9 +588,6 @@ static int _retryCounter;
             
             [self.view addSubview:_dragView];
             
-            UITapGestureRecognizer *g = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(taped:)];
-            [g setNumberOfTapsRequired:2];
-            [_dragView addGestureRecognizer:g];
         }
     }
 }
