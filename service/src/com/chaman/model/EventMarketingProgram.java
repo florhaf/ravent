@@ -10,6 +10,7 @@ import com.beoui.geocell.model.Point;
 import com.chaman.dao.Dao;
 import com.google.appengine.api.memcache.MemcacheService;
 import com.google.appengine.api.memcache.MemcacheServiceFactory;
+import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Unindexed;
 import com.restfb.DefaultFacebookClient;
@@ -23,6 +24,16 @@ import com.restfb.types.FacebookType;
 @Entity
 public class EventMarketingProgram extends Model {
 
+	static {
+		try {
+
+			ObjectifyService.register(EventMarketingProgram.class);
+		} catch (Exception ex) {
+			
+			//System.out.println(ex.toString());
+		}
+	}
+	
 	@Id
 	long eid;
 	@Unindexed

@@ -143,8 +143,6 @@ public class Event extends Model implements Serializable, Runnable {
 		List<EventLocationCapable> l = EventTools.proximityFetch(searchLat, searchLon, ofySearch, searchRadius, searchLimit);
 
 		if (l != null && !l.isEmpty()) {
-
-			log.severe("After proxy fetch: " + l.size());
 			
 			MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
 			
@@ -164,16 +162,10 @@ public class Event extends Model implements Serializable, Runnable {
 			else
 				result = e.tm.Process(q, 30000);
 			
-			log.severe("After run: " + result.size());
-			
 			Collections.sort(result, new EventComparator());
-			
-			log.severe("After sort: " + result.size());
 			
 			try {
 				result = EventTools.removeDuplicates(result);
-				
-				log.severe("After remove duplicate: " + result.size());
 				
 			} catch (Exception ex) {
 				log.severe("ERROR IN remove duplicates");
