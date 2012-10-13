@@ -143,6 +143,8 @@ public class Event extends Model implements Serializable, Runnable {
 		List<EventLocationCapable> l = EventTools.proximityFetch(searchLat, searchLon, ofySearch, searchRadius, searchLimit);
 
 		if (l != null && !l.isEmpty()) {
+
+			log.severe("After proxy fetch: " + l.size());
 			
 			MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
 			
@@ -157,11 +159,22 @@ public class Event extends Model implements Serializable, Runnable {
 			Queue<EventLocationCapable> q = new ArrayBlockingQueue<EventLocationCapable>(l.size());
 			q.addAll(l);
 			
-			result = e.tm.Process(q);
+			if (is_chaman != null)
+				result = e.tm.Process(q, 5000);
+			else
+				result = e.tm.Process(q, 30000);
+			
+			log.severe("After run: " + result.size());
 			
 			Collections.sort(result, new EventComparator());
+			
+			log.severe("After sort: " + result.size());
+			
 			try {
 				result = EventTools.removeDuplicates(result);
+				
+				log.severe("After remove duplicate: " + result.size());
+				
 			} catch (Exception ex) {
 				log.severe("ERROR IN remove duplicates");
 			}
@@ -187,20 +200,11 @@ public class Event extends Model implements Serializable, Runnable {
 		
 		EventLocationCapable e = this.tm.getIdForThread(Thread.currentThread());
 		
-		try {
-
-			Dao dao = new Dao();
+		try {		
 			
 			DateTimeZone TZ = DateTimeZone.forOffsetMillis(timeZoneInMinutes*60*1000);
 			DateTime now = DateTime.now(TZ);	
 			long actual_time = now.getMillis() / 1000L;
-			
-			FacebookClient client 	= new DefaultFacebookClient(accessToken);
-			String properties 		= "eid, name, pic_big, start_time, end_time, venue, location, privacy, update_time, all_members_count, timezone, creator";
-		
-			AsyncMemcacheService asyncCache = MemcacheServiceFactory.getAsyncMemcacheService();
-			
-			Event event;
 			
 	    	if (actual_time < e.getTimeStampEnd()) { //if event not in the past
 
@@ -208,15 +212,21 @@ public class Event extends Model implements Serializable, Runnable {
     				return;
     			}
 
-    			event = (Event) map_cache.get(e.getEid());
+				Dao dao = new Dao();
+				
+				FacebookClient client 	= new DefaultFacebookClient(accessToken);
+				String properties 		= "eid, name, pic_big, start_time, end_time, venue, location, privacy, update_time, all_members_count, timezone, creator";
+			
+				AsyncMemcacheService asyncCache = MemcacheServiceFactory.getAsyncMemcacheService();
+				
+				Event event;
+	 			
+	 			event = (Event) map_cache.get(e.getEid());
     							
-    			
     			if (event == null) { // if not in the cache
-            		
-                		
+            				
     				String query 			= "SELECT " + properties + " FROM event WHERE eid = " + e.getEid();
             		List<Event> fbevents 	= client.executeQuery(query, Event.class); //TODO: Use Batch
-            	
             		
             		if (fbevents != null && fbevents.size() > 0) {
         	
@@ -242,11 +252,9 @@ public class Event extends Model implements Serializable, Runnable {
             	if (event != null && (event.venue_category == null || !event.venue_category.equals("city"))) {
             		
         			if (event.Format(timeZoneInMinutes, now, searchTimeFrame, locale, is_chaman)){
-
-        				
+			
             			event.latitude 	= Double.toString(e.getLatitude());
-            			event.longitude = Double.toString(e.getLongitude());
-            			
+            			event.longitude = Double.toString(e.getLongitude());	
             			
               			float distance = Geo.Fence(userLatitude, userLongitude, event.latitude, event.longitude);
 
@@ -260,10 +268,8 @@ public class Event extends Model implements Serializable, Runnable {
         			}
             	} 
             	
-	    	} else {
-	    		
-	    		//dao.ofy().delete(e); //clean the datastore by removing old events TODO: call a task doesn't have to be deleted right away
 	    	}
+	    	
 		} catch (Exception ex) {
 			
 			log.severe(e.getEid() + ": " + ex.toString());
@@ -272,7 +278,6 @@ public class Event extends Model implements Serializable, Runnable {
 			tm.threadIsDone(Thread.currentThread());
 		}
 }
-
 
 	public static void DeleteCron() throws FacebookException {
 		
@@ -284,6 +289,9 @@ public class Event extends Model implements Serializable, Runnable {
 		Dao dao = new Dao();
 		Query<EventLocationCapable> qELC = dao.ofy().query(EventLocationCapable.class);
 		qELC.filter("timeStampEnd <", snow_minus_1day);
+		
+		log.severe("Nb Deleted: " + qELC.count());
+		
 		dao.ofy().delete(qELC.fetchKeys());
 	}
 	

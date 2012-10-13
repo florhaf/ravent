@@ -42,7 +42,7 @@ public class MyThreadManager<K> {
 		}
 	}
 	
-	public List<Model> Process(Queue<K> queue) {
+	public List<Model> Process(Queue<K> queue, long millis) {
 		
 		do {
 			
@@ -74,7 +74,7 @@ public class MyThreadManager<K> {
 			
 		} while ((queue.size() > 1 || 											// stuff to process
 				CRT_NUMBER_OF_THREAD_RUNNING > 0) &&
-				ApiProxy.getCurrentEnvironment().getRemainingMillis() > 30);	// time remaining before time out
+				ApiProxy.getCurrentEnvironment().getRemainingMillis() > millis);	// time remaining before time out
 		
 		//this.killAllThread();
 		

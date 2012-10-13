@@ -217,7 +217,7 @@ public class User extends Model implements Serializable, Runnable {
 		Queue<User> q = new ArrayBlockingQueue<User>(dbUsers.size());
 		q.addAll(dbUsers);
 		
-		result = u.tm.Process(q);
+		result = u.tm.Process(q, 30000);
 		
 		return (ArrayList<Model>)result;
 	}

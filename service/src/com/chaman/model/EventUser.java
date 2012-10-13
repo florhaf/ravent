@@ -78,7 +78,7 @@ public class EventUser extends Model implements Runnable {
 			Queue<Event> q = new ArrayBlockingQueue<Event>(fbevents.size());
 			q.addAll(fbevents);
 			
-			result = eu.tm.Process(q);
+			result = eu.tm.Process(q, 30000);
 		}
 
 		return (ArrayList<Model>) result;

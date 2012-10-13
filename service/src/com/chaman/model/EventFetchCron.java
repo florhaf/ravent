@@ -41,7 +41,7 @@ public class EventFetchCron extends Model implements Runnable {
 		Queue<User> q = new ArrayBlockingQueue<User>(users_count);
 		q.addAll(quser.list());
 		
-		efc.tm.Process(q);
+		efc.tm.Process(q, 30000);
 		
 	}	
 

@@ -25,7 +25,7 @@ public class Visibility extends Model  {
 				
 				this.event_list_size = list.size();
 				
-				for (int i = 0; i < this.event_list_size; i++) {
+				for (int i = this.event_list_size - 1; i >= 0; i--) {
 					
 					Event event = (Event) list.get(i);
 					
