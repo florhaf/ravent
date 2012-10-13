@@ -286,6 +286,30 @@ public class User extends Model implements Serializable, Runnable {
 		}
 	}
 	
+	
+	public static void login(String userid, String accessToken) {
+		
+		try {
+			
+			//FacebookClient client		= new DefaultFacebookClient(accessToken);
+			
+			Dao dao = new Dao();
+		    MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
+		    User user = (User) syncCache.get(Long.parseLong(userid)); // read from cache
+		    if (user == null) {
+		    	  user = dao.ofy().find(User.class, Long.parseLong(userid));
+		      }
+		    
+		    // first time the User uses the app
+		    if (user == null ) {
+		    	dao.ofy().put(new User(accessToken, userid));
+		    	//client.publish(userid + "/feed", FacebookType.class, Parameter.with("message", "Started using Gemster"), Parameter.with("link", "http://www.gemsterapp.com/"),
+		    	//		Parameter.with("name", "Check it out"), Parameter.with("picture", "http://gemsterapp.com/img/app_icon.png"));
+		    }
+		} catch (Exception ex) {log.severe(ex.toString());}
+	}
+	
+	
 	public static User getUserByUID(long uid, ArrayList<User> users) {
 		
 		User result = null;

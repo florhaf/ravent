@@ -6,6 +6,7 @@ import org.restlet.resource.Get;
 import org.restlet.resource.ServerResource;
 
 import com.chaman.model.Promoter;
+import com.chaman.model.User;
 
 
 public class Login extends ServerResource {
@@ -21,11 +22,12 @@ public class Login extends ServerResource {
 			
 			String accessToken	= getQuery().getValues("access_token");
 			String userID 		= getQuery().getValues("userID");
-			String appuser		= getQuery().getValues("appuser");
-			String isPromoter		= getQuery().getValues("isPromoter");
+			String isPromoter	= getQuery().getValues("isPromoter");
 			
 			if (isPromoter != null && !isPromoter.isEmpty())
 				Promoter.Put(userID, userID, null, null, null);
+			else
+				User.login(userID, accessToken);
 						
 			result.setSuccess(true);
 			result.setRecords(null);

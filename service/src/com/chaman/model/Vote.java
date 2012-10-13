@@ -83,7 +83,7 @@ public class Vote extends Model implements Serializable  {
     		try {
         		client.publish(eventid + "/feed", FacebookType.class, Parameter.with("message", message), Parameter.with("link", "http://gemsterapp.com/facebook/event_page.php?eid=" + eventid),
         				Parameter.with("name", "See more"), Parameter.with("picture", "http://gemsterapp.com/img/app_icon.png"));
-        	} catch (Exception ex) {log.severe(ex.toString());}
+        	} catch (Exception ex) {}
     		
     		if (!visibility) {
     			new VoteDetails(eventid, userid);

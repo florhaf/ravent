@@ -11,7 +11,6 @@ import com.google.appengine.api.memcache.MemcacheServiceFactory;
 import com.restfb.DefaultFacebookClient;
 import com.restfb.Facebook;
 import com.restfb.FacebookClient;
-import com.restfb.Parameter;
 import com.restfb.exception.FacebookException;
 import com.restfb.types.FacebookType;
 
@@ -235,8 +234,6 @@ public class Attending extends Model {
 		    // first time the User uses the app // TODO will need togo to a specific call in the future
 		    if (user == null ) {
 		    	dao.ofy().put(new User(accessToken, userid));
-		    	client.publish(userid + "/feed", FacebookType.class, Parameter.with("message", "Started using Gemster"), Parameter.with("link", "http://www.gemsterapp.com/"),
-		    			Parameter.with("name", "Check it out"), Parameter.with("picture", "http://gemsterapp.com/img/app_icon.png"));
 		    }
 		} catch (Exception ex) {}
 
