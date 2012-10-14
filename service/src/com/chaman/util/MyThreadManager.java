@@ -128,6 +128,8 @@ public class MyThreadManager<K> {
 			
 			threadPool.remove(oldt);
 			
+			System.gc();
+			
 			Thread newt = f.newThread(r);
 			
 			threadPool.put(newt, null);

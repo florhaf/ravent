@@ -8,7 +8,7 @@
     <target>eventbackend</target>
   </cron>
     <cron>
-    <url>/eventbackends?options=delete</url>
+    <url>/eventdelete?options=delete</url>
     <description>Delete past events</description>
     <schedule>every 1 hours synchronized</schedule>
     <timezone>America/New_York</timezone>

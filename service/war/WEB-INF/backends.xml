@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <backends>
 	<backend name="eventbackend">
+		<class>B2</class>
+   		<instances>1</instances>
+ 		<options>
+  			<dynamic>true</dynamic>
+   		</options>
+ 	</backend>
+ 	
+ 	<backend name="eventdelete">
 		<class>B1</class>
-   		<instances>2</instances>
+   		<instances>1</instances>
  		<options>
   			<dynamic>true</dynamic>
    		</options>
