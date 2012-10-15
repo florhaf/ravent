@@ -74,7 +74,7 @@ static models_User *_crtUser = nil;
     [defaults setObject:_picture forKey:@"_picture"];
     [defaults setObject:_accessToken forKey:@"_accessToken"];
     [defaults setObject:[NSNumber numberWithInt:_searchRadius] forKey:@"_searchRadius"];
-    [defaults setObject:[NSNumber numberWithInt:_searchWindow] forKey:@"_searchWindow"];
+    [defaults setObject:[NSNumber numberWithInt:24] forKey:@"_searchWindow"];
     [defaults setObject:[NSNumber numberWithBool:_isTourTaken] forKey:@"_isTourTaken"];
     [defaults synchronize];
 }
@@ -103,7 +103,7 @@ static models_User *_crtUser = nil;
     self.picture = [defaults objectForKey:@"_picture"];
     self.accessToken = [defaults objectForKey:@"_accessToken"];
     self.searchRadius = [((NSNumber *)[defaults objectForKey:@"_searchRadius"]) intValue];
-    self.searchWindow = [((NSNumber *)[defaults objectForKey:@"_searchWindow"]) intValue];
+    self.searchWindow = 24;//[((NSNumber *)[defaults objectForKey:@"_searchWindow"]) intValue];
     self.isTourTaken = [((NSNumber *)[defaults objectForKey:@"_isTourTaken"]) boolValue];
 }
 
@@ -158,7 +158,7 @@ static models_User *_crtUser = nil;
     _crtUser.picture = u.picture;
     _crtUser.latitude = @"";
     _crtUser.longitude = @"";
-    _crtUser.searchWindow = 48;
+    _crtUser.searchWindow = 24;
     _crtUser.searchRadius = 15;
     _crtUser.timeZone = [NSString stringWithFormat:@"%d", [[NSTimeZone localTimeZone] secondsFromGMT] / 60 ];
     _crtUser.accessToken = u.accessToken;
@@ -254,14 +254,25 @@ static models_User *_crtUser = nil;
     [_manager loadObjectsAtResourcePath:resourcePath objectMapping:objectMapping delegate:self]; 
 }
 
+// save user token in DS
+- (void)loginCall
+{
+    NSString *resourcePath = [NSString stringWithFormat:@"login?userID=%@&access_token=%@", self.uid, self.accessToken];
+    
+    if (_manager == nil) {
+        
+        _manager = [RKObjectManager objectManagerWithBaseURL:SERVICE_URL];
+    }
+    
+    [_manager loadObjectsAtResourcePath:resourcePath objectMapping:nil delegate:nil];
+}
+
 - (void)refreshToken
 {
     NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
     [params setValue:_uid forKey:@"userID"];
-    
-
-        [params setValue:_accessToken forKey:@"access_token"];
-        [params setValue:@"yes" forKey:@"appuser"];
+    [params setValue:_accessToken forKey:@"access_token"];
+    [params setValue:@"yes" forKey:@"appuser"];
 
     
     NSString *resourcePath = [@"users" appendQueryParams:params];
@@ -521,7 +532,7 @@ static models_User *_crtUser = nil;
         
         models_User *u = [data objectAtIndex:i];
         
-        u.group = [u.lastName substringToIndex:1];
+        u.group = [u.firstName substringToIndex:1];
         u.group = [NSString stringWithFormat:@"%@%@",[[u.group substringToIndex:1] uppercaseString],[u.group substringFromIndex:1] ];
         
         u.pic_small = [u.picture stringByReplacingOccurrencesOfString:@"_n.jpg" withString:@"_s.jpg"];

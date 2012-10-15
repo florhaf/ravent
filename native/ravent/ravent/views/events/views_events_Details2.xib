@@ -37,7 +37,7 @@
 			</object>
 			<object class="IBUIView" id="220015750">
 				<reference key="NSNextResponder"/>
-				<int key="NSvFlags">274</int>
+				<int key="NSvFlags">258</int>
 				<array class="NSMutableArray" key="NSSubviews">
 					<object class="IBUIView" id="816145128">
 						<reference key="NSNextResponder" ref="220015750"/>
@@ -258,7 +258,7 @@
 					</object>
 					<object class="IBUIButton" id="938181117">
 						<reference key="NSNextResponder" ref="220015750"/>
-						<int key="NSvFlags">308</int>
+						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{161, 360}, {148, 39}}</string>
 						<reference key="NSSuperview" ref="220015750"/>
 						<reference key="NSWindow"/>
@@ -291,7 +291,7 @@
 					</object>
 					<object class="IBUIButton" id="958766792">
 						<reference key="NSNextResponder" ref="220015750"/>
-						<int key="NSvFlags">308</int>
+						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{11, 360}, {148, 39}}</string>
 						<reference key="NSSuperview" ref="220015750"/>
 						<reference key="NSWindow"/>
@@ -583,7 +583,7 @@ AAAAAAAAdGV4dAAAAABDb3B5cmlnaHQgQXBwbGUsIEluYy4sIDIwMDgAA</bytes>
 					</object>
 					<object class="IBUIScrollView" id="1028502484">
 						<reference key="NSNextResponder" ref="220015750"/>
-						<int key="NSvFlags">268</int>
+						<int key="NSvFlags">260</int>
 						<string key="NSFrame">{{0, 143}, {320, 31}}</string>
 						<reference key="NSSuperview" ref="220015750"/>
 						<reference key="NSWindow"/>
@@ -1021,6 +1021,14 @@ AAAAAAAAdGV4dAAAAABDb3B5cmlnaHQgQXBwbGUsIEluYy4sIDIwMDgAA</bytes>
 					<int key="connectionID">74</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">_googleBranding</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="626598120"/>
+					</object>
+					<int key="connectionID">78</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">snap_Tap:</string>
 						<reference key="source" ref="958766792"/>
@@ -1382,7 +1390,7 @@ AAAAAAAAdGV4dAAAAABDb3B5cmlnaHQgQXBwbGUsIEluYy4sIDIwMDgAA</bytes>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">77</int>
+			<int key="maxID">78</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1534,6 +1542,7 @@ AAAAAAAAdGV4dAAAAABDb3B5cmlnaHQgQXBwbGUsIEluYy4sIDIwMDgAA</bytes>
 						<string key="_dropagemLabel">UILabel</string>
 						<string key="_featuredIcon">UIImageView</string>
 						<string key="_goodiesIcon">UIImageView</string>
+						<string key="_googleBranding">UIImageView</string>
 						<string key="_header">UIView</string>
 						<string key="_headerAddButton">UIButton</string>
 						<string key="_headerDateLabel">UILabel</string>
@@ -1586,6 +1595,10 @@ AAAAAAAAdGV4dAAAAABDb3B5cmlnaHQgQXBwbGUsIEluYy4sIDIwMDgAA</bytes>
 						</object>
 						<object class="IBToOneOutletInfo" key="_goodiesIcon">
 							<string key="name">_goodiesIcon</string>
+							<string key="candidateClassName">UIImageView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="_googleBranding">
+							<string key="name">_googleBranding</string>
 							<string key="candidateClassName">UIImageView</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="_header">

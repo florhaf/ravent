@@ -4,6 +4,7 @@
 #import "ActionDispatcher.h"
 #import "GANTracker.h"
 #import "controllers_FeatureYourEvent.h"
+#import "utils.h"
 
 @implementation controllers_Login
 
@@ -147,6 +148,11 @@ static controllers_Login *_ctrl;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    if ([utils isIphone5]) {
+        
+        _bg.frame = CGRectMake(0, 0, 320, 548);
+    }
     
     AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     
@@ -310,13 +316,8 @@ static controllers_Login *_ctrl;
         [models_User crtUser].firstName = [result objectForKey:@"first_name"];
         [models_User crtUser].lastName = [result objectForKey:@"last_name"];
         [models_User crtUser].picture = [result objectForKey:@"pic"];
-        [models_User crtUser].searchWindow = 48;
-        [models_User crtUser].searchRadius = 15;
-        
-        
         
         [[models_User crtUser] saveToNSUserDefaults];
-        
         
         NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
         
@@ -329,6 +330,8 @@ static controllers_Login *_ctrl;
         [self performSelector:@selector(onFacebookLogin) withObject:nil afterDelay:1];
         
         [self trackPageView:@"login" forEvent:nil];
+        
+        [[models_User crtUser] loginCall];
        
     } else {
         
@@ -423,7 +426,7 @@ static controllers_Login *_ctrl;
     [_spinner stopAnimating];
     
     // pre load web page
-    [controllers_FeatureYourEvent instance];
+    //[controllers_FeatureYourEvent instance];
 }
 
 - (void)moveNameUp

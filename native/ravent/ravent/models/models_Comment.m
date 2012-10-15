@@ -127,8 +127,8 @@
     
     // Let's examine the RKRequestSerializable info...
     //NSLog(@"RKParams HTTPHeaderValueForContentType = %@", [rkparams HTTPBodyStream]);
-    NSLog(@"RKParams HTTPHeaderValueForContentType = %@", [rkparams HTTPHeaderValueForContentType]);
-    NSLog(@"RKParams HTTPHeaderValueForContentLength = %d", [rkparams HTTPHeaderValueForContentLength]);
+//    NSLog(@"RKParams HTTPHeaderValueForContentType = %@", [rkparams HTTPHeaderValueForContentType]);
+//    NSLog(@"RKParams HTTPHeaderValueForContentLength = %d", [rkparams HTTPHeaderValueForContentLength]);
     
     if (imageData != nil) {
         

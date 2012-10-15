@@ -14,7 +14,7 @@
 #import "Store.h"
 #import "YRDropdownView.h"
 #import "controllers_App.h"
-
+#import "utils.h"
 
 @implementation controllers_watchlist_Container
 
@@ -56,11 +56,11 @@ static customNavigationController *_ctrl;
     
     
     // shadows
-    UIImageView *ivright = [[UIImageView alloc] initWithFrame:CGRectMake(320, 0, 40, 460)];
+    UIImageView *ivright = [[UIImageView alloc] initWithFrame:CGRectMake(320, 0, 40, [utils isIphone5] ? 460 + 88 : 460)];
     [ivright setImage:[UIImage imageNamed:@"shadowRight"]];
     [self.slidingViewController.topViewController.view addSubview:ivright];
     
-    UIImageView *ivleft = [[UIImageView alloc] initWithFrame:CGRectMake(-40, 0, 40, 460)];
+    UIImageView *ivleft = [[UIImageView alloc] initWithFrame:CGRectMake(-40, 0, 40, [utils isIphone5] ? 460 + 88 : 460)];
     [ivleft setImage:[UIImage imageNamed:@"shadowLeft"]];
     [self.slidingViewController.topViewController.view addSubview:ivleft];
     

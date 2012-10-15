@@ -81,6 +81,14 @@
     [_spinner startAnimating];
 }
 
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    
+    // should be on back tap!!!
+    //[self mydealloc];
+}
+
 - (IBAction)onCommentTap:(id)sender
 {
     postController *post = [[postController alloc] initWithNibName:@"views_Post" bundle:nil];
@@ -135,8 +143,6 @@
 
 - (void)mydealloc
 {
-    NSLog(@"friend details dealloc NOT CHECKED");
-    
     _detailsView = nil;
     _nameLabel = nil;
     _followingLabel = nil;
@@ -144,6 +150,11 @@
     _eventsLabel = nil;
     _userImage = nil;
     _fbButton = nil;
+    _footerView = nil;
+    _footerSpinner = nil;
+    _footerLabel = nil;
+    
+    [super mydealloc];
 }
 
 @end

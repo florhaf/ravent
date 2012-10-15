@@ -22,6 +22,8 @@
     models_Event *_event;
     
     controllers_events_Details *_parent;
+    
+    IBOutlet UIImageView *_googleBranding;
 }
 
 - (id)initWithEvent:(models_Event *)event andParent:(controllers_events_Details *)p;

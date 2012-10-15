@@ -49,18 +49,18 @@ Ext.application({
                 xtype : 'button',
                     margin: '-50px auto 0 auto',
                 ui : 'confirm',
-                text : (Ext.os.is.ios) ? 'Get the app' : 'Gemster is only available for iOS only',
-                disabled : !(Ext.os.is.ios),
+                text : /*(Ext.os.is.ios) ? */'Get the app' /*: 'Gemster is only available for iOS only'*/,
+                //disabled : !(Ext.os.is.ios),
                 width : '300px',
-                listeners : {
-                    tap : function() {
-
-                        window.location = 'http://itunes.apple.com/us/app/gemster/id553371725?ls=1&mt=8';
-                    }
-                }
-//                html : (Ext.os.is.ios) ?
-//                    '<a href="itms-services://?action=download-manifest&url=http://beta.gemsterapp.com/Gemster.plist">Get the app</a>' :
-//                    '<div style="color: #a9a9a9; text-align: center; width: 100%;">Gemster is only available on iOS, for now...</div>'
+//                listeners : {
+//                    tap : function() {
+//
+//                        window.location = 'http://itunes.apple.com/us/app/gemster/id553371725?ls=1&mt=8';
+//                    }
+//                }
+                html : //(Ext.os.is.ios) ?
+                    '<a href="itms-services://?action=download-manifest&url=http://gemsterapp.com/Gemster.plist" style="color: white; text-decoration: none;">Get the app</a>' //:
+                    //'<div style="color: #a9a9a9; text-align: center; width: 100%;">Gemster is only available on iOS, for now...</div>'
             },{
                 html : '<br />'
             },{

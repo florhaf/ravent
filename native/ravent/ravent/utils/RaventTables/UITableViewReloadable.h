@@ -75,6 +75,7 @@ typedef void (^success)();
 
 - (void)cancelAllRequests;
 
+
 - (void)mydealloc;
 
 @end

@@ -24,6 +24,7 @@
     IBOutlet UITableView *_tableOptions;
     IBOutlet UIButton *_buttonChangeLocation;
     IBOutlet UIImageView *_overlay;
+    IBOutlet UIImageView *_googleBranding;
     
     models_User *_user;
     MKCircleView *_overlayView;

@@ -45,6 +45,9 @@ static controllers_friends_All *_ctrl;
 {
     [MBProgressHUD hideHUDForView:self.view animated:YES];
     
+    [_spinner stopAnimating];
+    _footerLabel.text =@"";
+    
     if (notification != nil) {
         
         _following = [[NSMutableDictionary alloc] initWithDictionary:[notification userInfo]];   

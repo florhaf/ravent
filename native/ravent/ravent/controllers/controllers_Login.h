@@ -21,6 +21,8 @@ FBSessionDelegate>{
     IBOutlet UIActivityIndicatorView *_spinner;
     IBOutlet UILabel *_errorLabel;
     
+    IBOutlet UIImageView *_bg;
+    
     NSTimer *_loginTimer;
     
     models_User *_user;

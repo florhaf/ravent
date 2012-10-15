@@ -12,6 +12,7 @@
 #import "models_User.h"
 #import "GANTracker.h"
 #import "MapSingleton.h"
+#import "utils.h"
 
 @implementation controllers_events_Details_Map
 
@@ -66,6 +67,14 @@
 {
     [super viewDidLoad];
     
+    NSString *reqSysVer = @"6.0";
+    NSString *currSysVer = [[UIDevice currentDevice] systemVersion];
+    
+    if ([currSysVer compare:reqSysVer options:NSNumericSearch] != NSOrderedAscending)
+    {
+        [_googleBranding removeFromSuperview];
+    }
+    
     UIImage *donei = [UIImage imageNamed:@"doneButton"];
     UIButton *doneb = [UIButton buttonWithType:UIButtonTypeCustom];
     [doneb addTarget:self action:@selector(hideAllModal) forControlEvents:UIControlEventTouchUpInside];
@@ -77,7 +86,7 @@
     _map = [MapSingleton instance].map;
     _map.scrollEnabled = YES;
     _map.zoomEnabled = YES;
-    [_map setFrame:CGRectMake(0, 0, 320, 416)];
+    [_map setFrame:CGRectMake(0, 0, 320, [utils isIphone5] ? 416 + 88 : 416)];
     [self.view addSubview:_map];
     [self.view sendSubviewToBack:_map];
     
@@ -93,7 +102,7 @@
 {
     NSString *slat = _event.latitude;
     NSString *slon = _event.longitude;
-    NSString *sAddr = @"http://maps.google.com/maps?saddr=Current%20Location&daddr";
+    NSString *sAddr = [utils isIphone5] ? @"http://maps.apple.com/maps?daddr" : @"http://maps.google.com/maps?saddr=Current%20Location&daddr";
     NSString *sUrl = [NSString stringWithFormat:@"%@=%@,%@", sAddr, slat, slon];
     
     NSURL *uUrl = [NSURL URLWithString:sUrl];
@@ -121,7 +130,7 @@
     [_map removeFromSuperview];
     _map = nil;
     [_parent setMapOnTop];
-    
+    _googleBranding = nil;
     _parent = nil;
     _segmentedControl = nil;
 

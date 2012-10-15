@@ -44,4 +44,10 @@
     return buttonItem;
 }
 
++ (BOOL)isIphone5
+{
+    CGRect screenBounds = [[UIScreen mainScreen] bounds];
+    return (screenBounds.size.height == 568);
+}
+
 @end
