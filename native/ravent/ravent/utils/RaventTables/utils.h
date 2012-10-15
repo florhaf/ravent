@@ -12,5 +12,6 @@
 
 + (UIBarButtonItem *)createSquareBarButtonItemWithTitle:(NSString *)t imageNamed:(NSString *)img imageSelectedNamed:(NSString *)imgSelected target:(id)tgt action:(SEL)a;
 + (BOOL)isIphone5;
++ (int)getIOSVersion;
 
 @end
