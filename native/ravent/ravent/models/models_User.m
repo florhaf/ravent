@@ -532,7 +532,7 @@ static models_User *_crtUser = nil;
         
         models_User *u = [data objectAtIndex:i];
         
-        u.group = [u.lastName substringToIndex:1];
+        u.group = [u.firstName substringToIndex:1];
         u.group = [NSString stringWithFormat:@"%@%@",[[u.group substringToIndex:1] uppercaseString],[u.group substringFromIndex:1] ];
         
         u.pic_small = [u.picture stringByReplacingOccurrencesOfString:@"_n.jpg" withString:@"_s.jpg"];

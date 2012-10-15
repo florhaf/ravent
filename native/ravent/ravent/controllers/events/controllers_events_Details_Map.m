@@ -102,7 +102,7 @@
 {
     NSString *slat = _event.latitude;
     NSString *slon = _event.longitude;
-    NSString *sAddr = @"http://maps.apple.com/maps?daddr";
+    NSString *sAddr = [utils isIphone5] ? @"http://maps.apple.com/maps?daddr" : @"http://maps.google.com/maps?saddr=Current%20Location&daddr";
     NSString *sUrl = [NSString stringWithFormat:@"%@=%@,%@", sAddr, slat, slon];
     
     NSURL *uUrl = [NSURL URLWithString:sUrl];

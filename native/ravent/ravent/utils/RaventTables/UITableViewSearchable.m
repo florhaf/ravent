@@ -82,6 +82,7 @@
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
 {
+    _isSearching = NO;
     [self searchBarTextDidEndEditing:searchBar];
     [searchBar resignFirstResponder];
     
@@ -91,7 +92,7 @@
 - (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
 {
     [searchBar setShowsCancelButton:NO animated:YES];    
-    _isSearching = NO;
+    //_isSearching = NO;
 }
 
 #pragma mark -
