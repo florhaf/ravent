@@ -17,6 +17,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "GANTracker.h"
 #import "controllers_TakeTheTour.h"
+#import "utils.h"
 
 @implementation controllers_events_Events
 
@@ -103,11 +104,11 @@ static customNavigationController *_ctrl;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectFirstNonEmptyList) name:@"onLoadEventsP2P" object:[controllers_events_List_p2p instance]];
     
     // shadows
-    UIImageView *ivright = [[UIImageView alloc] initWithFrame:CGRectMake(320, 0, 40, 460)];
+    UIImageView *ivright = [[UIImageView alloc] initWithFrame:CGRectMake(320, 0, 40, [utils isIphone5] ? 460 + 88 : 460)];
     [ivright setImage:[UIImage imageNamed:@"shadowRight"]];
     [self.slidingViewController.topViewController.view addSubview:ivright];
     
-    UIImageView *ivleft = [[UIImageView alloc] initWithFrame:CGRectMake(-40, 0, 40, 460)];
+    UIImageView *ivleft = [[UIImageView alloc] initWithFrame:CGRectMake(-40, 0, 40, [utils isIphone5] ? 460 + 88 : 460)];
     [ivleft setImage:[UIImage imageNamed:@"shadowLeft"]];
     [self.slidingViewController.topViewController.view addSubview:ivleft];
     

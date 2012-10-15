@@ -12,6 +12,7 @@
 #import "models_User.h"
 #import "ActionDispatcher.h"
 #import "UIView+Animation.h"
+#import "utils.h"
 
 @implementation controllers_friends_People
 
@@ -158,7 +159,7 @@ static customNavigationController *_ctrl;
     
     NSArray *objects = [NSArray arrayWithObjects:@"Following", @"Followers", nil];
     _segmentedControl = [[STSegmentedControl alloc] initWithItems:objects];
-	_segmentedControl.frame = CGRectMake(44, 380, 232, 30);
+	_segmentedControl.frame = CGRectMake(44, [utils isIphone5] ? 380 + 88 : 380, 232, 30);
 	_segmentedControl.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     _segmentedControl.selectedSegmentIndex = 0;
     [_segmentedControl addTarget:self action:@selector(onSegmentedControlValueChanged:) forControlEvents:UIControlEventValueChanged];
@@ -166,11 +167,11 @@ static customNavigationController *_ctrl;
     
     
     // shadows
-    UIImageView *ivright = [[UIImageView alloc] initWithFrame:CGRectMake(320, 0, 40, 460)];
+    UIImageView *ivright = [[UIImageView alloc] initWithFrame:CGRectMake(320, 0, 40, [utils isIphone5] ? 460 + 88 : 460)];
     [ivright setImage:[UIImage imageNamed:@"shadowRight"]];
     [self.slidingViewController.topViewController.view addSubview:ivright];
     
-    UIImageView *ivleft = [[UIImageView alloc] initWithFrame:CGRectMake(-40, 0, 40, 460)];
+    UIImageView *ivleft = [[UIImageView alloc] initWithFrame:CGRectMake(-40, 0, 40, [utils isIphone5] ? 460 + 88 : 460)];
     [ivleft setImage:[UIImage imageNamed:@"shadowLeft"]];
     [self.slidingViewController.topViewController.view addSubview:ivleft];
     

@@ -796,6 +796,15 @@ static int _retryCounter;
 
 - (void)setMapOnTop
 {
+    
+    NSString *reqSysVer = @"6.0";
+    NSString *currSysVer = [[UIDevice currentDevice] systemVersion];
+    
+    if ([currSysVer compare:reqSysVer options:NSNumericSearch] != NSOrderedAscending)
+    {
+        [_googleBranding removeFromSuperview];
+    }
+    
     _map = [MapSingleton instance].map;
     [_map setDelegate:self];
     [_map setFrame:CGRectMake(0, 0, 320, 340)];
@@ -865,10 +874,10 @@ static int _retryCounter;
         
         
             double d = [e.female_ratio doubleValue];
-            d = d * 100;
+            d = round(d * 100);
         
-            _labelFemaleRatio.text = [NSString stringWithFormat:@"%.0f%%", (d + 1 <= 100) ? d + 1 : 100 ];
-            _labelMaleRatio.text = [NSString stringWithFormat:@"%.0f%%", (100 - (d + 1) >= 0) ? 100 - (d + 1) : 0];
+            _labelFemaleRatio.text = [NSString stringWithFormat:@"%.0f%%", d];
+            _labelMaleRatio.text = [NSString stringWithFormat:@"%.0f%%", 100 - d];
             _labelTotalAttendings.text = e.nb_attending;
         }
     } else {
@@ -1030,6 +1039,7 @@ static int _retryCounter;
     }
     
     _header = nil;
+    _googleBranding = nil;
     _headerDateLabel = nil;
     _headerGroupLabel = nil;
     _headerNameLabel = nil;

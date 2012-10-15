@@ -144,16 +144,38 @@
     [self performSelector:@selector(updateLoadingMessage3:) withObject:resourcePath afterDelay:5];
 }
 
+// call for watchlist
 - (void)reloadWithParams:(NSMutableDictionary *)params
 {
     NSString *resourcePath = [@"calendar" appendQueryParams:params];
     NSMutableArray *events = [[Store instance] findFutureEvents];
 
+    // no need to call ws if no eids...
+    if ([events count] == 0) {
+        
+        if (_delegate != nil && [_delegate respondsToSelector:_callback]) {
+            
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+            [_delegate performSelector:_callback withObject:nil];
+#pragma clang diagnostic pop
+        }
+        return;
+    }
+    
+    NSString *eids = @"";
+    
     for (int i = 0; i < [events count]; i++) {
         
         models_Event *e = (models_Event *)[events objectAtIndex:i];
         
-        resourcePath = [NSString stringWithFormat:@"%@&eventID=%@", resourcePath, e.eid];
+        if ([eids isEqualToString:@""]) {
+            
+            eids = [NSString stringWithFormat:@"%@", e.eid];
+        } else {
+            
+            eids = [NSString stringWithFormat:@"%@,%@", eids, e.eid];
+        }
     }
     
     RKObjectMapping *objectMapping = [RKObjectMapping mappingForClass:[models_Event class]];
@@ -184,7 +206,16 @@
     }
     
     [_manager.mappingProvider setMapping:objectMapping forKeyPath:@"records"];
-    [_manager loadObjectsAtResourcePath:resourcePath objectMapping:objectMapping delegate:self];
+
+    RKObjectLoader *loader = [[RKObjectLoader alloc] initWithResourcePath:resourcePath objectManager:_manager delegate:self];
+    
+    NSMutableDictionary *bodyparams = [[NSMutableDictionary alloc] init];
+    [bodyparams setObject:eids forKey:@"eid"];
+    
+    loader.params = bodyparams;
+    loader.method = RKRequestMethodPOST;
+    loader.objectMapping = objectMapping;
+    [loader send];
     
     _isRequesting = YES;
     [self performSelector:@selector(updateLoadingMessage3:) withObject:resourcePath afterDelay:5];
@@ -217,7 +248,7 @@
 - (void)loadStatsWithParams:(NSMutableDictionary *)params andTarget:(id)target andSelector:(SEL)success
 {
     NSString *resourcePath = [@"eventstats" appendQueryParams:params];
-    NSLog(resourcePath);
+
     _callbackStatsSuccess = success;
     _senderStats = target;
     
@@ -360,7 +391,7 @@
     
     [self performSelector:@selector(updateLoadingMessage:) withObject:request.resourcePath afterDelay:2];
     
-    if ([request isGET]) {
+    if ([request isGET] || [request isPOST]) {
         
         return;
     }
@@ -428,7 +459,7 @@
             NSMutableArray *array = [[NSMutableArray alloc] init];
             [array addObject:e];
             
-            //group = (group == nil) ? @"?" : group;
+            group = (group == nil) ? @"?" : group;
             
             if (group != nil) {
              

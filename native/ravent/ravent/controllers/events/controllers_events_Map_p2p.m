@@ -117,6 +117,14 @@ static int _retryCounter;
 {
     [super viewDidLoad];
     
+    NSString *reqSysVer = @"6.0";
+    NSString *currSysVer = [[UIDevice currentDevice] systemVersion];
+    
+    if ([currSysVer compare:reqSysVer options:NSNumericSearch] != NSOrderedAscending)
+    {
+        [_googleBranding removeFromSuperview];
+    }
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(startGps) name:ECSlidingViewUnderRightWillAppear object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(stopGps) name:ECSlidingViewTopDidReset object:nil];
     
@@ -391,6 +399,7 @@ static int _retryCounter;
 }
 
 - (void)dealloc {
+    _googleBranding = nil;
     _map = nil;
     _toolbarTop = nil;
     _toolbarBottom = nil;

@@ -233,6 +233,9 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLineEtched;
     
     self.searchDisplayController.searchBar.placeholder = @"Invite a friend";
+    
+    [_spinner stopAnimating];
+    _footerLabel.text =@"";
 
 }
 
@@ -260,7 +263,14 @@
     [[ActionDispatcher instance] execute:@"share" with:_friends];
 }
 
-- (void)dealloc
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    
+    [self mydealloc];
+}
+
+- (void)mydealloc
 {
     _invited = nil;
     

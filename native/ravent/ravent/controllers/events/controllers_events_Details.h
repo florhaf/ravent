@@ -64,6 +64,8 @@ typedef enum {
     IBOutlet UILabel *_dropagemLabel;
     IBOutlet UIImageView *_lightBurst;
     
+    IBOutlet UIImageView *_googleBranding;
+    
     detailsVersion _detailsVersion;
     
     STSegmentedControl *_segment;

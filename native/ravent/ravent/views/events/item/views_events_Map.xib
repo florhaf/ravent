@@ -51,7 +51,7 @@
 					</object>
 					<object class="IBUIImageView" id="370796987">
 						<reference key="NSNextResponder" ref="191373211"/>
-						<int key="NSvFlags">274</int>
+						<int key="NSvFlags">266</int>
 						<string key="NSFrame">{{0, 416}, {320, 44}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
@@ -70,7 +70,7 @@
 					</object>
 					<object class="IBUIButton" id="920050832">
 						<reference key="NSNextResponder" ref="191373211"/>
-						<int key="NSvFlags">292</int>
+						<int key="NSvFlags">268</int>
 						<string key="NSFrame">{{10, 421}, {260, 34}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
@@ -106,7 +106,7 @@
 					</object>
 					<object class="IBUIImageView" id="263314102">
 						<reference key="NSNextResponder" ref="191373211"/>
-						<int key="NSvFlags">-2147483356</int>
+						<int key="NSvFlags">-2147483352</int>
 						<string key="NSFrame">{{60, 152}, {155, 155}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
@@ -179,6 +179,14 @@
 						<reference key="destination" ref="263314102"/>
 					</object>
 					<int key="connectionID">71</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">_googleBranding</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="731810542"/>
+					</object>
+					<int key="connectionID">73</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
@@ -272,7 +280,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">72</int>
+			<int key="maxID">73</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -292,6 +300,7 @@
 					</object>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="_buttonChangeLocation">UIButton</string>
+						<string key="_googleBranding">UIImageView</string>
 						<string key="_map">MKMapView</string>
 						<string key="_overlay">UIImageView</string>
 						<string key="_tableOptions">UITableView</string>
@@ -302,6 +311,10 @@
 						<object class="IBToOneOutletInfo" key="_buttonChangeLocation">
 							<string key="name">_buttonChangeLocation</string>
 							<string key="candidateClassName">UIButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="_googleBranding">
+							<string key="name">_googleBranding</string>
+							<string key="candidateClassName">UIImageView</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="_map">
 							<string key="name">_map</string>

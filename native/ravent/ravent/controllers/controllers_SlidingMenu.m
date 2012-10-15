@@ -17,6 +17,7 @@
 #import "controllers_Login.h"
 #import "JMC.h"
 #import "JMCIssuesViewController.h"
+#import "utils.h"
 
 @implementation controllers_SlidingMenu
 
@@ -42,13 +43,14 @@ static controllers_SlidingMenu *_ctrl;
     
 
     UIImageView *bg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"backgroundDark"]];
+    bg.frame = CGRectMake(0, 0, 320, [utils isIphone5] ? 548 : 460);
     
     UITableView *menuTable = [[UITableView alloc] init];
     menuTable.delegate = self;
     menuTable.dataSource = self;
-    menuTable.frame = CGRectMake(0, 0, 280, 640);
+    menuTable.frame = CGRectMake(0, 0, 280, [utils isIphone5] ? 548 : 460);
     menuTable.backgroundColor = [UIColor clearColor];
-    menuTable.opaque = YES;
+    menuTable.opaque = NO;
     
     [self.view addSubview:bg];
     [self.view addSubview:menuTable];

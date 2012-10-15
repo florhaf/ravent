@@ -9,6 +9,7 @@
 #import "controllers_FeatureYourEvent.h"
 #import "models_User.h"
 #import "GANTracker.h"
+#import "utils.h"
 
 @interface controllers_FeatureYourEvent ()
 
@@ -115,7 +116,7 @@ static customNavigationController *_ctrl;
     self.navigationItem.rightBarButtonItem = refreshButton;
     
     // shadows
-    UIImageView *ivleft = [[UIImageView alloc] initWithFrame:CGRectMake(-40, 0, 40, 460)];
+    UIImageView *ivleft = [[UIImageView alloc] initWithFrame:CGRectMake(-40, 0, 40, [utils isIphone5] ? 460 + 88 : 460)];
     [ivleft setImage:[UIImage imageNamed:@"shadowLeft"]];
     [self.slidingViewController.topViewController.view addSubview:ivleft];
     

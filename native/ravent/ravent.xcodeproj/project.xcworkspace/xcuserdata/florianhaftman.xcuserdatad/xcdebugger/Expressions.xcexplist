@@ -3,13 +3,10 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "-[dataSource eventsFrom:to:]:dataSource.m">
+         contextName = "-[controllers_events_List loadEvents]:controllers_events_List.m">
          <PersistentStrings>
             <PersistentString
-               value = "toDate">
-            </PersistentString>
-            <PersistentString
-               value = "event.dateStart">
+               value = "_user.timeZone">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -87,10 +84,16 @@
          contextName = "-[models_Event objectLoader:didLoadObjects:]:models_Event.m">
          <PersistentStrings>
             <PersistentString
-               value = "objectLoader.response.URL.path">
+               value = "((models_Event *)obj).name">
             </PersistentString>
             <PersistentString
                value = "NSLog(@&quot;%@&quot;, objectLoader.response.URL.path)">
+            </PersistentString>
+            <PersistentString
+               value = "[objects objectAtIndex:0]">
+            </PersistentString>
+            <PersistentString
+               value = "objectLoader.response.URL.path">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -133,15 +136,15 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "-[controllers_events_List onLoadEvents:]:controllers_events_List.m">
-      </ContextState>
-      <ContextState
-         contextName = "-[dataSource markedDatesFrom:to:]:dataSource.m">
+         contextName = "-[MKTickerView reloadData]:MKTickerView.m">
          <PersistentStrings>
             <PersistentString
-               value = "[self eventsFrom:fromDate to:toDate]">
+               value = "counter % itemCount">
             </PersistentString>
          </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[controllers_events_List onLoadEvents:]:controllers_events_List.m">
       </ContextState>
       <ContextState
          contextName = "-[controllers_friends_List onUserLoad:]:controllers_friends_List.m">
@@ -215,10 +218,26 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "-[MKTickerView reloadData]:MKTickerView.m">
+         contextName = "-[dataSource markedDatesFrom:to:]:dataSource.m">
          <PersistentStrings>
             <PersistentString
-               value = "counter % itemCount">
+               value = "[self eventsFrom:fromDate to:toDate]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[models_Event reloadWithParams:]:models_Event.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[UITableViewEvents tableView:cellForRowAtIndexPath:]:UItableViewEvents.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "_data">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -304,10 +323,10 @@
          contextName = "-[controllers_events_Details viewDidLoad]:controllers_events_Details.m">
          <PersistentStrings>
             <PersistentString
-               value = "_headerNameLabel.frame.size.height">
+               value = "NSLog(mapUrl)">
             </PersistentString>
             <PersistentString
-               value = "NSLog(mapUrl)">
+               value = "_headerNameLabel.frame.size.height">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -331,6 +350,17 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "-[models_Event request:didLoadResponse:]:models_Event.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "[response bodyAsString]">
+            </PersistentString>
+            <PersistentString
+               value = "(NSMutableDictionary*)request.params">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "-[Store findEidsForDate:]:Store.m">
          <PersistentStrings>
             <PersistentString
@@ -350,10 +380,10 @@
          contextName = "-[models_User locationManager:didUpdateToLocation:fromLocation:]:models_User.m">
          <PersistentStrings>
             <PersistentString
-               value = "newLocation.horizontalAccuracy">
+               value = "_bestEffortAtLocation.horizontalAccuracy &gt; newLocation.horizontalAccuracy">
             </PersistentString>
             <PersistentString
-               value = "_bestEffortAtLocation.horizontalAccuracy &gt; newLocation.horizontalAccuracy">
+               value = "newLocation.horizontalAccuracy">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -391,10 +421,21 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "-[controllers_events_List loadEvents]:controllers_events_List.m">
+         contextName = "-[UITableViewReloadable getObjForSection:andRow:]:UITableViewReloadable.m">
          <PersistentStrings>
             <PersistentString
-               value = "_user.timeZone">
+               value = "_sortedKeys">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[dataSource eventsFrom:to:]:dataSource.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "toDate">
+            </PersistentString>
+            <PersistentString
+               value = "event.dateStart">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
