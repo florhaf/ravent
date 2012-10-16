@@ -1,6 +1,8 @@
 package com.chaman.model;
 
+import java.io.PrintWriter;
 import java.io.Serializable;
+import java.io.StringWriter;
 import java.lang.reflect.UndeclaredThrowableException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -266,7 +268,12 @@ public class Event extends Model implements Serializable, Runnable {
 		} catch (Exception ex) {
 			if (ex instanceof UndeclaredThrowableException) {
 				UndeclaredThrowableException ut = (UndeclaredThrowableException) ex;
-				log.severe(e.getEid() + ": " + ex.toString() + " UndeclaredThrowableException: " + ut.getUndeclaredThrowable().getMessage() != null ? ut.getUndeclaredThrowable().getMessage(): "");
+				
+				StringWriter sw = new StringWriter();
+				ut.printStackTrace(new PrintWriter(sw));
+				String stackTrace = sw.toString();
+				
+				log.severe(e.getEid() + ": " + ex.toString() + " UndeclaredThrowableException: " + stackTrace);
 			}
 			else {
 				log.severe(e.getEid() + ": " + ex.toString());
