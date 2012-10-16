@@ -63,7 +63,9 @@ public class EventFetchCron extends Model implements Runnable {
 				DateTimeZone PST = DateTimeZone.forID("America/Los_Angeles"); 	
 				DateTime now_plus_1month =  new DateTime(PST).plusDays(45);
 				String snow_plus_1month = String.valueOf(now_plus_1month.getMillis() / 1000L);
-
+				DateTime now_minus1day =  new DateTime(PST).plusDays(-1);
+				String snow_minus1day = String.valueOf(now_minus1day.getMillis() / 1000L);
+				
 				//Get friend list 
 				List<Friend> uidList = Friend.GetCron(u.getAccess_token(), Long.toString(u.getUid()), syncCache);
 
@@ -74,7 +76,7 @@ public class EventFetchCron extends Model implements Runnable {
 
 						FacebookClient client 	= new DefaultFacebookClient(u.getAccess_token());
 						String properties 		= "eid, name, pic_big, start_time, end_time, venue, location, privacy, update_time, all_members_count, timezone, creator";
-						String query 			= "SELECT " + properties + " FROM event WHERE eid IN (SELECT eid FROM event_member WHERE uid = " + l.getUid() + ") AND start_time < " + snow_plus_1month + " AND privacy = 'OPEN'";
+						String query 			= "SELECT " + properties + " FROM event WHERE eid IN (SELECT eid FROM event_member WHERE uid = " + l.getUid() + ") AND start_time < " + snow_plus_1month + " AND start_time > " + snow_minus1day + " AND privacy = 'OPEN'";
 						List<Event> fbevents 	= client.executeQuery(query, Event.class);
 
 						Event e_cache; 
