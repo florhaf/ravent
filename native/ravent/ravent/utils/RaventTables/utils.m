@@ -50,4 +50,11 @@
     return (screenBounds.size.height == 568);
 }
 
++ (int)getIOSVersion
+{
+    NSString *currSysVer = [[UIDevice currentDevice] systemVersion];
+    
+    return [currSysVer intValue];
+}
+
 @end
