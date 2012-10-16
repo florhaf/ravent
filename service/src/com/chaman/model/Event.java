@@ -266,7 +266,7 @@ public class Event extends Model implements Serializable, Runnable {
 		} catch (Exception ex) {
 			if (ex instanceof UndeclaredThrowableException) {
 				UndeclaredThrowableException ut = (UndeclaredThrowableException) ex;
-				log.severe(e.getEid() + ": " + ex.toString() + " UndeclaredThrowableException: " + ut.getUndeclaredThrowable().toString());
+				log.severe(e.getEid() + ": " + ex.toString() + " UndeclaredThrowableException: " + ut.getUndeclaredThrowable().getMessage() != null ? ut.getUndeclaredThrowable().getMessage(): "");
 			}
 			else {
 				log.severe(e.getEid() + ": " + ex.toString());
