@@ -44,6 +44,8 @@ public class MyThreadManager<K> {
 	
 	public List<Model> Process(Queue<K> queue, long millis) {
 		
+		log.severe(" BEFORE - TM: queue.size = " + queue.size() + " CRT = " + CRT_NUMBER_OF_THREAD_RUNNING + "Thread pool size = " + threadPool.size() + " time remaining:" + ApiProxy.getCurrentEnvironment().getRemainingMillis());
+		
 		do {
 			
 			if (CRT_NUMBER_OF_THREAD_RUNNING < MAX_NB_OF_RUNNING_THREAD) {
@@ -75,6 +77,8 @@ public class MyThreadManager<K> {
 		} while ((queue.size() > 1 || 											// stuff to process
 				CRT_NUMBER_OF_THREAD_RUNNING > 0) &&
 				ApiProxy.getCurrentEnvironment().getRemainingMillis() > millis);	// time remaining before time out
+		
+		log.severe(" AFTER - TM: queue.size = " + queue.size() + " CRT = " + CRT_NUMBER_OF_THREAD_RUNNING + "Thread pool size = " + threadPool.size() + " time remaining:" + ApiProxy.getCurrentEnvironment().getRemainingMillis());
 		
 		//this.killAllThread();
 		

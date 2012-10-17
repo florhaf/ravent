@@ -63,7 +63,7 @@ public class EventFetchCron extends Model implements Runnable {
 				DateTimeZone PST = DateTimeZone.forID("America/Los_Angeles"); 	
 				DateTime now_plus_1month =  new DateTime(PST).plusDays(45);
 				String snow_plus_1month = String.valueOf(now_plus_1month.getMillis() / 1000L);
-				DateTime now_minus1day =  new DateTime(PST).plusDays(-1);
+				DateTime now_minus1day =  new DateTime(PST).minusDays(1);
 				String snow_minus1day = String.valueOf(now_minus1day.getMillis() / 1000L);
 				
 				//Get friend list 

@@ -14,6 +14,8 @@ public class OfyEntityLocationCapableRepositorySearchImpl implements
 		LocationCapableRepositorySearch<EventLocationCapable> {
 
 	private Objectify ofy;
+	
+	//now + timeframe
 	private long timeStampLimit;
 	
 	public OfyEntityLocationCapableRepositorySearchImpl(Objectify ofy, String timeZone, int timeFrame) {
@@ -22,10 +24,12 @@ public class OfyEntityLocationCapableRepositorySearchImpl implements
 		
 		int timeZoneInMinutes	= Integer.parseInt(timeZone);		
 		DateTimeZone TZ = DateTimeZone.forOffsetMillis(timeZoneInMinutes*60*1000);
+		
+		// now + timeframe
 		DateTime now = DateTime.now(TZ).plusMinutes(timeFrame * 60);	
-		long timeStampNow = now.getMillis();
-		long timeStampToday = timeStampNow - (timeZoneInMinutes * 60000) - now.getMillisOfDay();
-		timeStampLimit = timeStampToday / 1000L;
+		long timeStampNowTF = now.getMillis();
+		long timeStampTodayTF = timeStampNowTF - (timeZoneInMinutes * 60000) - now.getMillisOfDay();
+		timeStampLimit = timeStampTodayTF / 1000L;
 	
 	}
 	

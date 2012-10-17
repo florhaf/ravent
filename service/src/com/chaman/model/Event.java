@@ -265,20 +265,20 @@ public class Event extends Model implements Serializable, Runnable {
             	
 	    	}
 	    	
+		} catch (UndeclaredThrowableException ex) {
+			
+			StringWriter sw = new StringWriter();
+			ex.printStackTrace(new PrintWriter(sw));
+			String stackTrace = sw.toString();
+			
+			log.severe(e.getEid() + ": " + ex.toString() + " UndeclaredThrowableException: " + stackTrace);
+			
+			//Thread.currentThread().interrupt();
+		
 		} catch (Exception ex) {
-			if (ex instanceof UndeclaredThrowableException) {
-				UndeclaredThrowableException ut = (UndeclaredThrowableException) ex;
-				
-				StringWriter sw = new StringWriter();
-				ut.printStackTrace(new PrintWriter(sw));
-				String stackTrace = sw.toString();
-				
-				log.severe(e.getEid() + ": " + ex.toString() + " UndeclaredThrowableException: " + stackTrace);
-			}
-			else {
-				log.severe(e.getEid() + ": " + ex.toString());
-			}
-				
+
+			log.severe(e.getEid() + ": " + ex.toString());
+			
 		} finally {
 		
 			tm.threadIsDone(Thread.currentThread());
