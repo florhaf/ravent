@@ -103,6 +103,8 @@ static controllers_Login *_ctrl;
  */
 - (IBAction)onLoginButtonTap:(id)sender {
     
+    _errorLabel.text = @"";
+    
     [_loginButton setEnabled:NO];
     [_loginButton setAlpha:0];
     [_spinner setAlpha:1];
@@ -158,6 +160,7 @@ static controllers_Login *_ctrl;
     
     if ([delegate facebook].accessToken != nil && ![[delegate facebook].accessToken isEqualToString:@""]) {
         
+        _errorLabel.text = @"";
         [_loginButton setEnabled:NO];
         [_loginButton setAlpha:0];
         [_spinner setAlpha:1];

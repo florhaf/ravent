@@ -259,7 +259,7 @@
 										<int key="IBUIContentMode">7</int>
 										<bool key="IBUIUserInteractionEnabled">NO</bool>
 										<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-										<string key="IBUIText">1 day(s)</string>
+										<string key="IBUIText">1 day</string>
 										<reference key="IBUITextColor" ref="415489210"/>
 										<nil key="IBUIHighlightedColor"/>
 										<reference key="IBUIShadowColor" ref="274358140"/>
@@ -439,6 +439,7 @@
 										<string key="NSFrame">{{206, 219}, {94, 29}}</string>
 										<reference key="NSSuperview" ref="387358071"/>
 										<reference key="NSWindow"/>
+										<reference key="NSNextKeyView"/>
 										<string key="NSReuseIdentifierKey">_NS:9</string>
 										<bool key="IBUIOpaque">NO</bool>
 										<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>

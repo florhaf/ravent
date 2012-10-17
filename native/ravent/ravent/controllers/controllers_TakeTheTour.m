@@ -42,6 +42,19 @@ static customNavigationController *_ctrl;
 
 - (IBAction)next:(id)sender
 {
+    _currentStep++;
+    
+    if (_quit.hidden) {
+        
+        [_quit setHidden:NO];
+    }
+    
+    if (_currentStep == 2) {
+        
+        [_gemAnim setHidden:NO];
+        [self startAnimation];
+    }
+    
     CGFloat crtX = _container.frame.origin.x;
     
     [_container raceTo:CGPointMake(crtX - 320, 0) withSnapBack:YES];
@@ -75,12 +88,8 @@ static customNavigationController *_ctrl;
 }
 
 - (void)loadDropAGem
-{
-        NSBundle *bundle = [NSBundle mainBundle];
-        
-        NSString *path = [bundle pathForResource:@"diamond.png" ofType:nil];
-        
-        UIImage *image = [UIImage imageWithContentsOfFile:path];
+{        
+        UIImage *image = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"diamond.png" ofType:nil]];
         
         
         self.goodFrames = [NSMutableArray arrayWithCapacity:1];
@@ -136,10 +145,9 @@ static customNavigationController *_ctrl;
             
             [self.dragViews addObject:_dragView];
             
-            [[self.view.subviews objectAtIndex:0] addSubview:_dragView];
+            [[self.view.subviews objectAtIndex:1] addSubview:_dragView];
 
         }
-//    }
 }
 
 - (void)viewDidLoad
@@ -154,6 +162,30 @@ static customNavigationController *_ctrl;
     
 }
 
+- (void)startAnimation
+{
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationCurve:UIViewAnimationCurveLinear];
+    [UIView setAnimationTransition:UIViewAnimationTransitionNone forView:self.view cache:YES];
+    [UIView setAnimationDuration:1];
+    [UIView setAnimationDelegate:self];
+    [UIView setAnimationDidStopSelector:@selector(animationDidStop:finished:context:)];
+    
+    _gemAnim.frame = CGRectMake(864, _gemAnim.frame.origin.y, _gemAnim.frame.size.width, _gemAnim.frame.size.height);
+    
+    [UIView commitAnimations];
+}
+
+- (void)animationDidStop:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context
+{
+    if (!_stopAnim) {
+        
+        // reset gem to origin
+        _gemAnim.frame = CGRectMake(670, _gemAnim.frame.origin.y, _gemAnim.frame.size.width, _gemAnim.frame.size.height);
+        [self performSelector:@selector(startAnimation) withObject:nil afterDelay:1];
+    }
+}
+
 - (void)viewDidUnload
 {
     [super viewDidUnload];
@@ -165,13 +197,15 @@ static customNavigationController *_ctrl;
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (void)dealloc
+- (void)mydealloc
 {
     _container = nil;
     _next = nil;
     _ctrl = nil;
     _lightBurst = nil;
     _dragView = nil;
+    _quit = nil;
+    _gemAnim = nil;
 }
 
 + (customNavigationController *)instance
@@ -191,7 +225,8 @@ static customNavigationController *_ctrl;
 {
     //_ctrl.container = nil;
     
-    
+    controllers_TakeTheTour *tour = (controllers_TakeTheTour *)_ctrl.rootController;
+    [tour mydealloc];
     [_ctrl setRootController:nil];
     _ctrl = nil;
 }
@@ -201,7 +236,8 @@ static customNavigationController *_ctrl;
 
 - (void)dragViewDidStartDragging:(TKDragView *)dragView{
     
-    
+    _stopAnim = YES;
+    _gemAnim.hidden = YES;
 }
 
 - (void)dragViewDidEndDragging:(TKDragView *)dragView{
@@ -285,6 +321,10 @@ static customNavigationController *_ctrl;
 
 - (void)dragViewDidSwapToStartFrame:(TKDragView *)dragView{
     
+    _stopAnim = NO;
+    _gemAnim.frame = CGRectMake(670, _gemAnim.frame.origin.y, _gemAnim.frame.size.width, _gemAnim.frame.size.height);
+    _gemAnim.hidden = NO;
+    [self startAnimation];
 }
 
 @end

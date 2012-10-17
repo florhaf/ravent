@@ -187,16 +187,19 @@ static int _retryCounter;
 
 - (IBAction)buttonTap:(id)sender
 {
-    MKCoordinateSpan span;
+    
     
     if (_isSettingLocation) {
         
         [_buttonChangeLocation setTitle:@"Change Location" forState:UIControlStateNormal];
         _isSettingLocation = NO;
         
+        MKCoordinateSpan span;
+        
         span.latitudeDelta = 0.08;
         span.longitudeDelta = 0.08;
         
+        _overlayView.strokeColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0];
         _overlayView.fillColor = [[UIColor grayColor] colorWithAlphaComponent:0];
         _map.zoomEnabled = YES;
         
@@ -223,29 +226,49 @@ static int _retryCounter;
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"locationChangedReloadDelayed" object:self];
             }
         }
+        
+        CLLocationCoordinate2D coord;
+        coord.latitude = _map.region.center.latitude;
+        coord.longitude = _map.region.center.longitude;
+        
+        MKCoordinateRegion region;
+        region.span = span;
+        region.center = coord;
+        
+        [_map setRegion:region animated:YES];
     } else {
-        
-        [_buttonChangeLocation setTitle:@"Done" forState:UIControlStateNormal];
         _isSettingLocation = YES;
+        [_buttonChangeLocation setTitle:@"Done" forState:UIControlStateNormal];
         
-        span.latitudeDelta = 0.2;
-        span.longitudeDelta = 0.2;
+        CLLocationCoordinate2D coord;
+        coord.latitude = _map.region.center.latitude;
+        coord.longitude = _map.region.center.longitude;
+        MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(coord, 12 * 1.61 * 1000, 12 * 1.61 * 1000);
+        MKCoordinateRegion adjustedRegion = [_map regionThatFits:viewRegion];
+        [_map setRegion:adjustedRegion animated:YES];
+        _map.showsUserLocation = YES;
         
+//        _map.zoomEnabled = NO;
+//        
+//        MKCoordinateSpan span;
+//        span.latitudeDelta = 0.2;
+//        span.longitudeDelta = 0.2;
+//        
+//        CLLocationCoordinate2D coord;
+//        coord.latitude = _map.region.center.latitude;
+//        coord.longitude = _map.region.center.longitude;
+//        
+//        MKCoordinateRegion region;
+//        region.span = span;
+//        region.center = coord;
+//        
+//        [_map setRegion:region animated:YES];
+//        
         _overlayView.strokeColor = [[UIColor lightGrayColor] colorWithAlphaComponent:1];
         _overlayView.fillColor = [[UIColor blueColor] colorWithAlphaComponent:0.3];
-        
-        _map.zoomEnabled = NO;
     }
     
-    CLLocationCoordinate2D coord;
-    coord.latitude = _map.region.center.latitude;
-    coord.longitude = _map.region.center.longitude;
     
-    MKCoordinateRegion region;
-    region.span = span;
-    region.center = coord;
-    
-    [_map setRegion:region animated:YES];
 }
 
 - (void)buttonTapWithDelay:(id)sender
@@ -395,10 +418,11 @@ static int _retryCounter;
 
 + (void)deleteInstance
 {
+    [_ctrl mydealloc];
     _ctrl = nil;
 }
 
-- (void)dealloc {
+- (void)mydealloc {
     _googleBranding = nil;
     _map = nil;
     _toolbarTop = nil;

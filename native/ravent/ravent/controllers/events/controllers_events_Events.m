@@ -289,7 +289,7 @@ static customNavigationController *_ctrl;
 - (IBAction)stepperWindowPressed:(UIStepper *)sender
 {
     [models_User crtUser].searchWindow = (int)sender.value * 24; // need to send in hours to the WS
-    _labelWindowValue.text = [NSString stringWithFormat:@"%d day", (int)sender.value];    
+    _labelWindowValue.text = [NSString stringWithFormat: ((int)sender.value == 1) ? @"%d day" : @"%d days", (int)sender.value];
     _isDirty = YES;
 }
 

@@ -48,6 +48,7 @@
 - (void)loadData:(NSArray *)objects;
 - (void) stopGps;
 - (void) startGps;
+- (void)mydealloc;
 
 + (controllers_events_Map_p2p *)instance;
 + (void)deleteInstance;
