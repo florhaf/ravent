@@ -74,6 +74,7 @@
 						<string key="NSFrame">{{10, 421}, {260, 34}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -107,7 +108,7 @@
 					<object class="IBUIImageView" id="263314102">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">-2147483352</int>
-						<string key="NSFrame">{{60, 152}, {155, 155}}</string>
+						<string key="NSFrame">{{112.5, 204.5}, {50, 50}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="731810542"/>
@@ -116,7 +117,7 @@
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<object class="NSCustomResource" key="IBUIImage">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">overlay.png</string>
+							<string key="NSResourceName">map_visor.png</string>
 						</object>
 					</object>
 					<object class="IBUIImageView" id="731810542">
@@ -356,7 +357,7 @@
 			<string key="askButton.png">{580, 70}</string>
 			<string key="google.png">{69, 24}</string>
 			<string key="grayToolbar.png">{320, 44}</string>
-			<string key="overlay.png">{310, 310}</string>
+			<string key="map_visor.png">{88, 88}</string>
 		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">1926</string>
 	</data>

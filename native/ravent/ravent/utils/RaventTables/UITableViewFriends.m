@@ -173,12 +173,15 @@
 
 - (void)onBackTap
 {
-    if ([_details respondsToSelector:@selector(cancelAllRequests)]) {
-     
-        [_details cancelAllRequests];
-        _details = nil;
-    }
     [self.navigationController popViewControllerAnimated:YES];
+    
+    [self performSelector:@selector(detailsDealloc) withObject:nil afterDelay:0.5];
+}
+
+- (void)detailsDealloc
+{
+    [_details mydealloc];
+    _details = nil;
 }
 
 - (void)viewDidLoad

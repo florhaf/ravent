@@ -139,6 +139,8 @@
 		DF16F70C153BCABD002819C2 /* controllers_friends_People.m in Sources */ = {isa = PBXBuildFile; fileRef = DF16F706153BCABD002819C2 /* controllers_friends_People.m */; };
 		DF16F70D153BCABD002819C2 /* controllers_friends_share.m in Sources */ = {isa = PBXBuildFile; fileRef = DF16F708153BCABD002819C2 /* controllers_friends_share.m */; };
 		DF17DAE7162B71A80025EAD5 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF17DAE6162B71A80025EAD5 /* Default-568h@2x.png */; };
+		DF17DAE9162CE22C0025EAD5 /* x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF17DAE8162CE22C0025EAD5 /* x.png */; };
+		DF17DAEB162E16F90025EAD5 /* map_visor.png in Resources */ = {isa = PBXBuildFile; fileRef = DF17DAEA162E16F90025EAD5 /* map_visor.png */; };
 		DF19116515CD165F004F413F /* views_Footer.xib in Resources */ = {isa = PBXBuildFile; fileRef = DF19116415CD165F004F413F /* views_Footer.xib */; };
 		DF1EE840151D23640037BE6C /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF1EE83F151D23640037BE6C /* MapKit.framework */; };
 		DF1EE843151D24CF0037BE6C /* controllers_events_Events.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1EE842151D24CF0037BE6C /* controllers_events_Events.m */; };
@@ -608,6 +610,8 @@
 		DF16F707153BCABD002819C2 /* controllers_friends_share.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = controllers_friends_share.h; sourceTree = "<group>"; };
 		DF16F708153BCABD002819C2 /* controllers_friends_share.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = controllers_friends_share.m; sourceTree = "<group>"; };
 		DF17DAE6162B71A80025EAD5 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		DF17DAE8162CE22C0025EAD5 /* x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = x.png; sourceTree = "<group>"; };
+		DF17DAEA162E16F90025EAD5 /* map_visor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = map_visor.png; path = icon/map_visor.png; sourceTree = "<group>"; };
 		DF19116415CD165F004F413F /* views_Footer.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = views_Footer.xib; sourceTree = "<group>"; };
 		DF1EE83F151D23640037BE6C /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		DF1EE841151D24CF0037BE6C /* controllers_events_Events.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = controllers_events_Events.h; sourceTree = "<group>"; };
@@ -1330,6 +1334,7 @@
 		DF629E6D153F8A5900BCA804 /* buttons */ = {
 			isa = PBXGroup;
 			children = (
+				DF17DAE8162CE22C0025EAD5 /* x.png */,
 				DF01821915D9D32000B5EBAB /* grayCrowd.png */,
 				DFF8D31A15C3E9E900C028CB /* facebookButton.png */,
 				DFF8D31615C3E24E00C028CB /* diamondSmall.png */,
@@ -1594,6 +1599,7 @@
 		DF8F14F8150BD4DE00008ABC /* resources */ = {
 			isa = PBXGroup;
 			children = (
+				DF17DAEA162E16F90025EAD5 /* map_visor.png */,
 				DFDD4DAD15CE162C00EC9006 /* overlay.png */,
 				DFA9FC7715B2CEC6003F9B5F /* gem.png */,
 				DFA9FC7815B2CECF003F9B5F /* gem@2x.png */,
@@ -2304,6 +2310,8 @@
 				DFD11C6E15EC477E0000FE86 /* google.png in Resources */,
 				DFD11C6F15EC477E0000FE86 /* google@2x.png in Resources */,
 				DF17DAE7162B71A80025EAD5 /* Default-568h@2x.png in Resources */,
+				DF17DAE9162CE22C0025EAD5 /* x.png in Resources */,
+				DF17DAEB162E16F90025EAD5 /* map_visor.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2534,7 +2542,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: florian haftman";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Gemster Group Inc";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/RestKit/Specs/Runner/OCHamcrest\"",
@@ -2551,7 +2559,7 @@
 				);
 				"OTHER_CFLAGS[arch=*]" = "-mthumb";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C136FD6F-C541-495F-AC1B-DDCDC54E8955";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9DD536D0-FCF8-41DE-8891-BC062A21B55D";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = NO;
 				USER_HEADER_SEARCH_PATHS = "";
@@ -2564,7 +2572,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: florian haftman";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Gemster Group Inc";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/RestKit/Specs/Runner/OCHamcrest\"",
@@ -2581,7 +2589,7 @@
 				);
 				"OTHER_CFLAGS[arch=*]" = "-mthumb";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C136FD6F-C541-495F-AC1B-DDCDC54E8955";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9DD536D0-FCF8-41DE-8891-BC062A21B55D";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = NO;
 				USER_HEADER_SEARCH_PATHS = "";

@@ -16,8 +16,14 @@
     
     IBOutlet UIImageView *_lightBurst;
     
+    IBOutlet UIButton *_quit;
+    IBOutlet UIImageView *_gemAnim;
+    
     int _currentNbOfBurst;
     int _maxNbOfBurst;
+    int _currentStep;
+    
+    BOOL _stopAnim;
     
     TKDragView *_dragView;
 }

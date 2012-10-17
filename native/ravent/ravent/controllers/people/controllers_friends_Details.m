@@ -84,9 +84,6 @@
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
-    
-    // should be on back tap!!!
-    //[self mydealloc];
 }
 
 - (IBAction)onCommentTap:(id)sender
@@ -143,6 +140,8 @@
 
 - (void)mydealloc
 {
+    [self cancelAllRequests];
+    
     _detailsView = nil;
     _nameLabel = nil;
     _followingLabel = nil;
