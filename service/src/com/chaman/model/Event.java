@@ -104,7 +104,8 @@ public class Event extends Model implements Serializable, Runnable {
 	String locale;
 	String userLatitude;
 	String userLongitude;
-	
+	long actual_time;
+	DateTime now;
 	
 	
 	public Event() {
@@ -131,6 +132,10 @@ public class Event extends Model implements Serializable, Runnable {
 		Event e = new Event();
 		e.timeZoneInMinutes = Integer.parseInt(timeZone);
 		
+		DateTimeZone TZ = DateTimeZone.forOffsetMillis(e.timeZoneInMinutes*60*1000);
+		e.now = DateTime.now(TZ);	
+		e.actual_time = e.now.getMillis() / 1000L;
+		
 		e.accessToken = accessToken;
 		
 		e.searchTimeFrame = searchTimeFrame;
@@ -140,11 +145,11 @@ public class Event extends Model implements Serializable, Runnable {
 		e.is_chaman = is_chaman;
 		
 		LocationCapableRepositorySearch<EventLocationCapable> ofySearch = new OfyEntityLocationCapableRepositorySearchImpl(dao.ofy(), timeZone, searchTimeFrame);
-		
+			
 		//List<EventLocationCapable> l = GeocellManager.proximityFetch(new Point(Double.parseDouble(searchLat), Double.parseDouble(searchLon)), searchLimit, searchRadius * 1000 * 1.61, ofySearch, 6);
 		
-		List<EventLocationCapable> l = EventTools.proximityFetch(searchLat, searchLon, ofySearch, searchRadius, searchLimit);
-
+		List<EventLocationCapable> l = EventTools.proximityFetch(searchLat, searchLon, ofySearch, searchRadius, searchLimit, e.actual_time);
+		
 		if (l != null && !l.isEmpty()) {
 			
 			MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
@@ -152,8 +157,6 @@ public class Event extends Model implements Serializable, Runnable {
 			List<Long> eventkeys = EventTools.getELCkeys(l);
 			
 			e.map_cache = syncCache.getAll(eventkeys);
-			
-			//TODO get all marketing programs here
 			
 			e.tm = new MyThreadManager<EventLocationCapable>(e);
 			
@@ -163,7 +166,7 @@ public class Event extends Model implements Serializable, Runnable {
 			if (is_chaman != null)
 				result = e.tm.Process(q, 5000);
 			else
-				result = e.tm.Process(q, 30000);
+				result = e.tm.Process(q, 40000);
 			
 			Collections.sort(result, new EventComparator());
 			
@@ -193,41 +196,37 @@ public class Event extends Model implements Serializable, Runnable {
 	@Override
 	public void run() {
 		
+		
+		
 		EventLocationCapable e = this.tm.getIdForThread(Thread.currentThread());
 		
-		try {		
+		try {
 			
-			DateTimeZone TZ = DateTimeZone.forOffsetMillis(timeZoneInMinutes*60*1000);
-			DateTime now = DateTime.now(TZ);	
-			long actual_time = now.getMillis() / 1000L;
-			
-	    	if (actual_time < e.getTimeStampEnd()) { //if event not in the past
+	    	if (actual_time < e.getTimeStampEnd()) { //if event not in the past TODO:to delete, added to proxyfetch
 
 	 			if (((e.getTimeStampEnd() - e.getTimeStampStart()) / 86400) > 62) {
     				return;
     			}
-
-				Dao dao = new Dao();
 				
-				FacebookClient client 	= new DefaultFacebookClient(accessToken);
-				String properties 		= "eid, name, pic_big, start_time, end_time, venue, location, privacy, update_time, all_members_count, timezone, creator";
-			
-				AsyncMemcacheService asyncCache = MemcacheServiceFactory.getAsyncMemcacheService();
-				
-				Event event;
+	 			Event event = (Event) map_cache.get(e.getEid());
 	 			
-	 			event = (Event) map_cache.get(e.getEid());
-    							
     			if (event == null) { // if not in the cache
             				
+    				FacebookClient client 	= new DefaultFacebookClient(accessToken);
+    				String properties 		= "eid, name, pic_big, start_time, end_time, venue, location, privacy, update_time, all_members_count, timezone, creator";
+    				
     				String query 			= "SELECT " + properties + " FROM event WHERE eid = " + e.getEid();
             		List<Event> fbevents 	= client.executeQuery(query, Event.class); //TODO: Use Batch
             		
-            		if (fbevents != null && fbevents.size() > 0) {
-        	
+            		if (fbevents != null && fbevents.size() > 0) {			
+            			
             			event = fbevents.get(0);
             			event.venue_id = JSON.GetValueFor("id", event.venue);	
+            			
+            			
+            			
             			Venue v_graph =  Venue.getVenue(client, event.venue_id, event);
+            			
         				event.venue_category = v_graph.category;
         				if (event.venue_category == null || !event.venue_category.equals("city")) {
         					event.Score(v_graph);
@@ -238,6 +237,7 @@ public class Event extends Model implements Serializable, Runnable {
 	    	    			e.setTimeStampStart(Long.parseLong(event.start_time));
 	    	    			e.setTimeStampEnd(Long.parseLong(event.end_time));
 	    	    			if (is_chaman == null) { //no write if web or visibility
+	    	    				Dao dao = new Dao();
 	    	    				dao.ofy().put(e);
 	    	    			}
 	    	    		}
@@ -247,7 +247,7 @@ public class Event extends Model implements Serializable, Runnable {
             	if (event != null && (event.venue_category == null || !event.venue_category.equals("city"))) {
             		
         			if (event.Format(timeZoneInMinutes, now, searchTimeFrame, locale, is_chaman)){
-			
+        				
             			event.latitude 	= Double.toString(e.getLatitude());
             			event.longitude = Double.toString(e.getLongitude());	
             			
@@ -256,10 +256,12 @@ public class Event extends Model implements Serializable, Runnable {
               			event.distance = String.format("%.2f", distance);
               			
               			if (is_chaman == null) { //no cache if web or visibility
+            				AsyncMemcacheService asyncCache = MemcacheServiceFactory.getAsyncMemcacheService();
               				asyncCache.put(event.eid, event, null);
               			}
         			
               			this.tm.AddToResultList(event);
+              			
         			}
             	} 
             	

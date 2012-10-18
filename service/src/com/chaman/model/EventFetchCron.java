@@ -85,6 +85,10 @@ public class EventFetchCron extends Model implements Runnable {
 
 							try {
 								
+								if (((Long.parseLong(e.end_time) - Long.parseLong(e.start_time)) / 86400) > 62) {
+									continue;
+								}
+								
 								e_cache = (Event) syncCache.get(e.eid); // read from Event cache
 								if (e_cache == null || !e_cache.update_time.equals(e.update_time)) {
 
@@ -109,7 +113,7 @@ public class EventFetchCron extends Model implements Runnable {
 										}	
 
 										if (e.latitude != null && e.longitude != null) {
-
+											
 											EventLocationCapable elc = dao.ofy().find(EventLocationCapable.class, e.eid);
 
 											if (elc == null) {

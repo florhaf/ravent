@@ -7,8 +7,10 @@ import java.util.logging.Logger;
 import com.beoui.geocell.GeocellUtils;
 import com.beoui.geocell.LocationCapableRepositorySearch;
 import com.beoui.geocell.model.Point;
+import com.chaman.dao.Dao;
 import com.chaman.model.Event;
 import com.chaman.model.EventLocationCapable;
+import com.chaman.model.EventMarketingProgram;
 import com.chaman.model.Model;
 import com.chaman.model.User;
 
@@ -19,7 +21,7 @@ public class EventTools {
     private static final int[] NORTHEAST = new int[] {1,1};
     private static final int[] SOUTHWEST = new int[] {-1,-1};
     
-	public static List<EventLocationCapable> proximityFetch(String searchLat, String searchLon, LocationCapableRepositorySearch<EventLocationCapable> ofySearch, float searchRadius, int limit) {
+	public static List<EventLocationCapable> proximityFetch(String searchLat, String searchLon, LocationCapableRepositorySearch<EventLocationCapable> ofySearch, float searchRadius, int limit, long actual_time) {
 		
 		List<EventLocationCapable> DS = new ArrayList<EventLocationCapable>();
 		
@@ -40,6 +42,11 @@ public class EventTools {
 			float distance = Geo.Fence(searchLat, searchLon, String.valueOf(e.getLatitude()), String.valueOf(e.getLongitude()));
 			if (distance <= searchRadius) {
 				
+				
+		    	if (actual_time > e.getTimeStampEnd() || (((e.getTimeStampEnd() - e.getTimeStampStart()) / 86400) > 62)) { //if past or lenth > 62days
+		    		continue;
+		    	}
+		 			
 				result.add(e);
 				if (limit != 0) {
 					i++;
@@ -50,6 +57,12 @@ public class EventTools {
 			}
 			
 		}
+		
+		/*Collections.sort(result, new EventLocationCapableComparator());
+		log.severe("PROXYFETCH - after sort = " + result.size());
+		
+		result = removeDuplicates_in_proximityFetch(result);
+		log.severe("PROXYFETCH - after rem duplicate = " + result.size());*/
 		
 		return result;
 	}
@@ -164,6 +177,82 @@ public class EventTools {
 		return result;	
 	}
 
+
+public static List<EventLocationCapable> removeDuplicates_in_proximityFetch(List<EventLocationCapable> l) {
+		
+		List<EventLocationCapable> result = new ArrayList<EventLocationCapable>();
+		
+		if (l != null && l.size() > 0) {
+			
+			EventLocationCapable isfirst = null;
+			
+			for (int i = 0; i < l.size() -1; i++) {
+				
+				EventLocationCapable e1 = (EventLocationCapable) l.get(i);
+				EventLocationCapable e2 = (EventLocationCapable) l.get(i + 1);
+				
+
+				//if same venue
+				if (is_same_venue(e1, e2)) {
+					
+					//if event overlap (assuming same event)
+					if (!(e1.getTimeStampStart() > e2.getTimeStampEnd() || e2.getTimeStampStart() > e1.getTimeStampEnd())) {
+						
+						//TODO to remove after implementation of second fetch for featured events
+						
+						/* Get information from DS concerning Marketing Programs
+						*/
+						Dao dao = new Dao();
+						EventMarketingProgram emp = dao.ofy().find(EventMarketingProgram.class, e1.getEid());
+						
+						if (emp != null) {
+							
+							result.add(e1);
+							isfirst = e1;
+							continue;
+						}
+						
+						if (isfirst == null) {
+							
+							isfirst = e1;
+							result.add(e1);
+							continue;
+						} else {
+							
+							if (is_same_venue(e1, isfirst)) {
+								
+								i++;
+								continue;
+							} else {
+								
+								isfirst = e1;
+								result.add(e1);
+								i++;
+								continue;
+							}
+						}
+					}
+				}
+				
+				result.add(e1);
+				result.add(e2);
+				isfirst = e2;
+				i++;
+			}		
+		}
+		
+		return result;	
+	}
+	
+	private static boolean is_same_venue (EventLocationCapable e1, EventLocationCapable e2) {
+		
+		if (e1.getLatitude() == e2.getLatitude() && e1.getLongitude() == e2.getLongitude()) {
+		
+			return true;
+		}
+		
+		return false;
+	}
 
 	private static boolean is_better_than(Event e1, Event e2) {
 		
