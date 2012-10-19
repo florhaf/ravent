@@ -186,8 +186,17 @@ chromium.org/developers/how-tos/chrome-frame-getting-started -->
                 	</div>
 				
 				</div>
+				<div style="text-align: left; margin-top: -50px; margin-bottom: 20px;">
+				    <ul>
+                    <li>Find the <b>best local events</b> around</li>
+                    <li>Share pictures - post comments</li>
+                    <li>Follow your friends RSVP status</li>
+                    <li><b>Drop gems</b> - get goodies</li>
+                    <li>And much more</li>
+                    </ul>
+				</div>
 				
-				<div>
+				<div style="margin-top: 70px;">
 
 					<div>
 						<img src="../img/cal.png" style="float:left; margin-left: 10px;" />
@@ -196,7 +205,17 @@ chromium.org/developers/how-tos/chrome-frame-getting-started -->
                     	<a id="button-promote" href="../promoter/" class="button-promote">Promote an Event</a>
                 	</div>
 				</div>
-				<div style="margin-top: -30px;">
+
+				<div style="text-align: left; margin-top: -50px; margin-bottom: 20px;">
+				<ul>
+				<li>Gain <b>more visibility</b></li>
+                <li>Sell more tickets</li>
+                <li>Increase user engagement with specials</li>
+                <li>And best of all... it's <b>FREE</b></li>
+                </ul>
+				</div>
+
+				<div style="margin-top: -20px;">
 					<img src="../img/separator.png">
 				</div>
 

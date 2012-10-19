@@ -232,8 +232,9 @@
                 <p>We will be pleased to discuss how Gemster can help you <b>promote your events</b>. <a href="contact.php" style="text-decoration: underline; font-size: 16px;">Contact us</a>.</p>
 
                 <p>
-                    <a onclick="seemore_onClick();" href="#"><b>OUR SERVICES ARE FREE | SEE MORE |</b> <img id="expandIcon" src="../img/expand.png"
-                                                                           width="16"/></a>
+                    <!--<a onclick="seemore_onClick();" href="#"><b>OUR SERVICES ARE FREE | SEE MORE |</b> <img id="expandIcon" src="../img/expand.png"width="16"/></a>-->
+
+                    <a onclick="seemore_onClick();" href="#" class="button-link" style="color: white;">OUR SERVICES ARE FREE | SEE MORE</a>
                 </p>
             </div>
             <hr>
@@ -343,6 +344,20 @@
                         </table>
                     </p>
 
+                    <h1>Event Card</h1>
+
+                    <p>
+                        We also generate an event card for your event that people can access directly from their browser.<br />
+                        This event card shows the featured red flag as well as your goodies for your specials and tickets.<br />
+                        People can now share this page on Facebook or Twitter, meaning they will share your event with all their friends.<br />
+
+                    </p>
+                    <div style="width: 100%; text-align: center;">
+
+                        <img src="../img/event_card_screen.png" style="width: 800px;" />
+                    </div>
+
+
                     <p>We will be pleased to discuss how Gemster can help you <b>promote your events</b>. <a href="contact.php" style="text-decoration: underline; font-size: 16px;">Contact us</a>.</p>
 
 
@@ -396,6 +411,10 @@
             </tr>
         </table>
 
+
+        <div id="mask" style="background-color: black; opacity: 0.5; width: 1004px; height: 540px; margin-top: -305px; margin-left: -4px; position: absolute;">
+
+        </div>
 
         <div id="login" class="gradientBoxesWithOuterShadows" style="position: relative; top: -200px; left: 290px;">
             <div style="margin: 20px 55px; text-align: center; border: 1px solid #a9a9a9; background-color: #ffffff; padding: 10px 20px; margin-bottom: 10px; width: 250px;">
@@ -885,6 +904,7 @@ $("#login-button").click(function () {
 
                 userId = response.id;
                 $("#login").hide();
+                $('#mask').hide();
 
                 $.ajax({
                     url:'../php/proxy.php?proxy_url=' + encodeURIComponent('http://api.gemsterapp.com/login?userID=' + userId + '&isPromoter=true')

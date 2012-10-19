@@ -7,11 +7,20 @@ Ext.define('Gemster.view.Facebook', {
     ],
 
     config  : {
-        id : 'facebook',
         grouped         : false,
         emptyText       : 'empty',
         disableSelection: true,
-
+        items : [{
+            xtype : 'toolbar',
+            docked : 'top',
+            title : 'Facebook Events',
+            items : [{
+                xtype : 'spacer'
+            },{
+                xtype : 'button',
+                text : 'logout'
+            }]
+        }],
         plugins: [{
             xclass      : 'Ext.plugin.PullRefresh',
             refreshFn   : function() {
