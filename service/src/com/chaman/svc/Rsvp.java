@@ -3,6 +3,7 @@ package com.chaman.svc;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
+import org.restlet.resource.Post;
 import org.restlet.resource.Put;
 import org.restlet.resource.Get;
 import org.restlet.resource.ServerResource;
@@ -44,6 +45,31 @@ public class Rsvp extends ServerResource {
 	
 	@Put("json")
 	public Response Create() {
+		
+		Response result = new Response();
+
+		try {
+			
+			String accessToken	= getQuery().getValues("access_token");
+			String eventID 		= getQuery().getValues("eventID");
+			String rsvp			= getQuery().getValues("rsvp");
+			
+			Attending.SetFacebookRsvp(accessToken, eventID, rsvp);
+			
+			result.setSuccess(true);
+			result.setRecords(null);
+			
+		} catch (Exception ex) {
+			
+			result.setSuccess(false);
+			result.setError(ex.toString());
+		}
+		
+		return result;
+	}
+	
+	@Post("json")
+	public Response Create2() {
 		
 		Response result = new Response();
 

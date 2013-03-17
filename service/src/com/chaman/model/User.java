@@ -61,6 +61,9 @@ public class User extends Model implements Serializable, Runnable {
 	@NotSaved
 	@Facebook
 	String relationship_status;
+	@NotSaved
+	@Facebook
+	String current_location;
 	
 	@NotSaved
 	String picture;
@@ -368,6 +371,21 @@ public class User extends Model implements Serializable, Runnable {
 		return this.relationship_status;
 	}
 	
+	public String getCurrent_location() {
+		return current_location;
+	}
+
+
+	public void setCurrent_location(String current_location) {
+		this.current_location = current_location;
+	}
+
+
+	public String getLocation() {
+		return current_location;
+	}
+
+
 	public int getNb_of_events() {
 		
 		return this.nb_of_events;

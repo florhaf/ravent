@@ -23,6 +23,8 @@ public class Venue  extends Model {
 	String likes;
 	@Facebook
 	String location;
+	@Facebook
+	String name;
 	
 	public Venue() {
 		
@@ -113,5 +115,13 @@ public class Venue  extends Model {
 
 	public void setLocation(String location) {
 		this.location = location;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 }

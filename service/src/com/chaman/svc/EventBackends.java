@@ -4,6 +4,7 @@ import org.restlet.resource.Get;
 import org.restlet.resource.ServerResource;
 import com.chaman.model.Event;
 import com.chaman.model.EventFetchCron;
+import com.chaman.model.Notification;
 
 public class EventBackends extends ServerResource {
 
@@ -14,11 +15,15 @@ public class EventBackends extends ServerResource {
 		
 		try {
 			
-			String options	= getQuery().getValues("options");
-
-			if (options.equals("fetch")) {
+			String options	= getQuery().getValues("options");	
+			
+			if (options.equals("notify_access_exp")) {
+				Notification.Notify_access_exp();
+			}
+			else if (options.equals("fetch")) {
 				EventFetchCron.GetCron();
-			} else {
+			}
+			else if (options.equals("delete")) {
 				Event.DeleteCron();
 			}
 			
