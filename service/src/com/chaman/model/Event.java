@@ -106,7 +106,7 @@ public class Event extends Model implements Serializable, Runnable {
 	String userLongitude;
 	long actual_time;
 	DateTime now;
-	
+	String eid_string; // used because of the proxy for FB app
 	
 	public Event() {
 		
@@ -211,7 +211,7 @@ public class Event extends Model implements Serializable, Runnable {
 	 			Event event = (Event) map_cache.get(e.getEid());
 	 			
     			if (event == null) { // if not in the cache
-            				
+            		    				
     				FacebookClient client 	= new DefaultFacebookClient(accessToken);
     				String properties 		= "eid, name, pic_big, start_time, end_time, venue, location, privacy, update_time, all_members_count, timezone, creator";
     				
@@ -221,6 +221,7 @@ public class Event extends Model implements Serializable, Runnable {
             		if (fbevents != null && fbevents.size() > 0) {			
             			
             			event = fbevents.get(0);
+            			
             			event.venue_id = JSON.GetValueFor("id", event.venue);	
             			
             			
@@ -245,6 +246,8 @@ public class Event extends Model implements Serializable, Runnable {
             	}
     			
             	if (event != null && (event.venue_category == null || !event.venue_category.equals("city"))) {
+            		
+            		event.eid_string = String.valueOf(event.eid);
             		
         			if (event.Format(timeZoneInMinutes, now, searchTimeFrame, locale, is_chaman)){
         				
@@ -347,6 +350,7 @@ public class Event extends Model implements Serializable, Runnable {
 			return null;
 		}
 		e = fbevents.get(0);
+		e.eid_string = String.valueOf(e.eid);
 		
 		e.venue_id = JSON.GetValueFor("id", e.venue);
 		Venue v_graph = Venue.getVenue(client, e.venue_id, e);
@@ -487,8 +491,11 @@ public class Event extends Model implements Serializable, Runnable {
 		
 		if (this.filter != null && (this.filter.equals("Other") || this.filter.equals("Entertain"))) {
 			
-			if (dtEnd.toDateTime(PST).getHourOfDay() >= 3 &&  dtEnd.toDateTime(PST).getHourOfDay() <= 7) {
-				this.filter = "Party";
+			if (dtEnd.toDateTime(PST).getHourOfDay() != dtStart.toDateTime(PST).getHourOfDay()) {
+			
+				if (dtEnd.toDateTime(PST).getHourOfDay() >= 3 &&  dtEnd.toDateTime(PST).getHourOfDay() <= 7) {
+					this.filter = "Party";
+				}
 			}
 		}
 	
@@ -901,6 +908,16 @@ public class Event extends Model implements Serializable, Runnable {
 
 	public void setAddress(String address) {
 		this.address = address;
+	}
+
+
+	public String getEid_string() {
+		return eid_string;
+	}
+
+
+	public void setEid_string(String eid_string) {
+		this.eid_string = eid_string;
 	}
 
 }
