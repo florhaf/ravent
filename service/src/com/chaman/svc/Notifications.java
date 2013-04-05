@@ -13,7 +13,7 @@ public class Notifications extends ServerResource {
 		
 		try {
 			
-			//Notification.Notify_access_exp();
+			Notification.Notify_access_exp();
 
 			result.setSuccess(true);
 			result.setRecords(null);
