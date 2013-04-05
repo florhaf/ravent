@@ -75,9 +75,9 @@ public class Notification  extends Model {
 						//String latitude	= JSON.GetValueFor("latitude", fbplace.get(0).location); // to use to send list of events later
 						//String longitude = JSON.GetValueFor("longitude", fbplace.get(0).location);
 						
-						NotifyOneUser(app_access, Long.toString(u.uid), "We found some good events for you around " + name + " Check them out!", "");
+						NotifyOneUser(app_access, Long.toString(u.uid), "We found some great events for you around " + name + " Check them out!", "");
 					} else {
-						NotifyOneUser(app_access, Long.toString(u.uid), "We found some good events for you. Check them out!", "");
+						NotifyOneUser(app_access, Long.toString(u.uid), "We found some great events for you. Check them out!", "");
 					}
 					nb_reminder++;
 					
@@ -85,7 +85,7 @@ public class Notification  extends Model {
 				    
 					// if user access token not expired
 					if (ex.getErrorType().equals("190"))
-						NotifyOneUser(app_access, Long.toString(u.uid), "We have been missing you since the last time you used Gemster. Check out what's going on near you and give us your feedback!", "");
+						NotifyOneUser(app_access, Long.toString(u.uid), "We have been missing you since the last time you used Gemster. Check out some great events going on near you and give us your feedback!", "");
 					nb_access_exp++;
 				}
 				
