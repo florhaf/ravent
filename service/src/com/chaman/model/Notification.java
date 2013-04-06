@@ -58,10 +58,11 @@ public class Notification  extends Model {
 		
 		for (User u: quser)
 		{ // TODO: Thread
-			FacebookClient client 	= new DefaultFacebookClient(u.access_token);
-			String userQuery 		= "SELECT current_location FROM user WHERE uid  = " + u.uid;
 			try {
 				
+				FacebookClient client 	= new DefaultFacebookClient(u.access_token);
+				String userQuery 		= "SELECT current_location FROM user WHERE uid  = " + u.uid;
+
 				try {
 					
 					client.executeQuery(userQuery, User.class);
@@ -82,11 +83,11 @@ public class Notification  extends Model {
 					nb_reminder++;
 					
 				} catch (FacebookOAuthException ex) {
-				    
+					
+					nb_access_exp++;
 					// if user access token not expired
 					if (ex.getErrorType().equals("190"))
 						NotifyOneUser(app_access, Long.toString(u.uid), "We have been missing you since the last time you used Gemster. Check out some great events going on near you and give us your feedback!", "");
-					nb_access_exp++;
 				}
 				
 			} catch (Exception ex) {
@@ -118,7 +119,7 @@ public class Notification  extends Model {
 		      InputStream is = connection.getInputStream();
 		      BufferedReader rd = new BufferedReader(new InputStreamReader(is));
 		      app_access = rd.readLine().substring(13);
-	    } catch (Exception ex1) {}
+	    } catch (Exception ex) {log.severe("Not able to get app token");}
 	    finally {
 	    	connection.disconnect(); 
 	    }
