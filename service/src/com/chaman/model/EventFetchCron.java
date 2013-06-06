@@ -18,6 +18,7 @@ import com.googlecode.objectify.Query;
 import com.restfb.DefaultFacebookClient;
 import com.restfb.FacebookClient;
 import com.restfb.exception.FacebookException;
+import com.restfb.exception.FacebookOAuthException;
 
 public class EventFetchCron extends Model implements Runnable {
 
@@ -41,7 +42,7 @@ public class EventFetchCron extends Model implements Runnable {
 		Queue<User> q = new ArrayBlockingQueue<User>(users_count);
 		q.addAll(quser.list());
 		
-		efc.tm.Process(q, 30000);
+		efc.tm.Process(q, -1);
 		
 	}	
 
@@ -130,13 +131,16 @@ public class EventFetchCron extends Model implements Runnable {
 								}
 							} catch (Exception ex ) {/*log.severe("Event loop " + ex.toString());*/}
 						}
-					} catch (Exception ex ) {log.severe("Get Events for friend of " + u.uid + "-" + l.uid + " " + ex.toString()); wait(600001); }
-				}		
-			} catch (Exception ex) {/*log.severe("Get friends list " + ex.toString());*/}
+					} catch (FacebookOAuthException ex) {
+						if (ex.getErrorType().equals("4"))
+							wait(600001); //10 minutes if too many requests
+					}
+				}
+			} catch (Exception ex) {log.severe("Get friends list " + ex.toString());}
 
 		} catch (Exception ex){
 
-			//log.severe("run " + ex.toString());
+			log.severe("run " + ex.toString());
 		}finally {
 
 			tm.threadIsDone(Thread.currentThread());

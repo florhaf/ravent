@@ -19,7 +19,6 @@ public class Notifications extends ServerResource {
 			result.setRecords(null);
 			
 		} catch (Exception ex) {
-			
 			result.setSuccess(false);
 			result.setError(ex.toString());
 		}
