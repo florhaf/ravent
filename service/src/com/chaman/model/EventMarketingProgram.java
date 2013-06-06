@@ -92,10 +92,10 @@ public class EventMarketingProgram extends Model {
 		try {
    
 			FacebookClient client 	= new DefaultFacebookClient(accessToken);
-			client.publish(eid + "/feed", FacebookType.class, Parameter.with("message", message), Parameter.with("link", "http://gemsterapp.com/facebook/event_page.php?eid=" + eid),
+			client.publish(eid + "/feed", FacebookType.class, Parameter.with("message", message), Parameter.with("link", "https://apps.facebook.com/gemsterapp/?eid=" + eid),
     				Parameter.with("name", "See more"), Parameter.with("picture", "http://gemsterapp.com/img/app_icon.png"));
 		
-			client.publish(e.creator + "/gemsterapp:drop_a_gem_on", FacebookType.class, Parameter.with("event", "http://gemsterapp.com/facebook/event_page.php?eid=" + eid));
+			client.publish(e.creator + "/gemsterapp:drop_a_gem_on", FacebookType.class, Parameter.with("event", "https://apps.facebook.com/gemsterapp/?eid=" + eid));
 		} catch (Exception ex) {}
     	
     	return null;
