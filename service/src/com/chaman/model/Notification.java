@@ -7,6 +7,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
+import java.util.concurrent.ArrayBlockingQueue;
 
 import com.chaman.dao.Dao;
 import com.chaman.util.JSON;
@@ -29,7 +31,8 @@ public class Notification  extends Model {
 	
 	public static void NotifyOneUser(String accessToken, String userID, String template, String href) {
 		
-		FacebookClient client	= new DefaultFacebookClient(accessToken); // globalviaduct app access token
+		FacebookClient client	= new DefaultFacebookClient(accessToken); // app access token
+		
 		try {	
 			client.publish(userID + "/notifications", FacebookType.class, Parameter.with("template", template), Parameter.with("href", href));
 		} catch (Exception ex) {
@@ -47,17 +50,25 @@ public class Notification  extends Model {
 	
 	public static void Notify_access_exp() {
 		
+		double nb_reminder = 0;
+		double nb_access_exp = 0;
+		double nb_error = 0;
+		String app_access = 		get_app_token();
+		
 		try {
+			
+			int users_count;
+			
 			Dao dao = new Dao();
 			Query<User> quser = dao.ofy().query(User.class);
 			
-			double nb_reminder = 0;
-			double nb_access_exp = 0;
-			double nb_error = 0;
+			users_count = quser.count();
 			
-			String app_access = 		get_app_token();
+			Queue<User> q = new ArrayBlockingQueue<User>(users_count);
+			q.addAll(quser.list());
 			
-			for (User u: quser)
+			
+			for (User u: q)
 			{ // TODO: Thread
 				try {
 					
@@ -93,13 +104,14 @@ public class Notification  extends Model {
 					
 				} catch (Exception ex) {
 					nb_error++;
+					log.severe("error " + ex.toString());
 				}
 	
 			}
 			
 			log.severe("Notifications sent: " + nb_reminder + " reminder & " + nb_access_exp + " access expired & " + nb_error + " errors");
 		} catch (Exception ex) {
-			log.severe("To check");
+			log.severe("To check: " + "Notifications sent: " + nb_reminder + " reminder & " + nb_access_exp + " access expired & " + nb_error + " errors & app_access = " + app_access + " & ex = " + ex.toString());
 		}
 	}
 	
